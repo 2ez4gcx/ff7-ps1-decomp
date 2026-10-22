@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_dive/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_dive/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0BD4();
+    return &D_801BAA50;
+}
 
 INCLUDE_ASM("../asm/us/magic_dive/nonmatchings/text", func_801B0028);
 

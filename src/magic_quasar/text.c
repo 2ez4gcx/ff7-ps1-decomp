@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_quasar/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_quasar/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1470();
+}
 
 INCLUDE_ASM("../asm/us/magic_quasar/nonmatchings/text", func_801B0020);
 

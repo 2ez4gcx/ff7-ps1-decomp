@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_vahamut2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B7C4C();
+    return &D_801D8EAC;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B0068);
 
@@ -80,7 +84,9 @@ INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6334);
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B66C8);
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6828);
+s32 func_801B6828(s32 arg0) {
+    return -(arg0 * 0x1388) / -20000;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6868);
 

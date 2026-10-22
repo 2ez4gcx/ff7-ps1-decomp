@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_jammer2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_jammer2/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0D8C();
+}
 
 INCLUDE_ASM("../asm/us/magic_jammer2/nonmatchings/text", func_801B0020);
 

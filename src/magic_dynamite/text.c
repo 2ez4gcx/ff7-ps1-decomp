@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_dynamite/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_dynamite/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B13F8();
+    return &D_801C2648;
+}
 
 INCLUDE_ASM("../asm/us/magic_dynamite/nonmatchings/text", func_801B0028);
 

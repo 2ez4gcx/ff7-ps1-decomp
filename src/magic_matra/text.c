@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_matra/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0070);
+void func_801B0070(void) {
+    func_801B1F38();
+}
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0090);
 

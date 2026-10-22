@@ -1,8 +1,15 @@
 #include "common.h"
+#include "magic_beam/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    D_801DFA34 = 0;
+    func_801B1564();
+}
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B007C);
+void func_801B007C(void) {
+    D_801DFA34 = 1;
+    func_801B1564();
+}
 
 INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B00A8);
 

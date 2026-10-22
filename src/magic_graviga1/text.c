@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_graviga1/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_graviga1/nonmatchings/text", func_801B0000);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_dia/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_dia/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B22F0();
+}
 
 INCLUDE_ASM("../asm/us/magic_dia/nonmatchings/text", func_801B0020);
 

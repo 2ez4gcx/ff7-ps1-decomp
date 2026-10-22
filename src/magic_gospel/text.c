@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_gospel/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B0048);
+M2C_UNK *func_801B0048(void) {
+    func_801B3914();
+    return &D_801DDCE4;
+}
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B0070);
 

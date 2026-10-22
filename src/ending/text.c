@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ending/decls.h"
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A0030);
 
@@ -32,15 +33,21 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A19A4);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1E20);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1ED4);
+void func_800A1ED4(s32 arg0) {
+    D_800A6528 = arg0;
+}
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1EE4);
+s32 func_800A1EE4(void) {
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1EEC);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1F48);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1FA4);
+s32 func_800A1FA4(void) {
+    return func_80034410() == 0;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A1FC8);
 
@@ -48,7 +55,9 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2014);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A208C);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A20D4);
+s32 func_800A20D4(void) {
+    return func_80034410() == 0;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A20F8);
 
@@ -62,7 +71,10 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2274);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A22A4);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A22D4);
+s32 func_800A22D4(void) {
+    D_800AF410 = 0;
+    return 1;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A22E4);
 
@@ -70,11 +82,21 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2328);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2380);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A23F8);
+s32 func_800A23F8(void) {
+    return func_80034410() == 8;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2420);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2458);
+void func_800A2458(void) {
+    func_8003D1B4();
+    func_8003D0C0();
+    func_80043938(0);
+    func_8003CE3C(0);
+    func_80039EDC();
+    func_80036298();
+    func_80033B70();
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A24A8);
 
@@ -84,7 +106,22 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A273C);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2888);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2934);
+void func_800A2934(void *arg0, void *arg1) {
+    M2C_FIELD(arg0, void **, 4) = arg1;
+    M2C_FIELD(arg1, void **, 0) = arg0;
+    M2C_FIELD(arg1, s32 *, 0x34) = 0x1000;
+    M2C_FIELD(arg1, s32 *, 0x30) = 0x1000;
+    M2C_FIELD(arg1, s32 *, 0x2C) = 0x1000;
+    M2C_FIELD(arg1, s32 *, 0x28) = 0x1000;
+    M2C_FIELD(arg1, s16 *, 0x46) = 0;
+    M2C_FIELD(arg1, s16 *, 0x44) = 0;
+    M2C_FIELD(arg1, s16 *, 0x42) = 0;
+    M2C_FIELD(arg1, s16 *, 0x40) = 0;
+    M2C_FIELD(arg1, s16 *, 0x3E) = 0;
+    M2C_FIELD(arg1, s16 *, 0x3C) = 0;
+    M2C_FIELD(arg1, s16 *, 0x3A) = 0;
+    M2C_FIELD(arg1, s16 *, 0x38) = 0;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2974);
 
@@ -104,13 +141,27 @@ INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A3178);
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A3210);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A32D8);
+void func_800A32D8(void *arg0) {
+    void **temp_v0;
+    void *temp_v1;
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A32F0);
+    temp_v1 = M2C_FIELD(arg0, void **, 0);
+    temp_v0 = M2C_FIELD(arg0, void ***, 4);
+    M2C_FIELD(temp_v1, void ***, 4) = temp_v0;
+    *temp_v0 = temp_v1;
+}
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A32FC);
+void func_800A32F0(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0xE) = 8;
+}
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A3308);
+void func_800A32FC(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0xE) = 4;
+}
+
+void func_800A3308(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0xE) = 0x10;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A3314);
 

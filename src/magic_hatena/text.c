@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_hatena/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_hatena/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B105C();
+}
 
 INCLUDE_ASM("../asm/us/magic_hatena/nonmatchings/text", func_801B0074);
 

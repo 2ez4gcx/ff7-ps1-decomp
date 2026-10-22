@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_sekika/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B0008);
+void func_801B0008(void) {
+    func_801B2914();
+}
 
 INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B0028);
 

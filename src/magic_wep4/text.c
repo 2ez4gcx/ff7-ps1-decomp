@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_wep4/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B39A8();
+}
 
 INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B0074);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_kona/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_kona/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0D14();
+}
 
 INCLUDE_ASM("../asm/us/magic_kona/nonmatchings/text", func_801B0020);
 

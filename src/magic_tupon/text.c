@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_tupon/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B64C8();
+    return &D_801D90DC;
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B0068);
 
@@ -24,7 +28,11 @@ INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B20CC);
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B21C8);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B2258);
+void func_801B2258(s32 arg0) {
+    if (D_801EDA8C != NULL) {
+        M2C_FIELD(D_801EDA8C, s32 *, 0xC) = (s32) ((s32) -M2C_FIELD(D_801EDA8C, s32 *, 4) / arg0);
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B22B4);
 

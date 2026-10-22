@@ -1,8 +1,13 @@
 #include "common.h"
+#include "magic_sting/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B0040);
+void func_801B0040(void) {
+    func_801B4770();
+}
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B0060);
+void func_801B0060(void) {
+    func_801B4804();
+}
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B0080);
 
@@ -64,4 +69,8 @@ INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B4640);
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B4770);
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B4804);
+void func_801B4804(void) {
+    func_800D2980(&D_801B485C, 0, 0, 0);
+    func_8003C21C(&D_801CC6F0, &D_801CC6D0);
+    func_800BBEAC(&func_801B4640);
+}

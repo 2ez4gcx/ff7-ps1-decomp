@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_cho_kyu/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_cho_kyu/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B2028();
+}
 
 INCLUDE_ASM("../asm/us/magic_cho_kyu/nonmatchings/text", func_801B0020);
 

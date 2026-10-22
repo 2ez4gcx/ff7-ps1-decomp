@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_tan/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_tan/nonmatchings/text", func_801B006C);
 

@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_siva/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B0054);
+M2C_UNK *func_801B0054(void) {
+    func_801B49CC();
+    return &D_801D9E98;
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B007C);
 
@@ -36,7 +40,9 @@ INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B25E8);
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B2658);
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B274C);
+void func_801B274C(s32 arg0) {
+    D_801F2674 = arg0;
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B275C);
 

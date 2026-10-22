@@ -1,4 +1,5 @@
 #include "common.h"
+#include "condor/decls.h"
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A038C);
 
@@ -148,7 +149,11 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A93A0);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A94B0);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A95C0);
+void func_800A95C0(void) {
+    D_8012C41C = -1;
+    D_8012C524 = 0x100;
+    D_8012C528 = 0;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A95E8);
 
@@ -254,7 +259,18 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B2E78);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B2ED0);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B32C0);
+void func_800B32C0(void *arg0) {
+    if (M2C_FIELD(arg0, u16 *, 0x1C) != 0) {
+        M2C_FIELD(arg0, u16 *, 0x1C) = (u16) (M2C_FIELD(arg0, u16 *, 0x1C) - 1);
+        if (M2C_FIELD(arg0, u16 *, 0x1C) == 0) {
+            M2C_FIELD(arg0, u16 *, 0) = (u16) (M2C_FIELD(arg0, u16 *, 0) & 0xEF);
+            if (M2C_FIELD(arg0, u8 *, 0x2A) != 2) {
+                M2C_FIELD(arg0, u8 *, 0x2A) = 1U;
+                func_800AC498();
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B332C);
 
@@ -274,7 +290,12 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B4060);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B42AC);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B46D4);
+void func_800B46D4(void *arg0) {
+    if ((M2C_FIELD(arg0, u16 *, 0x58) | M2C_FIELD(arg0, u16 *, 0x5A)) != 0) {
+        func_800B4720();
+        func_800B42AC(arg0);
+    }
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B4720);
 

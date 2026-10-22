@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_toybox/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_toybox/nonmatchings/text", func_801B0054);
 

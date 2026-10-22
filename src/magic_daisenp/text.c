@@ -1,8 +1,15 @@
 #include "common.h"
+#include "magic_daisenp/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_daisenp/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    D_801CF2F4 = 0;
+    func_801B0E38();
+}
 
-INCLUDE_ASM("../asm/us/magic_daisenp/nonmatchings/text", func_801B007C);
+void func_801B007C(void) {
+    D_801CF2F4 = 1;
+    func_801B0E38();
+}
 
 INCLUDE_ASM("../asm/us/magic_daisenp/nonmatchings/text", func_801B00A8);
 

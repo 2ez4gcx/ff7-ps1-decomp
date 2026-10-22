@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_dia2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B14E4();
+}
 
 INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B0074);
 
@@ -24,7 +27,10 @@ INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B0F9C);
 
 INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B1208);
 
-INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B1324);
+void func_801B1324(void) {
+    func_801B1208();
+    func_800D55F4(0x20, func_800D574C(D_801E5C58), 0x54);
+}
 
 INCLUDE_ASM("../asm/us/magic_dia2/nonmatchings/text", func_801B1364);
 

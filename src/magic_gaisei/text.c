@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_gaisei/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_gaisei/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B322C();
+    return &D_801BD370;
+}
 
 INCLUDE_ASM("../asm/us/magic_gaisei/nonmatchings/text", func_801B0028);
 

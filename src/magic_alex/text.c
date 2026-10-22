@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_alex/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B6AB0();
+    return &D_801DED44;
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B0068);
 
@@ -34,7 +38,28 @@ INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2FC8);
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3430);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3498);
+void func_801B3498(void *arg0) {
+    s16 temp_v0;
+    s32 temp_a1;
+    s32 temp_s0;
+    s32 temp_v0_2;
+
+    func_801B3430(arg0 + 4, M2C_FIELD(arg0, s16 *, 2), M2C_FIELD(arg0, s16 *, 0x14));
+    if (D_80062D98 == 0) {
+        temp_v0 = (u16) M2C_FIELD(arg0, s16 *, 2) + 1;
+        M2C_FIELD(arg0, s16 *, 2) = temp_v0;
+        if ((s32) D_801DEA40 < temp_v0) {
+            M2C_FIELD(arg0, s16 *, 0) = -1;
+            return;
+        }
+        M2C_FIELD(arg0, u16 *, 6) = (u16) (M2C_FIELD(arg0, u16 *, 6) + M2C_FIELD(arg0, u16 *, 0xE));
+        temp_s0 = func_80039A74(M2C_FIELD(arg0, s16 *, 0xC));
+        temp_v0_2 = func_80039B40(M2C_FIELD(arg0, s16 *, 0xC));
+        temp_a1 = (s32) ((temp_v0_2 * M2C_FIELD(arg0, s16 *, 4)) + (temp_s0 * M2C_FIELD(arg0, s16 *, 8))) >> 0xC;
+        M2C_FIELD(arg0, s16 *, 4) = (s16) temp_a1;
+        M2C_FIELD(arg0, s16 *, 8) = (s16) ((s32) ((-temp_s0 * (s16) temp_a1) + (temp_v0_2 * M2C_FIELD(arg0, s16 *, 8))) >> 0xC);
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B359C);
 
@@ -42,7 +67,20 @@ INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3924);
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3BAC);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3E14);
+void func_801B3E14(void *arg0) {
+    s16 temp_v0;
+
+    func_801B3430(arg0 + 4, M2C_FIELD(arg0, s16 *, 2), M2C_FIELD(arg0, s16 *, 0x14));
+    if (D_80062D98 == 0) {
+        temp_v0 = (u16) M2C_FIELD(arg0, s16 *, 2) + 1;
+        M2C_FIELD(arg0, s16 *, 2) = temp_v0;
+        if (temp_v0 >= (s32) D_801DEA40) {
+            M2C_FIELD(arg0, s16 *, 0) = -1;
+            return;
+        }
+        M2C_FIELD(arg0, u16 *, 6) = (u16) (M2C_FIELD(arg0, u16 *, 6) + 0x82);
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B3EA0);
 

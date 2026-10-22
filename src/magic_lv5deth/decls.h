@@ -1,0 +1,9 @@
+/* Declarations the C of src/magic_lv5deth/ uses (tools/auto_decomp.py adds to this). */
+#ifndef MAGIC_LV5DETH_DECLS_H
+#define MAGIC_LV5DETH_DECLS_H
+
+#include "main/decls.h"
+void func_801B0054(void);
+M2C_UNK func_801B0508();
+
+#endif /* MAGIC_LV5DETH_DECLS_H */

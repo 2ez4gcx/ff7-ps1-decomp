@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_choco0/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_choco0/nonmatchings/text", func_801B0038);
+M2C_UNK *func_801B0038(void) {
+    func_801B1F68();
+    return &D_801D267C;
+}
 
 INCLUDE_ASM("../asm/us/magic_choco0/nonmatchings/text", func_801B0060);
 

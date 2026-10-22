@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_to_seki/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_to_seki/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1A58();
+}
 
 INCLUDE_ASM("../asm/us/magic_to_seki/nonmatchings/text", func_801B0020);
 

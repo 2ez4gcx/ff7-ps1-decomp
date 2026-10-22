@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_blaver/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_blaver/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0730();
+    return &D_801B07A0;
+}
 
 INCLUDE_ASM("../asm/us/magic_blaver/nonmatchings/text", func_801B0028);
 

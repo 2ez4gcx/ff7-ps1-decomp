@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_catastro/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0058);
+M2C_UNK *func_801B0058(void) {
+    func_801B4AB0();
+    return &D_801C6C08;
+}
 
 INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0080);
 

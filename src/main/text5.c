@@ -4,6 +4,18 @@
 /* Declared here otherwise than in the other files (tools/work.py). */
 extern s32 D_80062FC4;
 extern s32 D_80062F24;
+s32 func_8002988C(s32 arg0, s32 arg1);
+extern u16 D_80089580[];
+extern u8 D_8004A60C[];
+extern u8 D_8007E778[];
+s32 func_80036FFC();
+s32 func_800373AC();
+s32 func_80038FB8();
+s32 func_800297A4();
+s32 func_800294BC();
+s32 func_80042BC0();
+s32 func_80042C98();
+extern void func_80030234();
 
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;
@@ -120,9 +132,47 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800294BC);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800297A4);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80029818);
+void func_80029818(u32 *arg0, u32 *arg1) {
+    u32 *d;
+    s32 n;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_8002988C);
+    func_80038F64(*arg0++);
+    n = *(volatile u32 *)arg0;
+    func_80029424((s32)(arg0 + 3), n);
+    d = D_80076C68;
+    n = 0x4B0;
+    do {
+        n--;
+        *d++ = *arg1++;
+    } while (n != 0);
+    func_800294A4();
+}
+
+s32 func_8002988C(s32 arg0, s32 arg1) {
+    s32 r;
+
+    D_80062F74 = D_80089580;
+    D_80062F84 = (u8 *) D_80089580 + 0x1000;
+    func_80036FFC(4, D_8007E778);
+    func_800373AC(0x77000, 0x2000);
+    func_80038FB8(0);
+    func_800297A4(arg0, arg1);
+    func_80038F64(0x76FE0);
+    func_80029424(D_8004A60C, 0x20);
+    func_800294A4();
+    func_800294BC();
+    do {
+        D_80062E00 = func_80042A00(0xF2000002, 2, 0x1000, func_80030234);
+    } while (D_80062E00 == -1);
+    while (func_80042A40(D_80062E00) == 0) {
+    }
+    while (func_80042BC0(0xF2000002, 0x43D1, 0x1000) == 0) {
+    }
+    do {
+        r = func_80042C98(0xF2000002);
+    } while (r == 0);
+    return r;
+}
 
 void func_80029998(u32 *src) {
     u32 *dst;

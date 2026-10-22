@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_seald/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0E98();
+}
 
 INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0074);
 

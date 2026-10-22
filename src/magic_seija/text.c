@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_seija/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_seija/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0D2C();
+    return &D_801C3C28;
+}
 
 INCLUDE_ASM("../asm/us/magic_seija/nonmatchings/text", func_801B0028);
 

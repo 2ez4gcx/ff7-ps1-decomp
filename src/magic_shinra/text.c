@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_shinra/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_shinra/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0950();
+    return &D_801BAD68;
+}
 
 INCLUDE_ASM("../asm/us/magic_shinra/nonmatchings/text", func_801B0028);
 

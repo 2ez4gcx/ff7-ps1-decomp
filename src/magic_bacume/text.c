@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_bacume/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0D5C();
+}
 
 INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B0020);
 

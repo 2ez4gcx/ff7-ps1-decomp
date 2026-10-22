@@ -1,4 +1,5 @@
 #include "common.h"
+#include "chocobo/decls.h"
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A02D0);
 

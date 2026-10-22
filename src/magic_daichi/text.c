@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_daichi/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_daichi/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0B28();
+    return &D_801B6D0C;
+}
 
 INCLUDE_ASM("../asm/us/magic_daichi/nonmatchings/text", func_801B0028);
 

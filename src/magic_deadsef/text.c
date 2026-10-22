@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_deadsef/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0040);
+void func_801B0040(void) {
+    func_801B384C();
+}
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0060);
 

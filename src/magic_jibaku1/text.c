@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_jibaku1/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_jibaku1/nonmatchings/text", func_801B006C);
 

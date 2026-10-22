@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_slipl/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_slipl/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0824();
+}
 
 INCLUDE_ASM("../asm/us/magic_slipl/nonmatchings/text", func_801B0074);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_antlion/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_antlion/nonmatchings/text", func_801B0040);
+void func_801B0040(void) {
+    func_801B3D30();
+}
 
 INCLUDE_ASM("../asm/us/magic_antlion/nonmatchings/text", func_801B0060);
 

@@ -187,6 +187,24 @@ def localize(known, mine, src, before_src):
                 files[other] = with_local(text, [old])
     files[src] = with_local(files.get(src, before_src), list(changed.values()))
     files[ad.DECLS] = decls
+    if ad.TARGET == 'main':
+        # The overlays include main/decls.h: those that use a symbol it no
+        # longer declares get the old declaration in their own decls.h.
+        for other in sorted((ROOT / 'src').glob('*/*.c')):
+            target = other.parent.name
+            if target == 'main':
+                continue
+            text = other.read_text(encoding='utf-8')
+            for sym in changed:
+                old = ad.declaration(known, sym)
+                if old is None or not uses(text, sym):
+                    continue
+                header = other.parent / 'decls.h'
+                h = files.get(header, header.read_text(encoding='utf-8') if header.exists() else None)
+                end = f'\n#endif /* {target.upper()}_DECLS_H */'
+                if h is None or end not in h or ad.declaration(h, sym) is not None:
+                    continue
+                files[header] = h.replace(end, '\n' + old + end, 1)
     return files
 
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_heart1/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B153C();
+}
 
 INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B0074);
 
@@ -26,7 +29,10 @@ INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B10D8);
 
 INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B131C);
 
-INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B137C);
+void func_801B137C(void) {
+    func_801B131C();
+    func_800D55F4(0x20, func_800D574C(D_801CB140), 6);
+}
 
 INCLUDE_ASM("../asm/us/magic_heart1/nonmatchings/text", func_801B13BC);
 

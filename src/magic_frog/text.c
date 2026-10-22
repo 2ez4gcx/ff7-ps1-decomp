@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_frog/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_frog/nonmatchings/text", func_801B0008);
+void func_801B0008(void) {
+    func_801B1E14();
+}
 
 INCLUDE_ASM("../asm/us/magic_frog/nonmatchings/text", func_801B0028);
 

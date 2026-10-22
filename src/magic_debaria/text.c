@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_debaria/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0054);
 
@@ -14,7 +15,9 @@ INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0B58);
 
 INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0CD4);
 
-INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0D4C);
+void func_801B0D4C(void) {
+    func_801B12F8();
+}
 
 INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0D6C);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_magma/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_magma/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B07E0();
+}
 
 INCLUDE_ASM("../asm/us/magic_magma/nonmatchings/text", func_801B0020);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_wlaser/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_wlaser/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B083C();
+}
 
 INCLUDE_ASM("../asm/us/magic_wlaser/nonmatchings/text", func_801B0020);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_heart2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_heart2/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B2014();
+}
 
 INCLUDE_ASM("../asm/us/magic_heart2/nonmatchings/text", func_801B0074);
 

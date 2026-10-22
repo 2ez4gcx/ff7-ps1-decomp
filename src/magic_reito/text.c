@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_reito/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B2354();
+}
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0020);
 

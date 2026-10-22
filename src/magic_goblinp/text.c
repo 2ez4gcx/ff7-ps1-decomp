@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_goblinp/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_goblinp/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0E64();
+}
 
 INCLUDE_ASM("../asm/us/magic_goblinp/nonmatchings/text", func_801B0074);
 

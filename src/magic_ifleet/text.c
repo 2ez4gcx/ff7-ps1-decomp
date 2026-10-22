@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_ifleet/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_ifleet/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B3BB0();
+    return &D_801DD188;
+}
 
 INCLUDE_ASM("../asm/us/magic_ifleet/nonmatchings/text", func_801B0068);
 

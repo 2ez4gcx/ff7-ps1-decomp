@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_s_guard/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_s_guard/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0B5C();
+    return &D_801B10DC;
+}
 
 INCLUDE_ASM("../asm/us/magic_s_guard/nonmatchings/text", func_801B0028);
 

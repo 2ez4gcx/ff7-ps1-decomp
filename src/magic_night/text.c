@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_night/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B2528();
+}
 
 INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B0074);
 

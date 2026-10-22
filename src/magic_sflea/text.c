@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_sflea/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_sflea/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B1D3C();
+}
 
 INCLUDE_ASM("../asm/us/magic_sflea/nonmatchings/text", func_801B0074);
 

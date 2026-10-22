@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_thundera/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_thundera/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B08F4();
+}
 
 INCLUDE_ASM("../asm/us/magic_thundera/nonmatchings/text", func_801B0020);
 

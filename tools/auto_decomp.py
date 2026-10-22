@@ -56,6 +56,8 @@ def use(name):
     if not DECLS.exists():
         write(DECLS, f'/* Declarations the C of src/{name}/ uses (tools/auto_decomp.py adds to this). */\n'
                      f'#ifndef {guard}\n#define {guard}\n\n#include "main/decls.h"\n\n#endif /* {guard} */\n')
+    if name != 'main' and DECLS.exists():
+        drop_main_duplicates()
     # Each source file sees them (splat writes new ones with common.h only).
     include = f'#include "{name}/decls.h"'
     for src in sources():
@@ -65,6 +67,25 @@ def use(name):
                 text = src.read_text(encoding='utf-8')
                 if include not in text and text.startswith('#include "common.h"\n'):
                     write(src, text.replace('#include "common.h"\n', f'#include "common.h"\n{include}\n', 1))
+
+
+def drop_main_duplicates():
+    """An overlay's decls.h may hold guesses about the main executable's
+    symbols from before they were decompiled; where main/decls.h now says
+    otherwise, its declaration is the one to keep."""
+    main = targets.get('main').decls.read_text(encoding='utf-8')
+    text = DECLS.read_text(encoding='utf-8')
+    keep = []
+    for line in text.splitlines():
+        m = re.search(r'\b((?:func|D)_[0-9A-F]{8})\b', line)
+        theirs = declaration(main, m.group(1)) if m and line.rstrip().endswith(';') else None
+        if theirs is not None and theirs != line:
+            continue
+        keep.append(line)
+    new = '\n'.join(keep) + '\n'
+    if new != text:
+        with Turn():
+            write(DECLS, new)
 
 
 def write(path, text):

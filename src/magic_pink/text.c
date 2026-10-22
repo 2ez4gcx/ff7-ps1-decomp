@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_pink/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B11D4();
+}
 
 INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B0020);
 

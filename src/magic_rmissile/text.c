@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_rmissile/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_rmissile/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1720();
+}
 
 INCLUDE_ASM("../asm/us/magic_rmissile/nonmatchings/text", func_801B0020);
 

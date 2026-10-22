@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_debucho/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_debucho/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B1D64();
+    return &D_801BAC54;
+}
 
 INCLUDE_ASM("../asm/us/magic_debucho/nonmatchings/text", func_801B0068);
 

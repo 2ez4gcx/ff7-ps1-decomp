@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_scope/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B0028);
 

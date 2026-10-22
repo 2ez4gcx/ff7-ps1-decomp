@@ -1,0 +1,81 @@
+/* Declarations the C of src/field/ uses (tools/auto_decomp.py adds to this). */
+#ifndef FIELD_DECLS_H
+#define FIELD_DECLS_H
+
+#include "main/decls.h"
+void func_800CDC14(void *arg0);
+void func_800AA32C(void *arg0);
+void func_800DA310(void);
+extern u16 D_800E4210;
+s32 func_800DA3C4(u8 *arg0);
+void func_800DA334(u8 *arg0, u8 *arg1);
+void func_800D85C0(void);
+extern u16 D_800E1024;
+extern s16 D_800E41B8;
+extern s16 D_800E41BC;
+extern s16 D_800E41C0;
+extern s16 D_800E41C4;
+void func_800A1498(void);
+void func_800A8DF4(void *arg0, void *arg1, void *arg2);
+void func_800D5750(void);
+M2C_UNK func_800C46A4();
+extern s16 D_8009A000;
+extern s32 D_8009A004;
+extern s32 D_8009A008;
+void func_800C49EC(void);
+M2C_UNK func_800BEAD4(M2C_UNK *, M2C_UNK);
+M2C_UNK func_800C4BCC();
+extern u8 D_8009D820;
+void func_800C4A40(void);
+void func_800C4A94(void);
+void func_800AB2B4(void);
+extern s32 D_80071E40;
+extern s32 D_80083270;
+extern s32 *D_80083578;
+extern u8 D_8009AC2D;
+void func_800A82A0(void *arg0);
+extern s8 D_8009ABF5;
+void func_800D4848(s32 arg0);
+M2C_UNK func_800D828C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s32);
+M2C_UNK func_800D9F00(M2C_UNK, s32);
+M2C_UNK func_800DA214(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+extern s8 D_80095DCC;
+extern s8 D_80099FFC;
+s32 func_800A41CC(s32 arg0, M2C_UNK arg1);
+M2C_UNK func_8003AE38();
+M2C_UNK func_8003AED8();
+M2C_UNK func_8003B48C(s32);
+M2C_UNK func_8003B51C(s32);
+M2C_UNK func_8003B6BC(M2C_UNK, M2C_UNK);
+s32 func_8003BBDC(s32, M2C_UNK, M2C_UNK *, M2C_UNK *);
+void func_800A47F8(void *arg0);
+extern u8 *D_800716C4;
+void func_800BA65C(s32 arg0);
+M2C_UNK func_8001F1BC(M2C_UNK *, M2C_UNK, s32, s32);
+M2C_UNK func_800429E0(M2C_UNK, M2C_UNK);
+M2C_UNK func_800BB3A8();
+M2C_UNK func_800BC338();
+M2C_UNK func_800BC438(s32);
+M2C_UNK func_800D4BFC();
+M2C_UNK func_800D7D6C();
+void func_800D7F9C(void);
+extern u8 D_80070788;
+extern u8 D_80071E2C;
+extern u8 D_8007EBE0;
+extern M2C_UNK D_80083274;
+extern u8 *D_8009C6DC;
+extern u8 *D_8009C6E0;
+extern s8 D_8009FE8C;
+M2C_UNK func_800DA124(M2C_UNK, M2C_UNK, M2C_UNK *);
+M2C_UNK func_800DA1D4(M2C_UNK, M2C_UNK);
+M2C_UNK func_800DA2CC(M2C_UNK);
+M2C_UNK func_800DA368(u8 *, u8 *);
+extern s8 D_80071C08;
+extern s8 D_80071E24;
+extern s8 D_8007EBCC;
+extern s8 D_8007EBDC;
+extern M2C_UNK D_800E0628;
+extern M2C_UNK D_800E0630;
+extern u8 D_800E4254;
+
+#endif /* FIELD_DECLS_H */

@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_spark/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_spark/nonmatchings/text", func_801B0054);
+s32 func_801B0054(void) {
+    func_801B2200();
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/magic_spark/nonmatchings/text", func_801B0078);
 

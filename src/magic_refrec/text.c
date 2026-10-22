@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_refrec/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_refrec/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B050C();
+}
 
 INCLUDE_ASM("../asm/us/magic_refrec/nonmatchings/text", func_801B0020);
 

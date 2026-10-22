@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_lv4jibak/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_lv4jibak/nonmatchings/text", func_801B0070);
+void func_801B0070(void) {
+    func_801B1858();
+}
 
 INCLUDE_ASM("../asm/us/magic_lv4jibak/nonmatchings/text", func_801B0090);
 

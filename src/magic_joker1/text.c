@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_joker1/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B0054);
+M2C_UNK *func_801B0054(void) {
+    func_801B1340();
+    return &D_801B2F10;
+}
 
 INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B007C);
 
@@ -24,7 +28,9 @@ INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B0FA4);
 
 INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B10B4);
 
-INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B1198);
+void func_801B1198(void) {
+    func_800BBEAC(&func_801B10B4);
+}
 
 INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B11C0);
 

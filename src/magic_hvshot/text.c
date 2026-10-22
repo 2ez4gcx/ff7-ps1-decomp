@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_hvshot/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_hvshot/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B103C();
+    return &D_801B10AC;
+}
 
 INCLUDE_ASM("../asm/us/magic_hvshot/nonmatchings/text", func_801B0028);
 

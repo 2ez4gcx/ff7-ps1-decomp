@@ -3,6 +3,7 @@
 
 /* Declared here otherwise than in the other files (tools/work.py). */
 extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
+M2C_UNK func_8002988C(M2C_UNK, M2C_UNK);
 
 void func_800110B8(void) {
 }
@@ -47,7 +48,16 @@ void func_80011274(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800112E8);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_8001146C);
+void func_8001146C(void) {
+    if (D_80071A58 != 0) {
+        D_80075DEC++;
+        D_80075DEC &= 1;
+        func_80013800();
+        func_800444AC((s32 *)&D_8007EB68[(s16) D_80075DEC]);
+        func_800443B0((s32 *)((u8 *)D_8007EAAC + (s16) D_80075DEC * 0x5C));
+        func_8004433C((s32)(D_8007E7A0 + (s16) D_80075DEC * 4));
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_8001155C);
 
@@ -115,7 +125,25 @@ void func_80011938(void) {
     func_80029998(0x801B0000);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800119E4);
+void func_800119E4(void) {
+    s32 i;
+
+    if (D_8009C560 == 3) {
+        D_8009D274.a = 2;
+        D_8009D278 = 3;
+    } else {
+        D_8009D274.a = 0;
+        D_8009D278 = 1;
+    }
+    D_8009D274.c = D_8009A05C;
+    i = D_800965E0 * 0x84;
+    D_8009D27E = *(s32 *)((u8 *)D_80074EB0 + i) >> 12;
+    D_8009D280 = *(s32 *)((u8 *)D_80074EB4 + i) >> 12;
+    D_8009D282 = *(u16 *)((u8 *)D_80074F16 + i);
+    D_8009D284 = *((u8 *)D_80074EDA + i);
+    D_8009D285 = D_8009C540;
+    D_8009D286 = D_8009AD2C;
+}
 
 void func_80011AEC(void) {
     D_80071E28 = D_8009D274.a;
@@ -156,7 +184,33 @@ void func_80012840(s32 arg0) {
     func_80044A68(D_8009A068 + 0x30, 0, 0, temp_s0, 0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800128B8);
+void func_800128B8(void) {
+    s32 i;
+    s32 j;
+    Tile16 *q;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 2; j++) {
+            func_800469B0(&((TileBuf *) D_8009A068)[i].tile[j]);
+            func_80046848(&((TileBuf *) D_8009A068)[i].tile[j], 1);
+            func_80046870(&((TileBuf *) D_8009A068)[i].tile[j], 1);
+            q = (Tile16 *) ((u8 *) &((TileBuf *) D_8009A068)[0].tile[0] + (i * 0x30 + j * 0x10));
+            q->r0 = 0;
+            q->g0 = 0;
+            q->b0 = 0;
+            q->w = 0xA0;
+            q->h = 0xE0;
+        }
+    }
+    D_8009A07C = 0;
+    D_8009A07E = 0;
+    D_8009A08C = 0xA0;
+    D_8009A08E = 0;
+    D_8009A0AC = 0;
+    D_8009A0AE = 0;
+    D_8009A0BC = 0xA0;
+    D_8009A0BE = 0;
+}
 
 void func_800129D0(void) {
     func_800440C8(&D_8007EB68[(s16) D_80075DEC].disp,

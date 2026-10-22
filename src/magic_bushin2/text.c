@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_bushin2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0008);
+M2C_UNK *func_801B0008(void) {
+    func_801B352C();
+    return &D_801D8A00;
+}
 
 INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0030);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_fubuki/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_fubuki/nonmatchings/text", func_801B0020);
+void func_801B0020(void) {
+    func_801B0F20();
+}
 
 INCLUDE_ASM("../asm/us/magic_fubuki/nonmatchings/text", func_801B0040);
 

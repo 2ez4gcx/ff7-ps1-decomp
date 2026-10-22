@@ -1,4 +1,5 @@
 #include "common.h"
+#include "dschange/decls.h"
 
 INCLUDE_ASM("../asm/us/dschange/nonmatchings/text", func_800A0000);
 

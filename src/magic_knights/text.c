@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_knights/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B0050);
+void func_801B0050(void) {
+    func_801BE87C();
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B0070);
 
@@ -26,7 +29,14 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B1F74);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B2048);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B3154);
+void func_801B3154(s32 arg0, s32 arg1, s16 arg2) {
+    D_8016207C = &func_801B2048;
+    D_801635D8 = 0;
+    D_801635E4 = arg0;
+    D_801635E8 = arg1;
+    D_801635EC = arg2;
+    D_80162080 += 1;
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B31A0);
 
@@ -62,7 +72,19 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B5670);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B56D4);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B5B24);
+void func_801B5B24(void *arg0) {
+    s32 temp_a1;
+    s32 temp_v0;
+
+    temp_a1 = M2C_FIELD(arg0, s32 *, 0xBA0);
+    if (temp_a1 != -1) {
+        temp_v0 = func_800D376C(arg0 + 0x40, temp_a1, M2C_FIELD(arg0, s16 *, 0xBA4), M2C_FIELD(arg0, s32 *, 0xB9C));
+        M2C_FIELD(arg0, s32 *, 0xBA0) = temp_v0;
+        if (temp_v0 == 0) {
+            M2C_FIELD(arg0, s32 *, 0xBA0) = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B5B7C);
 
@@ -76,7 +98,12 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B603C);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B6248);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B62D4);
+void func_801B62D4(void *arg0) {
+    M2C_UNK sp10;
+
+    func_801B0264(arg0 + ((M2C_FIELD(arg0, s16 *, 0xBB0) * 0x34) + 0x40), &sp10);
+    func_801B603C(&sp10);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B631C);
 
@@ -148,7 +175,10 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B9E4C);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA230);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA29C);
+void func_801BA29C(void) {
+    func_801B6624(&D_801ECCD4, &D_801ECCF4);
+    func_800D5444(D_801EE9CC, 0, 0, &func_801BA230);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA2E8);
 
@@ -178,7 +208,22 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BB8C4);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BBA64);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BBC20);
+void *func_801BBC20(void *arg0, s32 arg1, void *arg2) {
+    void *temp_s2;
+
+    M2C_FIELD(arg2, s32 *, 0) = 0x04000000;
+    M2C_FIELD(arg2, s32 *, 4) = (s32) M2C_FIELD(arg0, s32 *, 0xC);
+    M2C_FIELD(arg2, s32 *, 8) = (s32) M2C_FIELD(arg0, s32 *, 0);
+    M2C_FIELD(arg2, u8 *, 0xC) = (u8) M2C_FIELD(arg0, u8 *, 4);
+    M2C_FIELD(arg2, u8 *, 0xD) = (u8) M2C_FIELD(arg0, u8 *, 6);
+    M2C_FIELD(arg2, u16 *, 0xE) = (u16) M2C_FIELD(arg0, u16 *, 0x12);
+    M2C_FIELD(arg2, s32 *, 0x10) = (s32) M2C_FIELD(arg0, s32 *, 8);
+    func_80046794(arg1, (s32) arg2);
+    temp_s2 = arg2 + 0x14;
+    func_80044A68(temp_s2, 0, 1, (s32) M2C_FIELD(arg0, u16 *, 0x10), 0);
+    func_80046794(arg1, (s32) temp_s2);
+    return arg2 + 0x20;
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BBCE0);
 

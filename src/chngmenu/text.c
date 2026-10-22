@@ -1,4 +1,5 @@
 #include "common.h"
+#include "chngmenu/decls.h"
 
 INCLUDE_ASM("../asm/us/chngmenu/nonmatchings/text", func_801D0000);
 

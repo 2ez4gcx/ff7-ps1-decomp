@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_esna/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_esna/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B051C();
+}
 
 INCLUDE_ASM("../asm/us/magic_esna/nonmatchings/text", func_801B0020);
 

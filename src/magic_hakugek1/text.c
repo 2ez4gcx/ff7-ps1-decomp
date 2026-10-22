@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_hakugek1/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1290();
+}
 
 INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B0020);
 

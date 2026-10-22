@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_seed/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_seed/nonmatchings/text", func_801B006C);
 

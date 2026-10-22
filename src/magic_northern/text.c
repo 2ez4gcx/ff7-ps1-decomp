@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_northern/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_northern/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0E10();
+}
 
 INCLUDE_ASM("../asm/us/magic_northern/nonmatchings/text", func_801B0020);
 

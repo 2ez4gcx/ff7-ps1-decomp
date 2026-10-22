@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_queir/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B0074);
+void func_801B0074(void) {
+    func_801B2DCC();
+}
 
 INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B0094);
 

@@ -1,8 +1,15 @@
 #include "common.h"
+#include "magic_garyu/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B0060);
+M2C_UNK *func_801B0060(void) {
+    func_801B36B0();
+    return &D_801D48D8;
+}
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B0088);
+M2C_UNK *func_801B0088(void) {
+    func_801B3780();
+    return &D_801D48D8;
+}
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B00B0);
 
@@ -36,7 +43,19 @@ INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B3434);
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B35F0);
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B3654);
+void func_801B3654(void) {
+    s32 var_v1;
+
+    if (D_800F8368 != 0) {
+        var_v1 = D_801D62E8 + 0xE000;
+    } else {
+        var_v1 = D_801D62E8;
+    }
+    D_801D62EC = var_v1;
+    if (D_801D9F90 < 0) {
+        *D_801D62F0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B36B0);
 

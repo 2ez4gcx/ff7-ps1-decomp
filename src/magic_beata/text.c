@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_beata/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_beata/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B1184();
+}
 
 INCLUDE_ASM("../asm/us/magic_beata/nonmatchings/text", func_801B0074);
 

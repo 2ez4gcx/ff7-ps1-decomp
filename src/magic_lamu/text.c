@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_lamu/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_lamu/nonmatchings/text", func_801B0038);
+M2C_UNK *func_801B0038(void) {
+    func_801B38E8();
+    return &D_801D6B50;
+}
 
 INCLUDE_ASM("../asm/us/magic_lamu/nonmatchings/text", func_801B0060);
 

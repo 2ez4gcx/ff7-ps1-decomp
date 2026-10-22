@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_faiga2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B0084);
+void func_801B0084(void) {
+    func_801B1770();
+}
 
 INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B00A4);
 

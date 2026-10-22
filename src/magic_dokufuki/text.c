@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_dokufuki/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_dokufuki/nonmatchings/text", func_801B006C);
 

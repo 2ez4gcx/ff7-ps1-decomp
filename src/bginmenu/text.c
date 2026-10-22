@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bginmenu/decls.h"
 
 INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D0000);
 
@@ -9,7 +10,9 @@ void func_801D01BC(void) {
 
 INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D01C4);
 
-INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D0258);
+s32 func_801D0258(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0) | (M2C_FIELD(arg0, u8 *, 1) << 8);
+}
 
 INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D026C);
 

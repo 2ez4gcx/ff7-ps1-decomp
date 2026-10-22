@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_erave/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_erave/nonmatchings/text", func_801B0054);
+M2C_UNK *func_801B0054(void) {
+    func_801B226C();
+    return &D_801CBD74;
+}
 
 INCLUDE_ASM("../asm/us/magic_erave/nonmatchings/text", func_801B007C);
 

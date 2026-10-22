@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_titan/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B5190();
+    return &D_801C0EC8;
+}
 
 INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B0068);
 

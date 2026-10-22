@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_suna/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_suna/nonmatchings/text", func_801B006C);
 

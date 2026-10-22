@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_kien/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_kien/nonmatchings/text", func_801B006C);
 

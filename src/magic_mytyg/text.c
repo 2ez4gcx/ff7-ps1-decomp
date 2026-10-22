@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_mytyg/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_mytyg/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0A40();
+}
 
 INCLUDE_ASM("../asm/us/magic_mytyg/nonmatchings/text", func_801B0074);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_blaster/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_blaster/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B19DC();
+}
 
 INCLUDE_ASM("../asm/us/magic_blaster/nonmatchings/text", func_801B0020);
 

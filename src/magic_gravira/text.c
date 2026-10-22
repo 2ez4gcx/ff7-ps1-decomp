@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_gravira/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_gravira/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0C10();
+}
 
 INCLUDE_ASM("../asm/us/magic_gravira/nonmatchings/text", func_801B0020);
 

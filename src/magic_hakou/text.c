@@ -1,8 +1,15 @@
 #include "common.h"
+#include "magic_hakou/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_hakou/nonmatchings/text", func_801B0010);
+M2C_UNK *func_801B0010(void) {
+    func_801B1B78();
+    return &D_801B4EC0;
+}
 
-INCLUDE_ASM("../asm/us/magic_hakou/nonmatchings/text", func_801B0038);
+M2C_UNK *func_801B0038(void) {
+    func_801B1C64();
+    return &D_801B4EC0;
+}
 
 INCLUDE_ASM("../asm/us/magic_hakou/nonmatchings/text", func_801B0060);
 

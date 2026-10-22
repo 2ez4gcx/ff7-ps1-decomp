@@ -1,8 +1,15 @@
 #include "common.h"
+#include "magic_satan/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B00E0);
+s32 func_801B00E0(void) {
+    func_801B664C();
+    return 0;
+}
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B0104);
+s32 func_801B0104(void) {
+    func_801B672C();
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B0128);
 
@@ -86,7 +93,18 @@ INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B639C);
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B65BC);
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B65FC);
+void func_801B65FC(void) {
+    M2C_UNK *var_v1;
+
+    var_v1 = &D_801D47AC;
+    if (D_800F8368 == 0) {
+        var_v1 = &D_801C87AC;
+    }
+    D_801E07AC = var_v1;
+    if (D_801E1A10 < 0) {
+        *D_801E07B0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B664C);
 

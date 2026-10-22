@@ -1,4 +1,5 @@
 #include "common.h"
+#include "submar/decls.h"
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A00BC);
 
@@ -10,7 +11,18 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A12EC);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1444);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A162C);
+void func_800A162C(void) {
+    func_80033E74(D_800AD340, D_800AD344, 0x80100000, 0);
+    do {
+
+    } while (func_80034B44() != 0);
+    func_800A1444(0x80100000, &D_800AD91C);
+    func_80033E74(D_800AD348, D_800AD34C, 0x80100000, 0);
+    do {
+
+    } while (func_80034B44() != 0);
+    func_800A1444(0x80100000, &D_800AD904);
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A16BC);
 
@@ -56,7 +68,19 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6158);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6384);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A63E4);
+void func_800A63E4(s32 arg0) {
+    s32 var_v0;
+    s32 var_v1;
+
+    var_v1 = 0x64808080;
+    var_v0 = 0x64202020;
+    if (arg0 == 0) {
+        var_v1 = 0x64202020;
+        var_v0 = 0x64808080;
+    }
+    D_800AE3C8 = var_v1;
+    D_800AE3F0 = var_v0;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6420);
 

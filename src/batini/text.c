@@ -1,4 +1,5 @@
 #include "common.h"
+#include "batini/decls.h"
 
 INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B0050);
 

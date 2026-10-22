@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_thunder2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B147C();
+}
 
 INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B0020);
 

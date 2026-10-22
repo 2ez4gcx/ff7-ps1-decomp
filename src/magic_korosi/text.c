@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_korosi/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0BFC();
+}
 
 INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B0074);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_altema/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_altema/nonmatchings/text", func_801B0054);
+void func_801B0054(void) {
+    func_801B0EC4();
+}
 
 INCLUDE_ASM("../asm/us/magic_altema/nonmatchings/text", func_801B0074);
 

@@ -1,8 +1,16 @@
 #include "common.h"
+#include "magic_shield/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B0010);
+void func_801B0010(void) {
+    D_801C8F54 = 6;
+    D_801B0F2C = 1;
+    func_801B0880();
+}
 
-INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B0048);
+void func_801B0048(void) {
+    D_801C8F54 = 6;
+    func_801B0880();
+}
 
 INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B0074);
 

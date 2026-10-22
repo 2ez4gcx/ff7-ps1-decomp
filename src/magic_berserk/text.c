@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_berserk/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_berserk/nonmatchings/text", func_801B0018);
+void func_801B0018(void) {
+    func_801B07D0();
+}
 
 INCLUDE_ASM("../asm/us/magic_berserk/nonmatchings/text", func_801B0038);
 

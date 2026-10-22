@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_beast/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_beast/nonmatchings/text", func_801B0054);
+s32 func_801B0054(void) {
+    func_801B13EC();
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/magic_beast/nonmatchings/text", func_801B0078);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_triangle/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_triangle/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1340();
+}
 
 INCLUDE_ASM("../asm/us/magic_triangle/nonmatchings/text", func_801B0020);
 

@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_climb/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_climb/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0B44();
+    return &D_801B4DFC;
+}
 
 INCLUDE_ASM("../asm/us/magic_climb/nonmatchings/text", func_801B0028);
 

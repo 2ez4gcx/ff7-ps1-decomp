@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_nanntoka/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_nanntoka/nonmatchings/text", func_801B006C);
+void func_801B006C(void) {
+    func_801B2190();
+}
 
 INCLUDE_ASM("../asm/us/magic_nanntoka/nonmatchings/text", func_801B008C);
 

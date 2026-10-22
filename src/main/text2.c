@@ -346,7 +346,41 @@ INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_80010124);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80014E74);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_800150E4);
+u8 *func_800150E4(u8 *arg0, u8 *arg1) {
+    u32 n;
+    s32 m;
+    u8 c;
+    s32 len;
+    s32 i;
+    s32 off;
+
+    n = 0;
+    m = 0;
+    do {
+        c = *arg0++;
+        m++;
+        if (c == 0xF9) {
+            c = *arg0++;
+            m++;
+            off = m - 3;
+            off -= c & 0x3F;
+            len = (c >> 6) * 2 + 4;
+            for (i = 0; i < len; i++) {
+                c = arg1[off++];
+                D_80063560[n++] = c;
+            }
+        } else if ((u8) (c + 0x16) < 8) {
+            D_80063560[n++] = c;
+            m++;
+            D_80063560[n++] = *arg0++;
+            m++;
+            D_80063560[n++] = *arg0++;
+        } else {
+            D_80063560[n++] = c;
+        }
+    } while (c != 0xFF && n < 0x100);
+    return D_80063560;
+}
 
 s32 func_800151F4(s32 arg0) {
     return func_80014D9C(0x10, arg0, 0);

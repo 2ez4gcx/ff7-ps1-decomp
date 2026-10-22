@@ -1,18 +1,52 @@
 #include "common.h"
+#include "itemmenu/decls.h"
 
-INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D01E8);
+void func_801D01E8(s32 arg0) {
+    s32 temp_a0;
+
+    temp_a0 = arg0 & 0xFFFF;
+    D_8009A000 = 0x30;
+    D_8009A004 = temp_a0;
+    D_8009A008 = temp_a0;
+    func_8002DA7C(temp_a0);
+}
 
 INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D0228);
 
 INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D031C);
 
-INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D03B4);
+void func_801D03B4(s32 *arg0, s32 *arg1) {
+    s32 temp_v1;
+
+    temp_v1 = *arg0;
+    *arg0 = *arg1;
+    *arg1 = temp_v1;
+}
 
 INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D03C8);
 
-INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D0618);
+void func_801D0618(u16 *arg0, u16 *arg1) {
+    u16 temp_v1;
 
-INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D062C);
+    temp_v1 = *arg0;
+    *arg0 = *arg1;
+    *arg1 = temp_v1;
+}
+
+s32 func_801D062C(s32 arg0) {
+    s32 var_v0;
+
+    if (arg0 != 0) {
+        var_v0 = 1;
+        if (arg0 < 0) {
+            return -1;
+        }
+        
+        return var_v0;
+    }
+    var_v0 = 0;
+    return var_v0;
+}
 
 INCLUDE_ASM("../asm/us/itemmenu/nonmatchings/text", func_801D0650);
 

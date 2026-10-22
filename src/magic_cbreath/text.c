@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_cbreath/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_cbreath/nonmatchings/text", func_801B008C);
 

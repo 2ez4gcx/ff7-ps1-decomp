@@ -1,6 +1,15 @@
 #include "common.h"
+#include "statmenu/decls.h"
 
-INCLUDE_ASM("../asm/us/statmenu/nonmatchings/text", func_801D0000);
+void func_801D0000(s32 arg0) {
+    s32 temp_a0;
+
+    temp_a0 = arg0 & 0xFFFF;
+    D_8009A000 = 0x30;
+    D_8009A004 = temp_a0;
+    D_8009A008 = temp_a0;
+    func_8002DA7C(temp_a0);
+}
 
 INCLUDE_ASM("../asm/us/statmenu/nonmatchings/text", func_801D0040);
 

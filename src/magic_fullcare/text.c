@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_fullcare/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1034();
+}
 
 INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0020);
 

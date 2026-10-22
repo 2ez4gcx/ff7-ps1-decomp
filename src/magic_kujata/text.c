@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_kujata/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B0040);
+M2C_UNK *func_801B0040(void) {
+    func_801B88A4();
+    return &D_801DDD1C;
+}
 
 INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B0068);
 

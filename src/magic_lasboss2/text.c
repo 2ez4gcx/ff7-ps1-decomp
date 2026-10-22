@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_lasboss2/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_lasboss2/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B1834();
+}
 
 INCLUDE_ASM("../asm/us/magic_lasboss2/nonmatchings/text", func_801B0020);
 

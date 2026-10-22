@@ -1,4 +1,5 @@
 #include "common.h"
+#include "magic_w_wind/decls.h"
 
 INCLUDE_ASM("../asm/us/magic_w_wind/nonmatchings/text", func_801B0010);
 

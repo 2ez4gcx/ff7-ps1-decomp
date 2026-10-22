@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_lgirl/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_lgirl/nonmatchings/text", func_801B0054);
+s32 func_801B0054(void) {
+    func_801B0C9C();
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/magic_lgirl/nonmatchings/text", func_801B0078);
 

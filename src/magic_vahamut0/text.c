@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_vahamut0/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B0060);
+M2C_UNK *func_801B0060(void) {
+    func_801B7920();
+    return &D_801D823C;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B0088);
 
@@ -28,7 +32,22 @@ INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B2888);
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B2AE8);
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B2BDC);
+void *func_801B2BDC(void *arg0, s32 arg1, void *arg2) {
+    void *temp_s2;
+
+    M2C_FIELD(arg2, s32 *, 0) = 0x04000000;
+    M2C_FIELD(arg2, s32 *, 4) = (s32) M2C_FIELD(arg0, s32 *, 0xC);
+    M2C_FIELD(arg2, s32 *, 8) = (s32) M2C_FIELD(arg0, s32 *, 0);
+    M2C_FIELD(arg2, u8 *, 0xC) = (u8) M2C_FIELD(arg0, u8 *, 4);
+    M2C_FIELD(arg2, u8 *, 0xD) = (u8) M2C_FIELD(arg0, u8 *, 6);
+    M2C_FIELD(arg2, u16 *, 0xE) = (u16) M2C_FIELD(arg0, u16 *, 0x12);
+    M2C_FIELD(arg2, s32 *, 0x10) = (s32) M2C_FIELD(arg0, s32 *, 8);
+    func_80046794(arg1, (s32) arg2);
+    temp_s2 = arg2 + 0x14;
+    func_80044A68(temp_s2, 0, 1, (s32) M2C_FIELD(arg0, u16 *, 0x10), 0);
+    func_80046794(arg1, (s32) temp_s2);
+    return arg2 + 0x20;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B2C9C);
 

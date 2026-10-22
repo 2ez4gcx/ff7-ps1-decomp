@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_tifa/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B0088);
+M2C_UNK *func_801B0088(void) {
+    func_801BCD98();
+    return &D_801CDC20;
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B00B0);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_yu_waku/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_yu_waku/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0DC8();
+}
 
 INCLUDE_ASM("../asm/us/magic_yu_waku/nonmatchings/text", func_801B0020);
 

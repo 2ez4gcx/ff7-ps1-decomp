@@ -1,12 +1,29 @@
 #include "common.h"
+#include "magic_raise/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B0054);
+M2C_UNK *func_801B0054(void) {
+    D_801DBD1C = 0;
+    func_801B0C3C();
+    return &D_801B8874;
+}
 
-INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B0084);
+M2C_UNK *func_801B0084(void) {
+    D_801DBD1C = 0;
+    func_801B1FF8();
+    return &D_801B8874;
+}
 
-INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B00B4);
+M2C_UNK *func_801B00B4(void) {
+    D_801DBD1C = 1;
+    func_801B1FF8();
+    return &D_801B8874;
+}
 
-INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B00E8);
+M2C_UNK *func_801B00E8(void) {
+    D_801DBD1C = 1;
+    func_801B0C3C();
+    return &D_801B8874;
+}
 
 INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B011C);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_koudan1/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_koudan1/nonmatchings/text", func_801B0030);
+void func_801B0030(void) {
+    func_801B0AC4();
+}
 
 INCLUDE_ASM("../asm/us/magic_koudan1/nonmatchings/text", func_801B0050);
 

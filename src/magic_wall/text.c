@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_wall/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B074C();
+}
 
 INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B0020);
 
@@ -12,8 +15,19 @@ INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B056C);
 
 INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B0670);
 
-INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B06D0);
+void func_801B06D0(s32 arg0, M2C_UNK arg1) {
+    D_801D1710 = 0x1000;
+    D_801D1714 = 0xD00;
+    func_800BBEAC(&func_801B0670);
+    func_800D5444(arg0, arg1, 0, &func_801B056C);
+    func_800D55F4(0x20, 0x40, 0x44);
+}
 
 INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B074C);
 
-INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B07C8);
+void func_801B07C8(s32 arg0, M2C_UNK arg1) {
+    D_801D1710 = 0x2000;
+    D_801D1714 = 0;
+    func_800BBEAC(&func_801B0670);
+    func_800D5444(arg0, arg1, 0, &func_801B056C);
+}

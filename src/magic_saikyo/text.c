@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_saikyo/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_saikyo/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B10A8();
+}
 
 INCLUDE_ASM("../asm/us/magic_saikyo/nonmatchings/text", func_801B0020);
 

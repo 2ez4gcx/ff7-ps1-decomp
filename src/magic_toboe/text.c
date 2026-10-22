@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_toboe/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_toboe/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0820();
+}
 
 INCLUDE_ASM("../asm/us/magic_toboe/nonmatchings/text", func_801B0020);
 

@@ -1,6 +1,9 @@
 #include "common.h"
+#include "magic_elevator/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_elevator/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    func_801B0EF0();
+}
 
 INCLUDE_ASM("../asm/us/magic_elevator/nonmatchings/text", func_801B0020);
 

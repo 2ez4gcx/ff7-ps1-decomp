@@ -1,6 +1,10 @@
 #include "common.h"
+#include "magic_angermax/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B0000);
+M2C_UNK *func_801B0000(void) {
+    func_801B0BEC();
+    return &D_801BD6B4;
+}
 
 INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B0028);
 
