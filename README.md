@@ -12,12 +12,28 @@ từ file thực thi trên đĩa, viết lại thành hợp ngữ rồi C, sao c
 
 ## Trạng thái
 
-| File | Nội dung | Dựng lại khớp byte |
-|---|---|---|
-| `SCUS_941.63` | Chương trình chính (nạp ở 0x80010000) | ✅ toàn bộ dạng hợp ngữ |
+318 file thực thi của đĩa 1 dựng lại khớp từng byte (toàn bộ còn ở dạng hợp ngữ; chưa
+có hàm nào viết lại bằng C). Danh sách đầy đủ ở `config/targets.txt`.
 
-Các overlay (field, battle, world, menu, minigame...) sẽ được thêm dần, mỗi file một
-cấu hình splat trong `config/`.
+| File trên đĩa | Nội dung | Nạp ở |
+|---|---|---|
+| `SCUS_941.63` | Chương trình chính: hệ thống, CD, driver âm thanh AKAO, kernel | 0x80010000 |
+| `FIELD/FIELD.BIN` | Bản đồ field: script, nền, model, hội thoại | 0x800A0000 |
+| `BATTLE/BATTLE.X`, `BROM.X` | Trận đấu | 0x800A0000 |
+| `BATTLE/BATINI.X`, `BATRES.X` | Vào trận, kết thúc trận | 0x801B0000 |
+| `WORLD/WORLD.BIN` | Bản đồ thế giới | 0x800A0000 |
+| `FIELD/ENDING.X`, `DSCHANGE.X` | Đoạn kết, màn hình đổi đĩa | 0x800A0000 |
+| `MENU/*.MNU` (13 file) | Các menu: vật phẩm, phép, trang bị, materia, lưu, cửa hàng... | 0x801D0000 |
+| `MINI/*.BIN` (7 file) | Minigame: `CHOCOBO`, `CONDOR`, `HIGHWAY`, `JET`, `SNOBO`, `SNOBO2`, `SUBMAR` | 0x800A0000 |
+| `MAGIC/*.BIN` (289 file) | Hiệu ứng phép, triệu hồi, limit, chiêu của quái | 0x801B0000 |
+
+**Overlay nén:** nhiều file (`*.X`, `FIELD.BIN`, `WORLD.BIN`, `MINI/*.BIN`) là một
+luồng gzip sau 8 byte đầu `{u32 kích thước giải nén, u32 ...}`. Mục tiêu khớp byte của
+chúng là **ảnh đã giải nén**, đúng thứ game nạp vào RAM (`build.py` tự giải nén từ đĩa
+vào `disks/us/unpacked/`). Nén lại ra đúng file gốc thì cần bộ nén gzip gốc: zlib
+gần đúng (khớp 1112/1116 byte ở `BROM.X`) nhưng chưa khớp hoàn toàn.
+
+Chỉ đĩa 1 bản USA được dùng; overlay chỉ có trên đĩa 2/3 sẽ thêm sau.
 
 ## Cài đặt (Windows)
 
@@ -46,8 +62,14 @@ cấu hình splat trong `config/`.
 ```
 
 `extract_disc.py` chép file từ đĩa của bạn vào `disks/us/` (bỏ qua phim). `build.py`
-chạy splat (tách file thực thi thành hợp ngữ trong `asm/`), dịch bằng GNU as, liên kết
-theo linker script splat sinh ra, rồi so SHA-1 với bản gốc: `SCUS_941.63: OK`.
+chạy splat (tách từng file thực thi thành hợp ngữ trong `asm/`), dịch bằng GNU as, liên
+kết theo linker script splat sinh ra (overlay được liên kết với ký hiệu của chương
+trình chính), rồi so SHA-1 với bản gốc. Kết quả đúng: `N/N targets match`.
+`build.py field battle` chỉ dựng các mục có tên bắt đầu như vậy.
+
+Thêm một overlay: `tools/find_overlays.py` liệt kê file có mã MIPS và đoán địa chỉ nạp
+(từ các lệnh `jal` gọi vào chính nó); `tools/new_overlay.py FILE ĐỊA_CHỈ TÊN` tạo cấu
+hình splat và thêm vào `config/targets.txt`.
 
 ## Cấu trúc
 
@@ -58,7 +80,8 @@ theo linker script splat sinh ra, rồi so SHA-1 với bản gốc: `SCUS_941.63
 
 ## Lộ trình
 
-1. Thêm overlay vào cấu hình, mỗi file đều dựng lại khớp byte.
+1. ~~Thêm overlay vào cấu hình, mỗi file đều dựng lại khớp byte.~~ Xong cho đĩa 1;
+   còn: overlay riêng của đĩa 2/3, kích thước BSS của từng overlay, bộ nén gzip gốc.
 2. Đặt tên hàm/biến đã biết (từ quá trình làm FF7 Recompiled: driver âm thanh AKAO,
    field, trận đấu...).
 3. Dựng trình biên dịch gốc (PSY-Q, GCC 2.x) để decompile từng hàm sang C khớp byte.

@@ -1,0 +1,1 @@
+// MAGIC/*.BIN effect overlays (all load at 0x801B0000): name = 0xADDRESS; // type:func

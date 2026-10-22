@@ -1,0 +1,1 @@
+// MINI/JET.BIN: name = 0xADDRESS; // type:func

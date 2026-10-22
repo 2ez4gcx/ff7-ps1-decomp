@@ -19,6 +19,8 @@ options:
   # PSY-Q's linker packs sections back to back.
   ld_align_section_vram_end: False
   ld_align_segment_vram_end: False
+  # .bss gets its own section, so its alignment never pads the image.
+  ld_bss_is_noload: True
 
   find_file_boundaries: True
   gp_value: 0x80062D44

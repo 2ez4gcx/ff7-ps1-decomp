@@ -1,0 +1,56 @@
+# splat configuration for MAGIC/RIVA.BIN of Final Fantasy VII (USA, disc 1), loaded at
+# 0x801b0000. Made by tools/new_overlay.py; the overlay itself is
+# never part of this repository.
+name: magic_riva
+sha1: bc92a8577b4c4b94f3adf853614e7020a1232787
+options:
+  basename: magic_riva
+  target_path: disks/us/MAGIC/RIVA.BIN
+  elf_path: build/us/magic_riva.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/us/magic_riva
+  src_path: src/magic_riva
+  build_path: build/us
+  ld_script_path: build/us/magic_riva.ld
+  ld_dependencies: False
+  # PSY-Q's linker packs sections back to back.
+  ld_align_section_vram_end: False
+  ld_align_segment_vram_end: False
+  # .bss gets its own section, so its alignment never pads the image.
+  ld_bss_is_noload: True
+
+  find_file_boundaries: True
+  gp_value: 0x80062D44
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - config/symbols.us.main.txt
+    - config/symbols.us.magic.txt
+  reloc_addrs_path:
+    - config/reloc_addrs.us.magic.txt
+  undefined_funcs_auto_path: build/us/undefined_funcs_auto.magic_riva.txt
+  undefined_syms_auto_path: build/us/undefined_syms_auto.magic_riva.txt
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: magic_riva
+    type: code
+    start: 0x0
+    vram: 0x801b0000
+    subsegments:
+      - [0x0, rodata, rodata]
+      - [0x40, asm, text]
+      - [0x3268, data, data]
+  - [0x43678]

@@ -1,0 +1,57 @@
+# splat configuration for BATTLE/BATTLE.X of Final Fantasy VII (USA, disc 1), loaded at
+# 0x800a0000 (unpacked from its gzip stream). Made by tools/new_overlay.py; the overlay itself is
+# never part of this repository.
+name: battle
+sha1: c82690f814b18664c3b2d024f4edeea5743995d9
+options:
+  basename: battle
+  target_path: disks/us/unpacked/BATTLE/BATTLE.X
+  elf_path: build/us/battle.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/us/battle
+  src_path: src/battle
+  build_path: build/us
+  ld_script_path: build/us/battle.ld
+  ld_dependencies: False
+  # PSY-Q's linker packs sections back to back.
+  ld_align_section_vram_end: False
+  ld_align_segment_vram_end: False
+  # .bss gets its own section, so its alignment never pads the image.
+  ld_bss_is_noload: True
+
+  find_file_boundaries: True
+  gp_value: 0x80062D44
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - config/symbols.us.main.txt
+    - config/symbols.us.battle.txt
+  reloc_addrs_path:
+    - config/reloc_addrs.us.battle.txt
+  undefined_funcs_auto_path: build/us/undefined_funcs_auto.battle.txt
+  undefined_syms_auto_path: build/us/undefined_syms_auto.battle.txt
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: battle
+    type: code
+    start: 0x0
+    vram: 0x800a0000
+    # file header: unpacked 0x538ac, second word 0x741d8
+    subsegments:
+      - [0x0, rodata, rodata]
+      - [0x1158, asm, text]
+      - [0x47a38, data, data]
+  - [0x538ac]

@@ -1,0 +1,1 @@
+// MENU/BGINMENU.MNU: name = 0xADDRESS; // type:func

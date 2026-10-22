@@ -1,0 +1,1 @@
+// WORLD/WORLD.BIN: name = 0xADDRESS; // type:func

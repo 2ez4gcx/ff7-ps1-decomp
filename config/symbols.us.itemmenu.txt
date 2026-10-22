@@ -1,0 +1,1 @@
+// MENU/ITEMMENU.MNU: name = 0xADDRESS; // type:func

@@ -1,0 +1,1 @@
+// MINI/SUBMAR.BIN: name = 0xADDRESS; // type:func

@@ -1,0 +1,1 @@
+// BATTLE/BATRES.X: name = 0xADDRESS; // type:func

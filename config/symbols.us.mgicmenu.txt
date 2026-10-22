@@ -1,0 +1,1 @@
+// MENU/MGICMENU.MNU: name = 0xADDRESS; // type:func
