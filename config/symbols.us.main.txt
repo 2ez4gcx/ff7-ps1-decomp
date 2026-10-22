@@ -1,0 +1,12 @@
+// Symbols of SCUS_941.63: name = 0xADDRESS; // type:func (one per line)
+main_entry = 0x800110C0; // type:func
+
+// AKAO sound driver: command handlers (table at 0x80049548, entries 0x10/0x14/0x15)
+akao_cmd_song_play = 0x8002B1F8; // type:func
+akao_cmd_song_push = 0x8002B2F8; // type:func
+akao_cmd_song_pop = 0x8002B3B4; // type:func
+akao_song_start = 0x80029C48; // type:func
+akao_song_resume = 0x8002AABC; // type:func
+akao_sfx_lookup = 0x8002A6C4; // type:func
+akao_sfx_start = 0x8002A094; // type:func
+akao_menu_sfx_start = 0x8002A28C; // type:func

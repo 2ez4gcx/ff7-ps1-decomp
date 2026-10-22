@@ -1,0 +1,34 @@
+# The game's own data never goes into this repository: disc images and every
+# file taken from them stay on the machine that owns the discs.
+/disks/
+*.bin
+*.cue
+*.iso
+*.img
+*.chd
+*.ccd
+*.sub
+*.mdf
+*.mds
+*.ecm
+*.pbp
+/SCUS_*
+/SCES_*
+/SLUS_*
+/SLPS_*
+
+# Generated from the player's disc by tools/ and splat
+/asm/
+/assets/
+/build/
+/expected/
+undefined_funcs_auto.*.txt
+undefined_syms_auto.*.txt
+*.ld
+
+# Tools and editors
+/.venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
