@@ -147,14 +147,13 @@ def put(work, name):
             raise SystemExit(f'{name}: {why}')
         known = ad.DECLS.read_text(encoding='utf-8')
         before = src.read_text(encoding='utf-8')
-        ad.DECLS.write_text(mine, encoding='utf-8', newline='\n')
-        src.write_text(before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1),
-                       encoding='utf-8', newline='\n')
+        ad.write(ad.DECLS, mine)
+        ad.write(src, before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1))
         changed = [l for l in known.splitlines() if l.strip() and l not in mine.splitlines()]
         why = ad.all_match() if changed else ad.file_matches(src)
         if why is not None:
-            ad.DECLS.write_text(known, encoding='utf-8', newline='\n')
-            src.write_text(before, encoding='utf-8', newline='\n')
+            ad.write(ad.DECLS, known)
+            ad.write(src, before)
             raise SystemExit(f'{name} matches alone, but not in its file: {why}; nothing changed')
         print(f'{name}: put in {src.relative_to(ROOT).as_posix()}')
 

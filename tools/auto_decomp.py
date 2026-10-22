@@ -54,15 +54,31 @@ def use(name):
     guard = f'{name.upper()}_DECLS_H'
     END = f'\n#endif /* {guard} */'
     if not DECLS.exists():
-        DECLS.write_text(f'/* Declarations the C of src/{name}/ uses (tools/auto_decomp.py adds to this). */\n'
-                         f'#ifndef {guard}\n#define {guard}\n\n#include "main/decls.h"\n\n#endif /* {guard} */\n',
-                         encoding='utf-8', newline='\n')
+        write(DECLS, f'/* Declarations the C of src/{name}/ uses (tools/auto_decomp.py adds to this). */\n'
+                     f'#ifndef {guard}\n#define {guard}\n\n#include "main/decls.h"\n\n#endif /* {guard} */\n')
     # Each source file sees them (splat writes new ones with common.h only).
+    include = f'#include "{name}/decls.h"'
     for src in sources():
         text = src.read_text(encoding='utf-8')
-        if f'#include "{name}/decls.h"' not in text:
-            text = text.replace('#include "common.h"\n', f'#include "common.h"\n#include "{name}/decls.h"\n', 1)
-            src.write_text(text, encoding='utf-8', newline='\n')
+        if include not in text and text.startswith('#include "common.h"\n'):
+            with Turn():
+                text = src.read_text(encoding='utf-8')
+                if include not in text and text.startswith('#include "common.h"\n'):
+                    write(src, text.replace('#include "common.h"\n', f'#include "common.h"\n{include}\n', 1))
+
+
+def write(path, text):
+    """Replace a file's contents at once: another process reading it meanwhile
+    sees the old file or the new one, never a part of either."""
+    tmp = path.with_name(f'.{path.name}.{os.getpid()}.tmp')
+    tmp.write_text(text, encoding='utf-8', newline='\n')
+    for _ in range(50):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:                 # Windows: a reader has it open
+            time.sleep(0.1)
+    os.replace(tmp, path)
 
 
 HEAD = re.compile(r'^([A-Za-z_][\w \*]*?\b(\w+)\(.*\))\s*\{$', re.M)
@@ -174,7 +190,7 @@ def sync():
         if declaration(decls, name) is None:
             decls = with_prototype(decls, name, proto)
             added += 1
-    DECLS.write_text(decls, encoding='utf-8', newline='\n')
+    write(DECLS, decls)
     return added
 
 
@@ -282,13 +298,13 @@ def _apply(name, seg, src, form, new, proto):
     if new:
         mine = mine.replace(END, '\n'.join(new) + '\n' + END, 1)
     before = src.read_text(encoding='utf-8')
-    DECLS.write_text(mine, encoding='utf-8', newline='\n')
-    src.write_text(before.replace(INCLUDE.format(seg, name), form.rstrip('\n'), 1), encoding='utf-8', newline='\n')
+    write(DECLS, mine)
+    write(src, before.replace(INCLUDE.format(seg, name), form.rstrip('\n'), 1))
     old = declaration(known, name)
     why = all_match() if old is not None and old != proto else file_matches(src)
     if why is not None:
-        DECLS.write_text(known, encoding='utf-8', newline='\n')
-        src.write_text(before, encoding='utf-8', newline='\n')
+        write(DECLS, known)
+        write(src, before)
         return f'matches alone, but not in its file ({why})'
     return None
 

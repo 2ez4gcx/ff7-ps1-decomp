@@ -59,7 +59,7 @@ FILE_OPTIONS = {
 
 
 # The overlays never use $gp: it points into the main executable's data.
-OVERLAY_OPTIONS = {'cflags': ['-O2', '-G0'], 'gp_size': 0}
+OVERLAY_OPTIONS = {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'}
 
 
 def options(src):
