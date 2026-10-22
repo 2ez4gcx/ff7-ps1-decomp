@@ -15,3 +15,7 @@ akao_menu_sfx_start = 0x8002A28C; // type:func
 D_800425F8 = 0x800425F8; // type:u32
 // Words after the last function of the code (a table the game reads)
 D_80048CFC = 0x80048CFC; // type:u32
+// Two words after func_80036190 that the ENDING overlay reads and writes
+D_8003623C = 0x8003623C; // type:u32
+D_80036240 = 0x80036240; // type:u32
+func_80036244 = 0x80036244; // type:func

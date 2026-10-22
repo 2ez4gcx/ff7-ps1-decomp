@@ -141,7 +141,8 @@ def build(config, disc, packed, split, jobs):
                          # its own target's headers and the main executable's (overlays include those)
                          [h.stat().st_mtime for h in {*src.parent.glob('*.h'), *(ROOT / 'src' / 'main').glob('*.h')}] +
                          [p.stat().st_mtime for p in psyq.MASPSX.parent.glob('maspsx/*.py')])
-        if not obj.exists() or obj.stat().st_mtime < newest:
+        # After a split, C files include asm splat may have just rewritten.
+        if not obj.exists() or obj.stat().st_mtime < newest or (split and src.suffix == '.c'):
             work.append((obj, src))
 
     def assemble(item):

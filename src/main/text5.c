@@ -1,6 +1,10 @@
 #include "common.h"
 #include "main/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern s32 D_80062FC4;
+extern s32 D_80062F24;
+
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;
 }

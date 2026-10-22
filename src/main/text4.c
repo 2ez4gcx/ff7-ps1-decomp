@@ -5,6 +5,9 @@
 extern s16 D_8009A000;
 extern s32 D_8009A004;
 extern s32 D_8009A008;
+extern volatile s32 D_80062FC4;
+extern u8 *volatile D_80062F24;
+void func_8001D3C0(s16 arg0, s16 arg1);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001BDB0);
 
@@ -146,7 +149,16 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001CF3C);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001D180);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001D3C0);
+void func_8001D3C0(s16 arg0, s16 arg1) {
+    func_80046974(D_80062F24);
+    *(s16 *)(D_80062F24 + 8) = arg0;
+    *(s16 *)(D_80062F24 + 10) = arg1;
+    D_80062F24[4] = 0xFF;
+    D_80062F24[5] = 0xFF;
+    D_80062F24[6] = 0;
+    func_80046794(D_80062FC4, (s32)D_80062F24);
+    D_80062F24 += 12;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001D47C);
 

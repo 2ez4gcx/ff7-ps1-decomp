@@ -75,8 +75,10 @@ def symbol_of(decl):
     m = re.search(r'(\w+)\s*(?:\[[^\]]*\])*\s*(?:\(.*\))?\s*;$', decl)
     if m is None:
         return None
-    if re.search(r'\(\s*\*\s*(\w+)\s*\)', decl):         # a function pointer: (*name)(...)
-        return re.search(r'\(\s*\*\s*(\w+)\s*\)', decl).group(1)
+    # A function pointer, or an array of them: (*name)(...), (*name[])(...)
+    pointer = re.search(r'\(\s*\*\s*(\w+)\s*(?:\[[^\]]*\]\s*)*\)', decl)
+    if pointer:
+        return pointer.group(1)
     m2 = re.search(r'\b(\w+)\s*\(', decl)                  # a prototype: name(...)
     if m2 and not decl.lstrip().startswith('extern'):
         return m2.group(1)

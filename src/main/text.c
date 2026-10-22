@@ -63,7 +63,18 @@ void func_8001171C(void) {
     func_80039EDC();
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80011784);
+void func_80011784(void) {
+    func_800438D4(D_8007EB68, 0, 0xE8, 0x140, 0xF0);
+    func_800438D4(&D_8007EB68[1], 0, 0, 0x140, 0xF0);
+    func_80043814(&D_8007EAAC[0], 0, 8, 0x140, 0xE0);
+    func_80043814((Spr *)((u8 *)D_8007EAAC + 0x5C), 0, 0xF0, 0x140, 0xE0);
+    D_8007EAC2 = 1;
+    D_8007EB1E = 1;
+    D_8007EAC4 = 0;
+    D_8007EB20 = 0;
+    func_800444AC((s32 *) D_8007EB68);
+    func_800443B0((s32 *) &D_8007EAAC);
+}
 
 void func_80011860(void) {
     if (D_800965EC != 5 && D_800965EC != 13) {
