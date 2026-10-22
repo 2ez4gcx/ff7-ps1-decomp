@@ -206,6 +206,9 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
     ms = _run([sys.executable, str(MASPSX), f'--aspsx-version={aspsx}', f'-G{gp_size}',
                '--expand-div', *(['--nop-at-expansion'] if nop_at else [])], cc)
+    # A file's rodata ends on 4 bytes, as the game's do (a string can leave it
+    # odd, and the link only aligns each file's part on 2).
+    ms += '\n.section .rodata\n.align 2\n.text\n'
     return cc, ms
 
 

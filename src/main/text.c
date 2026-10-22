@@ -1,16 +1,26 @@
 #include "common.h"
 #include "main/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
+
 void func_800110B8(void) {
 }
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", main_entry);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_8001117C);
+void func_8001117C(u16 arg0) {
+    D_8009A000.a = 0xF1;
+    func_8002DA7C();
+    D_8009A000.a = 0x20;
+    D_8009A000.b = 0x40;
+    D_8009A000.c = arg0;
+    func_8002DA7C();
+}
 
 void func_800111E4(s32 arg0) {
     s32 x;
-    D_8009A000 = 0xF4;
+    D_8009A000.a = 0xF4;
     func_8002DA7C(arg0);
     if (!(D_8009D5E9 & 0x30)) {
         func_8001117C(0x2B);

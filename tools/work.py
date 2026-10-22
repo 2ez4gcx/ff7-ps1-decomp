@@ -132,6 +132,62 @@ def show(name):
     print(body, end='')
 
 
+LOCAL = '/* Declared here otherwise than in the other files (tools/work.py). */'
+
+
+def with_local(text, decls):
+    """A source file with `decls` in its block of its own declarations (made
+    after the decls.h include if missing), replacing any for the same names."""
+    include = f'#include "{ad.TARGET}/decls.h"\n'
+    if LOCAL not in text:
+        text = text.replace(include, include + '\n' + LOCAL + '\n', 1)
+    start = text.index(LOCAL) + len(LOCAL) + 1
+    end = text.index('\n\n', start - 1) + 1 if '\n\n' in text[start - 1:] else len(text)
+    block = text[start:end].splitlines()
+    for d in decls:
+        sym = symbol_of(d)
+        at = next((i for i, l in enumerate(block) if symbol_of(l) == sym), None)
+        if at is None:
+            block.append(d)
+        else:
+            block[at] = d
+    return text[:start] + ''.join(l + '\n' for l in block) + text[end:]
+
+
+def uses(text, sym):
+    """Whether C code (not INCLUDE_ASM lines) of a file names `sym`."""
+    return any(re.search(rf'\b{sym}\b', l) for l in text.splitlines()
+               if not l.startswith(('INCLUDE_ASM', 'INCLUDE_RODATA')))
+
+
+def localize(known, mine, src, before_src):
+    """Files to write so that declarations the work file changed live in the
+    files that use them instead of decls.h: the new one in `src`, the old
+    one in each other file. {path: text}, or None if nothing to do."""
+    changed = {}
+    for line in mine.splitlines():
+        if line.strip() and line not in known.splitlines() and line.rstrip().endswith(';'):
+            sym = symbol_of(line)
+            if sym:
+                changed[sym] = line
+    if not changed:
+        return None
+    decls = mine
+    files = {}
+    for sym, new in changed.items():
+        old = ad.declaration(known, sym)
+        decls = decls.replace(new + '\n', '', 1)
+        for other in ad.sources():
+            if other == src:
+                continue
+            text = files.get(other, other.read_text(encoding='utf-8'))
+            if old is not None and uses(text, sym):
+                files[other] = with_local(text, [old])
+    files[src] = with_local(files.get(src, before_src), list(changed.values()))
+    files[ad.DECLS] = decls
+    return files
+
+
 def put(work, name):
     with ad.Turn():
         found = where(name)
@@ -151,6 +207,21 @@ def put(work, name):
         ad.write(src, before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1))
         changed = [l for l in known.splitlines() if l.strip() and l not in mine.splitlines()]
         why = ad.all_match() if changed else ad.file_matches(src)
+        if why is not None and changed:
+            # The other files may have been written with the old declarations:
+            # keep each file's own.
+            originals = {f: f.read_text(encoding='utf-8') for f in ad.sources()}
+            files = localize(known, mine, src, before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1))
+            if files:
+                for f, text in files.items():
+                    ad.write(f, text)
+                why2 = ad.all_match()
+                if why2 is None:
+                    print(f'{name}: put in {src.relative_to(ROOT).as_posix()}, its changed declarations '
+                          f'kept in the files that use them')
+                    return
+                for f, text in originals.items():
+                    ad.write(f, text)
         if why is not None:
             ad.write(ad.DECLS, known)
             ad.write(src, before)
