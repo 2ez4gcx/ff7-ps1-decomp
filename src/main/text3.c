@@ -192,7 +192,37 @@ void func_8001840C(s32 arg0, s32 arg1, u32 arg2) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_800184C0);
+void func_800184C0(s32 arg0, s32 arg1, u32 arg2) {
+    u8 id;
+    s32 t;
+
+    id = arg2;
+    t = *((u8 *) D_800730DD + id * 20) & 0xF;
+    D_80062E88 = 0;
+    arg2 >>= 8;
+    switch (t) {
+    case 6:
+        D_80062E88 = 1;
+        func_80018630(arg1 & 0xFF, id, arg2);
+        break;
+    case 8:
+        D_80062E88 = 1;
+        func_800185A8(arg1 & 0xFF, 0xFD, arg2);
+        break;
+    case 9:
+        func_80018834(arg1 & 0xFF, id, arg2);
+        break;
+    case 10:
+        func_800185A8(arg1 & 0xFF, 0xFE, arg2);
+        break;
+    case 11:
+        func_80018934(arg1 & 0xFF, id, arg2);
+        break;
+    case 12:
+        func_800185A8(arg1 & 0xFF, 0xFF, arg2);
+        break;
+    }
+}
 
 void func_800185A8(u8 arg0, u8 arg1, s32 arg2) {
     s32 n;
@@ -208,7 +238,30 @@ void func_800185A8(u8 arg0, u8 arg1, s32 arg2) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80018630);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80018834);
+void func_80018834(u8 arg0, u8 arg1, s32 arg2) {
+    s32 id;
+    s32 cnt;
+    s32 idx;
+    s32 n;
+    u8 *p;
+
+    id = arg1;
+    cnt = func_8001AC9C(id, arg2);
+    while (cnt > 0) {
+        idx = id * 0x14 + cnt;
+        p = (u8 *) D_800730DD + idx;
+        cnt--;
+        if (*p != 0xFF) {
+            if (D_80062E80 != 8) {
+                ((Obj *) D_80062E60)->e[D_80062E80].a = D_80062E84 + *(u8 *) &D_80062E88;
+                ((Obj *) D_80062E60)->e[D_80062E80].b = *p;
+                n = D_80062E80++;
+                ((Obj *) D_80062E60)->e[n].c = *((u8 *) &D_80062E50 + 3 + (arg0 & 0xFF));
+            }
+            break;
+        }
+    }
+}
 
 void func_80018934(u8 arg0, u8 arg1, s32 arg2) {
     s32 id;

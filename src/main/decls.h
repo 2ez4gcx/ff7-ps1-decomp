@@ -906,7 +906,7 @@ extern u8 D_800738BC[][0x2C];
 extern u8 D_8009C754[][0x84];
 extern u8 D_8009CBDC[];
 void func_8001840C(s32 arg0, s32 arg1, u32 arg2);
-void func_80018834(u8, u8, s32);
+void func_80018834(u8 arg0, u8 arg1, s32 arg2);
 void func_80018934(u8 arg0, u8 arg1, s32 arg2);
 typedef struct { s8 a; s8 b; u8 c; } Ent3;
 typedef struct { u8 pad[0x24]; Ent3 e[8]; } Obj;
@@ -1315,5 +1315,6 @@ extern s16 D_8009A0BC;
 extern s16 D_8009A0BE;
 extern u8 D_80063560[];
 void func_8001DF24(u16 *arg0, s32 arg1, s8 arg2, s8 arg3);
+void func_800184C0(s32 arg0, s32 arg1, u32 arg2);
 
 #endif /* MAIN_DECLS_H */

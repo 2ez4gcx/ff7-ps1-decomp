@@ -52,7 +52,9 @@ FILE_OPTIONS = {
     'main/text.c': {'aspsx': '2.21'},
     'main/text1b.c': {'aspsx': '2.21'},
     'main/text2.c': {'nop_at_expansion': True, 'gcc': '2.7.2'},
-    'main/text3.c': {'aspsx': '2.21'},
+    # text3.c's loops hoist constants as if one register fewer were free
+    # (found by matching: -ffixed-25 gives it, and changes nothing else there).
+    'main/text3.c': {'aspsx': '2.21', 'cflags': ['-O2', '-G8', '-ffixed-25']},
     'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
@@ -124,6 +126,22 @@ def code_range(src):
         if kind == 'c' and name == rel.stem and i + 1 < len(subs):
             return offset + 0x8000F800, subs[i + 1][0] + 0x8000F800
     return None
+
+
+@lru_cache(maxsize=None)
+def rodata_start(src):
+    """Address where a C file's rodata starts in the game: its `.rodata`
+    subsegment in the main executable's config, an overlay's load address
+    (its rodata comes first), or None."""
+    try:
+        rel = Path(src).resolve().relative_to(ROOT / 'src')
+    except ValueError:
+        return None
+    if rel.parts[0] != 'main':
+        return 0x80000000                       # overlays load on 64 KB boundaries
+    text = (ROOT / 'config' / 'scus_941.63.us.yaml').read_text(encoding='utf-8')
+    m = re.search(rf'^\s*- \[(0x[0-9A-Fa-f]+), \.rodata, {re.escape(rel.stem)}\]', text, re.M)
+    return int(m.group(1), 16) + 0x8000F800 if m else None
 
 
 @lru_cache(maxsize=None)
@@ -201,10 +219,13 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     # GCC calls the read-only section .rdata; the game's (and splat's) is .rodata.
     cc = re.sub(r'^\t\.rdata$', '\t.section\t.rodata', cc, flags=re.M)
     # GCC aligns jump tables to 8 bytes from the start of its file's .rodata.
-    # Ours put many of the game's files in one, so that start is not theirs:
-    # keep tables on 4 bytes, as splat's asm does; where the game has padding
-    # before one, tools/match.py tells.
-    cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
+    # Where our file's rodata starts on 8 bytes in the game, that is where the
+    # game's has them too; elsewhere our file holds several of the game's, so
+    # its start is not theirs: keep tables on 4 bytes, as splat's asm does
+    # (where the game has padding before one, tools/match.py tells).
+    start = rodata_start(like or src)
+    if start is None or start % 8:
+        cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
     ms = _run([sys.executable, str(MASPSX), f'--aspsx-version={aspsx}', f'-G{gp_size}',
                '--expand-div', *(['--nop-at-expansion'] if nop_at else [])], cc)
     # A file's rodata ends on 4 bytes, as the game's do (a string can leave it
