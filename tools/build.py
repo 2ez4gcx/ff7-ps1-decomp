@@ -122,6 +122,7 @@ def build(config, disc, packed, split, jobs):
             # Compiler settings and headers too (a cheap stand-in for real dependencies).
             newest = max([newest, (ROOT / 'tools' / 'psyq.py').stat().st_mtime] +
                          [h.stat().st_mtime for h in (ROOT / 'include').glob('*.h')] +
+                         [h.stat().st_mtime for h in (ROOT / 'src').rglob('*.h')] +
                          [p.stat().st_mtime for p in psyq.MASPSX.parent.glob('maspsx/*.py')])
         if not obj.exists() or obj.stat().st_mtime < newest:
             work.append((obj, src))

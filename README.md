@@ -13,8 +13,21 @@ từ file thực thi trên đĩa, viết lại thành hợp ngữ rồi C, sao c
 ## Trạng thái
 
 318 file thực thi của đĩa 1 dựng lại khớp từng byte. Phần code của chương trình chính đã
-đi qua cùng phiên bản trình biên dịch mà PSY-Q dùng (GCC 2.6.3, xem [docs/toolchain.md](docs/toolchain.md)):
-6 hàm viết lại bằng C, các hàm còn lại vẫn là hợp ngữ (`INCLUDE_ASM`). Danh sách đầy đủ ở
+đi qua cùng phiên bản trình biên dịch mà PSY-Q dùng (GCC 2.6.3, xem [docs/toolchain.md](docs/toolchain.md))
+và được chia làm ba file theo cách nó được dịch:
+
+| File | Nội dung | Hàm bằng C | Còn hợp ngữ |
+|---|---|---|---|
+| `src/main/text.c` | Mã của game (0x800110B8–0x80029A4F) | 91 | 254 |
+| `src/main/akao.c` | Driver âm thanh AKAO (0x80029A50–0x80036297) | 91 | 188 |
+| `src/main/lib.c` | Thư viện PSY-Q (0x80036298–0x80048D17) | 103 | 345 |
+
+Mỗi hàm C dịch ra đúng từng lệnh như game. Phần lớn do `tools/auto_decomp.py` viết (m2c
+viết nháp, chỉ giữ bản khớp); các hàm AKAO chính được viết tay với kiểu dữ liệu thật:
+lệnh phát/cất/lấy lại bài nhạc (`akao_cmd_song_play/push/pop`), bắt đầu và tiếp tục một
+bài (`akao_song_start`, `akao_song_resume`), tìm và phát hiệu ứng âm thanh
+(`akao_sfx_lookup`, `akao_sfx_start`). `akao_menu_sfx_start` còn lệch 4 lệnh nên vẫn dùng
+hợp ngữ, bản C nằm trong `#ifdef NON_MATCHING`. Danh sách file thực thi ở
 `config/targets.txt`.
 
 | File trên đĩa | Nội dung | Nạp ở |
@@ -80,9 +93,9 @@ hình splat và thêm vào `config/targets.txt`.
 ## Cấu trúc
 
 - `config/`: cấu hình splat cho từng file thực thi, bảng ký hiệu (`symbols.*.txt`).
-- `include/`: macro hợp ngữ dùng chung.
-- `src/`: mã C đã decompile (từng hàm thay cho phần hợp ngữ tương ứng).
-- `tools/`: trích đĩa, dựng lại.
+- `include/`: kiểu và macro dùng chung (`common.h`, `m2c.h`, `include_asm.h`).
+- `src/`: mã C đã decompile (từng hàm thay cho phần hợp ngữ tương ứng); khai báo chung của chương trình chính ở `src/main/decls.h`.
+- `tools/`: trích đĩa, dựng lại, trình biên dịch (`psyq.py`), so khớp từng hàm (`match.py`, `auto_decomp.py`).
 
 ## Lộ trình
 
@@ -90,6 +103,8 @@ hình splat và thêm vào `config/targets.txt`.
    còn: overlay riêng của đĩa 2/3, kích thước BSS của từng overlay, bộ nén gzip gốc.
 2. Đặt tên hàm/biến đã biết (từ quá trình làm FF7 Recompiled: driver âm thanh AKAO,
    field, trận đấu...).
-3. ~~Dựng trình biên dịch gốc (PSY-Q, GCC 2.x).~~ Xong: GCC 2.6.3 + maspsx, 6 hàm đầu
-   tiên đã khớp. Tiếp: decompile dần từng hàm (`tools/try_c.py`), chia `text.c` thành
-   các file theo từng phần của game, dò tham số cho từng overlay.
+3. ~~Dựng trình biên dịch gốc (PSY-Q, GCC 2.x).~~ Xong: GCC 2.6.3 + maspsx, tham số
+   riêng cho từng phần của chương trình chính.
+4. Decompile dần từng hàm (`tools/match.py`, `tools/auto_decomp.py`): tách tiếp `text.c`
+   và `lib.c` theo từng phần của game và từng thư viện, đặt tên cho các trường của
+   driver AKAO, dò tham số cho từng overlay.

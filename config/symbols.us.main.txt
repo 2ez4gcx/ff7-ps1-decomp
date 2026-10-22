@@ -13,3 +13,5 @@ akao_menu_sfx_start = 0x8002A28C; // type:func
 
 // A constant (0x00FFFFFF) ahead of the code that reads it
 D_800425F8 = 0x800425F8; // type:u32
+// Words after the last function of the code (a table the game reads)
+D_80048CFC = 0x80048CFC; // type:u32
