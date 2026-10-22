@@ -1008,7 +1008,6 @@ extern u8 D_8009C6E4[];
 void func_800134F4(void);
 extern s8 D_8009AC2C;
 extern s16 D_8009AC40;
-extern volatile s16 D_8009AC42;
 extern s16 D_8009AC44;
 extern volatile s16 D_80114488;
 extern u8 D_800708C8[];

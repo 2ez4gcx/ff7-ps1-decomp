@@ -50,6 +50,7 @@ FILE_OPTIONS = {
     # Some of it was compiled by GCC 2.7.2 (text2, text4, text5): it fills a return's
     # delay slot where 2.6.3 does not, and allocates some registers otherwise.
     'main/text.c': {'aspsx': '2.21'},
+    'main/text1b.c': {'aspsx': '2.21'},
     'main/text2.c': {'nop_at_expansion': True, 'gcc': '2.7.2'},
     'main/text3.c': {'aspsx': '2.21'},
     'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},

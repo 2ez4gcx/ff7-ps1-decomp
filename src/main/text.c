@@ -4,6 +4,7 @@
 /* Declared here otherwise than in the other files (tools/work.py). */
 extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
 M2C_UNK func_8002988C(M2C_UNK, M2C_UNK);
+extern volatile s16 D_8009AC42;
 
 void func_800110B8(void) {
 }
@@ -248,7 +249,3 @@ s16 func_800135C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 }
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80013624);
-
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80013800);
-
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800138EC);

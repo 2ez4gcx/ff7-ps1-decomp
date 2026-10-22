@@ -57,6 +57,7 @@ segments:
     vram: 0x80010000
     subsegments:
       - [0x800, .rodata, text]
+      - [0x8C8, .rodata, text1b]
       - [0x900, .rodata, text2]
       - [0x958, .rodata, text3]
       - [0xA9C, .rodata, text4]
@@ -66,6 +67,7 @@ segments:
       # The game's code, in parts built differently (tools/psyq.py FILE_OPTIONS):
       # text2, text4 and text5 with GCC 2.7.2, text2 with a newer ASPSX too.
       - [0x18B8, c, text]
+      - [0x4000, c, text1b]
       - [0x449C, c, text2]
       - [0x7790, c, text3]
       - [0xC5B0, c, text4]
