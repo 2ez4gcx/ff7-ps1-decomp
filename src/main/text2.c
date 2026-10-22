@@ -424,7 +424,19 @@ s32 func_80015B88(void) {
     return var_a1;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80015BC0);
+s32 func_80015BC0(s32 arg0) {
+    u16 size;
+    s32 ret;
+
+    ret = -1;
+    if ((size = D_80062E30[0] | (D_80062E30[1] << 8)) != 0) {
+        ret = func_80017108(D_80062E30 + 6, arg0, ret);
+        if (ret == (D_80062E30[2] | (D_80062E30[3] << 8))) {
+            D_80062E30 += size + 6;
+        }
+    }
+    return ret;
+}
 
 s32 func_80015C3C(u8 *arg0, s32 arg1, s32 arg2) {
     u16 size;

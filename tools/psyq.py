@@ -47,12 +47,13 @@ FILE_OPTIONS = {
     # expansion that uses the register just loaded), but for text2.c, which
     # folds %lo into the load as 2.30 and later do and still has that nop
     # (maspsx's --nop-at-expansion, from its patch).
-    # Some of it was compiled by GCC 2.7.2 (text2, text4): it fills a return's
+    # Some of it was compiled by GCC 2.7.2 (text2, text4, text5): it fills a return's
     # delay slot where 2.6.3 does not, and allocates some registers otherwise.
     'main/text.c': {'aspsx': '2.21'},
     'main/text2.c': {'nop_at_expansion': True, 'gcc': '2.7.2'},
     'main/text3.c': {'aspsx': '2.21'},
     'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
+    'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
 }
@@ -102,18 +103,36 @@ def _far_from_gp(name, named):
     return address is not None and not (GP - 0x8000 <= address < GP + 0x8000)
 
 
-# The game's code built with -G8 (src/main/text.c), in its executable.
-GP_CODE = (0x800110B8, 0x80029A50)
 GAME = ROOT / 'disks' / 'us' / 'SCUS_941.63'
 
 
 @lru_cache(maxsize=None)
-def _never_through_gp():
-    """Addresses near $gp that the game's -G8 code reaches only with lui/%lo:
-    variables its source declared bigger than -G (in a struct or an array)."""
+def code_range(src):
+    """(first, end) address of the game's code a C file of the main
+    executable stands for (its c segment in the splat config), or None."""
+    try:
+        rel = Path(src).resolve().relative_to(ROOT / 'src')
+    except ValueError:
+        return None
+    if rel.parts[0] != 'main':
+        return None
+    text = (ROOT / 'config' / 'scus_941.63.us.yaml').read_text(encoding='utf-8')
+    subs = [(int(o, 16), kind, name) for o, kind, name in
+            re.findall(r'^\s*- \[(0x[0-9A-Fa-f]+), (\.?\w+), (\w+)\]', text, re.M)]
+    for i, (offset, kind, name) in enumerate(subs):
+        if kind == 'c' and name == rel.stem and i + 1 < len(subs):
+            return offset + 0x8000F800, subs[i + 1][0] + 0x8000F800
+    return None
+
+
+@lru_cache(maxsize=None)
+def _never_through_gp(lo, hi):
+    """Addresses near $gp that the game's code in [lo, hi) reaches only with
+    lui/%lo: variables that part's source declared bigger than -G (in a
+    struct or an array). The same variable may be on $gp in another part,
+    whose source declared it otherwise."""
     if not GAME.exists():
         return frozenset()
-    lo, hi = GP_CODE
     data = GAME.read_bytes()[lo - 0x8000F800:hi - 0x8000F800]
     sext = lambda v: v - 0x10000 if v & 0x8000 else v
     gp, absolute, upper = set(), set(), {}
@@ -138,17 +157,17 @@ def _never_through_gp():
     return frozenset(a for a in absolute - gp if GP - 0x8000 <= a < GP + 0x8000)
 
 
-def _absolute_externs(asm):
+def _absolute_externs(asm, span):
     """A small extern the game reaches with lui/%lo (too far from $gp, or
     declared bigger than -G in its source: part of a struct or an array):
     drop the size the compiler gave it, so the assembler does not put it on
-    $gp."""
+    $gp. `span` is the part of the game's code the file stands for."""
     named = _named_addresses()
+    near = _never_through_gp(*span) if span else frozenset()
     out = []
     for line in asm.splitlines(keepends=True):
         m = re.match(r'\s*\.extern\s+([\w.$]+)\s*,\s*\d+\s*$', line)
-        if m and (_far_from_gp(m.group(1), named)
-                  or _address(m.group(1), named) in _never_through_gp()):
+        if m and (_far_from_gp(m.group(1), named) or _address(m.group(1), named) in near):
             line = re.sub(r'\s*,\s*\d+\s*$', '\n', line)
         out.append(line)
     return ''.join(out)
@@ -177,7 +196,7 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     cc = _run([str(cc1_of(default.get('gcc', '2.6.3'))), '-quiet', *cflags, '-o', '-'], pre, env=env)
     if not cc:
         raise Failed(f'cc1 made nothing of {src}')
-    cc = _absolute_externs(cc)
+    cc = _absolute_externs(cc, code_range(like or src))
     # GCC calls the read-only section .rdata; the game's (and splat's) is .rodata.
     cc = re.sub(r'^\t\.rdata$', '\t.section\t.rodata', cc, flags=re.M)
     # GCC aligns jump tables to 8 bytes from the start of its file's .rodata.
