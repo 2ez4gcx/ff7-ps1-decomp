@@ -27,6 +27,9 @@ options:
 
   o_as_suffix: True
   use_legacy_include_asm: False
+  # GCC 2.6.3 puts top-level asm ahead of the functions around it; this
+  # INCLUDE_ASM wraps each in a function maspsx unwraps, keeping the order.
+  include_asm_macro_style: maspsx_hack
 
   section_order: [".rodata", ".text", ".data", ".bss"]
 
@@ -51,7 +54,7 @@ segments:
     vram: 0x800a0000
     # file header: unpacked 0x1e810, second word 0x6df68
     subsegments:
-      - [0x0, rodata, rodata]
-      - [0x38c, asm, text]
+      - [0x0, .rodata, text]
+      - [0x38c, c, text]
       - [0x1e7d8, data, data]
   - [0x1e810]

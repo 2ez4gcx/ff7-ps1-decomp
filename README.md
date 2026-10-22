@@ -1,110 +1,126 @@
 # Final Fantasy VII (PS1) decomp
 
-Dự án tái tạo mã nguồn (decompile) của **Final Fantasy VII bản PlayStation (USA)**:
-từ file thực thi trên đĩa, viết lại thành hợp ngữ rồi C, sao cho khi dịch lại cho ra
-đúng từng byte như bản gốc.
+A decompilation of **Final Fantasy VII for the PlayStation (USA)**: the executables on
+the disc turned back into assembly, then C, that rebuild to exactly the original bytes.
 
-> Repository này **không chứa** đĩa game, file trích từ đĩa hay hợp ngữ sinh ra từ
-> chúng. Mỗi người tự dùng đĩa của mình; mọi thứ lấy từ đĩa nằm trong `disks/`,
-> `asm/`, `build/` và đều bị `.gitignore` loại khỏi git.
+> This repository **does not contain** the game's discs, files taken from them, or the
+> assembly generated from them. Everyone uses their own disc; everything that comes from
+> it lives in `disks/`, `asm/` and `build/`, which `.gitignore` keeps out of git.
 
-Đây là dự án độc lập: không dựa trên mã của dự án decomp khác.
+This is an independent project: it is not based on the code of any other decomp.
 
-## Trạng thái
+## Status
 
-318 file thực thi của đĩa 1 dựng lại khớp từng byte. Phần code của chương trình chính đã
-đi qua cùng phiên bản trình biên dịch mà PSY-Q dùng (GCC 2.6.3, xem [docs/toolchain.md](docs/toolchain.md))
-và được chia làm ba file theo cách nó được dịch:
+All 318 executables of disc 1 rebuild byte for byte, from C files: functions not
+decompiled yet are still included as asm (`INCLUDE_ASM`). The compilers are the ones
+PSY-Q used (GCC 2.6.3 and 2.7.2, see [docs/toolchain.md](docs/toolchain.md)); the main
+executable is split by how each part was compiled:
 
-| File | Nội dung | Hàm bằng C | Còn hợp ngữ |
+| Files | Contents | Functions in C | Still asm |
 |---|---|---|---|
-| `src/main/text.c` | Mã của game (0x800110B8–0x80029A4F) | 91 | 254 |
-| `src/main/akao.c` | Driver âm thanh AKAO (0x80029A50–0x80036297) | 91 | 188 |
-| `src/main/lib.c` | Thư viện PSY-Q (0x80036298–0x80048D17) | 103 | 345 |
+| `src/main/text.c` … `text4.c` | The game's code (0x800110B8–0x80029A4F) | 134 | 211 |
+| `src/main/akao.c` | The AKAO sound driver, CD and movie code (0x80029A50–0x80036297) | 115 | 164 |
+| `src/main/lib.c` | The PSY-Q libraries (0x80036298–0x80048D17) | 105 | 343 |
+| `src/<overlay>/text.c` | The 317 overlays: field, battle, world, menus, minigames, spell effects | 0 | 7280 |
 
-Mỗi hàm C dịch ra đúng từng lệnh như game. Phần lớn do `tools/auto_decomp.py` viết (m2c
-viết nháp, chỉ giữ bản khớp); các hàm AKAO chính được viết tay với kiểu dữ liệu thật:
-lệnh phát/cất/lấy lại bài nhạc (`akao_cmd_song_play/push/pop`), bắt đầu và tiếp tục một
-bài (`akao_song_start`, `akao_song_resume`), tìm và phát hiệu ứng âm thanh
-(`akao_sfx_lookup`, `akao_sfx_start`). `akao_menu_sfx_start` còn lệch 4 lệnh nên vẫn dùng
-hợp ngữ, bản C nằm trong `#ifdef NON_MATCHING`. Danh sách file thực thi ở
-`config/targets.txt`.
+Every C function compiles to exactly the game's instructions (and its jump tables and
+strings to the game's rodata). Many were written by `tools/auto_decomp.py` (m2c drafts
+them, only exact matches are kept), the rest by hand with `tools/work.py`; the main AKAO
+functions use the driver's real data layouts: the song commands
+(`akao_cmd_song_play/push/pop`), starting and resuming a song (`akao_song_start`,
+`akao_song_resume`), looking up and starting sound effects (`akao_sfx_lookup`,
+`akao_sfx_start`). Part of `lib.c` (GTE and BIOS calls) was assembly in the original.
 
-| File trên đĩa | Nội dung | Nạp ở |
+| File on the disc | Contents | Loaded at |
 |---|---|---|
-| `SCUS_941.63` | Chương trình chính: hệ thống, CD, driver âm thanh AKAO, kernel | 0x80010000 |
-| `FIELD/FIELD.BIN` | Bản đồ field: script, nền, model, hội thoại | 0x800A0000 |
-| `BATTLE/BATTLE.X`, `BROM.X` | Trận đấu | 0x800A0000 |
-| `BATTLE/BATINI.X`, `BATRES.X` | Vào trận, kết thúc trận | 0x801B0000 |
-| `WORLD/WORLD.BIN` | Bản đồ thế giới | 0x800A0000 |
-| `FIELD/ENDING.X`, `DSCHANGE.X` | Đoạn kết, màn hình đổi đĩa | 0x800A0000 |
-| `MENU/*.MNU` (13 file) | Các menu: vật phẩm, phép, trang bị, materia, lưu, cửa hàng... | 0x801D0000 |
-| `MINI/*.BIN` (7 file) | Minigame: `CHOCOBO`, `CONDOR`, `HIGHWAY`, `JET`, `SNOBO`, `SNOBO2`, `SUBMAR` | 0x800A0000 |
-| `MAGIC/*.BIN` (289 file) | Hiệu ứng phép, triệu hồi, limit, chiêu của quái | 0x801B0000 |
+| `SCUS_941.63` | Main executable: system, CD, AKAO sound driver, kernel | 0x80010000 |
+| `FIELD/FIELD.BIN` | Field maps: scripts, backgrounds, models, dialogue | 0x800A0000 |
+| `BATTLE/BATTLE.X`, `BROM.X` | Battles | 0x800A0000 |
+| `BATTLE/BATINI.X`, `BATRES.X` | Battle start and results | 0x801B0000 |
+| `WORLD/WORLD.BIN` | World map | 0x800A0000 |
+| `FIELD/ENDING.X`, `DSCHANGE.X` | Ending, disc change screen | 0x800A0000 |
+| `MENU/*.MNU` (13 files) | Menus: items, magic, equipment, materia, save, shops... | 0x801D0000 |
+| `MINI/*.BIN` (7 files) | Minigames: `CHOCOBO`, `CONDOR`, `HIGHWAY`, `JET`, `SNOBO`, `SNOBO2`, `SUBMAR` | 0x800A0000 |
+| `MAGIC/*.BIN` (289 files) | Spell, summon, limit break and enemy attack effects | 0x801B0000 |
 
-**Overlay nén:** nhiều file (`*.X`, `FIELD.BIN`, `WORLD.BIN`, `MINI/*.BIN`) là một
-luồng gzip sau 8 byte đầu `{u32 kích thước giải nén, u32 ...}`. Mục tiêu khớp byte của
-chúng là **ảnh đã giải nén**, đúng thứ game nạp vào RAM (`build.py` tự giải nén từ đĩa
-vào `disks/us/unpacked/`). Nén lại ra đúng file gốc thì cần bộ nén gzip gốc: zlib
-gần đúng (khớp 1112/1116 byte ở `BROM.X`) nhưng chưa khớp hoàn toàn.
+**Packed overlays:** many files (`*.X`, `FIELD.BIN`, `WORLD.BIN`, `MINI/*.BIN`) are a
+gzip stream after an 8-byte header `{u32 unpacked size, u32 ...}`. Their byte-matching
+target is the **unpacked image**, exactly what the game loads into RAM (`build.py`
+unpacks them from the disc into `disks/us/unpacked/`). Packing them back into the
+original files needs the original gzip compressor: zlib comes close (1112 of 1116 bytes
+of `BROM.X`) but does not match yet.
 
-Chỉ đĩa 1 bản USA được dùng; overlay chỉ có trên đĩa 2/3 sẽ thêm sau.
+Only disc 1 of the USA release is used; overlays found only on discs 2 and 3 come later.
 
-## Cài đặt (Windows)
+## Setup (Windows)
 
-1. Python 3.12+ và môi trường riêng:
+1. Python 3.12+ and a virtual environment:
 
    ```bash
    python -m venv .venv
    .venv/Scripts/python -m pip install -r requirements.txt
    ```
 
-2. Bộ công cụ GNU cho MIPS (PS1): `gcc-mipsel-none-elf-12.3.0-windows.zip` từ
+2. The GNU toolchain for MIPS (PS1): `gcc-mipsel-none-elf-12.3.0-windows.zip` from
    [PSn00bSDK v0.24](https://github.com/Lameguy64/PSn00bSDK/releases/tag/v0.24)
-   (SHA-256 `51df48145d5ef4b396d3932b72ccba538cc605c7c7745b32c58c277aa00523c5`), giải nén
-   và trỏ biến `MIPSEL_PREFIX` tới `.../bin/mipsel-none-elf-` (mặc định
+   (SHA-256 `51df48145d5ef4b396d3932b72ccba538cc605c7c7745b32c58c277aa00523c5`). Unpack it
+   and point `MIPSEL_PREFIX` at `.../bin/mipsel-none-elf-` (default
    `D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-`).
 
-3. Trình biên dịch cho phần C: GCC 2.6.3 dựng thành chương trình Windows 32-bit bằng
-   `tools/gcc-win32/build.sh`, cùng [maspsx](https://github.com/mkst/maspsx) có bản vá
-   `tools/maspsx-extern.patch`. Chi tiết ở [docs/toolchain.md](docs/toolchain.md).
+3. The C compiler: GCC 2.6.3 built as a 32-bit Windows program by
+   `tools/gcc-win32/build.sh`, and [maspsx](https://github.com/mkst/maspsx) with
+   `tools/maspsx-extern.patch`. Details in [docs/toolchain.md](docs/toolchain.md).
 
-4. Công cụ hỗ trợ decompile (tuỳ chọn): [m2c](https://github.com/matt-kempster/m2c) và
-   [asm-differ](https://github.com/simonlindholm/asm-differ), clone về chỗ riêng.
-   Lưu ý: gói tên `m2c` trên PyPI **không phải** m2c này.
+4. Decompiling tools: [m2c](https://github.com/matt-kempster/m2c), cloned next to the
+   toolchain (`D:/FF7/toolchain/m2c`). Note: the `m2c` package on PyPI is **not** this m2c.
 
-## Dựng lại
+## Building
 
 ```bash
 .venv/Scripts/python tools/extract_disc.py "Final Fantasy VII (USA) (Disc 1).cue"
 .venv/Scripts/python tools/build.py --split
 ```
 
-`extract_disc.py` chép file từ đĩa của bạn vào `disks/us/` (bỏ qua phim). `build.py`
-chạy splat (tách từng file thực thi thành hợp ngữ trong `asm/`), dịch bằng GNU as, liên
-kết theo linker script splat sinh ra (overlay được liên kết với ký hiệu của chương
-trình chính), rồi so SHA-1 với bản gốc. Kết quả đúng: `N/N targets match`.
-`build.py field battle` chỉ dựng các mục có tên bắt đầu như vậy.
+`extract_disc.py` copies the files of your disc into `disks/us/` (movies left out).
+`build.py` runs splat (each executable into asm under `asm/`), compiles the C, assembles
+with GNU as, links with the linker scripts splat writes (overlays link against the main
+executable's symbols), and compares SHA-1s with the originals. Success reads
+`N/N targets match`. `build.py field battle` builds only the targets whose names start
+that way.
 
-Thêm một overlay: `tools/find_overlays.py` liệt kê file có mã MIPS và đoán địa chỉ nạp
-(từ các lệnh `jal` gọi vào chính nó); `tools/new_overlay.py FILE ĐỊA_CHỈ TÊN` tạo cấu
-hình splat và thêm vào `config/targets.txt`.
+Adding an overlay: `tools/find_overlays.py` lists the files that hold MIPS code and
+guesses where they load (from the `jal`s into themselves); `tools/new_overlay.py FILE
+ADDRESS NAME` writes its splat config and adds it to `config/targets.txt`.
+`tools/to_c.py NAME` turns an existing overlay's code into a C file of INCLUDE_ASMs.
 
-## Cấu trúc
+## Decompiling
 
-- `config/`: cấu hình splat cho từng file thực thi, bảng ký hiệu (`symbols.*.txt`).
-- `include/`: kiểu và macro dùng chung (`common.h`, `m2c.h`, `include_asm.h`).
-- `src/`: mã C đã decompile (từng hàm thay cho phần hợp ngữ tương ứng); khai báo chung của chương trình chính ở `src/main/decls.h`.
-- `tools/`: trích đĩa, dựng lại, trình biên dịch (`psyq.py`), so khớp từng hàm (`match.py`, `auto_decomp.py`).
+- `tools/auto_decomp.py --target main --max 100` drafts every function still in asm
+  with m2c (smallest first), tries a few forms of each, and keeps the exact matches.
+- `tools/work.py show NAME > work/NAME.c` starts a function by hand from m2c's draft;
+  `tools/work.py diff work/NAME.c NAME` shows its code next to the game's, word by word;
+  `tools/work.py put work/NAME.c NAME` puts it in once it matches.
+- `tools/match.py FILE.c` checks every function of a C file against the game.
 
-## Lộ trình
+See [docs/toolchain.md](docs/toolchain.md) for the compiler options of each file and
+what GCC 2.6.3 needs to produce the game's code.
 
-1. ~~Thêm overlay vào cấu hình, mỗi file đều dựng lại khớp byte.~~ Xong cho đĩa 1;
-   còn: overlay riêng của đĩa 2/3, kích thước BSS của từng overlay, bộ nén gzip gốc.
-2. Đặt tên hàm/biến đã biết (từ quá trình làm FF7 Recompiled: driver âm thanh AKAO,
-   field, trận đấu...).
-3. ~~Dựng trình biên dịch gốc (PSY-Q, GCC 2.x).~~ Xong: GCC 2.6.3 + maspsx, tham số
-   riêng cho từng phần của chương trình chính.
-4. Decompile dần từng hàm (`tools/match.py`, `tools/auto_decomp.py`): tách tiếp `text.c`
-   và `lib.c` theo từng phần của game và từng thư viện, đặt tên cho các trường của
-   driver AKAO, dò tham số cho từng overlay.
+## Layout
+
+- `config/`: a splat config for each executable, symbol tables (`symbols.*.txt`).
+- `include/`: shared types and macros (`common.h`, `m2c.h`, `include_asm.h`).
+- `src/`: decompiled C (each function replacing its asm); declarations shared by a
+  target's files in `src/<target>/decls.h`.
+- `tools/`: disc extraction, building, the compiler (`psyq.py`), matching
+  (`match.py`, `auto_decomp.py`, `work.py`, `diff_func.py`).
+
+## Roadmap
+
+1. ~~Add the overlays to the configs, each rebuilding byte for byte.~~ Done for disc 1;
+   left: the overlays of discs 2/3, each overlay's BSS size, the original gzip packer.
+2. Name known functions and variables (from the work on FF7 Recompiled: the AKAO sound
+   driver, field, battle...).
+3. ~~Build the original compiler (PSY-Q, GCC 2.x).~~ Done: GCC 2.6.3 + maspsx, with
+   options for each part of the main executable.
+4. Decompile function by function: split `text.c` and `lib.c` into the game's own
+   source files and libraries, name the AKAO driver's fields, move every overlay to C.

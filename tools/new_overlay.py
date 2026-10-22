@@ -55,6 +55,9 @@ options:
 
   o_as_suffix: True
   use_legacy_include_asm: False
+  # GCC 2.6.3 puts top-level asm ahead of the functions around it; this
+  # INCLUDE_ASM wraps each in a function maspsx unwraps, keeping the order.
+  include_asm_macro_style: maspsx_hack
 
   section_order: [".rodata", ".text", ".data", ".bss"]
 
@@ -122,8 +125,8 @@ def main():
     start, end = span
     subs = []
     if start > 0:
-        subs.append(f'      - [0x0, rodata, rodata]')
-    subs.append(f'      - [{start:#x}, asm, text]')
+        subs.append(f'      - [0x0, .rodata, text]')
+    subs.append(f'      - [{start:#x}, c, text]')
     tail = len(image) & ~3
     if end < tail:
         subs.append(f'      - [{end:#x}, data, data]')

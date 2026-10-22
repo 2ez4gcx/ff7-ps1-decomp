@@ -1,25 +1,37 @@
 #!/bin/sh
-# Build GCC 2.6.3's cpp and cc1 for mips-sony-psx as 32-bit Windows programs,
-# the compiler the game's C matches with (see docs/toolchain.md).
+# Build GCC's cpp and cc1 for mips-sony-psx as 32-bit Windows programs: the
+# PSY-Q compilers the game's C matches with (see docs/toolchain.md).
 #
-#     sh tools/gcc-win32/build.sh [TOOLCHAIN_DIR]     (default D:/FF7/toolchain)
+#     sh tools/gcc-win32/build.sh [TOOLCHAIN_DIR] [VERSION]
 #
-# Needs Git Bash (sh, tar, patch, sed), an llvm-mingw clang targeting
-# i686-w64-mingw32 and mingw32-make on PATH. Takes the official GCC source
-# from ftp.gnu.org and decompals/old-gcc's psx patches at a pinned commit, the
-# same recipe as its gcc-2.6.3-psx.Dockerfile, plus win32-compat.c for the BSD
-# string functions Windows lacks. A 32-bit host matters: GCC 2.6.3 assumes
+# TOOLCHAIN_DIR defaults to D:/FF7/toolchain, VERSION to 2.6.3 (2.7.2 also
+# builds). Needs Git Bash (sh, tar, patch, sed), an llvm-mingw clang targeting
+# i686-w64-mingw32 and mingw32-make on PATH. Takes the official GCC source from
+# ftp.gnu.org and decompals/old-gcc's psx patches at a pinned commit, following
+# its gcc-<VERSION>-psx.Dockerfile, plus win32-compat.c for the BSD string
+# functions Windows lacks. A 32-bit host matters: these GCCs assume
 # HOST_WIDE_INT is the size of a pointer, as on the hosts PSY-Q ran on.
 set -e
 HERE=$(cd "$(dirname "$0")" && pwd)
 TOOLS=${1:-D:/FF7/toolchain}
+VERSION=${2:-2.6.3}
 OLD_GCC_COMMIT=cf70ec58bce58128732062bc9930045c82904cbb
-GCC_SHA256=71f673849f4dc7f20aba6ba1ecb6221c6704ef3152779aef15602e974ae3c140
+
+case "$VERSION" in
+2.6.3)
+    archive=gcc-2.6.3.tar.bz2
+    sha256=71f673849f4dc7f20aba6ba1ecb6221c6704ef3152779aef15602e974ae3c140 ;;
+2.7.2)
+    archive=gcc-2.7.2.tar.gz
+    sha256=7cd8bce5c3aeec59a72ecc2d3d5123864a817b14cdbd0680b1a969c3bccc5da5 ;;
+*)
+    echo "unknown version $VERSION" >&2; exit 1 ;;
+esac
 
 mkdir -p "$TOOLS/dl/gcc" "$TOOLS/build-gcc"
-tarball="$TOOLS/dl/gcc/gcc-2.6.3.tar.bz2"
-[ -f "$tarball" ] || curl -sSfL -o "$tarball" https://ftp.gnu.org/old-gnu/gcc/gcc-2.6.3.tar.bz2
-echo "$GCC_SHA256 *$tarball" | sha256sum -c -
+tarball="$TOOLS/dl/gcc/$archive"
+[ -f "$tarball" ] || curl -sSfL -o "$tarball" "https://ftp.gnu.org/old-gnu/gcc/$archive"
+echo "$sha256 *$tarball" | sha256sum -c -
 
 if [ ! -d "$TOOLS/old-gcc" ]; then
     git clone -q https://github.com/decompals/old-gcc.git "$TOOLS/old-gcc"
@@ -28,14 +40,26 @@ git -C "$TOOLS/old-gcc" checkout -q "$OLD_GCC_COMMIT"
 patches="$TOOLS/old-gcc/patches"
 
 cd "$TOOLS/build-gcc"
-rm -rf gcc-2.6.3
-tar --force-local -xjf "$tarball"
-cd gcc-2.6.3
+rm -rf "gcc-$VERSION"
+case "$archive" in
+*.bz2) tar --force-local -xjf "$tarball" ;;
+*) tar --force-local -xzf "$tarball" ;;
+esac
+cd "gcc-$VERSION"
 chmod -R u+w .
 sed -i -- 's/include <varargs.h>/include <stdarg.h>/g' *.c
-patch -u -p1 obstack.h -i "$patches/obstack-2.7.2.h.patch"
-patch -u -p1 sdbout.c -i "$patches/sdbout-2.6.3.c.patch"
-patch -su -p1 < "$patches/psx-2.5.7.patch"
+case "$VERSION" in
+2.6.3)
+    patch -u -p1 obstack.h -i "$patches/obstack-2.7.2.h.patch"
+    patch -u -p1 sdbout.c -i "$patches/sdbout-2.6.3.c.patch"
+    patch -su -p1 < "$patches/psx-2.5.7.patch" ;;
+2.7.2)
+    patch -u -p1 obstack.h -i "$patches/obstack-2.7.2.h.patch"
+    patch -u -p1 configure -i "$patches/configure.patch"
+    patch -u -p1 config.sub -i "$patches/config.sub.patch"
+    patch -u -p1 config/mips/mips.h -i "$patches/mipsel-2.7.patch"
+    patch -su -p1 < "$patches/psx-2.5.7.patch" ;;
+esac
 touch insn-config.h
 ./configure --target=mips-sony-psx --prefix=/opt/cross --with-endian-little --with-gnu-as \
     --host=i386-pc-linux --build=i386-pc-linux > configure.log 2>&1
@@ -44,8 +68,8 @@ CC=i686-w64-mingw32-clang
 CFLAGS="-std=gnu89 -O2 -Dbsd4_4 -Dmips -DHAVE_STRERROR -w -fcommon -fno-strict-aliasing \
  -Wno-error=int-conversion -Wno-error=implicit-function-declaration \
  -Wno-error=incompatible-pointer-types -Wno-error=incompatible-function-pointer-types \
- -Wno-error=implicit-int -Wno-error=return-type"
-$CC -O2 -c "$HERE/win32-compat.c" -o win32-compat.o
+ -Wno-error=implicit-int -Wno-error=return-type -I$(cygpath -m "$HERE/include")"
+$CC -O2 -I"$(cygpath -m "$HERE/include")" -c "$HERE/win32-compat.c" -o win32-compat.o
 mingw32-make cc1 cpp CC=$CC HOST_CC=$CC CFLAGS="$CFLAGS" CLIB=win32-compat.o > make.log 2>&1
 
 # old-gcc's own checks of the result.
@@ -55,4 +79,4 @@ grep -qE 'lbu\s\$2,0\(\$4\)' le.s
 ./cc1.exe -quiet -O2 "$TOOLS/old-gcc/tests/section_attribute.c" -o sa.s
 ./cc1.exe -quiet -O2 "$TOOLS/old-gcc/tests/host_wide_int.c" -o hw.s
 grep -q -- '-2147483648' hw.s
-echo "built $TOOLS/build-gcc/gcc-2.6.3/cc1.exe and cpp.exe"
+echo "built $TOOLS/build-gcc/gcc-$VERSION/cc1.exe and cpp.exe"

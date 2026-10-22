@@ -56,8 +56,18 @@ segments:
     start: 0x800
     vram: 0x80010000
     subsegments:
-      - [0x800, rodata, rodata]
+      - [0x800, .rodata, text]
+      - [0x900, .rodata, text2]
+      - [0x958, .rodata, text3]
+      - [0xA9C, .rodata, text4]
+      - [0xB94, .rodata, akao]
+      - [0xCB4, .rodata, lib]
+      # The game's code, in parts built differently (tools/psyq.py FILE_OPTIONS):
+      # text2 and text4 with GCC 2.7.2, text2 with a newer ASPSX too.
       - [0x18B8, c, text]
+      - [0x449C, c, text2]
+      - [0x7790, c, text3]
+      - [0xC5B0, c, text4]
       # The AKAO sound driver and the PSY-Q libraries were built without $gp (-G0).
       - [0x1A250, c, akao]
       - [0x26A98, c, lib]

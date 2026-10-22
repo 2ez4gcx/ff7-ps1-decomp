@@ -1,3 +1,27 @@
+diff --git a/maspsx.py b/maspsx.py
+index 78b742b..379d596 100644
+--- a/maspsx.py
++++ b/maspsx.py
+@@ -79,6 +79,9 @@ def main() -> None:
+     # deprecated
+     parser.add_argument("--no-macro-inc", action="store_true")
+     parser.add_argument("--expand-li", action="store_true")
++    # A nop between a load and an instruction expanded through $at that uses the
++    # loaded register, whatever the version (some ASPSX 2.3x builds do this).
++    parser.add_argument("--nop-at-expansion", action="store_true")
+ 
+     args, as_args = parser.parse_known_args()
+ 
+@@ -150,6 +153,9 @@ def main() -> None:
+         if args.dont_expand_li and version_config.expand_li:
+             version_config.expand_li = False
+ 
++        if args.nop_at_expansion:
++            version_config.nop_at_expansion = True
++
+         # GNU as would otherwise use $gp itself
+         if not version_config.gp_allow:
+             force_G0 = True
 diff --git a/maspsx/__init__.py b/maspsx/__init__.py
 index 0aade6d..81cf1b5 100644
 --- a/maspsx/__init__.py

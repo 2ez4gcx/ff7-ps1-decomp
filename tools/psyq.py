@@ -10,15 +10,22 @@ as ASPSX did. Paths come from FF7_TOOLCHAIN (default D:/FF7/toolchain).
 """
 import os
 import re
+import struct
 import subprocess
 import sys
 import tempfile
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = Path(os.environ.get('FF7_TOOLCHAIN', 'D:/FF7/toolchain'))
 CPP = TOOLS / 'build-gcc' / 'gcc-2.6.3' / 'cpp.exe'
 CC1 = TOOLS / 'build-gcc' / 'gcc-2.6.3' / 'cc1.exe'
+
+
+def cc1_of(version):
+    """cc1 of a GCC built by tools/gcc-win32/build.sh (2.6.3 by default)."""
+    return TOOLS / 'build-gcc' / f'gcc-{version}' / 'cc1.exe'
 MASPSX = TOOLS / 'maspsx' / 'maspsx.py'
 PREFIX = os.environ.get('MIPSEL_PREFIX', str(TOOLS / 'mipsel' / 'bin' / 'mipsel-none-elf-'))
 AS_FLAGS = ['-EL', '-march=r3000', '-mtune=r3000', '-mabi=32', '-no-pad-sections', '-G0',
@@ -35,9 +42,24 @@ GP = 0x80062D44
 # Files built otherwise (relative to src/): the AKAO sound driver and the
 # PSY-Q libraries never use $gp, even for the smallest variables.
 FILE_OPTIONS = {
+    # The game's code went through an ASPSX older than 2.30 (`lui $at`, `addiu
+    # $at, %lo`, `addu` for a global plus a register; a nop before an $at
+    # expansion that uses the register just loaded), but for text2.c, which
+    # folds %lo into the load as 2.30 and later do and still has that nop
+    # (maspsx's --nop-at-expansion, from its patch).
+    # Some of it was compiled by GCC 2.7.2 (text2, text4): it fills a return's
+    # delay slot where 2.6.3 does not, and allocates some registers otherwise.
+    'main/text.c': {'aspsx': '2.21'},
+    'main/text2.c': {'nop_at_expansion': True, 'gcc': '2.7.2'},
+    'main/text3.c': {'aspsx': '2.21'},
+    'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
 }
+
+
+# The overlays never use $gp: it points into the main executable's data.
+OVERLAY_OPTIONS = {'cflags': ['-O2', '-G0'], 'gp_size': 0}
 
 
 def options(src):
@@ -46,7 +68,10 @@ def options(src):
         key = Path(src).resolve().relative_to(ROOT / 'src').as_posix()
     except ValueError:
         key = None
-    return {'cflags': CFLAGS, 'gp_size': GP_SIZE, 'aspsx': ASPSX, **FILE_OPTIONS.get(key, {})}
+    base = {'cflags': CFLAGS, 'gp_size': GP_SIZE, 'aspsx': ASPSX}
+    if key is not None and not key.startswith('main/'):
+        base.update(OVERLAY_OPTIONS)
+    return {**base, **FILE_OPTIONS.get(key, {})}
 
 
 class Failed(Exception):
@@ -62,24 +87,68 @@ def _named_addresses():
     return out
 
 
-def _far_from_gp(name, named):
-    """True when the symbol's address is known and $gp cannot reach it."""
+def _address(name, named):
+    """The address of a symbol: from config/, or from its name (D_8006xxxx)."""
     address = named.get(name)
     if address is None:
         m = re.search(r'_([0-9A-Fa-f]{8})$', name)
         address = int(m.group(1), 16) if m else None
+    return address
+
+
+def _far_from_gp(name, named):
+    """True when the symbol's address is known and $gp cannot reach it."""
+    address = _address(name, named)
     return address is not None and not (GP - 0x8000 <= address < GP + 0x8000)
 
 
-def _absolute_far_externs(asm):
-    """A small extern the game reaches with lui/%lo was declared bigger than
-    -G in its source (part of a struct or array): drop the size the compiler
-    gave it, so the assembler does not put it on $gp."""
+# The game's code built with -G8 (src/main/text.c), in its executable.
+GP_CODE = (0x800110B8, 0x80029A50)
+GAME = ROOT / 'disks' / 'us' / 'SCUS_941.63'
+
+
+@lru_cache(maxsize=None)
+def _never_through_gp():
+    """Addresses near $gp that the game's -G8 code reaches only with lui/%lo:
+    variables its source declared bigger than -G (in a struct or an array)."""
+    if not GAME.exists():
+        return frozenset()
+    lo, hi = GP_CODE
+    data = GAME.read_bytes()[lo - 0x8000F800:hi - 0x8000F800]
+    sext = lambda v: v - 0x10000 if v & 0x8000 else v
+    gp, absolute, upper = set(), set(), {}
+    for (w,) in struct.iter_unpack('<I', data):
+        op, rs, rt, imm = w >> 26, (w >> 21) & 31, (w >> 16) & 31, w & 0xFFFF
+        if op == 0x0F:                                  # lui
+            upper[rt] = imm << 16
+            continue
+        if op == 0x09 or 0x20 <= op <= 0x2E:            # addiu, loads, stores
+            if rs == 28:
+                gp.add(GP + sext(imm))
+            elif rs in upper:
+                absolute.add((upper[rs] + sext(imm)) & 0xFFFFFFFF)
+            if op < 0x28:                               # addiu and loads write rt
+                upper.pop(rt, None)
+        elif op == 0:
+            upper.pop((w >> 11) & 31, None)
+            if w & 0x3F == 0x08:                        # jr: the function may end
+                upper.clear()
+        else:
+            upper.pop(rt, None)
+    return frozenset(a for a in absolute - gp if GP - 0x8000 <= a < GP + 0x8000)
+
+
+def _absolute_externs(asm):
+    """A small extern the game reaches with lui/%lo (too far from $gp, or
+    declared bigger than -G in its source: part of a struct or an array):
+    drop the size the compiler gave it, so the assembler does not put it on
+    $gp."""
     named = _named_addresses()
     out = []
     for line in asm.splitlines(keepends=True):
         m = re.match(r'\s*\.extern\s+([\w.$]+)\s*,\s*\d+\s*$', line)
-        if m and _far_from_gp(m.group(1), named):
+        if m and (_far_from_gp(m.group(1), named)
+                  or _address(m.group(1), named) in _never_through_gp()):
             line = re.sub(r'\s*,\s*\d+\s*$', '\n', line)
         out.append(line)
     return ''.join(out)
@@ -92,24 +161,32 @@ def _run(cmd, data=None, env=None):
     return done.stdout
 
 
-def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None):
+def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expansion=None):
     """C file -> (cc1 output, assembly GNU as takes). Options not given are
     those of `like` (a file of src/), or of src itself."""
     default = options(like or src)
     cflags = default['cflags'] if cflags is None else cflags
     gp_size = default['gp_size'] if gp_size is None else gp_size
     aspsx = default['aspsx'] if aspsx is None else aspsx
+    nop_at = default.get('nop_at_expansion', False) if nop_at_expansion is None else nop_at_expansion
     env = dict(os.environ, TMPDIR=tempfile.gettempdir())
     # macro.inc keeps jump-table labels global: the tables are in another file.
     pre = _run([str(CPP), '-undef', '-Dmips', '-D__GNUC__=2', '-D_LANGUAGE_C', '-DLANGUAGE_C',
                 '-DINCLUDE_ASM_USE_MACRO_INC=1',
                 '-I', str(ROOT / 'include'), '-I', str(ROOT / 'src'), str(src)], env=env)
-    cc = _run([str(CC1), '-quiet', *cflags, '-o', '-'], pre, env=env)
+    cc = _run([str(cc1_of(default.get('gcc', '2.6.3'))), '-quiet', *cflags, '-o', '-'], pre, env=env)
     if not cc:
         raise Failed(f'cc1 made nothing of {src}')
-    cc = _absolute_far_externs(cc)
+    cc = _absolute_externs(cc)
+    # GCC calls the read-only section .rdata; the game's (and splat's) is .rodata.
+    cc = re.sub(r'^\t\.rdata$', '\t.section\t.rodata', cc, flags=re.M)
+    # GCC aligns jump tables to 8 bytes from the start of its file's .rodata.
+    # Ours put many of the game's files in one, so that start is not theirs:
+    # keep tables on 4 bytes, as splat's asm does; where the game has padding
+    # before one, tools/match.py tells.
+    cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
     ms = _run([sys.executable, str(MASPSX), f'--aspsx-version={aspsx}', f'-G{gp_size}',
-               '--expand-div'], cc)
+               '--expand-div', *(['--nop-at-expansion'] if nop_at else [])], cc)
     return cc, ms
 
 

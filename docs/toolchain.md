@@ -1,106 +1,157 @@
-# Trình biên dịch cho phần C
+# The C compiler
 
-Game được dịch bằng bộ PSY-Q của Sony: `CCPSX` gọi `cpp`, `cc1` (GCC 2.6.3 sửa cho PS1)
-và `ASPSX` (trình hợp dịch). Ở đây dùng những thứ tương đương chạy được trên Windows:
+The game was compiled with Sony's PSY-Q: `CCPSX` runs `cpp`, `cc1` (GCC modified for the
+PS1; the game used two versions of it, 2.6.3 and 2.7.2) and `ASPSX` (the assembler). This
+repository uses equivalents that run on Windows:
 
 ```
-cpp (GCC 2.6.3) -> cc1 (GCC 2.6.3, mips-sony-psx) -> maspsx -> GNU as (mipsel-none-elf)
+cpp (GCC 2.6.3) -> cc1 (GCC 2.6.3 or 2.7.2, mips-sony-psx) -> maspsx -> GNU as (mipsel-none-elf)
 ```
 
-| Bước | Công cụ | Lấy ở đâu |
+| Step | Tool | Where it comes from |
 |---|---|---|
-| Tiền xử lý, biên dịch | `cpp.exe`, `cc1.exe` (GCC 2.6.3) | Dựng bằng `tools/gcc-win32/build.sh` |
-| Thay ASPSX | [maspsx](https://github.com/mkst/maspsx) commit `4ffa8b5` + `tools/maspsx-extern.patch` | `git clone`, `git apply` |
-| Hợp dịch, liên kết | GNU binutils 2.40 (`mipsel-none-elf-*`) | PSn00bSDK v0.24, xem README |
+| Preprocessing, compiling | `cpp.exe`, `cc1.exe` (GCC 2.6.3 and 2.7.2) | Built by `tools/gcc-win32/build.sh` |
+| Standing in for ASPSX | [maspsx](https://github.com/mkst/maspsx) commit `4ffa8b5` + `tools/maspsx-extern.patch` | `git clone`, `git apply` |
+| Assembling, linking | GNU binutils 2.40 (`mipsel-none-elf-*`) | PSn00bSDK v0.24, see the README |
 
-`tools/psyq.py` nối các bước này; `tools/build.py` dùng nó cho mọi file `src/**/*.c`.
+`tools/psyq.py` chains these steps; `tools/build.py` uses it for every `src/**/*.c`.
 
-## Dựng GCC 2.6.3 cho Windows
+## Building GCC for Windows
 
 ```bash
-sh tools/gcc-win32/build.sh D:/FF7/toolchain
+sh tools/gcc-win32/build.sh D:/FF7/toolchain 2.6.3
+sh tools/gcc-win32/build.sh D:/FF7/toolchain 2.7.2
 ```
 
-Script lấy mã nguồn GCC chính thức (`ftp.gnu.org/old-gnu/gcc/gcc-2.6.3.tar.bz2`, SHA-256
-`71f67384…3c140`) và bản vá PS1 của
-[decompals/old-gcc](https://github.com/decompals/old-gcc) (commit `cf70ec5`, đúng công thức
-`gcc-2.6.3-psx.Dockerfile` của họ), rồi dịch `cc1` và `cpp` bằng clang thành chương trình
-**Windows 32-bit** (`i686-w64-mingw32`, có trong bộ llvm-mingw). Bản 32-bit là cần thiết:
-GCC 2.6.3 coi một số nguyên máy (`HOST_WIDE_INT`) đủ chứa con trỏ, như trên các máy chạy
-PSY-Q thời đó. `tools/gcc-win32/win32-compat.c` bù vài hàm chuỗi kiểu BSD mà Windows
-không có. Kết quả qua được các phép thử của old-gcc; hai lần dựng cho đầu ra giống hệt
-nhau.
+The script takes the official GCC sources (`ftp.gnu.org/old-gnu/gcc/gcc-2.6.3.tar.bz2`,
+SHA-256 `71f67384…3c140`; `gcc-2.7.2.tar.gz`, SHA-256 `7cd8bce5…c5da5`) and the PS1
+patches of [decompals/old-gcc](https://github.com/decompals/old-gcc) (commit `cf70ec5`,
+following their `gcc-<version>-psx.Dockerfile`), and builds `cc1` and `cpp` with clang as
+**32-bit Windows** programs (`i686-w64-mingw32`, part of llvm-mingw). 32 bits are needed:
+these GCCs take a host integer (`HOST_WIDE_INT`) to be wide enough for a pointer, as it
+was on the machines PSY-Q ran on. `tools/gcc-win32/win32-compat.c` and
+`tools/gcc-win32/include/` supply the BSD string functions and `getrusage` Windows lacks.
+The results pass old-gcc's tests; two builds give identical output.
 
-`cc1` cần biến `TMPDIR` trỏ tới một thư mục ghi được (`psyq.py` tự đặt).
+`cc1` needs `TMPDIR` set to a writable folder (`psyq.py` sets it).
 
-## Bản vá maspsx
+## The maspsx patch
 
-ASPSX truy cập một biến ngoài nhỏ (`.extern x, 4`, kích thước ≤ `-G`) qua `$gp`; maspsx
-bản gốc bỏ qua dòng `.extern`. `tools/maspsx-extern.patch` ghi nhận các biến đó (chỉ để
-chọn cách truy cập, không định nghĩa chúng):
+ASPSX reaches a small extern variable (`.extern x, 4`, size ≤ `-G`) through `$gp`; the
+original maspsx ignores `.extern` lines. `tools/maspsx-extern.patch` records those
+variables (only to choose how to reach them, never to define them). It also adds
+`--nop-at-expansion`: a `nop` between a load and an instruction expanded through `$at`
+that uses the loaded register, which maspsx otherwise does only for ASPSX below 2.30
+but the game's `text2.c` code has with a newer one.
 
 ```bash
 git -C D:/FF7/toolchain/maspsx apply "$PWD/tools/maspsx-extern.patch"
 ```
 
-## Tham số đã khớp
+## Options that match
 
-Chương trình chính (`SCUS_941.63`) được chia làm ba file C theo cách nó được dịch
-(`tools/psyq.py`, bảng `FILE_OPTIONS`):
+The main executable (`SCUS_941.63`) is split into C files by how each part was compiled
+(`tools/psyq.py`, table `FILE_OPTIONS`); the overlays are all built like `lib.c` for now:
 
-| File | Vùng | `cc1` | maspsx |
-|---|---|---|---|
-| `src/main/text.c` | 0x800110B8–0x80029A4F, mã của game | `-O2 -G8` | `-G8`, ASPSX 2.34 |
-| `src/main/akao.c` | 0x80029A50–0x80036297, driver âm thanh AKAO | `-O2 -G0` | `-G0`, ASPSX 2.21 |
-| `src/main/lib.c` | 0x80036298–0x80048D17, thư viện PSY-Q | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| File | Range | Compiler | `cc1` | maspsx |
+|---|---|---|---|---|
+| `src/main/text.c` | 0x800110B8–0x80013C9B, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text2.c` | 0x80013C9C–0x80016F8F, game code (kernel strings...) | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.34, `--nop-at-expansion` |
+| `src/main/text3.c` | 0x80016F90–0x8001BDAF, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text4.c` | 0x8001BDB0–0x80029A4F, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/akao.c` | 0x80029A50–0x80036297, AKAO sound driver, CD/movie code | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/main/lib.c` | 0x80036298–0x80048D17, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/<overlay>/*.c` | each overlay | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
 
-Cách các tham số được chốt:
+The game's code was many source files; these four are groups of them, cut where the way
+they were built changes. How the options were settled:
 
-- **ASPSX của `text.c` nằm trong [2.30, 2.56)**: từ 2.30 trình hợp dịch gộp `%lo` vào
-  lệnh nạp (`lw $v0, %lo(x)($v0)` thay vì `addiu` + `lw`), còn tới 2.56 thì `li` của
-  hằng 16 bit không dấu vẫn ra `ori` như game. 2.34 là một giá trị trong khoảng đó.
-- **AKAO dùng ASPSX cũ hơn 2.30**: trước một lệnh mở rộng qua `$at` (`sh $v0, x` thành
-  `lui $at` + `sh`) dùng ngay thanh ghi vừa nạp, game có thêm một `nop`; chỉ ASPSX dưới
-  2.30 làm vậy. 2.21 là một giá trị trong khoảng đó. Có lẽ Square dịch driver này riêng
-  bằng bộ công cụ cũ hơn.
-- **`-G8` chỉ cho `text.c`**: không hàm nào từ 0x80029A50 trở đi dùng `$gp`, kể cả với
-  biến 1–4 byte nằm ngay cạnh `$gp`.
-- **Biến ngoài ở xa `$gp`**: một biến nhỏ mà game truy cập bằng `lui`/`%lo` (vì địa chỉ
-  cách `$gp` quá ±32 KB, hoặc vì trong mã gốc nó là một phần của mảng/struct) được
-  `psyq.py` bỏ kích thước khỏi dòng `.extern`, để maspsx không đưa nó qua `$gp`.
+- **ASPSX below 2.30 for most of the game's code**: a global plus a register is
+  `lui $at; addiu $at, %lo(x); addu $at, $reg; lw 0($at)` (maspsx's form below 2.30),
+  and before an instruction expanded through `$at` that uses the register just loaded
+  there is an extra `nop`. 2.21 is one value below 2.30.
+- **`text2.c`, a newer ASPSX**: there `%lo` is folded into the load
+  (`lw $v0, %lo(x)($at)`), as from 2.30 on, and `li` of an unsigned 16-bit constant is
+  still `ori`, as up to 2.56; it also has that `nop`, which maspsx gives a newer version
+  only with `--nop-at-expansion` (from its patch). 2.34 is one value in between.
+- **GCC 2.7.2 for `text2.c` and `text4.c`**: there a function can end
+  `lw $ra; li $v0, 1; jr $ra; addiu $sp` (2.6.3 never fills a return's delay slot so),
+  and some registers are allocated as 2.7.2 does (`mflo $v1` where 2.6.3 picks `$v0`).
+  Elsewhere functions match only with 2.6.3. The boundaries are where those functions
+  change sides, and where the same variable starts being reached through `$gp` or with
+  `lui` (its declaration changed, so the source file did).
+- **`-G8` only for the game's code**: no function from 0x80029A50 on uses `$gp`, not even
+  for 1–4 byte variables right next to it, and neither do the overlays (`$gp` points
+  into the main executable's data).
+- **Externs reached with `lui`/`%lo`**: when the game reaches a small variable that way
+  (too far from `$gp`, or declared bigger than `-G` in its source: part of an array or
+  a struct), `psyq.py` drops the size from its `.extern` line so maspsx does not put it
+  on `$gp`. Which variables near `$gp` are reached only that way is read from the game's
+  own code.
+- **AKAO**: Square probably built the driver apart, with older tools (ASPSX below 2.30).
+- **PSY-Q libraries**: some of `lib.c` was built with other options (for example
+  without filling a return's delay slot), and the GTE (cop2) and BIOS-call functions
+  were assembly to begin with. `lib.c` is still to be split by library.
 
-`INCLUDE_ASM` dùng kiểu `maspsx_hack` của splat: GCC 2.6.3 đưa khối `asm` cấp ngoài cùng
-lên trước các hàm C xung quanh, nên mỗi `INCLUDE_ASM` được bọc trong một hàm giả mà
-maspsx gỡ ra, giữ đúng thứ tự.
+`INCLUDE_ASM` uses splat's `maspsx_hack` style: GCC 2.6.3 puts top-level `asm` ahead of
+the C functions around it, so each `INCLUDE_ASM` is wrapped in a dummy function that
+maspsx unwraps, keeping the order. `INCLUDE_RODATA` (`include/common.h`) does the same
+for rodata.
 
-## Viết lại một hàm
+### Rodata
 
-- `tools/match.py thu.c` dịch file như `build.py` dịch và so **từng từ** của mỗi hàm với
-  game, sau khi điền địa chỉ như trình liên kết (lấy từ `build/us/scus_941.63.elf`, nên
-  chạy `build.py` trước). Hàm cần dữ liệu riêng (chuỗi, bảng tĩnh) được báo riêng. Lời
-  gọi trong Python: `match.check(file, like='src/main/akao.c')` dịch theo tham số của
-  file được nêu.
-- `tools/auto_decomp.py --max 48 --limit 600` cho m2c viết nháp từng hàm còn là hợp ngữ
-  (nhỏ trước), giữ bản nào khớp: thay `INCLUDE_ASM` bằng C và thêm khai báo, cả nguyên
-  mẫu của chính hàm đó, vào `src/main/decls.h`. Khi nguyên mẫu mới thay một khai báo m2c
-  đoán trước đó cho nơi gọi, mọi hàm C được kiểm tra lại và hàm mới bị gỡ nếu có nơi gọi
-  hết khớp. Hàm không khớp được liệt kê cùng lý do trong `build/us/auto_decomp.txt`.
-- Khi đã thay xong: `tools/build.py` phải vẫn khớp byte.
+Each C file has its own part of `.rodata` (config: `[0x800, .rodata, text]`, ...), and
+splat moves every function's jump tables and strings into its asm file, so a function
+written in C brings its own: GCC's `.rdata` is renamed `.rodata`, and its jump tables are
+aligned on 4 bytes instead of 8 (the game's files were smaller than ours, so GCC's
+8-byte alignment from the start of the file does not fall where theirs did; where the
+game really has padding, `match.py` reports a rodata difference). Strings a function
+uses must be string literals in its C. A function may not define tables of its own
+(`static` or global data): GCC puts static data at the end of its file, which in our
+larger files is not where the game has it, so the game's tables stay in asm and the C
+declares them `extern` (`tools/work.py put` refuses such data, and checks the whole file).
 
-Vài điều GCC 2.6.3 cần để ra đúng mã của game (rút ra từ các hàm đã khớp):
+C code may name any address as `D_80012345` or `func_80012345`; `build.py` gives each such
+name its address (`build/us/<target>.addresses.ld`), whether or not splat named it.
 
-- `while (1)` thay vì `for (;;)`; đặt giá trị vào biến tạm bằng `if`/`else` rồi ghi một
-  lần, thay vì toán tử `?:` trong lệnh ghi.
-- Bộ lập lịch được tự do đổi chỗ một lệnh nạp qua con trỏ vào struct với một lệnh ghi
-  vào biến đơn ở địa chỉ cố định (và ngược lại), nhưng không đổi chỗ hai truy cập cùng
-  loại. Nên khi thứ tự nạp/ghi lệch, thử ghi qua trường của struct
-  (`D_8009A104[1].unk28 = 0`) thay vì tên riêng của trường (`D_8009A18C = 0`) hoặc
-  ngược lại.
-- Địa chỉ cố định được giữ trong thanh ghi khi mã gốc đi qua một biến con trỏ
-  (`p = &x; *p |= ...`); trường khác 0 của con trỏ hằng thì GCC tự đổi về địa chỉ cố
-  định (`lui`/`%lo`).
-- Vòng lặp đếm bằng `u16` ra `addu n, n, 0xFFFF` + `andi`; vị trí của `n--` trong thân
-  vòng lặp quyết định thứ tự hằng được đưa ra ngoài vòng lặp.
+## Writing a function
 
-[m2c](https://github.com/matt-kempster/m2c) cho bản C nháp từ hợp ngữ:
-`python D:/FF7/toolchain/m2c/m2c.py asm/us/main/nonmatchings/<file>/<hàm>.s`.
+- `tools/match.py FILE.c` compiles a file the way `build.py` does and compares **every
+  word** of each function with the game's, after filling in addresses as the linker
+  would (from the built ELF, so run `build.py` first), and the object's rodata with the
+  game's. From Python, `match.check(file, like='src/main/akao.c')` compiles with the
+  options of the named file.
+- `tools/auto_decomp.py --target main --max 100` has m2c draft each function still in
+  asm (smallest first) and keeps the ones that match: the draft, the draft with struct
+  members (`M2C_SFIELD`) and the draft with neighbouring statements swapped are tried.
+  The function replaces its `INCLUDE_ASM` and its declarations, its own prototype among
+  them, go into `src/<target>/decls.h`. When a new prototype replaces a guess m2c made
+  earlier for a caller, every function in C is checked again, and the new one is taken
+  out if a caller stops matching. The rest are listed with the reason in
+  `build/us/auto_decomp.txt`.
+- `tools/work.py show NAME`, `diff FILE NAME`, `put FILE NAME`: the same by hand, from
+  m2c's draft to a function in place (see its help). A work file's own declarations
+  replace decls.h's for the same names.
+- When done: `tools/build.py` must still match.
+
+What GCC 2.6.3 needs to produce the game's code (learned from functions that match):
+
+- `while (1)` rather than `for (;;)`; a value chosen with `if`/`else` into a temporary
+  and stored once, rather than `?:` inside the store.
+- The scheduler may swap a load through a pointer to a struct with a store to a plain
+  variable at a fixed address (and the reverse), never two accesses of the same kind.
+  So when loads and stores are out of order, try a struct member
+  (`D_8009A104[1].unk28 = 0`) instead of the field's own name (`D_8009A18C = 0`), or the
+  other way round, or the statements in the other order.
+- A fixed address kept in a register comes from a pointer variable in the source
+  (`p = &x; *p |= ...`); for other fields of a constant pointer, GCC goes back to the
+  fixed address (`lui`/`%lo`).
+- `u16` counters give `addu n, n, 0xFFFF` + `andi`; where `n--` sits in the loop body
+  decides the order constants are hoisted out of it.
+- Register choice follows the order variables are declared and how long they live;
+  reusing a parameter as a variable changes it.
+- A `switch` table spans the smallest to the largest case, so empty cases may be needed;
+  case blocks are laid out in source order, and identical tails are merged.
+
+[m2c](https://github.com/matt-kempster/m2c) drafts C from asm:
+`python D:/FF7/toolchain/m2c/m2c.py asm/us/main/nonmatchings/<file>/<function>.s`.

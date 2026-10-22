@@ -77,6 +77,22 @@ def main_symbols():
     return out
 
 
+def named_by_address(elf, c_objects):
+    """A linker script giving the address its name holds (D_80012345,
+    func_80012345) to each symbol C code uses that nothing defines: splat
+    only names what its asm refers to, and the C may refer to more."""
+    names = set()
+    for obj in c_objects:
+        for line in run([PREFIX + 'nm', '-u', str(obj)]).stdout.splitlines():
+            m = re.fullmatch(r'\s*U\s+((?:D|func|jtbl)_([0-9A-F]{8}))', line)
+            if m:
+                names.add(m.group(1))
+    out = elf.with_name(elf.stem + '.addresses.ld')
+    out.write_text(''.join(f'PROVIDE({n} = 0x{n[-8:]});\n' for n in sorted(names)), encoding='utf-8',
+                   newline='\n')
+    return out
+
+
 def objects(ld_script):
     """Object files a splat linker script names, with their sources."""
     out = []
@@ -122,7 +138,8 @@ def build(config, disc, packed, split, jobs):
             # Compiler settings and headers too (a cheap stand-in for real dependencies).
             newest = max([newest, (ROOT / 'tools' / 'psyq.py').stat().st_mtime] +
                          [h.stat().st_mtime for h in (ROOT / 'include').glob('*.h')] +
-                         [h.stat().st_mtime for h in (ROOT / 'src').rglob('*.h')] +
+                         # its own target's headers and the main executable's (overlays include those)
+                         [h.stat().st_mtime for h in {*src.parent.glob('*.h'), *(ROOT / 'src' / 'main').glob('*.h')}] +
                          [p.stat().st_mtime for p in psyq.MASPSX.parent.glob('maspsx/*.py')])
         if not obj.exists() or obj.stat().st_mtime < newest:
             work.append((obj, src))
@@ -153,6 +170,7 @@ def build(config, disc, packed, split, jobs):
         link += ['-T', str(main_symbols())]
     for path in auto:
         link += ['-T', str(path)]
+    link += ['-T', str(named_by_address(elf, [o for o, s in objects(ld) if s.suffix == '.c']))]
     run(link)
     out = elf.with_suffix('')
     run([PREFIX + 'objcopy', '-O', 'binary', str(elf), str(out)])
@@ -174,10 +192,14 @@ def main():
                     'executable is always built first')
     ap.add_argument('--split', action='store_true', help='run splat again before building')
     ap.add_argument('--jobs', type=int, default=os.cpu_count() or 4)
+    ap.add_argument('--skip-main', action='store_true', help='link overlays against the main '
+                    'executable as last built, without building it again')
     args = ap.parse_args()
     results = []
     for config, disc, packed in targets():
         if args.only and config != MAIN and not any(config.startswith(o) for o in args.only):
+            continue
+        if config == MAIN and args.skip_main:
             continue
         results.append(build(config, disc, packed, args.split, args.jobs))
     print(f'{sum(results)}/{len(results)} targets match')
