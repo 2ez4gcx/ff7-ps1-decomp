@@ -16,6 +16,7 @@ s32 func_800294BC();
 s32 func_80042BC0();
 s32 func_80042C98();
 extern void func_80030234();
+s32 func_80026B70(u8 *arg0);
 
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;
@@ -61,7 +62,55 @@ void func_80026B64(s8 arg0) {
     D_80062DFC = arg0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80026B70);
+s32 func_80026B70(u8 *arg0) {
+    s32 pad[1];
+    s32 n;
+    s32 total;
+    s32 base;
+    u8 c;
+    u8 t;
+
+    total = 0;
+    for (n = 0; n < (u8) D_80062DFC; n++) {
+        if (arg0 == NULL) {
+            return total;
+        }
+        c = *arg0;
+        if (c == 0xFF) {
+            break;
+        }
+        switch (c) {
+        case 0xFA:
+            arg0++;
+            base = 0xE7;
+            break;
+        case 0xFB:
+            arg0++;
+            base = 0x1B9;
+            break;
+        case 0xFC:
+            arg0++;
+            base = 0x2A0;
+            break;
+        case 0xFD:
+            arg0++;
+            base = 0x372;
+            break;
+        case 0xFE:
+            arg0++;
+            base = 0x444;
+            break;
+
+        default:
+            base = 0;
+            break;
+        }
+        t = D_800707C0[*arg0++ + base];
+        total += t >> 5;
+        total += t & 0x1F;
+    }
+    return total;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80026C5C);
 

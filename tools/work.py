@@ -208,6 +208,26 @@ def localize(known, mine, src, before_src):
     return files
 
 
+def local_block(text):
+    """The declarations of a file's own block."""
+    if LOCAL not in text:
+        return []
+    start = text.index(LOCAL) + len(LOCAL) + 1
+    end = text.index('\n\n', start - 1) if '\n\n' in text[start - 1:] else len(text)
+    return [l for l in text[start:end].splitlines() if l.strip()]
+
+
+def locally_declared():
+    """Symbols some source file declares in its own block."""
+    out = set()
+    for f in ad.sources():
+        for line in local_block(f.read_text(encoding='utf-8')):
+            sym = symbol_of(line)
+            if sym:
+                out.add(sym)
+    return out
+
+
 def put(work, name):
     with ad.Turn():
         found = where(name)
@@ -223,15 +243,26 @@ def put(work, name):
             raise SystemExit(f'{name}: {why}')
         known = ad.DECLS.read_text(encoding='utf-8')
         before = src.read_text(encoding='utf-8')
+        placed = before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1)
+        # A symbol some file declares in its own block stays out of decls.h:
+        # this file gets its declaration in its own block too.
+        own = locally_declared()
+        mine_lines = mine.splitlines()
+        mine_local = [l for l in mine_lines if l.rstrip().endswith(';') and l not in known.splitlines()
+                      and symbol_of(l) in own]
+        if mine_local:
+            mine = ''.join(l + '\n' for l in mine_lines if l not in mine_local)
+            placed = with_local(placed, mine_local)
         ad.write(ad.DECLS, mine)
-        ad.write(src, before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1))
+        ad.write(src, placed)
         changed = [l for l in known.splitlines() if l.strip() and l not in mine.splitlines()]
-        why = ad.all_match() if changed else ad.file_matches(src)
+        # Any change to decls.h is checked against every file of the target.
+        why = ad.all_match() if mine != known else ad.file_matches(src)
         if why is not None and changed:
             # The other files may have been written with the old declarations:
             # keep each file's own.
             originals = {f: f.read_text(encoding='utf-8') for f in ad.sources()}
-            files = localize(known, mine, src, before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1))
+            files = localize(known, mine, src, placed)
             if files:
                 for f, text in files.items():
                     ad.write(f, text)

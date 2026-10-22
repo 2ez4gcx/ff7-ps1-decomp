@@ -1316,7 +1316,5 @@ extern s16 D_8009A0BC;
 extern s16 D_8009A0BE;
 extern u8 D_80063560[];
 void func_8001DF24(u16 *arg0, s32 arg1, s8 arg2, s8 arg3);
-extern volatile s32 D_80062FC4;
-extern u8 *volatile D_80062F24;
 
 #endif /* MAIN_DECLS_H */
