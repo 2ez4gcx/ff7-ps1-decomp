@@ -1,0 +1,63 @@
+diff --git a/maspsx/__init__.py b/maspsx/__init__.py
+index 0aade6d..81cf1b5 100644
+--- a/maspsx/__init__.py
++++ b/maspsx/__init__.py
+@@ -515,6 +515,8 @@ class MaspsxProcessor:
+ 
+         self.bss_entries: dict[str, int] = {}
+         self.sbss_entries: dict[str, int] = {}
++        # Small externs (.extern x, n with n <= -G): reached through $gp, defined elsewhere.
++        self.extern_entries: dict[str, int] = {}
+         self.sdata_entries: dict[str, int] = {}
+ 
+         self.comm_symbols: set[str] = set()
+@@ -560,7 +562,14 @@ class MaspsxProcessor:
+                 continue
+ 
+             if line.startswith(".extern"):
++                # e.g.	.extern	D_80062F88, 4: ASPSX reaches a small extern
++                # (size <= -G) through $gp, as the compiler expects.
+                 in_sdata = False
++                parts = line.split(None, 1)
++                if len(parts) == 2 and "," in parts[1]:
++                    symbol, size_str = (p.strip() for p in parts[1].split(",", 1))
++                    if size_str.isdigit() and 0 < int(size_str) <= self.sdata_limit:
++                        self.extern_entries[symbol] = int(size_str)
+                 continue
+ 
+             if line.startswith(".comm") or line.startswith(".lcomm"):
+@@ -623,6 +632,7 @@ class MaspsxProcessor:
+ 
+         self.bss_entries = {}
+         self.sbss_entries = {}
++        self.extern_entries = {}
+         self.sdata_entries = {}
+ 
+         self.preprocess_lines()
+@@ -731,7 +741,7 @@ class MaspsxProcessor:
+                     gp_allowed = True
+ 
+                 if gp_allowed and (
+-                    symbol in self.sbss_entries or symbol in self.sdata_entries
++                    symbol in self.sbss_entries or symbol in self.sdata_entries or symbol in self.extern_entries
+                 ):
+                     return True
+ 
+@@ -1042,7 +1052,7 @@ class MaspsxProcessor:
+                     gp_allowed = True
+ 
+                 if gp_allowed and (
+-                    symbol in self.sdata_entries or symbol in self.sbss_entries
++                    symbol in self.sdata_entries or symbol in self.sbss_entries or symbol in self.extern_entries
+                 ):
+                     res.append(f"{op}\t{r_dest},{gp_rel}")
+                 else:
+@@ -1135,7 +1145,7 @@ class MaspsxProcessor:
+                     gp_allowed = False
+ 
+                 if gp_allowed and (
+-                    symbol in self.sdata_entries or symbol in self.sbss_entries
++                    symbol in self.sdata_entries or symbol in self.sbss_entries or symbol in self.extern_entries
+                 ):
+                     res.append(f"{op}\t{r_dest},{gp_rel}")
+                 else:

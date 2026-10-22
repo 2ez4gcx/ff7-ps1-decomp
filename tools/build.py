@@ -25,6 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import find_overlays  # noqa: E402
+import psyq  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = os.environ.get('MIPSEL_PREFIX', 'D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-')
@@ -83,7 +84,12 @@ def objects(ld_script):
         stem = obj[len('build/us/'):-2] if obj.startswith('build/us/') else None
         src = None
         if stem:
-            src = ROOT / (stem + '.bin' if stem.startswith('assets/') else stem + '.s')
+            if stem.startswith('assets/'):
+                src = ROOT / (stem + '.bin')
+            elif stem.startswith('src/'):
+                src = ROOT / (stem + '.c')
+            else:
+                src = ROOT / (stem + '.s')
         out.append((ROOT / obj, src))
     return out
 
@@ -111,13 +117,24 @@ def build(config, disc, packed, split, jobs):
     for obj, src in objects(ld):
         if src is None or not src.exists():
             sys.exit(f'no source for {obj}')
-        if not obj.exists() or obj.stat().st_mtime < src.stat().st_mtime:
+        newest = src.stat().st_mtime
+        if src.suffix == '.c':
+            # Compiler settings and headers too (a cheap stand-in for real dependencies).
+            newest = max([newest, (ROOT / 'tools' / 'psyq.py').stat().st_mtime] +
+                         [h.stat().st_mtime for h in (ROOT / 'include').glob('*.h')] +
+                         [p.stat().st_mtime for p in psyq.MASPSX.parent.glob('maspsx/*.py')])
+        if not obj.exists() or obj.stat().st_mtime < newest:
             work.append((obj, src))
 
     def assemble(item):
         obj, src = item
         obj.parent.mkdir(parents=True, exist_ok=True)
-        if src.suffix == '.bin':
+        if src.suffix == '.c':
+            try:
+                psyq.compile_c(src, obj)
+            except psyq.Failed as e:
+                sys.exit(f'failed: {src}\n{e}')
+        elif src.suffix == '.bin':
             # Raw bytes splat kept as they are (a 'bin' subsegment), as .data.
             run([PREFIX + 'objcopy', '-I', 'binary', '-O', 'elf32-littlemips', '-B', 'mips',
                  '--rename-section', '.data=.data,alloc,load,data,contents', str(src), str(obj)])

@@ -12,8 +12,10 @@ từ file thực thi trên đĩa, viết lại thành hợp ngữ rồi C, sao c
 
 ## Trạng thái
 
-318 file thực thi của đĩa 1 dựng lại khớp từng byte (toàn bộ còn ở dạng hợp ngữ; chưa
-có hàm nào viết lại bằng C). Danh sách đầy đủ ở `config/targets.txt`.
+318 file thực thi của đĩa 1 dựng lại khớp từng byte. Phần code của chương trình chính đã
+đi qua cùng phiên bản trình biên dịch mà PSY-Q dùng (GCC 2.6.3, xem [docs/toolchain.md](docs/toolchain.md)):
+6 hàm viết lại bằng C, các hàm còn lại vẫn là hợp ngữ (`INCLUDE_ASM`). Danh sách đầy đủ ở
+`config/targets.txt`.
 
 | File trên đĩa | Nội dung | Nạp ở |
 |---|---|---|
@@ -50,7 +52,11 @@ Chỉ đĩa 1 bản USA được dùng; overlay chỉ có trên đĩa 2/3 sẽ t
    và trỏ biến `MIPSEL_PREFIX` tới `.../bin/mipsel-none-elf-` (mặc định
    `D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-`).
 
-3. Công cụ hỗ trợ decompile (tuỳ chọn): [m2c](https://github.com/matt-kempster/m2c) và
+3. Trình biên dịch cho phần C: GCC 2.6.3 dựng thành chương trình Windows 32-bit bằng
+   `tools/gcc-win32/build.sh`, cùng [maspsx](https://github.com/mkst/maspsx) có bản vá
+   `tools/maspsx-extern.patch`. Chi tiết ở [docs/toolchain.md](docs/toolchain.md).
+
+4. Công cụ hỗ trợ decompile (tuỳ chọn): [m2c](https://github.com/matt-kempster/m2c) và
    [asm-differ](https://github.com/simonlindholm/asm-differ), clone về chỗ riêng.
    Lưu ý: gói tên `m2c` trên PyPI **không phải** m2c này.
 
@@ -84,4 +90,6 @@ hình splat và thêm vào `config/targets.txt`.
    còn: overlay riêng của đĩa 2/3, kích thước BSS của từng overlay, bộ nén gzip gốc.
 2. Đặt tên hàm/biến đã biết (từ quá trình làm FF7 Recompiled: driver âm thanh AKAO,
    field, trận đấu...).
-3. Dựng trình biên dịch gốc (PSY-Q, GCC 2.x) để decompile từng hàm sang C khớp byte.
+3. ~~Dựng trình biên dịch gốc (PSY-Q, GCC 2.x).~~ Xong: GCC 2.6.3 + maspsx, 6 hàm đầu
+   tiên đã khớp. Tiếp: decompile dần từng hàm (`tools/try_c.py`), chia `text.c` thành
+   các file theo từng phần của game, dò tham số cho từng overlay.

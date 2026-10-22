@@ -10,3 +10,6 @@ akao_song_resume = 0x8002AABC; // type:func
 akao_sfx_lookup = 0x8002A6C4; // type:func
 akao_sfx_start = 0x8002A094; // type:func
 akao_menu_sfx_start = 0x8002A28C; // type:func
+
+// A constant (0x00FFFFFF) ahead of the code that reads it
+D_800425F8 = 0x800425F8; // type:u32
