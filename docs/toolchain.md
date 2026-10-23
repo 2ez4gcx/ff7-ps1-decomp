@@ -50,21 +50,29 @@ git -C D:/FF7/toolchain/maspsx apply "$PWD/tools/maspsx-extern.patch"
 
 ## Options that match
 
-The main executable (`SCUS_941.63`) is split into C files by how each part was compiled
-(`tools/psyq.py`, table `FILE_OPTIONS`); the overlays are all built like `lib.c` for now:
+Each executable is split into C files by how each part was compiled
+(`tools/psyq.py`, tables `FILE_OPTIONS` and `OVERLAY_OPTIONS`):
 
 | File | Range | Compiler | `cc1` | maspsx |
 |---|---|---|---|---|
-| `src/main/text.c` | 0x800110B8–0x80013C9B, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text.c` | 0x800110B8–0x800137FF, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text1b.c` | 0x80013800–0x80013C9B, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/text2.c` | 0x80013C9C–0x80016F8F, game code (kernel strings...) | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.34, `--nop-at-expansion` |
-| `src/main/text3.c` | 0x80016F90–0x8001BDAF, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
-| `src/main/text4.c` | 0x8001BDB0–0x80029A4F, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text3.c` | 0x80016F90–0x8001BDAF, game code | GCC 2.6.3 | `-O2 -G8 -ffixed-25` | `-G8`, ASPSX 2.21 |
+| `src/main/text4.c` | 0x8001BDB0–0x800269FF, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
+| `src/main/text5.c` | 0x80026A00–0x80029A4F, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/akao.c` | 0x80029A50–0x80036297, AKAO sound driver, CD/movie code | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
 | `src/main/lib.c` | 0x80036298–0x80048D17, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
-| `src/<overlay>/*.c` | each overlay | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/battle/text.c` | BATTLE.X up to 0x800B30E4 | GCC 2.7.2 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/battle/text2.c` | BATTLE.X, 0x800B30E4–0x800E5F2F | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/battle/text3.c` | BATTLE.X from 0x800E5F30 | GCC 2.7.2 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/field/text.c` … `text5.c` | FIELD.BIN, cut where the game's files began | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/*menu/text.c` | the 13 menus (MENU/*.MNU) | GCC 2.7.2 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/<overlay>/*.c` | every other overlay | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
 
-The game's code was many source files; these four are groups of them, cut where the way
-they were built changes. How the options were settled:
+The game's code was many source files; our files are groups of them, cut where the way
+they were built changes (or, in FIELD.BIN, where the jump tables show a new file). How
+the main executable's options were settled:
 
 - **ASPSX below 2.30 for most of the game's code**: a global plus a register is
   `lui $at; addiu $at, %lo(x); addu $at, $reg; lw 0($at)` (maspsx's form below 2.30),
@@ -102,14 +110,22 @@ for rodata.
 
 Each C file has its own part of `.rodata` (config: `[0x800, .rodata, text]`, ...), and
 splat moves every function's jump tables and strings into its asm file, so a function
-written in C brings its own: GCC's `.rdata` is renamed `.rodata`, and its jump tables are
-aligned on 4 bytes instead of 8 (the game's files were smaller than ours, so GCC's
-8-byte alignment from the start of the file does not fall where theirs did; where the
-game really has padding, `match.py` reports a rodata difference). Strings a function
-uses must be string literals in its C. A function may not define tables of its own
-(`static` or global data): GCC puts static data at the end of its file, which in our
-larger files is not where the game has it, so the game's tables stay in asm and the C
-declares them `extern` (`tools/work.py put` refuses such data, and checks the whole file).
+written in C brings its own: GCC's `.rdata` is renamed `.rodata`. GCC aligns a jump table
+on 8 bytes from the start of its file's rodata, and the link packs each file's rodata on
+2 bytes (`SUBALIGN(2)`), so that alignment is relative to the file's start, as it was in
+the game. Where one of our files holds several of the game's, its start is not theirs:
+its jump tables are aligned on 4 bytes instead (where the game really has padding,
+`match.py` reports a rodata difference), unless the file starts on 8 bytes or is marked
+`unit_start` (it begins where one of the game's files began). The game's files show in
+the jump tables: those of one file are all on 8 bytes, or all 4 bytes past them, so a
+change marks a new file (that is how FIELD.BIN's were found).
+
+Strings a function uses are string literals in its C. A function may not define tables
+of its own (`static` or global data): GCC puts static data at the end of its file, which
+in our larger files is not where the game has it, so the game's tables stay in asm and
+the C declares them `extern` (`tools/work.py put` refuses such data, keeps a table the C
+reads by name in an asm file of its own with an `INCLUDE_RODATA`, and checks the whole
+file).
 
 C code may name any address as `D_80012345` or `func_80012345`; `build.py` gives each such
 name its address (`build/us/<target>.addresses.ld`), whether or not splat named it.

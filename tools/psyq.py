@@ -77,6 +77,11 @@ FILE_OPTIONS = {
     'battle/text.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
     # ... and its last part (from 0x800E5F30) by GCC 2.7.2 too.
     'battle/text3.c': {'gcc': '2.7.2'},
+    # FIELD.BIN's files, found where its jump tables change from 8-byte to
+    # 4-byte alignment: text2.c and text4.c begin where the game's files
+    # began, 4 bytes past an 8-byte boundary.
+    'field/text2.c': {'unit_start': True},
+    'field/text4.c': {'unit_start': True},
 }
 
 
@@ -252,8 +257,12 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     # game's has them too; elsewhere our file holds several of the game's, so
     # its start is not theirs: keep tables on 4 bytes, as splat's asm does
     # (where the game has padding before one, tools/match.py tells).
+    # A file that begins where one of the game's began (`unit_start`) keeps
+    # them on 8 bytes from its own start, as the game's did: the link packs
+    # each file's rodata on 2 bytes (SUBALIGN), so GNU as's alignment is
+    # relative to the file's start too.
     start = rodata_start(like or src)
-    if start is None or start % 8:
+    if not default.get('unit_start') and (start is None or start % 8):
         cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
     ms = _run([sys.executable, str(MASPSX), f'--aspsx-version={aspsx}', f'-G{gp_size}',
                '--expand-div', *(['--nop-at-expansion'] if nop_at else [])], cc)
