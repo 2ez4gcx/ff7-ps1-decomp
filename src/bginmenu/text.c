@@ -14,7 +14,10 @@ s32 func_801D0258(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0) | (M2C_FIELD(arg0, u8 *, 1) << 8);
 }
 
-INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D026C);
+void func_801D026C(u8 *arg0, u16 arg1) {
+    arg0[0] = arg1;
+    arg0[1] = arg1 >> 8;
+}
 
 INCLUDE_ASM("../asm/us/bginmenu/nonmatchings/text", func_801D027C);
 

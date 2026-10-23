@@ -61,6 +61,8 @@ FILE_OPTIONS = {
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
     # BATTLE.X: its first part was built by GCC 2.7.2 and a newer ASPSX.
     'battle/text.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
+    # ... and its last part (from 0x800E5F30) by GCC 2.7.2 too.
+    'battle/text3.c': {'gcc': '2.7.2'},
 }
 
 
