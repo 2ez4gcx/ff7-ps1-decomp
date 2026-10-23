@@ -29,4 +29,5 @@ typedef struct { u8 a[8]; Blk b[3]; u8 rest[0x3E4]; } Ent;
 extern Ent D_8009D8F8[];
 extern Blk D_801D1324[];
 
+s32 func_801D11A8(void);
 #endif /* LIMTMENU_DECLS_H */

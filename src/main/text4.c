@@ -8,6 +8,21 @@ extern s32 D_8009A008;
 extern volatile s32 D_80062FC4;
 extern u8 *volatile D_80062F24;
 void func_8001D3C0(s16 arg0, s16 arg1);
+M2C_UNK func_801D4CC0();
+M2C_UNK func_801D1774();
+M2C_UNK func_801D2D74();
+M2C_UNK func_801D2E84();
+M2C_UNK func_801D3228();
+M2C_UNK func_801D027C();
+M2C_UNK func_801D1A6C(s32);
+M2C_UNK func_801D4118(s32);
+M2C_UNK func_801D2F00(s32);
+M2C_UNK func_801D3138(s32);
+M2C_UNK func_801D3018(s32);
+M2C_UNK func_801D05C4(s32);
+M2C_UNK func_801D0704(s32);
+M2C_UNK func_801D131C(s32);
+M2C_UNK func_801D11A8();
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001BDB0);
 

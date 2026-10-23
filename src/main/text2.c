@@ -1,6 +1,15 @@
 #include "common.h"
 #include "main/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern s32 D_8019D5E8;
+extern s32 D_8019DAA0;
+void func_800A3278(void);
+void func_800B6D6C(void);
+extern u16 D_800F83C6[];
+s32 D_800A00CC();
+s32 D_800A1158();
+
 INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80013C9C);
 
 void func_800140A4(void) {

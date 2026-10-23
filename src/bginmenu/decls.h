@@ -30,4 +30,7 @@ extern s8 D_8009D6F7;
 extern u8 D_801D085C[];
 extern s32 D_8009CE60[];
 
+s32 func_801D027C(void);
+s32 func_801D05C4(s32 arg0);
+s32 func_801D0704(s32 arg0);
 #endif /* BGINMENU_DECLS_H */

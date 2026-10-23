@@ -5,6 +5,9 @@
 extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
 M2C_UNK func_8002988C(M2C_UNK, M2C_UNK);
 extern volatile s16 D_8009AC42;
+void func_800A16CC(void);
+void func_800CF60C(void);
+extern volatile s16 D_80114488;
 
 void func_800110B8(void) {
 }

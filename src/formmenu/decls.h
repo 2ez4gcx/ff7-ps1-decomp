@@ -57,4 +57,5 @@ extern s32 D_801DEA60;
 extern s32 D_801DEA6C;
 extern s32 D_801DEA70;
 
+s32 func_801D1A6C(s32 arg0);
 #endif /* FORMMENU_DECLS_H */
