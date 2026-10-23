@@ -390,5 +390,8 @@ void func_800ADE84(void);
 s32 func_800B2F70(void);
 void func_800D2710();
 void func_800D2828();
+s32 func_800E6B40(void);
+extern u16 D_8016376E[];
+extern u8 D_800F38A7;
 
 #endif /* BATTLE_DECLS_H */

@@ -59,6 +59,20 @@ FILE_OPTIONS = {
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
+    # The menus (MENU/*.MNU) were built by GCC 2.7.2.
+    'bginmenu/text.c': {'gcc': '2.7.2'},
+    'chngmenu/text.c': {'gcc': '2.7.2'},
+    'cnfgmenu/text.c': {'gcc': '2.7.2'},
+    'eqipmenu/text.c': {'gcc': '2.7.2'},
+    'formmenu/text.c': {'gcc': '2.7.2'},
+    'itemmenu/text.c': {'gcc': '2.7.2'},
+    'limtmenu/text.c': {'gcc': '2.7.2'},
+    'mgicmenu/text.c': {'gcc': '2.7.2'},
+    'namemenu/text.c': {'gcc': '2.7.2'},
+    'patymenu/text.c': {'gcc': '2.7.2'},
+    'savemenu/text.c': {'gcc': '2.7.2'},
+    'shopmenu/text.c': {'gcc': '2.7.2'},
+    'statmenu/text.c': {'gcc': '2.7.2'},
     # BATTLE.X: its first part was built by GCC 2.7.2 and a newer ASPSX.
     'battle/text.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
     # ... and its last part (from 0x800E5F30) by GCC 2.7.2 too.

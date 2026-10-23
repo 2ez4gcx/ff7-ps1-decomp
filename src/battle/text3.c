@@ -50,7 +50,17 @@ void func_800E68B4(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6904);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6B40);
+s32 func_800E6B40(void) {
+    s32 i;
+    s32 m;
+
+    m = (1 << D_800F38A7) & D_801516F8;
+    for (i = 0; i < 3; i++) {
+        if (m & D_8016376E[i]) {
+            return i;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6B94);
 
