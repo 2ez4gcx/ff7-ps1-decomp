@@ -35,7 +35,11 @@ void func_800E6820(void) {
     func_80026B70(&D_800F384A);
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6848);
+void func_800E6848(void) {
+    func_80026F44(0x10, 8, D_800F3828[0], 7);
+    func_80026F44(0x2C, 0x1C, D_800F3828[1], 7);
+    func_80026F44(((s32 (*)(void)) func_800E6820)() + 0x4C, 0x1C, D_800F3828[2], 7);
+}
 
 void func_800E68B4(void) {
     switch (D_800F38A5) {
