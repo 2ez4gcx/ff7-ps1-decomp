@@ -13,15 +13,25 @@ This is an independent project: it is not based on the code of any other decomp.
 
 All 318 executables of disc 1 rebuild byte for byte, from C files: functions not
 decompiled yet are still included as asm (`INCLUDE_ASM`). The compilers are the ones
-PSY-Q used (GCC 2.6.3 and 2.7.2, see [docs/toolchain.md](docs/toolchain.md)); the main
-executable is split by how each part was compiled:
+PSY-Q used (GCC 2.6.3 and 2.7.2, see [docs/toolchain.md](docs/toolchain.md)), and each
+executable is split into source files by how its parts were compiled. Progress, as
+`tools/progress.py` counts it (code: the functions' bytes):
 
-| Files | Contents | Functions in C | Still asm |
+| Part | Executables | Functions in C | Code in C |
 |---|---|---|---|
-| `src/main/text.c` … `text4.c` | The game's code (0x800110B8–0x80029A4F) | 134 | 211 |
-| `src/main/akao.c` | The AKAO sound driver, CD and movie code (0x80029A50–0x80036297) | 115 | 164 |
-| `src/main/lib.c` | The PSY-Q libraries (0x80036298–0x80048D17) | 105 | 343 |
-| `src/<overlay>/text.c` | The 317 overlays: field, battle, world, menus, minigames, spell effects | 0 | 7280 |
+| Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 583 of 1071 (54%) | 25% |
+| Field (`src/field/`) | 1 | 197 of 435 (45%) | 12% |
+| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 313 of 838 (37%) | 6% |
+| World map (`src/world/`) | 1 | 313 of 460 (68%) | 16% |
+| Menus (`src/*menu/`) | 13 | 96 of 243 (40%) | 13% |
+| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 326 of 1317 (25%) | 4% |
+| Ending, disc change (`src/ending/`, `dschange/`) | 2 | 12 of 64 (19%) | 2% |
+| Spell effects (`src/magic_*/`) | 289 | 430 of 3928 (11%) | 1% |
+| **All** | **318** | **2270 of 8356 (27%)** | **6%** |
+
+The main executable's files: `text.c` … `text5.c` are the game's code
+(0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code
+(0x80029A50–0x80036297), `lib.c` the PSY-Q libraries (0x80036298–0x80048D17).
 
 Every C function compiles to exactly the game's instructions (and its jump tables and
 strings to the game's rodata). Many were written by `tools/auto_decomp.py` (m2c drafts
@@ -101,9 +111,12 @@ ADDRESS NAME` writes its splat config and adds it to `config/targets.txt`.
   `tools/work.py diff work/NAME.c NAME` shows its code next to the game's, word by word;
   `tools/work.py put work/NAME.c NAME` puts it in once it matches.
 - `tools/match.py FILE.c` checks every function of a C file against the game.
+- `tools/progress.py` counts the functions and code bytes in C (`--targets`: per
+  executable).
 
-See [docs/toolchain.md](docs/toolchain.md) for the compiler options of each file and
-what GCC 2.6.3 needs to produce the game's code.
+See [docs/toolchain.md](docs/toolchain.md) for the compiler options of each file, what
+GCC 2.6.3 and 2.7.2 need to produce the game's code, and the other tools (the
+permuter, splitting a file).
 
 ## Layout
 
