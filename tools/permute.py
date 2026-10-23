@@ -19,6 +19,7 @@ import argparse
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -72,6 +73,17 @@ def sfield_structs(text, tag):
     return ''.join(out), defs
 
 
+def stop_tree(proc):
+    """Stop the permuter and its worker processes. Killing only the permuter
+    leaves its workers running, holding our output pipe open, so a caller
+    reading it (tools/permute_all.py) would wait for ever."""
+    if os.name == 'nt':
+        subprocess.run(['taskkill', '/F', '/T', '/PID', str(proc.pid)], capture_output=True)
+    else:
+        os.killpg(proc.pid, signal.SIGKILL)
+    proc.wait()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('work', type=Path)
@@ -117,11 +129,12 @@ def main():
     # The permuter preprocesses base.c again with a `cpp` from PATH: GCC 2.6.3's.
     run_env = dict(os.environ, TMPDIR=tempfile.gettempdir(),
                    PATH=str(psyq.CPP.parent) + os.pathsep + os.environ.get('PATH', ''))
+    run = subprocess.Popen([sys.executable, str(PERMUTER / 'permuter.py'), str(out), '-j', str(args.jobs),
+                            '--stop-on-zero'], cwd=PERMUTER, env=run_env, start_new_session=os.name != 'nt')
     try:
-        subprocess.run([sys.executable, str(PERMUTER / 'permuter.py'), str(out), '-j', str(args.jobs),
-                        '--stop-on-zero'], cwd=PERMUTER, timeout=args.minutes * 60, env=run_env)
+        run.wait(timeout=args.minutes * 60)
     except subprocess.TimeoutExpired:
-        pass
+        stop_tree(run)
     results = sorted(out.glob('output-*'), key=lambda p: int(p.name.split('-')[1]))
     if not results:
         print('nothing better found')

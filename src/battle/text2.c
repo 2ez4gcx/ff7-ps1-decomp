@@ -331,7 +331,16 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800BC11C);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800BC1E0);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800BC2F0);
+void func_800BC2F0(void) {
+    s32 i;
+
+    D_800FA9BC = 0;
+    for (i = 0; i < 16; i++) {
+        D_800FA978[i] = 0;
+        D_800F7ED8[i].a = 0;
+        D_800F7ED8[i].b = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800BC348);
 

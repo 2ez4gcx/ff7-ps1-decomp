@@ -15,7 +15,22 @@ void func_800A23BC(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A23E0);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A283C);
+void func_800A283C(void) {
+    u32 i;
+    u32 start;
+    s32 k;
+
+    k = 0;
+    for (i = 0, start = 0; i < 0x6D; i++) {
+        if (i == start) {
+            D_800F38AC[k] = i;
+            k++;
+        }
+        if (D_800A0098[i] == 0x1F) {
+            start = i + 1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2894);
 
@@ -168,7 +183,14 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A3ED0);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A4350);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A4480);
+void func_800A4480(void) {
+    s32 i;
+
+    for (i = 0; i < 10; i++) {
+        D_800F5BF2[i].a = D_800F8408[i].b;
+        D_800F5BF2[i].b = D_800F8408[i].a;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A44D8);
 
@@ -401,7 +423,15 @@ void func_800A6A70(s32 arg0, s32 arg1) {
     D_800F5BC6[arg0].a |= 9;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A6AC4);
+void func_800A6AC4(void) {
+    u16 *p;
+
+    p = &D_800F7DC4;
+    *p = *p & 0xFC0F;
+    D_800F7DCA &= 0xFC0F;
+    D_800F7DAC &= 0xFC0F;
+    D_800F7DC2 &= 0xFC0F;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A6B1C);
 
@@ -410,7 +440,13 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A6B88);
 void func_800A6BFC(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A6C04);
+void func_800A6C04(s32 arg0) {
+    s16 buf;
+
+    buf = D_801636B8[arg0].a;
+    D_800F7DBE = func_800A5EB0(func_800151F4(0x26), &buf) + 0x100;
+    D_800F7DC0 = 0xF;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A6C5C);
 
@@ -964,7 +1000,14 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800B0C14);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800B0DF8);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800B0E5C);
+s32 func_800B0E5C(s32 arg0) {
+    if (arg0 < 0xFF) {
+        if (M2C_FIELD(D_80063014, s32 *, 0xC8) & 0x20) {
+            arg0 -= arg0 * 3 / 10;
+        }
+    }
+    return arg0;
+}
 
 s32 func_800B0EB4(s32 arg0) {
     u32 f;

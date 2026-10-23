@@ -393,5 +393,27 @@ void func_800D2828();
 s32 func_800E6B40(void);
 extern u16 D_8016376E[];
 extern u8 D_800F38A7;
+void func_800A283C(void);
+extern u8 D_800A0098[];
+extern s32 D_800F38AC[];
+void func_800A4480(void);
+typedef struct { u16 a; u8 pad1[2]; s32 b; u8 pad2[0x60]; } W68;
+typedef struct { u16 p; u16 a; u16 b; u8 pad2[0x3E]; } W44;
+extern W68 D_800F8408[];
+extern W44 D_800F5BF2[];
+void func_800A6AC4(void);
+extern u16 D_800F7DCA;
+void func_800A6C04(s32 arg0);
+typedef struct { s8 a; u8 pad[15]; } T16b;
+extern T16b D_801636B8[];
+extern u16 D_800F7DBE;
+extern u16 D_800F7DC0;
+s32 func_800A5EB0();
+s32 func_800B0E5C(s32 arg0);
+void func_800BC2F0(void);
+typedef struct { s16 a; s16 b; u8 pad[0x24]; } T28;
+extern T28 D_800F7ED8[];
+extern s32 D_800FA978[];
+extern u16 D_800FA9BC;
 
 #endif /* BATTLE_DECLS_H */
