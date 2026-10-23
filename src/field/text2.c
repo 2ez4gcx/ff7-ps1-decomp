@@ -133,7 +133,30 @@ s16 func_800A8620(u8 arg0) {
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8640);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8858);
+s32 func_800A8858(FdMover *e, s16 step) {
+    FdVec a;
+    FdVec b;
+    s32 d;
+    s32 r;
+
+    a.x = e->x >> 12;
+    a.y = e->y >> 12;
+    b.x = e->tx >> 12;
+    b.y = e->ty >> 12;
+    d = (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
+    r = e->x6C + step;
+    r = r * r + 0x1000;
+    if (step != 0 && r >= d) {
+        return 0;
+    }
+    if (d < (e->x70 * e->x70) >> 16 || d < 4) {
+        e->x = e->tx;
+        e->y = e->ty;
+        return 0;
+    }
+    e->x36 = func_800A8640(&a, &b, &d) - e->x35;
+    return 1;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8968);
 
