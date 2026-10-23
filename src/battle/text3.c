@@ -37,7 +37,16 @@ void func_800E6820(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6848);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E68B4);
+void func_800E68B4(void) {
+    switch (D_800F38A5) {
+    case 0:
+        D_801516F8 = D_8016375C;
+        break;
+    case 1:
+        D_801516F8 = D_8016375E;
+        break;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6904);
 

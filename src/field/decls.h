@@ -185,5 +185,22 @@ void func_80020058(s32);
 s32 func_800C0B54(void);
 extern u8 D_8009A058;
 extern u8 D_800E4288;
+s32 func_800CB7C0(void);
+s32 func_800CFAF0(void);
+extern u16 D_8009D788[];
+s32 func_800A4134(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 func_800CC558(void);
+s32 func_800CB8F4(void);
+s32 func_800CBA28(void);
+s32 func_800CBB5C(void);
+s32 func_800CBDFC(void);
+s32 func_800CFB84(void);
+s32 func_800D3DCC(void);
+s32 func_800D3CA8(void);
+s32 func_800CC78C(void);
+s32 func_800CB01C(void);
+M2C_UNK func_800D7A58(u8);
+s32 func_800CB858(void);
+s32 func_800CB98C(void);
 
 #endif /* FIELD_DECLS_H */

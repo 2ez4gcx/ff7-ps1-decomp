@@ -99,6 +99,8 @@ def merged(known, decls, name, proto):
         if old is None:
             out = out.replace(ad.END, d + '\n' + ad.END, 1)
         elif old != d:
+            if d.lstrip().startswith('typedef') or old.lstrip().startswith('typedef'):
+                raise SystemExit(f'{sym} is already a type in decls.h ({old!r}): give yours another name')
             out = out.replace(old, d, 1)
     return out
 
