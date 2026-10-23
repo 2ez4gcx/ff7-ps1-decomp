@@ -132,6 +132,16 @@ name its address (`build/us/<target>.addresses.ld`), whether or not splat named 
 - `tools/work.py show NAME`, `diff FILE NAME`, `put FILE NAME`: the same by hand, from
   m2c's draft to a function in place (see its help). A work file's own declarations
   replace decls.h's for the same names.
+- `tools/permute.py WORK.c NAME` hands a near miss to
+  [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) (clone it next to the
+  toolchain, `pip install pycparser toml` in the venv): base.c is the work file expanded,
+  and each candidate is compiled as the function's file is built and linked at its game
+  address (`tools/permute_cc.py`), so only real differences count. A match is written
+  next to the work file for `work.py put`; `tools/permute_all.py LIST` runs a list of
+  them one after the other.
+- `tools/split_file.py TARGET FILE NEW ADDRESS [RODATA]` splits a C file where the game's
+  source files change (a different compiler, or a variable declared otherwise), and
+  `tools/find_units.py` lists the rare functions followed by a file's padding `nop`.
 - When done: `tools/build.py` must still match.
 
 What GCC 2.6.3 needs to produce the game's code (learned from functions that match):
