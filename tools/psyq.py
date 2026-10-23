@@ -82,6 +82,10 @@ FILE_OPTIONS = {
     # began, 4 bytes past an 8-byte boundary.
     'field/text2.c': {'unit_start': True},
     'field/text4.c': {'unit_start': True},
+    # The same for CHOCOBO.BIN and SUBMAR.BIN.
+    'chocobo/text2.c': {'unit_start': True},
+    'chocobo/text4.c': {'unit_start': True},
+    'submar/text2.c': {'unit_start': True},
 }
 
 

@@ -145,9 +145,3 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800ABA8C);
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800ABD4C);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AC2FC);
-
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800ACA40);
-
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800ACCA8);
-
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800ACF6C);
