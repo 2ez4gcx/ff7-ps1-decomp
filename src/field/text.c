@@ -1,7 +1,7 @@
 #include "common.h"
 #include "field/decls.h"
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A1370);
+INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A1368);
 
 void func_800A1498(void) {
     if (D_800965E8 == 1) {
@@ -2882,5 +2882,3 @@ void func_800DA4FC(s32 n, u8 *buf) {
     buf[len] = D_800E0208[n];
     buf[len + 1] = 0;
 }
-
-INCLUDE_RODATA("../asm/us/field/nonmatchings/text", func_800A1368);

@@ -55,6 +55,8 @@ segments:
     # file header: unpacked 0x40748, second word 0x33ddc
     subsegments:
       - [0x0, .rodata, text]
-      - [0x1370, c, text]
+      # The code starts at 0x1368 (func_800A1368 loads a global before its
+      # stack adjustment), not at 0x1370.
+      - [0x1368, c, text]
       - [0x3a5b8, data, data]
   - [0x40748]
