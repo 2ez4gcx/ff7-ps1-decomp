@@ -59,6 +59,8 @@ FILE_OPTIONS = {
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
+    # BATTLE.X: its first part was built by GCC 2.7.2 and a newer ASPSX.
+    'battle/text.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
 }
 
 
@@ -109,39 +111,50 @@ def _far_from_gp(name, named):
 GAME = ROOT / 'disks' / 'us' / 'SCUS_941.63'
 
 
-@lru_cache(maxsize=None)
-def code_range(src):
-    """(first, end) address of the game's code a C file of the main
-    executable stands for (its c segment in the splat config), or None."""
+def _subsegments(src):
+    """(origin, [(offset, kind, name)]) of the splat config of the target a
+    file of src/ belongs to, or None."""
     try:
         rel = Path(src).resolve().relative_to(ROOT / 'src')
     except ValueError:
         return None
-    if rel.parts[0] != 'main':
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import targets
+    try:
+        t = targets.get(rel.parts[0])
+    except KeyError:
         return None
-    text = (ROOT / 'config' / 'scus_941.63.us.yaml').read_text(encoding='utf-8')
+    text = t.config.read_text(encoding='utf-8')
     subs = [(int(o, 16), kind, name) for o, kind, name in
             re.findall(r'^\s*- \[(0x[0-9A-Fa-f]+), (\.?\w+), (\w+)\]', text, re.M)]
+    return t.origin, subs
+
+
+@lru_cache(maxsize=None)
+def code_range(src):
+    """(first, end) address of the game's code a C file stands for (its c
+    subsegment in the target's splat config), or None."""
+    found = _subsegments(src)
+    if found is None:
+        return None
+    origin, subs = found
+    stem = Path(src).stem
     for i, (offset, kind, name) in enumerate(subs):
-        if kind == 'c' and name == rel.stem and i + 1 < len(subs):
-            return offset + 0x8000F800, subs[i + 1][0] + 0x8000F800
+        if kind == 'c' and name == stem and i + 1 < len(subs):
+            return origin + offset, origin + subs[i + 1][0]
     return None
 
 
 @lru_cache(maxsize=None)
 def rodata_start(src):
-    """Address where a C file's rodata starts in the game: its `.rodata`
-    subsegment in the main executable's config, an overlay's load address
-    (its rodata comes first), or None."""
-    try:
-        rel = Path(src).resolve().relative_to(ROOT / 'src')
-    except ValueError:
+    """Address where a C file's rodata starts in the game (its `.rodata`
+    subsegment in the target's splat config), or None."""
+    found = _subsegments(src)
+    if found is None:
         return None
-    if rel.parts[0] != 'main':
-        return 0x80000000                       # overlays load on 64 KB boundaries
-    text = (ROOT / 'config' / 'scus_941.63.us.yaml').read_text(encoding='utf-8')
-    m = re.search(rf'^\s*- \[(0x[0-9A-Fa-f]+), \.rodata, {re.escape(rel.stem)}\]', text, re.M)
-    return int(m.group(1), 16) + 0x8000F800 if m else None
+    origin, subs = found
+    stem = Path(src).stem
+    return next((origin + o for o, kind, name in subs if kind == '.rodata' and name == stem), None)
 
 
 @lru_cache(maxsize=None)
@@ -215,7 +228,7 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     cc = _run([str(cc1_of(default.get('gcc', '2.6.3'))), '-quiet', *cflags, '-o', '-'], pre, env=env)
     if not cc:
         raise Failed(f'cc1 made nothing of {src}')
-    cc = _absolute_externs(cc, code_range(like or src))
+    cc = _absolute_externs(cc, code_range(like or src) if gp_size else None)
     # GCC calls the read-only section .rdata; the game's (and splat's) is .rodata.
     cc = re.sub(r'^\t\.rdata$', '\t.section\t.rodata', cc, flags=re.M)
     # GCC aligns jump tables to 8 bytes from the start of its file's .rodata.

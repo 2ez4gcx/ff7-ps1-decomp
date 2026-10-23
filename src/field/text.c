@@ -98,9 +98,13 @@ void func_800A82A0(void *arg0) {
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A8304);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A8600);
+s16 func_800A8600(u8 arg0) {
+    return D_800DF120[arg0].a;
+}
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A8620);
+s16 func_800A8620(u8 arg0) {
+    return D_800DF120[arg0].b;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800A8640);
 
@@ -175,7 +179,10 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AB728);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AB9C8);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800ABA34);
+u8 func_800ABA34(void) {
+    D_80071C20 += 1;
+    return D_800E0638[D_80071C20];
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800ABA70);
 
@@ -211,7 +218,17 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AF96C);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AFAC4);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AFDE4);
+void func_800AFDE4(void) {
+    List2 *p = &D_800DFDFC;
+    s32 n;
+    s32 i;
+    n = 16;
+    p->n = n;
+    for (i = 0; i < n; i++) {
+        p->e[i].a = 0;
+        p->e[i].b = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800AFE1C);
 
@@ -397,7 +414,10 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C0248);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C0B54);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C0BE8);
+s32 func_800C0BE8(void) {
+    D_800831FC[D_800722C4]++;
+    return 1;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C0C18);
 
@@ -513,7 +533,14 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C43C4);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C45AC);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C46A4);
+void func_800C46A4(void) {
+    s32 i;
+    Block9A000 *p = (Block9A000 *)&D_8009A000;
+    p->a = 0;
+    for (i = 5; i >= 0; i--) {
+        p->list[i] = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800C46D0);
 
@@ -1009,7 +1036,10 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D493C);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4B28);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4BC0);
+void func_800D4BC0(s16 arg0, s8 arg1, s16 arg2) {
+    D_8008327C[arg0].x11 = arg1;
+    D_8008327C[arg0].y26 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4BFC);
 
@@ -1017,7 +1047,9 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4C68);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4E24);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4E88);
+void func_800D4E88(s16 arg0, s16 arg1) {
+    D_8008327C[arg0].b = arg1;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D4EB4);
 
@@ -1106,7 +1138,9 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D83A8);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D8420);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D8498);
+s32 func_800D8498(s16 arg0) {
+    return D_800E08C0[arg0].a == 0;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D84CC);
 
@@ -1130,13 +1164,24 @@ INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800D9FFC);
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA124);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA194);
+s32 func_800DA194(s16 arg0, s16 arg1, s8 arg2) {
+    D_800E0746[arg0].f162[arg1] = arg2;
+    return 1;
+}
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA1D4);
+s32 func_800DA1D4(s32 arg0, s32 arg1) {
+    s32 r = 1;
+    D_800E0746[(s16)arg0].s10 = arg1;
+    D_8009D824 = r;
+    return r;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA214);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA28C);
+void func_800DA28C(s16 arg0) {
+    D_800E08C0[arg0].a = 1;
+    D_8009D824 = 1;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA2CC);
 
@@ -1179,11 +1224,37 @@ s32 func_800DA3C4(u8 *arg0) {
     return var_v1;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA3F0);
+void func_800DA3F0(u8 *arg0, u8 *arg1, s32 arg2) {
+    u8 pad[8];
+    s32 var_v1;
+    u8 *var_a0;
+    u8 *var_a1;
+    u8 temp_v0;
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA424);
+    var_a0 = arg0;
+    var_a1 = arg1;
+    var_v1 = arg2 - 1;
+    if (arg2 != 0) {
+        do {
+            temp_v0 = *var_a1;
+            var_a1 += 1;
+            var_v1 -= 1;
+            *var_a0 = temp_v0;
+            var_a0 += 1;
+        } while (var_v1 != -1);
+    }
+}
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA444);
+void func_800DA424(s32 arg0, u8 *arg1) {
+    arg1[1] = 0;
+    arg1[0] = D_800E0208[arg0 & 0xF];
+}
+
+void func_800DA444(s32 arg0, u8 *arg1) {
+    arg1[2] = 0;
+    arg1[0] = D_800E0208[(arg0 & 0xF0) >> 4];
+    arg1[1] = D_800E0208[arg0 & 0xF];
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text", func_800DA480);
 
