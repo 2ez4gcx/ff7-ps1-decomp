@@ -95,6 +95,17 @@ def merged(known, decls, name, proto):
         sym = symbol_of(d)
         if sym is None or sym == name or sym in in_c:
             continue
+        if d.lstrip().startswith('typedef'):
+            # A new type goes before the first line that uses it (the
+            # function's own prototype may).
+            old = re.search(rf'^(?:typedef\b[^\n]*\b|\}}\s*){sym}\s*;$', out, re.M)
+            if old is None:
+                first = re.search(rf'^[^\n#]*\b{sym}\b', out, re.M)
+                at = first.start() if first else out.index(ad.END)
+                out = out[:at] + d + '\n' + out[at:]
+            elif old.group(0) != d:
+                raise SystemExit(f'{sym} is already a type in decls.h ({old.group(0)!r}): give yours another name')
+            continue
         old = ad.declaration(out, sym)
         if old is None:
             out = out.replace(ad.END, d + '\n' + ad.END, 1)
