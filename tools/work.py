@@ -85,24 +85,40 @@ def symbol_of(decl):
     return m.group(1)
 
 
+TYPE = r'^(?:typedef\b[^\n]*?\b(\w+)\s*;|\}\s*(\w+)\s*;)$'
+
+
+def after_types(text, lines):
+    """decls.h with each of `lines` that names a type defined further down
+    moved to the end, after it."""
+    for line in lines:
+        at = text.find(line + '\n')
+        if at < 0:
+            continue
+        later = {a or b for a, b in re.findall(TYPE, text[at + len(line):], re.M)}
+        if any(re.search(rf'\b{t}\b', line) for t in later):
+            text = text[:at] + text[at + len(line) + 1:]
+            text = text.replace(ad.END, line + '\n' + ad.END, 1)
+    return text
+
+
 def merged(known, decls, name, proto):
     """decls.h with the work file's declarations in it (replacing any for the
     same names) and `proto` as the function's own. A function already in C
-    keeps the prototype of its definition."""
+    keeps the prototype of its definition. New types go at the end, in the
+    work file's order, and a declaration that names a type defined further
+    down moves after it."""
     out = ad.with_prototype(known, name, proto)
     in_c = ad.defined()
+    mine = [proto]
     for d in decls:
         sym = symbol_of(d)
         if sym is None or sym == name or sym in in_c:
             continue
         if d.lstrip().startswith('typedef'):
-            # A new type goes before the first line that uses it (the
-            # function's own prototype may).
             old = re.search(rf'^(?:typedef\b[^\n]*\b|\}}\s*){sym}\s*;$', out, re.M)
             if old is None:
-                first = re.search(rf'^[^\n#]*\b{sym}\b', out, re.M)
-                at = first.start() if first else out.index(ad.END)
-                out = out[:at] + d + '\n' + out[at:]
+                out = out.replace(ad.END, d + '\n' + ad.END, 1)
             elif old.group(0) != d:
                 raise SystemExit(f'{sym} is already a type in decls.h ({old.group(0)!r}): give yours another name')
             continue
@@ -110,10 +126,11 @@ def merged(known, decls, name, proto):
         if old is None:
             out = out.replace(ad.END, d + '\n' + ad.END, 1)
         elif old != d:
-            if d.lstrip().startswith('typedef') or old.lstrip().startswith('typedef'):
+            if old.lstrip().startswith('typedef'):
                 raise SystemExit(f'{sym} is already a type in decls.h ({old!r}): give yours another name')
             out = out.replace(old, d, 1)
-    return out
+        mine.append(d)
+    return after_types(out, mine)
 
 
 def standalone(work, name):
