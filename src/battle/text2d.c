@@ -27,7 +27,13 @@ s32 func_800E54EC(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2d", func_800E5530);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2d", func_800E5814);
+void func_800E5814(void) {
+    s32 i;
+
+    for (i = 0; i < D_800F5774; i++) {
+        D_80163778[i] = D_800F33B0[D_80163B70[i]][(2 - D_800F338C[i] / 4) & 0xF];
+    }
+}
 
 void func_800E58B0(void) {
     D_800F3468 = 0;
