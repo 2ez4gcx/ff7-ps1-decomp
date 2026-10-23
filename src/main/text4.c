@@ -704,7 +704,34 @@ void func_80025174(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_80025288);
+u16 func_80025288(u16 item) {
+    s32 id;
+    s32 count;
+    s32 i;
+    s32 n;
+    u16 v;
+    u16 res;
+
+    id = item & 0x1FF;
+    res = 0xFFFF;
+    count = item >> 9;
+    for (i = 0; i < 320; i++) {
+        v = D_8009CBE0[i];
+        if (v != 0xFFFF && id == (v & 0x1FF)) {
+            res = v >> 9;
+            n = res;
+            if (count < n) {
+                res = item | (count << 9);
+                D_8009CBE0[i] = ((n - count) << 9) | id;
+            } else {
+                res = v;
+                D_8009CBE0[i] = 0xFFFF;
+            }
+            break;
+        }
+    }
+    return res;
+}
 
 s32 func_80025310(s32 arg0) {
     s32 id;

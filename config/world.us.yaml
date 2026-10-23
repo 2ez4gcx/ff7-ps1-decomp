@@ -55,6 +55,8 @@ segments:
     # file header: unpacked 0x280c0, second word 0x4e454
     subsegments:
       - [0x0, .rodata, text]
-      - [0xbe4, c, text]
+      # The code starts with func_800A0B40 (an empty function), not at 0xbe4:
+      # with the code split right, splat moves each jump table into its function.
+      - [0xb40, c, text]
       - [0x265ec, data, data]
   - [0x280c0]

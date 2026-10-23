@@ -120,7 +120,7 @@ def standalone(work, name):
     """A file to compile for the work file: decls.h as merged() makes it,
     then the function. Returns (path, merged decls.h, function)."""
     decls, body = split_work(work.read_text(encoding='utf-8'), name)
-    proto = ad.HEAD.search(body).group(1) + ';'
+    proto = ad.prototype(ad.HEAD.search(body).group(1))
     mine = merged(ad.DECLS.read_text(encoding='utf-8'), decls, name, proto)
     path = Path(tempfile.gettempdir()) / f'ff7_work_{name}.c'
     path.write_text('#include "common.h"\n' + mine + '\n\n' + body, encoding='utf-8')
@@ -241,22 +241,79 @@ def locally_declared():
     return out
 
 
+def named_tables(asm_path, body):
+    """The function's own rodata (splat moved it into its asm) that its C
+    reads by name, as an extern: those tables stay asm, each in an asm file
+    of its own for an INCLUDE_RODATA put right before the function.
+    Returns ([(symbol, asm file text)], address of the rest of its rodata
+    (what the compiler makes: jump tables, strings) or None)."""
+    text = asm_path.read_text(encoding='utf-8')
+    m = re.search(r'^\.section \.rodata\n(.*?)(?=^\.section \.text)', text, re.S | re.M)
+    if not m:
+        return [], None
+    tables, rest, block = [], [], []
+    for line in m.group(1).splitlines():
+        block.append(line)
+        end = re.match(r'\s*enddlabel (\w+)', line)
+        if end:
+            sym = end.group(1)
+            if not sym.startswith('jtbl_') and re.search(rf'\b{sym}\b', body):
+                tables.append((sym, '.section .rodata\n' + '\n'.join(block).strip('\n') + '\n'))
+            else:
+                rest += re.findall(r'/\* [0-9A-F]+ ([0-9A-F]{8})', '\n'.join(block))
+            block = []
+    return tables, (min(int(a, 16) for a in rest) if rest else None)
+
+
+def keep_unmigrated(sym, text):
+    """Tell splat (config/symbols.us.<target>.txt) to keep a table out of its
+    function's asm, so a split writes it as an asm file of its own again."""
+    address = re.search(r'/\* [0-9A-F]+ ([0-9A-F]{8})', text).group(1)
+    path = ROOT / 'config' / f'symbols.us.{ad.TARGET}.txt'
+    lines = path.read_text(encoding='utf-8').splitlines()
+    for i, line in enumerate(lines):
+        if re.match(rf'{sym}\s*=', line):
+            if 'force_not_migration' not in line:
+                lines[i] = line + (' force_not_migration:True' if '//' in line else ' // force_not_migration:True')
+            break
+    else:
+        lines.append(f'{sym} = 0x{address}; // force_not_migration:True')
+    ad.write(path, '\n'.join(lines) + '\n')
+
+
+def compile_error(e):
+    """What a failed compile says, without its warnings."""
+    lines = [l for l in str(e).strip().splitlines() if 'warning:' not in l]
+    return '\n'.join(lines)[-600:]
+
+
 def put(work, name):
     with ad.Turn():
         found = where(name)
         if found is None:
             raise SystemExit(f'{name} is not an INCLUDE_ASM of src/{ad.TARGET}/ (already in C?)')
-        src, seg, _ = found
+        src, seg, asm_path = found
         path, mine, body, proto = standalone(work, name)
+        tables, rest = named_tables(asm_path, body)
         try:
-            why = match.check(path, ad.TARGET, only={name}, like=src).get(name, 'not compiled')
+            why = match.check(path, ad.TARGET, only={name}, like=src,
+                              rodata=rest if tables else None).get(name, 'not compiled')
         except psyq.Failed as e:
-            why = 'does not compile: ' + str(e).strip()[-300:]
+            why = 'does not compile: ' + compile_error(e)
         if why is not None:
             raise SystemExit(f'{name}: {why}')
         known = ad.DECLS.read_text(encoding='utf-8')
         before = src.read_text(encoding='utf-8')
-        placed = before.replace(ad.INCLUDE.format(seg, name), body.rstrip('\n'), 1)
+        include = ad.INCLUDE.format(seg, name)
+        written = []
+        for sym, text in tables:
+            table = ad.ASM / seg / f'{sym}.s'
+            if not table.exists():
+                table.write_text(text, encoding='utf-8', newline='\n')
+                written.append(table)
+        head = ''.join(include.replace('INCLUDE_ASM', 'INCLUDE_RODATA').replace(f', {name});', f', {sym});')
+                       + '\n\n' for sym, _ in tables)
+        placed = before.replace(include, head + body.rstrip('\n'), 1)
         # A symbol some file declares in its own block stays out of decls.h:
         # this file gets its declaration in its own block too.
         own = locally_declared()
@@ -289,8 +346,13 @@ def put(work, name):
         if why is not None:
             ad.write(ad.DECLS, known)
             ad.write(src, before)
+            for table in written:
+                table.unlink()
             raise SystemExit(f'{name} matches alone, but not in its file: {why}; nothing changed')
-        print(f'{name}: put in {src.relative_to(ROOT).as_posix()}')
+        for sym, text in tables:
+            keep_unmigrated(sym, text)
+        print(f'{name}: put in {src.relative_to(ROOT).as_posix()}'
+              + (f' (its tables {", ".join(s for s, _ in tables)} stay asm)' if tables else ''))
 
 
 def main():

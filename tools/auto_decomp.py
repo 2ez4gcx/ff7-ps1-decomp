@@ -163,12 +163,23 @@ def with_prototype(decls, name, proto):
     return decls.replace(END, proto + '\n' + END, 1)
 
 
+def prototype(head):
+    """The declaration for a definition's head. One with bare parameter
+    names, `f(arg0)` (old style, so callers may pass any arguments), is
+    declared `f()`: `f(arg0);` is no declaration C (or m2c) accepts."""
+    m = re.match(r'(.*?\w)\s*\((.*)\)$', head)
+    params = m.group(2).strip()
+    if params and params != 'void' and re.fullmatch(r'\w+(\s*,\s*\w+)*', params):
+        return m.group(1) + '();'
+    return head + ';'
+
+
 def defined():
     """{name: (source, prototype)} of the functions written in C."""
     out = {}
     for src in sources():
         for m in HEAD.finditer(src.read_text(encoding='utf-8')):
-            out[m.group(2)] = (src, m.group(1) + ';')
+            out[m.group(2)] = (src, prototype(m.group(1)))
     return out
 
 
@@ -258,7 +269,7 @@ def attempt(name, src, path, ctx, known):
         body = re.sub(rf'\(\s*[\w\s\*]+\)\s*&{sym}\b|&{sym}\b|\b{sym}\b', lambda m: text, body)
         decls = [d for d in decls if not re.search(rf'\b{sym}\b', d)]
     new = [d for d in decls if d not in known and not re.search(rf'\b{name}\b', d)]
-    proto = HEAD.search(body).group(1) + ';'
+    proto = prototype(HEAD.search(body).group(1))
     mine = with_prototype(known, name, proto)
     if new:
         mine = mine.replace(END, '\n'.join(new) + '\n' + END, 1)

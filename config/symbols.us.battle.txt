@@ -1,1 +1,2 @@
 // BATTLE/BATTLE.X: name = 0xADDRESS; // type:func
+D_800A01A8 = 0x800A01A8; // force_not_migration:True

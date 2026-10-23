@@ -1316,5 +1316,6 @@ extern s16 D_8009A0BE;
 extern u8 D_80063560[];
 void func_8001DF24(u16 *arg0, s32 arg1, s8 arg2, s8 arg3);
 void func_800184C0(s32 arg0, s32 arg1, u32 arg2);
+u16 func_80025288(u16 item);
 
 #endif /* MAIN_DECLS_H */
