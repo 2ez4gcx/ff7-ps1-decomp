@@ -7,5 +7,6 @@ void func_801D01F0(void);
 extern M2C_UNK D_800756F8;
 extern M2C_UNK D_801D19CC;
 extern M2C_UNK D_801D41CC;
+void func_801D0198(void);
 
 #endif /* PATYMENU_DECLS_H */
