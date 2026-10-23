@@ -73,9 +73,15 @@ FILE_OPTIONS = {
     'savemenu/text.c': {'gcc': '2.7.2'},
     'shopmenu/text.c': {'gcc': '2.7.2'},
     'statmenu/text.c': {'gcc': '2.7.2'},
-    # BATTLE.X: its first part was built by GCC 2.7.2 and a newer ASPSX.
+    # BATTLE.X: its first part (text.c ... text1c.c) was built by GCC 2.7.2 and a
+    # newer ASPSX, its last part (from 0x800E5F30) by GCC 2.7.2 too. Its files
+    # are cut where the jump tables show the game's (see the field below):
+    # text1b.c, text2.c and text2c.c begin 4 bytes past an 8-byte boundary.
     'battle/text.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
-    # ... and its last part (from 0x800E5F30) by GCC 2.7.2 too.
+    'battle/text1b.c': {'gcc': '2.7.2', 'aspsx': '2.34', 'unit_start': True},
+    'battle/text1c.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
+    'battle/text2.c': {'unit_start': True},
+    'battle/text2c.c': {'unit_start': True},
     'battle/text3.c': {'gcc': '2.7.2'},
     # FIELD.BIN's files, found where its jump tables change from 8-byte to
     # 4-byte alignment: text2.c and text4.c begin where the game's files
