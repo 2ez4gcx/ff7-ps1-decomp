@@ -25,7 +25,42 @@ s32 func_800E5F70(void) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E5FB4);
+s32 func_800E5FB4(s32 arg0, s32 arg1) {
+    s32 r;
+
+    r = 0;
+    switch (arg0) {
+    case 0:
+        if (arg1 == 4) {
+            r = 1;
+        }
+        break;
+    case 1:
+        if (arg1 == 10) {
+            r = 1;
+        }
+        break;
+    case 2:
+        if (arg1 == 5) {
+            r = 1;
+        }
+        break;
+    case 3:
+        if (arg1 == 9) {
+            r = 1;
+        }
+        break;
+    case 4:
+        if (arg1 == 8) {
+            r = 1;
+        }
+        break;
+    case 5:
+        r = 1;
+        break;
+    }
+    return r;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6018);
 
