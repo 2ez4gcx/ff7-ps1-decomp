@@ -1,53 +1,7 @@
 #include "common.h"
 #include "condor/decls.h"
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A038C);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A0000);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A0038);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0058);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0098);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A00B0);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A00F8);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0120);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0148);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0168);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0180);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A01A0);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01BC);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01C8);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01D4);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01E0);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01EC);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A0234);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0280);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0298);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A02EC);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0308);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0328);
-
-INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", jtbl_800A0340);
+INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A037C);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A0548);
 
