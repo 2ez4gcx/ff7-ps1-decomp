@@ -21,7 +21,17 @@ INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B137C);
 
 INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B13DC);
 
-INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B14E8);
+s32 func_801B14E8(u32 arg0) {
+    s32 temp_v1;
+    s32 var_a1;
+
+    temp_v1 = arg0 & 0xFF;
+    var_a1 = 0;
+    if ((temp_v1 != 0xFF) && ((D_800730DD[temp_v1].a & 0xF) == 7)) {
+        var_a1 = (arg0 >> 8) | 0x80000000;
+    }
+    return var_a1;
+}
 
 INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B1530);
 

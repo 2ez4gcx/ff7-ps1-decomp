@@ -35,7 +35,17 @@ INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B1204);
 
 INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B1320);
 
-INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B13F4);
+s32 func_801B13F4(s32 arg0) {
+    s32 v;
+
+    v = arg0 + (func_80014B70() & 7) + 1;
+    if (v < 0) {
+        v = 0;
+    } else if ((u32)v > 11) {
+        v = 11;
+    }
+    return v;
+}
 
 INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B1448);
 

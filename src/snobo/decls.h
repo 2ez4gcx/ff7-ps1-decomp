@@ -109,5 +109,20 @@ void func_800A7F7C(void *arg0, s32 arg1);
 extern s16 D_801027BC;
 void func_800BD518(s32 arg0, s32 arg1);
 M2C_UNK func_800B18B0();
+s32 func_800A671C(void *arg0);
+s32 func_800A6790(void *arg0);
+void func_800A1874(void);
+extern s16 D_801027C4;
+extern s32 D_8010284C;
+extern s32 D_80102850;
+extern s32 D_80102854;
+extern u8 *D_801028D4;
+void func_800A8740(void *arg0);
+void func_800A48D4(void *arg0, void *arg1);
+void func_800ABDFC(void *arg0);
+void func_800ABCE4(void *arg0);
+void func_800ABA64(void *arg0);
+void func_800ABAFC(void *arg0);
+extern u16 D_80101190;
 
 #endif /* SNOBO_DECLS_H */
