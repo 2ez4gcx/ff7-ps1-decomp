@@ -1,1 +1,2 @@
 // MINI/JET.BIN: name = 0xADDRESS; // type:func
+func_800A8310 = 0x800A8310; // type:func
