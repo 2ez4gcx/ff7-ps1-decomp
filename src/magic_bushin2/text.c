@@ -17,7 +17,19 @@ void func_801B0030(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0094);
+MgMat *func_801B0094(MgSVec *pos, MgSVec *rot, s16 s) {
+    MgVec scale;
+
+    func_8003C21C(rot, &D_801DB354);
+    scale.vx = scale.vy = scale.vz = s;
+    func_8003B35C(&D_801DB354, &scale);
+    D_801DB368[0] = pos->vx;
+    D_801DB36C[0] = pos->vy;
+    D_801DB370[0] = pos->vz;
+    func_8003B48C(&D_801DB354);
+    func_8003B51C(&D_801DB354);
+    return &D_801DB354;
+}
 
 INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0144);
 

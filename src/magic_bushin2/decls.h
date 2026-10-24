@@ -13,5 +13,17 @@ extern s16 D_80162080;
 extern MgTask D_80162978[];
 extern s32 D_801DB058[];
 extern s32 D_801F338C;
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+MgMat *func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+extern MgMat D_801DB354;
+extern s32 D_801DB368[];
+extern s32 D_801DB36C[];
+extern s32 D_801DB370[];
+MgMat *func_801B0094(MgSVec *pos, MgSVec *rot, s16 s);
 
 #endif /* MAGIC_BUSHIN2_DECLS_H */

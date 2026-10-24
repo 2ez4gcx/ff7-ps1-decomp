@@ -15,7 +15,7 @@ extern u8 D_8015190F[][0xB9C];
 extern M2C_UNK D_801B0CC0;
 extern M2C_UNK func_801B05AC;
 void func_801B0020(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801B0CC8[];
 extern u8 *D_801C8CC8;

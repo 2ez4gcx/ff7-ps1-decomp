@@ -31,7 +31,7 @@ void func_8003BC6C(MgSVec *, MgVec *, s32 *);
 void func_8003A08C(MgVec *, MgVec *);
 MgMat *func_8003C21C(MgSVec *, MgMat *);
 MgMat *func_8003B05C(MgMat *, MgMat *);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801B4540[];
 extern u8 *D_801CC540;

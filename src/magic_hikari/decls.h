@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0124(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
 extern s16 D_8015169C;
@@ -22,5 +22,15 @@ M2C_UNK func_800BBEAC(M2C_UNK *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_80151918[][0xB9C];
 void func_801B01E0(void);
+void func_801B0698(s32 arg0, s32 arg1);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+extern M2C_UNK D_801B0000;
+extern M2C_UNK D_801B072C;
+extern M2C_UNK D_801B4804;
+void func_801B006C(void);
+extern s32 D_801B4770;
+extern u16 D_801B8914;
 
 #endif /* MAGIC_HIKARI_DECLS_H */

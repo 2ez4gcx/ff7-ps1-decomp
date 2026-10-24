@@ -12,7 +12,7 @@ extern M2C_UNK D_801B19FC;
 void func_801B045C(void);
 extern M2C_UNK func_801B1850;
 void func_801B0D04(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
 M2C_UNK func_800D4368(void *, s32, s32);

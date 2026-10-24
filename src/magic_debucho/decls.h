@@ -19,7 +19,7 @@ MgMat *func_801B0068(MgSVec *v, s16 scale, s32 dist);
 s32 func_801B0184(s16 **pp);
 extern s16 D_801C42C2[];
 void func_801B11DC(s32 arg0, s32 arg1, s16 arg2);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14; u8 pad16[0xA]; } MgObjC;
 extern M2C_UNK func_801B01C0;
 M2C_UNK func_800BBEAC(M2C_UNK *);

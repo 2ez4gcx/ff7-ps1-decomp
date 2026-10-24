@@ -75,7 +75,7 @@ void func_801B25F8(void) {
         goto block_5;
     }
 block_5:
-    func_801B2200((MgSVec *) temp_s0->pad, 0x2000, 0);
+    func_801B2200((MgSVec *)&temp_s0->unk4, 0x2000, 0);
     D_80163C74 = func_800D4D90(&D_801F1C6C, D_801517C0 + 0x406C, 0, D_80163C74);
     if (D_80062D98 == 0) {
         temp_s0->unk2 = (u16) temp_s0->unk2 + 1;

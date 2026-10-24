@@ -23,6 +23,14 @@ void func_801B0028(void) {
 
 INCLUDE_ASM("../asm/us/magic_jinrai/nonmatchings/text", func_801B00E0);
 
-INCLUDE_ASM("../asm/us/magic_jinrai/nonmatchings/text", func_801B01E4);
+void func_801B01E4(s32 arg0, s32 arg1) {
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC(&func_801B00E0)];
+    func_800D3994(arg1, D_8015190F[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 INCLUDE_ASM("../asm/us/magic_jinrai/nonmatchings/text", func_801B02B0);

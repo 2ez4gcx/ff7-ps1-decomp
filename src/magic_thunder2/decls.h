@@ -17,5 +17,12 @@ extern s32 D_80163C74;
 extern s32 *D_801D2180[];
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B0020(void);
+M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
+extern s16 D_8015169C;
+extern s16 D_80162080;
+extern MgTask D_80162978[];
+extern u8 D_801D220C[];
+extern u8 *D_801EA20C;
 
 #endif /* MAGIC_THUNDER2_DECLS_H */

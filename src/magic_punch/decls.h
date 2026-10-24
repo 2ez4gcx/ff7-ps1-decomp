@@ -9,7 +9,7 @@ extern s16 D_801C9794;
 void func_801B0010(void);
 extern s16 D_801B176C;
 void func_801B0074(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
 extern u8 D_801B1790[];

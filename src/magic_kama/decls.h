@@ -6,7 +6,7 @@
 void func_801B0010(void);
 M2C_UNK func_801B09C4();
 void func_801B0030(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801C92C0[];
 extern u8 *D_801E12C0;

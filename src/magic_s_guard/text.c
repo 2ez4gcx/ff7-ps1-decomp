@@ -18,7 +18,18 @@ INCLUDE_ASM("../asm/us/magic_s_guard/nonmatchings/text", func_801B0444);
 
 INCLUDE_ASM("../asm/us/magic_s_guard/nonmatchings/text", func_801B064C);
 
-INCLUDE_ASM("../asm/us/magic_s_guard/nonmatchings/text", func_801B09F0);
+void func_801B09F0(void) {
+    MgObj20 *temp_s0;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (temp_s0->unk2 == 0x20) {
+            func_800D55F4(0x20, func_800D574C(D_801D3B8C), 0x7D);
+            temp_s0->unk0 = -1;
+        }
+        temp_s0->unk2 = (u16) temp_s0->unk2 + 1;
+    }
+}
 
 void func_801B0A7C(s32 arg0) {
     MgTask *p;

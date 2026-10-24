@@ -79,7 +79,26 @@ void func_801B045C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B04C8);
+void func_801B04C8(void) {
+    MgObj20 *temp_s0;
+    s16 temp_v0;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    D_80163C74 = func_800C4FC8(D_801D5650, 0, 0);
+    if (D_80062D98 == 0) {
+        if (temp_s0->unk2 < 0x10) {
+            D_801D5650 = (u16) D_801D5650 + 0xF;
+        }
+        if (temp_s0->unk2 >= 0x23) {
+            D_801D5650 = (u16) D_801D5650 - 0xF;
+        }
+        temp_v0 = (u16) temp_s0->unk2 + 1;
+        temp_s0->unk2 = temp_v0;
+        if (temp_v0 == 0x32) {
+            temp_s0->unk0 = -1;
+        }
+    }
+}
 
 void func_801B05A8(void) {
     MgTask *p;

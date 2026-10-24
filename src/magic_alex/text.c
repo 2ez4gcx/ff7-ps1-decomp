@@ -31,9 +31,40 @@ INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1124);
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1BE4);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1E24);
+void func_801B1E24(MgSVecList *a, MgSVec *b, MgSVec *out) {
+    s32 i;
+    s32 n;
+    MgSVec *s;
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1EB4);
+    n = a->n / 8;
+    s = a->v;
+    for (i = 0; i < n; i++) {
+        out->vx = s->vx - b->vx;
+        out->vy = s->vy - b->vy;
+        out->vz = s->vz - b->vz;
+        s++;
+        b++;
+        out++;
+    }
+}
+
+void func_801B1EB4(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t) {
+    s32 i;
+    s32 n;
+    MgSVec *s;
+
+    n = a->n / 8;
+    s = a->v;
+    t = 0x1000 - t;
+    for (i = 0; i < n; i++) {
+        s->vx = b->vx + ((d->vx * t) >> 12);
+        s->vy = b->vy + ((d->vy * t) >> 12);
+        s->vz = b->vz + ((d->vz * t) >> 12);
+        s++;
+        b++;
+        d++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1F7C);
 

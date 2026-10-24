@@ -12,11 +12,16 @@ extern M2C_UNK func_801B064C;
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
 void func_801B0AFC(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801B3B88[];
 extern u8 *D_801D3B88;
 extern s16 D_80162080;
 extern MgObj20 D_80162978[];
+void func_801B09F0(void);
+M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
+s32 func_800D574C(s32);
+extern u8 D_80062D98;
+extern s32 D_801D3B8C;
 
 #endif /* MAGIC_S_GUARD_DECLS_H */

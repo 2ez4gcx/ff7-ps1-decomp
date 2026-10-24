@@ -3,7 +3,22 @@
 
 INCLUDE_ASM("../asm/us/magic_bio/nonmatchings/text", func_801B0000);
 
-INCLUDE_ASM("../asm/us/magic_bio/nonmatchings/text", func_801B0178);
+void func_801B0178(void) {
+    MgTask *p;
+    u16 *frame;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    frame = &D_801B7884;
+    *frame = p->unk2;
+    func_800D4368(&p->unk8, p->unk10, 0);
+    D_801D7888 = (u8 *)func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, (s32)D_801D7888);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= 6) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_bio/nonmatchings/text", func_801B0238);
 

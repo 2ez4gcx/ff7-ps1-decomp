@@ -99,7 +99,10 @@ void func_801B274C(s32 arg0) {
     D_801F2674 = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B275C);
+void func_801B275C(MgSVec *arg0) {
+    func_801B007C(arg0, 0x1000, 0);
+    D_80163C74 = func_800D4D90(&D_801F0298, D_801517C0 + 0x70, 0xC, D_80163C74);
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B27AC);
 
@@ -131,7 +134,33 @@ INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B3FD4);
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B40F0);
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B4334);
+void func_801B4334(void) {
+    MgObj20 *temp_s0;
+    s16 temp_v0;
+    u16 temp_v1;
+    u16 temp_v1_2;
+    u16 temp_v1_3;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    func_800D41FC(&D_801F1374, &D_801546EC, D_801F0374);
+    temp_v1 = M2C_FIELD(D_801F0374, u16 *, 0x14);
+    M2C_FIELD(D_801F2674, u16 *, 0x18) = temp_v1;
+    M2C_FIELD(D_801F2674, u16 *, 4) = temp_v1;
+    temp_v1_2 = M2C_FIELD(D_801F0374, u16 *, 0x18);
+    M2C_FIELD(D_801F2674, u16 *, 0x1A) = temp_v1_2;
+    M2C_FIELD(D_801F2674, u16 *, 6) = temp_v1_2;
+    temp_v1_3 = M2C_FIELD(D_801F0374, u16 *, 0x1C);
+    M2C_FIELD(D_801F2674, u16 *, 0x1C) = temp_v1_3;
+    M2C_FIELD(D_801F2674, u16 *, 8) = temp_v1_3;
+    func_8003B2CC(D_801F0374, &D_801F036C, D_801F2674 + 0x20);
+    if (D_80062D98 == 0) {
+        temp_v0 = (u16) temp_s0->unk2 + 1;
+        temp_s0->unk2 = temp_v0;
+        if (temp_v0 >= 0x3C) {
+            temp_s0->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B440C);
 

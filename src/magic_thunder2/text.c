@@ -5,7 +5,17 @@ void func_801B0000(void) {
     func_801B147C();
 }
 
-INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B0020);
+void func_801B0020(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801EA20C = D_801D220C + p->unk2 * 0xC000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        func_800D52A0(0, 0xA);
+        p->unk0 = -1;
+    }
+}
 
 void func_801B00B0(void) {
     MgTask *p;

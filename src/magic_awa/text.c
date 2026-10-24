@@ -38,7 +38,7 @@ void func_801B0458(void) {
     s16 temp_v0;
 
     temp_s0 = &D_80162978[D_8015169C];
-    func_800D4368(temp_s0->pad, D_801C9836, -0x3E8);
+    func_800D4368((u8 *)&temp_s0->unk4, D_801C9836, -0x3E8);
     func_801B0148(8, M2C_SFIELD(temp_s0, s16 *, 0x16), 0x100, D_801C9834);
     M2C_SFIELD(temp_s0, s16 *, 0x16) = (s16) ((u16) M2C_SFIELD(temp_s0, s16 *, 0x16) + 0x100);
     if (D_80062D98 == 0) {

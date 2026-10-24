@@ -120,9 +120,13 @@ INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B3D20);
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B3F1C);
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B40A0);
+void func_801B40A0(s16 arg0) {
+    D_80162978[func_800BBEAC(&func_801B3D20)].unk0 = arg0;
+}
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B40E4);
+void func_801B40E4(s16 arg0) {
+    D_80162978[func_800BBEAC(&func_801B3F1C)].unk0 = arg0;
+}
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B4128);
 

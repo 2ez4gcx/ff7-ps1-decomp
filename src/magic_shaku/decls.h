@@ -24,7 +24,7 @@ void func_8003A08C(MgVec *, MgVec *);
 MgMat *func_8003C21C(MgSVec *, MgMat *);
 MgMat *func_8003B05C(MgMat *, MgMat *);
 void func_801B045C(void);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
 extern u8 D_801D5768[];
@@ -41,5 +41,8 @@ extern s32 D_80163C74;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D5294;
+void func_801B04C8(void);
+s32 func_800C4FC8(s16, M2C_UNK, M2C_UNK);
+extern s16 D_801D5650;
 
 #endif /* MAGIC_SHAKU_DECLS_H */

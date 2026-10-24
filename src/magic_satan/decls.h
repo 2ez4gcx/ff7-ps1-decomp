@@ -31,10 +31,16 @@ s32 func_801B2898(s16 **pp);
 extern s16 D_801E7E16[];
 s32 func_801B28D4(s32 a, s32 b);
 void func_801B3A14(s32 arg0, s32 arg1, s16 arg2);
-typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14; u8 pad16[0xA]; } MgObjC;
 extern M2C_UNK func_801B29CC;
 M2C_UNK func_800BC04C(M2C_UNK *);
 extern MgObj20 D_801621F0[];
+void func_801B5884(void *arg0);
+s32 func_801B0B5C();
+extern s32 D_801517C0;
+extern M2C_UNK D_801BF980;
+void func_801B5804(void);
+s32 func_800D29D4(M2C_UNK, s32, M2C_UNK, s32);
 
 #endif /* MAGIC_SATAN_DECLS_H */
