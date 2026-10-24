@@ -7,9 +7,45 @@ INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0314);
 
 INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B036C);
 
-INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0A18);
+s32 func_801B0A18(s32 a) {
+    s32 r;
 
-INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0ABC);
+    a &= 0xFFF;
+    if (a < 0x800) {
+        if (a < 0x400) {
+            r = D_801B22EC[a];
+        } else {
+            r = D_801B22EC[0x800 - a];
+        }
+    } else {
+        if (a < 0xC00) {
+            r = -D_801B22EC[a - 0x800];
+        } else {
+            r = -D_801B22EC[0x1000 - a];
+        }
+    }
+    return r;
+}
+
+s32 func_801B0ABC(s32 a) {
+    s32 r;
+
+    a &= 0xFFF;
+    if (a < 0x800) {
+        if (a < 0x400) {
+            r = D_801B22EC[0x400 - a];
+        } else {
+            r = -D_801B22EC[a - 0x400];
+        }
+    } else {
+        if (a < 0xC00) {
+            r = -D_801B22EC[0xC00 - a];
+        } else {
+            r = D_801B22EC[a - 0xC00];
+        }
+    }
+    return r;
+}
 
 INCLUDE_ASM("../asm/us/magic_debaria/nonmatchings/text", func_801B0B58);
 

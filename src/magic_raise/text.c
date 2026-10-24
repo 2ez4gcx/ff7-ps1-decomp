@@ -53,6 +53,12 @@ INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B18D8);
 
 INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B1D04);
 
-INCLUDE_ASM("../asm/us/magic_raise/nonmatchings/text", func_801B1FF8);
+void func_801B1FF8(arg0, arg1) {
+    D_801DBD0C = &D_80162978[func_800BBEAC(&D_801B0000)];
+    func_800D2980(&D_801B2084, 0, 0, 0);
+    func_800BBEAC(&func_801B1D04);
+    D_801DBD10 = arg0;
+    D_801DBD18 = arg1;
+}
 
 INCLUDE_RODATA("../asm/us/magic_raise/nonmatchings/text", D_801B0000);

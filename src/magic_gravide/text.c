@@ -11,7 +11,16 @@ INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B02E8);
 
 INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B0568);
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B06C4);
+void func_801B06C4(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801EEA64 = D_801D0A64 + p->unk2 * 0xF000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B0730(s32 arg0, M2C_UNK arg1) {
     func_800D2980(&D_801B07A0, 0, 0, 0);

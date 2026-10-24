@@ -5,11 +5,35 @@ void func_801B0010(void) {
     func_801B0E20();
 }
 
-INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B0030);
+void func_801B0030(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801CD77C = D_801B577C + p->unk2 * 0xC000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B009C);
 
-INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B01F8);
+void func_801B01F8(void) {
+    MgObjAwa *p;
+    u16 *frame;
+
+    p = (MgObjAwa *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2000, 0);
+    frame = &D_801B3068;
+    *frame = p->unk2;
+    D_801CD77C = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801CD77C);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= D_801B2F8C) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B02B4);
 

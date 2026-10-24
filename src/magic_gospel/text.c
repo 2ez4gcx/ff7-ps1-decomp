@@ -6,13 +6,45 @@ M2C_UNK *func_801B0048(void) {
     return &D_801DDCE4;
 }
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B0070);
+MgMat *func_801B0070(MgSVec *v, s16 scale, s32 dist) {
+    MgVec n;
+    s32 flag;
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B018C);
+    D_801E0628.m[0][0] = D_801E0628.m[1][1] = D_801E0628.m[2][2] = scale;
+    func_8003B48C(&D_801E0988);
+    func_8003B51C(&D_801E0988);
+    func_8003BC6C(v, (MgVec *)D_801E0628.t, &flag);
+    if (dist != 0) {
+        func_8003A08C((MgVec *)D_801E0628.t, &n);
+        D_801E0628.t[0] += (dist * n.vx) >> 12;
+        D_801E0628.t[1] += (dist * n.vy) >> 12;
+        D_801E0628.t[2] += (dist * n.vz) >> 12;
+    }
+    func_8003B48C(&D_801E0628);
+    func_8003B51C(&D_801E0628);
+    return &D_801E0628;
+}
+
+s32 func_801B018C(s16 **pp) {
+    s32 v;
+
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801E09AA[-v];
+    }
+    return v;
+}
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B01C8);
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B120C);
+void func_801B120C(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B01C8)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B1270);
 
@@ -54,7 +86,13 @@ INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B3034);
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B31BC);
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B3394);
+void func_801B3394(s32 arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B31BC)];
+    p->unk0 = arg0;
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unk4);
+}
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B3414);
 

@@ -3,7 +3,18 @@
 
 INCLUDE_ASM("../asm/us/magic_suna/nonmatchings/text", func_801B006C);
 
-INCLUDE_ASM("../asm/us/magic_suna/nonmatchings/text", func_801B0160);
+MgObj8 *func_801B0160(void) {
+    s16 i;
+
+    for (i = 0; i < 200; i++) {
+        if (D_801BA628[i].unk0 == 0) {
+            D_801BA628[i].unk0 = 1;
+            D_801BA628[i].unk6 = 0;
+            return &D_801BA628[i];
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("../asm/us/magic_suna/nonmatchings/text", func_801B01E0);
 

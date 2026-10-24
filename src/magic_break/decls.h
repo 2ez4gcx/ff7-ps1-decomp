@@ -11,6 +11,12 @@ M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
 extern M2C_UNK D_801B08DC;
 extern M2C_UNK func_801B0758;
-extern M2C_UNK func_801B07F4;
+void func_801B07F4(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801CD328[];
+extern u8 *D_801ED328;
+extern s16 D_80162080;
 
 #endif /* MAGIC_BREAK_DECLS_H */

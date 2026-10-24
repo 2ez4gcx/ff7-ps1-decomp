@@ -7,7 +7,11 @@ void func_801B0000(s32 arg0) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x1DE);
 }
 
-INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B0048);
+void func_801B0048(void) {
+    D_801DD870 = 1;
+    func_801B1014(D_80151774);
+    func_800D55F4(0x20, func_800D574C((s32) D_80151774), 0x1FA);
+}
 
 INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B009C);
 
@@ -50,9 +54,22 @@ INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B0DBC);
 
 INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B0EB8);
 
-INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B0FB4);
+void func_801B0FB4(void) {
+    MgObj20 *p;
 
-INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B1014);
+    p = &D_80162978[D_8015169C];
+    D_801DD868 = D_801BD868 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
+
+void func_801B1014(arg0, arg1) {
+    func_800D2980(&D_801B134C, 0, 0, 0);
+    func_800BBEAC(&func_801B0FB4);
+    func_800D5444(arg0, arg1, 0, (M2C_UNK *)&func_801B0DBC);
+}
 
 void func_801B1084(s32 arg0, M2C_UNK arg1) {
     func_800D2980(&D_801B134C, 0, 0, 0);

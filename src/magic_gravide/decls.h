@@ -9,6 +9,12 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 extern M2C_UNK D_801B07A0;
 extern M2C_UNK func_801B0568;
-extern M2C_UNK func_801B06C4;
+void func_801B06C4(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801D0A64[];
+extern u8 *D_801EEA64;
+extern s16 D_80162080;
 
 #endif /* MAGIC_GRAVIDE_DECLS_H */

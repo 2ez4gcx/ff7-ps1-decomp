@@ -38,6 +38,15 @@ INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B1F78);
 
 INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B20EC);
 
-INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B21C0);
+void func_801B21C0(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801E5640 = D_801C5640 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B2220);

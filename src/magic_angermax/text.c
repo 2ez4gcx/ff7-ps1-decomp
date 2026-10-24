@@ -20,6 +20,15 @@ INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B08C0);
 
 INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B09F0);
 
-INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B0B8C);
+void func_801B0B8C(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801DDED4 = D_801BDED4 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_angermax/nonmatchings/text", func_801B0BEC);

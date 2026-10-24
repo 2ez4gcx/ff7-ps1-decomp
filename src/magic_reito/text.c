@@ -11,7 +11,16 @@ INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0A48);
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1158);
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B12E4);
+void func_801B12E4(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801ECB98 = D_801D4B98 + p->unk2 * 0xC000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1350);
 

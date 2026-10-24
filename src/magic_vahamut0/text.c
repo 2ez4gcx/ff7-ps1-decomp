@@ -6,17 +6,74 @@ M2C_UNK *func_801B0060(void) {
     return &D_801D823C;
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B0088);
+MgMat *func_801B0088(MgSVec *v, s16 scale, s32 dist) {
+    MgVec n;
+    s32 flag;
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B01A4);
+    D_801FC8E0.m[0][0] = D_801FC8E0.m[1][1] = D_801FC8E0.m[2][2] = scale;
+    func_8003B48C(&D_801FD11C);
+    func_8003B51C(&D_801FD11C);
+    func_8003BC6C(v, (MgVec *)D_801FC8E0.t, &flag);
+    if (dist != 0) {
+        func_8003A08C((MgVec *)D_801FC8E0.t, &n);
+        D_801FC8E0.t[0] += (dist * n.vx) >> 12;
+        D_801FC8E0.t[1] += (dist * n.vy) >> 12;
+        D_801FC8E0.t[2] += (dist * n.vz) >> 12;
+    }
+    func_8003B48C(&D_801FC8E0);
+    func_8003B51C(&D_801FC8E0);
+    return &D_801FC8E0;
+}
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B01E0);
+s32 func_801B01A4(s16 **pp) {
+    s32 v;
+
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801FD13E[-v];
+    }
+    return v;
+}
+
+s32 func_801B01E0(s32 a, s32 b) {
+    s32 i;
+    s32 n;
+    s32 orig;
+
+    orig = a;
+    if (b > 0) {
+        n = b >> 8;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+    } else if (b < 0) {
+        b = -b;
+        n = b >> 8;
+        a = 0x1000 - a;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+        a = 0x1000 - a;
+    } else {
+        return a;
+    }
+    n = (b & 0xFF) + 1;
+    a = (a * n + orig * (0x100 - n)) >> 8;
+    return a;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B02D8);
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B03D4);
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B13AC);
+void func_801B13AC(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B03D4)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B1410);
 

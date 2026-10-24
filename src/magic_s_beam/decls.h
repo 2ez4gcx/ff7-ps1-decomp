@@ -6,5 +6,12 @@
 M2C_UNK *func_801B0000(void);
 M2C_UNK func_801B2220();
 extern M2C_UNK D_801C3740;
+void func_801B21C0(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801C5640[];
+extern u8 *D_801E5640;
+extern s16 D_80162080;
 
 #endif /* MAGIC_S_BEAM_DECLS_H */

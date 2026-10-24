@@ -6,11 +6,26 @@ M2C_UNK *func_801B0040(void) {
     return &D_801DED44;
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B0068);
+s32 func_801B0068(s16 **pp) {
+    s32 v;
+
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801F0632[-v];
+    }
+    return v;
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B00A4);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B10C0);
+void func_801B10C0(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B00A4)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1124);
 
@@ -28,11 +43,40 @@ INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2B08);
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2B80);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2C78);
+MgMat *func_801B2C78(MgSVec *v, s16 scale, s32 dist) {
+    MgVec n;
+    s32 flag;
+
+    D_801EDDEC.m[0][0] = D_801EDDEC.m[1][1] = D_801EDDEC.m[2][2] = scale;
+    func_8003B48C(&D_801F0610);
+    func_8003B51C(&D_801F0610);
+    func_8003BC6C(v, (MgVec *)D_801EDDEC.t, &flag);
+    if (dist != 0) {
+        func_8003A08C((MgVec *)D_801EDDEC.t, &n);
+        D_801EDDEC.t[0] += (dist * n.vx) >> 12;
+        D_801EDDEC.t[1] += (dist * n.vy) >> 12;
+        D_801EDDEC.t[2] += (dist * n.vz) >> 12;
+    }
+    func_8003B48C(&D_801EDDEC);
+    func_8003B51C(&D_801EDDEC);
+    return &D_801EDDEC;
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2D94);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2F38);
+void func_801B2F38(void) {
+    MgMat m;
+
+    D_801EDE3C = D_801EDB30;
+    D_801EDE2C = D_801EDB30;
+    if (D_801EDB52 != 0) {
+        D_801EDE48 = D_801EDB4C;
+    } else {
+        D_801EDE48 = -D_801EDB4C;
+    }
+    func_8003A63C(&D_801EDE0C, &D_801EDE2C, &m);
+    func_801B1BE4(&m, &D_801EDE4C);
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2FC8);
 

@@ -9,7 +9,16 @@ M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s16);
 extern s16 D_80151774;
-extern M2C_UNK func_801B02D4;
-extern M2C_UNK func_801B031C;
+void func_801B02D4(s16 arg0);
+void func_801B031C(void);
+void func_801B028C(s16 arg0);
+extern struct { s16 unk0; u8 pad[0x1E]; } D_8016297C[];
+extern M2C_UNK func_801B018C;
+typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801B1014[];
+extern u8 *D_801D1014;
+extern s16 D_80162080;
 
 #endif /* MAGIC_BRIZAD_DECLS_H */

@@ -24,6 +24,15 @@ INCLUDE_ASM("../asm/us/magic_beat/nonmatchings/text", func_801B0C00);
 
 INCLUDE_ASM("../asm/us/magic_beat/nonmatchings/text", func_801B0CA0);
 
-INCLUDE_ASM("../asm/us/magic_beat/nonmatchings/text", func_801B0D4C);
+void func_801B0D4C(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801DD540 = D_801BD540 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_beat/nonmatchings/text", func_801B0DAC);

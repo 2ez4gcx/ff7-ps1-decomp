@@ -7,15 +7,55 @@ void func_801B0040(void) {
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0060);
 
-INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0DE4);
+s32 func_801B0DE4(s16 **pp) {
+    s32 v;
 
-INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0E20);
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801CF89A[-v];
+    }
+    return v;
+}
+
+s32 func_801B0E20(s32 a, s32 b) {
+    s32 i;
+    s32 n;
+    s32 orig;
+
+    orig = a;
+    if (b > 0) {
+        n = b >> 8;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+    } else if (b < 0) {
+        b = -b;
+        n = b >> 8;
+        a = 0x1000 - a;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+        a = 0x1000 - a;
+    } else {
+        return a;
+    }
+    n = (b & 0xFF) + 1;
+    a = (a * n + orig * (0x100 - n)) >> 8;
+    return a;
+}
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0F18);
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B1014);
 
-INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B1F6C);
+void func_801B1F6C(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B1014)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B1FD0);
 

@@ -7,7 +7,16 @@ INCLUDE_ASM("../asm/us/magic_resist/nonmatchings/text", func_801B0218);
 
 INCLUDE_ASM("../asm/us/magic_resist/nonmatchings/text", func_801B044C);
 
-INCLUDE_ASM("../asm/us/magic_resist/nonmatchings/text", func_801B0504);
+void func_801B0504(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801E0770 = D_801C0770 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B0564(s32 arg0, M2C_UNK arg1) {
     s32 temp_v0;

@@ -4,6 +4,18 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0404();
+void func_801B0404();
+void func_801B03A4(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801B687C[];
+extern u8 *D_801D687C;
+extern s16 D_80162080;
+extern M2C_UNK D_801B0474;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800BBEAC(M2C_UNK *);
+void func_801B02BC(s16 arg0, s16 arg1);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 
 #endif /* MAGIC_ECHOES_DECLS_H */

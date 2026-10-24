@@ -7,7 +7,21 @@ void func_801B0000(void) {
 
 INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B0020);
 
-INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B00B0);
+void func_801B00B0(void) {
+    MgTask *p;
+
+    p = &D_801621F0[D_801590D4];
+    func_800D4368(&p->unk4, 0x2000, 0);
+    D_801D2174.unk0 = D_801D2180[p->unk16];
+    D_801D2174.unk8 = p->unk2;
+    D_80163C74 = func_800D4D90(&D_801D2174, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D2180[p->unk16][1]) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_thunder2/nonmatchings/text", func_801B01A4);
 

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B24B0();
+void func_801B24B0();
 extern M2C_UNK D_801B2564;
 extern M2C_UNK *D_801D2C34;
 extern s32 D_801D2C38;
@@ -35,6 +35,36 @@ extern M2C_UNK D_801B814C;
 void func_801B0300(void);
 extern M2C_UNK D_801B95A8;
 void func_801B08B4(void *arg0, M2C_UNK arg1, M2C_UNK arg2);
-s32 func_8003BBDC(M2C_UNK, s32, s32, s32);
+s32 func_8003BBDC(void *, void *, s32 *, s32 *);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_8003BA10(MgVec *, MgVec *, MgVec *);
+s32 func_8003A59C(s32);
+s32 func_8003CC1C(s32, s32);
+void func_8003A08C(MgVec *, MgVec *);
+s32 func_801B0374(MgVec *a, MgVec *b, MgVec *c);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_801B0450(s32 ang, MgMat *m, MgVec *v);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+void func_801B05CC(MgSVec *p, MgSVec *o, MgVec *n);
+s16 func_801B06A8(MgSVec *p, MgSVec *q, MgVec *n);
+void func_801B0928(MgSVec *v0, MgSVec *v1, s32 color);
+typedef struct { u32 addr : 24; u32 len : 8; } MgTag;
+typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 r1; u8 g1; u8 b1; u8 pad; s16 x1; s16 y1; } MgLineG2;
+extern MgMat D_800FA63C;
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern MgLineG2 *D_801D2BF0;
+extern s32 D_801517C0;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+extern M2C_UNK D_801B0000;
+M2C_UNK func_800BBEAC(M2C_UNK *);
+extern MgTask D_80162978[];
+extern MgTask *D_801D2BF4;
+extern s32 D_801D2BF8;
+extern s32 D_801D2BFC;
+extern s32 D_801D2C00;
+extern M2C_UNK func_801B22E4;
 
 #endif /* MAGIC_WPSI_DECLS_H */

@@ -38,4 +38,11 @@ INCLUDE_ASM("../asm/us/magic_sdust/nonmatchings/text", func_801B2F04);
 
 INCLUDE_ASM("../asm/us/magic_sdust/nonmatchings/text", func_801B3418);
 
-INCLUDE_ASM("../asm/us/magic_sdust/nonmatchings/text", func_801B355C);
+INCLUDE_RODATA("../asm/us/magic_sdust/nonmatchings/text", D_801B0000);
+
+void func_801B355C(arg0) {
+    D_801E15FC = &D_80162978[func_800BBEAC(&D_801B0000)];
+    func_800D2980(&D_801B35D8, 0, 0, 0);
+    func_800BBEAC(&func_801B3418);
+    D_801E1600 = arg0;
+}

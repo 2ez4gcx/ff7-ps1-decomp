@@ -27,7 +27,13 @@ INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0AB4);
 
 INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0D04);
 
-INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0EF8);
+void func_801B0EF8(s32 arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B0D04)];
+    p->unk0 = arg0;
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unk4);
+}
 
 INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0F78);
 

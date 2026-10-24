@@ -12,13 +12,51 @@ INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B0830);
 
 INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B0E64);
 
-INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B1A24);
+s32 func_801B1A24(s16 **pp) {
+    s32 v;
 
-INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B1A60);
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801D3E02[-v];
+    }
+    return v;
+}
+
+s32 func_801B1A60(s32 t, s32 s) {
+    s32 orig;
+    s32 i;
+    s32 n;
+
+    orig = t;
+    if (s > 0) {
+        n = s >> 8;
+        for (i = 0; i < n; i++) {
+            t = func_80039A74(t / 4);
+        }
+    } else {
+        s = -s;
+        n = s >> 8;
+        t = 0x1000 - t;
+        for (i = 0; i < n; i++) {
+            t = func_80039A74(t / 4);
+        }
+        t = 0x1000 - t;
+    }
+    n = (s & 0xFF) + 1;
+    t = (t * n + orig * (0x100 - n)) >> 8;
+    return t;
+}
 
 INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B1B50);
 
-INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B2B84);
+void func_801B2B84(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B1B50)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_titan/nonmatchings/text", func_801B2BE8);
 

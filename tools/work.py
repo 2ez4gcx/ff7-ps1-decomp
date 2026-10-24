@@ -287,6 +287,11 @@ def keep_unmigrated(sym, text):
     function's asm, so a split writes it as an asm file of its own again."""
     address = re.search(r'/\* [0-9A-F]+ ([0-9A-F]{8})', text).group(1)
     path = ROOT / 'config' / f'symbols.us.{ad.TARGET}.txt'
+    if not path.exists():
+        # The spells share symbols.us.magic.txt, where the line would hold for
+        # all of them. None is needed: once the function that reads it is in
+        # C, splat writes the table as a file of its own anyway.
+        return
     lines = path.read_text(encoding='utf-8').splitlines()
     for i, line in enumerate(lines):
         if re.match(rf'{sym}\s*=', line):

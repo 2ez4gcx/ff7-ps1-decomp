@@ -5,5 +5,7 @@
 #include "main/decls.h"
 void func_801B0054(void);
 M2C_UNK func_801B0A90();
+s32 func_801B04CC(s32 a);
+extern s16 D_801B8004[];
 
 #endif /* MAGIC_DETHFO_DECLS_H */

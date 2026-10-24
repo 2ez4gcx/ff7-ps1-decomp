@@ -8,13 +8,28 @@ M2C_UNK *func_801B0058(void) {
 
 INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0080);
 
-INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0B40);
+s32 func_801B0B40(s16 **pp) {
+    s32 v;
+
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801D88F2[-v];
+    }
+    return v;
+}
 
 INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0B7C);
 
 INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0C68);
 
-INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B1C9C);
+void func_801B1C9C(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
+
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B0C68)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
 
 INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B1D00);
 

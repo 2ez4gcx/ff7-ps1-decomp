@@ -21,21 +21,86 @@ INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B1EAC);
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B1F3C);
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B2004);
+s32 func_801B2004(s16 **pp) {
+    s32 v;
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B2040);
+    v = *(*pp)++;
+    if (v < 0) {
+        v = D_801CD40E[-v];
+    }
+    return v;
+}
+
+s32 func_801B2040(s32 a, s32 b) {
+    s32 i;
+    s32 n;
+    s32 orig;
+
+    orig = a;
+    if (b > 0) {
+        n = b >> 8;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+    } else if (b < 0) {
+        b = -b;
+        n = b >> 8;
+        a = 0x1000 - a;
+        for (i = 0; i < n; i++) {
+            a = func_80039A74(a / 4);
+        }
+        a = 0x1000 - a;
+    } else {
+        return a;
+    }
+    n = (b & 0xFF) + 1;
+    a = (a * n + orig * (0x100 - n)) >> 8;
+    return a;
+}
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B2138);
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B2228);
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B318C);
+void func_801B318C(s32 arg0, s32 arg1, s16 arg2) {
+    MgObjC *p;
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B31F0);
+    p = (MgObjC *)&D_80162978[func_800BBEAC(&func_801B2228)];
+    p->unkC = arg0;
+    p->unk10 = arg1;
+    p->unk14 = arg2;
+}
+
+MgMat *func_801B31F0(MgSVec *v, s16 scale, s32 dist) {
+    MgVec n;
+    s32 flag;
+
+    D_801CC794.m[0][0] = D_801CC794.m[1][1] = D_801CC794.m[2][2] = scale;
+    func_8003B48C(&D_801CD3F0);
+    func_8003B51C(&D_801CD3F0);
+    func_8003BC6C(v, (MgVec *)D_801CC794.t, &flag);
+    if (dist != 0) {
+        func_8003A08C((MgVec *)D_801CC794.t, &n);
+        D_801CC794.t[0] += (dist * n.vx) >> 12;
+        D_801CC794.t[1] += (dist * n.vy) >> 12;
+        D_801CC794.t[2] += (dist * n.vz) >> 12;
+    }
+    func_8003B48C(&D_801CC794);
+    func_8003B51C(&D_801CC794);
+    return &D_801CC794;
+}
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B330C);
 
-INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B3448);
+void func_801B3448(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B330C)];
+    p->unk4 = arg0;
+    p->unk6 = arg1;
+    p->unk8 = arg2;
+    p->unkA = arg3;
+}
 
 INCLUDE_ASM("../asm/us/magic_sting/nonmatchings/text", func_801B34BC);
 

@@ -5,5 +5,12 @@
 #include "main/decls.h"
 void func_801B0000(void);
 M2C_UNK func_801B100C();
+void func_801B0020(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad[0x1C]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+extern u8 D_801D2D48[];
+extern u8 *D_801EAD48;
+extern s16 D_80162080;
 
 #endif /* MAGIC_OSEN_DECLS_H */

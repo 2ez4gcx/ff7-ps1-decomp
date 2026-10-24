@@ -9,7 +9,16 @@ INCLUDE_ASM("../asm/us/magic_brizara/nonmatchings/text", func_801B03A4);
 
 INCLUDE_ASM("../asm/us/magic_brizara/nonmatchings/text", func_801B0634);
 
-INCLUDE_ASM("../asm/us/magic_brizara/nonmatchings/text", func_801B06B4);
+void func_801B06B4(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801D8F98 = D_801B8F98 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B0714(s32 arg0, M2C_UNK arg1) {
     func_800D2980(&D_801B07A4, 0, 0, 0);

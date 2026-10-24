@@ -20,7 +20,13 @@ INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B0454);
 
 INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B08A8);
 
-INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B0970);
+void func_801B0970(s32 arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B08A8)];
+    p->unk0 = arg0;
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unk4);
+}
 
 INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B09F0);
 

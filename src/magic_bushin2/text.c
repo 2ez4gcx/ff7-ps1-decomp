@@ -6,7 +6,16 @@ M2C_UNK *func_801B0008(void) {
     return &D_801D8A00;
 }
 
-INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0030);
+void func_801B0030(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801F338C = D_801DB058[p->unk2];
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B0094);
 

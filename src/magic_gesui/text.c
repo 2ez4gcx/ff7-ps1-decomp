@@ -9,7 +9,16 @@ void func_801B0020(void) {
     func_801B0D44();
 }
 
-INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B0040);
+void func_801B0040(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801D9108 = D_801C1108 + p->unk2 * 0xC000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B00AC);
 

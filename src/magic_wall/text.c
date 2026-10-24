@@ -13,7 +13,16 @@ INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B03B4);
 
 INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B056C);
 
-INCLUDE_ASM("../asm/us/magic_wall/nonmatchings/text", func_801B0670);
+void func_801B0670(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801D170C = D_801B170C + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B06D0(s32 arg0, M2C_UNK arg1) {
     D_801D1710 = 0x1000;
