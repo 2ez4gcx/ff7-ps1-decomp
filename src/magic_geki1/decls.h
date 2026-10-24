@@ -28,5 +28,19 @@ typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 
 extern u16 D_801BD4A4;
 extern s32 D_801BD3C4;
 void func_800D4368(MgSVec *, s32, s32);
+void func_801B0238(void);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+MgMat *func_8003B05C(MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+extern MgMat D_800FA63C;
+extern u8 D_801BD4AC;
+extern u8 D_801BD4AD;
+extern u8 D_801BD4AE;
+extern u8 D_801BD4AF;
+extern u16 D_801BD4B0;
 
 #endif /* MAGIC_GEKI1_DECLS_H */

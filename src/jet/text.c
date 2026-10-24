@@ -9,9 +9,47 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A0D78);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1198);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A12EC);
+void func_800A12EC(void) {
+    s32 acc;
+    JetUnk24 *base;
+    JetUnk24 *e;
+    u16 i;
+    JetLink *tbl;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A13AC);
+    acc = *(s32 *)(D_800D1964 + 0x4370);
+    base = (JetUnk24 *)D_800D1BFC;
+    if (D_800D1C78 != 0) {
+        i = D_800A8A60;
+        tbl = D_800E2608;
+        do {
+            e = &base[i];
+            acc = func_800A8734(e, acc, D_800D1964 + 0x70, e);
+            i = tbl[i].next;
+        } while (i != 0xFFFF);
+    }
+    *(s32 *)(D_800D1964 + 0x4370) = acc;
+}
+
+void func_800A13AC(void) {
+    u16 i;
+    s32 acc;
+    JetLink *tbl;
+    JetPair *p;
+    JetPair *q;
+
+    i = D_800A89DC;
+    tbl = D_800D9948;
+    acc = *(s32 *)(D_800D1964 + 0x437C);
+loop:
+    p = D_800D1C58;
+    q = D_800EE194;
+    acc = func_800A882C(&p[i], acc, D_800D1964 + 0x70, &q[i]);
+    i = tbl[i].next;
+    if (i != 0xFFFF) {
+        goto loop;
+    }
+    *(s32 *)(D_800D1964 + 0x437C) = acc;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1450);
 
@@ -98,7 +136,30 @@ void func_800A2E30(void) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2E38);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A334C);
+void func_800A334C(void) {
+    s32 i;
+    JetLink *p;
+
+    D_800D172C = 0xFFFE;
+    D_800A8CC8 = 0;
+    D_800D1C60 = D_800D1BF4;
+    D_800EE428 = D_800D1BF8;
+    D_800D196C = D_800D1BDC;
+    D_800EE188 = D_800D1BE0;
+    for (i = 0; i < 12000; i++) {
+        p = &D_800E2608[i];
+        p->prev = 0xFFFF;
+        p->next = 0xFFFF;
+    }
+    D_800D1C78 = 0;
+    for (i = 0; i < 9000; i++) {
+        p = &D_800D9948[i];
+        p->prev = 0xFFFF;
+        p->next = 0xFFFF;
+    }
+    D_800D1C50 = 0;
+    D_800E25F8 = 1;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3414);
 
@@ -108,13 +169,118 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A372C);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A385C);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A38D4);
+void func_800A38D4(u16 arg0) {
+    JetLink *tbl;
+    JetLink *e;
+    JetLink *b;
+    JetLink *f;
+    u16 prev;
+    u16 next;
+    u16 *count;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3980);
+    e = &D_800E2608[arg0];
+    tbl = D_800E2608;
+    prev = e->prev;
+    next = e->next;
+    if (prev != 0xFFFF) {
+        tbl[prev].next = next;
+    } else {
+        D_800A8A60 = next;
+    }
+    if (next != 0xFFFF) {
+        D_800E2608[next].prev = prev;
+    } else {
+        D_800D9930 = prev;
+    }
+    b = D_800E2608;
+    f = &b[arg0];
+    f->prev = 0xFFFF;
+    f->next = 0xFFFF;
+    count = &D_800D1C78;
+    *count -= 1;
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3A20);
+void func_800A3980(u16 arg0) {
+    u16 *count;
+    u16 n;
+    JetLink *e;
+    JetLink *tbl;
+    JetLink *f;
+    JetLink *b;
+    u16 *tail;
+    u16 t;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3AAC);
+    count = &D_800D1C50;
+    n = *count;
+    if (n == 0) {
+        b = D_800D9948;
+        e = &b[arg0];
+        e->prev = 0xFFFF;
+        e->next = 0xFFFF;
+        D_800A89DC = arg0;
+        D_800D1C80 = arg0;
+        *count = 1;
+    } else {
+        n++;
+        tbl = D_800D9948;
+        f = &tbl[arg0];
+        tail = &D_800D1C80;
+        t = *tail;
+        f->next = 0xFFFF;
+        f->prev = t;
+        tbl[t].next = arg0;
+        *tail = arg0;
+        *count = n;
+    }
+}
+
+void func_800A3A20(u16 arg0) {
+    JetLink *tbl;
+    JetLink *e;
+    u16 prev;
+    u16 next;
+    u16 *count;
+
+    e = &D_800D9948[arg0];
+    tbl = D_800D9948;
+    prev = e->prev;
+    next = e->next;
+    if (prev != 0xFFFF) {
+        tbl[prev].next = next;
+    } else {
+        D_800A89DC = next;
+    }
+    if (next != 0xFFFF) {
+        D_800D9948[next].prev = prev;
+    } else {
+        D_800D1C80 = prev;
+    }
+    count = &D_800D1C50;
+    *count -= 1;
+}
+
+void func_800A3AAC(void) {
+    s32 i;
+    JetObj *p;
+
+    for (i = 0; i < 100; i++) {
+        p = &D_800D1DC0[i];
+        p->unkD8 = -1;
+        p->unkDA = 0;
+    }
+    D_800D9940 = 0;
+    for (i = 0; i < 100; i++) {
+        D_800D1970[i] = i + 1;
+    }
+    D_800D1C5C = 0x80;
+    D_800E25EC = 0xA0;
+    D_800D1C4C = 0;
+    D_800D1C7C = 0;
+    D_800E25F0 = 0x78;
+    D_800A898C = 0;
+    D_800A89E0 = 0;
+    D_800EE42C = 0;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3B58);
 
@@ -208,7 +374,29 @@ void func_800A7AF8(void) {
     D_800A89D8 = D_800D1BD8;
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7B48);
+JetUnk20 *func_800A7B48(s32 arg0) {
+    JetSpr *spr;
+    JetSprDef *def;
+    s32 x;
+    s32 y;
+
+    spr = (JetSpr *)func_800A7BF4();
+    def = &((JetSprDef *)D_800A89D8)[arg0];
+    x = def->x;
+    y = def->y;
+    spr->unk16 = def->unk4;
+    spr->unk14 = def->unkC;
+    spr->unk1A = def->unk8;
+    spr->unk18 = def->unk10;
+    spr->unk2 = 0;
+    spr->unk4 = x;
+    spr->unk6 = y;
+    spr->unk8 = 0;
+    spr->unk0 = x + y;
+    spr->unkC = func_800A7C20(x);
+    spr->unk10 = func_800A7C54(y);
+    return (JetUnk20 *)spr;
+}
 
 JetUnk20 *func_800A7BF4(void) {
     s32 *p;
@@ -270,7 +458,26 @@ void func_800A7FAC(void *arg0) {
     M2C_FIELD(arg0, void **, 0x20) = (void *) (arg0 + 0xE2E4);
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8010);
+void func_800A8010(void) {
+    s32 i;
+    JetNode *a;
+    JetNode *b;
+
+    func_800A80A8(&D_800D16E4, 0);
+    D_800D1710 = 0;
+    D_800D9944 = 0;
+    for (i = 0; i < 200; i++) {
+        D_800D1A40[i] = i + 1;
+    }
+    for (i = 0; i < 10; i++) {
+        a = &D_800A8A90[i];
+        b = &D_800EE1D4[i];
+        a->next = NULL;
+        a->prev = b;
+        b->next = a;
+        b->prev = NULL;
+    }
+}
 
 void func_800A80A8(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 4) = 0x1000;

@@ -98,7 +98,36 @@ void func_801B05B0(void) {
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B066C);
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B0888);
+void func_801B0888(void) {
+    MgMat m;
+    MgMat lw;
+    MgSVec rot;
+    MgTask *p;
+
+    rot.vy = 0;
+    rot.vx = 0;
+    p = &D_80162978[D_8015169C];
+    rot.vz = p->unk14;
+    func_8003BF8C(&rot, &m);
+    func_8003B35C(&m, &D_801D554C);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    D_801D5566[0] = 0x80 - p->unk2 * 6;
+    *(s32 *)&D_801D5566[-5] = D_801D556C[p->unk16];
+    D_801ED648 = func_800D29D4(&D_801D5566[-5], D_801517C0 + 0x70, 0xC, D_801ED648);
+    if (D_80062D98 == 0) {
+        p->unk6 -= 200;
+        p->unk14 += 0x100;
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B09E8(void) {
     MgTask *p;
@@ -184,7 +213,46 @@ void func_801B0CC8(void) {
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B0DB4);
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B0EB4);
+void func_801B0EB4(void) {
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    MgTask *p;
+    s16 *frame;
+    s32 **q;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&D_801D55D8, &m);
+    func_8003A79C(&D_801D561C, &m, &m);
+    scale.vx = scale.vz = 0x4000 - p->unk2 * 300;
+    scale.vy = p->unk2 * 900;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    frame = &D_801D55D2;
+    q = (s32 **)((u8 *)frame - 0xA);
+    M2C_SFIELD(q, s32 **, 0) = &D_801D1C40;
+    v = 0x1000 - (D_801D55C4 << 8);
+    *frame = v;
+    D_801ED648 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801ED648);
+    *q = &D_801D2244;
+    D_801ED648 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801ED648);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 13) {
+            D_801D55C4--;
+        }
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B10A8);
 

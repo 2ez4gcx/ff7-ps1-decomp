@@ -29,5 +29,10 @@ extern s32 D_801517C0;
 extern s16 D_801D443E[];
 extern MgSVec D_801D4444;
 extern MgTask D_80162978[];
+void func_801B04FC(void);
+typedef struct { s32 tag; u8 r; u8 g; u8 b; u8 code; } MgColTag;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern MgColTag D_801D4470;
+extern s32 D_801D447C[];
 
 #endif /* MAGIC_DAIONPA_DECLS_H */

@@ -56,5 +56,15 @@ void func_801B09E8(void);
 extern MgSVec D_801D557C;
 extern s16 D_801D558E[];
 extern MgTask D_80162978[];
+void func_801B0888(void);
+extern MgVec D_801D554C;
+extern s16 D_801D5566[];
+extern s32 D_801D556C[];
+void func_801B0EB4(void);
+extern s32 D_801D1C40;
+extern s32 D_801D2244;
+extern s16 D_801D55C4;
+extern s16 D_801D55D2;
+extern MgSVec D_801D55D8;
 
 #endif /* MAGIC_HADOHO_DECLS_H */

@@ -50,5 +50,12 @@ extern MgTask D_801621F0[];
 extern s16 D_801D7160[];
 extern s32 D_80163C74;
 extern s32 D_801D6E5C;
+void func_801B07A0(void);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+s32 func_800D29D4(void *, s32, s32, s32);
+extern MgSVec D_801D7170;
+extern s16 D_801D7182[];
 
 #endif /* MAGIC_ENERGY_DECLS_H */

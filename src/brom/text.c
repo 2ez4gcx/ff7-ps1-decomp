@@ -38,4 +38,43 @@ u32 func_800A0514(u32 arg0) {
 
 INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A0534);
 
-INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A05D4);
+s32 func_800A05D4(BromImg *arg0, s32 x, s32 y) {
+    BromRect rect;
+    u32 tw;
+    u32 th;
+    u16 w;
+    u16 h;
+    s32 v;
+    s32 ry;
+
+    if ((v = arg0->magic[0]) != 0x4152) {
+        return v;
+    }
+    if ((v = arg0->magic[1]) != 0x2057) {
+        return v;
+    }
+    if ((v = arg0->magic[2]) != 0x4752) {
+        return v;
+    }
+    if ((v = arg0->magic[3]) != 0x2042) {
+        return v;
+    }
+    tw = arg0->w;
+    th = arg0->h;
+    w = (tw >> 8) | (tw << 8);
+    h = (th >> 8) | (th << 8);
+    if (x == -1) {
+        x = (0x140 - w) / 2;
+    }
+    ry = y + 0xE8;
+    if (y == -1) {
+        y = (0xF0 - h) / 2;
+        ry = y + 0xE8;
+    }
+    rect.w = w;
+    rect.x = x;
+    rect.y = ry;
+    rect.h = h;
+    func_80044000(&rect, arg0->data);
+    return 0;
+}

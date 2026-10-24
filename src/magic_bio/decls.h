@@ -28,5 +28,11 @@ s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801517C0;
 extern u16 D_801B7884;
+void func_801B0000(void);
+extern u8 D_801B7874;
+extern u8 D_801B7875;
+extern u8 D_801B7876;
+extern u8 D_801B7877;
+extern s16 D_801B7878;
 
 #endif /* MAGIC_BIO_DECLS_H */

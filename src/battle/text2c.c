@@ -211,7 +211,23 @@ void func_800DF8F0(void) {
 void func_800DF8F8(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DF900);
+void func_800DF900(void) {
+    if (D_800F3896 == 3 && D_800F99E4 == 0) {
+        if (D_80062D7E & 0x20) {
+            func_800BB9B8(1);
+            D_800F99E4 = 1;
+            D_800F3896 = -1;
+            func_800A4350(D_800F38A0, D_800F389C, D_800F389E, D_801516F8);
+            func_800D9F5C(3);
+            func_800D9F5C(1);
+        } else if (D_80062D7E & 0x8040) {
+            func_800BB9B8(4);
+            D_800F99E4 = 1;
+            D_800F3896 = 1;
+            func_800D9F5C(3);
+        }
+    }
+}
 
 void func_800DF9F0(void) {
 }

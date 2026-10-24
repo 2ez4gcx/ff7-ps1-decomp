@@ -51,7 +51,13 @@ void func_800CDDE8(void) {
     D_801621F0[D_801590D4][0] = -1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CDE78);
+void func_800CDE78(void) {
+    if (D_801516FC[D_801590CC].a.a < D_801516FC[D_801621F0[D_801590D4][4]].a.a) {
+        D_80162204[D_801590D4][0] |= 0x100;
+    }
+    func_800D4D4C(D_801621F0[D_801590D4][4], D_80162204[D_801590D4][0]);
+    D_801621F0[D_801590D4][0] = -1;
+}
 
 void func_800CDF6C(s32 arg0, s16 arg1) {
     func_800BBA84(0x14, arg1, 0);
@@ -462,7 +468,31 @@ void func_800D4484(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D44E8);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D461C);
+void func_800D461C(MgMat *m) {
+    MgVec u;
+    MgVec v;
+    MgVec w;
+
+    v.vx = m->m[0][1];
+    v.vy = m->m[1][1];
+    v.vz = m->m[2][1];
+    func_8003A08C(&v, &v);
+    m->m[0][1] = v.vx;
+    m->m[1][1] = v.vy;
+    m->m[2][1] = v.vz;
+    u.vz = 0;
+    u.vx = v.vy;
+    u.vy = -v.vx;
+    func_8003A08C(&u, &u);
+    m->m[0][0] = u.vx;
+    m->m[1][0] = u.vy;
+    m->m[2][0] = u.vz;
+    func_8003BA10(&u, &v, &w);
+    func_8003A08C(&w, &w);
+    m->m[0][2] = w.vx;
+    m->m[1][2] = w.vy;
+    m->m[2][2] = w.vz;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D4710);
 
@@ -588,7 +618,29 @@ void func_800D52A0(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D5350);
+void func_800D5350(void) {
+    BtlTask20 *p;
+
+    p = (BtlTask20 *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->b == 0) {
+            do {
+                while (!((p->c >> p->a) & 1)) {
+                    p->a++;
+                }
+                p->fn(p->a, p->d);
+                p->a++;
+                if (p->c < (1 << p->a)) {
+                    p->a = -1;
+                    return;
+                }
+            } while (p->x8 == 0);
+        }
+        if (++p->b >= p->x8) {
+            p->b = 0;
+        }
+    }
+}
 
 void func_800D5444(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     B20 *temp_v0;

@@ -53,6 +53,18 @@ extern MgTask *D_801D09B0;
 extern s32 D_801D09B4;
 extern s32 D_801D09B8;
 extern s32 D_801D09BC;
-extern M2C_UNK func_801B0C60;
+void func_801B0C60(void);
+MgVec *func_8003AB84(MgMat *, MgVec *, MgVec *);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_800D3994(s32, s32, void *);
+extern s16 D_8015169C;
+extern u8 D_8015190F[][0xB9C];
+extern u16 D_80151A46[][0x5CE];
+extern MgVec D_801B899C;
+extern MgSVec D_801D09C0;
+extern MgSVec D_801D09C8;
+extern u16 D_801D09CE;
+extern MgVec D_801D09D0;
+void func_801B09F4(void);
 
 #endif /* MAGIC_WPBI_DECLS_H */

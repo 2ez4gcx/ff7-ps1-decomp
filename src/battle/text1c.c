@@ -85,7 +85,30 @@ void func_800A4844(s32 arg0) {
     D_800F39EC = var_v0;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A4860);
+s32 func_800A4860(void) {
+    s32 i;
+    s32 ret;
+
+    ret = 0;
+    D_800F39EC = 0;
+    D_800F83D0[0] |= 2;
+    for (i = 0; i < 3; i++) {
+        func_800A7254(0, i, 4, 0);
+    }
+    for (i = 0; i < 4; i++) {
+        func_800A3354();
+    }
+    D_800F3896 = 0x1C;
+    func_800D9E0C(-1, -1, 0x1C);
+    while (D_800F39EC == 0) {
+        func_800A3354();
+    }
+    if (D_800F39EC & 2) {
+        func_800E60F8();
+        ret = 1;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A4954);
 
@@ -785,7 +808,30 @@ void func_800A778C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A784C);
+INCLUDE_RODATA("../asm/us/battle/nonmatchings/text1c", D_800A0290);
+
+INCLUDE_RODATA("../asm/us/battle/nonmatchings/text1c", D_800A029C);
+
+void func_800A784C(void) {
+    BtlU16x5 t;
+    BtlU8x4 ids;
+    u32 i;
+    s32 p;
+
+    M2C_FIELD(D_80063014, s32 *, 0x2C) = D_800F64EC[M2C_FIELD(D_80063014, s32 *, 0x10)];
+    if (M2C_FIELD(D_80063014, s32 *, 0xC) == 0x20) {
+        t = D_800A0290;
+        ids = D_800A029C;
+        p = D_80063014;
+        for (i = 0; i < 4; i++) {
+            if (M2C_FIELD(p, s32 *, 0x2C) < t.v[i + 1]) {
+                M2C_FIELD(p, s32 *, 0x28) = ids.v[i];
+                M2C_FIELD(p, s32 *, 0x98) = M2C_FIELD(p, s32 *, 0x2C) - t.v[i];
+                return;
+            }
+        }
+    }
+}
 
 void func_800A7940(void) {
     M2C_FIELD(D_80063014, s32 *, 0x80) = 0x400000;
@@ -1702,7 +1748,32 @@ s32 func_800B0EB4(s32 arg0) {
     return r & 1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B0F04);
+u16 func_800B0F04(BtlB0F04 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    s32 n;
+    s32 v;
+    u16 ret;
+    BtlB0F04 *p;
+
+    ret = 0xFFFF;
+    p = arg0;
+    for (i = 0; i < 4; i++) {
+        v = p->a[i];
+        if ((v & ~0x3F) == arg1) {
+            n = v & 0x3F;
+            if (arg2 != 0) {
+                n = 0x100;
+            } else {
+                n = n * arg3 / 256;
+            }
+            if (n >= (func_80014B70() & 0x3F)) {
+                ret = p->b[i];
+                break;
+            }
+        }
+    }
+    return ret;
+}
 
 s32 func_800B0FFC(s32 arg0, s32 arg1, s32 arg2, u16 *arg3) {
     return func_800A31A0(arg0, 2, arg2, func_800A5EB0(((s32 (*)(s32))func_8001521C)(arg1), arg3) + 0x100);

@@ -96,7 +96,34 @@ void func_801B04C8(void) {
 
 INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B0584);
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B07A0);
+void func_801B07A0(void) {
+    MgTask *p;
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003BF8C(&D_801D7170, &m);
+    scale.vx = scale.vy = scale.vz = p->unk2 * 1500;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    t = p->unk2;
+    D_801D7182[0] = t << 8;
+    D_801EF234 = (u8 *)func_800D29D4(&D_801D7182[-5], D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 15) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B08E8);
 

@@ -50,5 +50,12 @@ extern M2C_UNK D_801B19FC;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK func_801B1850;
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+void func_801B07A0(void);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+s32 func_800D29D4(void *, s32, s32, s32);
+extern MgSVec D_801D7170;
+extern s16 D_801D7182[];
 
 #endif /* MAGIC_HADO_DECLS_H */

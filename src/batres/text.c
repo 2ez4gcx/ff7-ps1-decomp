@@ -5,11 +5,48 @@ INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B0000);
 
 INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B09C0);
 
-INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B0C74);
+void func_801B0C74(BrChr *arg0, s32 arg1) {
+    s32 i;
+    u32 m;
+
+    arg1 <<= 8;
+    for (i = 0; i < 8; i++) {
+        m = arg0->wpn[i];
+        if ((m & 0xFF) != 0xFF && (D_800730DD[m & 0xFF].a & 0xF) == 7) {
+            arg0->wpn[i] = m | arg1;
+        }
+        m = arg0->arm[i];
+        if ((m & 0xFF) != 0xFF && (D_800730DD[m & 0xFF].a & 0xF) == 7) {
+            arg0->arm[i] = m | arg1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B0D14);
 
-INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B0E20);
+void func_801B0E20(void) {
+    s32 mask;
+    s32 i;
+
+    mask = 0;
+    D_8009D7D8 = 0;
+    D_8009D7DC = 0;
+    D_8009D7E0 = 0;
+    for (i = 0; i < 4; i++) {
+        D_8009D808[i].a = -1;
+        D_8009D808[i].b = 0;
+    }
+    for (i = 0; i < 3; i++) {
+        D_8009D7EC[i].b = 0;
+        D_8009D7EC[i].a = 0;
+    }
+    for (i = 0; i < 3; i++) {
+        if (D_8009CBDC[i] == 0xFF) {
+            mask |= 1 << i;
+        }
+    }
+    func_80015654(mask);
+}
 
 INCLUDE_ASM("../asm/us/batres/nonmatchings/text", func_801B0EF8);
 

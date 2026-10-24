@@ -20,7 +20,34 @@ void func_801B1160(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_frog/nonmatchings/text", func_801B11CC);
+INCLUDE_RODATA("../asm/us/magic_frog/nonmatchings/text", D_801B0000);
+
+INCLUDE_RODATA("../asm/us/magic_frog/nonmatchings/text", D_801B0004);
+
+void func_801B11CC(void) {
+    MgPtrPair tbl;
+    MgTask *p;
+    s32 **hdr;
+
+    tbl = D_801B0000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2400, 0);
+    hdr = &D_801CAA60;
+    M2C_SFIELD(hdr, s32 **, 0) = tbl.ptr[p->unk1A];
+    D_801CAA68 = p->unk2;
+    D_801E2AE8 = (u8 *)func_800D4D90(hdr, D_801517C0 + 0x70, 0xC, (s32)D_801E2AE8);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= tbl.ptr[p->unk1A][1]) {
+            if (p->unk1A == 0) {
+                p->unk1A = 1;
+                p->unk2 = 0;
+            } else {
+                p->unk0 = -1;
+            }
+        }
+    }
+}
 
 void func_801B12E8(void) {
     MgTask *p;

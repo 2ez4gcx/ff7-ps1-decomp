@@ -1,7 +1,36 @@
 #include "common.h"
 #include "magic_bio/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_bio/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    MgTask *p;
+    s16 *frame;
+    s32 t;
+    s32 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 10) {
+        *(s32 *)&D_801B7874 = 0x2C808080;
+    } else {
+        t -= 10;
+        if (t < 10) {
+            D_801B7877 = 0x2E;
+            c = -(t << 7) / 10 - 0x80;
+            D_801B7874 = D_801B7875 = D_801B7876 = c;
+        } else {
+            p->unk0 = -1;
+            return;
+        }
+    }
+    frame = &D_801B7878;
+    *frame = p->unk2 % 7;
+    func_800D4368(&p->unk8, p->unk10, 0);
+    D_801D7888 = (u8 *)func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, (s32)D_801D7888);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unkA -= p->unk12;
+    }
+}
 
 void func_801B0178(void) {
     MgTask *p;

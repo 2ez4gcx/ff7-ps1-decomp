@@ -643,7 +643,36 @@ void func_800D4BFC(void) {
     D_80071E2C = 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D4C68);
+void func_800D4C68(s16 n, s16 x, s16 y, s16 w, s16 h) {
+    if (x < 8) {
+        if (D_8009D820 & 3) {
+            func_800BECA4("win limit x=", x, 2);
+        }
+        x = 8;
+    }
+    if (x + w > 0x138) {
+        if (D_8009D820 & 3) {
+            func_800BECA4("win limit x=", x + w, 3);
+        }
+        x = 0x138 - w;
+    }
+    if (y < 8) {
+        if (D_8009D820 & 3) {
+            func_800BECA4("win limit y=", y, 2);
+        }
+        y = 8;
+    }
+    if (y + h > 0xE0) {
+        if (D_8009D820 & 3) {
+            func_800BECA4("win limit y=", y + h, 3);
+        }
+        y = 0xE0 - h;
+    }
+    D_80083278[n].v = x;
+    D_8008327A[n].v = y;
+    D_8008327C[n].a = w;
+    D_8008327C[n].b = h;
+}
 
 void func_800D4E24(s16 arg0, s32 arg1, s32 arg2) {
     D_80083278[arg0].v += arg1;

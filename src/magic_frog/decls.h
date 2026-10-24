@@ -20,5 +20,10 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 extern u8 D_801CAAE8[];
 extern s16 D_80162080;
 extern MgObj20 D_80162978[];
+void func_801B11CC(void);
+typedef struct { s32 *ptr[2]; } MgPtrPair;
+extern MgPtrPair D_801B0000;
+extern s32 *D_801CAA60;
+extern u16 D_801CAA68;
 
 #endif /* MAGIC_FROG_DECLS_H */
