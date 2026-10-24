@@ -11,8 +11,8 @@ splat writes, and the result must match the original byte for byte (its
 SHA-1 is in the config): the main executable as it is on the disc, an
 overlay as the image the game loads into RAM (packed overlays are unpacked
 from the disc into disks/us/unpacked/ first). Overlays link against the main
-executable's symbols. Tools: the mipsel GNU binutils (set MIPSEL_PREFIX,
-default D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-).
+executable's symbols. Tools: the mipsel GNU binutils (MIPSEL_PREFIX, by default
+mipsel/bin/mipsel-none-elf- in the toolchain folder FF7_TOOLCHAIN).
 """
 import argparse
 import hashlib
@@ -28,7 +28,7 @@ import find_overlays  # noqa: E402
 import psyq  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = os.environ.get('MIPSEL_PREFIX', 'D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-')
+PREFIX = psyq.PREFIX
 AS_FLAGS = ['-EL', '-march=r3000', '-mtune=r3000', '-mabi=32', '-no-pad-sections', '-G0', '-Iinclude']
 PYTHON = sys.executable
 MAIN = 'scus_941.63.us.yaml'
