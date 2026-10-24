@@ -1,2 +1,5 @@
 // WORLD/WORLD.BIN: name = 0xADDRESS; // type:func
 func_800BD948 = 0x800BD948; // type:func
+D_800A01D8 = 0x800A01D8; // force_not_migration:True
+D_800A01E0 = 0x800A01E0; // force_not_migration:True
+D_800A01E8 = 0x800A01E8; // force_not_migration:True
