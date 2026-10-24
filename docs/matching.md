@@ -286,7 +286,10 @@ and report what was put, what was not (with what still differs) and any finding.
 agents at once on a small machine, eight on a 16-core one (each permuter run with
 `--jobs 2`). On Windows, agents must never run `python3`/`python` (the Microsoft Store
 aliases) or `python -` reading stdin: such processes hang at 100% CPU and outlive their
-command; scripts are written to a file and run with the venv's Python.
+command; scripts are written to a file and run with the venv's Python. Agents never
+delete files (`rm`, `Remove-Item`...): Claude Code asks the user about every deletion
+even when it may run everything else, so an unattended batch stalls; they overwrite
+files or use new names instead (`work/` is ignored by git).
 After each batch: `tools/build.py --skip-main <target>`, commit, push.
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
