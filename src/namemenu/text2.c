@@ -1,7 +1,59 @@
 #include "common.h"
 #include "namemenu/decls.h"
 
-INCLUDE_ASM("../asm/us/namemenu/nonmatchings/text2", func_801D14E8);
+void func_801D14E8(u8 *arg0) {
+    NmLvlFull lv;
+    s32 sum;
+    s32 n;
+    s32 i;
+    s32 j;
+    u8 flags;
+
+    sum = 0;
+    n = 0;
+    flags = 0;
+    if (arg0[0] < 9) {
+        flags = D_80082268[arg0[0]][0xA];
+    }
+    for (i = 0; i < 9; i++) {
+        if ((D_8009D78A[0] >> i) & 1) {
+            for (j = 0; j < 9; j++) {
+                if (D_8009C738[j][0] == i) {
+                    if (i != arg0[0]) {
+                        n++;
+                        sum += D_8009C738[j][1];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    if (n == 0) {
+        n = 1;
+        sum = arg0[1];
+    }
+    sum /= n;
+    if (flags & 1) {
+        sum = D_8009D28A;
+    } else {
+        sum += (s8)flags / 2;
+    }
+    if (sum <= 0) {
+        sum = 1;
+    }
+    func_801D16B4(&lv, arg0);
+    if (flags & 1) {
+        lv.l.f2C = 0;
+        lv.l.lvl = 1;
+        for (i = 0; i < 8; i++) {
+            lv.l.base[i] = 0;
+        }
+    }
+    func_801D1838(&lv.l);
+    M2C_FIELD(&lv, u32 *, 0x34) = func_801D19CC(&lv.l, sum - 1);
+    func_801D18B0(&lv.l);
+    func_801D1738(&lv.l, arg0);
+}
 
 void func_801D16B4(void *arg0, void *arg1) {
     M2C_FIELD(arg0, u8 *, 4) = (u8) M2C_FIELD(arg1, u8 *, 0);
@@ -17,7 +69,34 @@ void func_801D16B4(void *arg0, void *arg1) {
     M2C_FIELD(arg0, s32 *, 0x2C) = (s32) M2C_FIELD(arg1, s32 *, 0x3C);
 }
 
-INCLUDE_ASM("../asm/us/namemenu/nonmatchings/text2", func_801D1738);
+void func_801D1738(NmLvl *arg0, u8 *arg1) {
+    u32 next;
+    u32 prev;
+    u32 left;
+
+    arg1[1] = arg0->lvl;
+    arg1[2] = arg0->stat[0];
+    arg1[3] = arg0->stat[1];
+    arg1[4] = arg0->stat[2];
+    arg1[5] = arg0->stat[3];
+    arg1[6] = arg0->stat[4];
+    arg1[7] = arg0->stat[5];
+    *(u16 *)(arg1 + 0x2E) = arg0->stat[6];
+    *(u16 *)(arg1 + 0x32) = arg0->stat[7];
+    *(u32 *)(arg1 + 0x3C) = M2C_FIELD(arg0, u32 *, 0x30);
+    left = M2C_FIELD(arg0, u32 *, 0x80) - M2C_FIELD(arg0, u32 *, 0x30);
+    arg1[0x21] = 0;
+    *(u32 *)(arg1 + 0x80) = left;
+    next = M2C_FIELD(arg0, u32 *, 0x80);
+    prev = M2C_FIELD(arg0, u32 *, 0x7C);
+    if (next != prev) {
+        arg1[0x21] = (M2C_FIELD(arg0, u32 *, 0x30) - prev) * 61 / (next - prev);
+    }
+    if (arg0->lvl >= 99) {
+        *(u32 *)(arg1 + 0x80) = 0;
+        arg1[0x21] = 61;
+    }
+}
 
 void func_801D1838(NmLvl *arg0) {
     s32 i;
@@ -34,7 +113,42 @@ void func_801D1838(NmLvl *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/namemenu/nonmatchings/text2", func_801D18B0);
+void func_801D18B0(NmLvl *arg0) {
+    s32 n;
+    s32 i;
+    u32 next;
+    u32 exp;
+    s32 lvl;
+    u32 prev;
+
+    exp = arg0->f2C + M2C_FIELD(arg0, s32 *, 0x34);
+    M2C_FIELD(arg0, u32 *, 0x30) = exp;
+    n = 0;
+    if (exp > 999999999) {
+        M2C_FIELD(arg0, u32 *, 0x30) = 999999999;
+    }
+    prev = func_801D19CC(arg0, arg0->lvl - 1);
+    M2C_FIELD(arg0, u32 *, 0x38) = prev;
+    M2C_FIELD(arg0, u32 *, 0x7C) = prev;
+    while ((lvl = arg0->lvl) < 99) {
+        next = func_801D19CC(arg0, lvl);
+        M2C_FIELD(arg0, u32 *, 0x80) = next;
+        if (n < 16) {
+            arg0->c[n] = next;
+            n++;
+        }
+        if (M2C_FIELD(arg0, u32 *, 0x30) < next) {
+            break;
+        }
+        for (i = 0; i < 6; i++) {
+            func_801D1C10(arg0, i);
+        }
+        func_801D1C90(arg0);
+        func_801D1D84(arg0);
+        arg0->lvl++;
+        M2C_FIELD(arg0, u32 *, 0x7C) = next;
+    }
+}
 
 s32 func_801D19CC(NmLvl *arg0, s32 arg1) {
     s32 sum;
