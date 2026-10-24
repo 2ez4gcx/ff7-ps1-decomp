@@ -37,5 +37,20 @@ extern M2C_UNK D_801EDB88;
 void func_8003A63C(void *, void *, MgMat *);
 extern M2C_UNK D_801EDBC8;
 void func_801B1C0C(MgMat *, void *);
+void func_801B575C(s16 arg0);
+extern s32 func_801B550C;
+void func_801B5E5C(void);
+void func_801B21C8(s32 arg0);
+extern u8 D_80062D98;
+extern s16 D_8015169C;
+extern s32 func_801B20CC;
+void func_801B45C0(void);
+M2C_UNK func_8003C8DC(M2C_UNK, M2C_UNK *);
+s32 func_800D29D4(M2C_UNK *, s32, M2C_UNK, s32);
+extern s32 D_801517C0;
+extern s32 D_80163C74;
+extern M2C_UNK D_801EDBF0;
+extern M2C_UNK D_801EDC00;
+extern MgMat *D_801EDC20;
 
 #endif /* MAGIC_TUPON_DECLS_H */

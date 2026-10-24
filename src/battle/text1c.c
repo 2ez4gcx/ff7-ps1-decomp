@@ -353,7 +353,25 @@ s32 func_800A5E0C(u8 *dst, u8 *src, u16 *args) {
     return n;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5EB0);
+s32 func_800A5EB0(u8 *arg0, u16 *arg1) {
+    u8 buf[0x100];
+    s32 n;
+    s32 i;
+    s32 idx;
+
+    n = func_800A5E0C(buf, arg0, arg1);
+    if (D_800F4300 + n > 0x800) {
+        D_800F4300 = 0;
+    }
+    idx = D_800F4304++;
+    D_800F4280[idx] = D_800F4300;
+    D_800F4304 &= 0x3F;
+    for (i = 0; i < n; i++) {
+        D_800F3A80[D_800F4300 + i] = buf[i];
+    }
+    D_800F4300 += n;
+    return idx;
+}
 
 u8 *func_800A5F90(s32 arg0) {
     return D_800F4280[arg0] + D_800F3A80;
@@ -789,7 +807,26 @@ void func_800A79A8(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A79CC);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A80DC);
+void func_800A80DC(void) {
+    BtlE722CC *e;
+    u16 v;
+
+    M2C_FIELD(D_80063014, s32 *, 0x3C) = 0xFF;
+    e = &D_800722CC[M2C_FIELD(D_80063014, s32 *, 0x2C)];
+    M2C_FIELD(D_80063014, s32 *, 0x40) = e->xE;
+    M2C_FIELD(D_80063014, s32 *, 0x48) = e->xF;
+    v = e->x18;
+    if (v != 0xFFFF) {
+        M2C_FIELD(D_80063014, s32 *, 0x44) = v;
+    }
+    M2C_FIELD(D_80063014, s32 *, 0x60) = e->x8;
+    M2C_FIELD(D_80063014, s32 *, 0x64) = e->x8;
+    M2C_FIELD(D_80063014, s32 *, 0x24) = e->xD;
+    M2C_FIELD(D_80063014, s32 *, 0x6C) = e->x1A;
+    func_800A8D60(e->xC);
+    func_800A8DCC(e->x11, e->x14);
+    func_800A8D88(e->x12, e->x13);
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A81B8);
 
@@ -1463,7 +1500,19 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AEC10);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AEF68);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AF0C4);
+void func_800AF0C4(s32 arg0, s32 arg1, s32 arg2) {
+    if (!(D_800F83E0[arg0].a & 0x02804444)) {
+        func_800A7254(0, arg0, 6, 0);
+    }
+    if (!(D_800F83E0[arg0].a & 0x02004404)) {
+        if ((D_800F6B34.mask >> arg0) & 1) {
+            if (D_800F6B34.e[arg0].a != 0xFF) {
+                func_800A3D4C(&D_800F6B34.e[arg0]);
+                D_800F6B34.e[arg0].a = 0xFF;
+            }
+        }
+    }
+}
 
 void func_800AF1A8(s32 arg0) {
     func_800A7254(0, arg0, 8, 0);

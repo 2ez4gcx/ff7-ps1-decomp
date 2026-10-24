@@ -58,7 +58,16 @@ MgMat *func_801B1FB0(MgSVec *v, s16 scale, s32 dist) {
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B20CC);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B21C8);
+void func_801B21C8(s32 arg0) {
+    MgObj20 *temp_v0;
+
+    if (D_801EDA8C == NULL) {
+        temp_v0 = &D_80162978[func_800BBEAC(&func_801B20CC)];
+        D_801EDA8C = (u8 *) temp_v0;
+        M2C_FIELD(temp_v0, s32 *, 4) = 0;
+        M2C_FIELD(temp_v0, s32 *, 0xC) = (s32) (0x10000 / arg0);
+    }
+}
 
 void func_801B2258(s32 arg0) {
     if (D_801EDA8C != NULL) {
@@ -110,7 +119,25 @@ INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B421C);
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B4378);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B45C0);
+void func_801B45C0(void) {
+    MgObj20 *temp_s0;
+    s16 temp_v0;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    func_8003A63C(&D_801EDDF8, &D_801EDC00, D_801EDC20);
+    func_8003B48C(D_801EDC20);
+    func_8003B51C(D_801EDC20);
+    D_80163C74 = func_800D29D4(&D_801EDBF0, D_801517C0 + 0x406C, 0, D_80163C74);
+    if (D_80062D98 == 0) {
+        temp_v0 = (u16) temp_s0->unk2 + 1;
+        temp_s0->unk2 = temp_v0;
+        if (temp_v0 >= 0x78) {
+            temp_s0->unk0 = -1;
+            return;
+        }
+        func_8003C8DC(0x10, &D_801EDC00);
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B46B4);
 
@@ -128,7 +155,13 @@ INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B51E0);
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B550C);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B575C);
+void func_801B575C(s16 arg0) {
+    MgObj20 *temp_v0;
+
+    temp_v0 = &D_80162978[func_800BBEAC(&func_801B550C)];
+    temp_v0->unk0 = arg0;
+    M2C_FIELD(temp_v0, s16 *, 0xE) = 0;
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B57A8);
 
@@ -138,7 +171,22 @@ INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B5AB0);
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B5D00);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B5E5C);
+void func_801B5E5C(void) {
+    MgObj20 *temp_s0;
+    s16 temp_v1;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        temp_v1 = temp_s0->unk2;
+        if (temp_v1 == 0) {
+            func_801B21C8(4);
+        } else if (temp_v1 == 4) {
+            func_801B2258(4);
+            temp_s0->unk0 = -1;
+        }
+        temp_s0->unk2 = (u16) temp_s0->unk2 + 1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B5EE8);
 

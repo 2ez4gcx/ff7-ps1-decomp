@@ -40,5 +40,9 @@ extern s16 D_801D7270[];
 extern u8 D_801D726E;
 extern u8 D_801D726D;
 extern u8 D_801D726C;
+void func_801B063C(void);
+s32 func_800C4FC8(M2C_UNK, M2C_UNK, s16);
+extern s32 D_80163C74;
+extern s16 D_801D7178;
 
 #endif /* MAGIC_TBREATH_DECLS_H */

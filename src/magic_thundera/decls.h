@@ -12,5 +12,11 @@ extern MgObj20 D_80162978[];
 extern u8 D_801C90EC[];
 extern u8 *D_801E90EC;
 extern s16 D_80162080;
+void func_801B01A0(void);
+M2C_UNK func_800D4368(s16 *, M2C_UNK, s16);
+u8 *func_800D4D90(M2C_UNK, s32, M2C_UNK, u8 *);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern M2C_UNK D_801B097C;
 
 #endif /* MAGIC_THUNDERA_DECLS_H */

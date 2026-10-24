@@ -62,7 +62,18 @@ s32 func_800E5FB4(s32 arg0, s32 arg1) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E6018);
+void func_800E6018(s32 arg0, s32 arg1) {
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (D_8009C778[arg0].a[i] != -1 && func_800E5FB4(arg1, ((s32 (*)(s32))func_8002603C)(D_8009C778[arg0].a[i])) != 0) {
+            D_8009C778[arg0].a[i] = -1;
+        }
+        if (D_8009C778[arg0].b[i] != -1 && func_800E5FB4(arg1, ((s32 (*)(s32))func_8002603C)(D_8009C778[arg0].b[i])) != 0) {
+            D_8009C778[arg0].b[i] = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text3", func_800E60F8);
 

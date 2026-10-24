@@ -51,13 +51,33 @@ loop_1:
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2860);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2938);
+void func_800A2938(void) {
+    s16 *p = &D_8009A000;
+
+    *p = 0xC1;
+    D_8009A004 = 0xF0;
+    D_8009A008 = 0;
+    func_8002DA7C();
+    *p = 0xB9;
+    D_8009A004 = 0xF0;
+    D_8009A008 = 0;
+    func_8002DA7C();
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A29AC);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2AA0);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2B78);
+void func_800A2B78(void) {
+    s16 *p = &D_8009A000;
+
+    *p = 0xA2;
+    D_8009A004 = D_800A8338;
+    func_8002DA7C();
+    *p = 0xA3;
+    D_8009A004 = D_800A833C;
+    func_8002DA7C();
+}
 
 void func_800A2BE0(void) {
     D_800A83CC = -0x1B76;
@@ -106,11 +126,38 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3E58);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A40F4);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A4390);
+void func_800A4390(void *arg0) {
+    s16 *p;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A4400);
+    if (M2C_FIELD(arg0, s16 *, 0xD8) != -1) {
+        p = &D_800EE42C;
+        *p -= 1;
+        func_800A8204(M2C_FIELD(arg0, void **, 0xD4));
+        func_800A442C(M2C_FIELD(arg0, s16 *, 0xD8));
+        M2C_FIELD(arg0, s16 *, 0xD8) = -1;
+        M2C_FIELD(arg0, s16 *, 0xDA) = 0;
+    }
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A442C);
+s16 func_800A4400(void) {
+    s16 *p;
+    s16 i;
+
+    p = &D_800D9940;
+    i = *p;
+    *p = D_800D1970[i];
+    return i;
+}
+
+void func_800A442C(s16 arg0) {
+    s16 *p;
+    s16 *q;
+
+    q = &D_800D1970[arg0];
+    p = &D_800D9940;
+    *q = *p;
+    *p = arg0;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A4458);
 
@@ -130,9 +177,21 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7414);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7544);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7688);
+s32 func_800A7688(s32 arg0, s32 arg1, s32 arg2) {
+    s32 a, b, c;
+    a = D_800A892C;
+    b = D_800A8930;
+    c = D_800A8934;
+    return a * (arg0 >> 2) + b * (arg1 >> 2) + c * (arg2 >> 2) + D_800A8A5C;
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A76DC);
+s32 func_800A76DC(s32 arg0, s32 arg1, s32 arg2) {
+    s32 a, b, c;
+    a = D_800A893C;
+    b = D_800A8940;
+    c = D_800A8944;
+    return a * (arg0 >> 2) + b * (arg1 >> 2) + c * (arg2 >> 2) + D_800A8A64;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7730);
 
@@ -151,15 +210,51 @@ void func_800A7AF8(void) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7B48);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7BF4);
+JetUnk20 *func_800A7BF4(void) {
+    s32 *p;
+    JetUnk20 *base;
+    s32 n;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7C20);
+    p = &D_800A8A8C;
+    n = *p;
+    *p = n + 1;
+    base = D_800D0554;
+    return base + n;
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7C54);
+JetUnk24 *func_800A7C20(s32 arg0) {
+    s32 *p;
+    s32 n;
+    JetUnk24 *base;
+
+    p = &D_800A8A70;
+    n = *p;
+    *p = n + arg0;
+    base = (JetUnk24 *)D_800A8CCC;
+    return base + n;
+}
+
+JetUnk28 *func_800A7C54(s32 arg0) {
+    s32 *p;
+    s32 n;
+    JetUnk28 *base;
+
+    p = &D_800D171C;
+    n = *p;
+    *p = n + arg0;
+    base = (JetUnk28 *)D_800D1968;
+    return base + n;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7C88);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7E1C);
+void func_800A7E1C(void) {
+    s32 *p = &D_800D1964;
+
+    func_80044244(*p + 0x70, 0x1000);
+    func_80044244(*p + 0x4098, 0xB4);
+    func_800A7FAC((void *)(*p + 0x4368));
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A7E70);
 
@@ -198,13 +293,44 @@ void func_800A80A8(void *arg0, s16 arg1) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A80F8);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8204);
+void func_800A8204(void *arg0) {
+    func_800A82F0(arg0);
+    func_800A8264(M2C_FIELD(arg0, s16 *, 0x2A));
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8238);
+s16 func_800A8238(void) {
+    s16 *p;
+    s16 i;
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8264);
+    p = &D_800D9944;
+    i = *p;
+    *p = D_800D1A40[i];
+    return i;
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8290);
+void func_800A8264(s16 arg0) {
+    s16 *p;
+    s16 *q;
+
+    q = &D_800D1A40[arg0];
+    p = &D_800D9944;
+    *q = *p;
+    *p = arg0;
+}
+
+void func_800A8290(JetNode *arg0, JetNode *arg1) {
+    s16 depth;
+    JetNode *head;
+
+    arg0->parent = arg1;
+    depth = arg1->depth + 1;
+    arg0->depth = depth;
+    head = &D_800EE1D4[depth];
+    arg0->next = head->next;
+    arg0->prev = arg0->next->prev;
+    head->next->prev = arg0;
+    head->next = arg0;
+}
 
 void func_800A82F0(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void **, 0x34) = (void *) M2C_FIELD(arg0, void **, 0x34);

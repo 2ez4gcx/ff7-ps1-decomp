@@ -14,5 +14,6 @@ extern s8 D_800A06E3;
 extern s8 D_800A06E4;
 extern s32 D_800A0728;
 extern s8 D_800A0739;
+u32 func_800A0514(u32 arg0);
 
 #endif /* BROM_DECLS_H */

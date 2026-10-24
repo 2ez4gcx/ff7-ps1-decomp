@@ -32,7 +32,21 @@ void func_800A283C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2894);
+void func_800A2894(void) {
+    s32 i;
+    u16 *p;
+
+    i = 0;
+    p = &D_800F7DE2;
+    for (; i < 3; i++) {
+        if (D_800F840C[i].a == 0x1E61 && !(D_800F5BE0[i].b[0] & 0x80)) {
+            if ((*p)++ < 0x40) {
+                D_800F5BE0[i].b[0] |= 0x80;
+                func_800A3E98(i, 1, 1, 0, 0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2974);
 

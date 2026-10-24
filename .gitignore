@@ -32,6 +32,7 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+.claude/settings.local.json
 
 # Work files of tools/work.py
 /work/

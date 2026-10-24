@@ -19,5 +19,8 @@ extern MgObj20 D_80162978[];
 extern s32 D_801B85F8;
 extern u16 D_801BA26C;
 extern s32 D_80163C74;
+void func_801B00E0(void);
+extern s32 D_801B8530;
+extern u16 D_801BA278;
 
 #endif /* MAGIC_BOOST_DECLS_H */

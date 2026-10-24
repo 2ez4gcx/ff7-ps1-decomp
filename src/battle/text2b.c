@@ -98,9 +98,31 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CE970);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CEB48);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF2F0);
+void func_800CF2F0(void) {
+    s16 i;
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF3CC);
+    if (D_801620AC[D_801590D0][2] == 0) {
+        D_801620AC[D_801590D0][0] = -1;
+        return;
+    }
+    i = D_801620AC[D_801590D0][4];
+    D_80151A4C[i].v.b += D_801620AC[D_801590D0][5];
+    *(s32 *)0x1F80000C = i;
+    D_801620AC[D_801590D0][2]--;
+}
+
+void func_800CF3CC(void) {
+    s16 i;
+
+    i = D_801620AC[D_801590D0][4];
+    *(s32 *)0x1F80000C = i;
+    if (D_801620AC[D_801590D0][2] == 0) {
+        D_801620AC[D_801590D0][0] = -1;
+        return;
+    }
+    D_801518E6[i][0xB0] += D_801620AC[D_801590D0][7];
+    D_801620AC[D_801590D0][2]--;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF4A8);
 
@@ -394,9 +416,40 @@ void func_800D415C(s32 arg0, V8 *arg1, s32 arg2, s32 arg3, u16 arg4) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D41FC);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D4284);
+MgMat *func_800D4284(MgSVec *arg0, s32 arg1, MgMat *arg2) {
+    MgVec v;
+    s32 flag;
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D4368);
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C(arg0, (MgVec *)arg2->t, &flag);
+    if (arg1 != 0) {
+        func_8003A08C((MgVec *)arg2->t, &v);
+        arg2->t[0] += (arg1 * v.vx) >> 12;
+        arg2->t[1] += (arg1 * v.vy) >> 12;
+        arg2->t[2] += (arg1 * v.vz) >> 12;
+    }
+    return arg2;
+}
+
+MgMat *func_800D4368(MgSVec *v, s16 scale, s32 dist) {
+    MgVec n;
+    s32 flag;
+
+    D_800F0228.m[0][0] = D_800F0228.m[1][1] = D_800F0228.m[2][2] = scale;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C(v, (MgVec *)D_800F0228.t, &flag);
+    if (dist != 0) {
+        func_8003A08C((MgVec *)D_800F0228.t, &n);
+        D_800F0228.t[0] += (dist * n.vx) >> 12;
+        D_800F0228.t[1] += (dist * n.vy) >> 12;
+        D_800F0228.t[2] += (dist * n.vz) >> 12;
+    }
+    func_8003B48C(&D_800F0228);
+    func_8003B51C(&D_800F0228);
+    return &D_800F0228;
+}
 
 void func_800D4484(s32 arg0, s32 arg1) {
     void *temp_s0;

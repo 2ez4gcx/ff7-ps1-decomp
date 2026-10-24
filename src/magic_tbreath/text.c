@@ -72,7 +72,26 @@ INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B045C);
 
 INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B04C0);
 
-INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B063C);
+void func_801B063C(void) {
+    MgObj20 *temp_s0;
+    s16 temp_v0;
+
+    temp_s0 = &D_80162978[D_8015169C];
+    D_80163C74 = func_800C4FC8(0, 0, D_801D7178);
+    if (D_80062D98 == 0) {
+        if (temp_s0->unk2 < 0x10) {
+            D_801D7178 = (u16) D_801D7178 + 0xF;
+        }
+        if (temp_s0->unk2 >= 0x11) {
+            D_801D7178 = (u16) D_801D7178 - 0xF;
+        }
+        temp_v0 = (u16) temp_s0->unk2 + 1;
+        temp_s0->unk2 = temp_v0;
+        if (temp_v0 == 0x20) {
+            temp_s0->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B071C);
 

@@ -28,7 +28,13 @@ void func_800A015C(void) {
 
 INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A01A0);
 
-INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A0514);
+u32 func_800A0514(u32 arg0) {
+    u32 r, g, b;
+    g = arg0 & 0x3E0;
+    r = arg0 & 0x1F;
+    b = (arg0 & 0x7C00) >> 10;
+    return (r << 10) | (b | g);
+}
 
 INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A0534);
 

@@ -37,5 +37,6 @@ s32 func_800D29D4(M2C_UNK *, s32, M2C_UNK, s32);
 extern M2C_UNK D_801F1C78;
 extern M2C_UNK D_801F1C88;
 extern MgMat *D_801F1CA8;
+MgMat *func_801B231C(MgSVec *v, s32 d, MgMat *m);
 
 #endif /* MAGIC_ODIN2_DECLS_H */

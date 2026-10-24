@@ -50,7 +50,21 @@ MgMat *func_801B2200(MgSVec *v, s16 scale, s32 dist) {
     return &D_801F1C3C;
 }
 
-INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B231C);
+MgMat *func_801B231C(MgSVec *v, s32 d, MgMat *m) {
+    MgVec n;
+    s32 flag;
+
+    func_8003B48C(&D_801F6238);
+    func_8003B51C(&D_801F6238);
+    func_8003BC6C(v, (MgVec *)m->t, &flag);
+    if (d != 0) {
+        func_8003A08C((MgVec *)m->t, &n);
+        m->t[0] += (d * n.vx) >> 12;
+        m->t[1] += (d * n.vy) >> 12;
+        m->t[2] += (d * n.vz) >> 12;
+    }
+    return m;
+}
 
 INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B2400);
 

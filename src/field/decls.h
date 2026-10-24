@@ -520,5 +520,13 @@ extern s16 D_8009AC1C[];
 s32 func_800CDD40(void);
 extern char D_800A0C68[];
 typedef struct { u16 c[16]; } FdRow;
+s32 func_800C5898(void);
+extern s16 D_80082248[];
+extern u8 D_8008325C[];
+s32 func_800CFCE4(void);
+s32 func_800C107C(void);
+extern u8 D_80075E24[];
+extern u8 D_8009D288[];
+s32 func_800C5CE8(void);
 
 #endif /* FIELD_DECLS_H */

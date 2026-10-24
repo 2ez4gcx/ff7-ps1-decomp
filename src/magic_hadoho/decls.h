@@ -41,5 +41,17 @@ extern s32 D_80163C74;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D5174;
+void func_801B0CC8(void);
+extern s32 D_801D53AC;
+extern u16 D_801D55B4;
+void func_801B0B44(void);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+s32 func_800D29D4(void *, s32, s32, s32);
+extern MgSVec D_801D5594;
+extern s16 D_801D55A6[];
+extern MgMat D_801D561C;
 
 #endif /* MAGIC_HADOHO_DECLS_H */

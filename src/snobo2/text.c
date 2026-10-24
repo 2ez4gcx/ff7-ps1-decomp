@@ -112,7 +112,12 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A21FC);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A2294);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A235C);
+void func_800A235C(void) {
+    D_800E1950 ^= 1;
+    D_80105380 = D_800FB954[D_800E1950];
+    func_80044244(D_80105380, 0x1000);
+    D_8010538C = D_800E1954[D_800E1950];
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A23DC);
 

@@ -414,7 +414,7 @@ M2C_UNK func_800A1E30();
 M2C_UNK func_800A2EF0(M2C_UNK, M2C_UNK, M2C_UNK);
 void func_800A71E0(s32 arg0, s32 arg1);
 extern M2C_UNK *D_800E194C;
-extern s32 D_80105380;
+extern u8 *D_80105380;
 extern M2C_UNK func_800A0654;
 void func_800A9AC0(void *arg0, s32 arg1);
 M2C_UNK func_800A9B18(void *);
@@ -519,5 +519,10 @@ void func_800ACB2C(void);
 typedef struct { s32 unk0; s32 unk4[7]; } SbUnkFFC40;
 extern s16 D_80103F6C;
 extern SbUnkFFC40 D_80103E6C[];
+void func_800A235C(void);
+extern u8 D_800FB954[][0x4000];
+extern s32 D_800E1950;
+void func_80044244(u8 *, s32);
+extern u8 D_800E1954[][0xD000];
 
 #endif /* SNOBO2_DECLS_H */
