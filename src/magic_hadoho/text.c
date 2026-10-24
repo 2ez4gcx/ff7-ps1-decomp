@@ -100,7 +100,35 @@ INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B066C);
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B0888);
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B09E8);
+void func_801B09E8(void) {
+    MgTask *p;
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    s32 t;
+
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&D_801D557C, &m);
+    func_8003A79C(&D_801D561C, &m, &m);
+    scale.vx = scale.vy = scale.vz = p->unk2 * 1500;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    t = p->unk2;
+    D_801D558E[0] = t << 8;
+    D_801ED648 = func_800D29D4(&D_801D558E[-5], D_801517C0 + 0x70, 0xC, D_801ED648);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0B44(void) {
     MgTask *p;

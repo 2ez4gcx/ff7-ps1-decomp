@@ -23,5 +23,8 @@ extern s32 D_80163C74;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D2374;
+void func_801B1548(void);
+extern u16 D_801D46B0;
+extern s32 D_801D22AC;
 
 #endif /* MAGIC_HYPER_DECLS_H */

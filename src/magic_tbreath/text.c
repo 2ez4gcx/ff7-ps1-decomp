@@ -68,7 +68,16 @@ void func_801B02FC(MgSVec *pos, MgSVec *rot, s16 scale, s32 dist) {
     func_8003B51C(&m);
 }
 
-INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B045C);
+void func_801B045C(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801E72D0 = D_801D715C[p->unk2];
+    p->unk2 ^= 1;
+    if (D_80162080 < 2) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B04C0);
 

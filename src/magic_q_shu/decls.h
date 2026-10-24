@@ -19,5 +19,10 @@ extern s32 D_801BD9CC;
 void func_801B03FC(void);
 extern u16 D_801BDAC4;
 extern s32 D_801BD84C;
+void func_801B0F5C(s32 arg0, s32 arg1);
+void func_801B0C5C(void);
+M2C_UNK func_800BBEAC(M2C_UNK *);
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
 
 #endif /* MAGIC_Q_SHU_DECLS_H */

@@ -18,5 +18,15 @@ void func_801B016C(s32 ang, MgMat *m, MgVec *v);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 void func_801B02E8(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03C4(MgSVec *p, MgSVec *q, MgVec *n);
+typedef struct { u32 addr : 24; u32 len : 8; } MgTag;
+typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 r1; u8 g1; u8 b1; u8 pad; s16 x1; s16 y1; } MgLineG2;
+typedef struct { s32 unk0; s32 sxy; s32 otz; s32 flag; } MgRtp;
+extern MgMat D_800FA63C;
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern MgLineG2 *D_801CFD2C;
+s32 func_8003BBDC(void *, void *, s32 *, s32 *);
+extern s32 D_801517C0;
+void func_801B115C(MgRtp *r, MgSVec *v0, MgSVec *v1, s32 color);
 
 #endif /* MAGIC_LV4JIBAK_DECLS_H */

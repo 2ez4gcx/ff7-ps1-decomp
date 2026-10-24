@@ -6,9 +6,40 @@ M2C_UNK *func_801B0040(void) {
     return &D_801DD640;
 }
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B0068);
+void func_801B0068(MgSVecList *a, MgSVec *b, MgSVec *out) {
+    s32 i;
+    s32 n;
+    MgSVec *s;
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B00F8);
+    n = a->n / 8;
+    s = a->v;
+    for (i = 0; i < n; i++) {
+        out->vx = s->vx - b->vx;
+        out->vy = s->vy - b->vy;
+        out->vz = s->vz - b->vz;
+        s++;
+        b++;
+        out++;
+    }
+}
+
+void func_801B00F8(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t) {
+    s32 i;
+    s32 n;
+    MgSVec *s;
+
+    n = a->n / 8;
+    s = a->v;
+    t = 0x1000 - t;
+    for (i = 0; i < n; i++) {
+        s->vx = b->vx + ((d->vx * t) >> 12);
+        s->vy = b->vy + ((d->vy * t) >> 12);
+        s->vz = b->vz + ((d->vz * t) >> 12);
+        s++;
+        b++;
+        d++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B01C0);
 
@@ -79,7 +110,39 @@ INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B2A60);
 
 INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B2BE0);
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B2EC0);
+void func_801B2EC0(void) {
+    MgTask *p;
+    s32 t;
+    s32 d;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        d = p->unk6;
+        if (t < d) {
+            d = (t << 12) / d;
+            v = (p->unk4 * d) >> 12;
+        } else {
+            t -= d;
+            if (t < p->unk8) {
+                v = p->unk4;
+            } else {
+                t -= p->unk8;
+                d = p->unkA;
+                if (t >= d) {
+                    p->unk0 = -1;
+                    D_800FA668[0] = 0;
+                    return;
+                }
+                d = (t << 12) / d;
+                v = (p->unk4 * (0x1000 - d)) >> 12;
+            }
+        }
+        D_800FA668[0] = (p->unk2 & 1) ? v : -v;
+        p->unk2++;
+    }
+}
 
 void func_801B2FFC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     MgTask *p;

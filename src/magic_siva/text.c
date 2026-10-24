@@ -89,7 +89,18 @@ INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B24C0);
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B257C);
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B25C4);
+void func_801B25C4(void) {
+    s32 i;
+    s32 *p;
+
+    i = 0x1F3;
+    p = D_801F45B4;
+    do {
+        *p = 0;
+        i--;
+        p--;
+    } while (i >= 0);
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B25E8);
 

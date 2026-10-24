@@ -128,7 +128,41 @@ void func_801B107C(MgSVec *v0, MgSVec *v1, s32 color) {
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B1180);
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B11D8);
+void func_801B11D8(MgRing *r, s32 v) {
+    s32 head;
+    s32 tail;
+    s32 count;
+    s32 size;
+    s32 last;
+
+    tail = r->tail;
+    last = r->head;
+    count = r->count;
+    r->prev = r->last;
+    size = r->size;
+    r->last = last;
+    head = last;
+    r->buf[head] = v;
+    head++;
+    count++;
+    if (head >= size) {
+        head = 0;
+    }
+    if (count >= size) {
+        count = size;
+    }
+    if (head == tail) {
+        tail++;
+        count--;
+        if (tail >= size) {
+            tail = 0;
+        }
+    }
+    r->head = head;
+    r->tail = tail;
+    r->count = count;
+    r->size = size;
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B1258);
 

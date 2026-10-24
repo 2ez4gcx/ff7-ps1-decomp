@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0D5C();
+void func_801B0D5C();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -21,5 +21,11 @@ extern s32 D_801517C0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D5C94;
+M2C_UNK func_800BBEAC(M2C_UNK *);
+extern s32 D_801B0DD8;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_801B0C9C(void);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 
 #endif /* MAGIC_YAMI_DECLS_H */

@@ -45,6 +45,14 @@ INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B08E0);
 
 INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B0C5C);
 
-INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B0F5C);
+void func_801B0F5C(s32 arg0, s32 arg1) {
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC(&func_801B0C5C)];
+    func_800D3994(arg1, D_8015190F[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B1028);

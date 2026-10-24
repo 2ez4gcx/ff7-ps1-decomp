@@ -240,11 +240,32 @@ void func_801B6690(s32 arg0) {
     func_801B6624((s32)&D_801EC954, &D_801EE9D8[arg0]);
 }
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B66C4);
+void func_801B66C4(void) {
+    MgTask *p;
+    s32 i;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            for (i = 0; i < 10; i++) {
+                if ((D_801EE9CC >> i) & 1) {
+                    func_801B018C(i, D_8015190F[i][0], &D_801EE9D8[i]);
+                }
+            }
+        }
+        func_800D5444(D_801EE9CC, 0, 0, (M2C_UNK *)func_801B6690);
+        p->unk2++;
+        if (p->unk2 > 0) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B67C4);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B6B78);
+void func_801B6B78(s32 arg0) {
+    func_801B6624((s32)&D_801EC98C, &D_801EE9D8[arg0]);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B6BAC);
 
@@ -321,7 +342,9 @@ void func_801B8924(void) {
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B8A00);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B8D7C);
+void func_801B8D7C(s32 arg0) {
+    func_801B6624((s32)&D_801ECB80, &D_801EE9D8[arg0]);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B8DB0);
 
@@ -346,7 +369,13 @@ void func_801B9DF0(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B9E4C);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA230);
+void func_801BA230(s32 arg0) {
+    s32 sp10[2];
+
+    func_801B018C(arg0, D_8015190F[arg0][0], sp10);
+    func_801B6624((s32)&D_801ECC94, sp10);
+    func_801B6624((s32)&D_801ECCB4, sp10);
+}
 
 void func_801BA29C(void) {
     func_801B6624(&D_801ECCD4, &D_801ECCF4);
@@ -355,7 +384,13 @@ void func_801BA29C(void) {
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA2E8);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA598);
+void func_801BA598(s32 arg0) {
+    s32 sp10[2];
+
+    func_801B018C(arg0, D_8015190F[arg0][0], sp10);
+    func_801B6624((s32)&D_801ECD14, sp10);
+    func_801B6624((s32)&D_801ECD34, sp10);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BA604);
 

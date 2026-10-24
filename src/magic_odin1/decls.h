@@ -27,9 +27,15 @@ void func_8003A08C(MgVec *, MgVec *);
 MgMat *func_801B2944(MgSVec *v, s16 scale, s32 dist);
 void func_801B2FFC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
-extern M2C_UNK func_801B2EC0;
+void func_801B2EC0(void);
 extern MgTask D_80162978[];
 void func_801B5148(s16 arg0, s16 arg1, s16 arg2);
 extern s32 func_801B5088;
+typedef struct { s32 n; MgSVec v[1]; } MgSVecList;
+void func_801B0068(MgSVecList *a, MgSVec *b, MgSVec *out);
+void func_801B00F8(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
+extern s16 D_8015169C;
+extern u8 D_80062D98;
+extern s16 D_800FA668[];
 
 #endif /* MAGIC_ODIN1_DECLS_H */

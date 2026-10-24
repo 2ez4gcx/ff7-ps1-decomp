@@ -15,5 +15,10 @@ extern s16 D_8015169C;
 extern u8 D_801D0F40[];
 extern u8 *D_801EEF40;
 extern s16 D_80162080;
+void func_801B0108(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; MgSVec unk8; MgSVec unk10; u8 pad18[8]; } MgObjVel;
+extern u8 D_80062D98;
+void func_801B0020(void);
 
 #endif /* MAGIC_GRAVIRA_DECLS_H */

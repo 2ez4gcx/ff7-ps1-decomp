@@ -119,11 +119,87 @@ INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B0664);
 
 INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B0880);
 
-INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B09E0);
+void func_801B09E0(void) {
+    MgTask *p;
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B0B3C);
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&D_801D569C, &m);
+    func_8003A79C(&D_801D573C, &m, &m);
+    scale.vx = scale.vy = scale.vz = p->unk2 * 1500;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    t = p->unk2;
+    D_801D56AE[0] = t << 8;
+    D_801ED768 = func_800D29D4(&D_801D56AE[-5], D_801517C0 + 0x70, 0xC, D_801ED768);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B0CC0);
+void func_801B0B3C(void) {
+    MgTask *p;
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (p->unk2 >= 3) {
+        func_8003C21C(&D_801D56B4, &m);
+        func_8003A79C(&D_801D573C, &m, &m);
+        scale.vx = scale.vy = scale.vz = 0x4000 - p->unk2 * 400;
+        func_8003B35C(&m, &scale);
+        m.t[0] = p->unk4;
+        m.t[1] = p->unk6;
+        m.t[2] = p->unk8;
+        func_8003A63C(&D_800FA63C, &m, &lw);
+        func_8003B48C(&lw);
+        func_8003B51C(&lw);
+        func_8003B69C(0, 0, 0);
+        t = p->unk2;
+        D_801D56C6[0] = t * 200;
+        D_801ED768 = (u8 *)func_800D29D4(&D_801D56C6[-5], D_801517C0 + 0x70, 0xC, (s32)D_801ED768);
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B0CC0(void) {
+    MgTask *p;
+    u16 *frame;
+
+    p = &D_801621F0[D_801590D4];
+    func_800D4368(&p->unk4, 0x4000, 0);
+    frame = &D_801D56D4;
+    *frame = p->unk2;
+    D_80163C74 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unk2++;
+        if (p->unk2 >= D_801D54CC) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_shaku/nonmatchings/text", func_801B0DAC);
 

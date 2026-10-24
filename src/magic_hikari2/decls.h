@@ -32,5 +32,14 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 extern u8 D_801B8AE4[];
 extern s16 D_80162080;
 extern MgObj20 D_80162978[];
+void func_801B0228(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
+extern u16 D_801B8AD4;
+extern s32 D_801B492C;
+void func_801B07CC(s32 arg0, s32 arg1);
+void func_801B039C(void);
+extern u8 D_80151918[][0xB9C];
+void func_800D3994(s32, s32, void *);
 
 #endif /* MAGIC_HIKARI2_DECLS_H */

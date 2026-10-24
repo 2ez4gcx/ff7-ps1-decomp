@@ -97,4 +97,9 @@ INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B11FC);
 
 INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B16C4);
 
-INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B1784);
+void func_801B1784(arg0, arg1) {
+    func_800BBEAC(&func_801B045C);
+    func_800D2980(&D_801B1800, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B16C4);
+    func_800BBA84(0x82, arg1, 0x40);
+}

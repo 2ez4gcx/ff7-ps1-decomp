@@ -27,5 +27,7 @@ typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14;
 extern M2C_UNK func_801B03D4;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern MgObj20 D_80162978[];
+void func_801B24A4(void);
+extern s32 D_801FD924[];
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */

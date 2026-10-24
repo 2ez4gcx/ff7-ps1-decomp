@@ -29,5 +29,7 @@ extern s32 D_801DBEE8;
 extern s32 D_801DBEEC;
 extern s32 D_801DBEF0;
 void func_801B2420(void);
+typedef struct { s32 head; s32 tail; s32 count; s32 size; s32 last; s32 prev; s32 buf[1]; } MgRing;
+void func_801B0ECC(MgRing *r, s32 v);
 
 #endif /* MAGIC_NIGHT_DECLS_H */

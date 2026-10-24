@@ -71,5 +71,10 @@ extern M2C_UNK D_801B0000;
 extern M2C_UNK D_801B160C;
 extern MgTask *D_801CB228;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_801B0F9C(void);
+typedef struct { s16 x; s16 y; u8 u; u8 v; u8 w; u8 h; s32 rgbc; u16 tpage; u16 clut; } MgSprArg;
+M2C_UNK func_800D4368(void *, s32, s32);
+extern u8 D_801B3218[];
+s32 func_800D6260(MgSprArg *, s32, s32, s32);
 
 #endif /* MAGIC_SPADE2_DECLS_H */

@@ -7,7 +7,23 @@ void func_801B0000(void) {
 
 INCLUDE_ASM("../asm/us/magic_gravira/nonmatchings/text", func_801B0020);
 
-INCLUDE_ASM("../asm/us/magic_gravira/nonmatchings/text", func_801B0108);
+void func_801B0108(void) {
+    MgObjVel *p;
+    MgObjVel *q;
+
+    p = (MgObjVel *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        p->unk8.vx += p->unk10.vx;
+        p->unk8.vy += p->unk10.vy;
+        p->unk8.vz += p->unk10.vz;
+        q = (MgObjVel *)&D_80162978[func_800BBEAC(&func_801B0020)];
+        q->unk8 = p->unk8;
+        p->unk2++;
+        if (p->unk2 >= 8) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gravira/nonmatchings/text", func_801B01E0);
 

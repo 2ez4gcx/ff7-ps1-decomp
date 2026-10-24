@@ -37,9 +37,21 @@ extern s32 D_80163C74;
 void func_801B045C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
-extern MgObj20 D_80162978[];
+extern MgTask D_80162978[];
 extern u8 D_801D7498[];
-extern u8 *D_801EF498;
+extern s32 D_801EF498;
 extern s16 D_80162080;
+void func_801B04C8(void);
+extern s16 D_801D7320;
+s32 func_800C4FC8(M2C_UNK, M2C_UNK, s16);
+void func_801B0B58(void);
+extern MgSVec D_801D7384;
+extern MgMat D_801D746C;
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003B35C(MgMat *, MgVec *);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B69C(s32, s32, s32);
+extern s16 D_801D7396[];
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_CHO_KYU_DECLS_H */

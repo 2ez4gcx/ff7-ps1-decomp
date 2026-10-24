@@ -82,7 +82,41 @@ INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B09B8);
 
 INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B0E58);
 
-INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B0ECC);
+void func_801B0ECC(MgRing *r, s32 v) {
+    s32 head;
+    s32 tail;
+    s32 count;
+    s32 size;
+    s32 last;
+
+    tail = r->tail;
+    last = r->head;
+    count = r->count;
+    r->prev = r->last;
+    size = r->size;
+    r->last = last;
+    head = last;
+    r->buf[head] = v;
+    head++;
+    count++;
+    if (head >= size) {
+        head = 0;
+    }
+    if (count >= size) {
+        count = size;
+    }
+    if (head == tail) {
+        tail++;
+        count--;
+        if (tail >= size) {
+            tail = 0;
+        }
+    }
+    r->head = head;
+    r->tail = tail;
+    r->count = count;
+    r->size = size;
+}
 
 INCLUDE_ASM("../asm/us/magic_night/nonmatchings/text", func_801B0F4C);
 

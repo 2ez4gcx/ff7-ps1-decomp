@@ -21,5 +21,8 @@ extern s32 D_801517C0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D1724;
+void func_801B03B0(void);
+extern u16 D_801D1D58;
+extern s32 D_801D1914;
 
 #endif /* MAGIC_MIZUFUKI_DECLS_H */

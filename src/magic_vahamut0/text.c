@@ -77,7 +77,18 @@ void func_801B13AC(s32 arg0, s32 arg1, s16 arg2) {
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B1410);
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B24A4);
+void func_801B24A4(void) {
+    s32 i;
+    s32 *p;
+
+    i = 0x1F3;
+    p = D_801FD924;
+    do {
+        *p = 0;
+        i--;
+        p--;
+    } while (i >= 0);
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B24C8);
 

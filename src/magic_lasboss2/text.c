@@ -16,7 +16,19 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lasboss2/nonmatchings/text", func_801B008C);
+MgMat *func_801B008C(MgSVec *pos, MgSVec *rot, s16 s) {
+    MgVec scale;
+
+    func_8003C21C(rot, &D_801CD6F8);
+    scale.vx = scale.vy = scale.vz = s;
+    func_8003B35C(&D_801CD6F8, &scale);
+    D_801CD70C[0] = pos->vx;
+    D_801CD710[0] = pos->vy;
+    D_801CD714[0] = pos->vz;
+    func_8003B48C(&D_801CD6F8);
+    func_8003B51C(&D_801CD6F8);
+    return &D_801CD6F8;
+}
 
 INCLUDE_ASM("../asm/us/magic_lasboss2/nonmatchings/text", func_801B013C);
 

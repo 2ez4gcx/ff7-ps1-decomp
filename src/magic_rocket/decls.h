@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B1784();
+void func_801B1784();
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 extern u8 D_8015190F[][0xB9C];
@@ -30,5 +30,11 @@ extern MgObj20 D_80162978[];
 extern u8 D_801D85B4[];
 extern u8 *D_801F05B4;
 extern s16 D_80162080;
+M2C_UNK func_800BBEAC(M2C_UNK *);
+extern s32 D_801B1800;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_801B16C4(void);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 
 #endif /* MAGIC_ROCKET_DECLS_H */

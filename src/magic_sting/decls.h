@@ -40,5 +40,11 @@ void func_801B40A0(s16 arg0);
 extern s32 func_801B3D20;
 void func_801B40E4(s16 arg0);
 extern s32 func_801B3F1C;
+typedef struct { s32 n; MgSVec v[1]; } MgSVecList;
+void func_801B1EAC(MgSVecList *a, MgSVec *b, MgSVec *out);
+void func_801B1F3C(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
+extern s16 D_8015169C;
+extern u8 D_80062D98;
+extern s16 D_800FA666[];
 
 #endif /* MAGIC_STING_DECLS_H */

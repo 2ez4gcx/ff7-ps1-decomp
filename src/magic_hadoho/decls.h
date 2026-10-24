@@ -26,9 +26,8 @@ MgMat *func_8003B05C(MgMat *, MgMat *);
 void func_801B045C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
-extern MgObj20 D_80162978[];
 extern u8 D_801D5648[];
-extern u8 *D_801ED648;
+extern s32 D_801ED648;
 extern s16 D_80162080;
 void func_801B05B0(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -53,5 +52,9 @@ s32 func_800D29D4(void *, s32, s32, s32);
 extern MgSVec D_801D5594;
 extern s16 D_801D55A6[];
 extern MgMat D_801D561C;
+void func_801B09E8(void);
+extern MgSVec D_801D557C;
+extern s16 D_801D558E[];
+extern MgTask D_80162978[];
 
 #endif /* MAGIC_HADOHO_DECLS_H */

@@ -84,7 +84,23 @@ INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B107C);
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B12B8);
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B1428);
+void func_801B1428(MgRtp *r, MgSVec *v0, MgSVec *v1, s32 color) {
+    MgLineG2 *p;
+
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    p = D_801DC890;
+    r->otz = func_8003BBDC(v0, &p->x0, &r->sxy, &r->flag);
+    func_8003BBDC(v1, &p->x1, &r->sxy, &r->flag);
+    *(s32 *)&p->r0 = color;
+    *(s32 *)&p->r1 = color;
+    p->tag.len = 4;
+    p->code = 0x52;
+    p->tag.addr = ((MgTag *)D_801517C0 + (r->otz >> 2) + 0x1C)->addr;
+    ((MgTag *)D_801517C0 + (r->otz >> 2) + 0x1C)->addr = (u32)p;
+    p++;
+    D_801DC890 = p;
+}
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B1558);
 

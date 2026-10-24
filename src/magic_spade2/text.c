@@ -315,7 +315,39 @@ void func_801B0E9C(void) {
     func_8003AB84(&m, &D_801B3208, &D_801CB250);
 }
 
-INCLUDE_ASM("../asm/us/magic_spade2/nonmatchings/text", func_801B0F9C);
+void func_801B0F9C(void) {
+    MgTask *p;
+    MgSprArg *s;
+    s32 n;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, p->unk10, -500);
+    s = (MgSprArg *)0x1F800000;
+    s->y = -16;
+    s->x = -16;
+    s->u = D_801B3218[p->unk2];
+    s->v = ((u8 *)&p->unkC)[1];
+    s->w = 0x1F;
+    s->h = 0x1F;
+    s->tpage = p->unk16;
+    s->clut = p->unkE;
+    s->rgbc = 0x2E808080;
+    D_801CB224 = func_800D6260(s, D_801517C0 + 0x70, 0xC, D_801CB224);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        n = p->unk2;
+        if (((u8 *)&p->unkC)[1] == 0x80) {
+            if (n >= 8) {
+                goto block;
+            }
+            return;
+        }
+        if (n >= 9) {
+        block:
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_spade2/nonmatchings/text", func_801B10D8);
 

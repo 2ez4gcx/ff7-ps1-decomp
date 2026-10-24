@@ -41,4 +41,9 @@ INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0878);
 
 INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0C9C);
 
-INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0D5C);
+void func_801B0D5C(arg0, arg1) {
+    func_800BBEAC(&func_801B0020);
+    func_800D2980(&D_801B0DD8, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B0C9C);
+    func_800BBA84(0x82, arg1, 0x40);
+}
