@@ -471,5 +471,6 @@ extern u32 D_800E41C8[][7];
 void func_8004418C(void *, s32);
 void func_800D8710(s16);
 void func_800D85FC(FdTag *arg0);
+s32 func_800D195C(void);
 
 #endif /* FIELD_DECLS_H */

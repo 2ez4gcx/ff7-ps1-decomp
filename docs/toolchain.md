@@ -118,7 +118,10 @@ its jump tables are aligned on 4 bytes instead (where the game really has paddin
 `match.py` reports a rodata difference), unless the file starts on 8 bytes or is marked
 `unit_start` (it begins where one of the game's files began). The game's files show in
 the jump tables: those of one file are all on 8 bytes, or all 4 bytes past them, so a
-change marks a new file (that is how FIELD.BIN's were found).
+change marks a new file (that is how FIELD.BIN's were found). A function checked alone
+(`work.py`, the permuter) has its rodata start where the function's own does, which in
+such a file may be 4 bytes past the file's 8: `match.rodata_pad` puts that many bytes
+before its object's rodata, so its tables are aligned as in the whole file.
 
 Strings a function uses are string literals in its C. A function may not define tables
 of its own (`static` or global data): GCC puts static data at the end of its file, which

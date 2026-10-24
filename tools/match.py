@@ -123,6 +123,38 @@ def rodata_address(name, target='main'):
     return min(int(a, 16) for a in found) if found else None
 
 
+def rodata_pad(like, rodata):
+    """Bytes to put before an object's rodata linked at `rodata` on its own,
+    so that its jump tables land where the game's are: a file that keeps them
+    on 8 bytes counts from the start of its whole rodata, and one function's
+    own rodata (strings before a table) may start 4 bytes past that."""
+    if rodata is None or not psyq.tables_on_8(like):
+        return 0
+    start = psyq.rodata_start(like)
+    return 0 if start is None else (rodata - start) % 8
+
+
+def compiled(src, cflags=None, gp_size=None, aspsx=None, like=None, rodata_pad=0):
+    """object_text of a C file compiled as `like` (a file of src/) is built."""
+    fd, name = tempfile.mkstemp(suffix='.o')
+    os.close(fd)
+    obj = Path(name)
+    try:
+        psyq.compile_c(src, obj, cflags, gp_size, aspsx, like=like, rodata_pad=rodata_pad)
+        return object_text(obj)
+    finally:
+        obj.unlink(missing_ok=True)
+
+
+def compiled_alone(src, name, target, like):
+    """(object_text, address for its rodata) of a C file compiled to check
+    function `name` alone: its rodata goes where the function's own is in
+    the game, after any padding rodata_pad asks for."""
+    rodata = rodata_address(name, target)
+    pad = rodata_pad(like, rodata)
+    return compiled(src, like=like, rodata_pad=pad), (None if rodata is None else rodata - pad)
+
+
 @lru_cache(maxsize=None)
 def placed(obj_path, section, target='main'):
     """Address the link put a section of one of our objects at (map file)."""
@@ -236,14 +268,7 @@ def check(src, target='main', only=None, cflags=None, gp_size=None, like=None, a
     built as `like` (a file of src/) is when given. The object's .rodata,
     if any, goes at `rodata`: by default where the function's own rodata is
     in the game (one function checked), or where the build put this file's."""
-    fd, name = tempfile.mkstemp(suffix='.o')
-    os.close(fd)
-    obj = Path(name)
-    try:
-        psyq.compile_c(src, obj, cflags, gp_size, aspsx, like=like)
-        funcs, relocs, (ro, ro_relocs), data = object_text(obj)
-    finally:
-        obj.unlink(missing_ok=True)
+    funcs, relocs, (ro, ro_relocs), data = compiled(src, cflags, gp_size, aspsx, like)
     names = [n for n in funcs if not n.startswith('__maspsx') and (not only or n in only)]
     if ro and rodata is None:
         if len(names) == 1:
@@ -254,6 +279,10 @@ def check(src, target='main', only=None, cflags=None, gp_size=None, like=None, a
                 rodata = placed(f'build/us/{rel}', '.rodata', target)
             except ValueError:
                 pass
+    pad = rodata_pad(like or src, rodata) if ro else 0
+    if pad:
+        funcs, relocs, (ro, ro_relocs), data = compiled(src, cflags, gp_size, aspsx, like, pad)
+        rodata -= pad
     out, places = {}, {}
     for name in names:
         orig = original(name, target)
@@ -289,9 +318,9 @@ def check(src, target='main', only=None, cflags=None, gp_size=None, like=None, a
         except KeyError as e:
             why = f'rodata: unknown symbol or relocation {e}'
         else:
-            game = game_bytes(rodata, len(mine), target)
-            at = next((i for i in range(len(mine)) if mine[i] != game[i]), None)
-            why = None if at is None else f'rodata differs at 0x{rodata + at:08X}'
+            game = game_bytes(rodata + pad, len(mine) - pad, target)
+            at = next((i for i in range(len(game)) if mine[pad + i] != game[i]), None)
+            why = None if at is None else f'rodata differs at 0x{rodata + pad + at:08X}'
         if why is not None:
             for n in out:
                 if out[n] is None:

@@ -40,18 +40,12 @@ def main():
     if src == '-':
         words_object(want, name, out)
         return
-    fd, obj = tempfile.mkstemp(suffix='.o')
-    os.close(fd)
     try:
-        psyq.compile_c(src, obj, like=like)
-        funcs, relocs, (ro, _), _ = match.object_text(obj)
+        (funcs, relocs, _, _), rodata = match.compiled_alone(src, name, target, like)
     except psyq.Failed as e:
         sys.exit(str(e)[-2000:])
-    finally:
-        os.unlink(obj)
     if name not in funcs:
         sys.exit(f'{name} not compiled')
-    rodata = match.rodata_address(name, target) if ro else None
     try:
         got = match.linked(funcs, relocs, name, address, target, rodata)
     except KeyError as e:

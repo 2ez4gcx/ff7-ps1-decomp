@@ -2796,7 +2796,39 @@ s32 func_800D184C(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800D195C);
+s32 func_800D195C(void) {
+    if (D_8009D820 & 3) {
+        func_800BEAD4("fadew", 0);
+    }
+    switch ((s16)M2C_FIELD(D_8009C6E0, volatile u16 *, 0x4C)) {
+    case 1:
+    case 5:
+    case 7:
+    case 9:
+        if (M2C_FIELD(D_8009C6E0, volatile u16 *, 0x4E) == 0) {
+            break;
+        }
+        return 1;
+    case 2:
+    case 6:
+    case 8:
+    case 10:
+        if ((s16)M2C_FIELD(D_8009C6E0, volatile u16 *, 0x4E) >= 0xFF) {
+            break;
+        }
+        return 1;
+    default:
+        if ((s16)M2C_FIELD(D_8009C6E0, volatile u16 *, 0x4E) != (s16)M2C_FIELD(D_8009C6E0, volatile u16 *, 0x50)) {
+            return 1;
+        }
+        break;
+    case 0:
+    case 4:
+        break;
+    }
+    D_800831FC[D_800722C4] += 1;
+    return 0;
+}
 
 s32 func_800D1A80(void) {
     s32 n;

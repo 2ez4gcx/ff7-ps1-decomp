@@ -248,9 +248,17 @@ def _run(cmd, data=None, env=None):
     return done.stdout
 
 
-def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expansion=None):
+def tables_on_8(src):
+    """True when a C file keeps GCC's 8-byte alignment of jump tables, from
+    the start of its rodata (see assembly)."""
+    start = rodata_start(src)
+    return bool(options(src).get('unit_start')) or (start is not None and start % 8 == 0)
+
+
+def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expansion=None, rodata_pad=0):
     """C file -> (cc1 output, assembly GNU as takes). Options not given are
-    those of `like` (a file of src/), or of src itself."""
+    those of `like` (a file of src/), or of src itself. `rodata_pad` bytes
+    go before the object's rodata (see match.rodata_pad)."""
     default = options(like or src)
     cflags = default['cflags'] if cflags is None else cflags
     gp_size = default['gp_size'] if gp_size is None else gp_size
@@ -276,20 +284,21 @@ def assembly(src, cflags=None, gp_size=None, aspsx=None, like=None, nop_at_expan
     # them on 8 bytes from its own start, as the game's did: the link packs
     # each file's rodata on 2 bytes (SUBALIGN), so GNU as's alignment is
     # relative to the file's start too.
-    start = rodata_start(like or src)
-    if not default.get('unit_start') and (start is None or start % 8):
+    if not tables_on_8(like or src):
         cc = re.sub(r'^\t\.align\t3$', '\t.align\t2', cc, flags=re.M)
     ms = _run([sys.executable, str(MASPSX), f'--aspsx-version={aspsx}', f'-G{gp_size}',
                '--expand-div', *(['--nop-at-expansion'] if nop_at else [])], cc)
+    if rodata_pad:
+        ms = f'.section .rodata\n.space {rodata_pad}\n.text\n' + ms
     # A file's rodata ends on 4 bytes, as the game's do (a string can leave it
     # odd, and the link only aligns each file's part on 2).
     ms += '\n.section .rodata\n.align 2\n.text\n'
     return cc, ms
 
 
-def compile_c(src, obj, cflags=None, gp_size=None, aspsx=None, like=None):
+def compile_c(src, obj, cflags=None, gp_size=None, aspsx=None, like=None, rodata_pad=0):
     """C file -> object, as the game's build made it."""
-    _, asm = assembly(src, cflags, gp_size, aspsx, like)
+    _, asm = assembly(src, cflags, gp_size, aspsx, like, rodata_pad=rodata_pad)
     Path(obj).parent.mkdir(parents=True, exist_ok=True)
     # The INCLUDE_ASM paths are relative to the repository root.
     done = subprocess.run([PREFIX + 'as', *AS_FLAGS, '-o', str(obj), '-'], input=asm,

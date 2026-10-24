@@ -58,19 +58,13 @@ def main():
     args = ap.parse_args()
 
     like = args.like or file_of(args.name, args.target)
-    fd, obj = tempfile.mkstemp(suffix='.o')
-    os.close(fd)
     try:
-        psyq.compile_c(args.source, obj, like=like)
-        funcs, relocs, (ro, ro_relocs), data = match.object_text(obj)
+        (funcs, relocs, (ro, ro_relocs), data), rodata = match.compiled_alone(args.source, args.name, args.target, like)
     except psyq.Failed as e:
         sys.exit(str(e))
-    finally:
-        os.unlink(obj)
     if args.name not in funcs:
         sys.exit(f'{args.name} is not in {args.source}')
     address, want = match.original(args.name, args.target)
-    rodata = match.rodata_address(args.name, args.target) if ro else None
     try:
         got = match.linked(funcs, relocs, args.name, address, args.target, rodata)
     except KeyError as e:
