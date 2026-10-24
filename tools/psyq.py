@@ -70,6 +70,10 @@ FILE_OPTIONS = {
     'limtmenu/text.c': {'gcc': '2.7.2'},
     'mgicmenu/text.c': {'gcc': '2.7.2'},
     'namemenu/text.c': {'gcc': '2.7.2'},
+    # NAMEMENU's code from func_801D14E8 on folds %lo into a load with a
+    # register index, as ASPSX 2.30 and later do (func_801D131C, between the
+    # last unfolded and first folded forms, has neither: it could go either side).
+    'namemenu/text2.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
     'patymenu/text.c': {'gcc': '2.7.2'},
     'savemenu/text.c': {'gcc': '2.7.2'},
     'shopmenu/text.c': {'gcc': '2.7.2'},

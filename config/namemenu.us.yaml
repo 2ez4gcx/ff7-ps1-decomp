@@ -55,5 +55,6 @@ segments:
     subsegments:
       - [0x0, .rodata, text]
       - [0x14, c, text]
+      - [0x14E8, c, text2]
       - [0x1e78, data, data]
   - [0xc078]

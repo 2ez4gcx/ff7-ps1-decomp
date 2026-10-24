@@ -36,5 +36,15 @@ typedef struct { s32 f0; u16 hp; u16 maxhp; u16 mp; u16 maxmp; u8 pad[0x78]; } N
 extern NmHp D_8009C760[];
 extern u8 D_801D9870[];
 void func_801D14E8(u8 *arg0);
+s32 func_801D19CC(NmLvl *arg0, s32 arg1);
+s32 func_801D1AF4(NmLvl *arg0, s32 arg1, s32 arg2);
+s32 func_801D1B58(NmLvl *arg0, s32 arg1);
+s32 func_801D1BAC(NmLvl *arg0, s32 arg1);
+void func_801D1C10(NmLvl *arg0, s32 arg1);
+extern u8 D_80082460[];
+void func_801D1C90(NmLvl *arg0);
+extern u8 D_8008246C[];
+void func_801D1D84(NmLvl *arg0);
+extern u8 D_80082478[];
 
 #endif /* NAMEMENU_DECLS_H */
