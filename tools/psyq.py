@@ -6,7 +6,8 @@ can run it on Windows.
 cc1 and cpp are GCC 2.6.3 built for 32-bit Windows with decompals/old-gcc's
 psx patches (docs/toolchain.md); maspsx stands in for PSY-Q's ASPSX, with
 tools/maspsx-extern.patch so small externs (`.extern x, 4`) go through $gp
-as ASPSX did. Paths come from FF7_TOOLCHAIN (default D:/FF7/toolchain).
+as ASPSX did. Paths come from FF7_TOOLCHAIN (default: the folder `toolchain`
+next to the repository's).
 """
 import os
 import re
@@ -18,7 +19,7 @@ from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOLS = Path(os.environ.get('FF7_TOOLCHAIN', 'D:/FF7/toolchain'))
+TOOLS = Path(os.environ.get('FF7_TOOLCHAIN', ROOT.parent / 'toolchain'))
 CPP = TOOLS / 'build-gcc' / 'gcc-2.6.3' / 'cpp.exe'
 CC1 = TOOLS / 'build-gcc' / 'gcc-2.6.3' / 'cc1.exe'
 

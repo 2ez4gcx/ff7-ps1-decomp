@@ -74,8 +74,8 @@ Only disc 1 of the USA release is used; overlays found only on discs 2 and 3 com
 2. The GNU toolchain for MIPS (PS1): `gcc-mipsel-none-elf-12.3.0-windows.zip` from
    [PSn00bSDK v0.24](https://github.com/Lameguy64/PSn00bSDK/releases/tag/v0.24)
    (SHA-256 `51df48145d5ef4b396d3932b72ccba538cc605c7c7745b32c58c277aa00523c5`). Unpack it
-   and point `MIPSEL_PREFIX` at `.../bin/mipsel-none-elf-` (default
-   `D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-`).
+   as `mipsel/` in the toolchain folder (or point `MIPSEL_PREFIX` at
+   `.../bin/mipsel-none-elf-`).
 
 3. The C compilers: GCC 2.6.3 and 2.7.2 built as 32-bit Windows programs by
    `tools/gcc-win32/build.sh` (they only need the Windows C runtime), and
@@ -86,9 +86,10 @@ Only disc 1 of the USA release is used; overlays found only on discs 2 and 3 com
    [decomp-permuter](https://github.com/simonlindholm/decomp-permuter), cloned into the
    toolchain folder. Note: the `m2c` package on PyPI is **not** this m2c.
 
-All of it lives in one toolchain folder, `D:/FF7/toolchain` unless `FF7_TOOLCHAIN` says
-otherwise (`mipsel/`, `build-gcc/gcc-2.6.3/`, `build-gcc/gcc-2.7.2/`, `maspsx/`, `m2c/`,
-`decomp-permuter/`); a folder set up on one Windows machine can be copied to another.
+All of it lives in one toolchain folder: `toolchain/` next to this repository's folder
+(for `D:/FF7/ff7-ps1-decomp`, `D:/FF7/toolchain`), unless `FF7_TOOLCHAIN` names another
+(`mipsel/`, `build-gcc/gcc-2.6.3/`, `build-gcc/gcc-2.7.2/`, `maspsx/`, `m2c/`,
+`decomp-permuter/`). A folder set up on one Windows machine can be copied to another.
 
 ## Building
 
