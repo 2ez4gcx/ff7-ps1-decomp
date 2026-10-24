@@ -80,7 +80,10 @@ def index_done(all_targets):
             text = src.read_text(encoding='utf-8')
             for m in ad.HEAD.finditer(text):
                 name = m.group(2)
-                path = next(tg.asm.glob(f'*/{name}.s'), None)
+                # splat writes a function in C to matchings/ (build.py splits
+                # with --disassemble-all); one put since the last split is
+                # still in nonmatchings/.
+                path = next(tg.asm.parent.glob(f'*/*/{name}.s'), None)
                 if path is None:
                     continue
                 sh = shape(path, name)

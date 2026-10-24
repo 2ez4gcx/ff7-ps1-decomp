@@ -125,7 +125,9 @@ def build(config, disc, packed, split, jobs):
             target.write_bytes(image[0])
     ld = ROOT / config_value(cfg, 'ld_script_path')
     if split or not ld.exists():
-        done = subprocess.run([PYTHON, '-m', 'splat', 'split', config],
+        # --disassemble-all: functions already in C get their asm too (in
+        # asm/us/<target>/matchings/), which tools/propagate.py compares.
+        done = subprocess.run([PYTHON, '-m', 'splat', 'split', config, '--disassemble-all'],
                               cwd=ROOT / 'config', capture_output=True, text=True)
         if done.returncode:
             sys.exit(f'splat failed for {config}\n{done.stdout[-3000:]}{done.stderr[-3000:]}')
