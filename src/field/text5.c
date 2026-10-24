@@ -149,7 +149,25 @@ s32 func_800D3004(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D3124);
+s32 func_800D3124(void) {
+    s32 a;
+    s32 b;
+    u16 *p;
+    s16 *q;
+
+    if (D_8009D820 & 3) {
+        func_800BEAD4("mpra2", 5);
+    }
+    a = (D_8009C6DC + D_800831FC[D_800722C4])[2];
+    b = func_800BEE10(1, 3) & 0xFF;
+    D_800E4214[a][b] = (D_8009C6DC + D_800831FC[D_800722C4])[1] & 0xF;
+    q = D_800E4D48[a];
+    p = &D_800831FC[D_800722C4];
+    q[b] = (D_8009C6DC + *p)[4];
+    q[b] |= (D_8009C6DC + *p)[5] << 8;
+    *p += 6;
+    return 0;
+}
 
 s32 func_800D3264(void) {
     s32 v;
@@ -214,7 +232,37 @@ void func_800D348C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D3548);
+s32 func_800D3548(void) {
+    u8 buf[3];
+    s32 i;
+    u16 *pc;
+
+    if (D_8009D820 & 3) {
+        func_800BEAD4("mhmmx", 0);
+    }
+    for (i = 0; i < 3; i++) {
+        buf[i] = D_8009CBDC[i];
+    }
+    for (i = 0; i < 3; i++) {
+        D_8009CBDC[i] = i;
+    }
+    func_800D348C();
+    for (i = 0; i < 3; i++) {
+        D_8009CBDC[i] = i + 3;
+    }
+    func_800D348C();
+    for (i = 0; i < 3; i++) {
+        D_8009CBDC[i] = i + 6;
+    }
+    func_800D348C();
+    for (i = 0; i < 3; i++) {
+        D_8009CBDC[i] = buf[i];
+    }
+    func_800D348C();
+    pc = &D_800831FC[D_800722C4];
+    *pc += 1;
+    return 0;
+}
 
 s32 func_800D368C(void) {
     s32 i;
@@ -642,7 +690,28 @@ void func_800D6D44(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D6E0C);
+void func_800D6E0C(s16 arg0) {
+    if (D_8008326C[arg0] != D_800722C4) {
+        if (D_8009D820 & 3) {
+            func_800BECA4(D_800A10EC, arg0, 1);
+        }
+    } else {
+        if ((s16)D_80083284[arg0].v + D_800E424C[arg0] > 0) {
+            D_80083284[arg0].v -= D_80114480[arg0] >> 2;
+            if (M2C_FIELD(D_8009C6E0, s32 *, 0x78) & 0x20) {
+                if (++D_80114480[arg0] > 0x80) {
+                    D_80114480[arg0] = 0x80;
+                }
+            } else {
+                if (--D_80114480[arg0] < 2) {
+                    D_80114480[arg0] = 1;
+                }
+            }
+        } else {
+            D_800832A0[arg0].v = 9;
+        }
+    }
+}
 
 void func_800D6F6C(s16 arg0) {
     if (D_8008326C[arg0] != D_800722C4) {
