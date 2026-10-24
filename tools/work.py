@@ -27,6 +27,7 @@ import auto_decomp as ad  # noqa: E402
 import diff_func  # noqa: E402
 import match  # noqa: E402
 import psyq  # noqa: E402
+import targets  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -274,7 +275,12 @@ def named_tables(asm_path, body):
         end = re.match(r'\s*enddlabel (\w+)', line)
         if end:
             sym = end.group(1)
-            if not sym.startswith('jtbl_') and re.search(rf'\b{sym}\b', body):
+            # A table the C reads by name stays asm, and so does game data
+            # next to it that the C reaches through it (an 8-byte struct
+            # copied from D_801B0000 also reads D_801B0004): GCC makes only
+            # jump tables and strings.
+            data = '.asciz' not in '\n'.join(block)
+            if not sym.startswith('jtbl_') and (data or re.search(rf'\b{sym}\b', body)):
                 tables.append((sym, '.section .rodata\n' + '\n'.join(block).strip('\n') + '\n'))
             else:
                 rest += re.findall(r'/\* [0-9A-F]+ ([0-9A-F]{8})', '\n'.join(block))
@@ -289,9 +295,14 @@ def keep_unmigrated(sym, text):
     path = ROOT / 'config' / f'symbols.us.{ad.TARGET}.txt'
     if not path.exists():
         # The spells share symbols.us.magic.txt, where the line would hold for
-        # all of them. None is needed: once the function that reads it is in
-        # C, splat writes the table as a file of its own anyway.
-        return
+        # all of them: such a target gets a symbol file of its own, listed
+        # last in its splat config.
+        ad.write(path, f'// Symbols of {ad.TARGET} alone (the others it shares are listed before).\n')
+        config = targets.get(ad.TARGET).config
+        yaml = config.read_text(encoding='utf-8')
+        m = re.search(r'^(\s*)symbol_addrs_path:\n((?:\1  - .*\n)+)', yaml, re.M)
+        entry = f'{m.group(1)}  - config/{path.name}\n'
+        ad.write(config, yaml[:m.end()] + entry + yaml[m.end():])
     lines = path.read_text(encoding='utf-8').splitlines()
     for i, line in enumerate(lines):
         if re.match(rf'{sym}\s*=', line):

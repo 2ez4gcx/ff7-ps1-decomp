@@ -156,11 +156,18 @@ def compiled_alone(src, name, target, like):
 
 
 @lru_cache(maxsize=None)
+def placed_at(obj_path, section, target='main'):
+    """(address, size) the link gave a section of one of our objects (map
+    file), or None."""
+    text = targets.get(target).elf.with_suffix('.map').read_text(encoding='utf-8', errors='replace')
+    m = re.search(rf'^ {re.escape(section)}\s+0x([0-9a-f]+)\s+0x([0-9a-f]+) {re.escape(obj_path)}$', text, re.M)
+    return (int(m.group(1), 16), int(m.group(2), 16)) if m else None
+
+
 def placed(obj_path, section, target='main'):
     """Address the link put a section of one of our objects at (map file)."""
-    text = targets.get(target).elf.with_suffix('.map').read_text(encoding='utf-8', errors='replace')
-    m = re.search(rf'^ {re.escape(section)}\s+0x([0-9a-f]+)\s+0x[0-9a-f]+ {re.escape(obj_path)}$', text, re.M)
-    return int(m.group(1), 16) if m else None
+    found = placed_at(obj_path, section, target)
+    return found[0] if found else None
 
 
 def object_text(obj):
@@ -270,15 +277,20 @@ def check(src, target='main', only=None, cflags=None, gp_size=None, like=None, a
     in the game (one function checked), or where the build put this file's."""
     funcs, relocs, (ro, ro_relocs), data = compiled(src, cflags, gp_size, aspsx, like)
     names = [n for n in funcs if not n.startswith('__maspsx') and (not only or n in only)]
+    whole = None
+    if len(names) != 1 and rodata is None:
+        # A whole file: its rodata must also keep the size it had in the last
+        # build, which matched (a table left out shifts all that follows).
+        try:
+            rel = Path(like or src).resolve().relative_to(ROOT).with_suffix('.o').as_posix()
+            whole = placed_at(f'build/us/{rel}', '.rodata', target)
+        except ValueError:
+            pass
     if ro and rodata is None:
         if len(names) == 1:
             rodata = rodata_address(names[0], target)
-        else:
-            try:
-                rel = Path(like or src).resolve().relative_to(ROOT).with_suffix('.o').as_posix()
-                rodata = placed(f'build/us/{rel}', '.rodata', target)
-            except ValueError:
-                pass
+        elif whole is not None:
+            rodata = whole[0]
     pad = rodata_pad(like or src, rodata) if ro else 0
     if pad:
         funcs, relocs, (ro, ro_relocs), data = compiled(src, cflags, gp_size, aspsx, like, pad)
@@ -306,6 +318,10 @@ def check(src, target='main', only=None, cflags=None, gp_size=None, like=None, a
             out[name] = 'needs data of its own'
         else:
             out[name] = None
+    if whole is not None and len(ro) != whole[1]:
+        for n in out:
+            if out[n] is None:
+                out[n] = f'rodata is {len(ro)} bytes, the build had {whole[1]}'
     if ro and rodata is not None and any(v is None for v in out.values()):
         # Jump tables point into every function of the object, asm ones too.
         for n in funcs:
