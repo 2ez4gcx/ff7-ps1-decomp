@@ -336,7 +336,43 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E15D8);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E16B8);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E1938);
+void func_800E1938(s16 arg0, s16 arg1, s32 arg2) {
+    u32 t;
+    s32 u;
+    s32 v;
+
+    if (arg2 < 0x80) {
+        t = 0;
+    } else if (arg2 < 0x100) {
+        arg2 -= 0x80;
+        if (arg2 < 0x10) {
+            t = 1;
+        } else if (arg2 < 0x20) {
+            t = 3;
+        } else if (arg2 < 0x30) {
+            t = 2;
+        } else if (arg2 < 0x3E) {
+            t = 5;
+        } else if (arg2 < 0x49) {
+            t = 4;
+        } else if (arg2 < 0x57) {
+            t = 9;
+        } else if (arg2 < 0x65) {
+            t = 6;
+        } else if (arg2 < 0x72) {
+            t = 7;
+        } else {
+            t = 8;
+        }
+    } else if (arg2 < 0x120) {
+        t = 0xA;
+    } else {
+        t = 0xB;
+    }
+    u = (t & 1) * 0x10 | 0x60;
+    v = (t >> 1) * 0x10 + 0x70;
+    func_80028CA0(arg0, arg1, u, v, 0x10, 0x10, 1, 0);
+}
 
 s32 func_800E1A2C(void) {
     s32 i;

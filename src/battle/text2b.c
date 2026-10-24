@@ -333,7 +333,15 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D3658);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D376C);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D3994);
+void func_800D3994(s32 arg0, s32 arg1, BtlSVec *arg2) {
+    BtlMatrix m;
+
+    arg2->vx = D_80151A6C[arg0].c[arg1].x - D_800FA63C.t[0];
+    arg2->vy = D_80151A6C[arg0].c[arg1].y - D_800FA63C.t[1];
+    arg2->vz = D_80151A6C[arg0].c[arg1].z - D_800FA63C.t[2];
+    ((void (*)(BtlMatrix *, BtlMatrix *))func_8003BF3C)(&D_800FA63C, &m);
+    func_8003B2CC(&m, arg2, arg2);
+}
 
 void func_800D3A6C(BtlMatrix *arg0, BtlSVec *arg1) {
     BtlMatrix m;

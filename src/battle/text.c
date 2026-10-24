@@ -36,7 +36,23 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2894);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2974);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A2B28);
+void func_800A2B28(s32 arg0) {
+    if (arg0 & 1) {
+        M2C_FIELD(D_80063014, s32 *, 0x90) |= 0x80;
+    }
+    if (arg0 & 2) {
+        M2C_FIELD(D_80063014, s32 *, 0x90) |= 0x40;
+    }
+    if (arg0 & 8) {
+        M2C_FIELD(D_80063014, s32 *, 0x90) |= 4;
+    }
+    if (arg0 & 0x10) {
+        M2C_FIELD(D_80063014, s32 *, 0x90) |= 0x800;
+    }
+    if (arg0 & 0xE0) {
+        M2C_FIELD(D_80063014, s32 *, 0xE8) = (arg0 >> 5) * 10;
+    }
+}
 
 INCLUDE_RODATA("../asm/us/battle/nonmatchings/text", D_800A0098);
 
