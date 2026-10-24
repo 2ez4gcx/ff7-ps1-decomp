@@ -77,7 +77,34 @@ void func_801B0464(void) {
 
 INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B04D0);
 
-INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B05B4);
+INCLUDE_RODATA("../asm/us/magic_scope/nonmatchings/text", D_801B0020);
+
+INCLUDE_RODATA("../asm/us/magic_scope/nonmatchings/text", D_801B0024);
+
+void func_801B05B4(void) {
+    MgPtrPair tbl;
+    MgTask *p;
+    s32 **hdr;
+
+    tbl = D_801B0020;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2400, 0);
+    hdr = &D_801BD910;
+    M2C_SFIELD(hdr, s32 **, 0) = tbl.ptr[p->unk1A];
+    D_801BD918 = p->unk2;
+    D_801D5964 = (u8 *)func_800D4D90(hdr, D_801517C0 + 0x70, 0xC, (s32)D_801D5964);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= tbl.ptr[p->unk1A][1]) {
+            if (p->unk1A == 0) {
+                p->unk1A = 1;
+                p->unk2 = 0;
+            } else {
+                p->unk0 = -1;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B06D0);
 

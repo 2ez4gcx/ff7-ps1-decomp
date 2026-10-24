@@ -85,7 +85,22 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A1DBC);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A1E30);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A1EB4);
+void func_800A1EB4(void) {
+    u32 out;
+
+    D_801053A8 = D_801053A0;
+    D_801053A0 = ((s32 (*)(s32))func_8001C808)(0);
+    D_801053B0 = (D_801053A8 ^ D_801053A0) & D_801053A0;
+    if (D_801053A8 != D_801053A0) {
+        D_8010539C = 0;
+    }
+    out = D_801053A0;
+    if (D_8010539C != 0 && D_8010539C < 0x10) {
+        out = 0;
+    }
+    D_801053AC = out;
+    D_8010539C += 1;
+}
 
 void func_800A1F58(void) {
     func_80033E74(D_800B8260, D_800B8264, 0x801F8000, 0);
@@ -144,7 +159,33 @@ void func_800A2560(void) {
     D_80106A68 = M2C_FIELD(temp_v0, s32 *, 8);
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A25B0);
+void func_800A25B0(void) {
+    s32 d;
+    s32 s;
+
+    d = D_800DDEC4 - D_800DDECC;
+    if (d != 0) {
+        s = (d < 0 ? -d : d) >> 3;
+        if (s == 0) {
+            s = 1;
+        }
+        if (d < 0) {
+            s = -s;
+        }
+        D_800DDECC += s;
+    }
+    d = D_800DDEC0 - D_800DDEC8;
+    if (d != 0) {
+        s = (d < 0 ? -d : d) >> 2;
+        if (s == 0) {
+            s = 1;
+        }
+        if (d < 0) {
+            s = -s;
+        }
+        D_800DDEC8 += s;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A2664);
 
@@ -191,7 +232,17 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4338);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4494);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A47D0);
+void func_800A47D0(void *arg0) {
+    SbFF784 *p;
+    s16 n;
+
+    p = D_80103994;
+    n = M2C_FIELD(arg0, u16 *, 0x36);
+    while (--n != -1) {
+        ((void (*)(s32))func_800B3B44)(D_800B835C[(s16)p->unk0] + (s16)p->unk2);
+        p++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4870);
 
@@ -249,7 +300,19 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5744);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A58F0);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A59E0);
+s16 func_800A59E0(void *arg0, void *arg1) {
+    s16 d;
+
+    d = M2C_FIELD(arg1, s16 *, 4);
+    if (d > 0) {
+        D_80106B00 = -func_8003CC1C(M2C_FIELD(arg0, s16 *, 4), d + M2C_FIELD(arg0, s16 *, 0));
+    } else if (d < 0) {
+        D_80106B00 = func_8003CC1C(M2C_FIELD(arg0, s16 *, 4), M2C_FIELD(arg1, s16 *, 0x38) - M2C_FIELD(arg0, s16 *, 0) - d);
+    } else {
+        D_80106B00 = 0;
+    }
+    return M2C_FIELD(D_80106AF8, s16 **, 0x18)[D_801069CC] + D_80106B00;
+}
 
 void func_800A5A9C(void *arg0, void *arg1) {
     M2C_FIELD(arg1, s16 *, 0) = func_8003CC1C((s32) -M2C_FIELD(arg0, s16 *, 4), (s32) M2C_FIELD(arg0, s16 *, 2));
@@ -277,7 +340,27 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A6E18);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A7030);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A7108);
+void func_800A7108(s32 arg0, s32 arg1) {
+    u8 *p;
+    s32 h;
+
+    arg0 |= (arg0 << 16) | (arg0 << 8);
+    p = D_8010538C;
+    M2C_FIELD(p, s32 *, 0) = 0x03000000;
+    M2C_FIELD(p, s32 *, 4) = arg0 | 0x62000000;
+    M2C_FIELD(p, s32 *, 8) = 0xFF88FF60;
+    M2C_FIELD(p, s32 *, 0xC) = 0xF00140;
+    func_80046794(arg1, (s32)p);
+    p += 0x10;
+    if (((s32 (*)(void))func_80043CC0)() == 1 || ((s32 (*)(void))func_80043CC0)() == 2) {
+        h = 0x80;
+    } else {
+        h = 0x20;
+    }
+    func_80044A68(p, 1, 0, h, 0);
+    func_80046794(arg1, (s32)p);
+    D_8010538C = p + 0xC;
+}
 
 void func_800A71E0(s32 arg0, s32 arg1) {
     void *temp_s0;
@@ -522,7 +605,23 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A95D0);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A9768);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A9900);
+void func_800A9900(void *arg0) {
+    if (M2C_FIELD(arg0, s16 *, 0x14) < 0x200) {
+        M2C_FIELD(arg0, s16 *, 8) = 0;
+    }
+    if (M2C_FIELD(arg0, s16 *, 8) != 0) {
+        if (M2C_FIELD(arg0, s16 *, 4) != M2C_FIELD(arg0, s16 *, 6)) {
+            M2C_FIELD(arg0, s16 *, 6) += M2C_FIELD(arg0, s16 *, 4) >> 3;
+        }
+        M2C_FIELD(arg0, s16 *, 8) -= 1;
+    } else if (M2C_FIELD(arg0, s16 *, 6) != 0) {
+        M2C_FIELD(arg0, s16 *, 6) -= M2C_FIELD(arg0, s16 *, 4) >> 1;
+    } else {
+        D_80103E49 = 1;
+    }
+    M2C_FIELD(arg0, s16 *, 0x76) += M2C_FIELD(arg0, s16 *, 6);
+    func_800A7860();
+}
 
 void func_800A99C8(void *arg0, s32 arg1) {
     u8 var_a0;
@@ -561,7 +660,19 @@ void func_800A9AC0(void *arg0, s32 arg1) {
     func_800A9DE4(arg0);
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A9B18);
+void func_800A9B18(void *arg0) {
+    if (M2C_FIELD(arg0, s16 *, 0x12) < 5) {
+        M2C_FIELD(arg0, s32 *, 0x34) -= M2C_FIELD(arg0, s32 *, 0x34) >> 5;
+        M2C_FIELD(arg0, s32 *, 0x3C) -= M2C_FIELD(arg0, s32 *, 0x3C) >> 5;
+        if (M2C_FIELD(arg0, s16 *, 0x14) < 0x180) {
+            M2C_FIELD(arg0, s16 *, 0x72) = 3;
+        }
+        if ((D_80103E50 == 0 && M2C_FIELD(arg0, s16 *, 0x14) < 0x100) || M2C_FIELD(arg0, s16 *, 0xE) > 0xF0) {
+            M2C_FIELD(arg0, s16 *, 0x72) = 0;
+            D_80103E50 = 1;
+        }
+    }
+}
 
 void func_800A9BB4(void *arg0) {
     func_800A7860();
@@ -784,7 +895,25 @@ void func_800ADD64(void *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800ADDFC);
+void func_800ADDFC(void *arg0) {
+    s32 y;
+
+    y = M2C_FIELD(arg0, s32 *, 0x2C);
+    if (M2C_FIELD(arg0, s32 *, 0x34) < y) {
+        M2C_FIELD(arg0, s8 *, 0) = 0;
+        return;
+    }
+    M2C_FIELD(arg0, u16 *, 2) = D_80106A30;
+    M2C_FIELD(arg0, s16 *, 0x24) = 0;
+    M2C_FIELD(arg0, s32 *, 0x28) += M2C_FIELD(arg0, s32 *, 0x6C);
+    M2C_FIELD(arg0, s32 *, 0x2C) += M2C_FIELD(arg0, s32 *, 0x70);
+    M2C_FIELD(arg0, s32 *, 0x30) += M2C_FIELD(arg0, s32 *, 0x74);
+    M2C_FIELD(arg0, s32 *, 0x70) += 0x1000;
+    M2C_FIELD(arg0, u16 *, 0x1E) -= 0x20;
+    if (M2C_FIELD(arg0, s32 *, 0x70) > 0) {
+        M2C_FIELD(arg0, u16 *, 0x8A) += 1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800ADE94);
 

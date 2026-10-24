@@ -19,5 +19,11 @@ M2C_UNK func_800D4368(void *, s32, s32);
 extern s32 D_801517C0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B0410(void);
+extern u8 D_801CCC70;
+extern u8 D_801CCC73;
+extern u8 D_801CCC72;
+extern u8 D_801CCC71;
+extern s16 D_801CCC74;
 
 #endif /* MAGIC_BIORA_DECLS_H */

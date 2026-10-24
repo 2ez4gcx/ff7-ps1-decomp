@@ -59,5 +59,21 @@ extern s16 D_801D5696[];
 void func_801B0CC0(void);
 extern u16 D_801D56A4;
 extern s32 D_801D549C;
+void func_801B0664(void);
+extern u16 D_801D5638;
+extern u8 D_801D5637;
+extern u8 D_801D5634;
+extern u8 D_801D5636;
+extern u8 D_801D5635;
+void func_801B0880(void);
+extern MgVec D_801D563C;
+extern s16 D_801D5656;
+extern s32 D_801D565C[];
+void func_801B0EAC(void);
+extern MgSVec D_801D56C8;
+extern s16 D_801D56C2;
+extern s32 D_801D1C08;
+extern s16 D_801D56B4;
+extern s32 D_801D220C;
 
 #endif /* MAGIC_RE_DO_DECLS_H */

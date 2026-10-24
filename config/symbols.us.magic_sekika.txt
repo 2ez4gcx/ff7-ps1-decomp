@@ -1,0 +1,3 @@
+// Symbols of magic_sekika alone (the others it shares are listed before).
+D_801B0000 = 0x801B0000; // force_not_migration:True
+D_801B0004 = 0x801B0004; // force_not_migration:True

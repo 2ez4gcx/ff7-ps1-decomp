@@ -9,7 +9,7 @@ void func_801B1160(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801CD86C[];
-extern s32 D_801E586C;
+extern u8 *D_801E586C;
 extern s16 D_80162080;
 void func_801B162C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -28,6 +28,13 @@ extern s16 D_801CD7BE[];
 extern s32 D_801517C0;
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
-extern MgTask D_80162978[];
+extern MgObj20 D_80162978[];
+void func_801B11CC(void);
+typedef struct { s32 *ptr[2]; } MgPtrPair;
+extern MgPtrPair D_801B0000;
+M2C_UNK func_800D4368(void *, s32, s32);
+extern s32 *D_801CD778;
+extern u16 D_801CD780;
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_SEKIKA_DECLS_H */

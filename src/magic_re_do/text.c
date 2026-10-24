@@ -115,9 +115,93 @@ void func_801B05A8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B0664);
+void func_801B0664(void) {
+    MgMat lw;
+    MgMat m;
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    u8 *rgb;
+    s16 i;
+    s16 n;
 
-INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B0880);
+    p = &D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m.m[2][i] = 0;
+        m.m[1][i] = 0;
+        m.m[0][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 12) {
+        n = 20 - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = 0x2000;
+    func_8003C21C(&rot, &lw);
+    func_8003B05C(&m, &lw);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801D5638 = p->unk16;
+    D_801D5637 = (n == 8) ? 0x2C : 0x2E;
+    rgb = &D_801D5634;
+    *rgb = D_801D5635 = D_801D5636 = n << 4;
+    D_80163C74 = func_800D4D90(rgb - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (p->unk6 > 0) {
+            p->unk6 = 0;
+            p->unkE *= -1;
+        }
+        p->unkE += 20;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B0880(void) {
+    MgMat m;
+    MgMat lw;
+    MgSVec rot;
+    MgTask *p;
+    s16 *frame;
+    s32 *q;
+
+    rot.vy = 0;
+    rot.vx = 0;
+    p = &D_80162978[D_8015169C];
+    rot.vz = p->unk14;
+    func_8003BF8C(&rot, &m);
+    func_8003B35C(&m, &D_801D563C);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    frame = &D_801D5656;
+    q = (s32 *)((u8 *)frame - 0xA);
+    M2C_SFIELD(frame, s16 *, 0) = 0x80 - p->unk2 * 6;
+    *q = D_801D565C[p->unk16];
+    D_801ED738 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801ED738);
+    if (D_80062D98 == 0) {
+        p->unk6 -= 200;
+        p->unk14 += 0x100;
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B09E0(void) {
     MgTask *p;
@@ -203,7 +287,46 @@ void func_801B0CC0(void) {
 
 INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B0DAC);
 
-INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B0EAC);
+void func_801B0EAC(void) {
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    MgTask *p;
+    s16 *frame;
+    s32 **q;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&D_801D56C8, &m);
+    func_8003A79C(&D_801D570C, &m, &m);
+    scale.vx = scale.vz = 0x4000 - p->unk2 * 300;
+    scale.vy = p->unk2 * 900;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    frame = &D_801D56C2;
+    q = (s32 **)((u8 *)frame - 0xA);
+    M2C_SFIELD(q, s32 **, 0) = &D_801D1C08;
+    v = 0x1000 - (D_801D56B4 << 8);
+    *frame = v;
+    D_801ED738 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801ED738);
+    *q = &D_801D220C;
+    D_801ED738 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801ED738);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 13) {
+            D_801D56B4--;
+        }
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B10A0);
 

@@ -164,7 +164,25 @@ INCLUDE_ASM("../asm/us/magic_wpcu/nonmatchings/text", func_801B07B4);
 
 INCLUDE_ASM("../asm/us/magic_wpcu/nonmatchings/text", func_801B0A0C);
 
-INCLUDE_ASM("../asm/us/magic_wpcu/nonmatchings/text", func_801B0BDC);
+void func_801B0BDC(void) {
+    MgSVec rot;
+    MgMat m;
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    p->unk0 = -1;
+    func_800D3994(D_801D31F4, D_8015190F[D_801D31F4][0], &D_801D31FC);
+    func_800D3994(D_801D31F8, D_8015190F[D_801D31F8][0], &D_801D3204);
+    rot.vy = D_801D320A = D_80151A46[D_801D31F8][0];
+    rot.vx = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    func_8003AB84(&m, &D_801BB1D8, &D_801D320C);
+    if (D_801D3230 == 0) {
+        p = &D_80162978[func_800BBEAC(&func_801B0A0C)];
+    }
+    p->unk1C = 0;
+}
 
 INCLUDE_RODATA("../asm/us/magic_wpcu/nonmatchings/text", D_801B0000);
 

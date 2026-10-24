@@ -111,5 +111,7 @@ void func_801BA598(s32 arg0);
 extern s32 D_801ECD14;
 extern s32 D_801ECD34;
 void func_801B66C4(void);
+void func_801B6BAC(void);
+void func_801B8DB0(void);
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

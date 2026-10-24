@@ -34,5 +34,10 @@ extern s32 D_801517C0;
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern MgTask D_80162978[];
+void func_801B0324(void);
+typedef struct { s32 tag; u8 r; u8 g; u8 b; u8 code; } MgColTag;
+extern MgColTag D_801D129C;
+extern s32 D_801D12A8[];
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_JAMMER_DECLS_H */

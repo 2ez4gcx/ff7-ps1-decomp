@@ -152,7 +152,25 @@ INCLUDE_ASM("../asm/us/magic_wpke/nonmatchings/text", func_801B0744);
 
 INCLUDE_ASM("../asm/us/magic_wpke/nonmatchings/text", func_801B09FC);
 
-INCLUDE_ASM("../asm/us/magic_wpke/nonmatchings/text", func_801B0C88);
+void func_801B0C88(void) {
+    MgSVec rot;
+    MgMat m;
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    p->unk0 = -1;
+    func_800D3994(D_801CCA08, D_8015190F[D_801CCA08][0], &D_801CCA10);
+    func_800D3994(D_801CCA0C, D_8015190F[D_801CCA0C][0], &D_801CCA18);
+    rot.vy = D_801CCA1E = D_80151A46[D_801CCA0C][0];
+    rot.vx = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    func_8003AB84(&m, &D_801B49EC, &D_801CCA20);
+    if (D_801CCA44 == 0) {
+        p = &D_80162978[func_800BBEAC(&func_801B09FC)];
+    }
+    p->unk1C = 0;
+}
 
 INCLUDE_RODATA("../asm/us/magic_wpke/nonmatchings/text", D_801B0000);
 

@@ -96,7 +96,58 @@ void func_801B05B0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B066C);
+void func_801B066C(void) {
+    MgMat lw;
+    MgMat m;
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    u8 *rgb;
+    s16 i;
+    s16 n;
+
+    p = &D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m.m[2][i] = 0;
+        m.m[1][i] = 0;
+        m.m[0][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 12) {
+        n = 20 - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = 0x2000;
+    func_8003C21C(&rot, &lw);
+    func_8003B05C(&m, &lw);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801D5548 = p->unk16;
+    D_801D5547 = (n == 8) ? 0x2C : 0x2E;
+    rgb = &D_801D5544;
+    *rgb = D_801D5545 = D_801D5546 = n << 4;
+    D_80163C74 = func_800D4D90(rgb - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (p->unk6 > 0) {
+            p->unk6 = 0;
+            p->unkE *= -1;
+        }
+        p->unkE += 20;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0888(void) {
     MgMat m;
@@ -258,4 +309,28 @@ INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B10A8);
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B1598);
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B1978);
+void func_801B1978(arg0, arg1) {
+    MgVec v;
+    MgSVec d;
+    MgTask *p;
+
+    func_800BBEAC(func_801B045C);
+    D_801D563C = arg0;
+    p = &D_80162978[func_800BBEAC(func_801B1598)];
+    func_800D3994(arg1, D_80151917[arg1][0], &p->unk4);
+    func_801B0020(arg0, &D_801D5640);
+    v.vx = d.vx = D_801D5640.vx - p->unk4;
+    v.vy = d.vy = D_801D5642 - p->unk6;
+    v.vz = d.vz = D_801D5644 - p->unk8;
+    func_800D44E8(&d, &D_801D561C);
+    func_8003A08C(&v, &v);
+    p->unkC = (u32)(v.vx * 75) >> 9;
+    p->unkE = (u32)(v.vy * 75) >> 9;
+    p->unk10 = (u32)(v.vz * 75) >> 9;
+    p->unk1E = arg1;
+    func_800D2980(D_801B1B40, 0, 0, 0);
+    D_800F5B72 = 0;
+    D_800F5B71 = 0;
+    D_800F5B70 = 0;
+    func_800D52A0(0x1000, 0x10);
+}

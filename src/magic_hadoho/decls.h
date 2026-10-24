@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B1978();
+void func_801B1978();
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 extern u8 D_8015190F[][0xB9C];
@@ -66,5 +66,25 @@ extern s32 D_801D2244;
 extern s16 D_801D55C4;
 extern s16 D_801D55D2;
 extern MgSVec D_801D55D8;
+void func_801B066C(void);
+extern u16 D_801D5548;
+extern u8 D_801D5547;
+extern u8 D_801D5544;
+extern u8 D_801D5546;
+extern u8 D_801D5545;
+s32 func_800BBEAC(void (*)());
+void func_801B1598();
+extern s16 D_801D563C;
+extern u8 D_80151917[][0xB9C];
+extern MgSVec D_801D5640;
+extern s16 D_801D5642;
+extern s16 D_801D5644;
+void func_800D44E8(MgSVec *, MgMat *);
+extern u8 D_801B1B40[];
+void func_800D2980(void *, s32, s32, s32);
+extern u8 D_800F5B72;
+extern u8 D_800F5B71;
+extern u8 D_800F5B70;
+s32 func_800D52A0(s32, s32);
 
 #endif /* MAGIC_HADOHO_DECLS_H */
