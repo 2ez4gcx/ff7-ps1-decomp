@@ -129,7 +129,64 @@ void func_801D2A80(s32 *arg0, s32 *arg1) {
     *arg1 = temp_v1;
 }
 
-INCLUDE_ASM("../asm/us/eqipmenu/nonmatchings/text", func_801D2A94);
+s32 func_801D2A94(void *base, u32 n, s32 (*cmp)(), void (*swap)()) {
+    u32 lo[64];
+    u32 hi[64];
+    u32 r;
+    u32 l;
+    u32 i;
+    u32 sp;
+
+    if (n < 2) {
+        return 1;
+    }
+    if (0) {
+    overflow:
+        return 0;
+    }
+    sp = 0;
+    lo[0] = 0;
+    hi[0] = n - 1;
+    do {
+        l = lo[sp];
+        i = l + 1;
+        n = r = hi[sp];
+        while (i < r) {
+            while (i < r && cmp(i, l, &base) <= 0) {
+                i++;
+            }
+            while (i <= r && cmp(l, r, &base) <= 0) {
+                r--;
+            }
+            if (i < r) {
+                swap(i++, r--, &base);
+            }
+        }
+        if (cmp(l, r, &base) > 0) {
+            swap(l, r, &base);
+        }
+        if (l < r && l < --r) {
+            if (i < n && r - l < n - i) {
+                func_801D2A80(&r, &n);
+                func_801D2A80(&l, &i);
+            }
+            if (r > l) {
+                lo[sp] = l;
+                hi[sp] = r;
+                sp++;
+            }
+        }
+        if (n > i) {
+            lo[sp] = i;
+            hi[sp] = n;
+            sp++;
+        }
+        if (sp >= 0x40) {
+            goto overflow;
+        }
+    } while (sp-- != 0);
+    return 1;
+}
 
 void func_801D2CE4(s32 *arg0, s32 *arg1) {
     s32 temp_v1;
@@ -251,7 +308,34 @@ void func_801D3A24(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/eqipmenu/nonmatchings/text", func_801D3AA0);
+void func_801D3AA0(s32 arg0, s32 arg1, u8 *arg2, u8 *arg3) {
+    s16 rect[4];
+    s32 i;
+    for (i = 0; i < 8; i++) {
+        if (arg2[i] != 0 && (arg2[i] == 3 || arg2[i] == 7)) {
+            func_80028CA0((s16)(arg0 + i * 0x10 - 8), (s16)arg1, 0x70, 0x30, 0x10, 0x10, 1, 0);
+        }
+    }
+    for (i = 0; i < 8; i++) {
+        if (arg2[i] != 0) {
+            if (arg3[i * 4] != 0xFF) {
+                func_80028CA0((s16)(arg0 + i * 0x10), (s16)arg1, 0x80, 0x20, 0x10, 0x10, (s16)func_8002603C(arg3[i * 4]), 1);
+            }
+            if (arg2[i] >= 5) {
+                func_80028CA0((s16)(arg0 + i * 0x10), (s16)arg1, 0x80, 0x30, 0x10, 0x10, 1, 0);
+            } else {
+                func_80028CA0((s16)(arg0 + i * 0x10), (s16)arg1, 0x70, 0x20, 0x10, 0x10, 1, 0);
+            }
+        }
+    }
+    func_80026A34(0, 1, 0x3F, 0);
+    rect[0] = arg0 - 2;
+    rect[1] = arg1;
+    rect[2] = 0x80;
+    rect[3] = 0xB;
+    func_80027B84(rect);
+    func_80026A34(0, 1, 0x1F, 0);
+}
 
 void func_801D3CB0(void) {
     s32 i;

@@ -18,5 +18,9 @@ s32 func_800A23F8(void);
 void func_800A2934(void *arg0, void *arg1);
 void func_800A2458(void);
 M2C_UNK func_8003CE3C(M2C_UNK);
+void func_800A24A8(void);
+s32 func_800484A8();
+s32 func_8003CEDC(M2C_UNK);
+s32 func_80048540(M2C_UNK);
 
 #endif /* ENDING_DECLS_H */

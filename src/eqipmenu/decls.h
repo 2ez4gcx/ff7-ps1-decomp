@@ -16,7 +16,7 @@ void func_801D2CE4(s32 *arg0, s32 *arg1);
 s32 func_801D1BDC(s32 arg0);
 void func_801D0164(void);
 void func_801D2E78(s32 arg0);
-M2C_UNK func_801D2A94(s32 *, M2C_UNK, M2C_UNK *, M2C_UNK *);
+s32 func_801D2A94(void *base, u32 n, s32 (*cmp)(), void (*swap)());
 s16 func_801D2D40(u16 arg0, u16 arg1, u32 **arg2);
 void func_801D2E40(u16 arg0, u16 arg1, s32 **arg2);
 s32 func_801D2EBC(s32 arg0, s32 arg1);
@@ -58,5 +58,9 @@ typedef struct { u8 filled; u8 count; u8 pad[8]; s16 v[8]; } EqpStatDiff;
 extern EqpStatDiff *D_801D8B08;
 void func_801D1BF4(void);
 extern u8 D_801D8674[][0x14];
+void func_801D3AA0(s32 arg0, s32 arg1, u8 *arg2, u8 *arg3);
+extern s32 func_80028CA0();
+s32 func_8002603C(u8 arg0);
+void func_80026A34(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 #endif /* EQIPMENU_DECLS_H */

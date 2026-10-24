@@ -91,24 +91,47 @@ def index_done(all_targets):
                     continue
                 body = body_of(src, name)
                 if body:
-                    out[sh[0]] = (t, name, sh[1], body)
+                    out[sh[0]] = (t, name, sh[1], body, src)
     return out
 
 
-def needed_decls(source_target, body, names):
-    """Declaration lines the body's symbols have in its target's decls."""
-    tg = targets.get(source_target)
-    text = tg.decls.read_text(encoding='utf-8') if tg.decls.exists() else ''
+TYPEDEF = re.compile(r'^typedef\b.*\b(\w+)\s*;$', re.M)
+
+
+def needed_decls(source_target, body, names, source_file, dest_target):
+    """Declaration lines the body's symbols have where it comes from (its
+    file's own block, its target's decls, the main executable's), after the
+    one-line typedefs they use that the destination's decls lack, in the
+    order they were declared."""
+    texts = ['\n'.join(work.local_block(source_file.read_text(encoding='utf-8')))]
+    for t in (source_target, 'main'):
+        decls = targets.get(t).decls
+        if decls.exists():
+            texts.append(decls.read_text(encoding='utf-8'))
     lines = []
     for n in names:
         if not re.search(rf'\b{n}\b', body):
             continue
-        d = ad.declaration(text, n)
-        if d is None and source_target != 'main':
-            d = ad.declaration(targets.get('main').decls.read_text(encoding='utf-8'), n)
+        d = next((d for d in (ad.declaration(text, n) for text in texts) if d is not None), None)
         if d is not None and d not in lines:
             lines.append(d)
-    return lines
+    dest = targets.get(dest_target).decls
+    have = set(TYPEDEF.findall(dest.read_text(encoding='utf-8'))) if dest.exists() else set()
+    order = {}
+    for text in reversed(texts):           # the source's own types win over main's
+        for i, m in enumerate(TYPEDEF.finditer(text)):
+            order[m.group(1)] = (len(order), m.group(0))
+    types, used = [], body + '\n' + '\n'.join(lines)
+    while True:
+        new = [n for n in order if n not in have and order[n][1] not in types
+               and re.search(rf'\b{n}\b', used)]
+        if not new:
+            break
+        for n in new:
+            types.append(order[n][1])
+            used += '\n' + order[n][1]
+    types.sort(key=lambda line: next(i for i, l in order.values() if l == line))
+    return types + lines
 
 
 def main():
@@ -129,11 +152,11 @@ def main():
                 sh = shape(ad.ASM / seg / f'{name}.s', name)
                 if sh is None or sh[0] not in done:
                     continue
-                from_target, from_name, from_syms, body = done[sh[0]]
+                from_target, from_name, from_syms, body, from_src = done[sh[0]]
                 mapping = dict(zip(from_syms, sh[1]))
                 mapping[from_name] = name
                 rename = lambda s: SYMBOL.sub(lambda m: mapping.get(m.group(0), m.group(0)), s)
-                decls = [rename(d) for d in needed_decls(from_target, body, list(mapping))]
+                decls = [rename(d) for d in needed_decls(from_target, body, list(mapping), from_src, t)]
                 text = ('#include "common.h"\n' + f'#include "{t}/decls.h"\n\n' + '\n'.join(decls) + '\n\n'
                         + rename(body) + '\n')
                 path = Path(tempfile.gettempdir()) / f'ff7_copy_{t}_{name}.c'
@@ -145,7 +168,8 @@ def main():
                     work.put(path, name)
                     put += 1
                 except SystemExit as e:
-                    print(f'{t} {name}: not kept ({str(e)[:100]})', flush=True)
+                    why = ' '.join(str(e).split())
+                    print(f'{t} {name}: not kept ({why if len(why) < 300 else why[:100] + " ... " + why[-200:]})', flush=True)
                 finally:
                     path.unlink(missing_ok=True)
     print(f'{put} functions copied')

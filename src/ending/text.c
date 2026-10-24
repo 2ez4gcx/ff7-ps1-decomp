@@ -98,7 +98,17 @@ void func_800A2458(void) {
     func_80033B70();
 }
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A24A8);
+void func_800A24A8(void) {
+    s32 t;
+
+    while ((t = func_800484A8()) == -1) {
+        func_8003CEDC(0);
+    }
+    if (t != 0) {
+        while (func_80048540(1) != 0) {
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2504);
 
