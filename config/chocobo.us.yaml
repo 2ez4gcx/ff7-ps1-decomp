@@ -62,5 +62,6 @@ segments:
       - [0x3308, c, text2]
       - [0x7924, c, text3]
       - [0xBABC, c, text4]
+      - [0xD9D8, c, text4b]
       - [0x11250, data, data]
   - [0x1733c]

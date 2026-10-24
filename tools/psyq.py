@@ -93,9 +93,18 @@ FILE_OPTIONS = {
     # began, 4 bytes past an 8-byte boundary.
     'field/text2.c': {'unit_start': True},
     'field/text4.c': {'unit_start': True},
-    # The same for CHOCOBO.BIN and SUBMAR.BIN.
-    'chocobo/text2.c': {'unit_start': True, 'aspsx': '2.34'},
-    'chocobo/text4.c': {'unit_start': True, 'aspsx': '2.34'},
+    # The same for CHOCOBO.BIN and SUBMAR.BIN. CHOCOBO.BIN up to func_800AD9D8 was
+    # built by GCC 2.7.2 with -funroll-loops (loops with an `n & 3` prologue or
+    # copies unrolled in full) and an ASPSX of 2.50 or later (`li` of a small
+    # constant is `addiu`, where older ones give `ori`); text4b.c from there
+    # on has `ori` again.
+    'chocobo/text.c': {'gcc': '2.7.2', 'aspsx': '2.56', 'cflags': ['-O2', '-G0', '-funroll-loops']},
+    'chocobo/text2.c': {'unit_start': True, 'gcc': '2.7.2', 'aspsx': '2.56',
+                        'cflags': ['-O2', '-G0', '-funroll-loops']},
+    'chocobo/text3.c': {'gcc': '2.7.2', 'aspsx': '2.56', 'cflags': ['-O2', '-G0', '-funroll-loops']},
+    'chocobo/text4.c': {'unit_start': True, 'gcc': '2.7.2', 'aspsx': '2.56',
+                        'cflags': ['-O2', '-G0', '-funroll-loops']},
+    'chocobo/text4b.c': {'aspsx': '2.34'},
     'submar/text2.c': {'unit_start': True},
     # Overlays assembled by ASPSX 2.30 or later: a global plus a register
     # folds %lo into the load (`addu $at, $at, $r; lbu $v0, %lo(x)($at)`),
@@ -103,8 +112,6 @@ FILE_OPTIONS = {
     'batini/text.c': {'aspsx': '2.34'},
     'batres/text.c': {'aspsx': '2.34'},
     'brom/text.c': {'aspsx': '2.34'},
-    'chocobo/text.c': {'aspsx': '2.34'},
-    'chocobo/text3.c': {'aspsx': '2.34'},
     'snobo/text.c': {'aspsx': '2.34'},
     'snobo2/text.c': {'aspsx': '2.34'},
     'magic_antlion/text.c': {'aspsx': '2.34'},

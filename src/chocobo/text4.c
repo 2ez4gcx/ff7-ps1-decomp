@@ -7,9 +7,42 @@ INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AC554);
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AD52C);
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AD7B8);
+void func_800AD7B8(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    func_80026F44(arg2, arg3, arg0, 7);
+}
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AD7E8);
+void func_800AD7E8(void) {
+    ChoSpr sp10;
+    u8 sp70[0x40];
+    s32 *p;
+    s32 *q;
+    s32 v;
+    ChoSpr *src;
+    u8 c;
+
+    if (D_800B7514 != 0) {
+        src = (ChoSpr *)(D_800F5074 + 0x1EA70); sp10 = *src;
+        sp10.e = func_8004656C(0, 2, 0, 0);
+        sp10.g = 0;
+        func_80044AC0((s32)sp70, (Spr *)&sp10);
+        func_800442DC(sp70);
+        c = D_800B7514;
+        D_800B14BA = c;
+        D_800B14B9 = c;
+        D_800B14B8 = c;
+        func_800442DC(D_800B14B4);
+    }
+    p = &D_800B7514;
+    q = &D_800F5070;
+    v = *p + *q;
+    *p = v;
+    if (v < 0) {
+        *p = 0;
+        *q = 0;
+    } else if (v > 0x100) {
+        *p = 0x100;
+    }
+}
 
 s32 func_800AD91C(WmHdr3 *arg0, s32 arg1, s32 arg2) {
     u32 i;
@@ -24,42 +57,3 @@ s32 func_800AD91C(WmHdr3 *arg0, s32 arg1, s32 arg2) {
     func_800AF9E4(arg0, arg0->f16, 0);
     return arg1;
 }
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AD9D8);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AE534);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AE7D4);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AF11C);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AF9E4);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AFC64);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800AFDBC);
-
-s32 func_800B00DC(WmHdr3 *arg0, u8 *arg1) {
-    u32 i;
-    u32 cnt;
-    s32 pad[2];
-    s32 q;
-    s16 x;
-    s16 y;
-    s16 z;
-
-    cnt = arg0->cnt;
-    q = arg0->off + arg0->base;
-    x = (arg1[1] << 8) | arg1[0];
-    y = (arg1[3] << 8) | arg1[2];
-    z = (arg1[5] << 8) | arg1[4];
-    *(s32 *)0x1F800200 = arg1[6];
-    for (i = 0; i < cnt; i++) {
-        func_800B01B0(q + i * 0x20, x, y, z);
-    }
-    return 1;
-}
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800B01B0);
-
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text4", func_800B0E7C);

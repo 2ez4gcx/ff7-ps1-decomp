@@ -1,1 +1,6 @@
 // MINI/CHOCOBO.BIN: name = 0xADDRESS; // type:func
+D_800A0068 = 0x800A0068; // force_not_migration:True
+D_800A0020 = 0x800A0020; // force_not_migration:True
+D_800A0028 = 0x800A0028; // force_not_migration:True
+D_800A00A8 = 0x800A00A8; // force_not_migration:True
+D_800A00B8 = 0x800A00B8; // force_not_migration:True
