@@ -94,9 +94,24 @@ FILE_OPTIONS = {
     'field/text2.c': {'unit_start': True},
     'field/text4.c': {'unit_start': True},
     # The same for CHOCOBO.BIN and SUBMAR.BIN.
-    'chocobo/text2.c': {'unit_start': True},
-    'chocobo/text4.c': {'unit_start': True},
+    'chocobo/text2.c': {'unit_start': True, 'aspsx': '2.34'},
+    'chocobo/text4.c': {'unit_start': True, 'aspsx': '2.34'},
     'submar/text2.c': {'unit_start': True},
+    # Overlays assembled by ASPSX 2.30 or later: a global plus a register
+    # folds %lo into the load (`addu $at, $at, $r; lbu $v0, %lo(x)($at)`),
+    # with no nop before it. Every such access in their asm has that form.
+    'batini/text.c': {'aspsx': '2.34'},
+    'batres/text.c': {'aspsx': '2.34'},
+    'brom/text.c': {'aspsx': '2.34'},
+    'chocobo/text.c': {'aspsx': '2.34'},
+    'chocobo/text3.c': {'aspsx': '2.34'},
+    'snobo/text.c': {'aspsx': '2.34'},
+    'snobo2/text.c': {'aspsx': '2.34'},
+    'magic_antlion/text.c': {'aspsx': '2.34'},
+    'magic_choco0/text.c': {'aspsx': '2.34'},
+    'magic_ifleet/text.c': {'aspsx': '2.34'},
+    'magic_siva/text.c': {'aspsx': '2.34'},
+    'magic_sting/text.c': {'aspsx': '2.34'},
 }
 
 

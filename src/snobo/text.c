@@ -1010,7 +1010,11 @@ void func_800BD508(void) {
 void func_800BD510(void) {
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800BD518);
+void func_800BD518(s32 arg0, s32 arg1) {
+    if (arg1 != 0) {
+        func_800B18B0();
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800BD53C);
 
