@@ -72,6 +72,20 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A real global struct array (`D_x[i].f`) gives the game's `sym+off(reg)` addressing; a
   cast `((T *)D_x)[i].f` puts the base in a register instead. Declaring a struct-array
   base the asm never names can give the game's addressing.
+- `s16field & 0x100` loads with `lhu`; the game's `lh` comes from reading the field into
+  an `s32` local first. `s16 n = byte + 1` gives `lbu s0; addiu s0, s0, 1`, an `s32`
+  gives `lbu v0; addiu s0, v0, 1`. A return value sign-extended again by the caller:
+  declare both the callee and the local `s16`.
+- A value narrowed with the wrong registers (`a & 0xFF`): pass it through a cast `u8`
+  prototype, `((s32 (*)(s32, u8))func_X)(x, a)`.
+- Variadic functions spill `a0`–`a3`: `void f(s32 cmd, ...)`, the extra arguments read
+  as `args = &cmd; args[i]`, a `u16` local for the fixed one (`c = cmd;`) to get `lhu`.
+- An OT link, `(x & 0xFF000000) | (y & 0xFFFFFF)`, matches as a bitfield struct
+  (`typedef struct { u32 addr : 24; u32 len : 8; } FdTag;`, `->addr = ...`); with masks
+  the two constants swap registers.
+- 2.7.2: an array element both loaded and stored (`D[8]`) gets its address in a register
+  and the branches cross-jumped; a plain extern for that element (`extern u8 D_x;`)
+  keeps the game's direct `lui`/`%lo` accesses.
 
 ### Order of instructions
 
@@ -92,6 +106,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - 2.7.2 reassociates `(x*k + C) + y` so that C joins the other operand; compute
   `t = x*k + C;` in a single-use temporary to keep the game's `addiu`.
 - A constant assignment written after a call is moved into the call's argument setup.
+- 2.7.2: a plain scalar global read scheduled before indexed array stores the game has
+  ahead of it: declare it as an array and read `D_x[0]`.
+- A temporary computed as its own statement moves things: `j = 3 - i;` first in a loop
+  body changes which constants are hoisted first; `n = p[0];` before an expression sets
+  the operand order of its `addu`. `v <<= 8; v |= x;` keeps registers that
+  `v = (v << 8) | x` swaps.
 
 ### Registers
 
@@ -102,6 +122,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - An address kept in a register was usually a pointer variable (`p = &x; ... p->a`). A
   global re-read through a register several times is a pointer variable to it.
 - A local used once (`mask = D_x;`) changes registers where CSE of the global would not.
+- A remainder written `i - i / 91 * 91` gives the game's registers (or saves a `move`)
+  where `i % 91` does not.
+- A loop bound kept in a register (`li t3, 31` hoisted, `slt` in the loop) is a local:
+  `n = 31; for (i = 1; i < n; i++)`.
+- A table value re-read into the same register: `c = byte; if (T[c] != 0xFF) { c = T[c];
+  ... }` with `c` an `s32`.
 
 ### Control flow
 
@@ -120,6 +146,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `m = 0; if (!(x & 0x20)) m = 3;` gives `sltiu/negu/andi`; `(x & 0x200) != 0` through a
   temporary gives `andi/sltu`; `v & (1 << n)` with a mask local keeps `li 1; sllv; and`.
 - `return 1` sharing a register with a store of 1: a `ret` variable.
+- 2.6.3 lays out `if (c) { A; return 0; } else { B; return 1; }` with B first.
+- In a switch, `if (cond) break; return 1;` keeps the cases apart; the inverted
+  `if (!cond) return 1; break;` gets cross-jumped into one tail.
+- A `sltiu` clamp after a `< 0` test: `(u32)v > 11`.
+- A hoisted `slti` flag and `-(i > 0) & 8`: `(rows >= 2 && i > 0) ? 8 : 0`.
+- `lw 0(reg); ... jr ra; sw 0(reg)` on a global (the store in the delay slot): a pointer
+  local, `p = &D_x; *p += n;` (a volatile store stays out of the delay slot).
+- A retry loop with the result zeroed in a jump's delay slot:
+  `do { ... } while (dir == 0 && i < 100); if (dir != 0) { ... } else { mask = 0; }
+  return mask;`.
 
 ### Loops
 
@@ -132,6 +168,18 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A constant left inside a loop with a call: a `goto` loop stops it being hoisted.
 - Doubled address computations (`&D[i]` used twice) come from a flat `s32` array indexed
   `D[i * 2]` and `D[i * 2 + 1]`.
+- The exception: a loop register kept at a struct's last field, the other fields at
+  negative offsets (`-8(s0)`, `-16(s0)`), is a pointer advanced by hand
+  (`p = D.o; ... p->x = v; p++;`).
+- 2.7.2 reverses a loop that only stores: a counter from N-1 down to `bgez` and a pointer
+  stepping down from the array's end is `for (i = 0; i < N; i++) a[i] = c;`.
+- Registers stepping by a constant, set up after the hoisted constants, come from an
+  expression of the counter at each use: `(s16)(x + i * 0x10)` in a call, or a row
+  counter `n * 0xB + 0x9A` with `n++` inside an `if` (two such registers swap if written
+  as two variables). A loop ending in `slt p, base + 8` is a `for` over `i` reading
+  `base[i]`, with `i` optimised away.
+- A counter that must get the first free register: `n++` in each branch (the tails are
+  merged only after register allocation).
 
 ### Stack frame
 
@@ -143,7 +191,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 
 Some functions were assembly in the original and stay `INCLUDE_ASM`: the GTE (cop2) and
 BIOS-call functions of `lib.c`, and helpers that take arguments in `t0`-`t2` or return
-through `jr $at` (battle's func_800D32B4, func_800D8304, func_800D29D4).
+through `jr $at` (battle's func_800D32B4, func_800D8304, func_800D29D4). C with inline
+GTE instructions (`ctc2`, `lwc2`, `mvmva`, `swc2` between ordinary code, battle's
+func_800D84F8) stays asm too: it cannot be written without `asm()`.
+
+A file's assembler can change partway: NAMEMENU's code folds `%lo` into a load with a
+register index (ASPSX 2.30 and later) from func_801D14E8 on, and not before. Counting
+the unfolded `addiu $at, %lo` against the folded `%lo(sym)($at)` per function finds such
+a boundary; split the file there and give the new part its options in `tools/psyq.py`.
 
 ## Working with agents
 

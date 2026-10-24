@@ -28,8 +28,9 @@ the ~30 smallest functions still in asm of one target (battle, field, world, the
 eqipmenu/namemenu/savemenu/shopmenu, then the minigames and the spell effects), given to
 a subagent with docs/matching.md, at most four at once. Known near misses that resisted
 (skip them in batches): main func_800297A4, func_80025A44, func_800258BC, func_80036244,
-func_80034D18; field func_800A2F78; battle func_800B38E0, func_800D41FC, func_800DE3CC,
-func_800A1798 (its jump table is shared rodata); world func_800B6EFC; menus
+func_80034D18; field func_800A2F78, func_800CDC28; battle func_800B38E0, func_800D41FC,
+func_800DE3CC, func_800A1798 (its jump table is shared rodata), func_800D84F8 (inline
+GTE, stays asm); world func_800B6EFC; menus
 statmenu func_801D14E0 (frame 8 bytes short), patymenu func_801D0250, itemmenu
 func_801D0E80.
 
