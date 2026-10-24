@@ -77,12 +77,18 @@ Only disc 1 of the USA release is used; overlays found only on discs 2 and 3 com
    and point `MIPSEL_PREFIX` at `.../bin/mipsel-none-elf-` (default
    `D:/FF7/toolchain/mipsel/bin/mipsel-none-elf-`).
 
-3. The C compiler: GCC 2.6.3 built as a 32-bit Windows program by
-   `tools/gcc-win32/build.sh`, and [maspsx](https://github.com/mkst/maspsx) with
-   `tools/maspsx-extern.patch`. Details in [docs/toolchain.md](docs/toolchain.md).
+3. The C compilers: GCC 2.6.3 and 2.7.2 built as 32-bit Windows programs by
+   `tools/gcc-win32/build.sh` (they only need the Windows C runtime), and
+   [maspsx](https://github.com/mkst/maspsx) with `tools/maspsx-extern.patch`. Details in
+   [docs/toolchain.md](docs/toolchain.md).
 
-4. Decompiling tools: [m2c](https://github.com/matt-kempster/m2c), cloned next to the
-   toolchain (`D:/FF7/toolchain/m2c`). Note: the `m2c` package on PyPI is **not** this m2c.
+4. Decompiling tools: [m2c](https://github.com/matt-kempster/m2c) and, for near misses,
+   [decomp-permuter](https://github.com/simonlindholm/decomp-permuter), cloned into the
+   toolchain folder. Note: the `m2c` package on PyPI is **not** this m2c.
+
+All of it lives in one toolchain folder, `D:/FF7/toolchain` unless `FF7_TOOLCHAIN` says
+otherwise (`mipsel/`, `build-gcc/gcc-2.6.3/`, `build-gcc/gcc-2.7.2/`, `maspsx/`, `m2c/`,
+`decomp-permuter/`); a folder set up on one Windows machine can be copied to another.
 
 ## Building
 

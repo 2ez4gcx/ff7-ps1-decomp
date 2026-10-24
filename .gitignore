@@ -32,3 +32,6 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+
+# Work files of tools/work.py
+/work/
