@@ -268,7 +268,21 @@ void func_800AB2B4(void) {
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AB310);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AB4AC);
+void func_800AB4AC(FdSprBuf *arg0) {
+    s32 i;
+
+    for (i = 0; i < 64; i++) {
+        D_800E42E8[i].x6 = 0;
+        D_800E42E8[i].x2 = i * 4;
+        D_800E42E8[i].x0 = i % 8;
+        func_800469C4(&arg0->prims[i]);
+        func_80046848(&arg0->prims[i], 1);
+        arg0->prims[i].r0 = 0x10;
+        arg0->prims[i].g0 = 0x10;
+        arg0->prims[i].b0 = 0x10;
+    }
+    func_80044A68(arg0->dm, 0, 0, func_8004656C(0, 1, 0, 0) & 0xFFFF, 0);
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AB5E8);
 
