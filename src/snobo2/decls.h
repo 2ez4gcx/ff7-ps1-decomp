@@ -689,5 +689,10 @@ extern u8 D_800E07F0[];
 extern u8 D_800E07FC[];
 extern s32 D_8009A00C;
 extern s32 D_800B837C;
+void func_800A56B8(void);
+s32 func_800A5744();
+extern s32 D_800DDE98;
+void func_800B6D98(s16 arg0, s32 arg1);
+extern u8 D_800E0948[];
 
 #endif /* SNOBO2_DECLS_H */

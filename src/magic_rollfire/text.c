@@ -82,7 +82,40 @@ MgObj20 *func_801B0320(void) {
     return NULL;
 }
 
-INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B0384);
+void func_801B0384(MgSVec *pos, MgSVec *dir, s32 arg2, s32 count) {
+    MgTask *q;
+    s32 i;
+    s32 t;
+    s32 k;
+    s32 w;
+    s32 r;
+    s32 m;
+
+    for (i = 0; i < count; i++) {
+        q = (MgTask *)func_801B0320();
+        q->unk1E = func_80042DA8() % 15 + 10;
+        q->unk4 = pos->vx + (func_80042DA8() % 100 - 0x32);
+        q->unk6 = pos->vy + (func_80042DA8() % 100 - 0x32);
+        q->unk8 = pos->vz + (func_80042DA8() % 100 - 0x32);
+        t = func_80039A74((arg2 << 12) / 6);
+        r = func_80042DA8();
+        m = r;
+        t <<= 10;
+        t >>= 12;
+        if (m < 0) {
+            m += 0x3FF;
+        }
+        w = r - ((m >> 10) << 10) + 0xE00;
+        k = t + w;
+        q->unkC = (dir->vx * k) >> 12;
+        q->unkE = (dir->vy * k) >> 12;
+        q->unk10 = (dir->vz * k) >> 12;
+        q->unk14 = 0;
+        q->unk16 = 0x4B;
+        q->unk18 = -(func_80042DA8() % 5 + 5);
+        q->unk1A = func_80042DA8() % 128 + 0x400;
+    }
+}
 
 void func_801B0610(void) {
     MgObj20 *p;

@@ -458,7 +458,20 @@ s32 func_800A56B0(void) {
     return 1;
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A56B8);
+void func_800A56B8(void) {
+    s32 a;
+
+    if (((u8)D_800DDE70 == 2) || ((s16)D_800DDE78 < 0x80)) {
+        D_800DDE98 = 0;
+        D_800DDEA0 = 0;
+        return;
+    }
+    a = func_800A5744();
+    if (a >= 0x801) {
+        a = 0x1000 - a;
+    }
+    func_800AA188((u8 *)&D_800DDE70 - 0xC, a);
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5744);
 
@@ -2710,7 +2723,12 @@ void func_800B6D68(s16 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800B6D98);
+void func_800B6D98(s16 arg0, s32 arg1) {
+    if (arg1 != 0) {
+        func_800B2610(arg0, D_800E0948);
+        func_800B2610(arg0, D_800E0948 + 0xA);
+    }
+}
 
 void func_800B6DEC(s16 arg0, s32 arg1) {
     if (arg1 != 0) {

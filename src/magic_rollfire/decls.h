@@ -43,7 +43,7 @@ void func_8003BC6C(void *, MgVec *, s32 *);
 void func_800D41FC(void *, void *, MgMat *);
 s32 func_800D55F4(s32, s32, s32);
 s32 func_800D5774(s32);
-void func_801B0384(MgSVec *, MgSVec *, s32, s32);
+void func_801B0384(MgSVec *pos, MgSVec *dir, s32 arg2, s32 count);
 extern MgMat D_800FA63C;
 extern u8 D_80151AC0[][0xB9C];
 extern u8 D_801BCE3C[];
