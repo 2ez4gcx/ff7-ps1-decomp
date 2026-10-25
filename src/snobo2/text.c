@@ -305,7 +305,48 @@ s32 func_800A52E4(u8 *arg0) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5350);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A53A0);
+s32 func_800A53A0(arg0) {
+    SbObjD *p;
+    SbTbl *e;
+    SbRec12 *r;
+    s16 *q;
+    u16 a;
+    s32 b;
+    s32 res;
+
+    p = (SbObjD *)arg0;
+    p->unk10 = &D_800C824C[(s16)p->unk0];
+    p->unk2 = 0;
+    p->unk3C = (SbRecC *)(D_800B85D8 + *p->unk10->unk8 * 0x374);
+    q = &p->unk34;
+    e = (SbTbl *)(((-*p->unk10->unk18 & 0xFFF) << 2) + (u8 *)D_8004BC98);
+    a = e->a;
+    b = e->b;
+    p->unk1C = 0x1000;
+    p->unk16 = 0;
+    p->unk1A = 0;
+    p->unk1E = 0;
+    p->unk22 = 0;
+    p->unk18 = a;
+    p->unk14 = b;
+    p->unk20 = -a;
+    p->unk24 = b;
+    r = p->unk10->unk1C;
+    p->unk34 = p->unk40 - r->unk0;
+    p->unk38 = p->unk48 - r->unk8;
+    func_8003B2CC(&p->unk14, q, q);
+    res = func_800A4B78(q, (s32)p->unk3C, p);
+    p->unk4 = res;
+    if ((s16)res < 0) {
+        return 1;
+    }
+    D_80106B04 = p->unk0;
+    D_801069CC = p->unk2;
+    D_801069D0 = p->unk4;
+    D_80106AF8 = (u8 *)p->unk10;
+    D_80106B4C = p->unk63;
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5520);
 

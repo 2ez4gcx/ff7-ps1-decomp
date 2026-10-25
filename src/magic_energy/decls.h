@@ -66,5 +66,18 @@ void func_801B13F4(void);
 void func_800D44E8(MgSVec *, MgMat *);
 void func_800D52A0(s32, s32);
 void func_800BBA84(s32, s32, s32);
+void func_801B0EF8(void);
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+extern s32 D_801D2160[];
+extern s32 D_801D26C4[];
+extern s16 D_801D71B4;
+extern s16 D_801D71C2;
+extern MgSVec D_801D71C8;
+void func_801B0584(void);
+extern u8 D_801D7168;
+extern u8 D_801D7169;
+extern u8 D_801D716A;
+extern u8 D_801D716B;
+extern u16 D_801D716C;
 
 #endif /* MAGIC_ENERGY_DECLS_H */

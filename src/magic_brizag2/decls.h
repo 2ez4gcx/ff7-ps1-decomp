@@ -26,7 +26,7 @@ void func_8003B51C(MgMat *);
 s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 extern MgMat D_800FA63C;
 extern s32 D_801517C0;
-extern MgLineG2 *D_801EA264;
+extern s32 D_801EA264;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
@@ -37,5 +37,16 @@ extern MgTask *D_801EA268;
 extern s32 D_801EA26C;
 extern s32 D_801EA278;
 void func_801B57EC(void);
+void func_801B3474(void);
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+extern s16 D_8015169C;
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+void func_8003B27C(MgMat *, MgSVec *, MgVec *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+extern u8 D_801D5E58[];
+s32 func_800D29D4(void *, s32, s32, s32);
+extern u8 D_80062D98;
+void func_801B3640(void);
 
 #endif /* MAGIC_BRIZAG2_DECLS_H */

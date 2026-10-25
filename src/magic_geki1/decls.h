@@ -47,5 +47,14 @@ extern u8 D_8015190F[][0xB9C];
 extern u8 D_801D54D0[];
 void func_800D3994(s32, s32, void *);
 void func_801B0854();
+void func_801B0468(void);
+M2C_UNK func_8003A63C(MgMat *, MgMat *, MgMat *);
+M2C_UNK func_8003A79C(MgMat *, MgMat *, MgMat *);
+M2C_UNK func_8003B35C(MgMat *, MgVec *);
+s32 func_800D29D4(u8 *, s32, s32, s32);
+M2C_UNK func_800D44E8(MgSVec *, MgMat *);
+extern MgSVec D_801BD4B4;
+extern s16 D_801BD4C6;
+extern u16 D_801D54D4;
 
 #endif /* MAGIC_GEKI1_DECLS_H */

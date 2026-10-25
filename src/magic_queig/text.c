@@ -53,7 +53,48 @@ s32 func_801B0E60(s32 a) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/magic_queig/nonmatchings/text", func_801B0EFC);
+void func_801B0EFC(s16 *arg0, s16 *arg1, s32 *arg2) {
+    s32 cx;
+    s32 cy;
+    s32 cz;
+    s32 sx;
+    s32 sy;
+    s32 sz;
+    s32 m0;
+    s32 m1;
+    s32 m2;
+    s32 m3;
+    s32 m4;
+    s32 m5;
+    s32 m6;
+    s32 m7;
+    s32 m8;
+
+    cx = func_801B0E60(arg0[0]);
+    cy = func_801B0E60(arg0[1]);
+    cz = func_801B0E60(arg0[2]);
+    sx = func_801B0DBC(arg0[0]);
+    sy = func_801B0DBC(arg0[1]);
+    sz = func_801B0DBC(arg0[2]);
+    m0 = (((cz * cy) >> 12) * arg2[0]) >> 12;
+    m3 = ((((sz * cx) >> 12) - (((cz * -sy >> 12) * sx) >> 12)) * arg2[0]) >> 12;
+    m6 = ((((sz * sx) >> 12) + (((cz * -sy >> 12) * cx) >> 12)) * arg2[0]) >> 12;
+    m1 = (((-sz * cy) >> 12) * arg2[1]) >> 12;
+    m4 = ((((cz * cx) >> 12) + (((sz * -sy >> 12) * sx) >> 12)) * arg2[1]) >> 12;
+    m7 = ((((cz * sx) >> 12) - (((sz * -sy >> 12) * cx) >> 12)) * arg2[1]) >> 12;
+    m2 = (sy * arg2[2]) >> 12;
+    m5 = (((-cy * sx) >> 12) * arg2[2]) >> 12;
+    m8 = (((cy * cx) >> 12) * arg2[2]) >> 12;
+    arg1[0] = m0;
+    arg1[3] = m3;
+    arg1[6] = m6;
+    arg1[1] = m1;
+    arg1[4] = m4;
+    arg1[7] = m7;
+    arg1[2] = m2;
+    arg1[5] = m5;
+    arg1[8] = m8;
+}
 
 INCLUDE_ASM("../asm/us/magic_queig/nonmatchings/text", func_801B1100);
 

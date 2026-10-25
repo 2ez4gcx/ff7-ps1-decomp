@@ -24,5 +24,24 @@ void func_801B0388(void);
 extern u8 D_80062D98;
 s32 func_800BBEAC(void (*)());
 void func_801B01D8(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003A79C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003B69C(s32, s32, s32);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+void func_800D44E8(MgSVec *, MgMat *);
+extern MgMat D_800FA63C;
+extern s32 D_801517C0;
+extern MgVec D_801B0000;
+extern MgSVec D_801B1770;
+extern s32 D_801B177C;
+extern struct { s16 v; } D_801B1782;
+extern s32 D_801B1788[];
 
 #endif /* MAGIC_PUNCH_DECLS_H */

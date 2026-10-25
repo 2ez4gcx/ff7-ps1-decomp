@@ -587,5 +587,10 @@ extern u8 D_80106A34[];
 void func_800A8E7C(void *arg0, s32 arg1, void *arg2);
 void func_800AA188(void *arg0, s32 arg1);
 extern u8 D_800DE034[];
+s32 func_800A53A0();
+typedef struct { u8 pad0[0x4E]; SbVtx8 e[1]; } SbRecC;
+typedef struct { u16 unk0; u16 unk2; u16 unk4; u8 pad6[0xA]; SbQ *unk10; u16 unk14; s16 unk16; u16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; s16 unk20; s16 unk22; u16 unk24; u8 pad26[0xE]; s16 unk34; u8 pad36[2]; s16 unk38; u8 pad3A[2]; SbRecC *unk3C; u16 unk40; u8 pad42[6]; u16 unk48; u8 pad4A[0x19]; u8 unk63; } SbObjD;
+extern SbQ D_800C824C[];
+extern s16 D_80106B04;
 
 #endif /* SNOBO2_DECLS_H */

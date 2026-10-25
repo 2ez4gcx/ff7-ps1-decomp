@@ -29,5 +29,16 @@ extern s16 D_801D0F3C[];
 void func_800D4368(void *, s32, s32);
 extern s32 D_801517C0;
 s32 func_800D4D90(void *, s32, s32, s32);
+void func_801B033C(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern u8 D_801D0F2E;
+extern u8 D_801D0F2D;
+extern u8 D_801D0F2C;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+extern u8 D_801D0F24[];
+u8 *func_800D6260(void *, s32, s32, u8 *);
 
 #endif /* MAGIC_GRAVIRA_DECLS_H */

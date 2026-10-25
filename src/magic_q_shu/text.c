@@ -35,7 +35,28 @@ void func_801B0138(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B0264);
+void func_801B0264(void) {
+    MgSVec v;
+    MgTask *p;
+    s16 *frame;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    v.vx = p->unk4 + (func_80039A74(p->unk14) * p->unk18 >> 12);
+    v.vz = p->unk8 + (func_80039B40(p->unk14) * p->unk18 >> 12);
+    v.vy = p->unk6 + p->unk1A;
+    func_800D4368(&v, 0x2000, 0);
+    frame = &D_801BDAB8;
+    *frame = p->unk2 % D_801BD8E4;
+    D_801D5AE8 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801D5AE8);
+    if (D_80062D98 == 0) {
+        p->unk1A -= 0x32;
+        p->unk14 += 0x80;
+        p->unk18 -= p->unk18 / 10;
+        if (++p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B03FC(void) {
     MgObjAwa *p;

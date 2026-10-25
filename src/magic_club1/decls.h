@@ -72,6 +72,8 @@ s32 func_80039B40(s32);
 void func_801B02CC(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n);
 extern u16 D_801518F6[][0x5CE];
-void func_801B0F9C();
+void func_801B0F9C(void);
+void func_800D5774(s32);
+extern u8 D_801CCFC0[];
 
 #endif /* MAGIC_CLUB1_DECLS_H */

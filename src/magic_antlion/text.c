@@ -7,7 +7,40 @@ void func_801B0040(void) {
 
 INCLUDE_ASM("../asm/us/magic_antlion/nonmatchings/text", func_801B0060);
 
-INCLUDE_ASM("../asm/us/magic_antlion/nonmatchings/text", func_801B0B20);
+void func_801B0B20(MgMat *arg0, u16 *arg1) {
+    s32 sp10;
+    s32 sp14;
+    MgHalf *p;
+    MgHalf *q;
+    MgHalf *r;
+    MgWord *w;
+
+    func_80044AC0((s32)D_801E4084, (Spr *)D_800FAFF4[D_800F8368 ^ 1]);
+    func_80046794(D_801517C0 + 0x4084, (s32)D_801E4084);
+    p = (MgHalf *)&D_801E3F5C;
+    p->v = D_801E3F6C.v = arg1[2];
+    D_801E3F66 = D_801E3F6E = arg1[3];
+    func_80046794(D_801517C0 + 0x4084, (s32)((u8 *)p - 0x10));
+    func_8003B64C(&sp10, &sp14);
+    func_8003B6BC((s16)arg1[2] / 2, (s16)arg1[3] / 2);
+    func_8003B48C(arg0);
+    func_8003B51C(arg0);
+    w = (MgWord *)&D_801E3F2C;
+    w->v = D_8016209C;
+    D_80163C74 = func_801B0060((s32 *)w, D_801517C0 + 0x4084, 0, D_80163C74);
+    func_8003B6BC(sp10, sp14);
+    q = (MgHalf *)&D_801E3F48;
+    q->v = arg1[2];
+    D_801E3F4A = arg1[3];
+    func_80046794(D_801517C0 + 0x4084, (s32)((u8 *)q - 0xC));
+    func_80044978(D_801E40C4, arg1);
+    func_80046794(D_801517C0 + 0x4084, (s32)D_801E40C4);
+    r = (MgHalf *)&D_801E40DC;
+    r->v = arg1[0];
+    D_801E40DE = arg1[1];
+    func_800449FC(D_801E40D0, r);
+    func_80046794(D_801517C0 + 0x4084, (s32)D_801E40D0);
+}
 
 s32 func_801B0D24(s16 **pp) {
     s32 v;

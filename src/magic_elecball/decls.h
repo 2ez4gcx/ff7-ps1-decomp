@@ -29,5 +29,16 @@ extern s16 D_801D11D4[];
 extern s32 D_801517C0;
 void func_800D4368(void *, s32, s32);
 s32 func_800D4D90(void *, s32, s32, s32);
+void func_801B02FC(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+u8 *func_800D6260(void *, s32, s32, u8 *);
+extern u8 D_801D11BC[];
+extern u8 D_801D11C4;
+extern u8 D_801D11C5;
+extern u8 D_801D11C6;
 
 #endif /* MAGIC_ELECBALL_DECLS_H */

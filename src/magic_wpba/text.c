@@ -168,7 +168,34 @@ INCLUDE_ASM("../asm/us/magic_wpba/nonmatchings/text", func_801B0E6C);
 
 INCLUDE_ASM("../asm/us/magic_wpba/nonmatchings/text", func_801B10B0);
 
-INCLUDE_ASM("../asm/us/magic_wpba/nonmatchings/text", func_801B133C);
+void func_801B133C(void) {
+    MgSVec rot;
+    MgMat m;
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    p->unk0 = -1;
+    func_800D3994(D_801D3640, D_8015190F[D_801D3640][0], &D_801D3648);
+    func_800D3994(D_801D3644, D_8015190F[D_801D3644][0], &D_801D3650);
+    rot.vy = D_801D3650.pad = *(u16 *)D_80151A46[D_801D3644];
+    rot.vx = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    func_8003AB84(&m, &D_801BB624, &D_801D3658);
+    switch (D_801D367C) {
+    case 0:
+        p = &D_80162978[func_800BBEAC((void *)func_801B0E6C)];
+        p->unk1C = 0;
+        break;
+    case 1:
+        p = &D_80162978[func_800BBEAC((void *)func_801B10B0)];
+        p->unk1C = 0;
+        break;
+    default:
+        p->unk1C = 0;
+        break;
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_wpba/nonmatchings/text", D_801B0000);
 

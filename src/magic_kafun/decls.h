@@ -28,5 +28,20 @@ extern s32 D_801D1504;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; } MgObj8;
 extern MgObj8 D_801D16E8[];
 MgObj8 *func_801B0308(void);
+void func_801B08B4(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+extern s32 D_801D16CC[];
+extern s32 D_801D16D0;
+void func_8003B35C(MgMat *, MgVec *);
+extern MgMat D_800FA63C;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern s16 D_801D16E2;
+extern u16 D_801D16C4;
+u8 *func_800D29D4(void *, s32, s32, u8 *);
 
 #endif /* MAGIC_KAFUN_DECLS_H */

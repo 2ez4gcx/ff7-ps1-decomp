@@ -131,9 +131,104 @@ INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B30D0);
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3294);
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3474);
+void func_801B3474(void) {
+    MgSVec rot;
+    MgSVec pad;
+    MgSVec v;
+    MgMat m;
+    MgMat pad2;
+    MgVec scale;
+    MgTask *p;
+    s16 t;
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3640);
+    p = &D_80162978[D_8015169C];
+    rot.vx = p->unkC;
+    rot.vy = p->unkE;
+    rot.vz = 0;
+    func_8003C21C(&rot, &m);
+    v.vx = 0;
+    v.vy = -p->unk14;
+    v.vz = 0;
+    func_8003B27C(&m, &v, (MgVec *)m.t);
+    m.t[0] += p->unk4;
+    m.t[1] += p->unk6;
+    m.t[2] += p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unk10;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk0 = D_801D5E58;
+    ((MgScratch *)0x1F800000)->unk4 = 8;
+    ((MgScratch *)0x1F800000)->unkA = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0x20;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    D_801EA264 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801EA264);
+    if (p->unk2 >= p->unk18) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        t = p->unk14 - p->unk16;
+        p->unk14 = t;
+        if (t < 0) {
+            p->unk14 = 0;
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B3640(void) {
+    MgSVec rot;
+    s32 c;
+    MgSVec pad;
+    MgSVec v;
+    MgMat m;
+    MgMat pad2;
+    MgVec scale;
+    MgTask *p;
+    s16 t;
+
+    p = &D_80162978[D_8015169C];
+    rot.vx = p->unkC;
+    rot.vy = p->unkE;
+    rot.vz = 0;
+    func_8003C21C(&rot, &m);
+    v.vx = 0;
+    v.vy = -p->unk14;
+    v.vz = 0;
+    func_8003B27C(&m, &v, (MgVec *)m.t);
+    m.t[0] += p->unk4;
+    m.t[1] += p->unk6;
+    m.t[2] += p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unk10;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    c = 0x80;
+    ((MgScratch *)0x1F800000)->unk0 = D_801D5E58;
+    ((MgScratch *)0x1F800000)->unk4 = 8;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = c;
+    ((MgScratch *)0x1F800000)->unkC = 0x20;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    if (p->unk2 >= p->unk18) {
+        ((MgScratch *)0x1F800000)->unkA = 0x80 - (p->unk2 - p->unk18) * 0x15;
+    }
+    D_801EA264 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801EA264);
+    if (p->unk2 >= p->unk18 + 6) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        t = p->unk14 - p->unk16;
+        p->unk14 = t;
+        if (t < 0) {
+            p->unk14 = 0;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3844);
 

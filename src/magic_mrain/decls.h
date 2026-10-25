@@ -37,5 +37,17 @@ extern u8 *D_801ED820;
 u8 *func_800D4D90(void *, s32, s32, u8 *);
 extern u8 D_80062D98;
 extern s32 D_801D2A2C;
+void func_801B1238(void);
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern MgMat D_800FA63C;
+extern u8 D_801D2E64[];
+void func_801B1420(void);
+extern u8 D_801D33C0[];
 
 #endif /* MAGIC_MRAIN_DECLS_H */

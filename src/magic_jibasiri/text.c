@@ -137,7 +137,46 @@ void func_801B0394(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B05C4);
+void func_801B05C4(void) {
+    MgMat a;
+    MgMat b;
+    MgMat c;
+    MgSVec v;
+    MgVec s;
+    MgTask *p;
+    u16 *frame;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+
+    v.vx = p->unkC - *(u16 *)D_801D98F4;
+    v.vy = 0;
+    v.vz = p->unk10 - D_801D98F8;
+    func_800D44E8(&v, &a);
+    func_8003C21C(&D_801C18C4, &b);
+    func_8003A79C(&a, &b, &b);
+    t = p->unk16 * 0x180 + 0xE00;
+    s.vz = t;
+    s.vy = t;
+    s.vx = t;
+    func_8003B35C(&b, &s);
+
+    b.t[0] = p->unkC;
+    b.t[1] = 0;
+    b.t[2] = p->unk10;
+    func_8003A63C(&D_800FA63C, &b, &c);
+    func_8003B48C(&c);
+    func_8003B51C(&c);
+    frame = (u16 *)&D_801C18D6;
+    *frame = 0x60 - p->unk2 * 0x18;
+    D_801D98F0 = func_800D29D4((u8 *)frame - 0xA, D_801517C0 + 0x70, 0xC, D_801D98F0);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B0748);
 

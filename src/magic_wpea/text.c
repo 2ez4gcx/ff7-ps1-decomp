@@ -144,7 +144,34 @@ INCLUDE_ASM("../asm/us/magic_wpea/nonmatchings/text", func_801B0DF8);
 
 INCLUDE_ASM("../asm/us/magic_wpea/nonmatchings/text", func_801B0FE4);
 
-INCLUDE_ASM("../asm/us/magic_wpea/nonmatchings/text", func_801B11E8);
+void func_801B11E8(void) {
+    MgSVec rot;
+    MgMat m;
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    p->unk0 = -1;
+    func_800D3994(D_801CF8DC, D_8015190F[D_801CF8DC][0], &D_801CF8E4);
+    func_800D3994(D_801CF8E0, D_8015190F[D_801CF8E0][0], &D_801CF8EC);
+    rot.vy = D_801CF8EC.pad = *(u16 *)D_80151A46[D_801CF8E0];
+    rot.vx = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    func_8003AB84(&m, &D_801B78C0, &D_801CF8F4);
+    switch (D_801CF918) {
+    case 0:
+        p = &D_80162978[func_800BBEAC((void *)func_801B0DF8)];
+        p->unk1C = 0;
+        break;
+    case 1:
+        p = &D_80162978[func_800BBEAC((void *)func_801B0FE4)];
+        p->unk1C = 0;
+        break;
+    default:
+        p->unk1C = 0;
+        break;
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_wpea/nonmatchings/text", D_801B0000);
 

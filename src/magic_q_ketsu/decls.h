@@ -32,5 +32,10 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16
 typedef struct { s32 unk0; s32 unk4; } MgAnim;
 extern s16 D_801BDAA4[];
 extern MgAnim *D_801BDAA8[];
+void func_801B0264(void);
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+extern s32 D_801BD8E4;
+extern s16 D_801BDAB8;
 
 #endif /* MAGIC_Q_KETSU_DECLS_H */

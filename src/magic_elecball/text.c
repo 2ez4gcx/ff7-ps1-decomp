@@ -27,7 +27,52 @@ void func_801B00E8(void) {
 
 INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B01C0);
 
-INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B02FC);
+void func_801B02FC(void) {
+    MgSVec v;
+    u8 pad[8];
+    MgMat m;
+    MgTask *p;
+    s32 t;
+    s32 i;
+    s32 ang;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 5) {
+        D_801D11C4 = D_801D11C5 = D_801D11C6 = (t << 7) / 5;
+    } else {
+        t -= 5;
+        if (t < 0xF) {
+            D_801D11C4 = D_801D11C5 = D_801D11C6 = 0x80;
+        } else {
+            t -= 0xF;
+            if (t >= 5) {
+                p->unk0 = -1;
+                return;
+            }
+            D_801D11C4 = D_801D11C5 = D_801D11C6 = -(t << 7) / 5 - 0x80;
+        }
+    }
+    for (i = 0; i < 0x10; i++) {
+        ang = i << 8;
+        v.vx = (u32)(func_80039A74(ang) * 0x7D) >> 10;
+        v.vy = (u32)(func_80039B40(ang) * 0x7D) >> 10;
+        v.vz = 0;
+        func_8003C21C((MgSVec *)&p->unk10, &m);
+        func_8003B2CC(&m, &v, &v);
+        v.vx += p->unk8;
+        v.vy += p->unkA;
+        v.vz += p->unkC;
+        func_800D4368(&v, 0x600, p->unk18);
+        D_801EF1E4 = func_800D6260(D_801D11BC, D_801517C0 + 0x70, 0xC, D_801EF1E4);
+    }
+    if (D_80062D98 == 0) {
+        p->unk10 += 0x50;
+        p->unk12 += 0x40;
+        p->unk14 += 0x50;
+        p->unk2++;
+    }
+}
 
 void func_801B0518(void) {
     MgTask *p;

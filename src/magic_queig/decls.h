@@ -30,5 +30,6 @@ extern u8 D_801CD468[];
 extern s32 D_801CD46C;
 extern u16 D_801CD474;
 extern u16 D_801CD47C;
+void func_801B0EFC(s16 *arg0, s16 *arg1, s32 *arg2);
 
 #endif /* MAGIC_QUEIG_DECLS_H */

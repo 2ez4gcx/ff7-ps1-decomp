@@ -44,7 +44,7 @@ extern MgTask *D_801D3638;
 extern s32 D_801D363C;
 extern s32 D_801D3640;
 extern s32 D_801D3644;
-extern M2C_UNK func_801B133C;
+void func_801B133C(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
@@ -58,5 +58,17 @@ void func_801B049C(s32 ang, MgMat *m, MgVec *v);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 void func_801B0618(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B06F4(MgSVec *p, MgSVec *q, MgVec *n);
+MgVec *func_8003AB84(MgMat *, MgVec *, MgVec *);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_800D3994(s32, s32, void *);
+extern s16 D_8015169C;
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_80151A46[][0xB9C];
+extern MgVec D_801BB624;
+extern MgSVec D_801D3648;
+extern MgSVec D_801D3650;
+extern MgVec D_801D3658;
+extern void func_801B0E6C(void);
+extern void func_801B10B0(void);
 
 #endif /* MAGIC_WPBA_DECLS_H */

@@ -74,7 +74,43 @@ INCLUDE_ASM("../asm/us/magic_awa/nonmatchings/text", func_801B05E0);
 
 INCLUDE_ASM("../asm/us/magic_awa/nonmatchings/text", func_801B0904);
 
-INCLUDE_ASM("../asm/us/magic_awa/nonmatchings/text", func_801B0B04);
+void func_801B0B04(void) {
+    MgMat m;
+    MgMat lw;
+    MgTask *p;
+    s16 *frame;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    p->unkC = -p->unk2 << 7;
+    func_8003C21C((MgSVec *)&p->unkC, &m);
+    D_801C984C[0] = p->unk18;
+    t = (p->unk1A + 0x100) * 0x1A;
+    D_801C9850 = t;
+    D_801C984C[-1] = t;
+    func_8003B35C(&m, (MgVec *)&D_801C984C[-1]);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    frame = &D_801C9862;
+    *frame = D_801C9844 * 0x10;
+    D_801E1EA8 = func_800D29D4((u8 *)frame - 0xA, D_801517C0 + 0x70, 0xC, D_801E1EA8);
+    if (D_80062D98 == 0) {
+        p->unk1A += 8;
+        if (p->unk2 < 8) {
+            D_801C9844 += 1;
+        }
+        if (p->unk2 >= 0x26) {
+            D_801C9844 -= 1;
+        }
+        if (++p->unk2 == 0x2D) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_awa/nonmatchings/text", func_801B0CB4);
 

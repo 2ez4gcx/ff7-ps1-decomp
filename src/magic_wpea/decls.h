@@ -50,6 +50,18 @@ extern MgTask *D_801CF8D4;
 extern s32 D_801CF8D8;
 extern s32 D_801CF8DC;
 extern s32 D_801CF8E0;
-extern M2C_UNK func_801B11E8;
+void func_801B11E8(void);
+extern s16 D_8015169C;
+extern u8 D_8015190F[][0xB9C];
+extern MgSVec D_801CF8E4;
+void func_800D3994(s32, s32, void *);
+extern MgSVec D_801CF8EC;
+extern u8 D_80151A46[][0xB9C];
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+extern MgVec D_801B78C0;
+extern MgVec D_801CF8F4;
+MgVec *func_8003AB84(MgMat *, MgVec *, MgVec *);
+extern void func_801B0DF8(void);
+extern void func_801B0FE4(void);
 
 #endif /* MAGIC_WPEA_DECLS_H */

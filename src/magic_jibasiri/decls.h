@@ -10,7 +10,7 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
 extern u8 D_801C18F0[];
-extern u8 *D_801D98F0;
+extern s32 D_801D98F0;
 extern s16 D_80162080;
 void func_801B008C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -40,13 +40,13 @@ MgMat *func_8003C21C(MgSVec *, MgMat *);
 extern MgVec D_801C18E0;
 extern s32 D_801C18E8[];
 extern s32 D_801C18E4;
-MgMat *func_8003B35C(MgMat *, MgVec *);
+M2C_UNK func_8003B35C(MgMat *, MgVec *);
 extern MgMat D_800FA63C;
-MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+M2C_UNK func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 extern s16 D_801C18A6[];
-s32 func_800D29D4(void *, s32, s32, s32);
+s32 func_800D29D4(u8 *, s32, s32, s32);
 void func_801B0394(void);
 void func_8003BC6C(MgSVec *, MgVec *, s32 *);
 MgMat *func_8003B05C(MgMat *, MgMat *);
@@ -59,5 +59,11 @@ void func_801B09B0();
 extern u8 D_801D98F4[];
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
+void func_801B05C4(void);
+extern u16 D_801D98F8;
+M2C_UNK func_800D44E8(MgSVec *, MgMat *);
+extern MgSVec D_801C18C4;
+M2C_UNK func_8003A79C(MgMat *, MgMat *, MgMat *);
+extern s16 D_801C18D6;
 
 #endif /* MAGIC_JIBASIRI_DECLS_H */

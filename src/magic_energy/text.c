@@ -94,7 +94,58 @@ void func_801B04C8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_energy/nonmatchings/text", func_801B0584);
+void func_801B0584(void) {
+    MgMat lw;
+    MgMat m;
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    u8 *rgb;
+    s16 i;
+    s16 n;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m.m[2][i] = 0;
+        m.m[1][i] = 0;
+        m.m[0][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 0x16) {
+        n = 0x1E - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = 0x2000;
+    func_8003C21C(&rot, &lw);
+    func_8003B05C(&m, &lw);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801D716C = p->unk16;
+    D_801D716B = (n == 8) ? 0x2C : 0x2E;
+    rgb = &D_801D7168;
+    *rgb = D_801D7169 = D_801D716A = n << 4;
+    D_80163C74 = func_800D4D90(rgb - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (p->unk6 > 0) {
+            p->unk6 = 0;
+            p->unkE *= -1;
+        }
+        p->unkE += 20;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B07A0(void) {
     MgTask *p;
@@ -146,7 +197,45 @@ void func_801B0D04(void) {
 
 INCLUDE_ASM("../asm/us/magic_energy/nonmatchings/text", func_801B0DC0);
 
-INCLUDE_ASM("../asm/us/magic_energy/nonmatchings/text", func_801B0EF8);
+void func_801B0EF8(void) {
+    MgMat m;
+    MgMat lw;
+    MgVec scale;
+    MgTask *p;
+    s16 *frame;
+    s32 **q;
+    s32 v;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003C21C(&D_801D71C8, &m);
+    func_8003A79C(&D_801D7214, &m, &m);
+    scale.vx = scale.vz = 0x2000 - (p->unk2 << 9);
+    scale.vy = p->unk18 * p->unk2 / 6;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    frame = &D_801D71C2;
+    q = (s32 **)((u8 *)frame - 0xA);
+    M2C_SFIELD(q, s32 **, 0) = D_801D2160;
+    v = 0x1000 - (D_801D71B4 << 8);
+    *frame = v;
+    D_801EF234 = (u8 *)func_800D29D4(q, D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    *q = D_801D26C4;
+    D_801EF234 = (u8 *)func_800D29D4(q, D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 7) {
+            D_801D71B4 -= 2;
+        }
+        if (++p->unk2 == 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_energy/nonmatchings/text", func_801B10F0);
 

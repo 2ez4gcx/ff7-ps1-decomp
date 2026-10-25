@@ -34,5 +34,19 @@ extern MgObj20 D_80162978[];
 void func_801B0020(void);
 extern u8 D_801C9EA8[];
 extern s16 D_80162080;
+void func_801B0B04(void);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern MgMat D_800FA63C;
+extern u16 D_801C9844;
+extern s32 D_801C984C[];
+extern s32 D_801C9850;
+extern s16 D_801C9862;
 
 #endif /* MAGIC_AWA_DECLS_H */

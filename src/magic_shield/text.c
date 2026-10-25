@@ -25,7 +25,49 @@ void func_801B0074(void) {
 
 INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B00E0);
 
-INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B01D8);
+INCLUDE_RODATA("../asm/us/magic_shield/nonmatchings/text", D_801B0000);
+
+void func_801B01D8(void) {
+    MgMat a;
+    MgMat b;
+    MgMat lw;
+    u8 pad[8];
+    MgVec scale;
+    MgTask *p;
+    s32 *frame;
+    s32 *q;
+    s32 c;
+
+    scale = D_801B0000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D44E8((MgSVec *)&p->unkC, &a);
+    func_8003C21C(&D_801B0F30, &b);
+    func_8003A79C(&a, &b, &b);
+    func_8003B35C(&b, &scale);
+    b.t[0] = p->unk4;
+    b.t[1] = p->unk6;
+    b.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &b, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    frame = &D_801B0F3C;
+    *frame = 0x80;
+    c = 0x80;
+    if (p->unk2 != 0) {
+        c = 0x88;
+    }
+    *frame = c;
+    q = (s32 *)((u8 *)frame - 4);
+    D_801B0F42.v = p->unk2 * 0x300;
+    M2C_SFIELD(q, s32 *, 0) = D_801B0F48[p->unk16];
+    D_801C8F50 = func_800D29D4(q, D_801517C0 + 0x70, 0xC, D_801C8F50);
+    if (D_80062D98 == 0) {
+        if (++p->unk2 == 4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0388(void) {
     MgTask *p;
