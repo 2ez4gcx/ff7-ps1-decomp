@@ -756,9 +756,101 @@ void func_800A946C(void *arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A94C0);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A95D0);
+void func_800A95D0(SbObjH *arg0, s32 arg1, void *arg2) {
+    s16 a;
+    s16 r;
+    s32 v;
+    s32 t;
+    s32 w;
+    u16 ca;
+    u16 cb;
+    SbTbl *e;
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A9768);
+    if (arg1 != 0) {
+        arg0->unk4 = -0x80;
+        arg0->unk6 = 0;
+        arg0->unk8 = 0x40;
+        arg0->unk66 = 0;
+        arg0->unk72 = 0;
+        D_801069D4 += 1;
+    }
+    v = -arg0->unk10;
+    a = arg0->unk12;
+    if (a < 0x19) {
+        r = arg0->unk14;
+        t = (r * r) >> 15;
+        v = (v * (0x180 - t)) / 384;
+        if (a >= 9) {
+            v = (v * (0x18 - a)) >> 4;
+        }
+        e = (SbTbl *)((v & 0x3FFC) + (u8 *)D_8004BC98);
+        ca = e->a;
+        cb = e->b;
+        M2C_FIELD(arg2, s16 *, 0x42) = 0;
+        M2C_FIELD(arg2, s16 *, 0x46) = 0;
+        M2C_FIELD(arg2, s16 *, 0x48) = 0x1000;
+        M2C_FIELD(arg2, s16 *, 0x4A) = 0;
+        M2C_FIELD(arg2, s16 *, 0x4E) = 0;
+        M2C_FIELD(arg2, s16 *, 0x44) = ca;
+        M2C_FIELD(arg2, s16 *, 0x40) = cb;
+        M2C_FIELD(arg2, s16 *, 0x50) = cb;
+        M2C_FIELD(arg2, s16 *, 0x4C) = -ca;
+        func_8003AB84((u8 *)arg2 + 0x40, (u8 *)arg0 + 0x34, (u8 *)arg2 + 0x20);
+        w = v < 0 ? -v : v;
+        t = (0x4000 - ((t * w) >> 4)) >> 2;
+        arg0->unk34 = (t * M2C_FIELD(arg2, s32 *, 0x20)) >> 12;
+        arg0->unk3C = (t * M2C_FIELD(arg2, s32 *, 0x28)) >> 12;
+    }
+    ((void (*)(void *, void *))func_800A9900)(arg0, arg2);
+}
+
+void func_800A9768(SbObjH *arg0, s32 arg1, void *arg2) {
+    s16 a;
+    s16 r;
+    s32 v;
+    s32 t;
+    s32 w;
+    u16 ca;
+    u16 cb;
+    SbTbl *e;
+
+    if (arg1 != 0) {
+        arg0->unk4 = 0x80;
+        arg0->unk6 = 0;
+        arg0->unk8 = 0x40;
+        arg0->unk66 = 0;
+        arg0->unk72 = 0;
+        D_801069D4 += 1;
+    }
+    v = -arg0->unk10;
+    a = arg0->unk12;
+    if (a < 0x19) {
+        r = arg0->unk14;
+        t = (r * r) >> 15;
+        v = (v * (0x180 - t)) / 384;
+        if (a >= 9) {
+            v = (v * (0x18 - a)) >> 4;
+        }
+        e = (SbTbl *)((v & 0x3FFC) + (u8 *)D_8004BC98);
+        ca = e->a;
+        cb = e->b;
+        M2C_FIELD(arg2, s16 *, 0x42) = 0;
+        M2C_FIELD(arg2, s16 *, 0x46) = 0;
+        M2C_FIELD(arg2, s16 *, 0x48) = 0x1000;
+        M2C_FIELD(arg2, s16 *, 0x4A) = 0;
+        M2C_FIELD(arg2, s16 *, 0x4E) = 0;
+        M2C_FIELD(arg2, s16 *, 0x44) = ca;
+        M2C_FIELD(arg2, s16 *, 0x40) = cb;
+        M2C_FIELD(arg2, s16 *, 0x50) = cb;
+        M2C_FIELD(arg2, s16 *, 0x4C) = -ca;
+        func_8003AB84((u8 *)arg2 + 0x40, (u8 *)arg0 + 0x34, (u8 *)arg2 + 0x20);
+        w = v < 0 ? -v : v;
+        t = (0x4000 - ((t * w) >> 4)) >> 2;
+        arg0->unk34 = (t * M2C_FIELD(arg2, s32 *, 0x20)) >> 12;
+        arg0->unk3C = (t * M2C_FIELD(arg2, s32 *, 0x28)) >> 12;
+    }
+    ((void (*)(void *, void *))func_800A9900)(arg0, arg2);
+}
 
 void func_800A9900(void *arg0) {
     if (M2C_FIELD(arg0, s16 *, 0x14) < 0x200) {

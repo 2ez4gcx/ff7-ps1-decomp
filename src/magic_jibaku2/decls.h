@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B164C();
+s32 func_801B164C();
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 extern u8 D_8015190F[][0xB9C];
@@ -56,5 +56,27 @@ extern s32 D_80163C74;
 extern u8 D_801D2520;
 extern u8 D_801D2521;
 extern u8 D_801D2522;
+void func_801B15B8();
+s32 func_800BBEAC(void (*)());
+void func_801B0D10(void);
+void func_800BBA84(s32, s32, s32);
+void func_800D2980(void *, s32, s32, s32);
+void func_800D5444(s32, s32, s32, void *);
+void func_801B04C8(void);
+extern u8 D_801B16D8[];
+void func_800D52A0(s32, s32);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+void func_801B0560(void);
+extern struct { s32 *unk0; s32 unk4; } D_801D24DC;
+extern u16 D_801D24E4;
+extern s32 *D_801D24E8[];
+void func_801B07C4(void);
+extern u8 D_801D2514;
+extern u8 D_801D2515;
+extern u8 D_801D2516;
+extern u8 D_801D2517;
+extern u16 D_801D2518;
 
 #endif /* MAGIC_JIBAKU2_DECLS_H */

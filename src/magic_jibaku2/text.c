@@ -79,9 +79,43 @@ void func_801B045C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B04C8);
+void func_801B04C8(void) {
+    MgTask *p;
 
-INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B0560);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (p->unk2 == 0) {
+        D_800F5B72 = 0;
+        D_800F5B71 = 0;
+        D_800F5B70 = 0;
+        func_800D52A0(0x1000, 0x14);
+    }
+    p->unk2++;
+    if (p->unk2 == 0x28) {
+        func_800D52A0(0, 0x14);
+        p->unk0 = -1;
+    }
+}
+
+void func_801B0560(void) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, p->unk16 == 5 ? 0x3000 : 0x2000, 0);
+    D_801D24DC.unk0 = D_801D24E8[p->unk16];
+    D_801D24E4 = p->unk2;
+    D_801EA548 = (u8 *)func_800D4D90(&D_801D24DC, D_801517C0 + 0x70, 0xC, (s32)D_801EA548);
+    if (D_80062D98 == 0) {
+        if (p->unk16 == 5) {
+            p->unk4 += p->unkC;
+            p->unk6 += p->unkE;
+            p->unk8 += p->unk10;
+        }
+        p->unk2++;
+        if (p->unk2 == D_801D24E8[p->unk16][1]) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B06B0(void) {
     s32 f;
@@ -110,7 +144,71 @@ void func_801B06B0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B07C4);
+void func_801B07C4(void) {
+    MgMat lw;
+    MgMat m;
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    u8 *rgb;
+    s16 i;
+    s16 n;
+    s32 s;
+    u8 d;
+    s32 w;
+
+    p = &D_801621F0[D_801590D4];
+    for (i = 0; i < 3; i++) {
+        m.m[2][i] = 0;
+        m.m[1][i] = 0;
+        m.m[0][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 7) {
+        n = 0xF - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    s = 0x2800;
+    if (p->unk16 < 4) {
+        s = 0x2000;
+    }
+    m.m[2][2] = s;
+    m.m[1][1] = s;
+    m.m[0][0] = s;
+    func_8003C21C(&rot, &lw);
+    func_8003B05C(&m, &lw);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801D2518 = p->unk16;
+    D_801D2517 = n == 8 ? 0x2C : 0x2E;
+    rgb = &D_801D2514;
+    d = n << 4;
+    D_801D2516 = d;
+    D_801D2515 = d;
+    *rgb = d;
+    D_80163C74 = func_800D4D90(rgb - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (p->unk6 > 0) {
+            p->unk6 = 0;
+            w = p->unkE;
+            p->unkE = -w;
+        }
+        p->unkE += 0x14;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 0xF) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B09F4(void) {
     MgMat lw;
@@ -187,6 +285,19 @@ void func_801B0BB4(void) {
 
 INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B0D10);
 
-INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B15B8);
+void func_801B15B8(arg0, arg1) {
+    MgTask *p;
 
-INCLUDE_ASM("../asm/us/magic_jibaku2/nonmatchings/text", func_801B164C);
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B0D10)];
+    func_800D3994(arg1, D_8015190F[arg1][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
+
+s32 func_801B164C(arg0, arg1) {
+    func_800BBEAC(func_801B045C);
+    func_800D2980(D_801B16D8, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, func_801B15B8);
+    func_800BBA84(0x13E, arg1, 0);
+    return func_800BBEAC(func_801B04C8);
+}
