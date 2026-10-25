@@ -305,7 +305,82 @@ void func_801B0EB4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B10A8);
+void func_801B10A8(void) {
+    MgMat m1;
+    MgMat m2;
+    MgTask *p;
+    MgTask *q;
+    u16 *frame;
+    u8 *pk;
+    s8 *col;
+    s32 r;
+    s32 k;
+    s8 c;
+
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&D_801D5610, &m1);
+    func_8003A79C(&D_801D561C, &m1, &m1);
+    func_8003B35C(&m1, &D_801D55E4);
+    m1.t[0] = p->unk4;
+    m1.t[1] = p->unk6;
+    m1.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m1, &m2);
+    func_8003B48C(&m2);
+    func_8003B51C(&m2);
+    frame = &D_801D55FE;
+    pk = (u8 *)frame - 0xA;
+    ((MgPkt *)pk)->tag = D_801D2848;
+    *frame = D_801D55E0 * 0x10;
+    D_801ED648 = func_800D29D4(pk, D_801517C0 + 0x70, 0xC, D_801ED648);
+    ((MgPkt *)pk)->tag = D_801D37EC;
+    D_801ED648 = func_800D29D4(pk, D_801517C0 + 0x70, 0xC, D_801ED648);
+    ((MgPkt *)pk)->tag = D_801D4790;
+    D_801ED648 = func_800D29D4(pk, D_801517C0 + 0x70, 0xC, D_801ED648);
+    func_800D4368(&p->unk4, 0x4000, 0);
+    col = &D_801D5608;
+    c = (s16)D_801D55E0 * 0x14;
+    D_801D560A.v = c;
+    D_801D5609.v = c;
+    *col = c;
+    D_801D560C = (s16)((u16 *)p)[1] % 2;
+    D_801ED648 = func_800D4D90(col - 4, D_801517C0 + 0x70, 0xC, D_801ED648);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (!(p->unk2 & 1)) {
+            q = &D_80162978[func_800BBEAC(func_801B0B44)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+        }
+        if (p->unk6 < 0) {
+            q = &D_80162978[func_800BBEAC(func_801B066C)];
+            q->unk4 = p->unk4;
+            q->unk8 = p->unk8;
+            q->unk6 = 0;
+            D_801D5618 = func_80042DA8() % 0x1000;
+            q->unkC = (u32)(func_80039B40(D_801D5618) * 0xF) >> 9;
+            q->unk10 = (u32)(func_80039A74(D_801D5618) * 0xF) >> 9;
+            q->unkE = -func_80042DA8() % 300 - 0x32;
+            q->unk16 = func_80042DA8() % 7;
+            if ((s16)(p->unk2 % 3) == 0) {
+                q = &D_80162978[func_800BBEAC(func_801B0888)];
+                q->unk4 = p->unk4 + func_80042DA8() % 4000 - 0x7D0;
+                q->unk8 = p->unk8 + func_80042DA8() % 4000 - 0x7D0;
+                q->unk6 = 0;
+                q->unk16 = func_80042DA8() % 4;
+            }
+        }
+        if (p->unk2 >= 0xD) {
+            D_801D55E0--;
+        }
+        p->unk2++;
+        if (p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B1598);
 
