@@ -1,1 +1,2 @@
 // MINI/CONDOR.BIN: name = 0xADDRESS; // type:func
+D_800A02EC = 0x800A02EC; // force_not_migration:True

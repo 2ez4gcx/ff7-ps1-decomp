@@ -238,5 +238,7 @@ void func_800A35DC(s32 arg0);
 extern s32 D_800A8988;
 extern s32 D_800D1724;
 extern s32 D_800D1BE4;
+void func_800A1A64(void);
+typedef struct { u8 pad0[0x409C]; JetTag ot; u8 pad40A0[0x4374 - 0x40A0]; u8 *prim; } JetDrawCtx;
 
 #endif /* JET_DECLS_H */

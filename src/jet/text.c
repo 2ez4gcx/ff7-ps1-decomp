@@ -55,7 +55,50 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1450);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A16A4);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1A64);
+void func_800A1A64(void) {
+    s32 *gp = &D_800D1964;
+    u8 *p;
+    s32 c;
+    s32 ty;
+    s32 tr;
+    s16 x0;
+    s16 x1;
+    u8 pad[8];
+
+    x0 = 0x14;
+    x1 = 0x1C;
+    do {
+        p = ((JetDrawCtx *)*gp)->prim;
+        c = D_800D1C5C;
+        ty = 0xDC - c;
+        *(s16 *)(p + 0xA) = ty;
+        *(s16 *)(p + 0x12) = ty;
+        *(s16 *)(p + 0x1A) = 0xDC;
+        *(s16 *)(p + 0x22) = 0xDC;
+        tr = -0x80 - c;
+        *(u8 *)(p + 4) = tr;
+        *(u8 *)(p + 0xC) = tr;
+        *(s16 *)(p + 0x10) = x1;
+        *(s16 *)(p + 0x20) = x1;
+        *(s16 *)(p + 8) = x0;
+        *(s16 *)(p + 0x18) = x0;
+        *(u8 *)(p + 5) = c;
+        *(u8 *)(p + 6) = 0;
+        *(u8 *)(p + 0xD) = c;
+        *(u8 *)(p + 0xE) = 0;
+        *(u8 *)(p + 0x14) = 0x80;
+        *(u8 *)(p + 0x15) = 0;
+        *(u8 *)(p + 0x16) = 0;
+        *(u8 *)(p + 0x1C) = 0x80;
+        *(u8 *)(p + 0x1D) = 0;
+        *(u8 *)(p + 0x1E) = 0;
+        func_80046848(p, 0);
+        ((JetTag *)p)->addr = ((JetDrawCtx *)*gp)->ot.addr;
+        ((JetDrawCtx *)*gp)->ot.addr = (u32)p;
+        p += 0x24;
+        ((JetDrawCtx *)*gp)->prim = p;
+    } while (0);
+}
 
 void func_800A1B64(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 **pp;
