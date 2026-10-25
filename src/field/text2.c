@@ -348,7 +348,60 @@ void func_800A82A0(void *arg0) {
     D_8009AC18 = (s16) M2C_FIELD(arg0, u8 *, 0x14);
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8304);
+s32 func_800A8304(void) {
+    struct { FdVec pos; FdVec other; s16 dist[16]; s32 d2; u8 pad[0x14]; } L;
+    s32 i;
+    u16 idx;
+    s16 min;
+    s32 n;
+    s32 t;
+
+    if (D_8009AC6C & 0x20) {
+        if (!(D_8009AC70 & 0x20)) {
+            i = 0;
+            L.pos.x = D_80074EB0[D_800965E0 * 33] >> 12;
+            L.pos.y = D_80074EB4[D_800965E0 * 33] >> 12;
+            L.pos.z = D_80074EB8[D_800965E0 * 33] >> 12;
+            if (D_8009AC1C[0] > 0) {
+                do {
+                    L.dist[i] = 0x100;
+                    if (i != D_800965E0 && D_80074EFE[i].b == 0) {
+                        L.other.x = D_80074EB0[i * 33] >> 12;
+                        L.other.y = D_80074EB4[i * 33] >> 12;
+                        L.other.z = D_80074EB8[i * 33] >> 12;
+                        if ((L.pos.x != L.other.x || L.pos.y != L.other.y) && (u32)(L.pos.z - L.other.z + 0xFF) < 0x1FF) {
+                            t = (D_80074EDC[D_800965E0].b - (func_800A8640(&L.pos, &L.other, &L.d2) & 0xFF)) & 0xFF;
+                            L.dist[i] = t;
+                            if (t > 0x80) {
+                                L.dist[i] = 0x100 - t;
+                            }
+                            if (L.d2 >= D_80074F10[i].b + D_80074F10[D_800965E0].a) {
+                                L.dist[i] = 0x100;
+                            }
+                        }
+                    }
+                    i++;
+                } while (i < D_8009AC1C[0]);
+            }
+            min = 0x40;
+            idx = D_800965E0;
+            i = 0;
+            if (D_8009AC1C[0] > 0) {
+                n = D_8009AC1C[0];
+                do {
+                    if (L.dist[i] < min) {
+                        min = L.dist[i];
+                        idx = i;
+                    }
+                    i++;
+                } while (i < n);
+            }
+            if ((s16)idx != D_800965E0 && min != 0x40) {
+                D_80074EFE[(s16)idx].a = 1;
+            }
+        }
+    }
+}
 
 s16 func_800A8600(u8 arg0) {
     return D_800DF120[arg0].a;

@@ -653,6 +653,18 @@ typedef struct { u8 b[0x15]; } FdCamCmd;
 typedef struct { s16 x0; s16 x2; s16 x4; s16 x6; s16 x8; s16 xA; s16 xC; s16 xE; s16 x10; u8 x12; u8 x13; u8 pad14[0x28]; } FdCam3C;
 extern struct { u8 b0; u8 b1; u8 b2; u8 b3; u8 b4; u8 b5; u8 b6; u8 pad7[0x19]; FdCam3C cam[1]; } D_800DFE1C;
 s32 func_800B480C(u8 *arg0, FdCamCmd *arg1);
+s32 func_800CFE78(void);
+typedef struct { u8 pad0[0x59]; u8 b59; u8 pad5A[2]; u8 b5C; u8 b5D; u8 pad5E[0xC]; s16 s6A; u8 pad6C[0x18]; } FdJn84;
+s32 func_800D0518(u8, u8);
+extern u8 D_8009D392;
+extern u8 D_8009D393;
+extern u8 D_800E48F0;
+s32 func_800A8304(void);
+extern struct { u8 b; u8 pad[0x83]; } D_80074EDC[];
+extern struct { u16 a; u16 b; u8 pad[0x80]; } D_80074F10[];
+extern s32 D_8009AC70;
+typedef struct { u8 a; u8 b; u8 pad2[0x82]; } FdActEFE;
+extern FdActEFE D_80074EFE[];
 
 #endif /* FIELD_DECLS_H */
 extern u8 D_800716CC;
