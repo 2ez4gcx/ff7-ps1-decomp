@@ -262,6 +262,82 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Sibling functions sharing one set of locals (club1's 3 SVECTOR, 2 MATRIX, 1 VECTOR):
   declare the unused ones in their slots to rebuild the frame.
 
+### How the scheduler and the allocator decide
+
+- GCC 2.6.3's first scheduler works backward: loads sink toward their use, and free
+  instructions (constants, address set-ups, `i = 0`) go into stall slots, the highest
+  LUID first. Moving a statement after an earlier call changes where it lands and its
+  live length, and with it the allocation priority `floor_log2(refs) * refs / len`.
+  Compile with `-dS -dR` (or `-dL` for loop hoisting, `-dl -dg` for priorities) from a
+  helper calling `psyq.assembly(..., cflags=...)`, run in a work folder: the dumps
+  (`gccdump.sched`...) show the decisions.
+- Registers and operand order follow pseudo creation order: user variables get lower
+  pseudos than expression temps, ties break by declaration order. Order the temps and
+  statements the way the registers should come (`s32 b, x; x = T[a]; b = G; R = b + x;`),
+  declare a pointer before an index for `base + i`. A variable set in two blocks is
+  allocated like a global, after the block-locals (2.7.2 even within one block:
+  `n = s / 10; ... n = s % 10;` gives `mfhi a2` where two temps give `a1`): repeat the
+  expression or use one variable per block or loop. A named variable shared by blocks
+  sums their priority and takes `v0` first.
+- What a store lets pass: a plain-symbol store does not stop a pointer load, a store
+  through a scalar pointer stops symbol and pointer loads, a struct-field store stops
+  only pointer loads, and struct member loads (alias-free) float above global stores
+  where raw casts do not. So a global declared as a one-field struct
+  (`extern struct { s16 v; } D_x; D_x.v = ...`, or `q = &D_x; q->v = ...`) stores like a
+  struct field; `M2C_SFIELD(q, s32 **, 0) = ...` keeps later loads after a pointer store;
+  a template or vector written as fields of a struct global keeps its loads in source
+  order. A store written before a call stays before it.
+- To stop a constant being hoisted out of a loop, set it in a local just before
+  (shorter life), or give the loop more instructions.
+
+### More forms
+
+- Calls: a function the game calls before its definition was unprototyped,
+  `((void (*)())f)(args)` (plain `lw` arguments); one called with other argument counts
+  is declared `M2C_UNK f();` or defined with bare parameter names; a call that takes
+  nothing may leave a constant set before it in `a0`. A wrapper setting one argument is
+  `void f(s32 a, s32 b) { g(a, b, 1); }`; the same value passed twice is
+  `v = D * 0x10; f(0, v, v)`; an uninitialised local passed as a fifth argument gives
+  `sw sN, 0x10(sp)`; stack arguments read lazily come from a by-value struct parameter.
+  An `s32 f(s16)` prototype adds `sll/sra` on the argument.
+- Constants: materialised in source order of first use; `c = 0x80;` before a run of
+  stores keeps it for a later `0x80 - (...)`; a colour local given 0x80 is `u8`;
+  `x - C + f()` folds C onto the call result unless `k = C;` comes first;
+  `f(x, c ? A : B)` puts the `li` first; `(x << 5) | 0x10` after an earlier `x << 5` is
+  CSE'd where `((x << 1) | 1) << 4` is not; `sll 16; srl 12` is `(u32)(n << 16) >> 12`.
+- Narrowing: `q->f = (u16)q->f - 0x64 + f() % 200` reassociates and folds; write
+  single-def locals, one per statement. A byte or halfword store of a sum or shift of
+  `s16` fields narrows their loads to `lbu`/`lhu` unless they go through `s32` locals
+  first; `(u8)D_x` reads a halfword global as `lbu`; `b--` on a `u8` gives `addiu -1`
+  where `b -= 1` gives `addiu 255`.
+- Copies: a 0x48-byte template copy is a struct assignment from an extern
+  `typedef struct { s32 v[18]; }`; eight word assignments give unscheduled `lw/nop/sw`
+  pairs where a struct assignment groups them; a 29-word copy is
+  `for (i = 0x1C; i != -1; i--) *d++ = *s++`; three words copied one at a time need a
+  struct pointer parameter and struct globals; a copy that must survive as `move` is
+  made through a cast (`c = (u8)t;`). GCC deletes the first of two stores to one stack
+  local unless it is `*(volatile s32 *)&d.x = p;`; `*(volatile s32 *)&sym = v` gives
+  `la; sw 0(reg)` and stays out of a call's delay slot.
+- Addresses: `s32 off = 0x12674; *(s8 *)(p + off) = 0;` stops `&sym + offset` folding;
+  `o = (i * 2 + j) << 3;` keeps one register where `* 8` makes a copy;
+  `*(s32 *)(u8 *)&D_x` keeps an address in a register without redeclaring `D_x`.
+- Control and loops: `if (--p->f == 0)` uses the register where `p->f--; if (...)`
+  reloads (and `++p->f == N` keeps the value across later stores); separate `case 2:`
+  and `case 3:` bodies keep a beq chain where `case 2: case 3:` makes a range test;
+  `D_x = 0x10; break;` in each case keeps separate blocks; for cases 1 and 2 only, an
+  empty `case 0: break;` gives `beq 1; slti 2; beq 2`; a ternary used directly as a stack
+  argument lays its arms out reversed; `while (1) { if (!(mask & bit)) break; ... }`
+  avoids loop inversion; a goto search loop with the found block first keeps it inline;
+  `for (i...)` leaves the increment for a delay slot where `do { ... i++; ... } while`
+  puts it before; `for (...; i++, p += size)` puts `i++` first.
+- Arithmetic: `t = A; t &= B;` loads early where `t = A & B` loads last; in-place
+  accumulation (`s = A - s; s += B;`) keeps one register; `q = s - q * 10` reuses the
+  quotient; a remainder may want `%` or `i - i / n * n`, try both; uninitialised unused
+  locals reproduce a `subu` of garbage registers; packed colour words assigned field by
+  field through a bitfield struct give the `and`/`or` insertion chain.
+- The permuter can report "closer" with an unreachable statement before a case label:
+  check its output with `work.py diff`.
+
 ## Hand-written assembly
 
 Some functions were assembly in the original and stay `INCLUDE_ASM`: the GTE (cop2) and
