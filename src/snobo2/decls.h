@@ -694,5 +694,17 @@ s32 func_800A5744();
 extern s32 D_800DDE98;
 void func_800B6D98(s16 arg0, s32 arg1);
 extern u8 D_800E0948[];
+void func_800B7228(s16 arg0, s32 arg1);
+extern u8 D_800E0A70[];
+void func_800B73E8(s16 arg0, s32 arg1);
+extern u8 D_800E0AC0[];
+void func_800B743C(s16 arg0, s32 arg1);
+extern u8 D_800E0AD4[];
+void func_800B7490(s16 arg0, s32 arg1);
+extern u8 D_800E0AE8[];
+void func_800B74E4(s16 arg0, s32 arg1);
+extern u8 D_800E0AFC[];
+void func_800B7DDC(s16 arg0, s32 arg1);
+extern u8 D_800E0DA0[];
 
 #endif /* SNOBO2_DECLS_H */
