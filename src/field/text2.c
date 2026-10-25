@@ -899,7 +899,42 @@ void func_800AD7B8(void *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AD858);
+void func_800AD858(FdLdHdr *h) {
+    s32 n;
+    s32 i;
+    s32 t;
+    FdLdEnt *p;
+    FdLdEnt *e;
+
+    if (h != 0) {
+        n = h->count;
+        if (n != 0) {
+            p = h->e;
+            for (i = 0; i < n; i++) {
+                e = &p[i];
+                switch (e->type) {
+                case 0:
+                    func_80042D98(e->arg, (u8 *)h + e->off, e->len);
+                    break;
+                case 1:
+                    if ((u32)e->arg < *(u16 *)(D_800DFCA0 + 4)) {
+                        t = D_800DFCA0 + *(s32 *)(D_800DFCA0 + 8) + (e->arg << 9);
+                        *(FdBlk200 *)t = *(FdBlk200 *)((u8 *)h + e->off);
+                    }
+                    break;
+                case 2:
+                    if ((u32)e->arg < *(u16 *)(D_800DFCA0 + 6)) {
+                        *(FdBlk20 *)(D_800DFCA0 + *(s32 *)(D_800DFCA0 + 0xC) + (e->arg << 5)) = *(FdBlk20 *)((u8 *)h + e->off);
+                    }
+                    break;
+                case 3:
+                    func_80044000(&e->arg, (u8 *)h + e->off);
+                    break;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800ADAA4);
 

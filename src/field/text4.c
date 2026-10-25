@@ -818,7 +818,54 @@ s32 func_800C1EEC(void) {
 
 INCLUDE_RODATA("../asm/us/field/nonmatchings/text4", D_800A0674);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800C2000);
+s32 func_800C2000(void) {
+    u8 v;
+    u8 op;
+
+    op = (D_8009C6DC + D_800831FC[D_800722C4])[4];
+    switch (op) {
+    case 0:
+        v = ((func_800BEE10(1, 2) ^ func_800BEE10(2, 3)) & 0xFF) == 0;
+        break;
+    case 1:
+        v = ((func_800BEE10(1, 2) ^ func_800BEE10(2, 3)) & 0xFF) != 0;
+        break;
+    case 2:
+        v = (u32)(func_800BEE10(1, 2) & 0xFF) > (u32)(func_800BEE10(2, 3) & 0xFF);
+        break;
+    case 3:
+        v = (u32)(func_800BEE10(1, 2) & 0xFF) < (u32)(func_800BEE10(2, 3) & 0xFF);
+        break;
+    case 4:
+        v = (u32)(func_800BEE10(1, 2) & 0xFF) >= (u32)(func_800BEE10(2, 3) & 0xFF);
+        break;
+    case 5:
+        v = (u32)(func_800BEE10(1, 2) & 0xFF) <= (u32)(func_800BEE10(2, 3) & 0xFF);
+        break;
+    case 6:
+        v = func_800BEE10(1, 2) & func_800BEE10(2, 3);
+        break;
+    case 7:
+        v = func_800BEE10(1, 2) ^ func_800BEE10(2, 3);
+        break;
+    case 8:
+        v = func_800BEE10(1, 2) | func_800BEE10(2, 3);
+        break;
+    case 9:
+        v = func_800BEE10(1, 2) & (1 << func_800BEE10(2, 3));
+        break;
+    case 10:
+        v = func_800BEE10(1, 2) & (1 << func_800BEE10(2, 3));
+        v = (v & 0xFF) == 0;
+        break;
+    default:
+        if (D_8009D820 & 3) {
+            func_800BECA4(D_800A0674, op, 2);
+        }
+        break;
+    }
+    return v;
+}
 
 s32 func_800C228C(void) {
     u16 *pc;
@@ -918,7 +965,54 @@ s32 func_800C285C(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800C2970);
+s32 func_800C2970(void) {
+    u8 v;
+    u8 op;
+
+    op = (D_8009C6DC + D_800831FC[D_800722C4])[6];
+    switch (op) {
+    case 0:
+        v = ((func_800BF908(1, 2) ^ func_800BF908(2, 4)) & 0xFFFF) == 0;
+        break;
+    case 1:
+        v = ((func_800BF908(1, 2) ^ func_800BF908(2, 4)) & 0xFFFF) != 0;
+        break;
+    case 2:
+        v = (u32)(func_800BF908(1, 2) & 0xFFFF) > (u32)(func_800BF908(2, 4) & 0xFFFF);
+        break;
+    case 3:
+        v = (u32)(func_800BF908(1, 2) & 0xFFFF) < (u32)(func_800BF908(2, 4) & 0xFFFF);
+        break;
+    case 4:
+        v = (u32)(func_800BF908(1, 2) & 0xFFFF) >= (u32)(func_800BF908(2, 4) & 0xFFFF);
+        break;
+    case 5:
+        v = (u32)(func_800BF908(1, 2) & 0xFFFF) <= (u32)(func_800BF908(2, 4) & 0xFFFF);
+        break;
+    case 6:
+        v = func_800BF908(1, 2) & func_800BF908(2, 4);
+        break;
+    case 7:
+        v = func_800BF908(1, 2) ^ func_800BF908(2, 4);
+        break;
+    case 8:
+        v = func_800BF908(1, 2) | func_800BF908(2, 4);
+        break;
+    case 9:
+        v = func_800BF908(1, 2) & (1 << func_800BF908(2, 4));
+        break;
+    case 10:
+        v = func_800BF908(1, 2) & (1 << func_800BF908(2, 4));
+        v = (v & 0xFF) == 0;
+        break;
+    default:
+        if (D_8009D820 & 3) {
+            func_800BECA4(D_800A0674, op, 2);
+        }
+        break;
+    }
+    return v;
+}
 
 void func_800C2BFC(void) {
     u16 var_a0;
