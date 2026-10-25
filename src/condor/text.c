@@ -121,7 +121,35 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A6808);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A698C);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A709C);
+void func_800A709C(s32 arg0, s32 arg1) {
+    s16 t;
+    s32 x0 = arg0 * 0x78;
+    s32 x1 = arg1 * 0x78;
+
+    D_8012C3EC = 0;
+    D_8012C42C = 0;
+    D_800BE8ED[x0] = 0;
+    D_800BE8ED[x1] = 0;
+    if (D_8012C4BC == 0) {
+        t = D_8012C424;
+        D_8012C41C = D_8012C424;
+        if (D_800BE8C0[t].flags != 0 && D_800BE8C5[t * 0x78] == 0) {
+            D_8012C428 = 0;
+            if (((s16 (*)(void *))func_800B2CD8)(&D_800BE8C0[t]) != 0) {
+                func_800A93A0();
+                goto end;
+            }
+        }
+    } else {
+        D_8012C3E8 = 1;
+        D_8012C41C = -1;
+    }
+    D_8012C47C = 1;
+    D_8012C484 = 1;
+    D_8012C480 = 1;
+end:
+    D_8012C4BC = 0;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A71D8);
 
@@ -469,7 +497,38 @@ void func_800B2804(void) {
     func_80042D88(b + 0x801B0000, 0x801B0000, 0x40000);
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B2940);
+s32 func_800B2940(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    Unk80046D0C img;
+    s32 ret;
+    CondorRect *p;
+    CondorRect *r;
+
+    func_80046CFC((arg0 >> 2 << 2) + 0x801B0000);
+    func_80046D0C(&img);
+    ret = 0;
+    if (img.b_arg != 0) {
+        r = (CondorRect *)img.b;
+        p = &D_8012AF3C;
+        p->x = arg1;
+        D_8012AF3C.y = arg2;
+        D_8012AF3C.w = r->w;
+        D_8012AF3C.h = r->h;
+        func_80044000(p, (void *)img.b_arg);
+        r = (CondorRect *)img.b;
+        ret = r->w | (r->h << 16);
+    }
+    if (img.a_arg != 0) {
+        r = (CondorRect *)img.a;
+        p = &D_8012AF3C;
+        p->x = arg3;
+        D_8012AF3C.y = arg4;
+        D_8012AF3C.w = r->w;
+        D_8012AF3C.h = r->h;
+        func_80044000(p, (void *)img.a_arg);
+    }
+    func_80043DD8(0);
+    return ret;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B2A70);
 
