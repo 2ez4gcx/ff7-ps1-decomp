@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0048(void);
-M2C_UNK func_801B0880();
+s32 func_801B0880();
 extern s16 D_801C8F54;
 void func_801B0010(void);
 extern s16 D_801B0F2C;
@@ -43,5 +43,18 @@ extern s32 D_801517C0;
 extern struct { s16 v; } D_801B0F42;
 extern s32 D_801B0F48[];
 u8 *func_800D29D4(void *, s32, s32, u8 *);
+s32 func_800BBA84(s32, s32, s32);
+void func_800D5444(s32, s32, s32, void (*)(s32, s32));
+void func_801B00E0(void);
+s32 func_800C4FC8(s32, s32, s32);
+typedef struct { u16 v; } ShieldU16;
+extern ShieldU16 D_801031EA;
+extern s32 D_80163C74;
+extern s16 D_801B0F2E;
+void func_800D4CBC(s32, s32, s32);
+void func_800D4D6C(void *, s32, s32);
+void func_800D5774(s32);
+extern u8 D_80151915[][0xB9C];
+extern u8 D_80151916[][0xB9C];
 
 #endif /* MAGIC_SHIELD_DECLS_H */

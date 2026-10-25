@@ -85,7 +85,7 @@ void func_800D2980(void *, s32, s32, s32);
 extern u8 D_800F5B72;
 extern u8 D_800F5B71;
 extern u8 D_800F5B70;
-s32 func_800D52A0(s32, s32);
+void func_800D52A0(s32, s32);
 void func_801B10A8(void);
 s32 func_80039A74(s32);
 s32 func_80039B40(s16);
@@ -105,5 +105,14 @@ extern MgSVec D_801D5610;
 extern s16 D_801D5618;
 void func_801B0DB4(void);
 extern s16 D_801D55C0[];
+void func_801B04C8(void);
+s32 func_800C4FC8(s16, s32, s32);
+extern u16 D_801D5530;
+typedef struct { u16 v; } HadohoU16;
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s32 func_800BBA84(s32, s32, s32);
+s32 func_800BC04C(void (*)());
+void func_800D5774(s32);
+extern HadohoU16 D_801031EA;
 
 #endif /* MAGIC_HADOHO_DECLS_H */

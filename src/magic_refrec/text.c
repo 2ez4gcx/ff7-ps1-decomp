@@ -22,4 +22,10 @@ void func_801B04AC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_refrec/nonmatchings/text", func_801B050C);
+s32 func_801B050C(arg0, arg1) {
+    D_801B0C10 = 0x2000;
+    D_801B0C14 = 0;
+    func_800BBEAC(func_801B04AC);
+    func_800D5444(arg0, arg1, 0, &func_801B03A8);
+    return func_800D55F4(0x20, 0x40, 0x48);
+}

@@ -7,7 +7,32 @@ void func_801B0000(void) {
 
 INCLUDE_ASM("../asm/us/magic_almighty/nonmatchings/text", func_801B0020);
 
-INCLUDE_ASM("../asm/us/magic_almighty/nonmatchings/text", func_801B01C0);
+void func_801B01C0(void) {
+    MgObjAlm *p;
+    MgObjAlm *q;
+    s32 i;
+
+    p = (MgObjAlm *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 10) {
+            i = 0;
+            D_801B059A[0] = func_80042DA8() & 0xFFF;
+            for (; i < D_801B05A8; i++) {
+                q = (MgObjAlm *)&D_80162978[func_800BBEAC(&func_801B0020)];
+                q->unk8 = p->unk8;
+                q->unk1A = func_80042DA8() % 0x2000 + 0x1000;
+                q->unk10 = *(MgSVec *)&D_801B059A[-1];
+                q->unk18 = (func_80042DA8() % 400 + 100) << 4;
+                q->unk1C = func_80042DA8() % 100 - 50;
+                D_801B059A[0] += 0x1000 / D_801B05A8;
+            }
+        } else {
+            func_800D5774(p->unk4);
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B03E4(s32 arg0) {
     MgTask *p;

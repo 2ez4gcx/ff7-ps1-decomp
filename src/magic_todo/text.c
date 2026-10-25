@@ -31,7 +31,45 @@ void func_801B0074(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_todo/nonmatchings/text", func_801B0190);
+void func_801B0190(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 n;
+    s32 i;
+    s32 r;
+    s32 t;
+
+    if (D_80062D98 == 0) {
+        p = (MgTask *)&D_80162978[D_8015169C];
+        if ((u16)p->unk2 - 2 < 0x1AU) {
+            n = D_801CE99C;
+            i = 0;
+            q = (MgTask *)&D_80162978[func_800BBEAC(&func_801B0074)];
+            q->unk18 = n;
+            do {
+                r = func_80042DA8();
+                t = r % 0x1000 + 0x800;
+                D_801CE9A0[n].x = (u16)p->unk4 + func_80042DA8() % p->unkE - (u16)p->unkC;
+                D_801CE9A0[n].y = -(func_80042DA8() % p->unk10);
+                D_801CE9A0[n].z = (u16)p->unk8 + func_80042DA8() % p->unkE - (u16)p->unkC;
+                D_801CE9A0[n].s = (p->unk14 * t) >> 12;
+                n++;
+                if (n >= 0x1BC) {
+                    n = 0;
+                }
+                i++;
+            } while (i < 4);
+            D_801CE99C = n;
+        }
+        if (p->unk2 == 0xC) {
+            func_800D5774(p->unk18);
+        }
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B03F4(arg0) {
     MgTask *q;

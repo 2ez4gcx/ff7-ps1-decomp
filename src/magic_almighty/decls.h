@@ -23,6 +23,13 @@ M2C_UNK func_800D3994(s32, u8, u8 *);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D56A8(u8 *);
 extern u8 D_8015190F[][0xB9C];
-extern M2C_UNK func_801B01C0;
+void func_801B01C0(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; MgSVec unk8; MgSVec unk10; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgObjAlm;
+s32 func_80042DA8(void);
+M2C_UNK func_800D5774(s32);
+extern u8 D_80062D98;
+extern s16 D_801B059A[];
+extern M2C_UNK func_801B0020;
 
 #endif /* MAGIC_ALMIGHTY_DECLS_H */

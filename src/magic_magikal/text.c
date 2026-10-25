@@ -49,4 +49,13 @@ INCLUDE_ASM("../asm/us/magic_magikal/nonmatchings/text", func_801B0214);
 
 INCLUDE_ASM("../asm/us/magic_magikal/nonmatchings/text", func_801B058C);
 
-INCLUDE_ASM("../asm/us/magic_magikal/nonmatchings/text", func_801B068C);
+INCLUDE_RODATA("../asm/us/magic_magikal/nonmatchings/text", D_801B0000);
+
+s32 func_801B068C(arg0, arg1) {
+    D_801D89B0 = &D_80162978[func_800BBEAC(&func_801B0000)];
+    func_800D2980(&D_801B0734, 0, 0, 0);
+    func_800BBEAC(&func_801B058C);
+    D_801D89B4 = arg0;
+    D_801D89B8 = arg1;
+    return func_800D55F4(0x20, func_800D574C(arg0), 0x9C);
+}
