@@ -109,7 +109,7 @@ FILE_OPTIONS = {
     # Overlays assembled by ASPSX 2.30 or later: a global plus a register
     # folds %lo into the load (`addu $at, $at, $r; lbu $v0, %lo(x)($at)`),
     # with no nop before it. Every such access in their asm has that form.
-    'batini/text.c': {'aspsx': '2.34'},
+    'batini/text.c': {'aspsx': '2.34', 'gcc': '2.7.2'},   # mfhi for a division result, 2.7.2's lhu
     'batres/text.c': {'aspsx': '2.34'},
     'brom/text.c': {'aspsx': '2.34'},
     'snobo/text.c': {'aspsx': '2.34'},

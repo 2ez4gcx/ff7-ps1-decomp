@@ -256,6 +256,16 @@ def locally_declared():
             sym = symbol_of(line)
             if sym:
                 out.add(sym)
+    if ad.TARGET == 'main':
+        # Every overlay's decls.h includes main's: a symbol an overlay declares
+        # itself would clash with another type in main's decls.h, so a put
+        # into main declares it in its own file instead.
+        for decls in ROOT.glob('src/*/decls.h'):
+            if decls.parent.name != 'main':
+                for line in decls.read_text(encoding='utf-8').splitlines():
+                    sym = symbol_of(line) if line.rstrip().endswith(';') else None
+                    if sym:
+                        out.add(sym)
     return out
 
 
