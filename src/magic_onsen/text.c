@@ -42,4 +42,14 @@ void func_801B06C8(s32 arg0, s32 arg1) {
     p->unk18 = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_onsen/nonmatchings/text", func_801B078C);
+void func_801B078C(arg0, arg1) {
+    s16 i;
+
+    func_800BBEAC((void *)func_801B0020);
+    func_800D2980(D_801B084C, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, (void *)func_801B06C8);
+    func_800BBA84(0x10B, arg1, 0x40);
+    for (i = 0; i < 0x12C; i++) {
+        D_801C8D48[i].unk0 = 0;
+    }
+}

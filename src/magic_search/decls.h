@@ -15,5 +15,15 @@ extern u8 *D_801CD45C;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801B5280;
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgMat D_801B0000;
+extern MgMat D_800FA63C;
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+MgMat *func_8003B05C(MgMat *, MgMat *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+void func_801B008C(s32 arg0, MgSVec *rot, s16 scale);
 
 #endif /* MAGIC_SEARCH_DECLS_H */

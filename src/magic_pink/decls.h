@@ -25,9 +25,12 @@ extern MgObj8 D_801E1BD8[];
 MgObj8 *func_801B0148(void);
 void func_801B110C(void);
 extern MgObj20 D_801E2218[];
-extern M2C_UNK func_801B1030;
+void func_801B1030(void);
 s32 func_800BBEAC(void *);
 s32 func_801B1164(void);
 s32 func_800BBA84(s32, s32, s32);
+extern u16 D_801E34D8;
+void func_801B0884();
+extern s16 D_801C9B4C;
 
 #endif /* MAGIC_PINK_DECLS_H */

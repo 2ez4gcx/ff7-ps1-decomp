@@ -76,5 +76,8 @@ extern MgByte D_801D83F0;
 extern u16 D_801EDC30;
 s32 func_800D4D90(void *, s32, s32, s32);
 s32 func_801B4A6C(MgObjTup *p);
+s32 func_801B4B1C(MgObjTup *p);
+MgMat *func_800D4368(MgSVec *v, s16 scale, s32 dist);
+extern u16 D_801EDC3C;
 
 #endif /* MAGIC_TUPON_DECLS_H */

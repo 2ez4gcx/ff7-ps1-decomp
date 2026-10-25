@@ -48,4 +48,14 @@ void func_801B0580(void) {
 
 INCLUDE_ASM("../asm/us/magic_seija/nonmatchings/text", func_801B0638);
 
-INCLUDE_ASM("../asm/us/magic_seija/nonmatchings/text", func_801B0D2C);
+void func_801B0D2C(arg0, arg1) {
+    func_800BBEAC((void *)func_801B0028);
+    func_800D2980(D_801B0DE8, 0, 0, 0);
+    D_801D752C = arg0;
+    func_800D54EC(arg0, D_801D7530);
+    D_80162996[func_800BBEAC((void *)func_801B0638)].unk0 = arg1;
+    D_800F5B71 = 0;
+    D_800F5B70 = 0;
+    D_800F5B72 = 0x40;
+    func_800D52A0(0x1000, 0xA);
+}

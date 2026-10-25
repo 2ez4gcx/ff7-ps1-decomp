@@ -121,7 +121,15 @@ INCLUDE_ASM("../asm/us/magic_rmissile/nonmatchings/text", func_801B0DA0);
 
 INCLUDE_ASM("../asm/us/magic_rmissile/nonmatchings/text", func_801B134C);
 
-INCLUDE_ASM("../asm/us/magic_rmissile/nonmatchings/text", func_801B1654);
+void func_801B1654(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B134C)];
+    func_800D3994(arg1, D_80151918[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 void func_801B1720(arg0, arg1) {
     func_800BBEAC(&func_801B045C);

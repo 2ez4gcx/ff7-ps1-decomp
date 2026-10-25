@@ -31,7 +31,7 @@ extern s32 D_801C17C4;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern M2C_UNK D_801B1100;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-extern M2C_UNK func_801B0FD0;
+void func_801B0FD0(s32 arg0, s32 arg1);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 void func_801B0180(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
@@ -55,5 +55,9 @@ extern u8 D_801C18BF;
 extern u8 D_801C18BC;
 extern u8 D_801C18BE;
 extern u8 D_801C18BD;
+void func_801B09B0();
+extern u8 D_801D98F4[];
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
 
 #endif /* MAGIC_JIBASIRI_DECLS_H */

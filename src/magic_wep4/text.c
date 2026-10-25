@@ -29,6 +29,11 @@ INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B2918);
 
 INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B2A4C);
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B3934);
+void func_801B3934(void) {
+    u8 pad[8];
+    D_80162978[D_8015169C].unk0 = -1;
+    D_80162994[func_800BBEAC(func_801B2A4C)].unk0 = 0;
+    func_800D54EC(D_801ECF74, D_801ECF7C);
+}
 
 INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B39A8);

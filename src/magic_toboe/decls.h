@@ -28,6 +28,12 @@ extern s16 D_801B1592[];
 extern s32 D_801517C0;
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
-extern MgTask D_80162978[];
+extern MgObj20 D_80162978[];
+void func_801B0760(s32 arg0, s32 arg1);
+void func_801B0484();
+s32 func_800BBEAC(void *);
+extern u8 D_80151917[][0xB9C];
+void func_800D3994(s32, s32, void *);
+extern u8 D_8015190F[][0xB9C];
 
 #endif /* MAGIC_TOBOE_DECLS_H */

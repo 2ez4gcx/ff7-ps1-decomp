@@ -31,7 +31,18 @@ void func_801B018C(u8 *arg0, u8 *arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B01DC);
+s32 func_801B01DC(s32 arg0, s16 arg1) {
+    s32 t;
+    u8 pad[8];
+
+    if ((u16)arg0 > 0x800) {
+        arg0 = 0;
+    }
+    do {
+        t = -D_801D8F90[(s16)arg0] * 625;
+    } while (0);
+    return (D_801D9190[arg1][0] * ((t * 64) >> 16) * 0x10) >> 16;
+}
 
 INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B0270);
 

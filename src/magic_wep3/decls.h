@@ -20,5 +20,14 @@ extern s16 D_8015169C;
 extern MgTask D_80162994[];
 extern u8 D_801EB6C0[];
 void func_801B16EC();
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_8003BA10(MgVec *, MgVec *, MgVec *);
+s32 func_8003A59C(s32);
+s32 func_8003CC1C(s32, s32);
+void func_8003A08C(MgVec *, MgVec *);
+s32 func_801B0074(MgVec *a, MgVec *b, MgVec *c);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+void func_801B02CC(MgSVec *p, MgSVec *o, MgVec *n);
+s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n);
 
 #endif /* MAGIC_WEP3_DECLS_H */

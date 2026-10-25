@@ -66,5 +66,7 @@ extern s32 D_801D2BF8;
 extern s32 D_801D2BFC;
 extern s32 D_801D2C00;
 extern M2C_UNK func_801B22E4;
+typedef struct { s32 head; s32 tail; s32 count; s32 v[0x18]; } MgRing;
+void func_801B0A8C(MgRing *r, s32 val);
 
 #endif /* MAGIC_WPSI_DECLS_H */

@@ -46,5 +46,17 @@ extern s16 D_801D8596[];
 extern s32 D_801517C0;
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B060C(void);
+typedef struct { u16 v; } MgHalf;
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+void func_800D4368(void *, s32, s32);
+extern MgHalf D_801D8540;
+extern s32 D_80163C74;
+extern s8 D_801D853E;
+extern s8 D_801D853D;
+extern s8 D_801D853C;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern s32 D_801D8180;
 
 #endif /* MAGIC_ROCKET_DECLS_H */

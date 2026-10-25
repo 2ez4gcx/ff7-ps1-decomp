@@ -76,7 +76,24 @@ s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n) {
 
 INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B048C);
 
-INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B0640);
+void func_801B0640(void) {
+    MgTask *p;
+    u16 *frame;
+    s16 t;
+
+    p = &D_80162978[D_8015169C];
+    frame = &D_801D11CC;
+    *frame = p->unk2;
+    t = p->unkC;
+    func_800D4368(&p->unk4, t, -(t >> 2));
+    D_801E91D0 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801E91D0);
+    if (p->unk2 >= 0xB) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B070C);
 

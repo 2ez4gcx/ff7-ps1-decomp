@@ -224,6 +224,14 @@ void func_801B65FC(void) {
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B664C);
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B672C);
+void func_801B672C(arg0, arg1) {
+    D_8016298C[func_800BBEAC((void *)func_801B65BC)].unk0 = 0x80;
+    D_801E1A10 &= 0xBFFFFFFF;
+    if (arg0 == (1 << arg1)) {
+        D_801E1A10 |= 0x20000000;
+    }
+    D_801E07B4 = arg0;
+    D_801E07B8 = arg1;
+}
 
 INCLUDE_RODATA("../asm/us/magic_satan/nonmatchings/text", D_801B008C);

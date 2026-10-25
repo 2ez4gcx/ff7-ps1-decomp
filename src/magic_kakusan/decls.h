@@ -30,5 +30,12 @@ extern MgObj20 D_80162978[];
 extern u8 D_801D18E4[];
 extern u8 *D_801E98E4;
 extern s16 D_80162080;
+void func_801B04C8(void);
+void func_800D4368(void *, s32, s32);
+extern u16 D_801D180C;
+extern s32 D_801517C0;
+u8 *func_800D4D90(void *, s32, s32, u8 *);
+extern u8 D_80062D98;
+extern s32 D_801D1740;
 
 #endif /* MAGIC_KAKUSAN_DECLS_H */

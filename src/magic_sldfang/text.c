@@ -117,7 +117,39 @@ void func_801B0650(MgSVec *v0, MgSVec *v1, s32 color) {
 
 INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B0754);
 
-INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B07B4);
+void func_801B07B4(MgRing *r, s32 val) {
+    s32 head;
+    s32 tail;
+    s32 count;
+
+    do {
+        head = r->head;
+        tail = r->tail;
+    } while (0);
+    count = r->count;
+    r->v[head] = val;
+    head++;
+    count++;
+    if (count >= 0x18) {
+        count = 0x18;
+    }
+    if (head >= 0x18) {
+        head = 0;
+    }
+    if (head == tail) {
+        count--;
+        tail++;
+        if (count < 0) {
+            count = 0;
+        }
+        if (tail >= 0x18) {
+            tail = 0;
+        }
+    }
+    r->head = head;
+    r->tail = tail;
+    r->count = count;
+}
 
 INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B0828);
 

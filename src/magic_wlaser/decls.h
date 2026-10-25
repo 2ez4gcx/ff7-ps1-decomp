@@ -24,5 +24,10 @@ extern s32 D_80163C74;
 extern s32 *D_801C8E48[];
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B07A8(s32 arg0, s32 arg1);
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
+void func_801B0364();
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
 
 #endif /* MAGIC_WLASER_DECLS_H */

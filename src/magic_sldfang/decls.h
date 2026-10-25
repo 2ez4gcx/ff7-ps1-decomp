@@ -30,5 +30,7 @@ M2C_UNK *func_801B0054(s32 a, s32 b);
 void func_801B3028(s32, s32, s32);
 extern M2C_UNK D_801B94D4;
 M2C_UNK *func_801B007C(s32 a, s32 b);
+typedef struct { s32 head; s32 tail; s32 count; s32 v[0x18]; } MgRing;
+void func_801B07B4(MgRing *r, s32 val);
 
 #endif /* MAGIC_SLDFANG_DECLS_H */

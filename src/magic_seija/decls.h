@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B0D2C();
+void func_801B0D2C();
 extern M2C_UNK D_801C3C28;
 void func_801B0028(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
@@ -18,5 +18,16 @@ void func_801B0580(void);
 s32 func_800BBEAC(M2C_UNK *);
 extern u8 D_80062D98;
 extern M2C_UNK func_801B038C;
+extern u8 D_801B0DE8[];
+void func_800D2980(void *, s32, s32, s32);
+extern u8 D_801D7530[];
+extern s16 D_801D752C;
+void func_800D54EC(s32, void *);
+void func_801B0638();
+extern MgObj20 D_80162996[];
+extern u8 D_800F5B71;
+extern u8 D_800F5B70;
+extern u8 D_800F5B72;
+void func_800D52A0(s32, s32);
 
 #endif /* MAGIC_SEIJA_DECLS_H */

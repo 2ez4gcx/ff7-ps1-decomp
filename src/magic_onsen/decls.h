@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B078C();
+void func_801B078C();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -21,5 +21,6 @@ extern M2C_UNK func_801B05AC;
 extern M2C_UNK D_801B0D3C;
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
+extern u8 D_801B084C[];
 
 #endif /* MAGIC_ONSEN_DECLS_H */

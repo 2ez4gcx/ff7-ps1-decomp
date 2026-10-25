@@ -50,7 +50,22 @@ void func_801B1350(void) {
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B149C);
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B15CC);
+void func_801B15CC(void) {
+    MgObj20 *p;
+    u16 *frame;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x1000, 0);
+    frame = &D_801D4B08;
+    *frame = p->unk2;
+    D_801ECB98 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801ECB98);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D481C) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1684);
 

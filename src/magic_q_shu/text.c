@@ -55,4 +55,11 @@ void func_801B0F5C(s32 arg0, s32 arg1) {
     p->unk1E = arg1;
 }
 
-INCLUDE_ASM("../asm/us/magic_q_shu/nonmatchings/text", func_801B1028);
+INCLUDE_RODATA("../asm/us/magic_q_shu/nonmatchings/text", D_801B0010);
+
+void func_801B1028(arg0, arg1) {
+    func_800BBEAC(D_801B0010);
+    func_800D2980(D_801B10A4, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B0F5C);
+    func_800BBA84(0x7E, arg1, 0x40);
+}

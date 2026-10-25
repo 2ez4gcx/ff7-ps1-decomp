@@ -11,7 +11,16 @@ MgObj4C *func_801B0020(void);
 MgObj4C *func_801B07CC(void);
 extern MgObj4C D_801C4CD0[];
 extern M2C_UNK D_801B1150;
-extern M2C_UNK func_801B105C;
+void func_801B105C(void);
 extern M2C_UNK func_801B0F4C;
+void func_801B0844(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
+extern s16 D_8015169C;
+extern MgObj20 D_80162978[];
+void func_801B0098();
+extern u8 D_801C6A80[];
+extern u8 *D_801E6A80;
+extern s16 D_80162080;
+void func_800D52A0(s32, s32);
 
 #endif /* MAGIC_WHIRL_DECLS_H */

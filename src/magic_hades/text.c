@@ -249,7 +249,25 @@ void func_801B98BC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B9960);
+void func_801B9960(void) {
+    MgObj20 *p;
+    MgObj20 *q;
+    s32 i;
+
+    if (D_80062D98 == 0) {
+        p = &D_80162978[D_8015169C];
+        if (p->unk2 == 2) {
+            func_800BBEAC((void *)func_801B9378);
+            q = D_801F1240 + 0x12B;
+            for (i = 0x12B; i >= 0; i--) {
+                *(s16 *)((u8 *)q + 0x9F60) = 0;
+                q--;
+            }
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B9A04);
 

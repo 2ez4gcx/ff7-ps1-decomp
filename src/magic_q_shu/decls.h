@@ -24,5 +24,8 @@ void func_801B0C5C(void);
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
+void func_801B1028();
+extern u8 D_801B0010[];
+extern u8 D_801B10A4[];
 
 #endif /* MAGIC_Q_SHU_DECLS_H */

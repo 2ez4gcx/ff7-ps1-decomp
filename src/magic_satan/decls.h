@@ -6,7 +6,7 @@
 s32 func_801B00E0(void);
 M2C_UNK func_801B664C();
 s32 func_801B0104(void);
-M2C_UNK func_801B672C();
+void func_801B672C();
 void func_801B65FC(void);
 extern s32 D_800F8368;
 extern M2C_UNK D_801C87AC;
@@ -42,5 +42,9 @@ extern s32 D_801517C0;
 extern M2C_UNK D_801BF980;
 void func_801B5804(void);
 s32 func_800D29D4(M2C_UNK, s32, M2C_UNK, s32);
+void func_801B65BC();
+extern MgObj20 D_8016298C[];
+extern s32 D_801E07B4;
+extern s32 D_801E07B8;
 
 #endif /* MAGIC_SATAN_DECLS_H */

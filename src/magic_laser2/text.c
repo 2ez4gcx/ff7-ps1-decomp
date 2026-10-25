@@ -51,6 +51,17 @@ INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B06EC);
 
 INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B082C);
 
-INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B0D30);
+void func_801B0D30(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B082C)];
+    func_800D3994(arg1, D_80151917[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    if (p->unk8 > p->unk10) {
+        D_801B3050 = -1;
+    }
+    func_800BBEAC((void *)func_801B0558);
+}
 
 INCLUDE_ASM("../asm/us/magic_laser2/nonmatchings/text", func_801B0E20);

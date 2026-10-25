@@ -33,5 +33,7 @@ extern u8 D_80062D98;
 extern s16 D_8015169C;
 extern MgObj20 *D_801F1240;
 void func_801B8D48();
+void func_801B9960(void);
+void func_801B9378();
 
 #endif /* MAGIC_HADES_DECLS_H */

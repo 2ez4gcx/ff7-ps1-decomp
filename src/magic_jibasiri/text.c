@@ -143,7 +143,14 @@ INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B0748);
 
 INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B09B0);
 
-INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B0FD0);
+void func_801B0FD0(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B09B0)];
+    func_800D3994(arg1, D_8015190F[arg1][0], D_801D98F4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+}
 
 void func_801B1094(arg0, arg1) {
     func_800BBEAC(&func_801B0020);

@@ -21,7 +21,25 @@ void func_801B007C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kama2/nonmatchings/text", func_801B0170);
+void func_801B0170(void) {
+    MgTask *p;
+    u16 *frame;
+    s16 n;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x1600, 0);
+    frame = &D_801D131C;
+    *frame = p->unk2;
+    D_801E9330 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801E9330);
+    if (D_80062D98 == 0) {
+        p->unk6 -= 0x32;
+        n = (u16)p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= D_801D0F38) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_kama2/nonmatchings/text", func_801B0238);
 
@@ -36,4 +54,11 @@ void func_801B0914(s32 arg0, s32 arg1) {
     p->unk1C = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_kama2/nonmatchings/text", func_801B09D4);
+INCLUDE_RODATA("../asm/us/magic_kama2/nonmatchings/text", D_801B0010);
+
+void func_801B09D4(arg0, arg1) {
+    func_800BBEAC(&D_801B0010);
+    func_800D2980(D_801B0A50, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B0914);
+    func_800BBA84(0x83, arg1, 0x40);
+}

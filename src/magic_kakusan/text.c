@@ -79,7 +79,22 @@ void func_801B045C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kakusan/nonmatchings/text", func_801B04C8);
+void func_801B04C8(void) {
+    MgObj20 *p;
+    u16 *frame;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2800, 0);
+    frame = &D_801D180C;
+    *frame = p->unk2;
+    D_801E98E4 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801E98E4);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D1740) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_kakusan/nonmatchings/text", func_801B0580);
 

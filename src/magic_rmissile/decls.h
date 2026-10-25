@@ -45,10 +45,12 @@ extern MgTask D_801621F0[];
 extern s16 D_801D47D8[];
 extern s32 D_80163C74;
 extern s32 D_801D4638;
-M2C_UNK func_800BBEAC(M2C_UNK *);
+s32 func_800BBEAC(void *);
 extern M2C_UNK D_801B178C;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-extern M2C_UNK func_801B1654;
+void func_801B1654(s32 arg0, s32 arg1);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+void func_801B134C();
+extern u8 D_80151918[][0xB9C];
 
 #endif /* MAGIC_RMISSILE_DECLS_H */

@@ -13,5 +13,8 @@ extern u8 D_801C0F8C[];
 extern u8 *D_801D8F8C;
 extern s16 D_80162080;
 void func_801B018C(u8 *arg0, u8 *arg1);
+s32 func_801B01DC(s32 arg0, s16 arg1);
+extern s16 D_801D8F90[];
+extern s16 D_801D9190[][0x60];
 
 #endif /* MAGIC_OTSUNAMI_DECLS_H */

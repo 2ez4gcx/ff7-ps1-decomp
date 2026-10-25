@@ -1,7 +1,23 @@
 #include "common.h"
 #include "magic_search/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B008C);
+INCLUDE_RODATA("../asm/us/magic_search/nonmatchings/text", D_801B0000);
+
+void func_801B008C(s32 arg0, MgSVec *rot, s16 scale) {
+    MgMat r;
+    MgMat m;
+    MgVec unused;
+
+    m = D_801B0000;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = scale;
+    func_8003B05C(&m, &D_800FA63C);
+    func_8003C21C(rot, &r);
+    func_8003B05C(&m, &r);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+}
 
 void func_801B0170(void) {
     MgTask *p;

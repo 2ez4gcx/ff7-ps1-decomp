@@ -15,5 +15,8 @@ extern u8 D_801C1108[];
 extern u8 *D_801D9108;
 extern s16 D_80162080;
 void func_801B01AC(u8 *arg0, u8 *arg1);
+s32 func_801B01FC(s32 arg0, s16 arg1);
+extern s16 D_801D910C[];
+extern s16 D_801D930C[][0x60];
 
 #endif /* MAGIC_GESUI_DECLS_H */

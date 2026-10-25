@@ -54,6 +54,14 @@ void func_801B030C(void) {
 
 INCLUDE_ASM("../asm/us/magic_toboe/nonmatchings/text", func_801B0484);
 
-INCLUDE_ASM("../asm/us/magic_toboe/nonmatchings/text", func_801B0760);
+void func_801B0760(s32 arg0, s32 arg1) {
+    MgTask *p;
+    u8 pad[8];
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B0484)];
+    func_800D3994(arg1, D_80151917[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk18 = arg0;
+}
 
 INCLUDE_ASM("../asm/us/magic_toboe/nonmatchings/text", func_801B0820);

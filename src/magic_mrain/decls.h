@@ -28,5 +28,14 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK func_801B27A4;
 extern s32 D_801ED828;
 extern s32 D_801ED82C;
+void func_801B0EA8(void);
+extern s16 D_8015169C;
+extern u16 D_801D5800;
+void func_800D4368(void *, s32, s32);
+extern s32 D_801517C0;
+extern u8 *D_801ED820;
+u8 *func_800D4D90(void *, s32, s32, u8 *);
+extern u8 D_80062D98;
+extern s32 D_801D2A2C;
 
 #endif /* MAGIC_MRAIN_DECLS_H */

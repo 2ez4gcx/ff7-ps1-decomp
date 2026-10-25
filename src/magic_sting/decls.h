@@ -46,5 +46,12 @@ void func_801B1F3C(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
 extern s16 D_8015169C;
 extern u8 D_80062D98;
 extern s16 D_800FA666[];
+void func_801B2138(s32 arg0, s32 arg1, MgTask *arg2, MgSVec *arg3);
+void func_800D3994(s32, s32, void *);
+extern s16 D_80151A4C[][0x5CE];
+extern s16 D_80151A4E[][0x5CE];
+extern s16 D_80151A50[][0x5CE];
+void func_8003BF3C(void *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
 
 #endif /* MAGIC_STING_DECLS_H */

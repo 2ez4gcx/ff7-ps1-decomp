@@ -74,7 +74,24 @@ s16 func_801B03C4(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B04A8);
+void func_801B04A8(void) {
+    MgTask *p;
+    u16 *frame;
+    s16 t;
+
+    p = &D_80162978[D_8015169C];
+    frame = &D_801B888C;
+    *frame = p->unk2;
+    t = p->unkC;
+    func_800D4368(&p->unk4, t, -(t >> 3));
+    D_801DC890 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801DC890);
+    if (p->unk2 >= 0xB) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0574);
 

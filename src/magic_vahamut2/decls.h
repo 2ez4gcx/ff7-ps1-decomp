@@ -61,5 +61,10 @@ void func_800D3994(s32, s32, MgSVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern s16 D_800FA668[];
+typedef struct { u32 tag; u8 pad4[4]; s32 xy0; u8 pad0c[4]; s32 xy1; u8 pad14[4]; s32 xy2; } MgPolyT;
+extern MgSVec D_801EF3E4[];
+extern MgPolyT *D_80163C74;
+s32 func_8003BC0C(MgSVec *, MgSVec *, MgSVec *, s32 *, s32 *, s32 *, s32 *, s32 *);
+MgPolyT *func_801B577C(void);
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

@@ -115,6 +115,10 @@ FILE_OPTIONS = {
     'snobo/text.c': {'aspsx': '2.34'},
     'snobo2/text.c': {'aspsx': '2.34'},
     'magic_antlion/text.c': {'aspsx': '2.34'},
+    # Spells whose register allocation is GCC 2.7.2's (functions shared with
+    # other spells come out with other registers under 2.6.3).
+    'magic_beam/text.c': {'gcc': '2.7.2'},
+    'magic_wep3/text.c': {'gcc': '2.7.2'},
     'magic_choco0/text.c': {'aspsx': '2.34'},
     'magic_ifleet/text.c': {'aspsx': '2.34'},
     'magic_siva/text.c': {'aspsx': '2.34'},
