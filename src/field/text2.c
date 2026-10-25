@@ -494,7 +494,62 @@ s32 func_800A9CE8(FdGate18 *g, s32 *pos, s32 *out) {
     return t;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A9EEC);
+s32 func_800A9EEC(u8 *e, FdGateT *t, s32 *v) {
+    s32 i;
+    s32 d;
+    s32 on;
+    s32 ret;
+    s32 *pos;
+    s32 *b;
+    s32 *out;
+    s32 sp10;
+    s32 c1;
+    s32 c2;
+
+    b = (s32 *)0x1F800010;
+    out = (s32 *)0x1F800020;
+    pos = (s32 *)0x1F800000;
+    pos[0] = M2C_FIELD(e, s32 *, 0xC) >> 12;
+    pos[1] = M2C_FIELD(e, s32 *, 0x10) >> 12;
+    ret = 0;
+    pos[2] = M2C_FIELD(e, s32 *, 0x14) >> 12;
+    i = 0;
+    b[0] = v[0] >> 12;
+    on = 1;
+    b[1] = v[1] >> 12;
+    b[2] = M2C_FIELD(e, s32 *, 0x14) >> 12;
+    for (; i < 32; i++, t++) {
+        if (t->xC == on) {
+            t->x15 = 0;
+            d = func_800A9CE8(t, pos, out);
+            sp10 = d;
+            if (d != -1 && d < M2C_FIELD(e, u16 *, 0x6C) * M2C_FIELD(e, u16 *, 0x6C)) {
+                if (t->x16 == on) {
+                    ret = 1;
+                }
+                if (t->xE == 0) {
+                    t->x12 = on;
+                }
+                t->xE = on;
+                c1 = (t->x1 - t->x0) * (pos[1] - t->y0) - (pos[0] - t->x0) * (t->y1 - t->y0);
+                c2 = (t->x1 - t->x0) * (b[1] - t->y0) - (b[0] - t->x0) * (t->y1 - t->y0);
+                if ((c1 >= 0 && c2 < 0) || (c2 >= 0 && c1 < 0) || (c1 > 0 && c2 <= 0) || (c2 > 0 && c1 <= 0)) {
+                    t->xF = on;
+                }
+                if ((pos[0] == out[0] && pos[1] == out[1]) || (t->x14 = func_800A8640((FdVec *)pos, (FdVec *)out, &sp10), ((t->x14 - e[0x36] + 0x40) & 0xFF) < 0x80)) {
+                    t->x10 = on;
+                    t->x15 = on;
+                }
+            } else {
+                if (t->xE == on) {
+                    t->x13 = on;
+                }
+                t->xE = 0;
+            }
+        }
+    }
+    return ret;
+}
 
 void func_800AA180(u8 *e, FdTrig18 *t) {
     s32 i;

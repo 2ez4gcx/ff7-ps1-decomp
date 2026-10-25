@@ -49,5 +49,12 @@ extern MgMat D_800FA63C;
 extern u8 D_801D2E64[];
 void func_801B1420(void);
 extern u8 D_801D33C0[];
+void func_801B0F6C(void);
+typedef struct { u16 v; } MgHalf;
+typedef struct { s16 flag; s16 timer; s16 x; s16 y; s16 z; s16 pad[6]; u16 w; } MrPart;
+typedef struct { MrPart e[64]; } MrGroup;
+extern MrGroup D_801ED838[];
+extern MgHalf D_801D580C;
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_MRAIN_DECLS_H */

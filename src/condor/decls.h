@@ -270,5 +270,11 @@ extern s32 D_8012C6EC;
 extern s32 D_8012C6F0;
 typedef struct { u8 pad00[0x28]; s16 x0; s16 y0; u8 pad2C[4]; s16 x1; s16 y1; u8 pad34[4]; s16 x2; s16 y2; u8 pad3C[4]; s16 minx; s16 maxx; s16 miny; s16 maxy; s16 w48; s16 w4A; } CondorTri;
 void func_800B1FD0(CondorTri *arg0);
+void func_800AEDE0(void);
+extern u16 D_8012C460;
+extern u16 D_8012C468;
+extern u8 D_8012C5DC;
+extern u16 D_8012C70E;
+typedef struct { u16 flags; u8 pad02[0x12]; u8 b14; u8 pad15[0x1F]; u16 w34; u16 w36; u8 pad38[0x40]; } CondorObjC;
 
 #endif /* CONDOR_DECLS_H */

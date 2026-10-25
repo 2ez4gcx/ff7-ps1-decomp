@@ -99,5 +99,9 @@ extern u8 D_801EDDD4[];
 extern u8 D_801EDDE0[];
 extern u16 D_801EDDEC;
 extern u16 D_801EDDEE;
+void func_801B3E90(void);
+void func_801B3464(void);
+void func_801B3668(s32, s32);
+void func_801B3A08(s32, s32, s32, s32);
 
 #endif /* MAGIC_TUPON_DECLS_H */

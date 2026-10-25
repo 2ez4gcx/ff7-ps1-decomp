@@ -100,7 +100,71 @@ void func_801B0EA8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_mrain/nonmatchings/text", func_801B0F6C);
+void func_801B0F6C(void) {
+    MgTask *p;
+    MrPart *base;
+    s32 o;
+    MrPart *e;
+    s32 i;
+    s32 j;
+    s32 r;
+    s32 s2;
+    s32 s1;
+    s16 v;
+
+    i = 0;
+    p = &D_80162978[D_8015169C];
+    base = D_801ED838[p->unk1C].e;
+    do {
+        e = &base[i];
+        if (e->flag != 0) {
+            D_801D580C.v = e->timer;
+            v = e->w;
+            func_800D4368(&e->x, v, -(v >> 3));
+            D_801ED820 = func_800D4D90((u8 *)&D_801D580C - 8, D_801517C0 + 0x70, 0xC, D_801ED820);
+            if (D_80062D98 == 0) {
+                if (e->timer >= 7) {
+                    e->flag = 0;
+                }
+                e->timer++;
+            }
+        }
+        i++;
+    } while (i < 0x40);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x10) {
+            p->unk0 = -1;
+        }
+        j = 0;
+        if (p->unk2 < 6) {
+            s1 = p->unk18;
+            i = 0;
+            s2 = s1 * 2;
+            do {
+                for (j = 0; j < 0x40; j++) {
+                    if (base[j].flag == 0) {
+                        break;
+                    }
+                }
+                if (j >= 0x40) {
+                    break;
+                }
+                o = j * 0x18;
+                e = (MrPart *)(o + (s32)base);
+                e->flag = 1;
+                e->timer = 0;
+                e->x = p->unk4 + (func_80042DA8() % s2 - s1);
+                e->y = p->unk6 - func_80042DA8() % s1;
+                e->z = p->unk8 + (func_80042DA8() % s2 - s1);
+                r = func_80042DA8();
+                e->w = r % 0x800 + 0x2000;
+                i++;
+                j = 0;
+            } while (i < 2);
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B1238(void) {
     MgSVec rot;

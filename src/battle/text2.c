@@ -1,6 +1,9 @@
 #include "common.h"
 #include "battle/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern u8 D_8015190B[][0xB9C];
+
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B30E4);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B33A4);
@@ -1337,7 +1340,32 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C5040);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C5170);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C5468);
+void func_800C5468(s32 arg0) {
+    s32 i;
+    s32 n;
+    u16 a;
+
+    i = arg0 & 0xFF;
+    if (D_80151200[i].f & 0x1000) {
+        a = D_8015120C[i][0];
+        if (!(a & 0x80)) {
+            D_8015120C[i][0] = a | 0x80;
+            n = func_800BC04C(func_800C55B8);
+            D_801621F0[n][3] = (u8)arg0;
+            D_801621F0[n][2] = 0x10;
+            D_801621F0[n][1] = -0x80;
+        }
+    } else {
+        a = D_8015120C[i][0];
+        if (a & 0x80) {
+            D_8015120C[i][0] = a & 0xFF7F;
+            n = func_800BC04C(func_800C55B8);
+            D_801621F0[n][3] = (u8)arg0;
+            D_801621F0[n][2] = 0x10;
+            D_801621F0[n][1] = 0x80;
+        }
+    }
+}
 
 void func_800C55B8(void) {
     if (D_801621F0[D_801590D4][2] == 0) {
@@ -1486,7 +1514,31 @@ void func_800C64AC(void) {
     func_800BBEAC(&func_800C679C);
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C64D4);
+void func_800C64D4(void) {
+    s32 i;
+    s32 j;
+    s32 o;
+    s32 o2;
+
+    for (i = 4; i < 10; i++) {
+        o = i * 0xB9C;
+        D_80151780[i] = (&D_80151909)[o];
+        D_80151922[i][0] |= 2;
+    }
+    for (i = 4; i < 10; i++) {
+        if (D_80151780[i] & 4) {
+            D_80151922[i][0] &= 0xFD;
+        }
+        if ((D_80151774 >> i) & 1) {
+            for (j = 4; j < 10; j++) {
+                o2 = j * 0xB9C;
+                if ((s16)D_80163C80[i].a == (s16)D_80163C80[j].a && (s16)D_80163C80[i].c == (s16)D_80163C80[j].c) {
+                    (&D_80154792)[o2 - 0x2E70] &= 0xFD;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C6628);
 

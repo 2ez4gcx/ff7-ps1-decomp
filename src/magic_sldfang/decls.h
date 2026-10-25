@@ -45,5 +45,9 @@ extern SfPart D_801D4DF2[];
 extern u8 D_801BCDB8[];
 void func_800D4368(void *, s32, s32);
 MgLineG2 *func_800D4D90(void *, s32, s32, MgLineG2 *);
+void func_801B1B60(void);
+typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; } SfDot;
+typedef struct { s16 flag; s16 pad0; s16 x; s16 y; s16 z; s16 pad1; s16 vx; s16 vy; s16 vz; s16 pad2; s16 pad3; s16 r; } SfPtcl;
+extern SfPtcl D_801D4DDC[];
 
 #endif /* MAGIC_SLDFANG_DECLS_H */

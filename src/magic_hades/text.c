@@ -163,7 +163,70 @@ INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3664);
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3768);
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B38DC);
+void func_801B38DC(void) {
+    MgTask *p;
+    HdBlk *h;
+    HdTrail *tr;
+    HdScratch *sc;
+    s32 s1;
+    s32 n;
+    s32 i;
+    s32 j;
+    s32 last;
+
+    sc = (HdScratch *)0x1F800000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    h = &D_801F1250[p->unk1C];
+    tr = &D_801F34D0[p->unk1C];
+    if (D_80062D98 == 0) {
+        tr->v[h->cur] = *(MgSVec *)&p->unk4;
+        func_801B35F0(h, &tr->v[h->cur]);
+    }
+    if (p->unk2 == 0) {
+        p->unk2 = p->unk2 + 1;
+        return;
+    }
+    sc->wA8 = 0x400202;
+    sc->wB0 = 0x787878;
+    sc->wAC = 0x787878;
+    s1 = h->start;
+    last = h->num - 1;
+    sc->v38 = *h->pos[s1];
+    func_801B3434(sc, &sc->v38, 0x20, p->unk14);
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_801B3354(sc, 0x20);
+    i = 1;
+    if (last > 0) {
+        do {
+            if (s1 >= h->wrap) {
+                s1 = 0;
+            }
+            n = s1 + 1;
+            if (n >= h->wrap) {
+                n = 0;
+            }
+            sc->w20 = sc->w1C;
+            sc->wB4 = sc->wB0;
+            sc->v38 = *h->pos[n];
+            for (j = 0; j < 0x20; j++) {
+                D_801F77D0[j] = D_801F76D0[j];
+                D_801F74D0[j].vy = sc->v38.vy;
+            }
+            func_801B3354(sc, 0x20);
+            func_801B2D04(sc, i, last, 0x20);
+            i++;
+            s1++;
+        } while (i <= last);
+    }
+    if (p->unk2 >= 0x28) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk6 += p->unk18;
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3BD4);
 

@@ -192,7 +192,54 @@ void func_801B18FC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B1B60);
+void func_801B1B60(void) {
+    SfDot *p;
+    MgTag *ot;
+    MgTask *t;
+    s32 sxy;
+    s32 flag;
+    s32 otz;
+    s32 i;
+    s32 k;
+
+    p = (SfDot *)D_801D4DC4;
+    t = &D_80162978[D_8015169C];
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    k = t->unk14;
+    for (i = 0; i < 0x12; i++) {
+        if (D_801D4DDC[k].flag == 0) {
+            otz = func_8003BBDC(&D_801D4DDC[k].x, &p->x0, &sxy, &flag);
+            if (flag & 0x60000) {
+                D_801D4DDC[k].flag = 1;
+            } else {
+                *(s32 *)&p->r0 = 0x686868;
+                p->tag.len = 2;
+                p->code = 0x6A;
+                ot = (MgTag *)D_801517C0 + (otz >> 2) + 0x1C;
+                p->tag.addr = ot->addr;
+                ot->addr = (u32)p;
+                p++;
+                if (D_80062D98 == 0) {
+                    D_801D4DDC[k].x += D_801D4DDC[k].vx;
+                    D_801D4DDC[k].y += D_801D4DDC[k].vy;
+                    D_801D4DDC[k].z += D_801D4DDC[k].vz;
+                    k++;
+                    if (k >= 0xDE) {
+                        k = 0;
+                    }
+                }
+            }
+        }
+    }
+    D_801D4DC4 = (MgLineG2 *)p;
+    if (t->unk2 >= 5) {
+        t->unk0 = -1;
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        t->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B1E04);
 

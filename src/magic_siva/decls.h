@@ -43,5 +43,26 @@ extern M2C_UNK D_801F036C;
 extern u8 *D_801F0374;
 void func_801B25C4(void);
 extern s32 D_801F45B4[];
+s32 func_801B2224(void);
+typedef struct { s16 pad0; s16 life; s16 x; s16 y; s16 z; s16 pad1; s16 vx; s16 vy; s16 vz; s16 pad2; void (*fn)(MgSVec *, void *, s32); } SvPtcl;
+extern SvPtcl D_801F13B4[];
+extern MgMat D_800FA63C;
+void func_801B1B5C(SvPtcl *);
+void func_801B3B10(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 padA; s16 unkC; s16 unkE; s16 unk10; s16 pad12; MgMat *unk14; s16 pad18; s16 unk1A; s16 pad1C; s16 pad1E; } SvTask;
+typedef struct { u8 pad0[8]; MgVec scale; MgMat m1; MgMat m2; } SvFx;
+extern s32 D_801F0008[];
+typedef struct { s32 v; } SvWord;
+extern SvWord D_801F0338;
+extern s16 D_801F0342;
+extern SvFx *D_801F0348;
+extern u8 D_801F45B8[];
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+void func_8003C21C(void *, MgMat *);
+s32 func_801B1364(SvWord *, s32, s32, s32);
+s32 func_801B1760(SvWord *, s32, s32, s32, void *);
+void func_801B3938(s32, s32, MgMat *, MgMat *);
 
 #endif /* MAGIC_SIVA_DECLS_H */
