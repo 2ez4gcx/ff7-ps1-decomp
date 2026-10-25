@@ -1051,7 +1051,219 @@ s32 func_800A45F4(void) {
 void func_800A4604(void) {
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800A460C);
+s32 func_800A460C(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3) {
+    WQuad32 sp10;
+    s32 c;
+    s32 mode;
+    s32 v;
+    s32 a;
+    s32 d;
+    s32 t;
+    s32 s;
+    s32 u;
+    s32 r;
+    s32 q;
+    s32 n;
+    s32 w;
+
+    D_800E566C = 0;
+    D_800E567C = (u8 *)arg3;
+    D_800E566C = 0;
+    do {
+        if (*arg0 != 0) {
+            v = ((s32 (*)(void))func_800B7218)();
+        } else {
+            v = 2;
+            if (D_800E566C != 6) {
+                a = *arg1;
+                if ((u32)(a - 0x1E) >= 2 && a != 0x2A && a != 0x38) {
+                    v = 0;
+                    if (D_800E566C != 7) {
+                        v = -(a >= 0x3C) & 3;
+                    }
+                }
+            }
+        }
+        D_800E5634 = v;
+        mode = func_800B717C();
+        if (*arg0 == 0 && (u32)(*arg1 - 0x24) < 4) {
+            w = 9;
+            if (mode > 0) {
+                w = 10;
+            }
+        } else {
+            if (D_800E5634 == 0) {
+                u = mode;
+            } else {
+                u = (u16)D_800E5634 + 9;
+            }
+            w = (s16)u;
+        }
+        ((void (*)(s32))func_800A0D2C)(w);
+        func_800B650C();
+        a = 0;
+        if ((u32)(mode - 3) < 2 || mode == 6 || mode == 8) {
+            a = 1;
+        }
+        func_800B715C(a);
+        D_800E5648 = 0;
+        func_800BC1CC();
+        func_800A7EA4();
+        func_800B7228(arg0, arg1, D_800E5634 != 3);
+        if (D_800E5634 == 2) {
+            func_800A2088(2);
+        }
+        D_800E5604 = 0;
+        func_800A31F8();
+        func_800A12AC();
+        func_800ADC70();
+        func_800AF0B0();
+        func_800AF9DC();
+        func_800B104C();
+        func_800B7C1C();
+        func_800B7C6C(1);
+        func_800A4138();
+        func_800B8488(D_800BE5E8);
+        func_800B04AC();
+        func_800AE8AC();
+        func_800B392C();
+        func_800A8A88();
+        func_800BB8B0();
+        func_800B6570(0x7F);
+        func_800AB5E4((u8 *)D_800D05EC);
+        func_800ABA18(0);
+        func_800AD788();
+        if (((s32 (*)(void))func_800A9174)() == 3) {
+            q = 0xFA0;
+        } else {
+            q = 0x7D0;
+        }
+        D_800E5640 = q;
+        if ((u32)(*arg0 - 1) < 2 || (u32)(D_800E566C - 6) < 2) {
+            func_800B76A8();
+            if ((u32)(D_800E566C - 6) < 2) {
+                func_800A886C(0xBB8);
+            }
+        }
+        if (D_800E5634 == 2) {
+            func_800A98A4(1);
+            func_800AA02C(-0xBB8);
+        }
+        func_800A835C();
+        func_800B6EFC(func_800B79B8());
+        if (func_800B64C8() < 6) {
+            func_800B63E0(1);
+        }
+        if (func_800B64C8() != 0) {
+            func_800B64A0();
+        } else {
+            func_800B63F0(1);
+        }
+        func_800A21B4();
+        D_800E566C = -0xF;
+        do {
+            func_800A1370();
+            D_800BD13C = 0;
+            func_800AB4F4();
+            func_800AA0E0(&sp10);
+            d = sp10.b - D_80116508;
+            if (d <= 0) {
+                d = D_80116508 - sp10.b;
+            }
+            if (D_800E5618 != 2) {
+                if (func_800A9878() != 0 || d >= 0xC9) {
+                    n = (D_80116508 * 7 + sp10.b) >> 3;
+                } else if (d >= 0x33) {
+                    if (sp10.b > D_80116508) {
+                        n = D_80116508 + 0x32;
+                    } else {
+                        n = D_80116508 - 0x32;
+                    }
+                } else {
+                    n = sp10.b;
+                }
+                D_80116508 = n;
+            }
+            func_800A21B4();
+            func_800A44C4();
+            func_800AA0E0(&sp10);
+            func_800AF3A4(&sp10);
+            func_800AD788();
+            func_800A1DF0(*(s16 *)&D_800E560C);
+            func_800A806C(*(s16 *)&D_800E560C, 1);
+            func_800AD804();
+            func_800A3C74();
+            func_800A3964();
+            if (D_800E566C < 9) {
+                func_800B85D4();
+            }
+            func_800B3828();
+            if ((D_800E5648 == 3 && D_800E5658 == 0) || (D_800E5634 == 2 && func_800A82F0() != 0)) {
+                func_800AA0E0(&sp10);
+                t = ((s32 (*)(void))func_800A9910)();
+                s = t + 0xC8;
+                D_800E55F8 = s < sp10.b;
+                if (D_800E55F8 == 0 && D_800E5658 == 0) {
+                    r = func_800A91A4(0x2000);
+                    c = s;
+                    if (r != 0) {
+                        func_800AA02C(c >= -0xBB7 ? -0xBB8 : c);
+                    } else {
+                        r = ((s32 (*)(void))func_800A9174)();
+                        c = s;
+                        if (r == 3 || t < 0x7D0) {
+                            func_800AA02C(c);
+                        } else {
+                            func_800AA238();
+                        }
+                    }
+                }
+            }
+            func_800AE638(*(s16 *)&D_800E560C);
+            func_800AEA48(*(s16 *)&D_800E560C);
+            func_800A4268();
+            func_800AFCC8();
+            if (D_800E566C < 9 && D_800E5634 != 3) {
+                func_800BC420(*(s16 *)&D_800E560C);
+            }
+            func_800BBD20(0);
+            func_800B2E90();
+            func_8003B6DC(D_800C65EC);
+            if (D_800E566C >= 0) {
+                func_800AB570();
+            }
+            func_800B57DC();
+            func_800B0E84();
+            func_800B6E78();
+            if (D_800E566C == 1) {
+                func_800B832C();
+            }
+            a = (u16)D_8011650C;
+            if (D_8011650C == 1) {
+                a -= 1;
+            }
+            func_800A141C(a);
+            if ((func_8001C808() & 0x90F) == 0x90F) {
+                func_800A4008();
+            }
+        } while (D_800E566C < 6);
+        func_800ABA18(1);
+        while (func_800AD928() != 0) {
+            func_800AD788();
+        }
+        func_800A7F18();
+        func_800B7620(arg0, arg1, arg2);
+        if (*arg0 == 1) {
+            func_800ADC80(3);
+            func_800A38C8();
+        }
+        func_800B650C();
+        while (func_80043DD8(1) != 0) {
+        }
+        func_800A3908();
+    } while (D_800E566C < 9);
+    return func_800A0BD4();
+}
 
 void func_800A4DDC() {
     s16 i;
@@ -3415,7 +3627,200 @@ s32 func_800AAA00(u8 *arg0) {
     return D_80109D70;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800AAB18);
+void func_800AAB18(u8 *arg0) {
+    WmActA *a;
+    WmAnimA *f;
+    WmAnimA *p;
+    WmAnimA *o;
+    s16 idx;
+    s32 dx;
+    s32 dz;
+    s32 adj;
+    s32 d2;
+    s32 fr;
+    s32 e;
+    s32 v;
+    s32 k;
+    u8 *rec;
+    WQuad32 pos;
+    s16 sp28[3];
+    s32 sp30[3];
+
+    a = (WmActA *)arg0;
+    if (a->f51 & 8) {
+        a->f51 &= 0xFD;
+    }
+    if (a != NULL && D_8010AD40 != 0 && (a->f51 & 2)) {
+        f = (WmAnimA *)func_800B6EFC(a->f50);
+        if (f == NULL) {
+            a->f51 &= 0xFD;
+            return;
+        }
+        p = NULL;
+        if (a->parent != NULL) {
+            p = (WmAnimA *)func_800B6EFC(a->parent->f50);
+            if (p == NULL) {
+                a->parent->f51 &= 0xFD;
+                return;
+            }
+        }
+        d2 = 0;
+        if (a->f5D != 0) {
+            idx = (a->f5D >= 0) ? a->f5D : 0;
+        } else {
+            dx = a->fC - a->f1C;
+            if (dx <= 0) {
+                dx = a->f1C - a->fC;
+            }
+            if (dx > 0x23FFF) {
+                dx = 0x48000 - dx;
+            }
+            e = a->f14 - a->f24;
+            if (e <= 0) {
+                e = a->f24 - a->f14;
+            }
+            if (e > 0x1BFFF) {
+                e = 0x38000 - e;
+            }
+            k = a->f50;
+            d2 = dx * dx + e * e;
+            idx = d2 >= 100;
+            if (k == 6) {
+                a->f58 = (a == (WmActA *)D_8010AD40) << 5;
+                if (d2 != 0) {
+                    idx = func_800AAA00(&a->f53);
+                } else {
+                    idx = 0;
+                }
+            } else if (func_800A921C(0x2000, k) != 0) {
+                if (d2 > 0) {
+                    a->f58 = 0x20;
+                } else {
+                    a->f58 = 0;
+                }
+            }
+        }
+        f->b1 = -1;
+        if (idx >= f->b4) {
+            idx = f->b4 - 1;
+        }
+        rec = (u8 *)(idx * 16 + (s32)(f->p1C - (-f->h1A)));
+        if (a->f53 >= *(u16 *)rec) {
+            if (a->f51 & 0x20) {
+                v = rec[0] - 1;
+            } else {
+                v = 0;
+            }
+            a->f53 = v;
+        }
+        dz = 0;
+        dx = 0;
+        sp28[2] = 0;
+        sp28[1] = 0;
+        sp28[0] = 0;
+        adj = 0;
+        if ((a->f51 & 0x80) && a == (WmActA *)D_8010AD40) {
+            f->b5 = D_8010AD44 - 0x40;
+            f->b6 = 0;
+            f->b7 = 0;
+            f->w8 = 0;
+            f->wC = (a->f10 - *(s32 *)&D_80116508) / 4;
+            f->w10 = 0;
+            sp28[1] = D_8010AD48 + a->f3C + a->f3E;
+            sp28[2] = D_8010AD4C;
+        } else {
+            func_800A6B8C(&pos);
+            dx = a->fC - pos.a;
+            if (dx < -0x24000) {
+                dx += 0x48000;
+            } else if (dx > 0x23FFF) {
+                dx -= 0x48000;
+            }
+            f->w8 = dx / 4;
+            dz = a->f14 - pos.c;
+            if (dz < -0x1C000) {
+                dz += 0x38000;
+            } else if (dz > 0x1BFFF) {
+                dz -= 0x38000;
+            }
+            f->w10 = dz / 4;
+            if (a != (WmActA *)D_8010AD40) {
+                adj = func_800AA8F8(dx, dz);
+            }
+            e = a->f10 - *(s32 *)&D_80116508 + a->f44;
+            f->wC = (e - adj) / 4;
+            f->b5 = 0xC0;
+            f->b6 = ((s16)a->f3C + (s16)a->f3E) >> 4;
+            f->b7 = 0;
+        }
+        if (p != NULL) {
+            p->w8 = f->w8;
+            p->wC = f->wC;
+            p->w10 = f->w10;
+            p->b5 = f->b5;
+            p->b6 = f->b6;
+            p->b7 = f->b7;
+        }
+        if (a->f50 == 6) {
+            fr = a->f53;
+            if (((WmActA *)D_8010AD40)->f50 == a->f50 && (((WmActA *)D_8010AD40)->f51 & 1)) {
+                func_800A8898(sp30);
+                D_8010AD54 = (D_8010AD54 * 3 - ((s16 (*)(s32, s32))func_800AE180)(sp30[2], -sp30[1])) >> 2;
+                D_8010AD58 = (D_8010AD58 * 3 - ((s16 (*)(s32, s32))func_800AE180)(sp30[0], -sp30[1])) >> 2;
+            }
+            sp28[0] = D_8010AD54;
+            sp28[2] = D_8010AD58;
+            func_800B5E28((WmHdr4 *)f, (WmObj5 *)a, idx, fr, (s32)sp28);
+        } else {
+            func_800B5E28((WmHdr4 *)f, (WmObj5 *)a, idx, a->f53, (s32)sp28);
+        }
+        if (p != NULL) {
+            if (a->f50 == 3) {
+                if (a->parent != NULL) {
+                    func_800B5E28((WmHdr4 *)p, NULL, 0, a->parent->f53, (s32)sp28);
+                }
+            } else {
+                func_800B5E28((WmHdr4 *)p, NULL, idx != 0 ? 3 : 2, a->f53, (s32)sp28);
+            }
+        }
+        func_800B45DC(a, a->f51 & 1);
+        if ((a->f58 >> 4) != 0) {
+            a->f53 += (a->f59 += D_8011650C) / (a->f58 >> 4);
+            a->f59 %= a->f58 >> 4;
+        }
+        if (a->f50 == 3) {
+            if (a->f51 & 0x80) {
+                a->f58 = 0x20;
+            } else if (a->f58 != 0) {
+                a->f58 = a->f58 + 1;
+            }
+            if (d2 >= 200 && a->parent != NULL) {
+                if (++a->parent->f53 >= *(u16 *)(p->p1C + p->h1A)) {
+                    a->parent->f53 = 0;
+                }
+            }
+        } else if (a->f50 == 5) {
+            if (a == (WmActA *)D_8010AD40) {
+                a->f58 = 0x20;
+            } else if (a->f58 != 0) {
+                a->f58 = a->f58 + 1;
+            }
+        }
+        o = (WmAnimA *)((u8 *)a + 0x90 + func_800A0BD4() * 0x28);
+        sp28[2] = 0;
+        sp28[0] = 0;
+        if (a->f50 == 3) {
+            sp28[0] = -10;
+            sp28[2] = 0x50;
+        } else if (a->f50 == 0xB) {
+            sp28[2] = -0x168;
+        }
+        func_800AE0BC((W4SVec *)sp28, a->f3C + a->f3E + func_800A1DC0() * 4);
+        *(s16 *)((u8 *)o + 0x1E) = dx + sp28[0];
+        a->f48 = a->f42 - adj;
+        *(s16 *)((u8 *)o + 0x26) = dz + sp28[2];
+    }
+}
 
 void func_800AB36C(void *arg0) {
     if (arg0 != NULL) {
