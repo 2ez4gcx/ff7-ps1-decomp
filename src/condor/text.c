@@ -946,7 +946,61 @@ void func_800AB6B0(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AB71C);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800ABA58);
+void func_800ABA58(s32 arg0) {
+    s32 b;
+    s32 mk;
+    s32 *p1;
+    s32 *p2;
+    s32 *p3;
+    s32 *p4;
+    s32 *p5;
+    s32 *p6;
+
+    b = arg0;
+    if (b & 0x1000) {
+        D_8012C438--;
+        if (D_8012C438 > 0x8000) {
+            D_8012C438 = 0;
+        } else {
+            p1 = &D_8012C6F0;
+            *p1 += 1;
+        }
+    }
+    if (b & 0x4000) {
+        D_8012C438++;
+        if (D_8012C438 >= 0x325) {
+            D_8012C438 = 0x324;
+        } else {
+            p2 = &D_8012C6F0;
+            *p2 -= 1;
+        }
+    }
+    if (b & 0x8000) {
+        D_8012C434--;
+        if (D_8012C434 > 0x8000) {
+            p3 = &D_8012C6EC;
+            mk = ~7;
+            do {
+                *p3 &= mk;
+                D_8012C434 = 0;
+            } while (0);
+        } else {
+            p4 = &D_8012C6EC;
+            *p4 += 1;
+        }
+    }
+    if (b & 0x2000) {
+        D_8012C434++;
+        if (D_8012C434 >= 0xC1) {
+            p5 = &D_8012C6EC;
+            D_8012C434 = 0xC0;
+            *p5 &= ~7;
+        } else {
+            p6 = &D_8012C6EC;
+            *p6 -= 1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800ABC18);
 
@@ -1370,7 +1424,125 @@ s16 func_800B17A0(void *arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B18E0);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B1FD0);
+void func_800B1FD0(CondorTri *arg0) {
+    u8 padA[0x50];
+    CondorSV r1;
+    CondorSV r2;
+    u8 padB[0x28];
+    s16 x;
+    s32 y;
+    s16 ta;
+    s16 tb;
+    s16 tc;
+    s32 m;
+
+    r1.x = 0;
+    r1.y = 0;
+    r1.z = 0;
+    r2.x = 0;
+    r2.y = 0;
+    r2.z = 0;
+    x = arg0->x0;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    ta = y + 0x4000;
+    x = arg0->x1;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    tb = y + 0x4000;
+    x = arg0->x2;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    tc = y + 0x4000;
+    if (ta <= tb) {
+        if (tc < ta) {
+            m = tc;
+        } else {
+            m = ta;
+        }
+    } else {
+        if (tc < tb) {
+            m = tc;
+        } else {
+            m = tb;
+        }
+    }
+    arg0->minx = m;
+    if (ta >= tb) {
+        if (ta >= tc) {
+            m = ta;
+        } else {
+            m = tc;
+        }
+    } else {
+        if (tb < tc) {
+            m = tc;
+        } else {
+            m = tb;
+        }
+    }
+    arg0->maxx = m;
+    x = arg0->y0;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    ta = y + 0x4000;
+    x = arg0->y1;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    tb = y + 0x4000;
+    x = arg0->y2;
+    if (x & 0x8000) {
+        y = (s16)x;
+    } else {
+        y = x;
+    }
+    tc = y + 0x4000;
+    if (ta <= tb) {
+        if (tc < ta) {
+            m = tc;
+        } else {
+            m = ta;
+        }
+    } else {
+        if (tc < tb) {
+            m = tc;
+        } else {
+            m = tb;
+        }
+    }
+    arg0->miny = m;
+    if (ta >= tb) {
+        if (ta >= tc) {
+            m = ta;
+        } else {
+            m = tc;
+        }
+    } else {
+        if (tb < tc) {
+            m = tc;
+        } else {
+            m = tb;
+        }
+    }
+    arg0->maxy = m;
+    arg0->w48 = 0x100;
+    arg0->w4A = 0;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B21A8);
 
