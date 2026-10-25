@@ -106,6 +106,9 @@ FILE_OPTIONS = {
                         'cflags': ['-O2', '-G0', '-funroll-loops']},
     'chocobo/text4b.c': {'aspsx': '2.34'},
     'submar/text2.c': {'unit_start': True},
+    # SUBMAR.BIN's first file: a magic-number division leaves mfhi in GCC
+    # 2.7.2's register (a2, where 2.6.3 picks v1).
+    'submar/text.c': {'gcc': '2.7.2'},
     # Overlays assembled by ASPSX 2.30 or later: a global plus a register
     # folds %lo into the load (`addu $at, $at, $r; lbu $v0, %lo(x)($at)`),
     # with no nop before it. Every such access in their asm has that form.

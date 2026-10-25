@@ -56,7 +56,34 @@ void func_800A162C(void) {
     func_800A1444(0x80100000, &D_800AD904);
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A16BC);
+void func_800A16BC(s32 arg0) {
+    u32 i;
+    u32 var_a1;
+    u32 var_v1;
+
+    i = arg0 & 0xFF;
+    if (i < 6) {
+        func_80033E34(D_800AD350[i * 2], D_800AD350[i * 2 + 1], (s32)D_800B0E5C, 0);
+        do {
+
+        } while (func_80034B44() != 0);
+    }
+    func_800A4B50(D_800B265C);
+    func_800A4BBC(&D_800B1EB0);
+    var_v1 = D_800B1E64;
+    if (var_v1 >= 0x10U) {
+        var_v1 = 0;
+    }
+    var_a1 = D_800B1E60;
+    var_v1 <<= 0x12;
+    D_800B1E64 = var_v1;
+    if (var_a1 >= 0x10U) {
+        var_a1 = 0;
+    }
+    D_800B1E60 = var_a1;
+    D_800B1E78 = (s32) (D_800B1E70 << 0xC) / (s32) D_800B1E74;
+    D_800B1E84 = (s32) (D_800B1E7C << 0xC) / (s32) D_800B1E80;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1814);
 
@@ -120,7 +147,66 @@ void func_800A2E7C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A2FB8);
+void func_800A2FB8(s16 arg0) {
+    s32 v;
+    s32 h;
+    s32 cx;
+    s32 cy;
+    s32 i;
+    s32 found;
+    s32 x;
+    s32 y;
+    s32 dy;
+    s32 dx;
+    SubTileM *t;
+
+    h = D_800B1E64 / 0x1000;
+    cx = D_800AE960 / 64;
+    cy = cx;
+    cx = D_800AE960 - cy * 64;
+    if (arg0 > 0x1F4) {
+        arg0 = 0x1F4;
+    }
+    while (arg0 > 0) {
+        found = 0;
+        for (i = 0; i < 0x1000; i++) {
+            t = &D_800B5F4C[i];
+            if (t->flags & 0x2000) {
+                continue;
+            }
+            found = 1;
+            y = i / 64;
+            dy = y - cy;
+            x = i - y * 64;
+            dx = x - cx;
+            if ((u32)(dy + 2) < 5 && (u32)(dx + 2) < 5) {
+                continue;
+            }
+            if (h >= (u16)t->fE) {
+                continue;
+            }
+            if ((s16)func_80042DA8() >= 0x7F) {
+                continue;
+            }
+            t->flags = 0x2000;
+            v = 0x400 - (((func_80042DA8() * 8) / 0x7FFF) << 6);
+            if (v < 0) {
+                v = 0;
+            }
+            if ((u16)t->fE < v) {
+                v = (u16)t->fE;
+            }
+            arg0--;
+            t->fC = v;
+            if (arg0 <= 0) {
+                break;
+            }
+        }
+        if (!found) {
+            break;
+        }
+    }
+}
 
 void func_800A3188(void) {
     SubTileM *t;
@@ -364,7 +450,25 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9CB0);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9FD0);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AA180);
+void func_800AA180(SubTrail *a) {
+    s16 *n;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    x = a->x >> 12;
+    n = a->p[4];
+    y = a->y >> 12;
+    n[0] = x;
+    z = a->z >> 12;
+    n[1] = y;
+    n[2] = z;
+    a->p[4] = a->p[3];
+    a->p[3] = a->p[2];
+    a->p[2] = a->p[1];
+    a->p[1] = a->p[0];
+    a->p[0] = n;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AA1D0);
 
