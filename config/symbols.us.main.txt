@@ -21,3 +21,4 @@ D_80036240 = 0x80036240; // type:u32
 func_80036244 = 0x80036244; // type:func
 D_80010100 = 0x80010100; // force_not_migration:True
 D_8001010E = 0x8001010E; // force_not_migration:True
+func_80042D98 = 0x80042D98; // type:func

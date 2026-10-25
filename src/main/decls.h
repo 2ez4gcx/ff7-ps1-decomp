@@ -1531,6 +1531,14 @@ extern volatile s32 *D_8004AB04;
 void func_80036F78(void);
 s32 func_80043CE0(s32 arg0);
 extern s32 D_80062C0C;
+char *func_8003DDBC(s32 arg0);
+extern char D_80010668[];
+extern char *D_8005164C[];
+char *func_8003DDF4(s32 arg0);
+extern char *D_800516CC[];
+void func_800458F0(s32 arg0);
+extern u8 D_80070590[];
+u8 func_8004591C(s32 arg0);
 
 #endif /* MAIN_DECLS_H */
 extern MainSlot440 D_8009D85C[];

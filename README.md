@@ -31,7 +31,7 @@ executable is split into source files by how its parts were compiled. Progress, 
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code
-(0x80029A50–0x80036297), `lib.c` the PSY-Q libraries (0x80036298–0x80048D17).
+(0x80029A50–0x80036297), `lib.c` … `lib5.c` the PSY-Q libraries (0x80036298–0x80048D17).
 
 Every C function compiles to exactly the game's instructions (and its jump tables and
 strings to the game's rodata). Many were written by `tools/auto_decomp.py` (m2c drafts
