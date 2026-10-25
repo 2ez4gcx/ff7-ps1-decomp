@@ -316,7 +316,51 @@ INCLUDE_ASM("../asm/us/magic_riva/nonmatchings/text", func_801B254C);
 
 INCLUDE_ASM("../asm/us/magic_riva/nonmatchings/text", func_801B2670);
 
-INCLUDE_ASM("../asm/us/magic_riva/nonmatchings/text", func_801B26E4);
+void func_801B26E4(void) {
+    MgMat m1;
+    MgMat m2;
+    MgTask *p;
+    s32 v;
+    s16 w;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        v = p->unk2;
+        if (v < 0x1B) {
+            if (!(*(volatile s16 *)&p->unk2 & 3)) {
+                if (v < 0) {
+                    v += 3;
+                }
+                func_801B254C(D_801D1934, D_801DD178[v >> 2], D_801DD25C, 4, 0x1E0);
+            }
+            func_801B2670(D_801D1934, D_801DD25C, 0x1E0);
+        }
+    }
+    func_8003C21C(D_801F3644, &m1);
+    m1.t[0] = p->unk4;
+    m1.t[1] = p->unk6;
+    m1.t[2] = p->unk8;
+    func_8003A63C(&D_801F49E0, &m1, &m2);
+    if (p->unk2 >= 0x2F) {
+        func_8003B69C(0, 0, 0);
+        D_801F3634.unk4 = 0xC8;
+        D_801F3634.unkA = ((p->unk2 - 0x2F) << 12) / 15;
+    } else {
+        D_801F3634.unk4 = 0xC0;
+        D_801F3634.unkA = 0;
+    }
+    func_8003B48C(&m2);
+    func_8003B51C(&m2);
+    D_80163C74 = func_800D29D4(&D_801F3634, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (*(u8 *)0x80062D98 == 0) {
+        p->unk8 += p->unk10;
+        w = p->unk2 + 1;
+        p->unk2 = w;
+        if (w >= 0x3E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_riva/nonmatchings/text", func_801B28EC);
 

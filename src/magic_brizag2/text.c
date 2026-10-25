@@ -236,7 +236,36 @@ INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3A1C);
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3BFC);
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3D94);
+void func_801B3D94(void) {
+    MgTask *p;
+    s32 i;
+    s32 k;
+    s32 sv;
+
+    p = &D_80162978[D_8015169C];
+    D_801D9200.v = p->unk2;
+    k = p->unk1A;
+    for (i = 0; i < 8; i++) {
+        sv = D_801EE87C[k].v[3];
+        func_800D4368(&D_801EE87C[k], sv, -(sv >> 3));
+        D_801EA264 = func_800D4D90(D_801D91F8, D_801517C0 + 0x70, 0xC, D_801EA264);
+        if (D_80062D98 == 0) {
+            sv = (s16)D_801EE87C[k].v[7];
+            D_801EE87C[k].v[1] += sv;
+            D_801EE87C[k].v[7] = sv - (sv >> 4);
+        }
+        k++;
+        if (k >= 0xDE) {
+            k = 0;
+        }
+    }
+    if (p->unk2 >= 7) {
+        p->unk0 = -1;
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B3F24);
 

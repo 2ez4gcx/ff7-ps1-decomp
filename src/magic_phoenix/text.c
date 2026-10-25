@@ -322,7 +322,59 @@ INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B3C08);
 
 INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B3D30);
 
-INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B3F84);
+void func_801B3F84(void) {
+    MgTask *p;
+    MgPhElem *e;
+    MgPhElem *f;
+    s32 i;
+    s32 j;
+    s32 s;
+    s32 t;
+    s32 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 5) {
+        *(s32 *)&D_801EC854 = 0x2E808080;
+        s = (t << 12) / 5;
+    } else {
+        t -= 5;
+        if (t < 0x14) {
+            *(s32 *)&D_801EC854 = 0x2E808080;
+            s = 0x1000;
+        } else {
+            t -= 0x14;
+            if (t >= 5) {
+                p->unk0 = -1;
+                return;
+            }
+            s = 0x1000;
+            c = (-((t << 12) / 5 << 7) >> 12) - 0x80;
+            D_801EC854 = D_801EC855 = D_801EC856 = c;
+        }
+    }
+    i = 0;
+    j = 0;
+    do {
+        e = (MgPhElem *)(D_801EC558 + j);
+        func_801B179C((MgSVec *)e, (s * e->w * 0x10) >> 16, 0);
+        D_80163C74 = func_800D4D90(D_801EC850, D_801517C0 + 0x70, 0xC, D_80163C74);
+        i++;
+        if (D_80062D98 == 0) {
+            f = (MgPhElem *)(D_801EC558 + j);
+            f->x += f->vx;
+            f->y += f->vy;
+            f->z += f->vz;
+            f->vx = f->vx * 15 >> 4;
+            f->vy = f->vy * 15 >> 4;
+            f->vz = f->vz * 15 >> 4;
+        }
+        j += 0x14;
+    } while (i < 100);
+    if (*(u8 *)0x80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B41C0);
 

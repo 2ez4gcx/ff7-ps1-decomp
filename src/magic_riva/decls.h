@@ -44,5 +44,21 @@ void func_800D3994(s32, s32, MgSVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 MgMat *func_801B1348(MgSVec *arg0, s32 arg1, MgMat *arg2);
+void func_801B26E4(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+void func_8003A63C(void *, void *, void *);
+void func_8003B69C(s32, s32, s32);
+void func_8003C21C(void *, void *);
+s32 func_800D29D4(void *, s32, s32, s32);
+void func_801B254C(void *, s32, s32, s32, s32);
+void func_801B2670(void *, s32, s32);
+extern s32 D_801517C0;
+extern s32 D_80163C74;
+extern u8 D_801D1934[];
+extern s32 D_801DD178[];
+extern s32 D_801DD25C;
+extern MgScratch D_801F3634;
+extern u8 D_801F3644[];
 
 #endif /* MAGIC_RIVA_DECLS_H */

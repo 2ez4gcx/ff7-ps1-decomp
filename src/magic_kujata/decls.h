@@ -60,5 +60,21 @@ void func_800D3994(s32, s32, MgSVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern s16 D_800FA666[];
+void func_801B500C(void);
+typedef struct { MgSVec rot; MgVec scale; MgMat m1; MgMat m2; } MgKjState;
+extern MgKjState *D_801F01D4;
+extern u8 D_801EFCC0[];
+extern u8 D_801EFCB0[];
+extern s32 D_801F04F0;
+extern s32 D_801F04F4;
+extern s32 D_801F04F8;
+extern s32 D_801517C0;
+extern s32 D_80163C74;
+void func_8003B35C(void *, void *);
+void func_8003C21C(void *, void *);
+s32 func_801B1348(void *, s32, s32, s32, s32, s32, s32, s32, s32, void *, void *);
+void func_801B3EA8(void);
+void func_801B42B8(void);
+void func_801B4D10(void);
 
 #endif /* MAGIC_KUJATA_DECLS_H */

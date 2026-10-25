@@ -310,7 +310,48 @@ INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B4B88);
 
 INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B4D10);
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B500C);
+void func_801B500C(void) {
+    MgTask *p;
+    s32 t;
+    s16 y;
+    s16 r;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 0x2D) {
+        if (D_80062D98 == 0) {
+            func_801B42B8();
+        }
+        func_801B3EA8();
+    } else {
+        t -= 0x2D;
+        if (t < 0xF) {
+            if (t == 0) {
+                func_801B4D10();
+            }
+            y = 0;
+            t = (t << 12) / 15;
+            r = func_801B01C0(t, 0x3C0);
+            if (t >= 0x800) {
+                y = t - 0x800;
+            }
+            func_8003A63C(&D_801F04C8, D_801EFCC0, &D_801F01D4->m1);
+            D_801F01D4->rot.vx = 0;
+            D_801F01D4->rot.vy = t;
+            D_801F01D4->rot.vz = 0;
+            func_8003C21C(D_801F01D4, &D_801F01D4->m2);
+            D_801F01D4->scale.vx = D_801F01D4->scale.vy = D_801F01D4->scale.vz = 0x1000;
+            func_8003B35C(&D_801F01D4->m2, &D_801F01D4->scale);
+            D_80163C74 = func_801B1348(D_801EFCB0, D_801517C0 + 0x70, 0xC, D_80163C74, D_801F04F4, D_801F04F0, D_801F04F8, r, y, &D_801F01D4->m1, &D_801F01D4->m2);
+        } else {
+            p->unk0 = -1;
+            return;
+        }
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B521C);
 

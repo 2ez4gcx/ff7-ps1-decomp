@@ -1,15 +1,87 @@
 #include "common.h"
 #include "magic_gravide/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    MgTask *p;
+    MgMat *m;
+    s32 z;
+    s16 *frame;
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B00F0);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    frame = &D_801D0A48;
+    *frame = p->unk2;
+    m = func_800D4368(&p->unk4, 0x800, 0);
+    z = m->t[2];
+    if (z > 0) {
+        func_800D4484(*(s32 *)(((z >> 4) * 4) + D_801517C0 + 0x70), 0x20);
+        D_801EEA64 = (u8 *)func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, (s32)D_801EEA64);
+    }
+    if (D_80062D98 == 0) {
+        p->unk2 += 3;
+        if (p->unk2 >= 5) {
+            p->unk0 = -1;
+        }
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B01F4);
+void func_801B00F0(void) {
+    MgTask *p;
+    MgMat *m;
+    s32 z;
+    s16 a;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    a = p->unk14;
+    m = func_800D4368(&p->unk4, a, -(a >> 4));
+    z = m->t[2];
+    if (z > 0) {
+        func_800D4484(*(s32 *)(((z >> 4) * 4) + D_801517C0 + 0x70), 0x20);
+        D_801EEA64 = (u8 *)func_800D4D90(&D_801D0A4C, D_801517C0 + 0x70, 0xC, (s32)D_801EEA64);
+    }
+    if (D_80062D98 == 0) {
+        p->unk14 += p->unk16;
+        p->unk16 -= 0x28;
+        p->unk2++;
+        if (p->unk2 >= 0x24) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B01F4(void) {
+    MgTask *p;
+    s16 *frame;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    t = t % 12;
+    frame = &D_801D0A60;
+    *frame = t;
+    ((void (*)(void *, s32, s32, s32))func_800D4368)(&p->unk4, 0x1000, -0xC8, t);
+    D_801EEA64 = (u8 *)func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, (s32)D_801EEA64);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= 0x24) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B02E8);
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B0568);
+void func_801B0568(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC(&func_801B02E8)];
+    func_800D3994(arg1, D_8015190F[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk18 = arg0;
+    p->unkC = (p->unkC - p->unk4) / 24;
+    p->unkE = (p->unkE - p->unk6) / 24;
+    p->unk10 = (p->unk10 - p->unk8) / 24;
+    func_800D55F4(0x20, func_800D56A8(D_80151A4C[arg1]), 0x50);
+}
 
 void func_801B06C4(void) {
     MgObj20 *p;

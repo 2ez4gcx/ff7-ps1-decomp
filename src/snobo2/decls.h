@@ -596,5 +596,13 @@ typedef struct { u8 pad0[4]; s16 unk4; s16 unk6; s16 unk8; u8 padA[6]; s16 unk10
 M2C_UNK func_8003AB84(s32, void *, void *);
 void func_800A95D0(SbObjH *arg0, s32 arg1, void *arg2);
 void func_800A9768(SbObjH *arg0, s32 arg1, void *arg2);
+void func_800A23DC(void);
+typedef struct { u8 b[0x5C]; } SbDrawEnv;
+typedef struct { u8 b[0x14]; } SbDispEnv;
+extern SbDrawEnv D_800B8278[];
+extern SbDispEnv D_800B8330[];
+extern u8 D_800FF950[][0x4000];
+extern s16 D_8010398C;
+extern s16 D_80106A5C;
 
 #endif /* SNOBO2_DECLS_H */

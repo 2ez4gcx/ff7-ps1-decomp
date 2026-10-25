@@ -30,5 +30,16 @@ extern s32 D_801517C0;
 extern s32 D_801DC4A0;
 s32 func_800D6260(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B1F00(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+extern MgMat D_800FA63C;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+extern u8 D_801C3210[];
+void func_8003A63C(void *, void *, void *);
+void func_8003B35C(void *, void *);
+void func_8003BF8C(void *, void *);
+s32 func_800D29D4(void *, s32, s32, s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_QUEIR_DECLS_H */

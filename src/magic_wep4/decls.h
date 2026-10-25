@@ -15,5 +15,21 @@ extern s32 D_801ECF74;
 extern u8 D_801ECF7C[];
 extern MgTask D_80162994[];
 void func_800D54EC(s32, void *);
+void func_801B0B0C(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+extern u8 D_801D3D68[];
+extern s32 D_801ECF6C;
+extern s32 D_801517C0;
+extern u8 D_80062D98;
+extern MgMat D_800FA63C;
+void func_8003BF8C(MgSVec *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_WEP4_DECLS_H */

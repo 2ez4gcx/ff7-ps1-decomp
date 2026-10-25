@@ -48,5 +48,13 @@ extern u8 D_801D5E58[];
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
 void func_801B3640(void);
+void func_801B3D94(void);
+typedef struct { s16 v[8]; } MgElem16;
+extern MgElem16 D_801EE87C[];
+extern u8 D_801D91F8[];
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_801D9200;
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_BRIZAG2_DECLS_H */

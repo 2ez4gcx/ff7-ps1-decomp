@@ -348,7 +348,56 @@ INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BB144);
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BB364);
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BB568);
+void func_801BB568(void) {
+    MgTask *p;
+    s32 sp10;
+    s32 sp14;
+    s32 sp18;
+    s32 sp1C;
+    s32 t;
+    s32 k;
+    s16 v;
+    u8 pad[1];
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    if (p->unk2 < 0xC) {
+        if (D_80062D98 == 0) {
+            p->unk2++;
+        }
+        return;
+    }
+    k = 0;
+    if (t >= 0x54) {
+        k = (t - 0x54) << 10;
+    }
+    sp10 = 0x108888;
+    sp18 = 0x404;
+    func_8003B69C(0, 0, 0);
+    func_8003B710(&sp10, k, &sp14);
+    func_8003B710(&sp18, k, &sp1C);
+    v = p->unkC;
+    func_800D4368(D_801F5360, v, -(v >> 4));
+    func_801B18C4((void *)0x1F800000, 0x20, sp14, sp1C);
+    if (p->unk2 >= 0x58) {
+        p->unk0 = -1;
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        t = p->unk2;
+        if (t < 0x12) {
+            p->unkC += p->unkE;
+        } else if (t < 0x44) {
+            p->unkC += (func_80039A74(p->unk10) * 0xF0) >> 12;
+            p->unk10 += 0x17C;
+        } else {
+            p->unkC -= p->unkC >> 3;
+            if (p->unkC < 0) {
+                p->unkC = 0;
+            }
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BB734);
 

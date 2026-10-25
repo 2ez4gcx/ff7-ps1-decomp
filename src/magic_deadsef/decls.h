@@ -24,5 +24,28 @@ void func_800D3994(s32, s32, void *);
 void func_8003BF3C(MgTask *, MgMat *);
 void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
 void func_801B0F18(s32 arg0, s32 arg1, MgTask *arg2, MgSVec *arg3);
+void func_801B2C30(void);
+typedef struct { u8 pad0[0x10]; s16 n; u8 pad12[0x66]; s32 v[1]; } MgDsList;
+extern MgDsList D_80154754;
+extern s16 D_80154764;
+extern MgMat D_800FA63C;
+extern MgMat D_801B431C;
+extern MgMat *D_801B434C;
+extern s32 D_801B4338;
+extern s32 D_801B433C[];
+extern u16 D_801B4450;
+extern u8 D_801B4454[];
+extern u8 D_801C73D4[];
+extern u8 D_801CBFB4[];
+extern s32 D_80163C74;
+extern s16 D_8015169C;
+extern s32 D_801517C0;
+extern u8 D_80062D98;
+void func_8003A63C(void *, void *, void *);
+void func_8003B48C(void *);
+void func_8003B51C(void *);
+void func_8003B69C(s32, s32, s32);
+s32 func_801B0060(void *, s32, s32, s32, u8 **, u8 **, u8 **);
+void func_801B2908(s32);
 
 #endif /* MAGIC_DEADSEF_DECLS_H */

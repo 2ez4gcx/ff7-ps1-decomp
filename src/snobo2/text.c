@@ -134,7 +134,14 @@ void func_800A235C(void) {
     D_8010538C = D_800E1954[D_800E1950];
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A23DC);
+void func_800A23DC(void) {
+    func_80043DD8(0);
+    func_8003CEDC((D_80106A5C != 0) * 2);
+    func_800443B0(&D_800B8278[D_800E1950]);
+    func_800444AC(&D_800B8330[D_800E1950]);
+    func_8004433C((s32)D_800FF950[D_800E1950]);
+    D_8010398C = 0;
+}
 
 void func_800A2490(void) {
     D_80106B54 = D_800DDE88;

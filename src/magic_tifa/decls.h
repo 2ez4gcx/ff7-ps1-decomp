@@ -59,5 +59,10 @@ typedef struct { s8 v; } MgByte;
 extern MgByte D_801F3BBC;
 extern MgByte D_801F3BBD;
 extern MgByte D_801F3BBE;
+void func_801BB568(void);
+void func_8003B69C(s32, s32, s32);
+void func_8003B710(s32 *, s32, s32 *);
+void func_801B18C4(void *, s32, s32, s32);
+extern u8 D_801F5360[];
 
 #endif /* MAGIC_TIFA_DECLS_H */
