@@ -7898,8 +7898,6 @@ s32 func_800BFBF0(WmHdr3 *arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800BFCAC);
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800C02F4);
-
 void func_800C0808(W4ImgHdr *arg0) {
     W4Rect r;
     u32 i;
