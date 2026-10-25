@@ -17,6 +17,8 @@ declaration makes another function stop matching, nothing is changed.
 Several people (or agents) can `put` at once: they take turns.
 """
 import argparse
+import atexit
+import os
 import re
 import sys
 import tempfile
@@ -140,8 +142,11 @@ def standalone(work, name):
     decls, body = split_work(work.read_text(encoding='utf-8'), name)
     proto = ad.prototype(ad.HEAD.search(body).group(1))
     mine = merged(ad.DECLS.read_text(encoding='utf-8'), decls, name, proto)
-    path = Path(tempfile.gettempdir()) / f'ff7_work_{name}.c'
+    # One name per process: agents diffing the same NAME at once (two targets
+    # can have one) must not compile each other's work.
+    path = Path(tempfile.gettempdir()) / f'ff7_work_{os.getpid()}_{name}.c'
     path.write_text('#include "common.h"\n' + mine + '\n\n' + body, encoding='utf-8')
+    atexit.register(path.unlink, missing_ok=True)
     return path, mine, body, proto
 
 

@@ -20,6 +20,7 @@ build/us/auto_decomp.txt with the reason, for a person to take on.
 only gives every function already in C a prototype in decls.h.
 """
 import argparse
+import atexit
 import os
 import re
 import subprocess
@@ -111,13 +112,15 @@ def sources():
 
 def context():
     """decls.h with its includes expanded, for m2c's C parser."""
-    stub = Path(tempfile.gettempdir()) / f'ff7_m2c_stub_{TARGET}.c'
+    stub = Path(tempfile.gettempdir()) / f'ff7_m2c_stub_{os.getpid()}_{TARGET}.c'
     stub.write_text(f'#include "common.h"\n#include "{TARGET}/decls.h"\n', encoding='utf-8')
     env = dict(os.environ, TMPDIR=tempfile.gettempdir())
     out = subprocess.run([str(psyq.CPP), '-undef', '-P', '-DM2CTX', '-I', str(ROOT / 'include'),
                           '-I', str(ROOT / 'src'), str(stub)], capture_output=True, text=True, env=env).stdout
-    ctx = Path(tempfile.gettempdir()) / f'ff7_m2c_context_{TARGET}.c'
+    ctx = Path(tempfile.gettempdir()) / f'ff7_m2c_context_{os.getpid()}_{TARGET}.c'
     ctx.write_text('\n'.join(l for l in out.splitlines() if not l.startswith('#')) + '\n', encoding='utf-8')
+    for f in (stub, ctx):
+        atexit.register(f.unlink, missing_ok=True)
     return ctx
 
 
@@ -254,7 +257,7 @@ def attempt(name, src, path, ctx, known):
     """Draft `name` and look for a form of it that matches: (body, decls of
     it, decls.h as it would be) or (None, why)."""
     # Without its own prototype: that is only a guess m2c made for a caller.
-    own = Path(tempfile.gettempdir()) / f'ff7_m2c_context_{name}.c'
+    own = Path(tempfile.gettempdir()) / f'ff7_m2c_context_{os.getpid()}_{name}.c'
     own.write_text(''.join(l for l in ctx.read_text(encoding='utf-8').splitlines(keepends=True)
                            if not re.search(rf'\b{name}\s*\(', l)), encoding='utf-8')
     decls, body = draft(path, name, own)

@@ -13,6 +13,7 @@ and the copy goes through the same check and `put` as tools/work.py: it is
 kept only if it matches.
 """
 import argparse
+import os
 import re
 import sys
 import tempfile
@@ -159,7 +160,7 @@ def main():
                 decls = [rename(d) for d in needed_decls(from_target, body, list(mapping), from_src, t)]
                 text = ('#include "common.h"\n' + f'#include "{t}/decls.h"\n\n' + '\n'.join(decls) + '\n\n'
                         + rename(body) + '\n')
-                path = Path(tempfile.gettempdir()) / f'ff7_copy_{t}_{name}.c'
+                path = Path(tempfile.gettempdir()) / f'ff7_copy_{os.getpid()}_{t}_{name}.c'
                 path.write_text(text, encoding='utf-8')
                 if args.dry_run:
                     print(f'{t} {name}: from {from_target} {from_name}')
