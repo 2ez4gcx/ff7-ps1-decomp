@@ -87,7 +87,7 @@ extern u8 D_800F5B71;
 extern u8 D_800F5B70;
 s32 func_800D52A0(s32, s32);
 void func_801B10A8(void);
-s32 func_80039A74(s16);
+s32 func_80039A74(s32);
 s32 func_80039B40(s16);
 typedef struct { u8 *tag; } MgPkt;
 extern u8 D_801D2848[];
@@ -103,5 +103,7 @@ extern MgByte D_801D560A;
 extern s16 D_801D560C;
 extern MgSVec D_801D5610;
 extern s16 D_801D5618;
+void func_801B0DB4(void);
+extern s16 D_801D55C0[];
 
 #endif /* MAGIC_HADOHO_DECLS_H */

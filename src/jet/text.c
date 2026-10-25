@@ -225,7 +225,49 @@ void func_800A2420(void) {
     } while (func_80034B44() != 0);
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2518);
+void func_800A2518(void) {
+    Unk80046D0C sp10;
+    s32 *p;
+    s32 x;
+    s32 i;
+
+    i = 0;
+    p = &D_800A89E4;
+    do {
+        x = *p;
+        p++;
+        i++;
+        func_800A27F0(x);
+        func_80046CFC(x);
+        func_80046D0C(&sp10);
+    } while (i < 9);
+    D_800AB894 = func_8004656C(0, 2, 0x280, 0);
+    D_800A8A68 = func_80046634(0, 0x1E0);
+    D_800A8990 = func_8004656C(0, 1, 0x280, 0);
+    D_800EE198 = func_80046634(0, 0x1E0);
+    D_800A8992 = func_8004656C(1, 1, 0x2C0, 0);
+    D_800EE19A = func_80046634(0, 0x1E1);
+    D_800A8994 = func_8004656C(1, 1, 0x2D0, 0);
+    D_800EE19C = func_80046634(0, 0x1E1);
+    D_800A8996 = func_8004656C(1, 1, 0x2E0, 0);
+    D_800EE19E = func_80046634(0, 0x1E1);
+    D_800A8998 = func_8004656C(0, 1, 0x280, 0x100);
+    D_800EE1A0 = func_80046634(0, 0x1FF);
+    D_800A899A = func_8004656C(0, 1, 0x280, 0x100);
+    D_800EE1A2 = func_80046634(0, 0x1FE);
+    D_800A899C = func_8004656C(0, 1, 0x300, 0);
+    D_800EE1A4 = func_80046634(0x10, 0x1E0);
+    D_800A899E = func_8004656C(0, 1, 0x240, 0);
+    D_800EE1A6 = func_80046634(0x40, 0x1E0);
+    D_800A89A0 = func_8004656C(0, 1, 0x240, 0x18);
+    D_800EE1A8 = func_80046634(0x30, 0x1E0);
+    D_800A89A2 = func_8004656C(0, 1, 0x240, 0x50);
+    D_800EE1AA = func_80046634(0x50, 0x1E0);
+    D_800A89A4 = func_8004656C(0, 1, 0x240, 0x30);
+    D_800EE1AC = func_80046634(0x20, 0x1E0);
+    D_800A89A6 = func_8004656C(0, 1, 0x240, 0);
+    D_800EE1AE = func_80046634(0x60, 0x1E0);
+}
 
 void func_800A27F0(s32 arg0) {
     Unk80046D0C sp10;
@@ -440,7 +482,77 @@ void func_800A334C(void) {
     D_800E25F8 = 1;
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A3414);
+void func_800A3414(s32 arg0) {
+    u32 y;
+    u32 i;
+    u32 j;
+    u16 v;
+    u16 **pp;
+    u16 **qq;
+    u16 **pp2;
+    u16 **qq2;
+    u32 *pa;
+    s32 *pb;
+    u32 old;
+    s32 t;
+    u32 n;
+    u32 hi;
+    u8 *q;
+    u32 m;
+    u32 m2;
+
+    pa = &D_800D172C;
+    old = *pa;
+    D_800A8CC8 = old;
+    hi = old >> 18;
+    *pa = old + arg0;
+    n = (*pa >> 18) - hi;
+    pb = &D_800D16E0;
+    t = *pb;
+    *pb = t + n;
+    for (i = 0; y = D_800E25F8, i < n + y; i++) {
+        pp = &D_800D1C60;
+        m = 0xFFFF;
+        pp2 = &D_800EE428;
+        while (1) {
+            v = *(*pp)++;
+            if (v == m) {
+                break;
+            }
+            func_800A385C(v);
+        }
+        while (1) {
+            v = *(*pp2)++;
+            if (v == m) {
+                break;
+            }
+            func_800A38D4(v);
+        }
+    }
+    for (j = 0; j < n; j++) {
+        qq = &D_800D196C;
+        m2 = 0xFFFF;
+        qq2 = &D_800EE188;
+        while (1) {
+            v = *(*qq)++;
+            if (v == m2) {
+                break;
+            }
+            func_800A3980(v);
+        }
+        while (1) {
+            v = *(*qq2)++;
+            if (v == m2) {
+                break;
+            }
+            func_800A3A20(v);
+        }
+    }
+    q = &D_800E25F8;
+    if (*q == 1) {
+        *q = 0;
+    }
+}
 
 void func_800A35DC(s32 arg0) {
     u32 x;
@@ -853,7 +965,69 @@ void func_800A6B08(JetSpawn *arg0) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A6BD8);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A70D4);
+INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0410);
+
+INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0420);
+
+INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0430);
+
+INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0440);
+
+void func_800A70D4(void) {
+    JetV4 a;
+    JetV4 b;
+    JetV4 c;
+    JetV4 d;
+    JetV4 e;
+    JetV4 f;
+    JetV4 g;
+    JetV4 h;
+    s32 k1;
+    s32 k2;
+    s32 pa;
+    s32 pb;
+    s32 pc;
+    s32 pd;
+    s32 pe;
+    s32 pf;
+    s32 *n1;
+    s32 *n2;
+
+    n1 = &D_800A892C;
+    n2 = &D_800A893C;
+    e = D_800A0410;
+    f = D_800A0420;
+    g = D_800A0430;
+    h = D_800A0440;
+    a.x = g.x >> 2;
+    a.y = g.y >> 2;
+    a.z = g.z >> 2;
+    b.x = e.x >> 2;
+    b.y = e.y >> 2;
+    b.z = e.z >> 2;
+    c.x = h.x >> 2;
+    c.y = h.y >> 2;
+    c.z = h.z >> 2;
+    d.x = f.x >> 2;
+    d.y = f.y >> 2;
+    d.z = f.z >> 2;
+    func_8003BA68(&a, &b, n1);
+    func_8003BA68(&c, &d, n2);
+    pa = n1[0];
+    pb = D_800A8930;
+    pc = D_800A8934;
+    pd = n2[0];
+    pe = D_800A8940;
+    pf = D_800A8944;
+    k1 = -(pa * (g.x >> 2)) - pb * (g.y >> 2) - pc * (g.z >> 2);
+    D_800A8A5C = k1;
+    k2 = -(pd * (h.x >> 2)) - pe * (h.y >> 2) - pf * (h.z >> 2);
+    D_800A8A64 = k2;
+    D_800A8950 = pa * (h.x >> 2) + pb * (h.y >> 2) + pc * (h.z >> 2) + k1;
+    D_800A8968 = pd * (g.x >> 2) + pe * (g.y >> 2) + pf * (g.z >> 2) + k2;
+    D_800AB890 = func_80039F5C(pa * pa + pb * pb + pc * pc);
+    D_800D0550 = func_80039F5C(n2[0] * n2[0] + D_800A8940 * D_800A8940 + D_800A8944 * D_800A8944);
+}
 
 s32 func_800A7414(s32 *arg0) {
     s32 a, b, c, d, e, f;

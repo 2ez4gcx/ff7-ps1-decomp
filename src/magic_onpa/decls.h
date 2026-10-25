@@ -19,5 +19,23 @@ void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern u8 D_80151917[][0xB9C];
 void func_801B02D0();
+void func_801B0158(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgMat D_800FA63C;
+extern MgSVec D_801B0B14;
+extern u8 D_801B0B04[];
+extern s32 D_801517C0;
+extern u8 D_80062D98;
+void func_800D44E8(MgSVec *, MgMat *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003B35C(MgMat *, MgVec *);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003B69C(s32, s32, s32);
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_ONPA_DECLS_H */

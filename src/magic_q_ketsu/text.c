@@ -18,7 +18,22 @@ void func_801B007C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_q_ketsu/nonmatchings/text", func_801B0138);
+void func_801B0138(void) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2000, 0);
+    D_801BDAA4[0] = p->unk2 % D_801BDAA8[p->unk14]->unk4;
+    *(MgAnim **)&D_801BDAA4[-4] = D_801BDAA8[p->unk14];
+    D_801D5AE8 = func_800D4D90(&D_801BDAA4[-4], D_801517C0 + 0x70, 0xC, D_801D5AE8);
+    if (D_80062D98 == 0) {
+        p->unk6 += 0x64;
+        p->unk2++;
+        if (p->unk2 == 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_q_ketsu/nonmatchings/text", func_801B0264);
 

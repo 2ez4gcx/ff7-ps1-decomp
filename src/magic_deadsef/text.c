@@ -44,7 +44,22 @@ s32 func_801B0E20(s32 a, s32 b) {
     return a;
 }
 
-INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B0F18);
+void func_801B0F18(s32 arg0, s32 arg1, MgTask *arg2, MgSVec *arg3) {
+    MgMat m;
+
+    if (arg1 != -1) {
+        func_800D3994(arg0, arg1, arg3);
+    } else {
+        arg3->vx = D_80151A4C[arg0][0];
+        arg3->vy = D_80151A4C[arg0][1];
+        arg3->vz = D_80151A50[arg0][0];
+    }
+    arg3->vx -= arg2->unk14;
+    arg3->vy -= arg2->unk18;
+    arg3->vz -= arg2->unk1C;
+    func_8003BF3C(arg2, &m);
+    func_8003B2CC(&m, arg3, arg3);
+}
 
 INCLUDE_ASM("../asm/us/magic_deadsef/nonmatchings/text", func_801B1014);
 

@@ -316,7 +316,30 @@ void func_801B0EA4(void) {
     func_8003AB84(&m, &D_801B798C, &D_801CF9C8);
 }
 
-INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B0FA4);
+void func_801B0FA4(void) {
+    MgTask *p;
+    MgTask *q;
+
+    p = &D_80162978[D_8015169C];
+    if (p->unk2 == 1) {
+        q = func_800D4FA8(1);
+        *(MgSVec *)&q->unk4 = *(MgSVec *)&p->unk4;
+        q->unk10 = p->unkC;
+    } else if (p->unk2 == 0x11) {
+        func_800D55F4(0x20, func_800D56A8(&p->unk4), 0x1A4);
+    } else if (p->unk2 == 0x20) {
+        func_800D4FA8(2);
+    }
+    if (p->unk2 >= 0x32) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x24) {
+            func_800D5774(D_801CF9A8);
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B10B4);
 

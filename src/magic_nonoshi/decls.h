@@ -45,5 +45,10 @@ void func_801B2340(s32 arg0, s32 arg1);
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
 extern M2C_UNK func_801B1EE0;
 M2C_UNK func_800BBEAC(M2C_UNK *);
+void func_801B1818(void);
+extern s16 D_801C5C1C[][4];
+extern s16 D_801C5C20[][4];
+extern s16 D_801C601C[][4];
+extern s16 D_801C6020[][4];
 
 #endif /* MAGIC_NONOSHI_DECLS_H */

@@ -46,5 +46,15 @@ extern s8 D_801D3FAE;
 extern s8 D_801D3FAF;
 extern u16 D_801D3FB0;
 s32 func_800D4D90(void *, s32, s32, s32);
+void func_801B04D8(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+typedef struct { s32 unk0; s32 unk4; } MgGasAnim;
+typedef struct { MgGasAnim *anim; } MgGasHold;
+void func_800D4368(void *, s32, s32);
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+extern MgGasHold D_801D3F90;
+extern u16 D_801D3F98;
+extern MgGasAnim *D_801D3F9C[];
 
 #endif /* MAGIC_GAS_DECLS_H */

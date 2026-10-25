@@ -102,7 +102,22 @@ INCLUDE_ASM("../asm/us/magic_nonoshi/nonmatchings/text", func_801B16BC);
 
 INCLUDE_ASM("../asm/us/magic_nonoshi/nonmatchings/text", func_801B1784);
 
-INCLUDE_ASM("../asm/us/magic_nonoshi/nonmatchings/text", func_801B1818);
+void func_801B1818(void) {
+    s16 i;
+
+    i = 0;
+    do {
+        D_801C5C1C[i][0] += D_801C601C[i][0];
+        D_801C5C1C[i][1] += D_801C601C[i][1];
+        D_801C5C20[i][0] += D_801C6020[i][0];
+        D_801C601C[i][1] += 0x14;
+        if (D_801C5C1C[i][1] > 0) {
+            D_801C5C1C[i][1] = 0;
+            D_801C601C[i][1] = -D_801C601C[i][1];
+        }
+        i++;
+    } while (i < 0x80);
+}
 
 INCLUDE_ASM("../asm/us/magic_nonoshi/nonmatchings/text", func_801B1954);
 

@@ -140,7 +140,14 @@ INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B0D98);
 
 INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B11FC);
 
-INCLUDE_ASM("../asm/us/magic_rocket/nonmatchings/text", func_801B16C4);
+void func_801B16C4(arg0, arg1) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC((void *)func_801B11FC)];
+    func_800D3994(arg1, D_8015190F[arg1][9], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+}
 
 void func_801B1784(arg0, arg1) {
     func_800BBEAC(&func_801B045C);

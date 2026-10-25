@@ -321,13 +321,138 @@ void func_800A4B50(SubEnt *p) {
     } while (p < &D_800B265C[0x80]);
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A4BBC);
+void func_800A4BBC(SubSelIn *in) {
+    SubSel *p;
+    u8 *t1;
+    u8 *t2;
+    s32 z;
+    s32 cx;
+    s32 cy;
+
+    p = D_800B08EC;
+    t1 = (u8 *)D_800B265C;
+    t2 = D_800AEAA0;
+    D_800AD8DC[0] = 0;
+    D_800AD8E0 = 0;
+    D_800AD8E4 = 0;
+    *(s32 *)(u8 *)&D_800AD8E8 = 0;
+    do {
+        p->x = in->x << 18;
+        p->y = in->y << 18;
+        z = in->z << 18;
+        p->z = z;
+        cy = z >> 12;
+        cx = p->x >> 12;
+        cx = (cx + 0x800) / 64;
+        if (cx < 0) {
+            cx = 0;
+        }
+        if (cx >= 0x40) {
+            cx = 0x3F;
+        }
+        cy = (0x800 - cy) / 64;
+        if (cy < 0) {
+            cy = 0;
+        }
+        if (cy >= 0x40) {
+            cy = 0x3F;
+        }
+        p->tile = cy * 64 + cx;
+        p->f10 = in->f10;
+        p->f1C = in->f14;
+        p->f1E = in->f16;
+        p->f20 = in->f18;
+        p->f2C = in->f1C;
+        p->f30 = in->f20;
+        p->flags = in->f24;
+        if (in->f24 & 1) {
+            p->p58 = (u8 *)((in->f2C << 5) + (u32)t1);
+            p->p54 = (u8 *)((in->f28 << 4) + (u32)t2);
+            D_800AD8DC[0] += 1;
+            *(s32 *)(u8 *)&D_800AD8E8 += in->f10;
+        }
+        in++;
+        p++;
+    } while (p < &D_800B08EC[12]);
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A4D90);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6158);
+void func_800A6158(void) {
+    s32 s;
+    s32 q;
+    s32 d;
+    s32 blank;
+    s32 *p;
+    SubSel *e;
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6384);
+    s = 0;
+    e = D_800B08EC;
+    p = &e[0].f10;
+    do {
+        if (p[9] & 3) {
+            s += p[0];
+        }
+        p = (s32 *)((u8 *)p + 0x74);
+    } while ((u32)p < (u32)&e[12].f10);
+    s = D_800AD8E8 - s;
+    s += D_800AE8E0;
+    s += D_800AD3B4;
+    s -= D_800AE9FC * 100;
+    if (s < 0) {
+        s = 0;
+    }
+    if (s > 99999) {
+        s = 99999;
+    }
+    blank = 1;
+    q = s / 10000;
+    d = q;
+    if (q == 0) {
+        d = 0xC;
+    } else {
+        blank = 0;
+    }
+    D_800AE54C = d << 4;
+    s -= q * 10000;
+    q = s / 1000;
+    d = q;
+    if (q == 0 && blank == 1) {
+        d = 0xC;
+    } else {
+        blank = 0;
+    }
+    D_800AE560 = d << 4;
+    s -= q * 1000;
+    q = s / 100;
+    d = q;
+    if (q == 0 && blank == 1) {
+        d = 0xC;
+    } else {
+        blank = 0;
+    }
+    D_800AE574 = d << 4;
+    s -= q * 100;
+    q = s / 10;
+    d = q;
+    if (q == 0 && blank == 1) {
+        d = 0xC;
+    }
+    q = s - q * 10;
+    D_800AE588 = d << 4;
+    D_800AE59C = q << 4;
+}
+
+void func_800A6384(void) {
+    s32 s;
+    s32 n;
+
+    s = D_800AD8E0 + D_800AD8E4;
+    n = s / 10;
+    D_800AE484 = n << 4;
+    n = s % 10;
+    D_800AE498 = n << 4;
+}
 
 void func_800A63E4(s32 arg0) {
     s32 var_v0;
@@ -474,7 +599,60 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AA1D0);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AA714);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AAFF0);
+void func_800AAFF0(void) {
+    u32 i;
+    SubObj *p;
+    SubVec32 *q1;
+    SubVec16 *q2;
+    SubVec16 *q3;
+    SubVec16 *q4;
+    SubVec16 *q5;
+    s32 *g;
+
+    for (i = 0; i < 0x20; i++) {
+        p = &D_800F5F6C[i];
+        q1 = &D_800F5F6C[i].v1;
+        q2 = &D_800F5F6C[i].s2;
+        q3 = &D_800F5F6C[i].s3;
+        q4 = &D_800F5F6C[i].s4;
+        q5 = &D_800F5F6C[i].s5;
+        p->v0.vx = 0;
+        p->v0.vy = 0;
+        p->v0.vz = 0;
+        q1->vx = 0;
+        q1->vy = 0;
+        q1->vz = 0;
+        q2->vx = 0;
+        q2->vy = 0;
+        q2->vz = 0;
+        q3->vx = 0;
+        q3->vy = 0;
+        q3->vz = 0x1000;
+        q4->vx = 0;
+        q4->vy = 0;
+        q4->vz = 0;
+        q5->vx = 0;
+        q5->vy = 0;
+        q5->vz = 0x1000;
+        p->a78 = 0x20;
+        p->a64 = 0;
+        p->a68 = 0x1000;
+        p->a70 = 0;
+        p->a74 = 0;
+        p->a7C = 1;
+        p->a80 = 0;
+        p->a84 = 0;
+    }
+    for (i = 0, g = &D_800B1E74; i < 0x10; i++) {
+        p = &D_800F5F6C[i];
+        p->a6C = *g;
+    }
+    for (i = 0x10, g = &D_800B1E80; i < 0x20; i++) {
+        p = &D_800F5F6C[i];
+        p->a6C = *g;
+    }
+    D_800AE9FC = 0;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800AB118);
 

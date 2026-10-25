@@ -55,13 +55,49 @@ void func_801B0858(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0924);
+void func_801B0924(void) {
+    MgObj20 *p;
+    s32 i;
+    s32 n;
+
+    n = 0;
+    p = &D_80162978[D_8015169C];
+    for (i = 0; i < 100; i++) {
+        if (D_801C4CE4[i].unk0 != -1) {
+            func_801B03AC(&D_801C4CE4[i]);
+            n++;
+        }
+    }
+    if (p->unk0 == 1 && n == 0) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        D_801C2EEC++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0A1C);
 
 INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0C8C);
 
-INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0F60);
+void func_801B0F60(s32 arg0, s32 arg1) {
+    MgTask *p;
+    s32 i;
+
+    for (i = 0; i < 100; i++) {
+        D_801C2F34[i].unk0 = -1;
+    }
+    for (i = 0; i < 100; i++) {
+        D_801C4CE4[i].unk0 = -1;
+    }
+    func_800D3994(arg0, D_8015190F[arg0][0], &D_801C2F28);
+    D_801C2F2A = 0;
+    D_801C2F30 = 0x1000;
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B0C8C)];
+    p->unk4 = arg0;
+    p->unk6 = arg1;
+    func_800D55F4(0x20, func_800D56A8(&D_801C2F28), 0x4E);
+}
 
 void func_801B1070(void) {
     MgObj20 *p;

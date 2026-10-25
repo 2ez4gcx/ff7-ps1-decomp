@@ -8,6 +8,7 @@ extern volatile s16 D_8009AC42;
 void func_800A16CC(void);
 void func_800CF60C(void);
 extern volatile s16 D_80114488;
+u16 func_800A460C(s32 *, s32 *, M2C_UNK *, M2C_UNK);
 
 void func_800110B8(void) {
 }
@@ -50,7 +51,39 @@ void func_80011274(void) {
     func_80029818(0x800A0000, 0x800E0000);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800112E8);
+void func_800112E8(void) {
+    s32 t;
+
+    if (D_800965EC == 2) {
+        do {
+        } while (func_80034B44() != 0);
+        func_80015CA0(0x801C0000, 0x800A0000);
+    } else {
+        do {
+        } while (func_80034B44() != 0);
+        func_80033E34(D_80048D2C, D_80048D30, 0x80180000, 0);
+        do {
+        } while (func_80034B44() != 0);
+        func_80015CA0(0x80180000, 0x800A0000);
+    }
+    if (D_80071E28 != 2) {
+        if (D_800965EC == 2) {
+            D_80071E28 = 1;
+        } else {
+            D_80071E28 = 0;
+        }
+        D_800730CC = (s16)D_8009A05C;
+    }
+    t = (s16)D_8009A05C;
+    if (t != D_80071A5C || t == 0) {
+        D_80075DEC = func_800A460C(&D_80071E28, &D_800730CC, &D_80095DDC, 0);
+    } else {
+        D_80075DEC = func_800A460C(&D_80071E28, &D_800730CC, &D_80095DDC, 0x801B0000);
+        D_80071A5C = 0;
+        D_800965E8 = 0;
+    }
+    D_8009A05C = D_8009ABF6;
+}
 
 void func_8001146C(void) {
     if (D_80071A58 != 0) {

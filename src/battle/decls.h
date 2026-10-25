@@ -999,6 +999,22 @@ extern BtlX240 D_800F90B4[];
 extern s16 D_800F1EF0;
 extern s16 D_800F1F02;
 extern s8 D_800F977C;
+void func_800AB674(void);
+extern u8 D_8009D86F[];
+extern u8 D_800F842E[];
+void func_800CF4A8(void);
+s32 func_800D3658(u8 *arg0, s32 *arg1, s32 arg2);
+void func_800DE2B4(void);
+void func_800DDFEC();
+extern u16 D_800F314E;
+extern u8 D_800F38A6;
+extern u16 D_800F562C;
+extern u8 D_800F5630;
+extern u16 D_800F5634;
+extern u8 D_800F5638;
+extern u8 D_800F563C;
+extern u16 D_800FAFD4;
+extern u8 D_80151698;
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;

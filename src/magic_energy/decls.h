@@ -5,12 +5,12 @@
 #include "main/decls.h"
 void func_801B0000(void);
 void func_801B1990();
-M2C_UNK func_800BBEAC(M2C_UNK *);
+s32 func_800BBEAC(void (*)());
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 extern M2C_UNK D_801B19FC;
 void func_801B045C(void);
-extern M2C_UNK func_801B1850;
+void func_801B1850();
 void func_801B0D04(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -57,5 +57,14 @@ void func_8003B69C(s32, s32, s32);
 s32 func_800D29D4(void *, s32, s32, s32);
 extern MgSVec D_801D7170;
 extern s16 D_801D7182[];
+extern u8 D_80151915[][0xB9C];
+extern MgMat D_801D7214;
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+void func_801B13F4(void);
+void func_800D44E8(MgSVec *, MgMat *);
+void func_800D52A0(s32, s32);
+void func_800BBA84(s32, s32, s32);
 
 #endif /* MAGIC_ENERGY_DECLS_H */

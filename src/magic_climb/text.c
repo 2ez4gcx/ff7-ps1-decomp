@@ -6,7 +6,17 @@ M2C_UNK *func_801B0000(void) {
     return &D_801B4DFC;
 }
 
-INCLUDE_ASM("../asm/us/magic_climb/nonmatchings/text", func_801B0028);
+void func_801B0028(MgSVec *a, MgSVec *b, s32 k, MgSVec *out) {
+    MgVec d;
+
+    d.vx = b->vx - a->vx;
+    d.vy = b->vy - a->vy;
+    d.vz = b->vz - a->vz;
+    func_8003A08C(&d, &d);
+    out->vx = a->vx + ((k * d.vx) >> 12) - b->vx;
+    out->vy = a->vy + ((k * d.vy) >> 12) - b->vy;
+    out->vz = a->vz + ((k * d.vz) >> 12) - b->vz;
+}
 
 INCLUDE_ASM("../asm/us/magic_climb/nonmatchings/text", func_801B0124);
 

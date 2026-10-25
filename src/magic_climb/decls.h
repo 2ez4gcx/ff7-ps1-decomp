@@ -19,5 +19,9 @@ void func_801B08B4();
 extern u8 D_801B0BBC[];
 extern s32 D_801B6AA8;
 extern s32 D_801B6AAC;
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_8003A08C(MgVec *, MgVec *);
+void func_801B0028(MgSVec *a, MgSVec *b, s32 k, MgSVec *out);
 
 #endif /* MAGIC_CLIMB_DECLS_H */

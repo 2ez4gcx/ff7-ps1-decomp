@@ -1,3 +1,7 @@
 // MINI/JET.BIN: name = 0xADDRESS; // type:func
 func_800A8310 = 0x800A8310; // type:func
 D_800A0000 = 0x800A0000; // force_not_migration:True
+D_800A0410 = 0x800A0410; // force_not_migration:True
+D_800A0420 = 0x800A0420; // force_not_migration:True
+D_800A0430 = 0x800A0430; // force_not_migration:True
+D_800A0440 = 0x800A0440; // force_not_migration:True

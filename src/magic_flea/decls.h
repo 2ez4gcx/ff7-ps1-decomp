@@ -16,5 +16,12 @@ extern MgObj20 D_80162978[];
 extern u16 D_801D34D0[];
 extern u16 D_801D3508;
 extern s32 D_801EB5D8;
+void func_801B094C(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+extern s8 D_801D3510;
+extern s8 D_801D3511;
+extern s8 D_801D3512;
+extern s16 D_801D3514[];
+extern u8 D_801D350C[];
 
 #endif /* MAGIC_FLEA_DECLS_H */

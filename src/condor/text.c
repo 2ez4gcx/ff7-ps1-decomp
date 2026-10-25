@@ -459,7 +459,49 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B0D50);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B1620);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B17A0);
+s16 func_800B17A0(void *arg0, s32 arg1) {
+    s16 sp[2];
+    CondorObj *obj;
+    CondorObj *p;
+    s32 n;
+
+    u16 i;
+
+    p = D_800BFB80;
+    n = 0x28;
+    while (1) {
+        i = n;
+        if (p->flags != 0) {
+            n++;
+            p++;
+            if (n >= 0x45) {
+                i = -1;
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+    
+    if (i != 0xFFFF) {
+        D_800BE8BC->b0 = arg1;
+        D_800BE8BC->h4 = D_800BE8BC->b3 = 0;
+        D_800BE8BC->b1 = D_800BE8BC->b2 = 0;
+        sp[0] = D_800BE8BC->b1;
+        sp[1] = D_800BE8BC->b2;
+        obj = &D_800BE8C0[i];
+        func_800AC72C(obj, D_800BE8BC, i, sp);
+        M2C_FIELD(obj, u16 *, 0x48) = M2C_FIELD(arg0, u16 *, 0x48);
+        M2C_FIELD(obj, u16 *, 0x4A) = M2C_FIELD(arg0, u16 *, 0x4A);
+        M2C_FIELD(obj, u16 *, 0x4C) = M2C_FIELD(arg0, u16 *, 0x4C);
+        M2C_FIELD(obj, u16 *, 0x50) = M2C_FIELD(arg0, u16 *, 0x50);
+        M2C_FIELD(obj, u16 *, 0x52) = M2C_FIELD(arg0, u16 *, 0x52);
+        M2C_FIELD(obj, u16 *, 0x54) = M2C_FIELD(arg0, u16 *, 0x54);
+        M2C_FIELD(obj, u16 *, 0x34) = M2C_FIELD(arg0, u16 *, 0x34);
+        return i;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B18E0);
 

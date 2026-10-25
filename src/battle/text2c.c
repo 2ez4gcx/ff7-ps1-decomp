@@ -94,7 +94,48 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DDE90);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DDFEC);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DE2B4);
+void func_800DE2B4(void) {
+    u8 n0;
+    u16 n3;
+    u16 n4;
+    u16 n1;
+    u8 n2;
+    u8 n5;
+    u16 s4;
+    u16 s5;
+    u8 s0;
+    u16 s1;
+    u8 s2;
+    u8 s3;
+
+    n0 = D_800F5630;
+    n3 = D_800F314E;
+    n4 = D_800F562C;
+    n1 = D_800F5634;
+    n2 = D_800F5638;
+    n5 = D_800F563C;
+    s4 = D_800F389E;
+    s5 = D_800FAFD4;
+    s0 = D_800F38A6;
+    s1 = D_801516F8;
+    s2 = D_800F38A7;
+    s3 = D_80151698;
+    D_800F38A6 = n0;
+    D_801516F8 = n1;
+    D_800F38A7 = n2;
+    D_800F389E = n3;
+    do {} while (0);
+    D_800FAFD4 = n4;
+    D_80151698 = n5;
+    func_800DDFEC(n0, n5, n3, n4);
+    D_800F38A6 = s0;
+    D_801516F8 = s1;
+    D_800F38A7 = s2;
+    D_800F389E = s4;
+    D_800FAFD4 = s5;
+    D_80151698 = s3;
+    func_800DDFEC();
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DE3CC);
 

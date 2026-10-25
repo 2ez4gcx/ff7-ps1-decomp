@@ -210,7 +210,50 @@ void func_80029E98(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80029F44);
+void func_80029F44(void) {
+    s32 mask;
+    s32 bit;
+    AkaoChannel *ch;
+    s32 *p;
+
+    mask = D_8009A108;
+    if (mask != 0) {
+        ch = D_80096608;
+        bit = 1;
+        mask |= D_8009A128 | D_8009A12C;
+        D_8009A10C = D_8009A110 = D_8009A128 = D_8009A12C = 0;
+        D_8009A108 = mask;
+        D_8009A114 |= mask;
+        do {
+            if (mask & bit) {
+                mask ^= bit;
+                ch->unk56 = 0x204;
+                ch->addr = (u8 *)D_80049C40;
+            }
+            bit *= 2;
+            ch++;
+        } while (mask != 0);
+    }
+    p = &D_8009A168;
+    mask = *p;
+    if (mask != 0) {
+        ch = (AkaoChannel *)&D_80097EC8;
+        bit = 1;
+        mask |= D_8009A188 | D_8009A18C;
+        D_8009A16C = D_8009A170 = D_8009A188 = D_8009A18C = 0;
+        *p = mask;
+        D_8009A174 |= mask;
+        do {
+            if (mask & bit) {
+                mask ^= bit;
+                ch->unk56 = 0x204;
+                ch->addr = (u8 *)D_80049C40;
+            }
+            bit *= 2;
+            ch++;
+        } while (mask != 0);
+    }
+}
 
 /* Start a sound effect on channels `channel` and `channel` + 1 (32 and up),
  * one for each sequence it has (akao_sfx_lookup); `pan` 0-127. */
@@ -417,7 +460,47 @@ void func_8002A798(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002A7E8);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002A958);
+void func_8002A958(void) {
+    AkaoChannel *ch;
+    AkaoChannel *q;
+    u32 *p;
+    u32 *p0;
+    u32 mask;
+    s32 bit;
+
+    p0 = &D_80099FCC;
+    mask = *p0;
+    bit = 0x10000;
+    if (mask != 0) {
+        ch = &D_80099788;
+        p = &D_80099FCC;
+        q = (AkaoChannel *)&D_80099788.unk54;
+        D_80099FD0 = D_80099FD4;
+        do {
+            if (mask & bit) {
+                if ((func_80031A70(&ch->addr) & 0xFF) == 0xCA) {
+                    if (func_80038E70(bit) == 1) {
+                        D_80099FD0 |= bit;
+                    } else {
+                        D_80099FD0 &= ~bit;
+                        D_80099FD4 &= ~bit;
+                    }
+                    M2C_FIELD(q, s32 *, 0x8C) = 0x1FF93;
+                } else {
+                    if (*(u16 *)q != 2) {
+                        *p &= ~bit;
+                        D_80099FD0 &= ~bit;
+                        D_80099FD4 &= ~bit;
+                    }
+                }
+                mask ^= bit;
+            }
+            q++;
+            ch++;
+            bit *= 2;
+        } while (mask != 0);
+    }
+}
 
 /* Carry on with the song slot `slot` kept (akao_cmd_song_push): its state
  * and channels come back, the channels it does not use are silenced. */
@@ -1991,7 +2074,36 @@ void func_800320AC(void *arg0) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_800320C4);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80032274);
+void func_80032274(AkaoChannel *ch, AkaoSong *song, u32 arg2) {
+    u8 *e;
+    u8 *p;
+    u8 idx;
+
+    p = ch->addr;
+    ch->addr = p + 1;
+    idx = *p;
+    e = D_80075F28[idx];
+    if (ch->unk54 != 0 || !(arg2 & song->unkC & D_80099FCC)) {
+        ch->unkE0 |= 0x10;
+        M2C_SFIELD(ch, u32 *, 0x30) = (u32)(M2C_SFIELD(ch, s32 *, 0x30) * *(s32 *)(e + 0x10)) / D_80075F38[M2C_SFIELD(ch, u16 *, 0x58) * 16];
+    }
+    M2C_SFIELD(ch, u16 *, 0x58) = idx;
+    M2C_SFIELD(ch, s32 *, 0xE4) = 0x76FE0;
+    M2C_SFIELD(ch, s32 *, 0xE8) = *(s32 *)(e + 4);
+    M2C_SFIELD(ch, u16 *, 0xFA) = e[8];
+    M2C_SFIELD(ch, u16 *, 0xFC) = e[9];
+    M2C_SFIELD(ch, u16 *, 0xFE) = e[0xA];
+    M2C_SFIELD(ch, u16 *, 0x100) = e[0xB];
+    M2C_SFIELD(ch, s32 *, 0xEC) = e[0xD];
+    M2C_SFIELD(ch, s32 *, 0xF0) = e[0xE];
+    if (ch->unk38 & 0x200) {
+        ch->unkE0 |= 0x1BB80;
+        return;
+    }
+    M2C_SFIELD(ch, u16 *, 0x102) = e[0xC];
+    M2C_SFIELD(ch, s32 *, 0xF4) = e[0xF];
+    ch->unkE0 |= 0x1FF80;
+}
 
 void func_800323CC(AkaoChannel *arg0) {
     AkaoChannel *ch;
@@ -3277,7 +3389,44 @@ loop_1:
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80035DC8);
+s32 *func_80035DC8(void) {
+    s32 *sp10;
+    s32 i;
+    s32 a0;
+
+    i = 0x800000;
+    while (1) {
+        if (func_80040BC4(&sp10, (void **)&D_80075D00) == 0) {
+            break;
+        }
+        i--;
+        if (i == 0) {
+            return NULL;
+        }
+    }
+    if (D_80075D00->f8 >= D_80095D98) {
+        D_80095DAC = 1;
+    }
+    if (D_8006E114 >= D_80075D00->f8) {
+        D_80095DAC = 1;
+    }
+    a0 = D_80075D00->f10;
+    if (D_80095D90 != a0 || D_80095D94 != D_80075D00->f12) {
+        D_80095D90 = a0;
+        D_80095D94 = *(u16 *)((u8 *)D_80075D00 + 0x12);
+        if (D_80095DB0 == 0) {
+            D_80095DC0 = D_80095D90;
+            D_80095DC2 = D_80095D94;
+            D_80095DBA = D_80095D94;
+        } else {
+            D_80095DC0 = (a0 * 3) >> 1;
+            D_80095DC2 = D_80095D94;
+            D_80095DBA = D_80095D94;
+        }
+    }
+    D_8006E114 = D_80075D00->f8;
+    return sp10;
+}
 
 s32 func_80035F14(void) {
     u32 n;

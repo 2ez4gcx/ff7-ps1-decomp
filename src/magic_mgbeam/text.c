@@ -59,7 +59,32 @@ void func_801B01D8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_mgbeam/nonmatchings/text", func_801B0294);
+void func_801B0294(void) {
+    MgMat m;
+    MgMat unused;
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003BF8C(&D_801B3D14, &m);
+    func_8003A79C(&D_801CBD24, &m, &m);
+    func_8003B35C(&m, &D_801B3CF4);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    D_801CBD20 = (u8 *)func_800D29D4(D_801B3D04, D_801517C0 + 0x70, 0xC, (s32)D_801CBD20);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (++p->unk2 == 7) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_mgbeam/nonmatchings/text", func_801B03DC);
 

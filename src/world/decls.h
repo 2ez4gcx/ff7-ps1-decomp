@@ -295,7 +295,7 @@ extern s32 D_8010CAC0;
 extern s32 D_8010CAC4;
 extern s32 D_8010CAC8;
 void func_800B851C(s32 arg0, s16 arg1, s16 arg2);
-M2C_UNK func_800B90C0(M2C_UNK, s32, u8, u8, M2C_UNK *);
+s32 func_800B90C0(u8 arg0, u8 arg1, u8 arg2, u8 arg3, s16 *arg4);
 extern s16 D_80116290;
 void func_800AF1E8(u32 arg0, u32 arg1);
 void func_800A7EA4(void);
@@ -806,7 +806,7 @@ s32 func_800BB650(s16 arg0);
 typedef struct { u16 f0; u16 f2; s16 f4; s16 f6; s16 f8; s16 fA; u8 padC[2]; u16 fE; u8 pad10[5]; u8 f15; u8 pad16; u8 f17; u8 f18; u8 f19; u8 pad1A[0xA]; s16 f24; s16 f26; u16 f28; s16 f2A; u8 pad2C[4]; } WmWin;
 extern u8 D_801163B4[][4];
 extern s16 D_801163B8[][4];
-extern WmWin D_80083278[];
+extern struct { u16 f0; u16 f2; s16 f4; s16 f6; s16 f8; s16 fA; u8 padC[2]; u16 fE; u8 pad10[2]; s16 f12; u8 pad14; u8 f15; u8 f16; u8 f17; u8 f18; u8 f19; u8 pad1A[6]; s16 f20; s16 f22; s16 f24; s16 f26; u16 f28; u16 f2A; u8 pad2C[4]; } D_80083278[];
 s32 func_800BAC70(s16 arg0);
 extern s32 D_800E56F8;
 extern s32 D_80109D4C;
@@ -916,6 +916,10 @@ extern s32 D_800E5640;
 extern s32 D_800E565C;
 extern u8 D_800C6A08;
 typedef struct { s16 x; s16 y; s16 z; s16 pad; } W4SV;
+void func_800BBD20(s32 arg0);
+s32 func_800BAE60(s16 arg0);
+extern u8 D_80075E24[];
+void func_800B9B2C(s32);
 
 #endif /* WORLD_DECLS_H */
 extern u8 D_80071E30;

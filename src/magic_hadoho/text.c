@@ -262,7 +262,20 @@ void func_801B0CC8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hadoho/nonmatchings/text", func_801B0DB4);
+void func_801B0DB4(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, (s16)(((func_80039A74(p->unk2 * 0x33) << 11 >> 16) << 7) + 0x1000), 0);
+    D_801D55C0[0] = p->unk2 % 2;
+    D_801ED648 = func_800D4D90(&D_801D55C0[-4], D_801517C0 + 0x70, 0xC, D_801ED648);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 0x28) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0EB4(void) {
     MgMat m;

@@ -25,5 +25,21 @@ extern s16 D_801D60A8[];
 extern u8 D_801D60A6;
 extern u8 D_801D60A5;
 extern u8 D_801D60A4;
+void func_801B0810(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgMat D_800FA63C;
+extern s32 D_801D60D4;
+extern s32 D_801D60D8;
+extern s32 D_801D60DC;
+extern s16 D_801D608A[];
+extern u8 *D_801D6090[];
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+MgMat *func_8003B35C(MgMat *, s32 *);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_SAIKYO_DECLS_H */

@@ -1095,7 +1095,44 @@ void func_8001A980(s32 arg0, s32 arg1, M2C_UNK arg2) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_8001A9CC);
+void func_8001A9CC(arg0) {
+    s32 id;
+    s32 n;
+    s32 i;
+    s32 a;
+    u8 *p;
+    Obj1A *q;
+    s32 last;
+    s32 b;
+
+    id = arg0 & 0xFF;
+    n = func_8001AC9C(id);
+    for (i = n; i > 0; i--) {
+        p = D_800730DE + id * 0x14;
+        b = p[i];
+        if (b != 0xFF) {
+            last = b;
+            break;
+        }
+    }
+    if (D_80063020 == 0) {
+        a = arg0 & 0xFF;
+        ((u16 *)&D_80062E6C)[D_800730DE[a * 0x14]] += last;
+        if (a == 0xA) {
+            if (*(s16 *)&D_80062E72 >= 0x56) {
+                *(s16 *)&D_80062E72 = 0x55;
+            }
+            if (n == 5) {
+                D_80062E5C = 1;
+            }
+        }
+    } else {
+        q = D_80062F7C;
+        q->a = D_800730DE[(arg0 & 0xFF) * 0x14];
+        q->b = n;
+        D_80062FFC = 0xA;
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_8001AB1C);
 

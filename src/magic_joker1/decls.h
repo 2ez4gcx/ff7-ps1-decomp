@@ -47,7 +47,7 @@ void func_801B0900(void);
 s32 func_800D56A8(void *);
 extern s32 D_801CF9A8;
 void func_800D4D4C(s32, s32);
-M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
+void func_800D55F4(s32, s32, s32);
 void func_801B0B38(void);
 extern MgSVec D_801CF9B0;
 extern s32 D_801CF9AC;
@@ -71,5 +71,8 @@ extern M2C_UNK D_801B140C;
 extern MgTask *D_801CF9A0;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern s32 D_801CF9A4;
+void func_801B0FA4(void);
+MgTask *func_800D4FA8(s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_JOKER1_DECLS_H */

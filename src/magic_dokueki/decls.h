@@ -16,8 +16,17 @@ void func_801B0780(s32 arg0, s32 arg1);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
 extern M2C_UNK func_801B03DC;
-M2C_UNK func_800BBEAC(M2C_UNK *);
+s32 func_800BBEAC(void (*)());
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
+void func_801B02A4(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+extern u8 D_80062D98;
+s32 func_80039A74(s32);
+void func_8003C4AC(MgSVec *, MgMat *);
+void func_8003C8DC(s32, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+void func_801B01A8(void);
 
 #endif /* MAGIC_DOKUEKI_DECLS_H */

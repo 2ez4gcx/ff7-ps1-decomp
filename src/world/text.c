@@ -6998,7 +6998,113 @@ void func_800B8D20(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800B8D4C);
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800B90C0);
+s32 func_800B90C0(u8 arg0, u8 arg1, u8 arg2, u8 arg3, s16 *arg4) {
+    s16 v;
+    s32 t;
+    s32 x;
+    s32 y;
+
+    switch ((s16)D_80083278[arg0].f28) {
+    case 0:
+        if (func_800B962C(arg0, arg1) != 0) {
+            return 1;
+        }
+        break;
+    case 1:
+        func_800B98F0(arg0);
+        break;
+    case 2:
+        func_800B9B2C(arg0);
+        break;
+    case 8:
+        func_800BA938(arg0);
+        break;
+    case 12:
+        func_800BAA00(arg0);
+        break;
+    case 13:
+        if (D_8009C6E0[0x80 / 4] & 0x20) {
+            D_80083278[arg0].f28 = 2;
+        }
+        break;
+    case 3:
+        v = D_801163D0[arg0];
+        if (v == 0) {
+            D_80083278[arg0].f28 = 2;
+            break;
+        }
+        D_801163D0[arg0] = v - 1;
+        break;
+    case 4:
+        if (D_8009C6E0[0x80 / 4] & 0x20) {
+            t = D_80083278[arg0].f12;
+            x = (D_80083278[arg0].f6 - 9) / 16;
+            y = D_801162A4[arg0] - 1;
+            if (t == x + y) {
+                D_80083278[arg0].f28 = 8;
+                D_80083284[arg0].f0 = D_80083284[arg0].f0 - 2;
+                D_801162A4[arg0] = D_801162A4[arg0] + 1;
+            }
+        }
+        break;
+    case 6:
+        if (!(D_80083278[arg0].f2A & 1)) {
+            D_80083278[arg0].f16 = 1;
+            if (D_8009C6E0[0x70 / 4] & 0x1000) {
+                if (arg2 < *arg4) {
+                    func_800B95E8();
+                }
+                *arg4 = *arg4 - 1;
+            }
+            if (D_8009C6E0[0x70 / 4] & 0x4000) {
+                if (*arg4 < arg3) {
+                    func_800B95E8();
+                }
+                *arg4 = *arg4 + 1;
+            }
+            if (*arg4 < arg2) {
+                *arg4 = arg2;
+            }
+            if (arg3 < *arg4) {
+                *arg4 = arg3;
+            }
+            D_80083278[arg0].f20 = 5;
+            D_80083278[arg0].f22 = *arg4 * 0x10 + 6;
+            if (D_8009C6E0[0x80 / 4] & 0x20) {
+                func_800B95E8();
+                D_80083278[arg0].f28 = 7;
+                func_800BAC70(arg0);
+            }
+        }
+        break;
+    case 14:
+        if (D_8009C6E0[0x80 / 4] & 0x20) {
+            func_800BAB60(arg0);
+        }
+        break;
+    case 11:
+        if (D_8009C6E0[0x80 / 4] & 0x20) {
+            D_80083278[arg0].f28 = 0xC;
+            D_801162A4[arg0 + 2] = D_80083278[arg0].f12 * 0x10 + 0x11;
+            D_80083284[arg0].f0 = D_80083284[arg0].f0 - 2;
+        }
+        break;
+    case 9:
+        func_800BAB60(arg0);
+        break;
+    case 5:
+    case 7:
+        if (func_800BAC70(arg0) != 0) {
+            D_80083278[arg0].f16 = 0;
+            return 1;
+        }
+        D_80083278[arg0].f16 = D_80083278[arg0].f16 ^ 1;
+        break;
+    default:
+        break;
+    }
+    return 0;
+}
 
 void func_800B95E8(void) {
     D_8009A000 = 0x30;
@@ -7176,7 +7282,73 @@ s32 func_800BAC70(s16 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800BAE60);
+s32 func_800BAE60(s16 arg0) {
+    s32 r;
+    u16 v;
+
+    r = D_801163B4[arg0][D_801163C0[arg0]];
+    switch (r) {
+    case 0:
+        r = (u16)D_801163B8[arg0][D_801163C0[arg0]];
+        break;
+    case 1:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[v];
+        break;
+    case 2:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[v] | (((u8 *)&D_8009D288)[v + 1] << 8);
+        break;
+    case 3:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[(u16)(v + 0x100)];
+        break;
+    case 4:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        v = v + 0x100;
+        r = ((u8 *)&D_8009D288)[v] | (((u8 *)&D_8009D288)[v + 1] << 8);
+        break;
+    case 11:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[(u16)(v + 0x200)];
+        break;
+    case 12:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        v = v + 0x200;
+        r = ((u8 *)&D_8009D288)[v] | (((u8 *)&D_8009D288)[v + 1] << 8);
+        break;
+    case 13:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[(u16)(v + 0x300)];
+        break;
+    case 15:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = ((u8 *)&D_8009D288)[(u16)(v + 0x400)];
+        break;
+    case 14:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        v = v + 0x300;
+        r = ((u8 *)&D_8009D288)[v] | (((u8 *)&D_8009D288)[v + 1] << 8);
+        break;
+    case 7:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        v = v + 0x400;
+        r = ((u8 *)&D_8009D288)[v] | (((u8 *)&D_8009D288)[v + 1] << 8);
+        break;
+    case 5:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = D_80075E24[v];
+        break;
+    case 6:
+        v = D_801163B8[arg0][D_801163C0[arg0]];
+        r = D_80075E24[v] | (D_80075E24[v + 1] << 8);
+        break;
+    default:
+        r = 0;
+        break;
+    }
+    return r;
+}
 
 void func_800BB350(u16 val, u8 *out) {
     s32 started;
@@ -7501,7 +7673,125 @@ void func_800BBD0C(void) {
     D_801163D4 = 1;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800BBD20);
+void func_800BBD20(s32 arg0) {
+    WQuad32 sp10;
+    WQuad32 sp20;
+    s16 v;
+    s32 s2;
+    s32 t;
+    s32 key;
+    s32 m;
+    s32 x;
+    s32 kind;
+
+    s2 = ((s32 (*)(void))func_800A9174)() == 3;
+    if (D_801163D8 != 0) {
+        D_801163D8 -= 1;
+        return;
+    }
+    if (func_800A369C() == 0 && func_800A1DE0() != 3) {
+        key = func_8001C8D4();
+        if (D_801163D4 == 0 && arg0 == 1) {
+            func_800BBA5C();
+        } else {
+            if (func_800A21A4() != 0) {
+                m = func_800A9240() == 0 ? (key & 0x40) : (key & 0xF040);
+                if (m == 0 && (u32)(D_801163DC - 1) < 0xE && (func_800A91A4(0x2000) == 0 || func_800A9A44() == 0x12)) {
+                    func_800BBC4C();
+                    goto done;
+                }
+            }
+            if (D_801163D4 == 1) {
+                D_801163D4 = 2;
+            } else if (D_801163D4 == 2) {
+                D_801163D4 = 0;
+                func_800A90EC();
+                kind = ((s32 (*)(void))func_800A9154)();
+                func_800AA098(&sp10);
+                func_800AA128(&sp20);
+                func_800A2108(1, 2);
+                if (sp10.a != sp20.a || sp10.c != sp20.c) {
+                    func_800B7C58();
+                    if (s2 != 0) {
+                        func_800A98A4(0);
+                        func_800AB8EC(0);
+                    }
+                    func_800AA1B8();
+                    func_800A1DD0(0);
+                    if (kind == 5 && func_800A98E4() != 0) {
+                        func_800A98A4(0);
+                    } else {
+                        if (kind == 4) {
+                            func_800AB8EC(0);
+                        }
+                        func_800AB988(kind, 5);
+                        if (kind == 4) {
+                            func_800AB8EC(1);
+                        }
+                        if (func_800A929C() != 0) {
+                            v = func_800AE47C(&sp20, &sp10) - 0x400;
+                            func_800A9480(v);
+                            t = kind < 0x29;
+                            func_800BB9D0();
+                            func_800A8E50();
+                            if (t != 0) {
+                                func_800A9110();
+                            }
+                            func_800AA2E4(2);
+                            func_800A9480(v);
+                            func_800B63F0(1);
+                            func_800A2108(0, 6);
+                            if (kind == 4) {
+                                func_800A82DC();
+                            } else if (t == 0) {
+                                func_800A993C(func_800B79B8());
+                                func_800A9110();
+                            }
+                            func_800ADC3C((V4 *)&sp10);
+                        } else {
+                            func_800A8A1C();
+                            x = ((s32 (*)(void))func_800BB9D0)() & 0xFF;
+                            if (func_800A92F8(x) != 0) {
+                                func_800A9334(((s32 (*)(void))func_800BBA0C)() & 0xFF);
+                                func_800A9110();
+                                func_800A8A1C();
+                                func_800A9334(x);
+                                func_800A8CE4();
+                            } else {
+                                func_800A9334(x);
+                                func_800A9110();
+                                if (s2 != 0) {
+                                    func_800BCA48();
+                                }
+                            }
+                            func_800A9DB4((s32)&sp10);
+                            func_800B63F0(func_800A9240() != 0 ? 2 : 1);
+                            if (kind == 6) {
+                                func_800B65E0(-0x1EC);
+                            } else if (kind == 5) {
+                                func_800B65E0(-0x1ED);
+                            }
+                            func_800A6994(&sp10, 1);
+                        }
+                    }
+                } else {
+                    if (((s32 (*)(void))func_800A9174)() == 3 || ((s32 (*)(void))func_800A9174)() == 4) {
+                        func_800AB8EC(0);
+                    }
+                    if (s2 != 0 || (((s32 (*)(void))func_800A9174)() == 5 && func_800A98E4() != 0)) {
+                        func_800A368C(1);
+                    }
+                }
+            }
+        }
+done:
+        if ((key & 0x40) != 0) {
+            D_801163DC += 1;
+            return;
+        }
+        D_801163DC = 0;
+    }
+}
 
 s32 func_800BC1AC(void) {
     return D_801163D4;

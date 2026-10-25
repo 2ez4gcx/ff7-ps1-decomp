@@ -33,7 +33,7 @@ extern s16 D_80162080;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern s32 D_801B1800;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-void func_801B16C4(void);
+void func_801B16C4();
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 void func_801B0C50(void);
@@ -58,5 +58,6 @@ extern s8 D_801D853D;
 extern s8 D_801D853C;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern s32 D_801D8180;
+void func_801B11FC(void);
 
 #endif /* MAGIC_ROCKET_DECLS_H */

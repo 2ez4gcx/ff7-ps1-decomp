@@ -30,5 +30,13 @@ s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 void func_801B02D4(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03B0(MgSVec *p, MgSVec *q, MgVec *n);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+extern s16 D_800FA650;
+extern s16 D_800FA654;
+extern s16 D_800FA658;
+MgMat *func_8003BF3C(MgSVec *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+MgMat *func_8003A79C(MgMat *, MgTask *, MgMat *);
+void func_801B0B1C(MgTask *arg0, MgSVec *arg1, MgSVec *arg2);
 
 #endif /* MAGIC_DEATH_DECLS_H */

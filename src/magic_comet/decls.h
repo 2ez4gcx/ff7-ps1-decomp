@@ -17,6 +17,16 @@ extern s16 D_8015169C;
 extern s16 D_80162080;
 extern M2C_UNK D_801B13E8;
 extern M2C_UNK D_801D34C0;
-extern M2C_UNK *D_801EB4C0;
+extern u8 *D_801EB4C0;
+void func_801B0020(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgMat D_800FA63C;
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+s32 func_8003BBDC(void *, void *, s32 *, s32 *);
+void func_80046974(void *);
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_COMET_DECLS_H */

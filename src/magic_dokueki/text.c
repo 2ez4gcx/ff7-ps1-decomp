@@ -20,7 +20,35 @@ INCLUDE_ASM("../asm/us/magic_dokueki/nonmatchings/text", func_801B008C);
 
 INCLUDE_ASM("../asm/us/magic_dokueki/nonmatchings/text", func_801B01A8);
 
-INCLUDE_ASM("../asm/us/magic_dokueki/nonmatchings/text", func_801B02A4);
+void func_801B02A4(void) {
+    MgSVec rot;
+    MgSVec pos;
+    MgMat m;
+    MgTask *p;
+    MgTask *q;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        q = (MgTask *)&D_80162978[func_800BBEAC(func_801B01A8)];
+        q->unk4 = p->unk4;
+        q->unk6 = p->unk6;
+        q->unk8 = p->unk8;
+        q->unk1A = p->unk2 >> 1;
+        pos.vx = 0;
+        pos.vy = 0;
+        pos.vz = p->unk18;
+        rot.vx = 0;
+        rot.vy = -func_80039A74(p->unk2 * 0x88) / 16;
+        rot.vz = 0x200;
+        func_8003C4AC(&rot, &m);
+        func_8003C8DC(p->unk14, &m);
+        func_8003B2CC(&m, &pos, (MgSVec *)&q->unkC);
+        p->unk2++;
+        if (p->unk2 == 0x20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_dokueki/nonmatchings/text", func_801B03DC);
 

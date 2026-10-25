@@ -8,7 +8,7 @@ void func_801B14E4();
 void func_801B1324(void);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
-M2C_UNK func_801B1208();
+void func_801B1208();
 extern s32 D_801E5C58;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
@@ -61,7 +61,7 @@ extern MgVec D_801CDC30;
 MgVec *func_8003AB84(MgMat *, MgVec *, MgVec *);
 void func_801B0E9C(void);
 extern u8 D_80151919[][0xB9C];
-extern u8 D_80151A46[][0xB9C];
+extern u16 D_80151A46[][0x5CE];
 extern MgVec D_801E5C6C;
 extern MgVec D_801E5C7C;
 void func_801B1364(void);
@@ -71,5 +71,7 @@ extern M2C_UNK D_801B0000;
 extern M2C_UNK D_801B15B0;
 extern MgTask *D_801E5C54;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+extern s16 D_801518F6[][0x5CE];
+void func_801B0F9C(void);
 
 #endif /* MAGIC_DIA2_DECLS_H */

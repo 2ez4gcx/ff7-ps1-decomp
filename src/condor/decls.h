@@ -114,5 +114,10 @@ extern u16 D_8012C424;
 extern s16 D_8012C428;
 extern s16 D_8012C42C;
 extern s16 D_8012C4BC;
+s16 func_800B17A0(void *arg0, s32 arg1);
+M2C_UNK func_800AC72C(CondorObj *, void *, s32, s16 *);
+typedef struct { u8 b0; u8 b1; u8 b2; u8 b3; s16 h4; } CondorInfo;
+extern CondorInfo *D_800BE8BC;
+extern CondorObj D_800BFB80[];
 
 #endif /* CONDOR_DECLS_H */

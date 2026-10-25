@@ -21,5 +21,16 @@ void func_800D54EC(s32, void *);
 extern s16 D_8015169C;
 void func_801B0190();
 extern MgTask D_80162978[];
+void func_801B0074(void);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern u8 D_801B6980[];
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_801B6988;
+extern s32 D_801CE98C;
+extern u8 D_801CE99C[];
+extern u8 D_801CE9A4[];
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_AYASII_DECLS_H */

@@ -34,5 +34,10 @@ typedef struct { s32 tag; u8 r; u8 g; u8 b; u8 code; } MgColTag;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern MgColTag D_801D4470;
 extern s32 D_801D447C[];
+void func_801B008C(void);
+typedef struct { s32 unk0; s32 unk4; } MgAnim;
+void func_800D4368(void *, s32, s32);
+extern s16 D_801D4418[];
+extern MgAnim *D_801D441C[];
 
 #endif /* MAGIC_DAIONPA_DECLS_H */

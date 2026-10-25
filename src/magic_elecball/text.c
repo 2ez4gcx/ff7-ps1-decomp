@@ -29,7 +29,39 @@ INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B01C0);
 
 INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B02FC);
 
-INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B0518);
+void func_801B0518(void) {
+    MgTask *p;
+    s32 t;
+    s32 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 5) {
+        c = (t << 7) / 5;
+        D_801D11D0 = D_801D11D1 = D_801D11D2 = c;
+    } else {
+        t -= 5;
+        if (t < 0x23) {
+            c = 0x80;
+            D_801D11D0 = D_801D11D1 = D_801D11D2 = c;
+        } else {
+            t -= 0x23;
+            if (t < 5) {
+                c = -(t << 7) / 5 - 0x80;
+                D_801D11D0 = D_801D11D1 = D_801D11D2 = c;
+            } else {
+                p->unk0 = -1;
+                return;
+            }
+        }
+    }
+    D_801D11D4[0] = p->unk2 % 12;
+    func_800D4368(&p->unk8, 0x2000, p->unk18);
+    D_801EF1E4 = (u8 *)func_800D4D90(&D_801D11D4[-4], D_801517C0 + 0x70, 0xC, (s32)D_801EF1E4);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_elecball/nonmatchings/text", func_801B0694);
 

@@ -130,7 +130,19 @@ void func_800CF3CC(void) {
     D_801620AC[D_801590D0][2]--;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF4A8);
+void func_800CF4A8(void) {
+    s16 i;
+
+    if (D_801620AC[D_801590D0][2] == 0) {
+        D_801620AC[D_801590D0][0] = -1;
+        return;
+    }
+    i = D_801620AC[D_801590D0][4];
+    D_80151A4C[i].v.a += D_801620AC[D_801590D0][5];
+    D_80151A4C[i].v.c += D_801620AC[D_801590D0][6];
+    *(s32 *)0x1F80000C = i;
+    D_801620AC[D_801590D0][2]--;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF5BC);
 
@@ -392,7 +404,34 @@ s32 func_800D35D8(u8 *buf, s32 *pos, s32 n) {
     return v;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D3658);
+s32 func_800D3658(u8 *arg0, s32 *arg1, s32 arg2) {
+    s32 n;
+    s32 v;
+
+    if (func_800D35D8(arg0, arg1, 1) == 0) {
+        return 0;
+    }
+    n = func_800D35D8(arg0, arg1, 3) & 7;
+    switch (n) {
+    case 0:
+        return (s32) (0xFFFF0000 << arg2) >> 0x10;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+        v = func_800D35D8(arg0, arg1, n);
+        if (v >= 0) {
+            v += 1 << (n - 1);
+        } else {
+            v -= 1 << (n - 1);
+        }
+        return (s16) (v << arg2);
+    case 7:
+        return (s16) (func_800D35D8(arg0, arg1, 0xC - arg2) << arg2);
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D376C);
 
