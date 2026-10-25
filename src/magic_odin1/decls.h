@@ -37,5 +37,10 @@ void func_801B00F8(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
 extern s16 D_8015169C;
 extern u8 D_80062D98;
 extern s16 D_800FA668[];
+void func_801B4F30(void);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+extern s16 D_800F5B74;
 
 #endif /* MAGIC_ODIN1_DECLS_H */

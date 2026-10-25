@@ -1,7 +1,52 @@
 #include "common.h"
 #include "snobo/decls.h"
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A0390);
+void func_800A0390(void) {
+    s16 *p = &D_8009A000;
+
+    *p = 0xBA;
+    D_8009A004 = 0x40;
+    func_8002DA7C();
+    *p = 0xB8;
+    D_8009A004 = 0x7F;
+    func_8002DA7C();
+    *p = 0xBC;
+    D_8009A004 = 0;
+    func_8002DA7C();
+    func_800A1514();
+    func_800A155C();
+    func_800A1624();
+    func_8003B6BC(0, 0);
+    func_8003B6DC(0xA0);
+    func_800A1CC0(0, 0, 0x10);
+    func_800A6D04();
+    func_800A9DB4();
+    D_800DD74C = 0;
+    D_800DD740 = 1;
+    func_80043F6C(D_800BFEB8, 0, 0, 0);
+    func_80043DD8(0);
+    func_80043D3C(1);
+    D_801027BC = 0;
+    D_80102818 = 0;
+    D_800FF750 = 0;
+    D_800DD748 = func_800A057C;
+    if (*(u8 *)&D_800DD740 != 0) {
+        do {
+            func_800A1470();
+            func_800A1670();
+            D_800DD748();
+            D_8010285C = func_80042B10(0x1F8003FC);
+            D_80102798 = func_800AAE98(0x80180000, D_80102794, D_80102798);
+            func_80042B10(D_8010285C);
+            func_800A16F0();
+            func_80034B44();
+            D_80102958 += 1;
+        } while (*(u8 *)&D_800DD740 != 0);
+    }
+    func_80043D3C(1);
+    func_800A1378();
+    func_800A12DC();
+}
 
 void func_800A057C(void) {
     s32 *p;
@@ -918,7 +963,69 @@ void func_800A6D04(void) {
     D_800FFC08 = 0x7F;
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A6D28);
+void func_800A6D28(void *arg0, void *arg1, s32 arg2, s32 arg3) {
+    SbTbl *e;
+    u8 *p;
+    u8 *q;
+    u8 *r;
+    s16 *w;
+    s32 i;
+    s32 f;
+    u16 ca;
+    u16 cb;
+
+    if (arg2 != 0) {
+        f = 0;
+        if (!(D_800DB1E0 & 0x8000)) {
+            i = 0;
+            D_800FFC18 = 0;
+            D_800FFC14 = 0;
+            D_800FFC28 = 0;
+            D_800FFC2C = 0;
+            D_800D71A6 = 0;
+            D_800DB1D4 = 0;
+        lp:
+            D_800FFC1C[i] = 0;
+            D_800FFC20[i] = 0;
+            i++;
+            f = 1;
+            if (i < 4) {
+                goto lp;
+            }
+            D_800DB1E2 = 0;
+            *(u16 *)&D_800DB1E0 |= 0x8000;
+        }
+        w = &D_800DB1E0;
+        p = (u8 *)w - 0xC;
+        D_800DB2E4[*(u8 *)&D_800DB1E0](p, f, arg1);
+        D_800DB1E2 += 1;
+        func_800A8CB4(p);
+    }
+    q = (u8 *)arg1 + 0x40;
+    func_8003C21C(&D_800DB238, q);
+    e = &D_8004BC98[D_800DB24A & 0xFFF];
+    ca = e->a;
+    cb = e->b;
+    M2C_FIELD(arg1, s16 *, 0x62) = 0;
+    M2C_FIELD(arg1, s16 *, 0x66) = 0;
+    M2C_FIELD(arg1, s16 *, 0x68) = 0x1000;
+    M2C_FIELD(arg1, s16 *, 0x6A) = 0;
+    M2C_FIELD(arg1, s16 *, 0x6E) = 0;
+    M2C_FIELD(arg1, u16 *, 0x64) = ca;
+    M2C_FIELD(arg1, u16 *, 0x60) = cb;
+    M2C_FIELD(arg1, s16 *, 0x6C) = -ca;
+    M2C_FIELD(arg1, u16 *, 0x70) = cb;
+    func_8003A79C(q, (u8 *)arg1 + 0x60, q);
+    r = (u8 *)&D_800DB238 + 0x34;
+    func_8003A79C(q, D_800D71BC, r);
+    D_800DB280 = M2C_FIELD(arg0, s16 *, 0);
+    D_800DB284 = M2C_FIELD(arg0, s16 *, 2);
+    D_800DB288 = M2C_FIELD(arg0, s16 *, 4);
+    func_800A8E20(r, &D_801027F4);
+    if (arg3 != 0) {
+        func_800A6F2C(arg1);
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A6F2C);
 
@@ -1151,9 +1258,101 @@ void func_800A8050(void *arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A815C);
+void func_800A815C(SbObjH *arg0, s32 arg1, void *arg2) {
+    s16 a;
+    s16 r;
+    s32 v;
+    s32 t;
+    s32 w;
+    u16 ca;
+    u16 cb;
+    SbTbl *e;
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A82F4);
+    if (arg1 != 0) {
+        arg0->unk4 = -0x80;
+        arg0->unk6 = 0;
+        arg0->unk8 = 0x40;
+        arg0->unk66 = 0;
+        arg0->unk72 = 0;
+        D_801027CC += 1;
+    }
+    v = -arg0->unk10;
+    a = arg0->unk12;
+    if (a < 0x19) {
+        r = arg0->unk14;
+        t = (r * r) >> 15;
+        v = (v * (0x180 - t)) / 384;
+        if (a >= 9) {
+            v = (v * (0x18 - a)) >> 4;
+        }
+        e = (SbTbl *)((v & 0x3FFC) + (u8 *)D_8004BC98);
+        ca = e->a;
+        cb = e->b;
+        M2C_FIELD(arg2, s16 *, 0x42) = 0;
+        M2C_FIELD(arg2, s16 *, 0x46) = 0;
+        M2C_FIELD(arg2, s16 *, 0x48) = 0x1000;
+        M2C_FIELD(arg2, s16 *, 0x4A) = 0;
+        M2C_FIELD(arg2, s16 *, 0x4E) = 0;
+        M2C_FIELD(arg2, s16 *, 0x44) = ca;
+        M2C_FIELD(arg2, s16 *, 0x40) = cb;
+        M2C_FIELD(arg2, s16 *, 0x50) = cb;
+        M2C_FIELD(arg2, s16 *, 0x4C) = -ca;
+        func_8003AB84((u8 *)arg2 + 0x40, (u8 *)arg0 + 0x34, (u8 *)arg2 + 0x20);
+        w = v < 0 ? -v : v;
+        t = (0x4000 - ((t * w) >> 4)) >> 2;
+        arg0->unk34 = (t * M2C_FIELD(arg2, s32 *, 0x20)) >> 12;
+        arg0->unk3C = (t * M2C_FIELD(arg2, s32 *, 0x28)) >> 12;
+    }
+    ((void (*)(void *, void *))func_800A848C)(arg0, arg2);
+}
+
+void func_800A82F4(SbObjH *arg0, s32 arg1, void *arg2) {
+    s16 a;
+    s16 r;
+    s32 v;
+    s32 t;
+    s32 w;
+    u16 ca;
+    u16 cb;
+    SbTbl *e;
+
+    if (arg1 != 0) {
+        arg0->unk4 = 0x80;
+        arg0->unk6 = 0;
+        arg0->unk8 = 0x40;
+        arg0->unk66 = 0;
+        arg0->unk72 = 0;
+        D_801027CC += 1;
+    }
+    v = -arg0->unk10;
+    a = arg0->unk12;
+    if (a < 0x19) {
+        r = arg0->unk14;
+        t = (r * r) >> 15;
+        v = (v * (0x180 - t)) / 384;
+        if (a >= 9) {
+            v = (v * (0x18 - a)) >> 4;
+        }
+        e = (SbTbl *)((v & 0x3FFC) + (u8 *)D_8004BC98);
+        ca = e->a;
+        cb = e->b;
+        M2C_FIELD(arg2, s16 *, 0x42) = 0;
+        M2C_FIELD(arg2, s16 *, 0x46) = 0;
+        M2C_FIELD(arg2, s16 *, 0x48) = 0x1000;
+        M2C_FIELD(arg2, s16 *, 0x4A) = 0;
+        M2C_FIELD(arg2, s16 *, 0x4E) = 0;
+        M2C_FIELD(arg2, s16 *, 0x44) = ca;
+        M2C_FIELD(arg2, s16 *, 0x40) = cb;
+        M2C_FIELD(arg2, s16 *, 0x50) = cb;
+        M2C_FIELD(arg2, s16 *, 0x4C) = -ca;
+        func_8003AB84((u8 *)arg2 + 0x40, (u8 *)arg0 + 0x34, (u8 *)arg2 + 0x20);
+        w = v < 0 ? -v : v;
+        t = (0x4000 - ((t * w) >> 4)) >> 2;
+        arg0->unk34 = (t * M2C_FIELD(arg2, s32 *, 0x20)) >> 12;
+        arg0->unk3C = (t * M2C_FIELD(arg2, s32 *, 0x28)) >> 12;
+    }
+    ((void (*)(void *, void *))func_800A848C)(arg0, arg2);
+}
 
 void func_800A848C(void *arg0) {
     if (M2C_FIELD(arg0, s16 *, 0x14) < 0x200) {
@@ -1396,7 +1595,54 @@ void func_800A9DB4(void) {
     func_80044A68(&D_800FFC34, 1, 0, func_8004656C(0, 0, 0x180, 0x100) & 0xFFFF, 0);
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A9DFC);
+s32 func_800A9DFC(s32 *arg0, s32 arg1) {
+    SbBcdU u;
+    u32 t;
+    u32 c;
+
+    u.w = arg1;
+    t = u.b.d0 + 7;
+    if (t >= 10) {
+        t = u.b.d0 - 3;
+        c = 7;
+    } else {
+        c = 6;
+    }
+    u.b.d0 = t;
+    t = u.b.d1 + c;
+    c = 1;
+    if (t >= 10) {
+        t -= 10;
+        c = 2;
+    }
+    u.b.d1 = t;
+    u.b.d2 += c;
+    if (u.b.d2 >= 10) {
+        u.b.d2 -= 10;
+        u.b.d3++;
+        if (u.b.d3 >= 10) {
+            u.b.d3 -= 10;
+            u.b.d4++;
+            if (u.b.d4 >= 10) {
+                u.b.d4 -= 10;
+                u.b.d5++;
+                if (u.b.d5 >= 6) {
+                    u.b.d5 -= 6;
+                    u.b.d6++;
+                    if (u.b.d6 >= 10) {
+                        u.b.d6 -= 10;
+                        u.b.d7++;
+                        if (u.b.d7 >= 10) {
+                            u.b.d7 = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    *arg0 = u.w;
+    return (s32)arg0;
+}
 
 void func_800A9FF8(u32 arg0, s32 arg1, s32 arg2) {
     SbPrim14 *p;
@@ -2386,9 +2632,106 @@ found:
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AD70C);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AD8F0);
+void func_800AD8F0(s16 arg0, s32 arg1, s16 arg2, SbVec3 *arg3) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+    s32 x;
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800ADA8C);
+    x = 0xC0000;
+    if (arg2 & 1) {
+        x = -0xC0000;
+    }
+    D_800DBEA8.unk1C = arg1;
+    D_800DBEA8.unk38 = x + arg3->x;
+    D_800DBEA8.unk3C = arg3->y - 0x400000;
+    D_800DBEA8.unk40 = x + arg3->z;
+    D_800DBEA8.unk30 = arg3->y - 0x80000;
+    if (arg2 & 2) {
+        D_800DBEA8.unk44 = 0x68;
+    } else {
+        D_800DBEA8.unk44 = 0x90;
+    }
+    i = D_80100F30;
+    n = 0x1F;
+    do {
+        p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+        if (p->flag == 0) {
+            D_80100F30 = (i + 1) & 0x1F;
+            s = p;
+            goto found;
+        }
+        i = (i + 1) & 0x1F;
+    } while (--n != -1);
+    s = NULL;
+found:
+    if (s != NULL) {
+        s->flag = 1;
+        s->unk1 = 0;
+        s->unk2 = arg0;
+        s->unk4 = *(SbBlock48 *)&D_800DBEA8;
+        s->unk6C = 0;
+        s->unk70 = 0;
+        s->unk74 = 0;
+        s->unk78 = 0;
+        s->unk84 = 0;
+        s->unk86 = 0;
+        s->unk88 = 0;
+        s->unk8A = 0;
+    }
+    x = D_800DBEF0[arg2] << 12;
+    s->unk8A = -1;
+    s->unk6C = x;
+    s->unk74 = x;
+}
+
+void func_800ADA8C(s16 arg0, s16 arg1, SbVec3 *arg2) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+
+    n = 0x1F;
+    D_800DBEF8.unk1C = D_800DBF70[arg1];
+    D_800DBEF8.unk38 = arg2->x;
+    i = D_80100F30;
+    D_800DBEF8.unk3C = arg2->y - 0x80000;
+    D_800DBEF8.unk40 = arg2->z;
+    D_800DBEF8.unk44 = arg1;
+
+    do {
+        p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+        if (p->flag == 0) {
+            D_80100F30 = (i + 1) & 0x1F;
+            s = p;
+            goto found;
+        }
+        do {
+            i = (i + 1) & 0x1F;
+        } while (0);
+    } while (--n != -1);
+    s = NULL;
+found:
+    if (s != NULL) {
+        s->flag = 1;
+        s->unk1 = 0;
+        s->unk2 = arg0;
+        s->unk4 = *(SbBlock48 *)&D_800DBEF8;
+        s->unk6C = 0;
+        s->unk70 = 0;
+        s->unk74 = 0;
+        s->unk78 = 0;
+        s->unk84 = 0;
+        s->unk86 = 0;
+        s->unk88 = 0;
+        s->unk8A = 0;
+    }
+    s->unk6C = D_800DBF40[arg1].x;
+    s->unk70 = D_800DBF40[arg1].y;
+    s->unk74 = D_800DBF40[arg1].z;
+    s->unk8A = -1;
+}
 
 void func_800ADC20(void *arg0) {
     if (M2C_FIELD(arg0, s16 *, 2) - D_8010281C < 4) {
@@ -3282,7 +3625,67 @@ found:
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B04B8);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B072C);
+void func_800B072C(s32 arg0, s32 arg1) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+    s32 t;
+    s16 id;
+    s16 *w;
+
+    if (arg1 != 0) {
+        id = arg0;
+        D_800DBD10 = 2;
+        D_800DBCE4 = 0x02007C80;
+        *(s16 *)&D_800DBCD8 = 0xF0;
+        D_800DBCF4 = 0xA00;
+        D_800DBCFC = D_800DC198;
+        D_800DBD00 = D_800DC19C + 0xFFF60000;
+        D_800DBD04 = D_800DC1A0;
+        n = 0x1F;
+        i = D_80100F30;
+        do {
+            p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+            if (p->flag == 0) {
+                D_80100F30 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = 1;
+            s->unk1 = 0;
+            s->unk2 = id;
+            s->unk4 = D_800DBCD8;
+            s->unk6C = 0;
+            s->unk70 = 0;
+            s->unk74 = 0;
+            s->unk78 = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+    if (arg0 == D_8010281C && (u16)(D_801027C8 - 0x18) < 0x18 && *(u8 *)(w = &D_800DB1E0) != 0xA && *(u8 *)w != 0xC) {
+        t = (D_800DB1EC - D_800DB1FC) >> 12;
+        if (t >= 0x50) {
+            if (t < 0x1C0) {
+                *w = 0xC;
+                goto block_19;
+            }
+            if (t < 0x1C8) {
+                *w = 0xA;
+block_19:
+                func_800A1300(2, 0xF0, 0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B0948);
 
@@ -4141,7 +4544,59 @@ void func_800B61C8(void) {
     func_800A1300(2, 0x10C, 0);
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B6228);
+void func_800B6228(s32 arg0, s32 arg1) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+    s16 id;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    if (arg1 != 0) {
+        id = arg0;
+        n = 0x1F;
+        i = D_80100F30;
+        *(s16 *)&D_800DBBB8 = 0xF8;
+        D_800DBBD4 = 0xD1C;
+        x = D_800DC778;
+        z = D_800DC780;
+        y = D_800DC77C;
+        D_800DBBE0 = y;
+        D_800DBBDC = x;
+        D_800DBBE4 = z;
+        D_800DBBE8 = y + 0x400000;
+        do {
+            p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+            if (p->flag == 0) {
+                D_80100F30 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = 1;
+            s->unk1 = 0;
+            s->unk2 = id;
+            s->unk4 = D_800DBBB8;
+            s->unk6C = 0;
+            s->unk70 = 0;
+            s->unk74 = 0;
+            s->unk78 = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+    if (D_8010281C == arg0 && (u8)D_800DB1E0 != 0xB && ((D_800DB1EC - D_800DB1FC) >> 12) > 0x240) {
+        func_800B61C8();
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B63E0);
 
@@ -4149,7 +4604,59 @@ INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B66D8);
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B6B10);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B6E08);
+void func_800B6E08(s32 arg0, s32 arg1) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+    s16 id;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    if (arg1 != 0) {
+        id = arg0;
+        n = 0x1F;
+        i = D_80100F30;
+        *(s16 *)&D_800DBBB8 = 0xF8;
+        D_800DBBD4 = 0x51C;
+        x = D_800DC7D8;
+        z = D_800DC7E0;
+        y = D_800DC7DC;
+        D_800DBBE0 = y;
+        D_800DBBDC = x;
+        D_800DBBE4 = z;
+        D_800DBBE8 = y + 0x400000;
+        do {
+            p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+            if (p->flag == 0) {
+                D_80100F30 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = 1;
+            s->unk1 = 0;
+            s->unk2 = id;
+            s->unk4 = D_800DBBB8;
+            s->unk6C = 0;
+            s->unk70 = 0;
+            s->unk74 = 0;
+            s->unk78 = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+    if (D_8010281C == arg0 && (u8)D_800DB1E0 != 0xB && ((D_800DB1EC - D_800DB1FC) >> 12) > 0x240) {
+        func_800B61C8();
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B6FC0);
 
@@ -4165,7 +4672,59 @@ INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B8118);
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B8550);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B8AC8);
+void func_800B8AC8(s32 arg0, s32 arg1) {
+    SbSlotA *p;
+    SbSlotA *s;
+    s32 i;
+    s32 n;
+    s16 id;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    if (arg1 != 0) {
+        id = arg0;
+        n = 0x1F;
+        i = D_80100F30;
+        *(s16 *)&D_800DBBB8 = 0xF8;
+        D_800DBBD4 = 0xD1C;
+        x = D_800DC8C8;
+        z = D_800DC8D0;
+        y = D_800DC8CC;
+        D_800DBBE0 = y;
+        D_800DBBDC = x;
+        D_800DBBE4 = z;
+        D_800DBBE8 = y + 0x400000;
+        do {
+            p = (SbSlotA *)((u8 *)&D_800FFDB0 + i * 0x8C);
+            if (p->flag == 0) {
+                D_80100F30 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = 1;
+            s->unk1 = 0;
+            s->unk2 = id;
+            s->unk4 = D_800DBBB8;
+            s->unk6C = 0;
+            s->unk70 = 0;
+            s->unk74 = 0;
+            s->unk78 = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+    if (D_8010281C == arg0 && (u8)D_800DB1E0 != 0xB && ((D_800DB1EC - D_800DB1FC) >> 12) > 0x240) {
+        func_800B61C8();
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800B8C80);
 

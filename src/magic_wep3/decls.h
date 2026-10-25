@@ -43,5 +43,7 @@ extern s32 D_801517C0;
 extern s32 D_801EB6B0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B067C(void);
+extern u16 D_801D3688[];
 
 #endif /* MAGIC_WEP3_DECLS_H */

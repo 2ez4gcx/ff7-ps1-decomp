@@ -61,7 +61,24 @@ s32 func_800A0BA8(void) {
     return 1;
 }
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A0CAC);
+void func_800A0CAC(void) {
+    s32 i;
+    s32 n;
+    s32 t;
+
+    i = *D_800A6528++;
+    n = *D_800A6528++;
+    t = *D_800A6528++;
+    D_800A652C[i].timer = n;
+    D_800A652C[i].tr = t;
+    D_800A652C[i].tg = t;
+    D_800A652C[i].tb = t;
+    D_800A652C[i].flags |= 8;
+    D_800A652C[i].dr = (t - D_800A652C[i].r) / n;
+    D_800A652C[i].dg = (t - D_800A652C[i].g) / n;
+    D_800A652C[i].db = (t - D_800A652C[i].b) / n;
+    D_800A6394 = 1;
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A0E68);
 
@@ -450,7 +467,28 @@ s32 func_800A2F1C(EndModel *p) {
     return sp10;
 }
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2FB8);
+s32 func_800A2FB8(EndModel *m, s32 *tgt, s32 *d, s32 scale) {
+    s32 v[3];
+
+    v[0] = tgt[0] - m->pos[0];
+    v[1] = tgt[1] - m->pos[1];
+    v[2] = tgt[2] - m->pos[2];
+    func_8003A08C(v, d);
+    if ((u32)(v[0] + 2) < 4U && (u32)(v[1] + 2) < 4U) {
+        if ((u32)(v[2] + 2) < 4U) {
+            d[0] = v[0] << 12;
+            d[1] = v[1] << 12;
+            d[2] = v[2] << 12;
+            return 1;
+        }
+    }
+    if (scale != 0x1000) {
+        d[0] = scale * d[0] / 4096;
+        d[1] = scale * d[1] / 4096;
+        d[2] = scale * d[2] / 4096;
+    }
+    return 0;
+}
 
 void func_800A310C(void) {
     D_800AF3C8.id = 0;
@@ -597,4 +635,44 @@ void func_800A34C4(EndActor *p) {
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A358C);
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A379C);
+s32 func_800A379C(EndModel *m, s32 *tgt, s32 *d, s32 scale) {
+    s32 v[3];
+    s32 t;
+
+    v[0] = tgt[0] - m->pos[0];
+    v[1] = tgt[1] - m->pos[1];
+    v[2] = tgt[2] - m->pos[2];
+    if (v[0] == 0) {
+        t = 0x1000;
+        if (v[1] < 0) {
+            t = -0x1000;
+        }
+        d[0] = 0;
+        d[1] = t;
+        d[2] = 0;
+    } else if (v[1] == 0) {
+        t = 0x1000;
+        if (v[0] < 0) {
+            t = -0x1000;
+        }
+        d[0] = t;
+        d[1] = 0;
+        d[2] = 0;
+    } else {
+        func_8003A08C(v, d);
+    }
+    if ((u32)(v[0] + 2) < 4U && (u32)(v[1] + 2) < 4U) {
+        if ((u32)(v[2] + 2) < 4U) {
+            d[0] = v[0] << 12;
+            d[1] = v[1] << 12;
+            d[2] = v[2] << 12;
+            return 1;
+        }
+    }
+    if (scale != 0x1000) {
+        d[0] = scale * d[0] / 4096;
+        d[1] = scale * d[1] / 4096;
+        d[2] = scale * d[2] / 4096;
+    }
+    return 0;
+}

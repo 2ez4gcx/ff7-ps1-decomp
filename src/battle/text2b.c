@@ -1158,7 +1158,34 @@ void func_800D76B8(V8 *arg0) {
     p->a = 1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D7724);
+void func_800D7724(void) {
+    MgMat m;
+    BtlT7724 *p;
+    BtlT7724q *q;
+
+    p = (BtlT7724 *)D_801621F0[D_801590D4];
+    if (D_80062D98 == 0) {
+        if (p->b != 0) {
+            p->a = -1;
+            return;
+        }
+    }
+    D_800F1978[0] = -p->c;
+    func_8003A63C(p->d, &D_800F1978[-7], &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_80163C74 = func_800D29D4(D_800F197C, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (*(u8 *)0x80062D98 == 0) {
+        q = (BtlT7724q *)D_801621F0[func_800BC04C(func_800D751C)];
+        q->v.vx = m.t[0] - D_800FA63C.t[0];
+        q->v.vy = m.t[1] - D_800FA63C.t[1];
+        q->v.vz = m.t[2] - D_800FA63C.t[2];
+        ((void (*)(MgMat *, MgMat *))func_8003BF3C)(&D_800FA63C, &m);
+        func_8003B2CC((BtlMatrix *)&m, &q->v, &q->v);
+        q->a = 0;
+        p->b++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D7888);
 

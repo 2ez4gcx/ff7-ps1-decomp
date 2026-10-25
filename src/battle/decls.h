@@ -1066,6 +1066,13 @@ extern u8 D_80162990[];
 void func_800BA11C(s32 arg0, s32 arg1, s16 arg2, s16 arg3);
 typedef struct { u8 pad[0xC]; s16 z; u8 pad2[0x26]; } BtlC34z;
 extern BtlC34z D_800F8178[];
+void func_800E03F0(void);
+void func_800D7724(void);
+typedef struct { s16 a; s16 b; s16 pad[11]; s16 c; MgMat *d; } BtlT7724;
+typedef struct { s16 a; s16 pad[3]; BtlSVec v; } BtlT7724q;
+extern s32 D_800F1978[];
+extern u8 D_800F197C[];
+void func_8003A63C(void *, void *, MgMat *);
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;

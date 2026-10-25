@@ -14,6 +14,7 @@ extern u8 D_8009D5F0;
 M2C_UNK func_80043F6C(Rect16 *, M2C_UNK, M2C_UNK, M2C_UNK);
 u32 func_80030234(void);
 s32 func_800354CC(void);
+s32 func_8002DF88(AkaoReq *cmd);
 
 void func_80029A50(void) {
     func_80038FEC(0);
@@ -1608,7 +1609,60 @@ void func_8002CFA0(void) {
     func_80038FEC(0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002CFC0);
+void func_8002CFC0(arg0) {
+    s32 flags;
+    s32 off;
+
+    D_80099FD8 |= D_80062F00;
+    func_80038FEC(0);
+    func_80038A84(0);
+    func_80038C04(0);
+    D_80062FE0 = ((AkaoStream *) arg0)->data;
+    D_80062FB0 = ((AkaoStream *) arg0)->vol;
+    D_80062FAC = ((AkaoStream *) arg0)->pan << 7;
+    D_80063004 = *(s32 *) D_80062FE0;
+    if (D_80063004 != 0) {
+        D_80062FE0 += 4;
+        flags = *(s32 *) D_80062FE0;
+        D_80062FE0 += 4;
+        D_80062F1C = flags;
+        off = *(s32 *) D_80062FE0;
+        D_80062FE0 += 8;
+        if (flags & 2) {
+            D_80063000 = off + D_80062FE0;
+        } else {
+            D_80063000 = 0;
+        }
+        if (flags & 2) {
+            D_80062F08 = D_80063004 - off;
+        } else {
+            D_80062F08 = 0;
+        }
+        if (flags & 1) {
+            func_8002D2D4();
+            func_80038FEC((s32) func_8002D4A0);
+            D_80062F00 = 0x30000;
+        } else {
+            func_8002D1E4();
+            func_80038FEC((s32) func_8002D410);
+            D_80062F00 = 0x10000;
+        }
+        func_80038FB8(0);
+        func_80038F64(0x77000);
+        func_80038F04(D_80062FE0, 0x2000);
+        if ((u32) D_80063004 >= 0x2001U) {
+            D_80063004 -= 0x2000;
+            D_80062FE0 += 0x2000;
+        } else {
+            D_80063004 = 0;
+        }
+    }
+    D_80099FF4 &= ~D_80062F00;
+    D_80099FEC &= ~D_80062F00;
+    func_80030148();
+    func_8002FF4C();
+    func_8002A510(0U, 1);
+}
 
 void func_8002D1E4(void) {
     D_8007EBE8 = 0x1FF93;
@@ -1792,7 +1846,57 @@ void func_8002DA30(Slot24 **arg0) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002DA7C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002DF88);
+s32 func_8002DF88(AkaoReq *cmd) {
+    switch (cmd->op) {
+    case 0x10:
+    case 0x14:
+    case 0x15:
+    case 0x18:
+    case 0x19:
+        cmd->op = 0;
+        break;
+    case 0x24:
+        cmd->op = 0x20;
+        break;
+    case 0x25:
+        cmd->op = 0x21;
+        cmd->a = cmd->base + 1;
+        break;
+    case 0x26:
+        cmd->op = 0x22;
+        cmd->a = cmd->base + 1;
+        cmd->b = cmd->base + 2;
+        break;
+    case 0x27:
+        cmd->op = 0x23;
+        cmd->a = cmd->base + 1;
+        cmd->b = cmd->base + 2;
+        cmd->c = cmd->base + 3;
+        break;
+    case 0xD8:
+        D_80049888(cmd);
+        cmd->op = 0xD4;
+        break;
+    case 0xD9:
+        D_8004988C(cmd);
+        cmd->op = 0xD5;
+        break;
+    case 0xDA:
+        D_80049890(cmd);
+        cmd->op = 0xD6;
+        break;
+    case 0x99:
+        D_800497B4(cmd);
+        cmd->op = 0x9D;
+        break;
+    case 0x98:
+        D_800497B0(cmd);
+        cmd->op = 0x9C;
+        break;
+    }
+    ((s32 (*)(AkaoReq *)) D_80049548[(u8) cmd->op])(cmd);
+    return 0;
+}
 
 void func_8002E1A8(void) {
     Slot24 *cmd;

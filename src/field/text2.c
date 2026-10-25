@@ -233,7 +233,64 @@ void func_800A48B8(s32 arg0) {
     func_800A41CC((s32)v, arg0);
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A496C);
+void func_800A496C(void) {
+    struct { s16 x; s16 y; } p;
+
+    if (D_8009AC13 == 1) {
+        switch (D_8009AC11) {
+        case 0:
+            break;
+        case 1:
+            func_800A48B8((s32)&p);
+            func_800A47F8(&p);
+            D_80071E38 = -p.x;
+            D_80071E3C = -p.y;
+            break;
+        case 2:
+            func_800A48B8((s32)&p);
+            func_800A47F8(&p);
+            D_80071E38 = func_800A4094((s16)D_80075E14, -p.x, (s16)D_8009C558, D_80075CF8);
+            D_80071E3C = func_800A4094((s16)D_80075E1C, -p.y, (s16)D_8009C558, D_80075CF8);
+            if ((s16)D_8009C558 == D_80075CF8) {
+                D_8009AC13 = 2;
+            } else {
+                D_80075CF8 = D_80075CF8 + 1;
+            }
+            break;
+        case 3:
+            func_800A48B8((s32)&p);
+            func_800A47F8(&p);
+            D_80071E38 = func_800A4134((s16)D_80075E14, -p.x, (s16)D_8009C558, D_80075CF8);
+            D_80071E3C = func_800A4134((s16)D_80075E1C, -p.y, (s16)D_8009C558, D_80075CF8);
+            if ((s16)D_8009C558 == D_80075CF8) {
+                D_8009AC13 = 2;
+            } else {
+                D_80075CF8 = D_80075CF8 + 1;
+            }
+            break;
+        case 5:
+            D_80071E38 = func_800A4094((s16)D_80075E14, (s16)D_80075E18, (s16)D_8009C558, D_80075CF8);
+            D_80071E3C = func_800A4094((s16)D_80075E1C, (s16)D_80075E20, (s16)D_8009C558, D_80075CF8);
+            if ((s16)D_8009C558 == D_80075CF8) {
+                D_8009AC13 = 2;
+            } else {
+                D_80075CF8 = D_80075CF8 + 1;
+            }
+            break;
+        case 6:
+            D_80071E38 = func_800A4134((s16)D_80075E14, (s16)D_80075E18, (s16)D_8009C558, D_80075CF8);
+            D_80071E3C = func_800A4134((s16)D_80075E1C, (s16)D_80075E20, (s16)D_8009C558, D_80075CF8);
+            if ((s16)D_8009C558 == D_80075CF8) {
+                D_8009AC13 = 2;
+            } else {
+                D_80075CF8 = D_80075CF8 + 1;
+            }
+            break;
+        case 9:
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A4BEC);
 
@@ -550,7 +607,64 @@ s32 func_800AA514(u8 *p, u8 op) {
     return ret;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AA5E4);
+INCLUDE_RODATA("../asm/us/field/nonmatchings/text2", D_800A00BC);
+
+void func_800AA5E4(u8 *e, u8 *g) {
+    FdTbl4 tbl;
+    s32 i;
+    s32 d;
+    s16 r;
+    u8 op;
+    s32 *pos;
+    s32 *out;
+
+    out = (s32 *)0x1F800020;
+    tbl = D_800A00BC;
+    i = 0;
+    pos = (s32 *)0x1F800000;
+    pos[0] = *(s32 *)(e + 0xC) >> 12;
+    pos[1] = *(s32 *)(e + 0x10) >> 12;
+    pos[2] = *(s32 *)(e + 0x14) >> 12;
+    for (; i < 12; i++, g += 0x10) {
+        if (g[0xC] != 0xFF) {
+            d = func_800A9CE8((FdGate18 *)g, pos, out);
+            if (d != -1 && d < *(u16 *)(e + 0x6C) * *(u16 *)(e + 0x6C)) {
+                if (pos[0] == out[0] && pos[1] == out[1]) {
+                    r = func_800AA514(g, g[0xE]);
+                    if (r == 1) {
+                        func_8001117C(tbl.v[g[0xF]]);
+                    }
+                } else {
+                    if ((((u8)func_800A8640((FdVec *)pos, (FdVec *)out, &d) - e[0x36] + 0x40) & 0xFF) < 0x80) {
+                        r = func_800AA514(g, g[0xE]);
+                        if (r == 1) {
+                            func_8001117C(tbl.v[g[0xF]]);
+                        }
+                    }
+                }
+            } else {
+                op = g[0xE];
+                if (op >= 4) {
+                    if ((*(s16 *)(g + 6) - *(s16 *)g) * (pos[1] - *(s16 *)(g + 2)) - (*(s16 *)(g + 8) - *(s16 *)(g + 2)) * (pos[0] - *(s16 *)g) > 0) {
+                        continue;
+                    }
+                }
+                if (op == 2 || op == 4) {
+                    r = func_800AA514(g, 1);
+                    if (r == 1) {
+                        func_8001117C(tbl.v[g[0xF]]);
+                    }
+                }
+                if (g[0xE] == 3 || g[0xE] == 5) {
+                    r = func_800AA514(g, 0);
+                    if (r == 1) {
+                        func_8001117C(tbl.v[g[0xF]]);
+                    }
+                }
+            }
+        }
+    }
+}
 
 void func_800AA870(u8 *p) {
     s32 i;

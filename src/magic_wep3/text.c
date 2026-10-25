@@ -80,7 +80,26 @@ INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B048C);
 
 INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0510);
 
-INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B067C);
+void func_801B067C(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    if (p->unk1C > 0) {
+        if (D_80062D98 == 0) {
+            p->unk1C--;
+        }
+        return;
+    }
+    D_801D3688[0] = p->unk2;
+    func_800D4368(&p->unk4, p->unk14, -(p->unk14 >> 3));
+    D_801EB6B0 = func_800D4D90(&D_801D3688[-4], D_801517C0 + 0x70, 0xC, D_801EB6B0);
+    if (p->unk2 >= 0xF) {
+        p->unk0 = -1;
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0774);
 

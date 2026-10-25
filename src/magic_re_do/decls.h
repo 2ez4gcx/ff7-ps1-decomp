@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B1A54();
+s32 func_801B1A54();
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 extern u8 D_8015190F[][0xB9C];
@@ -93,5 +93,17 @@ s32 func_800BBEAC(void (*)());
 extern s16 D_801D5708;
 s32 func_80039B40(s16);
 s32 func_80039A74(s16);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+s32 func_800D52A0(M2C_UNK, M2C_UNK);
+void func_801B1590();
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+extern u8 D_80162996[];
+extern M2C_UNK D_801B1B08;
+extern s16 D_801D572C;
+extern MgSVec D_801D5730;
+void func_801B0DAC(void);
+extern s16 D_801D56B0[];
 
 #endif /* MAGIC_RE_DO_DECLS_H */

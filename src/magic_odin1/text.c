@@ -184,7 +184,47 @@ INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B4C8C);
 
 INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B4DBC);
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B4F30);
+void func_801B4F30(void) {
+    MgTask *p;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        v = p->unk2;
+        if (v < 0xF) {
+            v = (v << 12) / 15;
+            v = (-(v * 0x1FF0) >> 12) + 0xFF0;
+        } else {
+            v -= 0xF;
+            if (v < 0xA) {
+                v = -0x1000;
+            } else {
+                v -= 0xA;
+                if (v >= 0x28) {
+                    D_800F5B74 = 0;
+                    p->unk0 = -1;
+                    return;
+                }
+                v = (v << 12) / 40;
+                v = ((v << 12) >> 12) - 0x1000;
+            }
+        }
+        if (v > 0) {
+            D_800F5B70 = 0x10;
+            D_800F5B71 = 0x10;
+            D_800F5B72 = 0;
+            D_800F5B74 = v;
+        } else {
+            D_800F5B70 = 0xFF;
+            D_800F5B71 = 0xFF;
+            D_800F5B72 = 0xFF;
+            D_800F5B74 = -v;
+        }
+        if (D_80062D98 == 0) {
+            p->unk2++;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B5088);
 

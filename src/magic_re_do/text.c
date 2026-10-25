@@ -285,7 +285,19 @@ void func_801B0CC0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B0DAC);
+void func_801B0DAC(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, (s16)((((s32 (*)(s32))func_80039A74)(p->unk2 * 0x33) << 11 >> 16 << 7) + 0x1000), -0x1F4);
+    D_801D56B0[0] = p->unk2 % 2;
+    D_801ED738 = func_800D4D90(&D_801D56B0[-4], D_801517C0 + 0x70, 0xC, D_801ED738);
+    if (D_80062D98 == 0) {
+        if (++p->unk2 == 0x28) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0EAC(void) {
     MgMat m;
@@ -407,4 +419,16 @@ void func_801B10A0(void) {
 
 INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B1590);
 
-INCLUDE_ASM("../asm/us/magic_re_do/nonmatchings/text", func_801B1A54);
+s32 func_801B1A54(arg0, arg1) {
+    u8 pad[24];
+
+    func_800BBEAC(func_801B045C);
+    D_801D572C = arg0;
+    *(s16 *)(D_80162996 + (func_800BBEAC(func_801B1590) << 5)) = arg1;
+    func_801B0020(arg0, &D_801D5730);
+    func_800D2980(&D_801B1B08, 0, 0, 0);
+    D_800F5B72 = 0;
+    D_800F5B71 = 0;
+    D_800F5B70 = 0;
+    return func_800D52A0(0x1000, 0x10);
+}

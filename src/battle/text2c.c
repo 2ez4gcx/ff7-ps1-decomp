@@ -416,7 +416,38 @@ void func_800E03D0(void) {
     func_800E4B88();
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E03F0);
+void func_800E03F0(void) {
+    BtlX440 *p;
+    s32 a;
+    u16 k;
+
+    p = &D_8009D8F8[D_800F38A1];
+    if (D_800F3896 == 0x1A && D_800F99E4 == 0) {
+        k = D_80062D7E;
+        if (k & 0x20) {
+            D_800F99E4 = 1;
+            if (func_800E4BCC() == 2) {
+                func_800BB9B8(1);
+                D_800F38A2 = p->b[3];
+                D_800F389E = p->b[0];
+                D_800FAFD4 = 0;
+                func_800E6B94();
+                func_800DDFEC();
+                func_800E5358();
+                func_800D9F5C(0x1A);
+                a = 1;
+                goto block_8;
+            }
+        } else if ((k & 0x40) && func_800E4BCC() == 0) {
+            func_800BB9B8(4);
+            a = 0x1A;
+            D_800F99E4 = 1;
+            D_800F3896 = 1;
+block_8:
+            func_800D9F5C(a);
+        }
+    }
+}
 
 void func_800E0528(void) {
 }

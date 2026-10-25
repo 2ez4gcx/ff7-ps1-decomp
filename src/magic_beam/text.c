@@ -115,7 +115,37 @@ void func_801B04C0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0634);
+void func_801B0634(void) {
+    MgTask *p;
+    s16 v;
+
+    p = &D_80162978[D_8015169C];
+    if (p->unk14 > 0) {
+        if (D_80062D98 == 0) {
+            p->unk14--;
+        }
+        return;
+    }
+    if (D_801DFA34 != 0) {
+        D_801C79F8 = 0x80;
+        D_801C79F9 = 0x70;
+        D_801C79FA = 0x20;
+    } else {
+        D_801C79F8 = 0x80;
+        D_801C79F9 = 0x80;
+        D_801C79FA = 0x80;
+    }
+    D_801C79FC[0] = p->unk2;
+    v = p->unkC;
+    func_800D4368(&p->unk4, v, -(v >> 3));
+    D_801DFA00 = func_800D4D90(&D_801C79FC[-4], D_801517C0 + 0x70, 0xC, D_801DFA00);
+    if (p->unk2 >= 0xF) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0774);
 

@@ -33,5 +33,10 @@ typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 void func_801B0184(s32 ang, MgMat *m, MgVec *v);
+void func_801B0634(void);
+extern u8 D_801C79F8;
+extern u8 D_801C79F9;
+extern u8 D_801C79FA;
+extern u16 D_801C79FC[];
 
 #endif /* MAGIC_BEAM_DECLS_H */

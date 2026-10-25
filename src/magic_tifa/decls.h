@@ -54,5 +54,10 @@ extern s16 D_800FA658;
 MgMat *func_8003BF3C(MgSVec *, MgMat *);
 void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
 MgMat *func_8003A79C(MgMat *, MgTask *, MgMat *);
+void func_801B6D34(void);
+typedef struct { s8 v; } MgByte;
+extern MgByte D_801F3BBC;
+extern MgByte D_801F3BBD;
+extern MgByte D_801F3BBE;
 
 #endif /* MAGIC_TIFA_DECLS_H */

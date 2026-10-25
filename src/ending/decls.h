@@ -84,7 +84,7 @@ extern s32 (*D_800A63DC[])(void);
 void func_800A3210(void);
 M2C_UNK func_80036244(u16 *, u16);
 extern u8 *D_8003623C;
-s32 func_800A379C(void *, void *, s32 *, s16);
+s32 func_800A379C(EndModel *m, s32 *tgt, s32 *d, s32 scale);
 void func_800A09DC(void);
 typedef struct { u8 b[0x14]; } EndDisp;
 typedef struct { u8 b[0x5C]; } EndDraw;
@@ -103,5 +103,8 @@ s32 func_800A139C(void);
 s32 func_800A0BA8(void);
 s32 func_800A16E4(void);
 s32 func_800A11B4(void);
+s32 func_800A2FB8(EndModel *m, s32 *tgt, s32 *d, s32 scale);
+M2C_UNK func_8003A08C(s32 *, void *);
+void func_800A0CAC(void);
 
 #endif /* ENDING_DECLS_H */
