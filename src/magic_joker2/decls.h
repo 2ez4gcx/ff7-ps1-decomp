@@ -71,5 +71,8 @@ extern M2C_UNK D_801B0000;
 extern M2C_UNK D_801B1F6C;
 extern MgTask *D_801D8258;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_801B11D4(void);
+M2C_UNK func_8003B27C(MgMat *, MgSVec *, MgVec *);
+extern M2C_UNK D_801C0148;
 
 #endif /* MAGIC_JOKER2_DECLS_H */

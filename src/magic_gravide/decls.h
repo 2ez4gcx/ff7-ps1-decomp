@@ -34,6 +34,9 @@ void func_800D55F4(s32, s32, s32);
 s32 func_800D56A8(void *);
 extern u8 D_8015190F[][0xB9C];
 extern u8 D_80151A4C[][0xB9C];
-extern M2C_UNK func_801B02E8;
+void func_801B02E8(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s16 unk0; s16 unk2; MgSVec pos; MgSVec vel; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgObjGrav;
+void func_800D5774(s32);
 
 #endif /* MAGIC_GRAVIDE_DECLS_H */

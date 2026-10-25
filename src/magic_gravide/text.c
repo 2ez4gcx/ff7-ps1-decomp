@@ -68,7 +68,43 @@ void func_801B01F4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_gravide/nonmatchings/text", func_801B02E8);
+void func_801B02E8(void) {
+    MgObjGrav *p;
+    MgObjGrav *q;
+
+    p = (MgObjGrav *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        q = (MgObjGrav *)&D_80162978[func_800BBEAC(&func_801B0000)];
+        q->pos = p->pos;
+        q->unk2 = 2;
+        p->pos.vx += p->vel.vx;
+        p->pos.vy += p->vel.vy;
+        p->pos.vz += p->vel.vz;
+        q = (MgObjGrav *)&D_80162978[func_800BBEAC(&func_801B0000)];
+        q->pos = p->pos;
+        q->unk2 = 1;
+        p->pos.vx += p->vel.vx;
+        p->pos.vy += p->vel.vy;
+        p->pos.vz += p->vel.vz;
+        q = (MgObjGrav *)&D_80162978[func_800BBEAC(&func_801B0000)];
+        q->pos = p->pos;
+        p->pos.vx += p->vel.vx;
+        p->pos.vy += p->vel.vy;
+        p->pos.vz += p->vel.vz;
+        p->unk2++;
+        if (p->unk2 >= 8) {
+            q = (MgObjGrav *)&D_80162978[func_800BBEAC(&func_801B01F4)];
+            q->pos = p->pos;
+            q = (MgObjGrav *)&D_80162978[func_800BBEAC(&func_801B00F0)];
+            q->pos = p->pos;
+            q->unk14 = 0x200;
+            q->unk16 = 0x2D0;
+            func_800D5774(p->unk18);
+            func_800D55F4(0x20, func_800D56A8(D_80151A4C[p->unk18]), 0x1E);
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0568(s32 arg0, s32 arg1) {
     MgTask *p;

@@ -15,5 +15,23 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void func_801B067C(void);
 extern s32 D_801D9174;
 extern s32 D_801D9178;
+void func_801B0074(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_801C1168;
+extern u8 D_801D917C[];
+extern u8 D_801D9180[];
+extern u8 D_801D9182[];
+extern u8 D_801C1160[];
+extern MgSVec D_801D9B34;
+extern s32 D_801D916C;
+extern s32 D_801517C0;
+extern s16 D_8015169C;
+extern u8 D_80062D98;
+s32 func_80039F5C(s32);
+s32 func_8003A08C(void *, void *);
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_RENBAKU_DECLS_H */

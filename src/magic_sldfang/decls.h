@@ -32,5 +32,18 @@ extern M2C_UNK D_801B94D4;
 M2C_UNK *func_801B007C(s32 a, s32 b);
 typedef struct { s32 head; s32 tail; s32 count; s32 v[0x18]; } MgRing;
 void func_801B07B4(MgRing *r, s32 val);
+void func_801B18FC(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+typedef struct { u16 v; } MgHalf;
+typedef struct { u16 f[12]; } SfPart;
+extern MgTask D_80162978[];
+extern s16 D_8015169C;
+extern u8 D_80062D98;
+extern MgHalf D_801BCDC0;
+extern SfPart D_801D4DE0[];
+extern SfPart D_801D4DF2[];
+extern u8 D_801BCDB8[];
+void func_800D4368(void *, s32, s32);
+MgLineG2 *func_800D4D90(void *, s32, s32, MgLineG2 *);
 
 #endif /* MAGIC_SLDFANG_DECLS_H */
