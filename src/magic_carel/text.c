@@ -74,9 +74,72 @@ void func_801B015C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B03A0);
+void func_801B03A0(void) {
+    MgSpark *p;
+    MgSpark *q;
+    s32 i;
+    s32 k;
+    s16 n;
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0648);
+    p = (MgSpark *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = 0;
+        do {
+            i++;
+            q = (MgSpark *)&D_80162978[func_800BBEAC((s32 *)&func_801B0020)];
+            p->unk14 = (p->unk14 + (func_80042DA8() & 3) + 1) % D_801518F4[p->unk12].unk0;
+            func_800D3994(p->unk12, p->unk14, &q->unk4);
+            k = 0xFA;
+            q->unk4 = q->unk4 - k + func_80042DA8() % 500;
+            k = 0xFA;
+            q->unk6 = q->unk6 - k + func_80042DA8() % 500;
+            k = 0xFA;
+            q->unk8 = q->unk8 - k + func_80042DA8() % 500;
+            q->unkD = (func_80042DA8() % 3) << 5;
+            q->unkE = D_801B1128[func_80042DA8() % 5];
+            q->unk10 = (func_80042DA8() & 0xFFF) + 0x1000;
+            q->unk16 = p->unk16;
+        } while (i < 2);
+        n = p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= 0x1E) {
+            func_800D5774(p->unk12);
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B0648(void) {
+    MgSpark *p;
+    MgSpark *q;
+    s32 i;
+    s32 k;
+
+    p = (MgSpark *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = 0;
+        do {
+            i++;
+            q = (MgSpark *)&D_80162978[func_800BBEAC((s32 *)&func_801B0020)];
+            p->unk14 = (p->unk14 + (func_80042DA8() & 3) + 1) % D_801518F4[p->unk12].unk0;
+            func_800D3994(p->unk12, p->unk14, &q->unk4);
+            k = 0xFA;
+            q->unk4 = q->unk4 - k + (func_80042DA8() & 0x1F4);
+            k = 0xFA;
+            q->unk6 = q->unk6 - k + (func_80042DA8() & 0x1F4);
+            k = 0xFA;
+            q->unk8 = q->unk8 - k + (func_80042DA8() & 0x1F4);
+            q->unkD = (func_80042DA8() & 1) * 0x60 + 0x20;
+            q->unkE = 0x7887;
+            q->unk10 = (func_80042DA8() & 0xFFF) + 0x1000;
+            q->unk16 = p->unk16;
+        } while (i < 2);
+        if ((s16)p->unk2++ >= 0xF) {
+            func_800D5774(p->unk12);
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0814(void) {
     MgObj20 *p;
@@ -153,7 +216,16 @@ void func_801B0B60(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x5C);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0BE0);
+void func_801B0BE0(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    *((u8 *)p + 0xD) = 0x60;
+    p->unkE = 0x7887;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B0C44(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);
@@ -161,7 +233,16 @@ void func_801B0C44(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x5B);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0CC4);
+void func_801B0CC4(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    p->unkE = 0x7A47;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    *((u8 *)p + 0xD) = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B0D24(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);
@@ -169,7 +250,16 @@ void func_801B0D24(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x1F);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0DA4);
+void func_801B0DA4(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    *((u8 *)p + 0xD) = 0x20;
+    p->unkE = 0x7907;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B0E08(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);
@@ -177,7 +267,16 @@ void func_801B0E08(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x1F);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0E88);
+void func_801B0E88(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    *((u8 *)p + 0xD) = 0x20;
+    p->unkE = 0x78C7;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B0EEC(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);
@@ -185,11 +284,33 @@ void func_801B0EEC(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 0x17E);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0F6C);
+void func_801B0F6C(arg0) {
+    MgTask *p;
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0FCC);
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    p->unkE = 0x7A07;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    *((u8 *)p + 0xD) = 0;
+    p->unk16 = 0x3A;
+}
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B1038);
+s32 func_801B0FCC(arg0, arg1) {
+    func_800BBEAC(&func_801B0814);
+    func_800D5444(arg0, arg1, 0, &func_801B0F6C);
+    func_800D55F4(0x20, func_800D574C(arg0), 0x166);
+}
+
+void func_801B1038(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    *((u8 *)p + 0xD) = 0x20;
+    p->unkE = 0x7847;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B109C(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);

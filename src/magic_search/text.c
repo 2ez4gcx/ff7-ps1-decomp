@@ -38,6 +38,29 @@ INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B022C);
 
 INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B05A0);
 
-INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B07B0);
+void func_801B07B0(arg0, arg1) {
+    MgSVec d;
+    SrObj *p;
 
-INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B08B4);
+    p = (SrObj *)&D_80162978[func_800BBEAC(&func_801B05A0)];
+    func_800D3994(arg1, D_80151918[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    d.vx = p->unkC - p->unk4;
+    d.vy = p->unkE - p->unk6;
+    d.vz = p->unk10 - p->unk8;
+    func_800D44E8(&d, D_801B543C);
+    p->unk18 = arg0;
+}
+
+INCLUDE_RODATA("../asm/us/magic_search/nonmatchings/text", D_801B0020);
+
+void func_801B08B4(arg0, arg1) {
+    func_800BBEAC((void *)D_801B0020);
+    func_800D2980((void *)D_801B0954, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B07B0);
+    D_800F5B72 = 0;
+    D_800F5B71 = 0;
+    D_800F5B70 = 0;
+    func_800D52A0(0x400, 0xA);
+    func_800BBA84(0x62, arg1, 0x40);
+}

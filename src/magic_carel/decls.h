@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0FCC();
+s32 func_801B0FCC();
 void func_801B08D4(s32 arg0, M2C_UNK arg1);
 M2C_UNK func_800BBEAC(M2C_UNK *);
 M2C_UNK func_800D5444(s32, M2C_UNK, s32, M2C_UNK *);
@@ -20,15 +20,15 @@ void func_801B0A38(s32 arg0);
 void func_801B0B60(s32 arg0, M2C_UNK arg1);
 void func_801B0B0C(s32 arg0);
 void func_801B0C44(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B0BE0;
+void func_801B0BE0();
 void func_801B0D24(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B0CC4;
+void func_801B0CC4();
 void func_801B0E08(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B0DA4;
+void func_801B0DA4();
 void func_801B0EEC(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B0E88;
+void func_801B0E88();
 void func_801B109C(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B1038;
+void func_801B1038();
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern u8 D_801B1134[];
@@ -43,13 +43,15 @@ extern u8 D_801B111C[];
 s32 func_800D6260(MgSprArg *, s32, s32, s32);
 extern u8 D_80062D98;
 extern MgTask D_80162978[];
-extern s32 func_801B03A0;
-extern s32 func_801B0648;
+void func_801B03A0(void);
+void func_801B0648(void);
 void func_801B015C(void);
 typedef struct { s16 unk0; u16 unk2; u16 unk4; u16 unk6; u16 unk8; u8 padA[3]; u8 unkD; u16 unkE; u16 unk10; s16 unk12; s16 unk14; u16 unk16; } MgSpark;
 s32 func_80042DA8(void);
 extern struct { s16 unk0; u8 pad[0xB9A]; } D_801518F4[];
 void func_800D3994(s32, s32, void *);
 M2C_UNK func_800D5774(s16);
+void func_801B0F6C();
+extern u16 D_801B1128[];
 
 #endif /* MAGIC_CAREL_DECLS_H */

@@ -25,5 +25,24 @@ void func_8003B51C(MgMat *);
 MgMat *func_8003B05C(MgMat *, MgMat *);
 MgMat *func_8003C21C(MgSVec *, MgMat *);
 void func_801B008C(s32 arg0, MgSVec *rot, s16 scale);
+void func_801B08B4();
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+s32 func_800BBEAC(M2C_UNK *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+extern u8 D_801B0020[];
+extern u8 D_801B0954[];
+void func_801B07B0();
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; u16 unkA; u16 unkC; u16 unkE; u16 unk10; u16 unk12; u16 unk14; u16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } SrObj;
+void func_800D3994(s32, s32, void *);
+void func_800D44E8(MgSVec *, void *);
+extern u8 D_80151918[][0xB9C];
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_801B543C[];
+extern M2C_UNK func_801B05A0;
 
 #endif /* MAGIC_SEARCH_DECLS_H */

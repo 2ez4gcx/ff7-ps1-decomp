@@ -57,7 +57,6 @@ void func_801B0218(void) {
     s16 w;
     s32 t;
     s32 u;
-    s32 y;
     s32 k;
 
     if (D_80062D98 == 0) {
