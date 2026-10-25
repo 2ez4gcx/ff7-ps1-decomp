@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0854();
+void func_801B0854();
 void func_801B01B4(s16 arg0);
 M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
 extern s16 D_801B8AC8;
@@ -55,5 +55,7 @@ M2C_UNK func_800D5774(s16);
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 extern u8 D_8015190F[][0xB9C];
 s32 func_80042DA8(void);
+extern u8 D_801B08E8[];
+extern u8 D_801B49C0[];
 
 #endif /* MAGIC_HIKARI2_DECLS_H */

@@ -51,4 +51,9 @@ void func_801B0904(s32 arg0, s32 arg1) {
     p->unk1C = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_kama/nonmatchings/text", func_801B09C4);
+void func_801B09C4(arg0, arg1) {
+    func_800BBEAC(&func_801B0030);
+    func_800D2980(D_801B0A40, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B0904);
+    func_800BBA84(0x83, arg1, 0x40);
+}

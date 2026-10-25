@@ -59,6 +59,14 @@ void func_801B3654(void) {
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B36B0);
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B3780);
+void func_801B3780(arg0, arg1) {
+    D_80162994[func_800BBEAC((void *)func_801B35F0)].unk0 = 0x80;
+    D_801D9F90 &= 0xBFFFFFFF;
+    if (arg0 == (1 << arg1)) {
+        D_801D9F90 |= 0x20000000;
+    }
+    D_801D62F4 = arg0;
+    D_801D62F8 = arg1;
+}
 
 INCLUDE_RODATA("../asm/us/magic_garyu/nonmatchings/text", D_801B0000);

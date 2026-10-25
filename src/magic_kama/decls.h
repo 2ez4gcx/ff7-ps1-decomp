@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0010(void);
-M2C_UNK func_801B09C4();
+void func_801B09C4();
 void func_801B0030(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -24,5 +24,6 @@ extern u8 D_80062D98;
 extern s32 D_801517C0;
 extern u16 D_801C928C;
 extern s32 *D_801C9290[];
+extern u8 D_801B0A40[];
 
 #endif /* MAGIC_KAMA_DECLS_H */

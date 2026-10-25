@@ -45,7 +45,14 @@ void func_801B00E0(void) {
 
 INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B01C8);
 
-INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B03D8);
+void func_801B03D8(s32 arg0, s32 arg1) {
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC((void *)func_801B01C8)];
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 void func_801B046C(arg0, arg1) {
     func_800D2980(&D_801B04CC, 0, 0, 0);

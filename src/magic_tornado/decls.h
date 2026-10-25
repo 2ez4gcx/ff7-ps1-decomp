@@ -12,6 +12,13 @@ MgObj4C *func_801B07E0(void);
 extern MgObj4C D_801C4CE4[];
 extern M2C_UNK D_801B1164;
 extern M2C_UNK func_801B0F60;
-extern M2C_UNK func_801B1070;
+void func_801B1070(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
+void func_800D52A0(s32, s32);
+extern s16 D_8015169C;
+extern s16 D_80162080;
+extern MgObj20 D_80162978[];
+extern u8 D_801C6A94[];
+extern u8 *D_801E6A94;
 
 #endif /* MAGIC_TORNADO_DECLS_H */

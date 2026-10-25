@@ -89,5 +89,22 @@ extern u8 D_800F5B72;
 extern u8 D_800F5B71;
 extern u8 D_800F5B70;
 s32 func_800D52A0(s32, s32);
+void func_801B10A0(void);
+typedef struct { u8 *tag; } MgPkt;
+typedef struct { s8 v; } MgByte;
+extern MgSVec D_801D5730;
+extern MgVec D_801D5704;
+extern u16 D_801D571E;
+extern u8 D_801D2840[];
+extern u16 D_801D5700;
+extern u8 D_801D37E4[];
+extern u8 D_801D4788[];
+extern s8 D_801D5728;
+extern MgByte D_801D572A;
+extern MgByte D_801D5729;
+extern s16 D_801D572C;
+extern s16 D_801D5738;
+s32 func_80039B40(s16);
+s32 func_80039A74(s16);
 
 #endif /* MAGIC_SHAKU_DECLS_H */

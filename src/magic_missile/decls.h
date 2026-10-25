@@ -26,6 +26,10 @@ M2C_UNK func_800BBEAC(M2C_UNK *);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 extern s32 D_801B0B2C;
-void func_801B09F0(void);
+void func_801B09F0(s32 arg0, s32 arg1);
+extern u8 D_80151918[][0xB9C];
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
+void func_801B0704();
 
 #endif /* MAGIC_MISSILE_DECLS_H */

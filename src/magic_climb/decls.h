@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B0B44();
+s32 func_801B0B44();
 extern M2C_UNK D_801B4DFC;
 void func_801B0AE4(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
@@ -13,5 +13,11 @@ extern MgObj20 D_80162978[];
 extern u8 D_801B6AB0[];
 extern u8 *D_801D6AB0;
 extern s16 D_80162080;
+s32 func_800BBEAC(void (*)());
+void func_800D2980(void *, s32, s32, s32);
+void func_801B08B4();
+extern u8 D_801B0BBC[];
+extern s32 D_801B6AA8;
+extern s32 D_801B6AAC;
 
 #endif /* MAGIC_CLIMB_DECLS_H */

@@ -57,4 +57,14 @@ INCLUDE_ASM("../asm/us/magic_mdance/nonmatchings/text", func_801B0524);
 
 INCLUDE_ASM("../asm/us/magic_mdance/nonmatchings/text", func_801B0678);
 
-INCLUDE_ASM("../asm/us/magic_mdance/nonmatchings/text", func_801B0754);
+INCLUDE_RODATA("../asm/us/magic_mdance/nonmatchings/text", D_801B0000);
+
+s32 func_801B0754(arg0, arg1) {
+    s32 v;
+
+    D_801CE294 = &D_80162978[func_800BBEAC(D_801B0000)];
+    v = func_800BBEAC(func_801B0678);
+    D_801CE298 = arg0;
+    D_801CE29C = arg1;
+    return v;
+}

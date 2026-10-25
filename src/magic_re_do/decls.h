@@ -75,5 +75,23 @@ extern s16 D_801D56C2;
 extern s32 D_801D1C08;
 extern s16 D_801D56B4;
 extern s32 D_801D220C;
+void func_801B10A0(void);
+typedef struct { u8 *tag; } MgPkt;
+typedef struct { s8 v; } MgByte;
+extern MgSVec D_801D5700;
+extern MgVec D_801D56D4;
+extern u16 D_801D56EE;
+extern u8 D_801D2810[];
+extern u16 D_801D56D0;
+extern u8 D_801D37B4[];
+extern u8 D_801D4758[];
+extern s8 D_801D56F8;
+extern MgByte D_801D56FA;
+extern MgByte D_801D56F9;
+extern s16 D_801D56FC;
+s32 func_800BBEAC(void (*)());
+extern s16 D_801D5708;
+s32 func_80039B40(s16);
+s32 func_80039A74(s16);
 
 #endif /* MAGIC_RE_DO_DECLS_H */

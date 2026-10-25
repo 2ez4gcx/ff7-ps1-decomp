@@ -27,4 +27,10 @@ void func_801B0AE4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_climb/nonmatchings/text", func_801B0B44);
+s32 func_801B0B44(arg0, arg1) {
+    func_800D2980(D_801B0BBC, 0, 0, 0);
+    D_801B6AA8 = arg0;
+    D_801B6AAC = arg1;
+    func_800BBEAC(func_801B0AE4);
+    return func_800BBEAC(func_801B08B4);
+}

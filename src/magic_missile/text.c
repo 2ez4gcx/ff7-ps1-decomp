@@ -37,7 +37,14 @@ INCLUDE_ASM("../asm/us/magic_missile/nonmatchings/text", func_801B0148);
 
 INCLUDE_ASM("../asm/us/magic_missile/nonmatchings/text", func_801B0704);
 
-INCLUDE_ASM("../asm/us/magic_missile/nonmatchings/text", func_801B09F0);
+void func_801B09F0(s32 arg0, s32 arg1) {
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0704)];
+    func_800D3994(arg1, D_80151918[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+}
 
 void func_801B0AB0(arg0, arg1) {
     func_800BBEAC(&func_801B0020);

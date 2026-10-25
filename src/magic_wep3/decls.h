@@ -11,8 +11,14 @@ extern M2C_UNK D_801B22F8;
 extern MgTask D_80162978[];
 extern MgTask *D_801EB6B4;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-extern M2C_UNK func_801B21F8;
+void func_801B21F8(void);
 extern s32 D_801EB6B8;
 extern s32 D_801EB6BC;
+s32 func_800BBEAC(void (*)());
+void func_800D54EC(s32, void *);
+extern s16 D_8015169C;
+extern MgTask D_80162994[];
+extern u8 D_801EB6C0[];
+void func_801B16EC();
 
 #endif /* MAGIC_WEP3_DECLS_H */

@@ -31,6 +31,13 @@ INCLUDE_ASM("../asm/us/magic_punch/nonmatchings/text", func_801B0388);
 
 INCLUDE_ASM("../asm/us/magic_punch/nonmatchings/text", func_801B0490);
 
-INCLUDE_ASM("../asm/us/magic_punch/nonmatchings/text", func_801B07EC);
+void func_801B07EC(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B0490)];
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1E = arg1;
+    p->unk1C = arg0;
+}
 
 INCLUDE_ASM("../asm/us/magic_punch/nonmatchings/text", func_801B0880);

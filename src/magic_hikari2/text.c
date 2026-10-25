@@ -155,4 +155,10 @@ void func_801B07CC(s32 arg0, s32 arg1) {
     p->unk1A = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_hikari2/nonmatchings/text", func_801B0854);
+void func_801B0854(arg0, arg1) {
+    func_800BBEAC((M2C_UNK *)func_801B0020);
+    func_800D2980(D_801B08E8, 0, 0, 0);
+    func_800D2980(D_801B49C0, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, (M2C_UNK *)func_801B07CC);
+    func_800BBA84(0x6B, arg1, 0x40);
+}
