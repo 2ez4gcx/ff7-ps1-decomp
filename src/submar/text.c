@@ -41,7 +41,49 @@ void func_800A12EC(void) {
     func_8002DA7C();
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1444);
+void func_800A1444(SubTimBlk *blk, SubImg *im) {
+    u32 mode;
+    u16 *tp;
+    SubRect r;
+    u32 v;
+
+    if (((SubTim *)blk)->id == 0x10) {
+        mode = ((SubTim *)blk)->flag & 7;
+        im->pmode = mode;
+        if (((SubTim *)blk)->flag & 8) {
+            blk = (SubTimBlk *)((u8 *)blk + 8);
+            if (blk->bnum >= 5) {
+                r.x = blk->x;
+                r.y = blk->y;
+                r.w = 0x100;
+                r.h = 1;
+                func_80044000(&r, blk->data);
+                im->clut = (blk->y << 6) | ((blk->x >> 4) & 0x3F);
+                im->cx = r.x;
+                im->cy = r.y;
+                im->cw = r.w;
+                im->ch = r.h;
+            }
+            blk = (SubTimBlk *)((u8 *)blk + blk->bnum);
+        } else {
+            blk = (SubTimBlk *)((u8 *)blk + 8);
+        }
+        if (blk->bnum >= 5) {
+            func_80044000(&blk->x, blk->data);
+            tp = &im->tpage;
+            if (((s32 (*)(void))func_80043CC0)() == 1 || ((s32 (*)(void))func_80043CC0)() == 2) {
+                v = ((mode & 3) << 9) | (((blk->y & 0x300) >> 3) | 0x80) | ((blk->x & 0x3FF) >> 6);
+            } else {
+                v = ((mode & 3) << 7) | (((blk->y >> 4) & 0x10) | 0x20) | ((blk->x & 0x3FF) >> 6) | ((blk->y & 0x200) << 2);
+            }
+            *tp = v;
+            im->px = blk->x;
+            im->py = blk->y;
+            im->pw = blk->w;
+            im->ph = blk->h;
+        }
+    }
+}
 
 void func_800A162C(void) {
     func_80033E74(D_800AD340, D_800AD344, 0x80100000, 0);
@@ -87,7 +129,50 @@ void func_800A16BC(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1814);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1AD8);
+void func_800A1AD8(void) {
+    u32 pad;
+    u32 hold;
+    u16 cur;
+    u32 press;
+    u32 i;
+    u32 v;
+    u32 n;
+
+    pad = func_8001C808();
+    cur = pad;
+    i = 0;
+    hold = D_800AD45A;
+    D_800AD458 = cur;
+    D_800AD460 = pad >> 16;
+    D_800AD45A = cur;
+    press = pad & ~hold;
+    hold &= pad;
+    D_800AD45C = press;
+    do {
+        if (D_800AD44C[i] & press) {
+            D_800AD440[i] = 10;
+        }
+        v = D_800AD44C[i];
+        if (v & hold) {
+            n = D_800AD440[i];
+            if (n == 0) {
+                press |= v;
+                D_800AD440[i] = 1;
+            } else {
+                n = n - 1;
+                D_800AD440[i] = n;
+            }
+        }
+        i++;
+    } while (i < 5);
+    D_800AD45E = press;
+    D_800AD466 = 0;
+    cur = D_800AD460;
+    hold = D_800AD462;
+    D_800AD462 = cur;
+    press = cur & ~hold;
+    D_800AD464 = press;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1BE8);
 
@@ -537,19 +622,322 @@ void func_800A6548(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A65D0);
+void func_800A65D0(void) {
+    s32 flags;
+    s32 n;
+    u32 *p1;
+    u32 *o1;
+    u32 v1;
+    u32 w1;
+    u32 *p2;
+    u32 *o2;
+    u32 v2;
+    u32 w2;
+    u32 *p3;
+    u32 *o3;
+    u32 v3;
+    u32 w3;
+    u32 *p4;
+    u32 *o4;
+    u32 v4;
+    u32 w4;
+
+    flags = D_800AE96C;
+    n = 0;
+    if (flags & 0x300) {
+        p1 = &D_800AD97C;
+        D_800AD996 = D_800AD91A + 3;
+        if (flags & 0x200) {
+            D_800AD996 = D_800AD91A + 1;
+        }
+        o1 = &D_801BCF58;
+        v1 = *p1 & 0xFF000000;
+        v1 |= *o1 & 0xFFFFFF;
+        w1 = *o1 & 0xFF000000;
+        w1 |= (u32)p1 & 0xFFFFFF;
+        *p1 = v1;
+        *o1 = w1;
+        n = 1;
+    }
+    if (flags & 0x400) {
+        p2 = &D_800AD99C;
+        o2 = &D_801BCF5C;
+        v2 = *p2 & 0xFF000000;
+        v2 |= *o2 & 0xFFFFFF;
+        w2 = *o2 & 0xFF000000;
+        w2 |= (u32)p2 & 0xFFFFFF;
+        *p2 = v2;
+        *o2 = w2;
+        n += 2;
+    }
+    if (flags & 0x4000) {
+        p3 = &D_800AD9BC;
+        o3 = &D_801BCF60;
+        v3 = *p3 & 0xFF000000;
+        v3 |= *o3 & 0xFFFFFF;
+        w3 = *o3 & 0xFF000000;
+        w3 |= (u32)p3 & 0xFFFFFF;
+        *p3 = v3;
+        *o3 = w3;
+        n += 3;
+    }
+    if (flags & 0x8000) {
+        p4 = &D_800AD9DC;
+        o4 = &D_801BCF60;
+        v4 = *p4 & 0xFF000000;
+        v4 |= *o4 & 0xFFFFFF;
+        w4 = *o4 & 0xFF000000;
+        w4 |= (u32)p4 & 0xFFFFFF;
+        *p4 = v4;
+        *o4 = w4;
+        n += 5;
+    }
+    if (n != 0) {
+        n = n * 8;
+        if (n >= 0x80) {
+            n = 0x7F;
+        }
+    } else {
+        n = 1;
+    }
+    D_800AD93C = n;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A6778);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A7060);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A71B4);
+void func_800A71B4(void) {
+    s32 n;
+    s32 sumsq;
+    s32 sumv;
+    s32 dist;
+    s32 v;
+    SubObj *e;
+    s32 *q;
+    s32 x;
+    s32 i;
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A7468);
+    n = 0;
+    sumsq = 0;
+    sumv = 0;
+    i = 0;
+    q = D_800AE8D0;
+    e = D_800F5F6C;
+    do {
+        if (e->a7C & 6) {
+            if (e >= &D_800F5F6C[16]) {
+                q[39] |= 0x8000;
+            }
+            dist = *(s32 *)(e->pad50 + 8);
+            dist = 0x100 - dist;
+            if (dist >= 0) {
+                v = *(s32 *)(e->pad50 + 16);
+                n += 1;
+                if (v < -0x800 && (e->a7C & 2)) {
+                    q[39] |= 0x2000;
+                }
+                if (v < 0) {
+                    v = -v;
+                }
+                v = v / 4;
+                x = D_8004BC98[v & 0xFFF];
+                x >>= 17;
+                if (*(s32 *)(e->pad50 + 12) < 0) {
+                    x = -x;
+                }
+                sumv += x * dist;
+                sumsq += dist * dist;
+            }
+        }
+        i++;
+        e++;
+    } while (i < 0x20);
+    if (n != 0) {
+        sumv /= 256;
+        sumsq /= 256;
+        sumv /= n;
+        sumsq /= n;
+        sumv /= 32;
+        sumsq /= 2;
+        if (sumv < -0x40) {
+            sumv = -0x40;
+        }
+        if (sumv >= 0x40) {
+            sumv = 0x3F;
+        }
+        if (sumsq >= 0x80) {
+            sumsq = 0x7F;
+        }
+        if (sumsq == 0) {
+            sumsq = 1;
+        }
+        D_8009A000[0] = 0xA6;
+        D_8009A004 = 4;
+        D_8009A008 = sumsq;
+        func_8002DA7C();
+        D_8009A000[0] = 0xAE;
+        D_8009A004 = 4;
+        sumv += 0x40;
+        D_8009A008 = sumv;
+    } else {
+        D_8009A000[0] = 0xA6;
+        D_8009A004 = 8;
+        D_8009A008 = 1;
+        func_8002DA7C();
+        D_8009A000[0] = 0xAE;
+        D_8009A004 = 2;
+        D_8009A008 = 0x40;
+    }
+    func_8002DA7C();
+}
+
+void func_800A7468(void) {
+    s32 n;
+    s32 sumsq;
+    s32 sumv;
+    s32 dist;
+    s32 v;
+    SubSel *e;
+    s32 *q;
+    s32 x;
+
+    n = 0;
+    sumsq = 0;
+    sumv = 0;
+    q = D_800AE8D0;
+    e = D_800B08EC;
+    do {
+        if (e->flags & 3) {
+            if (e->state & 0xF00) {
+                q[39] |= 0x4000;
+            }
+            dist = e->f40;
+            dist = 0x100 - dist;
+            if (dist >= 0) {
+                v = *(s32 *)e->pad44;
+                n += 1;
+                if (v < -0x800 && (e->flags & 8)) {
+                    q[39] |= 0x1000;
+                }
+                if (v < 0) {
+                    v = -v;
+                }
+                v = v / 4;
+                x = D_8004BC98[v & 0xFFF];
+                x >>= 17;
+                if (*(s32 *)(e->pad44 + 4) < 0) {
+                    x = -x;
+                }
+                sumv += x * dist;
+                sumsq += dist * dist;
+            }
+        }
+        e++;
+    } while (e < &D_800B08EC[12]);
+    if (n != 0) {
+        sumv /= 256;
+        sumsq /= 256;
+        sumv /= n;
+        sumsq /= n;
+        sumv /= 32;
+        sumsq /= 2;
+        if (sumv < -0x40) {
+            sumv = -0x40;
+        }
+        if (sumv >= 0x40) {
+            sumv = 0x3F;
+        }
+    }
+    sumv += 0x40;
+    sumsq += 0x18;
+    if (sumsq >= 0x80) {
+        sumsq = 0x7F;
+    }
+    D_8009A000[0] = 0xA5;
+    D_8009A004 = 4;
+    D_8009A008 = sumsq;
+    func_8002DA7C();
+    D_8009A000[0] = 0xAD;
+    D_8009A004 = 4;
+    D_8009A008 = sumv;
+    func_8002DA7C();
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A76C8);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A7D60);
+void func_800A7D60(s32 n) {
+    SubCamEnt *e;
+    s32 a;
+    s32 t;
+    s32 d;
+
+    a = D_800AE914;
+    if (D_800AE964.f4 == 0) {
+        if (D_800AE7E0[n].f14 != 0) {
+            a += D_800AE91C;
+        }
+    } else {
+        if (D_800AE7E0[n].f14 == 0) {
+            a -= D_800AE91C;
+        }
+    }
+    e = &D_800AE7E0[n];
+    D_801BA30C.a0 = a;
+    t = e->ang[0];
+    d = ((t + 0x1000) & 0xFFF) - ((a + 0x1000) & 0xFFF);
+    D_801BA30C.b0 = t;
+    if (d >= 0x801) {
+        d -= 0x1000;
+    }
+    if (d < -0x800) {
+        d += 0x1000;
+    }
+    D_801BA30C.c0 = d;
+    a = D_800AE916;
+    D_801BA30C.a1 = a;
+    t = e->ang[1];
+    d = ((t + 0x1000) & 0xFFF) - ((a + 0x1000) & 0xFFF);
+    D_801BA30C.b1 = t;
+    if (d >= 0x801) {
+        d -= 0x1000;
+    }
+    if (d < -0x800) {
+        d += 0x1000;
+    }
+    D_801BA30C.c1 = d;
+    a = D_800AE918;
+    D_801BA30C.a2 = a;
+    t = e->ang[2];
+    d = ((t + 0x1000) & 0xFFF) - ((a + 0x1000) & 0xFFF);
+    D_801BA30C.b2 = t;
+    if (d >= 0x801) {
+        d -= 0x1000;
+    }
+    if (d < -0x800) {
+        d += 0x1000;
+    }
+    D_801BA30C.c2 = d;
+    a = D_800AE944;
+    D_801BA30C.f18 = a;
+    t = e->f8;
+    D_801BA30C.f1C = t;
+    D_801BA30C.f20 = t - a;
+    a = D_800AD40C;
+    D_801BA30C.f24 = a;
+    t = e->fC;
+    D_801BA30C.f30 = 0;
+    D_801BA30C.f34 = 0x100;
+    D_801BA30C.f28 = t;
+    D_801BA30C.f2C = t - a;
+    D_800AE964.f0 = e->f10;
+    D_800AE964.f4 = e->f14;
+    D_800AEA00 = e->f18;
+    D_800AEA04 = e->f1C;
+    D_800AEA10 = e->f20;
+    D_800AEA14 = e->f24;
+    D_800AEA18 = e->f28;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A7FC4);
 
