@@ -73,5 +73,8 @@ extern MgTask *D_801E5C54;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern s16 D_801518F6[][0x5CE];
 void func_801B0F9C(void);
+M2C_UNK func_8003B27C(MgMat *, MgSVec *, MgVec *);
+M2C_UNK func_800D5774(s16);
+extern M2C_UNK D_801CD28C;
 
 #endif /* MAGIC_DIA2_DECLS_H */

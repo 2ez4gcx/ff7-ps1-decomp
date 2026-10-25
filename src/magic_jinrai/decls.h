@@ -28,5 +28,7 @@ void func_801B00E0(void);
 extern M2C_UNK D_801B0310;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+void func_800BBA84(s32, s32, s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_JINRAI_DECLS_H */

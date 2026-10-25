@@ -43,7 +43,47 @@ void func_801B00E0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B01C8);
+void func_801B01C8(void) {
+    MgObjAwa *p;
+    MgObjAwa *q;
+    s16 i;
+    s32 a;
+
+    p = (MgObjAwa *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x20) {
+            func_800BBA84(0x30, p->unk1E, 0);
+        }
+        if (p->unk2 == 0x3A) {
+            i = 0;
+            do {
+                q = (MgObjAwa *)&D_80162978[func_800BBEAC(func_801B00E0)];
+                a = (i << 16) >> 8;
+                q->unk4.vx = p->unkC.vx;
+                q->unk4.vy = 0;
+                q->unk4.vz = p->unkC.vz;
+                q->unkC.vx = (u32)(func_80039A74(a) * 0x19) >> 9;
+                q->unkC.vz = (u32)(func_80039B40(a) * 0x19) >> 9;
+                i++;
+                q->unkC.vy = -func_80042DA8() % 200;
+            } while (i < 0x10);
+            func_800D4CBC(p->unk1C, 0x21, 0x1000);
+            func_800BBA84(0x15A, p->unk1E, 0);
+        }
+        if (p->unk2 == 0x44) {
+            q = (MgObjAwa *)&D_80162978[func_800BBEAC(func_801B0028)];
+            q->unk4.vx = p->unkC.vx;
+            q->unk4.vy = p->unkC.vy;
+            q->unk4.vz = p->unkC.vz;
+            func_800D5774(p->unk1C);
+            func_800BBA84(0x141, p->unk1E, 0);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x64) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B03D8(s32 arg0, s32 arg1) {
     MgObjAwa *p;

@@ -4,13 +4,13 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0814();
+s32 func_801B0814();
 void func_801B0190(s16 arg0);
 extern s16 D_801B8A88;
 extern s16 D_801B8A8A;
 void func_801B0120(s16 arg0);
 M2C_UNK func_800BBEAC(M2C_UNK *);
-extern M2C_UNK func_801B008C;
+void func_801B008C(void);
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -52,5 +52,11 @@ M2C_UNK func_800D5774(s16);
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 extern u8 D_8015190F[][0xB9C];
 s32 func_80042DA8(void);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, s32, M2C_UNK, void (*)());
+extern M2C_UNK D_801B08A8;
+extern M2C_UNK D_801B4980;
+s32 func_800C4FC8(s16, M2C_UNK, M2C_UNK);
+extern s32 D_80163C74;
 
 #endif /* MAGIC_HIKARI3_DECLS_H */

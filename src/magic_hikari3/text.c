@@ -16,7 +16,18 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hikari3/nonmatchings/text", func_801B008C);
+void func_801B008C(void) {
+    MgObj20 *p;
+
+    p = &D_80162978[D_8015169C];
+    D_80163C74 = func_800C4FC8(D_801B8A88, 0, 0);
+    if (D_80062D98 == 0) {
+        D_801B8A88 += D_801B8A8A;
+        if (D_801B8A88 == 0) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0120(s16 arg0) {
     D_801B8A88 = 0;
@@ -137,4 +148,10 @@ void func_801B078C(s32 arg0, s32 arg1) {
     p->unk1A = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_hikari3/nonmatchings/text", func_801B0814);
+s32 func_801B0814(arg0, arg1) {
+    func_800BBEAC((M2C_UNK *)func_801B0020);
+    func_800D2980(&D_801B08A8, 0, 0, 0);
+    func_800D2980(&D_801B4980, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, func_801B078C);
+    return func_800BBA84(0x6B, arg1, 0x40);
+}

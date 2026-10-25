@@ -28,6 +28,13 @@ extern M2C_UNK D_801B04CC;
 void func_801B03D8(s32 arg0, s32 arg1);
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
-void func_801B01C8();
+void func_801B01C8(void);
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+s32 func_80042DA8();
+void func_800BBA84(s32, s32, s32);
+s32 func_800BBEAC(void (*)());
+void func_800D4CBC(s32, s32, s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_BOOST_DECLS_H */

@@ -64,4 +64,11 @@ void func_801B024C(arg0) {
     p->unk10 = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_queik/nonmatchings/text", func_801B0330);
+INCLUDE_RODATA("../asm/us/magic_queik/nonmatchings/text", D_801B0000);
+
+s32 func_801B0330(arg0, arg1) {
+    D_801D0AEC = &D_80162978[func_800BBEAC((M2C_UNK *)D_801B0000)];
+    func_800D2980(&D_801B03CC, 0, 0, 0);
+    func_800D5444(arg0, arg1, 1, func_801B024C);
+    return func_800D55F4(0x20, func_800D574C(arg0), 0x47);
+}

@@ -160,9 +160,90 @@ s16 func_801B06D0(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_wpcu/nonmatchings/text", func_801B07B4);
+void func_801B07B4(void) {
+    MgSVec rot;
+    MgMat m;
+    MgMat r;
+    MgVec off;
+    MgVec axis;
+    MgTask *p;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/magic_wpcu/nonmatchings/text", func_801B0A0C);
+    rot.vx = 0;
+    rot.vy = 0;
+    rot.vz = 0;
+    p = &D_80162978[D_8015169C];
+    func_8003BF8C(&rot, &m);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_801B0478(func_801B039C(&D_801BB1D8, &D_801D321C, &axis), &r, &axis);
+    func_8003B16C(&r, &m);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    off.vx = 0;
+    off.vy = 0;
+    off.vz = 0x17C;
+    func_8003AB84(&m, &off, &off);
+    m.t[0] += off.vx;
+    m.t[1] += off.vy;
+    m.t[2] += off.vz;
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk4 = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    ((MgScratch *)0x1F800000)->unk0 = D_801D322C;
+    if (p->unk2 >= 0x16) {
+        ((MgScratch *)0x1F800000)->unk4 = 0x88;
+        t = p->unk2 - 0x16;
+        ((MgScratch *)0x1F800000)->unkA = t << 9;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801D31E8 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D31E8);
+    if (p->unk2 >= 0x1E) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 4) {
+            p->unk4 += p->unkC;
+            p->unk6 += p->unkE;
+            p->unk8 += p->unk10;
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B0A0C(void) {
+    MgTask *p;
+    MgTask *q;
+    MgVec unused;
+    s32 n;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            D_801D321C.vx = D_801D31FC.vx - D_801D3204.vx;
+            D_801D321C.vy = D_801D31FC.vy - D_801D3204.vy;
+            D_801D321C.vz = D_801D31FC.vz - D_801D3204.vz;
+            n = func_80039F5C(func_8003A08C(&D_801D321C, &D_801D321C)) / 4;
+            q = &D_80162978[func_800BBEAC(&func_801B07B4)];
+            *(MgSVec *)&q->unk4 = D_801D3204;
+            q->unkC = (n * D_801D321C.vx) >> 12;
+            q->unkE = (n * D_801D321C.vy) >> 12;
+            q->unk10 = (n * D_801D321C.vz) >> 12;
+        }
+        if (p->unk2 == 4) {
+            func_800D5774(D_801D31F4);
+            func_800D55F4(0x20, func_800D56A8(&D_801D31FC), 0x12);
+        }
+        if (p->unk2 >= 0x1E) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B0BDC(void) {
     MgSVec rot;

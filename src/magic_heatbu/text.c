@@ -49,4 +49,13 @@ INCLUDE_ASM("../asm/us/magic_heatbu/nonmatchings/text", func_801B0214);
 
 INCLUDE_ASM("../asm/us/magic_heatbu/nonmatchings/text", func_801B05CC);
 
-INCLUDE_ASM("../asm/us/magic_heatbu/nonmatchings/text", func_801B06CC);
+INCLUDE_RODATA("../asm/us/magic_heatbu/nonmatchings/text", D_801B0000);
+
+s32 func_801B06CC(arg0, arg1) {
+    D_801D89F0 = &D_80162978[func_800BBEAC(&D_801B0000)];
+    func_800D2980(&D_801B0774, 0, 0, 0);
+    func_800BBEAC(&func_801B05CC);
+    D_801D89F4 = arg0;
+    D_801D89F8 = arg1;
+    return func_800D55F4(0x20, func_800D574C(arg0), 0x165);
+}

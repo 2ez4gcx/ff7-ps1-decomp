@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B0330();
+s32 func_801B0330();
 void func_801B024C();
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 void func_801B0074(void);
@@ -30,5 +30,12 @@ extern u8 D_801B840C[];
 s32 func_800D29D4(void *, s32, s32, s32);
 extern u8 D_80062D98;
 void func_800D5774(s32);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)());
+s32 func_800D55F4(M2C_UNK, s32, M2C_UNK);
+s32 func_800D574C(s32);
+extern M2C_UNK D_801B03CC;
+extern MgTask *D_801D0AEC;
+extern u8 D_801B0000[];
 
 #endif /* MAGIC_QUEIK_DECLS_H */

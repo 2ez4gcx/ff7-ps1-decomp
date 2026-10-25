@@ -59,5 +59,10 @@ s32 func_800D4D90(void *, s32, s32, s32);
 void func_801B04E8(void);
 void func_8003B69C(s32, s32, s32);
 extern u8 D_801CC270[];
+void func_801B008C(void);
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+extern s16 D_801CC238[];
+extern s32 *D_801CC23C[];
 
 #endif /* MAGIC_SOUTHERN_DECLS_H */

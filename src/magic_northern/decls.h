@@ -59,5 +59,10 @@ extern s32 D_801CB6C8[];
 extern s32 D_801CC238;
 extern s16 D_801CC23E;
 extern MgVec D_801CC260;
+void func_801B008C(void);
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+extern s16 D_801CC218[];
+extern s32 *D_801CC21C[];
 
 #endif /* MAGIC_NORTHERN_DECLS_H */

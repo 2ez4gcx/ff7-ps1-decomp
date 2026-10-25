@@ -21,7 +21,33 @@ void func_801B0028(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jinrai/nonmatchings/text", func_801B00E0);
+void func_801B00E0(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 t;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        if (t == 0x16 || t == 0x37) {
+            q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B0028)];
+            q->unk4 = p->unkC;
+            q->unk6 = p->unkE;
+            q->unk8 = p->unk10;
+            func_800BBA84(0x155, p->unk1E, 0);
+        }
+        if (p->unk2 == 0x1E) {
+            func_800BBA84(0x30, p->unk1E, 0);
+        }
+        if (p->unk2 == 0x37) {
+            func_800D5774(p->unk1C);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x46) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B01E4(s32 arg0, s32 arg1) {
     MgObjAwa *p;

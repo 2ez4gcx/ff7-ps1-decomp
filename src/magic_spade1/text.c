@@ -315,7 +315,28 @@ void func_801B0E9C(void) {
     func_8003AB84(&m, &D_801B2D6C, &D_801CADA8);
 }
 
-INCLUDE_ASM("../asm/us/magic_spade1/nonmatchings/text", func_801B0F9C);
+void func_801B0F9C(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x5A) {
+            if ((u32)(D_801CAD96 - 0x400) < 0x800U) {
+                func_800D4D4C(D_801CAD88, 0x115);
+            } else {
+                func_800D4D4C(D_801CAD88, 0x15);
+            }
+            func_800D55F4(0x20, func_800D56A8(&p->unk4), 0xE3);
+        }
+        if (p->unk2 == 0x5B) {
+            func_800D5774(D_801CAD88);
+        }
+        if (p->unk2 >= 0x60) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B1090(void) {
     MgSVec pos;
