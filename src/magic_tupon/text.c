@@ -362,7 +362,22 @@ void func_801B45C0(void) {
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B46B4);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B4A6C);
+s32 func_801B4A6C(MgObjTup *p) {
+    u16 *frame;
+    s16 n;
+
+    func_801B1FB0(&p->unk4, p->unk18, -0x3E8);
+    frame = &D_801EDC30;
+    *frame = p->unk2;
+    D_80163C74 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        n = (u16)p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= D_801D83F0.v) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B4B1C);
 

@@ -89,7 +89,16 @@ INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B09F0);
 
 INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B0D84);
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B11B4);
+void func_801B11B4(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B0D84)];
+    func_800D3994(arg1, D_8015190F[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+    func_800BBA84(0x14, arg1, 0);
+}
 
 void func_801B1290(arg0, arg1) {
     func_800BBEAC(&func_801B045C);

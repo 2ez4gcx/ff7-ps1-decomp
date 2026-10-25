@@ -18,7 +18,22 @@ void func_801B0020(void) {
 
 INCLUDE_ASM("../asm/us/magic_osen/nonmatchings/text", func_801B008C);
 
-INCLUDE_ASM("../asm/us/magic_osen/nonmatchings/text", func_801B0174);
+void func_801B0174(void) {
+    MgObj20 *p;
+    u16 *frame;
+
+    p = &D_801621F0[D_801590D4];
+    func_800D4368(&p->unk4, 0x1000, 0);
+    frame = &D_801D2CE4;
+    *frame = p->unk2;
+    D_80163C74 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D2944) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 MgMat *func_801B022C(MgSVec *pos, MgSVec *rot, s16 s) {
     MgVec scale;

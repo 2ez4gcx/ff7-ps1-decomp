@@ -85,7 +85,22 @@ INCLUDE_ASM("../asm/us/magic_geki2/nonmatchings/text", func_801B06F8);
 
 INCLUDE_ASM("../asm/us/magic_geki2/nonmatchings/text", func_801B07DC);
 
-INCLUDE_ASM("../asm/us/magic_geki2/nonmatchings/text", func_801B0930);
+void func_801B0930(void) {
+    MgObj20 *p;
+    u16 *frame;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x2800, 0);
+    frame = &D_801D3A14;
+    *frame = p->unk2;
+    D_801EBB0C = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801EBB0C);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D3908) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_geki2/nonmatchings/text", func_801B09E8);
 

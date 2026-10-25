@@ -36,7 +36,25 @@ void func_801B009C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kama/nonmatchings/text", func_801B0190);
+void func_801B0190(void) {
+    MgTask *p;
+    u16 *frame;
+    s16 n;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x1600, 0);
+    frame = &D_801C92AC;
+    *frame = p->unk2;
+    D_801E12C0 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801E12C0);
+    if (D_80062D98 == 0) {
+        p->unk6 -= 0x32;
+        n = (u16)p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= D_801C8EC8) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_kama/nonmatchings/text", func_801B0258);
 

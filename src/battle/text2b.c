@@ -292,7 +292,42 @@ void func_800D25C0(s32 arg0) {
     D_800F01DC++;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D25E8);
+void func_800D25E8(void) {
+    BtlCmd *p;
+    s32 *q;
+
+    p = D_800F4BAC;
+    if (p < D_800F01DC) {
+        q = &p->a;
+        do {
+            switch (p->op) {
+            case 0:
+                func_80044000((void *)q[0], (void *)q[1]);
+                q += 5;
+                break;
+            case 1:
+                func_80044064((void *)q[0], q[1]);
+                q += 5;
+                break;
+            case 2:
+                func_800440C8((Rect16 *)q[0], q[2], q[3]);
+                q += 5;
+                break;
+            case 3:
+                func_80043F6C((Rect16 *)q[0], 0, 0, 0);
+                do {
+                } while (0);
+                q += 5;
+                break;
+            default:
+                q += 5;
+                break;
+            }
+            p++;
+        } while (p < D_800F01DC);
+    }
+    D_800F01DC = D_800F4BAC;
+}
 
 void func_800D26F8(void) {
     D_800F01DC = &D_800F4BAC;

@@ -30,5 +30,12 @@ extern MgObj20 D_80162978[];
 extern u8 D_801D3B0C[];
 extern u8 *D_801EBB0C;
 extern s16 D_80162080;
+void func_801B0930(void);
+void func_800D4368(void *, s32, s32);
+u8 *func_800D4D90(void *, s32, s32, u8 *);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s32 D_801D3908;
+extern u16 D_801D3A14;
 
 #endif /* MAGIC_GEKI2_DECLS_H */

@@ -1,6 +1,10 @@
 #include "common.h"
 #include "main/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+s32 func_80017108(u8 *arg0, s32 arg1);
+extern s32 D_80062E40;
+
 s32 func_80016F90(s32 *arg0) {
     u32 t;
     u32 b;
@@ -60,7 +64,49 @@ s32 func_8001708C(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80017108);
+s32 func_80017108(u8 *arg0, s32 arg1) {
+    u8 hdr[8];
+    u8 window[0x4000];
+    s32 i;
+    s32 r;
+    s32 crc;
+    u8 b0;
+    u8 b1;
+
+    D_80062E44 = (s32)window;
+    D_80062E3C = arg0;
+    D_80062E40 = arg1;
+    D_80062E38 = 0;
+    D_80062E34 = 0;
+    D_80062E38 = 1;
+    b0 = arg0[0];
+    D_80062E38 = 2;
+    b1 = arg0[1];
+    if ((b0 != 0x1F) | (b1 != 0x8B)) {
+        return -1;
+    }
+    D_80062E38 = 3;
+    if (arg0[2] != 8) {
+        return -1;
+    }
+    D_80062E38 = 4;
+    if (arg0[3] != 0) {
+        return -1;
+    }
+    D_80062E38 = 0xA;
+    r = func_8001708C();
+    if (r == 3 || r != 0) {
+        return -1;
+    }
+    for (i = 0; i < 8; i++) {
+        hdr[i] = D_80062E3C[D_80062E38++];
+    }
+    crc = hdr[4] | (hdr[5] << 8) | ((hdr[6] | (hdr[7] << 8)) << 16);
+    if (crc != D_80062E34) {
+        return -1;
+    }
+    return crc;
+}
 
 void func_80017238(u32 arg0, u32 *arg1, u8 *arg2) {
     *arg2 = arg0;
@@ -648,7 +694,42 @@ s32 func_8001964C(u8 id) {
     return -1;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80019690);
+void func_80019690(u32 arg0) {
+    s32 id;
+    s32 d;
+    s32 i;
+    s32 x;
+    u32 sub;
+
+    id = arg0 & 0xFF;
+    sub = arg0 >> 8;
+    if ((D_800730DD[id].a & 0xF) == 4) {
+        d = ((s32 (*)(s32, u32))func_8001AC9C)(id, sub);
+        for (i = 0; i < 0x38; i++) {
+            if (((MainObj108 *)D_80062E60)->e[i].a != 0xFF) {
+                ((MainObj108 *)D_80062E60)->e[i].b += d;
+            }
+        }
+        for (i = 0; i < 16; i++) {
+            x = ((Obj4C *)D_80062E60)->e[i].a;
+            if (x != 0xFF) {
+                switch (x) {
+                case 5:
+                case 6:
+                case 9:
+                case 10:
+                case 11:
+                case 0x11:
+                    ((Obj4C *)D_80062E60)->e[i].e += d;
+                    break;
+                }
+            }
+        }
+        if (((Obj4C *)D_80062E60)->e[0].a != 0x1A) {
+            func_8001BB30(0x18, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_800197B8);
 
@@ -777,7 +858,54 @@ void func_8001A1C8(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_8001A280);
+void func_8001A280(s32 arg0, s32 arg1) {
+    s32 id;
+    s32 r;
+    s32 off;
+    Obj1A *p;
+
+    id = arg0 & 0xFF;
+    r = func_8001AC9C(id);
+    if (D_80063020 != 0) {
+        off = id * 20;
+        p = D_80062F7C;
+        p->a = *(D_800730DE + off);
+        p->b = r * 10;
+        switch (*(D_800730DE + off)) {
+        case 0x64:
+            D_80062FFC = 0x10;
+            break;
+        case 0x58:
+            D_80062FFC = 0x10;
+            break;
+        case 0x59:
+            D_80062FFC = 0x10;
+            break;
+        case 0x5A:
+            D_80062FFC = 0x10;
+            break;
+        case 0x56:
+            D_80062FFC = 0x10;
+            break;
+        case 0x5C:
+            D_80062FFC = 0x10;
+            break;
+        case 0x5D:
+            D_80062FFC = 0x10;
+            break;
+        case 0x5E:
+            D_80062FFC = 0x10;
+            break;
+        case 0x5F:
+            D_80062FFC = 0x10;
+            break;
+        case 0x54:
+        case 0x55:
+            D_80062FFC = 0xF;
+            break;
+        }
+    }
+}
 
 void func_8001A384(s32 arg0) {
     func_8001AC9C(arg0 & 0xFF);

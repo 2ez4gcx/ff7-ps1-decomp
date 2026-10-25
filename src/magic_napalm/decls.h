@@ -47,5 +47,17 @@ void func_8003B69C(s32, s32, s32);
 extern s16 D_801D8872[];
 extern s32 D_801517C0;
 s32 func_800D29D4(void *, s32, s32, s32);
+void func_801B060C(void);
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+extern s32 D_80163C74;
+extern s32 D_801D85E4;
+extern s8 D_801D880C;
+extern s8 D_801D880D;
+extern s8 D_801D880E;
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_801D8810;
 
 #endif /* MAGIC_NAPALM_DECLS_H */

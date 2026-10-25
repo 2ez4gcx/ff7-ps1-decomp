@@ -8,7 +8,7 @@ void func_801B1418();
 void func_801B1258(void);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
-M2C_UNK func_801B1174();
+void func_801B1174();
 extern s32 D_801E56C4;
 void func_801B1298(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -71,5 +71,7 @@ s32 func_8003CC1C(s32, s32);
 s32 func_80039B40(s32);
 void func_801B02CC(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n);
+extern u16 D_801518F6[][0x5CE];
+void func_801B0F9C();
 
 #endif /* MAGIC_CLUB1_DECLS_H */

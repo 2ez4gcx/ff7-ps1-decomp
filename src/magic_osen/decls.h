@@ -24,5 +24,15 @@ extern s32 D_801D2D44[];
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 MgMat *func_801B022C(MgSVec *pos, MgSVec *rot, s16 s);
+void func_801B0174(void);
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s16 D_801590D4;
+extern MgObj20 D_801621F0[];
+extern s32 D_80163C74;
+extern s32 D_801D2944;
+extern u16 D_801D2CE4;
 
 #endif /* MAGIC_OSEN_DECLS_H */

@@ -36,7 +36,25 @@ void func_801B01B4(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B01FC);
 
-INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B03C0);
+void func_801B03C0(void) {
+    MgObj20 *p;
+    s32 i;
+    s32 off;
+    s32 n;
+
+    n = 0;
+    p = &D_80162978[D_8015169C];
+    for (i = 0; i < 200; i++) {
+        off = i * 0x20;
+        if (*(s16 *)(&D_801DD874 + off) != -1) {
+            func_801B01FC(&D_801DD874 + off);
+            n++;
+        }
+    }
+    if (n == 0 && D_80162080 < 3) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B0484(void) {
     s32 off;

@@ -21,8 +21,11 @@ extern u8 D_80151918[][0xB9C];
 extern M2C_UNK func_801B08EC;
 void func_801B0C4C(void);
 extern MgObj20 D_801E149C[];
-extern M2C_UNK func_801B0B70;
+void func_801B0B70(void);
 s32 func_801B0CA4(void);
 s32 func_800BBA84(s32, s32, s32);
+extern u16 D_801E275C;
+extern s16 D_801C943C;
+void func_801B0554();
 
 #endif /* MAGIC_KONA_DECLS_H */

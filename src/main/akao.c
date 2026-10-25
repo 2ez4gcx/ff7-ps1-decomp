@@ -1135,7 +1135,34 @@ void func_8002C8C4(void *arg0) {
     D_8009A152 = (s16) M2C_FIELD(arg0, u16 *, 4);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002C8DC);
+void func_8002C8DC(void) {
+    s32 mask;
+    s32 bit;
+    u16 ch;
+
+    if (D_8009A108 != 0) {
+        mask = (D_8009A108 | D_8009A128 | D_8009A12C) & ~(D_80099FCC | D_80062F00);
+        if (mask != 0) {
+            bit = 1;
+            ch = 0;
+            D_8007EC0E = 0;
+            D_8007EC0C = 0;
+            D_8007EC08 = 0x7F;
+            do {
+                if (mask & bit) {
+                    D_8007EBE8 = 0x2203;
+                    func_8002E23C(ch, &D_8007EBE4);
+                    mask ^= bit;
+                }
+                bit <<= 1;
+                ch++;
+            } while (mask != 0);
+        }
+        D_8009A118 = D_8009A108;
+        D_8009A108 = 0;
+    }
+    D_80062FF8 |= 1;
+}
 
 void func_8002C9E4(void) {
     s32 *p;
@@ -1256,7 +1283,38 @@ void func_8002CCCC(void) {
     D_80083334[1].id = 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002CCDC);
+void func_8002CCDC(u16 *cmd) {
+    u32 *src;
+    u32 *dst;
+    u32 *dst2;
+    u16 n;
+
+    func_8002A958();
+    src = (u32 *)&D_80099788;
+    dst = src - 0x630;
+    n = 0x210;
+    do {
+        n--;
+        *dst++ = *src++;
+    } while (n);
+    n = 0xC;
+    src = &D_80099FCC;
+    dst2 = dst;
+    do {
+        n--;
+        *dst++ = *src++;
+    } while (n);
+    if (D_80099E0C == 2) {
+        dst2[0] &= 0xFF3FFFFF;
+        dst2[1] &= 0xFF3FFFFF;
+    }
+    D_80062FF8 |= 0x100;
+    func_8002A43C();
+    ((s32 *)cmd)[1] = 0x7F;
+    func_8002BDCC(cmd);
+    ((s32 *)cmd)[1] = 0;
+    func_8002C3A8(cmd);
+}
 
 void func_8002CDD0(void) {
     u32 *src;
@@ -1349,7 +1407,29 @@ void func_8002D1E4(void) {
     func_8002E23C(0x10, &D_8007EBE4);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002D2D4);
+void func_8002D2D4(void) {
+    D_8007EBE8 = 0x1FF93;
+    D_8007EBEC = 0x77000;
+    D_8007EBF0 = 0x78000;
+    D_8007EC04 = 0xF;
+    D_8007EC06 = 0xF;
+    D_8007EC08 = 0x7F;
+    D_8007EC0A = 6;
+    D_8007EBF4 = 1;
+    D_8007EBF8 = 3;
+    D_8007EBFC = 3;
+    D_8007EC0E = 0;
+    D_8007EC02 = 0;
+    D_8007EC0C = (s16) ((s32) D_80062FAC >> 1);
+    D_8007EC00 = D_80062F1E;
+    func_8002E23C(0x10, &D_8007EBE4);
+    D_8007EBE8 = 0x1FF93;
+    D_8007EC0C = 0;
+    D_8007EBEC = 0x77800;
+    D_8007EBF0 = 0x78800;
+    D_8007EC0E = (s16) ((s32) D_80062FAC >> 1);
+    func_8002E23C(0x11, &D_8007EBE4);
+}
 
 void func_8002D410(void) {
     func_80038FEC(0);
@@ -1526,7 +1606,30 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002ED34);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002F24C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002F738);
+void func_8002F738(AkaoChannel *arg0, s32 arg1, s32 arg2) {
+    AkaoChannel *ch;
+    AkaoChannel *other;
+    u16 pan;
+    s16 a;
+    s32 bit;
+
+    ch = arg0;
+    pan = 0x7F - ((s16)ch->unkC6 >> 8);
+    a = M2C_SFIELD(ch, s16 *, 0x104);
+    M2C_SFIELD(ch, s16 *, 0x104) = (a * pan) >> 8;
+    other = &D_80096608[M2C_SFIELD(ch, s32 *, 0x24)];
+    M2C_SFIELD(other, s16 *, 0x104) = (a * (s16)ch->unkC6) >> 16;
+    a = M2C_SFIELD(ch, s16 *, 0x106);
+    M2C_SFIELD(ch, s16 *, 0x106) = (a * pan) >> 8;
+    M2C_SFIELD(other, s16 *, 0x106) = (a * (s16)ch->unkC6) >> 16;
+    M2C_SFIELD(other, u16 *, 0xF8) = M2C_SFIELD(ch, u16 *, 0xF8);
+    other->unkE0 |= ch->unkE0;
+    func_8002E23C(*(s32 *)ch->padDC, (s32 *)ch->padDC);
+    bit = 1 << arg2;
+    if (arg1 & bit) {
+        func_8002E23C(arg2, (s32 *)other->padDC);
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002F848);
 
@@ -1565,7 +1668,38 @@ void func_8002FDA0(AkaoChannel *ch, s32 *out, s32 mask, s32 filter) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002FE48);
+void func_8002FE48(void) {
+    s32 sp10;
+    s32 a3;
+    s32 a2;
+    s32 t;
+    u32 v;
+
+    sp10 = 0;
+    if (D_8009A168 != 0) {
+        t = D_8009A174;
+        t &= D_80062F68;
+        a3 = ~(D_80099FCC | D_80062F00);
+        a2 = t & a3;
+        if (a2 != 0) {
+            func_8002FDA0((AkaoChannel *)&D_80097EC8, &sp10, a2, a3);
+        }
+        D_8009A174 = 0;
+    }
+    if (D_8009A108 != 0) {
+        a3 = ~(D_80062F68 | D_80099FCC | D_80062F00);
+        a2 = a3 & D_8009A114;
+        if (a2 != 0) {
+            func_8002FDA0(D_80096608, &sp10, a2, a3);
+        }
+        D_8009A114 = 0;
+    }
+    sp10 |= D_80099FD8;
+    D_80099FD8 = 0;
+    if (sp10 != 0) {
+        func_80038C6C(0, sp10);
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002FF4C);
 
@@ -1719,7 +1853,52 @@ void func_80031CE0(AkaoChannel *ch) {
     M2C_SFIELD(ch, s32 *, 0x48) = step;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80031D6C);
+void func_80031D6C(AkaoChannel *arg0, AkaoSong *arg1) {
+    AkaoChannel *ch;
+    s32 bit;
+    u16 idx;
+    s32 mask;
+    u32 v;
+    u8 *p;
+    u8 a;
+    u8 b;
+
+    ch = arg0;
+    if (!(ch->unk38 & 0x100)) {
+        bit = 1;
+        mask = arg1->active | arg1->unk24 | arg1->unk28;
+        idx = -(D_80062F04 != 0) & 0x18;
+        while (1) {
+            if ((mask & bit) == 0) {
+                break;
+            }
+            bit <<= 1;
+            idx++;
+            if (!(bit & 0xFFFFFF)) {
+                return;
+            }
+        }
+    } else {
+        v = M2C_SFIELD(ch, u32 *, 0x24);
+        idx = M2C_SFIELD(ch, u32 *, 0x24);
+        if (v >= 0x18) {
+            v -= 0x18;
+        }
+        bit = 1 << v;
+    }
+    if (bit & 0xFFFFFF) {
+        arg1->unk24 |= bit;
+        p = ch->addr;
+        M2C_SFIELD(ch, u32 *, 0x24) = idx;
+        ch->unk38 |= 0x100;
+        ch->addr = p + 1;
+        a = p[0];
+        ch->addr = p + 2;
+        b = p[1];
+        func_80031820(ch, a);
+        func_80031820(&D_80096608[idx], b);
+    }
+}
 
 void func_80031E98(void *arg0, void *arg1) {
     s32 temp_a2;
@@ -1814,7 +1993,34 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_800320C4);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80032274);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_800323CC);
+void func_800323CC(AkaoChannel *arg0) {
+    AkaoChannel *ch;
+    AkaoChannel *other;
+    u8 *e;
+
+    ch = arg0;
+    e = D_80075F28[M2C_SFIELD(ch, u16 *, 0x58)];
+    M2C_SFIELD(ch, u16 *, 0xFA) = e[8];
+    M2C_SFIELD(ch, u16 *, 0xFC) = e[9];
+    M2C_SFIELD(ch, u16 *, 0xFE) = e[0xA];
+    M2C_SFIELD(ch, u16 *, 0x100) = e[0xB];
+    M2C_SFIELD(ch, u16 *, 0x102) = e[0xC];
+    M2C_SFIELD(ch, s32 *, 0xEC) = e[0xD];
+    M2C_SFIELD(ch, s32 *, 0xF0) = e[0xE];
+    M2C_SFIELD(ch, s32 *, 0xF4) = e[0xF];
+    ch->unkE0 |= 0xFF00;
+    if (M2C_SFIELD(ch, s32 *, 0x38) & 0x100) {
+        other = &D_80096608[M2C_SFIELD(ch, s32 *, 0x24)];
+        M2C_SFIELD(other, u16 *, 0xFA) = M2C_SFIELD(ch, u16 *, 0xFA);
+        M2C_SFIELD(other, u16 *, 0xFC) = M2C_SFIELD(ch, u16 *, 0xFC);
+        M2C_SFIELD(other, u16 *, 0xFE) = M2C_SFIELD(ch, u16 *, 0xFE);
+        M2C_SFIELD(other, u16 *, 0x100) = M2C_SFIELD(ch, u16 *, 0x100);
+        M2C_SFIELD(other, u16 *, 0x102) = M2C_SFIELD(ch, u16 *, 0x102);
+        M2C_SFIELD(other, s32 *, 0xEC) = M2C_SFIELD(ch, s32 *, 0xEC);
+        M2C_SFIELD(other, s32 *, 0xF0) = M2C_SFIELD(ch, s32 *, 0xF0);
+        M2C_SFIELD(other, s32 *, 0xF4) = M2C_SFIELD(ch, s32 *, 0xF4);
+    }
+}
 
 void func_800324D8(void *arg0) {
     u8 *temp_v1;
@@ -3073,7 +3279,47 @@ loop_1:
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80035DC8);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80035F14);
+s32 func_80035F14(void) {
+    u32 n;
+    s32 *src;
+    s32 *dst;
+    s32 v;
+    s32 *p;
+
+    n = 0x800000;
+    while (1) {
+        src = func_80035DC8();
+        if (src != NULL) {
+            break;
+        }
+        n--;
+        if (n == 0) {
+            return 0;
+        }
+    }
+    n = 0;
+    dst = &D_80077F3C;
+    do {
+        *dst++ = *src++;
+        n++;
+    } while (n < 0xA);
+    if (D_8006E108 != 0) {
+        D_8006E108 = 0;
+        D_80095DB0 = D_8006E104;
+    } else {
+        v = D_80077F62;
+        if (D_8006E100 != v) {
+            D_8006E100 = v;
+            D_8006E104 = v;
+            D_8006E108 = 1;
+        }
+    }
+    p = &D_80095DA8;
+    *p = *p == 0;
+    func_8004262C(src, (&D_80095DA8)[D_80095DA8 - 3]);
+    func_80040AC8(src);
+    return 1;
+}
 
 void func_80036038(void) {
     u16 temp_v0;

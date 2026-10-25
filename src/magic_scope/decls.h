@@ -38,5 +38,7 @@ extern s32 D_801517C0;
 extern u16 D_801BD918;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+void func_801B04D0(s32 arg0, MgSVec *rot, s16 scale);
+extern MgMat D_801B0000;
 
 #endif /* MAGIC_SCOPE_DECLS_H */

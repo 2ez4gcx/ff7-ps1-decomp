@@ -37,7 +37,28 @@ void func_801B0AB0(s32 arg0, s32 arg1) {
     p->unk1C = arg0;
 }
 
-INCLUDE_ASM("../asm/us/magic_kona/nonmatchings/text", func_801B0B70);
+void func_801B0B70(void) {
+    MgObj20 *q;
+    MgObj20 *p;
+
+    q = D_801E149C;
+    D_801E275C = 0;
+    p = &D_80162978[D_8015169C];
+    do {
+        if (q->unk0 == 1) {
+            func_801B0554();
+            if (q->unk0 == -1) {
+                q->unk2 = 0;
+                q->unk0 = 0;
+            }
+        }
+        D_801E275C++;
+        q++;
+    } while ((s16)D_801E275C < 0x96);
+    if (D_801C943C == 1) {
+        p->unk0 = -1;
+    }
+}
 
 void func_801B0C4C(void) {
     MgObj20 *p;

@@ -26,4 +26,15 @@ INCLUDE_ASM("../asm/us/magic_northern/nonmatchings/text", func_801B04E8);
 
 INCLUDE_ASM("../asm/us/magic_northern/nonmatchings/text", func_801B06FC);
 
-INCLUDE_ASM("../asm/us/magic_northern/nonmatchings/text", func_801B0E10);
+void func_801B0E10(arg0, arg1) {
+    func_800D2980(D_801B0F08, 0, 0, 0);
+    D_801E4280 = arg0;
+    func_800D3994(arg1, D_80151918[arg1][0], &D_8016297C[func_800BBEAC((void *)func_801B06FC)]);
+    func_800D54EC(arg0, D_801E4278);
+    func_800BBA84(0x123, arg1, 0x40);
+    D_800F5B72 = 0;
+    D_800F5B71 = 0;
+    D_800F5B70 = 0;
+    func_800D52A0(0x1000, 0x14);
+    func_800BBEAC((void *)func_801B0020);
+}

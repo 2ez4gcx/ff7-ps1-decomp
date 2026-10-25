@@ -139,7 +139,17 @@ INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B3D14);
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B3E0C);
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B4018);
+MgPolyT *func_801B4018(void) {
+    s32 p;
+    s32 flag;
+    MgPolyT *prim;
+
+    prim = D_80163C74;
+    func_8003BC0C(&D_801FCDF4[0], &D_801FCDF4[1], &D_801FCDF4[2], &prim->xy0, &prim->xy1, &prim->xy2, &p, &flag);
+    prim->tag = 0x06000000;
+    D_80163C74 = prim + 1;
+    return prim;
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B4090);
 

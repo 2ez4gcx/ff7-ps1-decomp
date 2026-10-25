@@ -5640,7 +5640,127 @@ void func_800B5274(void) {
     e->f2 = 0x10;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800B5314);
+void func_800B5314(WmObj *arg0, s32 arg1) {
+    W4Ent0Cb *e;
+    W4SV *p;
+    W4SV *q;
+    W4SV *a;
+    W4SV *b;
+    s32 v;
+    s32 id;
+
+    a = (W4SV *)0x1F800010;
+    b = (W4SV *)0x1F800018;
+    *(s16 *)0x1F800020 = arg0->f3C;
+    *(WQuad32 *)0x1F800000 = arg0->b;
+    a->z = 0;
+    a->y = 0;
+    a->x = 0;
+    b->z = 0;
+    b->y = 0;
+    b->x = 0;
+    switch (arg1) {
+    case 20:
+    case 21:
+    case 22:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        v = func_800A1D04() == 0 ? 0x258 : 0x12C;
+        b->y = v;
+        b->z = -0xC8;
+        func_800B39B4((s16)arg0->f3C, 0, (s16)arg1, 0);
+        break;
+    case 23:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        v = func_800A1D04() == 0 ? 0x258 : 0x12C;
+        b->z = -0xC8;
+        b->y = v;
+        a->y = 0x32;
+        func_800B39B4((s16)arg0->f3C, 0, (s16)arg1, 0);
+        break;
+    case 1:
+        q = (W4SV *)0x1F800018;
+        p = (W4SV *)0x1F800010;
+        *(s16 *)0x1F800020 = 0;
+        q->z = 0x1F4;
+        p->z = 0x1E;
+        func_800B39B4(0, 0, 0x1C, 0);
+        q->z = -0x1F4;
+        p->z = -0x1E;
+        func_800B39B4(0, 0, 0x20, 0);
+        q->z = 0x161;
+        p->z = 0x15;
+        q->x = 0x161;
+        p->x = 0x15;
+        func_800B39B4(0, 0, 0x23, 0);
+        q->x = -0x161;
+        p->x = -0x15;
+        func_800B39B4(0, 0, 0x1D, 0);
+        q->z = -0x161;
+        p->z = -0x15;
+        func_800B39B4(0, 0, 0x1F, 0);
+        q->x = 0x161;
+        p->x = 0x15;
+        func_800B39B4(0, 0, 0x21, 0);
+        q->z = 0;
+        p->z = 0;
+        q->x = 0x1F4;
+        p->x = 0x1E;
+        func_800B39B4(0, 0, 0x22, 0);
+        q->x = -0x1F4;
+        p->x = -0x1E;
+        func_800B39B4(0, 0, 0x1E, 0);
+        break;
+    case 2:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        id = ((s32 (*)(void))func_800ADFC0)();
+        a->x = func_80039B40(id * 0x10) >> 6;
+        a->y = 0x78;
+        b->z = 0x1F4;
+        func_800B39B4((s16)(id * 0x10), 0, 0x31, 0x14);
+        break;
+    case 3:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        b->y = 0x12C;
+        b->z = -0x3E8;
+        a->y = 0x14;
+        a->z = -0xA;
+        func_800B39B4((s16)arg0->f3C, (s16)(arg0->f3C + (((s32 (*)(void))func_800ADFC0)() - 0x80) * 8), 0x38, 1);
+        break;
+    case 4:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        b->x = 0x1E;
+        b->y = 0x190;
+        b->z = 0x1F4;
+        func_800B39B4((s16)arg0->f3C, 0, 0x39, 0);
+        e = &D_800C6A10[D_800C6A08];
+        e->f3 = 0xB;
+        e->f2 = 0xB;
+        break;
+    case 5:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        b->x = 0x1E;
+        b->y = 0x190;
+        b->z = 0x1F4;
+        func_800B39B4((s16)arg0->f3C, 0, 0x3A, 0);
+        break;
+    case 6:
+        a = (W4SV *)0x1F800010;
+        b = (W4SV *)0x1F800018;
+        a->y = 0x32;
+        *(s16 *)0x1F800020 = 0;
+        func_800B39B4(0, 0, 7, 0);
+        e = &D_800C6A10[D_800C6940];
+        e->f3 = 0x10;
+        e->f2 = 0x10;
+        break;
+    }
+}
 
 void func_800B579C(s32 arg0, s8 arg1, s8 arg2, s8 arg3) {
     u8 *temp_a0;

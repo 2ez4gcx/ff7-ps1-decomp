@@ -42,5 +42,10 @@ extern u8 D_801BD4AD;
 extern u8 D_801BD4AE;
 extern u8 D_801BD4AF;
 extern u16 D_801BD4B0;
+void func_801B0D98(s32 arg0, s32 arg1);
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_801D54D0[];
+void func_800D3994(s32, s32, void *);
+void func_801B0854();
 
 #endif /* MAGIC_GEKI1_DECLS_H */

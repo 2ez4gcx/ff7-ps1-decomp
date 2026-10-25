@@ -11,8 +11,15 @@ extern s16 D_8015169C;
 extern MgTask D_80162978[];
 extern M2C_UNK D_801B154C;
 extern M2C_UNK D_801D4260;
-extern M2C_UNK *D_801EC260;
+extern u8 *D_801EC260;
 extern s16 D_80162080;
 M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
+void func_801B0B88(void);
+void func_800D4368(void *, s32, s32);
+u8 *func_800D4D90(void *, s32, s32, u8 *);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s32 D_801D40A8;
+extern u16 D_801D424C;
 
 #endif /* MAGIC_COMETEO_DECLS_H */

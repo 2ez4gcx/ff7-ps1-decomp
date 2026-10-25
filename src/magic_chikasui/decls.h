@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0714();
+void func_801B0714();
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgObj18;
 extern MgObj18 D_801C8CCC[];
 MgObj18 *func_801B008C(void);
@@ -21,5 +21,6 @@ extern u8 D_801B0CC8[];
 extern u8 *D_801C8CC8;
 extern s16 D_80162080;
 extern MgObj20 D_80162978[];
+extern u8 D_801B07D4[];
 
 #endif /* MAGIC_CHIKASUI_DECLS_H */

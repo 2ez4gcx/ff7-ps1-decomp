@@ -140,7 +140,27 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80027B84);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028030);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028484);
+void func_80028484(MainBox *arg0) {
+    Rect16 r;
+    s16 h;
+    s32 t;
+    s32 u;
+
+    h = arg0->h;
+    t = h * arg0->f4 / arg0->f2;
+    u = h * arg0->f0 / arg0->f2;
+    r.x = arg0->x;
+    r.y = arg0->y + t;
+    r.w = arg0->w - 1;
+    r.h = u + 1;
+    func_80028030(&r, t);
+    r.x = arg0->x;
+    r.y = arg0->y;
+    r.w = arg0->w;
+    r.h = arg0->h;
+    func_80027B84(&r);
+    func_80026A34(0, 1, 0x1F, 0);
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800285AC);
 

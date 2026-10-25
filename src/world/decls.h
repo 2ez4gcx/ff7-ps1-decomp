@@ -733,7 +733,7 @@ void func_800B57DC(void);
 typedef struct { s8 id; s8 arg; s8 period; s8 count; } WmTimer;
 void func_800B40B4(void);
 void func_800B4244(void);
-void func_800B5314(s32, s8);
+void func_800B5314(WmObj *arg0, s32 arg1);
 s32 func_800A5FB4(void);
 void func_800AD804(void);
 void func_800A5D00(W4Ent18 *arg0, W3Node *arg1);
@@ -914,6 +914,8 @@ extern s32 D_800C84D4;
 extern s32 D_800E5610;
 extern s32 D_800E5640;
 extern s32 D_800E565C;
+extern u8 D_800C6A08;
+typedef struct { s16 x; s16 y; s16 z; s16 pad; } W4SV;
 
 #endif /* WORLD_DECLS_H */
 extern u8 D_80071E30;

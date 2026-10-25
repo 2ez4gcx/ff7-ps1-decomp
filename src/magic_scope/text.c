@@ -75,7 +75,23 @@ void func_801B0464(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B04D0);
+INCLUDE_RODATA("../asm/us/magic_scope/nonmatchings/text", D_801B0000);
+
+void func_801B04D0(s32 arg0, MgSVec *rot, s16 scale) {
+    MgMat r;
+    MgMat m;
+    MgVec unused;
+
+    m = D_801B0000;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = scale;
+    func_8003B05C(&m, &D_800FA63C);
+    func_8003C21C(rot, &r);
+    func_8003B05C(&m, &r);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+}
 
 INCLUDE_RODATA("../asm/us/magic_scope/nonmatchings/text", D_801B0020);
 

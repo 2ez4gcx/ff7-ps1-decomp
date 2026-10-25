@@ -13,7 +13,22 @@ INCLUDE_ASM("../asm/us/magic_cometeo/nonmatchings/text", func_801B0608);
 
 INCLUDE_ASM("../asm/us/magic_cometeo/nonmatchings/text", func_801B0844);
 
-INCLUDE_ASM("../asm/us/magic_cometeo/nonmatchings/text", func_801B0B88);
+void func_801B0B88(void) {
+    MgTask *p;
+    u16 *frame;
+
+    p = &D_80162978[D_8015169C];
+    frame = &D_801D424C;
+    *frame = p->unk2;
+    func_800D4368(&p->unk4, 0x2500, 0);
+    D_801EC260 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801EC260);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= D_801D40A8) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_cometeo/nonmatchings/text", func_801B0C4C);
 

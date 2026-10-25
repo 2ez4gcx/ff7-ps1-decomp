@@ -148,7 +148,15 @@ INCLUDE_ASM("../asm/us/magic_kaen2/nonmatchings/text", func_801B0888);
 
 INCLUDE_ASM("../asm/us/magic_kaen2/nonmatchings/text", func_801B0B40);
 
-INCLUDE_ASM("../asm/us/magic_kaen2/nonmatchings/text", func_801B0FF0);
+void func_801B0FF0(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B0B40)];
+    func_800D3994(arg1, D_80151917[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 void func_801B10BC(arg0, arg1) {
     func_800BBEAC(&func_801B045C);

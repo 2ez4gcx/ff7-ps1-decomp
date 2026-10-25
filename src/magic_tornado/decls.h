@@ -20,5 +20,7 @@ extern s16 D_80162080;
 extern MgObj20 D_80162978[];
 extern u8 D_801C6A94[];
 extern u8 *D_801E6A94;
+void func_801B0858(void);
+void func_801B0098();
 
 #endif /* MAGIC_TORNADO_DECLS_H */

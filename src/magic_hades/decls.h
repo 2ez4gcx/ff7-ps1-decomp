@@ -28,5 +28,10 @@ typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14;
 extern M2C_UNK func_801B1AE8;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern MgObj20 D_80162978[];
+void func_801B98BC(void);
+extern u8 D_80062D98;
+extern s16 D_8015169C;
+extern MgObj20 *D_801F1240;
+void func_801B8D48();
 
 #endif /* MAGIC_HADES_DECLS_H */

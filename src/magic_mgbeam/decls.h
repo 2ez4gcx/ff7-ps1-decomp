@@ -40,5 +40,9 @@ extern u8 D_80151915[][0xB9C];
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 void func_800D44E8(MgSVec *, MgMat *);
+void func_801B01D8(void);
+void func_800D4368(void *, s32, s32);
+extern s32 D_801B1B58;
+extern u16 D_801B3CF0;
 
 #endif /* MAGIC_MGBEAM_DECLS_H */

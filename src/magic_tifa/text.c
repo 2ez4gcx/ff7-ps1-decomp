@@ -190,7 +190,25 @@ INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B2094);
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B2378);
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B24A8);
+void func_801B24A8(void) {
+    MgTask *p;
+    s16 *frame;
+    s16 t;
+
+    p = &D_80162978[D_8015169C];
+    frame = &D_801F3B7C;
+    *frame = p->unk2 | 0x8000;
+    D_801F3B7E.v = p->unk18 << 6;
+    t = p->unkC;
+    func_800D4368(&p->unk4, t, -(t >> 3));
+    D_801F3D50 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801F3D50);
+    if (p->unk2 >= 7) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B258C);
 

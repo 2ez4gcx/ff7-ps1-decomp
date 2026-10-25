@@ -18,12 +18,15 @@ extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
 extern MgTask D_80162978[];
 void func_801B009C(void);
-M2C_UNK func_800D4368(void *, s32, s32);
-s32 func_800D4D90(void *, s32, s32, s32);
+void func_800D4368(void *, s32, s32);
+u8 *func_800D4D90(void *, s32, s32, u8 *);
 extern u8 D_80062D98;
 extern s32 D_801517C0;
 extern u16 D_801C928C;
 extern s32 *D_801C9290[];
 extern u8 D_801B0A40[];
+void func_801B0190(void);
+extern s32 D_801C8EC8;
+extern u16 D_801C92AC;
 
 #endif /* MAGIC_KAMA_DECLS_H */

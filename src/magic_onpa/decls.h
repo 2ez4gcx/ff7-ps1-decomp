@@ -12,5 +12,12 @@ extern MgObj20 D_80162978[];
 extern u8 D_801B0B1C[];
 extern u8 *D_801C0B1C;
 extern s16 D_80162080;
+void func_801B04DC(s32 arg0, s32 arg1);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+s32 func_800BBEAC(void *);
+void func_800D3994(s32, s32, void *);
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_80151917[][0xB9C];
+void func_801B02D0();
 
 #endif /* MAGIC_ONPA_DECLS_H */

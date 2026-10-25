@@ -18,4 +18,5 @@ typedef struct { u16 magic[4]; u16 w; u16 h; u16 data[1]; } BromImg;
 typedef struct { s16 x; s16 y; s16 w; s16 h; } BromRect;
 s32 func_800A05D4(BromImg *arg0, s32 x, s32 y);
 
+s32 func_80017108();
 #endif /* BROM_DECLS_H */

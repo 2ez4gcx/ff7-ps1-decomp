@@ -81,7 +81,25 @@ void func_801B045C(void) {
 
 INCLUDE_ASM("../asm/us/magic_napalm/nonmatchings/text", func_801B04C8);
 
-INCLUDE_ASM("../asm/us/magic_napalm/nonmatchings/text", func_801B060C);
+void func_801B060C(void) {
+    MgTask *p;
+    s8 c;
+
+    p = &D_801621F0[D_801590D4];
+    func_800D4368(&p->unk4, 0x1800, 0);
+    D_801D8810.v = p->unk2;
+    c = 0x40 - p->unk2 * 4;
+    D_801D880E = c;
+    D_801D880D = c;
+    D_801D880C = c;
+    D_80163C74 = func_800D4D90((u8 *)&D_801D8810 - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= D_801D85E4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B06F0(void) {
     MgObj20 *temp_s0;

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B061C();
+void func_801B061C();
 extern M2C_UNK D_801B47E0;
 void func_801B0028(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
@@ -23,5 +23,16 @@ extern s32 D_80163C74;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801B471C;
+void func_800D2980(void *, s32, s32, s32);
+void func_800D52A0(s32, s32);
+void func_800D54EC(s32, void *);
+void func_801B0140();
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+extern MgObj20 D_80162996[];
+extern u8 D_801B06D8[];
+extern s16 D_801C8084;
+extern u8 D_801C8088[];
 
 #endif /* MAGIC_CHI_DECLS_H */

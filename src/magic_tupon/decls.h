@@ -70,5 +70,11 @@ void func_800D3994(s32, s32, void *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; u8 pad[0xC]; s16 unk18; } MgObjTup;
+typedef struct { u8 v; } MgByte;
+extern MgByte D_801D83F0;
+extern u16 D_801EDC30;
+s32 func_800D4D90(void *, s32, s32, s32);
+s32 func_801B4A6C(MgObjTup *p);
 
 #endif /* MAGIC_TUPON_DECLS_H */

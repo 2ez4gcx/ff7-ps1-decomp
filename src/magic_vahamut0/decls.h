@@ -29,5 +29,10 @@ M2C_UNK func_800BBEAC(M2C_UNK *);
 extern MgObj20 D_80162978[];
 void func_801B24A4(void);
 extern s32 D_801FD924[];
+typedef struct { u32 tag; u8 pad4[4]; s32 xy0; u8 pad0c[4]; s32 xy1; u8 pad14[4]; s32 xy2; } MgPolyT;
+s32 func_8003BC0C(MgSVec *, MgSVec *, MgSVec *, s32 *, s32 *, s32 *, s32 *, s32 *);
+extern MgSVec D_801FCDF4[];
+extern MgPolyT *D_80163C74;
+MgPolyT *func_801B4018(void);
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */

@@ -37,7 +37,23 @@ MgObj4C *func_801B07E0(void) {
     return NULL;
 }
 
-INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0858);
+void func_801B0858(void) {
+    MgObj20 *p;
+    s32 i;
+    s32 n;
+
+    n = 0;
+    p = &D_80162978[D_8015169C];
+    for (i = 0; i < 100; i++) {
+        if (D_801C2F34[i].unk0 != -1) {
+            func_801B0098(&D_801C2F34[i]);
+            n++;
+        }
+    }
+    if (p->unk0 == 1 && n == 0) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0924);
 

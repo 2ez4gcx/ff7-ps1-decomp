@@ -9,6 +9,7 @@ void func_800B6D6C(void);
 extern u16 D_800F83C6[];
 s32 D_800A00CC();
 s32 D_800A1158();
+s32 func_80017108();
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80013C9C);
 

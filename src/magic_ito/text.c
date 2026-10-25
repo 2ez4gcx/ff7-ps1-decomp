@@ -36,6 +36,17 @@ INCLUDE_ASM("../asm/us/magic_ito/nonmatchings/text", func_801B0604);
 
 INCLUDE_ASM("../asm/us/magic_ito/nonmatchings/text", func_801B076C);
 
-INCLUDE_ASM("../asm/us/magic_ito/nonmatchings/text", func_801B0CA8);
+void func_801B0CA8(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B076C)];
+    func_800D3994(arg1, D_80151917[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+    if (p->unk8 > p->unk10) {
+        D_801B5550 = -1;
+    }
+    func_800BBEAC((void *)func_801B0440);
+}
 
 INCLUDE_ASM("../asm/us/magic_ito/nonmatchings/text", func_801B0D98);
