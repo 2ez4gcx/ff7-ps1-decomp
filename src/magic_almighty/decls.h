@@ -30,6 +30,15 @@ s32 func_80042DA8(void);
 M2C_UNK func_800D5774(s32);
 extern u8 D_80062D98;
 extern s16 D_801B059A[];
-extern M2C_UNK func_801B0020;
+void func_801B0020(void);
+M2C_UNK func_8003B2CC(M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_8003C21C(M2C_UNK, M2C_UNK);
+M2C_UNK func_800D4368(M2C_UNK, s32, s32);
+u8 *func_800D6260(u8 *, s32, s32, u8 *);
+extern s32 D_801517C0;
+extern u8 D_801B0578[];
+extern u8 D_801B0584[];
+extern s16 D_1F800002;
+extern s16 D_1F800004;
 
 #endif /* MAGIC_ALMIGHTY_DECLS_H */

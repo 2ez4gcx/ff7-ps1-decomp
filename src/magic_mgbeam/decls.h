@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B099C();
+s32 func_801B099C();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -51,5 +51,18 @@ extern u8 D_801B3D04[];
 MgMat *func_8003BF8C(MgSVec *, MgMat *);
 void func_8003B69C(s32, s32, s32);
 s32 func_800D29D4(void *, s32, s32, s32);
+s32 func_800BBA84(s32, s32, s32);
+M2C_UNK func_800D2980(M2C_UNK *, s32, s32, s32);
+M2C_UNK func_800D5444(s32, s32, s32, void (*)(s32, s32));
+extern M2C_UNK D_801B0B14;
+extern M2C_UNK D_801B1C1C;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+M2C_UNK func_8003BADC();
+s32 func_80042DA8(void);
+M2C_UNK func_800D5774(s32);
+extern u8 D_800FA6D4;
+extern u8 D_801518F6[][0xB9C];
+extern struct { s32 x; s32 y; s32 z; } D_801CBD38[];
 
 #endif /* MAGIC_MGBEAM_DECLS_H */

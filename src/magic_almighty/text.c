@@ -5,7 +5,34 @@ void func_801B0000(void) {
     func_801B04E8();
 }
 
-INCLUDE_ASM("../asm/us/magic_almighty/nonmatchings/text", func_801B0020);
+void func_801B0020(void) {
+    MgTask *p;
+    MgSVec *s;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    D_801B0578[0] = D_801B0584[p->unk2];
+    func_800D4368(&p->unk8, p->unk1A, 0);
+    D_801D05AC = func_800D6260(&D_801B0578[-4], D_801517C0 + 0x70, 0xC, D_801D05AC);
+    s = (MgSVec *)0x1F800000;
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= 0x11) {
+            p->unk0 = -1;
+            return;
+        }
+        D_1F800002 = 0;
+        D_1F800004 = 0;
+        s->vx = p->unk18;
+        func_8003C21C(&p->unk10, 0x1F800008);
+        func_8003B2CC(0x1F800008, 0x1F800000, 0x1F800000);
+        p->unk8 += s->vx >> 4;
+        p->unkA += s->vy >> 4;
+        p->unkC += s->vz >> 4;
+        p->unk18 -= p->unk18 >> 3;
+        p->unk14 += (-0x400 - p->unk14) >> 2;
+        p->unk10 += p->unk1C;
+    }
+}
 
 void func_801B01C0(void) {
     MgObjAlm *p;
