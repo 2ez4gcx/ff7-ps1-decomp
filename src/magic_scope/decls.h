@@ -40,5 +40,24 @@ s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 void func_801B04D0(s32 arg0, MgSVec *rot, s16 scale);
 extern MgMat D_801B0000;
+void func_801B0C94(s32 arg0, s32 arg1);
+M2C_UNK func_800BBA84(M2C_UNK, s32, M2C_UNK);
+s32 func_800BBEAC(M2C_UNK *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_800D44E8(MgSVec *, MgMat *);
+M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
+void func_801B0A48(void);
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+extern M2C_UNK D_801B0DD8;
+extern MgMat D_801BD940;
+extern s16 D_801BD960;
+s32 func_80039F5C(s32);
+s16 func_8003CC1C(s32, s32);
+M2C_UNK func_800D5774(s16);
+extern s16 D_80151774;
+extern MgSVec D_801BD938;
+extern M2C_UNK func_801B06D0;
 
 #endif /* MAGIC_SCOPE_DECLS_H */

@@ -25,5 +25,10 @@ MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 s32 func_800D29D4(void *, s32, s32, s32);
+void func_801B0510(void);
+void func_8003B69C(s32, s32, s32);
+extern M2C_UNK D_801B2E94;
+extern s16 D_801B3270[];
+extern u16 D_801B3278[];
 
 #endif /* MAGIC_STOP_DECLS_H */

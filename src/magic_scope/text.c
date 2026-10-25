@@ -124,6 +124,71 @@ void func_801B05B4(void) {
 
 INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B06D0);
 
-INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B0A48);
+void func_801B0A48(void) {
+    MgTask *p;
+    MgTask *q;
+    s16 dx;
+    s16 dy;
+    s16 dz;
+    s16 n;
+    s16 i;
+    u8 pad[0x30];
 
-INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B0C94);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            dx = p->unkC - p->unk4;
+            D_801BD938.vx = dx;
+            dy = p->unkE - p->unk6;
+            D_801BD938.vy = dy;
+            dz = p->unk10 - p->unk8;
+            D_801BD938.vz = dz;
+            i = 0;
+            n = func_80039F5C(dx * dx + dy * dy + dz * dz);
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC(&func_801B06D0)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = p->unk8;
+                q->unkE = func_8003CC1C(p->unkC - p->unk4, p->unk10 - p->unk8);
+                q->unk16 = i;
+                i++;
+                q->unk18 = n;
+                q->unk14 = n * 0x1500 / 2800;
+            } while (i < 4);
+        }
+        if (p->unk2 == 0x20) {
+            i = 0;
+            do {
+                if ((D_80151774 >> i) & 1) {
+                    func_800D5774(i);
+                }
+                i++;
+            } while (i < 0xA);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x28) {
+            p->unk0 = -1;
+            func_800D52A0(0, 0xA);
+        }
+    }
+}
+
+void func_801B0C94(s32 arg0, s32 arg1) {
+    MgSVec v;
+    MgTask *p;
+
+    func_800D2980(&D_801B0DD8, 0, 0, 0);
+    func_800BBEAC(func_801B0464);
+    D_801BD960 = arg0;
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B0A48)];
+    func_800D3994(arg1, D_8015190F[arg1][9], &p->unk4);
+    func_801B0028(arg0, (MgSVec *)&p->unkC);
+    v.vx = p->unkC - p->unk4;
+    v.vy = p->unkE - p->unk6;
+    v.vz = p->unk10 - p->unk8;
+    func_800D44E8(&v, &D_801BD940);
+    D_800F5B70 = D_800F5B71 = D_800F5B72 = 0;
+    func_800D52A0(0x400, 0xA);
+    func_800BBA84(0x62, arg1, 0x40);
+}

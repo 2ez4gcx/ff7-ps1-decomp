@@ -74,5 +74,10 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void func_801B11D4(void);
 M2C_UNK func_8003B27C(MgMat *, MgSVec *, MgVec *);
 extern M2C_UNK D_801C0148;
+void func_801B1438(void);
+void func_8003B69C(s32, s32, s32);
+extern M2C_UNK D_801BFE48;
+extern s16 D_801C0244[];
+extern u16 D_801C024C[];
 
 #endif /* MAGIC_JOKER2_DECLS_H */

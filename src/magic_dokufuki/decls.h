@@ -13,7 +13,7 @@ extern s32 D_8009A004;
 extern s32 D_8009A008;
 extern M2C_UNK D_801B0000;
 extern M2C_UNK D_801B0A20;
-extern M2C_UNK func_801B07F8;
+void func_801B07F8(s32 arg0, s32 arg1);
 void func_801B096C(s32 arg0, M2C_UNK arg1);
 extern s16 D_801C8E78;
 void func_801B031C(void);
@@ -29,5 +29,14 @@ s32 func_80039A74(s32);
 void func_8003C4AC(MgSVec *, MgMat *);
 void func_8003C8DC(s32, MgMat *);
 void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+void func_800D3994(s32, s32, void *);
+void func_801B0454(void);
+extern u8 D_8015190F[][0xB9C];
+s32 func_80039B40(s32);
+s32 func_80039F5C(s32);
+s16 func_8003CC1C(s32, s32);
+s32 func_80042DA8(void);
+M2C_UNK func_800D5774(s32);
+void func_801B006C(void);
 
 #endif /* MAGIC_DOKUFUKI_DECLS_H */

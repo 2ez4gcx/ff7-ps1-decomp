@@ -227,7 +227,80 @@ void func_801B0A8C(MgRing *r, s32 val) {
 
 INCLUDE_ASM("../asm/us/magic_wpsi/nonmatchings/text", func_801B0B00);
 
-INCLUDE_ASM("../asm/us/magic_wpsi/nonmatchings/text", func_801B1274);
+void func_801B1274(void) {
+    MgSVec rot;
+    MgMat m;
+    MgMat n;
+    MgVec v;
+    MgVec w;
+    MgTask *p;
+    s32 k;
+    s32 c;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 u;
+
+    p = &D_80162978[D_8015169C];
+    c = func_801B0374(&D_801D2C14, &D_801D2C24, &w) / 190 + 1;
+    k = (-(func_80039A74(p->unkA) * 300) >> 12) * c;
+    rot.vx = 0;
+    rot.vy = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    x = p->unk4;
+    m.t[0] = x;
+    y = p->unk6 + k;
+    m.t[1] = y;
+    z = p->unk8;
+    v.vx = x - D_801D2C44.v;
+    m.t[2] = z;
+    v.vy = y - D_801D2C46;
+    v.vz = z - D_801D2C48;
+    func_8003A08C(&v, &v);
+    func_801B0450(func_801B0374(&D_801BABE0, &v, &w), &n, &w);
+    func_8003B16C(&n, &m);
+    if (D_80062D98 == 0 && p->unk2 < 0xA) {
+        D_801D2C44.v = m.t[0];
+        D_801D2C46 = m.t[1];
+        D_801D2C48 = m.t[2];
+    }
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    v.vx = 0;
+    v.vy = 0;
+    v.vz = 0x1A4;
+    func_8003AB84(&m, &v, &v);
+    m.t[0] += v.vx;
+    m.t[1] += v.vy;
+    m.t[2] += v.vz;
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk4 = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    ((MgScratch *)0x1F800000)->unk0 = D_801D2C34;
+    if (p->unk2 >= 0x16) {
+        ((MgScratch *)0x1F800000)->unk4 = 0x88;
+        u = p->unk2;
+        ((MgScratch *)0x1F800000)->unkA = (u - 0x16) << 9;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801D2BF0 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D2BF0);
+    if (p->unk2 >= 0x1E) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0xA) {
+            p->unk4 += p->unkC;
+            p->unk6 += p->unkE;
+            p->unk8 += p->unk10;
+            p->unkA += p->unk12;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_wpsi/nonmatchings/text", func_801B15DC);
 

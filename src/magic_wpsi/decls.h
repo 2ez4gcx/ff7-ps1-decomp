@@ -68,5 +68,21 @@ extern s32 D_801D2C00;
 extern M2C_UNK func_801B22E4;
 typedef struct { s32 head; s32 tail; s32 count; s32 v[0x18]; } MgRing;
 void func_801B0A8C(MgRing *r, s32 val);
+void func_801B1274(void);
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+extern MgVec D_801D2C14;
+extern MgVec D_801D2C24;
+extern MgVec D_801BABE0;
+extern struct { s16 v; } D_801D2C44;
+extern s16 D_801D2C46;
+extern s16 D_801D2C48;
+extern s16 D_8015169C;
+extern u8 D_80062D98;
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_8003B16C(MgMat *, MgMat *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003AB84(MgMat *, MgVec *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+MgLineG2 *func_800D29D4(void *, s32, s32, MgLineG2 *);
 
 #endif /* MAGIC_WPSI_DECLS_H */
