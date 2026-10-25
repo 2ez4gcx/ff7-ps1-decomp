@@ -117,7 +117,38 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DD690);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DD85C);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DDAD8);
+void func_800DDAD8(void *arg0, s16 arg1) {
+    BtlRect sp18;
+    BtlRect sp20;
+    s16 i;
+    s32 o;
+    s32 k;
+    u16 xa;
+    u16 xb;
+    u16 xc;
+    u16 xd;
+
+    func_80026A00((s32)arg0);
+    sp20.x = 0;
+    sp20.y = 0;
+    sp20.w = 0xFF;
+    sp20.h = 0xFF;
+    func_80026A34(0, 1, func_8004656C(0, 1, 0x3C0, 0x100) & 0xFFFF, (s32)&sp20);
+    if (*(s16 *)(D_800F1E64 + arg1 * 0x98) > 0) {
+        i = 0;
+        o = arg1 * 0x98;
+        do {
+            k = (i << 3) + o;
+            xa = *(volatile u16 *)(D_800F1E64 + 2 + k);
+            xb = *(volatile u16 *)(D_800F1E64 + 4 + k);
+            xc = *(volatile u16 *)(D_800F1E64 + 6 + k);
+            xd = *(volatile u16 *)(D_800F1E64 + 8 + k);
+            func_8001DE0C(&sp18, (s16)xa, (s16)xb, (s16)(xc - xa), (s16)(xd - xb));
+            func_8001E040(&sp18);
+            i++;
+        } while (i < *(s16 *)(D_800F1E64 + o));
+    }
+}
 
 void func_800DDC34(u8 *arg0, s16 arg1) {
     func_800DD85C(arg0 + D_800F5628 * 0x14, arg1);

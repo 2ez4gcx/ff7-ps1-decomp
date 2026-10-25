@@ -100,9 +100,9 @@ void func_800CE058(s16 arg0) {
 
 void func_800CE0C8(s16 arg0, u8 arg1, u8 arg2) {
     s32 n;
-    
 
-    
+
+
     func_800CE058(arg0);
     switch (arg1) {
     case 0:
