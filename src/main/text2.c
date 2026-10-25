@@ -308,8 +308,6 @@ u8 *func_80014C80(s32 arg0) {
 
 INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_80010100);
 
-INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_8001010E);
-
 s32 func_80014CBC(s32 arg0, s32 arg1) {
     u8 v;
     s32 r;
