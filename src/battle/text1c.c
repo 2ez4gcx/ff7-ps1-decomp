@@ -48,7 +48,35 @@ void func_800A3E98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A3ED0);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A4350);
+void func_800A4350(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
+    Q8 *e;
+    s32 i;
+    s32 mask;
+    u16 *p;
+
+    if (D_800F39D8 != ((D_800F39DC + 1) & 0xF)) {
+        e = &D_800F3958[D_800F39DC];
+        e->a = arg1 == 0x14 ? 5 : 6;
+        e->c = arg0;
+        e->d = arg1;
+        e->e = arg2;
+        e->f = arg3;
+        switch (arg1) {
+        case 4:
+        case 8:
+        case 0x17:
+            func_800A5660(arg0, arg2);
+            break;
+        }
+        i = arg0;
+        func_800A4D88(func_800A44D8(i));
+        p = &D_800F7DAC;
+        mask = 1 << i;
+        *p &= ~mask;
+        D_800F7DC2 |= mask;
+        D_800F39DC = (D_800F39DC + 1) & 0xF;
+    }
+}
 
 void func_800A4480(void) {
     s32 i;
@@ -110,7 +138,33 @@ s32 func_800A4860(void) {
     return ret;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A4954);
+s32 func_800A4954(void) {
+    s32 i;
+    s32 ret;
+
+    ret = 0;
+    D_800F39EC = 0;
+    D_800F83D0[0] |= 2;
+    for (i = 0; i < 3; i++) {
+        func_800A7254(0, i, 4, 0);
+    }
+    for (i = 0; i < 4; i++) {
+        func_800A3354();
+    }
+    D_800F3896 = 9;
+    func_800D9E0C(-1, -1, 9);
+    while (D_800F39EC == 0) {
+        func_800A3354();
+    }
+    D_800F83D0[0] &= 0xFFFD;
+    for (i = 0; i < 3; i++) {
+        func_800A7254(0, i, 6, 0);
+    }
+    if (D_800F39EC & 2) {
+        ret = 1;
+    }
+    return ret;
+}
 
 s32 func_800A4A80(void) {
     s32 var_v1;
@@ -2073,7 +2127,39 @@ s32 func_800B13B0(s32 arg0, s32 arg1, void **arg2) {
     return arg1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B141C);
+void func_800B141C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *p;
+    u8 *q;
+    s32 n;
+    s32 mask;
+
+    n = func_800B13B0(arg0, arg2, (void **)&p);
+    switch (arg1) {
+    case 0:
+        mask = 1 << (n & 7);
+        q = p;
+        q += n >> 3;
+        *q &= ~mask;
+        if (arg3 != 0) {
+            *q |= mask;
+        }
+        break;
+    case 1:
+        q = p;
+        q += n / 8;
+        *q = arg3;
+        break;
+    case 2:
+        q = p;
+        q += n / 16 * 2;
+        *(s16 *)q = arg3;
+        break;
+    case 3:
+        p = p + n / 32 * 4;
+        *(s32 *)p = arg3;
+        break;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B153C);
 
@@ -2092,7 +2178,32 @@ void func_800B1624(s32 arg0, u32 v) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B16D0);
+void func_800B16D0(s32 arg0) {
+    s32 hi;
+    s32 lo;
+    s32 i;
+
+    hi = arg0 >> 4;
+    lo = arg0 & 0xF;
+    switch (hi) {
+    case 0:
+        func_800B1624(lo, ((B1C1C_T *)D_800F4AC4)->w[0][0]);
+        break;
+    case 1:
+        func_800B1624(2, ((B1C1C_T *)D_800F4AC4)->w[0][0]);
+        break;
+    case 2:
+        i = 10;
+        do {
+            if ((((B1C1C_T *)D_800F4AC4)->mask[0] >> (i - 1)) & 1) {
+                func_800B1624(lo, ((B1C1C_T *)D_800F4AC4)->w[0][i - 1]);
+            }
+        } while (--i > 0);
+        func_800B1624(2, ((B1C1C_T *)D_800F4AC4)->mask[0]);
+        break;
+    }
+    ((BtlStk *)D_800F4AC4)->buf[--((BtlStk *)D_800F4AC4)->sp] = arg0;
+}
 
 s32 func_800B17F0(s32 arg0) {
     s32 v;

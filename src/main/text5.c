@@ -22,6 +22,7 @@ M2C_UNK func_80028030(Rect16 *, s32);
 void func_80026F44(s16 arg0, s16 arg1, u8 *arg2, s32 arg3);
 s16 func_80026C5C(s16, s16, s32, s32);
 extern u8 D_80062DFD;
+s32 func_80028CA0(s16 arg0, s16 arg1, s8 arg2, s8 arg3, u16 arg4, u16 arg5, s16 arg6, s32 arg7);
 
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;
@@ -177,7 +178,44 @@ void func_80027354(s16 x, s16 y, u8 *str, u8 color) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80027408);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80027990);
+void func_80027990(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s16 temp_a2;
+    s16 temp_s1;
+    void *temp_a1;
+    void *temp_a1_2;
+
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 6;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x4C;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s32 *, 0x18) = 0x55555555;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 8) = arg0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xA) = arg1;
+    temp_a2 = (arg0 + arg2) - 1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xC) = temp_a2;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xE) = arg1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0x10) = temp_a2;
+    temp_s1 = (arg1 + arg3) - 1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0x12) = temp_s1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0x14) = arg0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0x16) = temp_s1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 4) = (s8) arg4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 5) = (s8) arg4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 6) = (s8) arg4;
+    temp_a1 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1 + 0x1C;
+    func_80046794(D_80062FC4, (s32) temp_a1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 8) = arg0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xA) = arg1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xC) = arg0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xE) = temp_s1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 4) = (s8) arg4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 5) = (s8) arg4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 6) = (s8) arg4;
+    temp_a1_2 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1_2 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1_2);
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80027B84);
 
@@ -209,7 +247,23 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800285AC);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028930);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028CA0);
+s32 func_80028CA0(s16 arg0, s16 arg1, s8 arg2, s8 arg3, u16 arg4, u16 arg5, s16 arg6, s32 arg7) {
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x64;
+    func_80046870((*(void *volatile *)&D_80062F24), 1);
+    if ((arg7 << 0x10) != 0) {
+        func_80046848((*(void *volatile *)&D_80062F24), 1);
+    }
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 8) = arg0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xA) = arg1;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 0xC) = arg2;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 0xD) = arg3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0x10) = arg4;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0x12) = arg5;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s16 *, 0xE) = func_80046634(0x100, (s16) arg6 + 0x1E0);
+    func_80046794(*(const s32 *)&D_80062FC4, (s32) (*(void *volatile *)&D_80062F24));
+    (*(void *volatile *)&D_80062F24) = (*(void *volatile *)&D_80062F24) + 0x14;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028E00);
 

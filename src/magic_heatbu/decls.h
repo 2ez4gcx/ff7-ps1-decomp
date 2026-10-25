@@ -28,5 +28,14 @@ extern s32 D_801D89F4;
 extern s32 D_801D89F8;
 extern M2C_UNK func_801B05CC;
 extern M2C_UNK D_801B0000;
+void func_801B0214(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+s32 func_80042DA8();
+void func_800D5774(s32);
+extern MgByte D_800F5B70;
+extern MgByte D_800F5B71;
+extern MgByte D_800F5B72;
+extern struct { s16 v; } D_800F5B74;
+extern MgSVec D_801D89FC;
 
 #endif /* MAGIC_HEATBU_DECLS_H */

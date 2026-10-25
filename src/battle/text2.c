@@ -223,7 +223,22 @@ s32 func_800B5CD4(s32 arg0) {
     return p[*p];
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B5D38);
+void func_800B5D38(s32 arg0) {
+    s32 *ov;
+    s32 i;
+
+    ov = (s32 *)0x801B0000;
+    if (D_80163614 == 0x4E) {
+        func_800D2980(ov[ov[0]] + (s32)ov, arg0 + 0x13, 0, 0);
+    } else {
+        func_800D2980(ov[ov[0]] + (s32)ov, arg0 + 0x12, 0, (arg0 + 3) * 3);
+    }
+    for (i = 4; i < D_800F7E04 + 4; i++) {
+        if (D_800F7E08[i - 4][0] == arg0 + 3) {
+            ((void (*)(s32, s32))func_800C614C)((s32)ov + *(s32 *)((s32)ov + (ov[0] << 2)), i);
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B5E64);
 
@@ -358,7 +373,36 @@ void func_800B8944(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B8A34);
+u8 func_800B8A34(s32 arg0, s32 arg1) {
+    s32 o;
+    s32 t0;
+    s32 t1;
+    s32 t2;
+    s32 t3;
+    s32 t4;
+    s32 t5;
+    s32 t6;
+    s32 t7;
+
+    o = arg1 << 5;
+    t0 = D_800F99EC[arg0].a;
+    *(u16 *)(D_80162980 + 2 + o) = t0;
+    t1 = D_801590CC;
+    t2 = D_800F99EC[arg0].b;
+    *(u16 *)(D_80162984 + o) = t1;
+    *(u16 *)(D_80162984 + 2 + o) = t2;
+    t3 = D_800F99EC[arg0].c;
+    *(s32 *)(D_80162988 + o) = t3;
+    t4 = D_800F99EC[arg0].d;
+    *(s32 *)(D_8016298C + o) = t4;
+    t5 = D_800F8CF0;
+    t6 = D_800F99EC[arg0].e;
+    *(u8 *)(D_80162990 + o) = t5;
+    *(u16 *)(D_8016297E + o) = t6;
+    t7 = D_800F99EC[arg0].f;
+    *(u8 *)(D_80162990 + 1 + o) = t7;
+    return t7;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B8B48);
 
@@ -1066,7 +1110,27 @@ s32 func_800C1304(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return arg0 + (func_80039B40((arg3 << 11) / arg2 + 0x800) + 0x1000) * d / 8192;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C1394);
+void func_800C1394(s32 arg0) {
+    s32 i;
+    u8 *row;
+    u8 *p;
+
+    i = arg0 & 0xFF;
+    row = D_80151A58[i];
+    
+    D_8015246E[i].b = D_80151226[i].a;
+    D_8015246E[i].a += 0x80;
+    p = &row[0x9F4];
+    func_8003C21C((s32)&row[0xA14], (s32)p);
+    func_800BAF34((BtlCoord34 *)p);
+    *(u8 **)0x1F800020 = D_800EA470;
+    *(s32 *)0x1F800024 = 0x90;
+    *(s16 *)0x1F80002E = 0;
+    *(s16 *)0x1F80002A = 0;
+    *(s16 *)0x1F800028 = 0;
+    *(s16 *)0x1F80002C = 0x20;
+    D_80163C74 = func_800D29D4((void *)0x1F800020, D_801517C0 + 0x70, 0xC, D_80163C74);
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C14C0);
 
@@ -1267,7 +1331,19 @@ void func_800C55B8(void) {
     D_801621F0[D_801590D4][2]--;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C5694);
+void func_800C5694(void) {
+    s16 i;
+
+    if (D_80162978[D_8015169C].c == 0) {
+        D_80162978[D_8015169C].a = -1;
+        i = D_80162978[D_8015169C].d;
+        D_8015190A[i * 0xB9C] = 1;
+        return;
+    }
+    i = D_80162978[D_8015169C].d;
+    D_801518EA[i].a += D_80162978[D_8015169C].b;
+    D_80162978[D_8015169C].c--;
+}
 
 void func_800C57B0(void) {
     s32 i;
@@ -1403,7 +1479,36 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C6CB8);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C70AC);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C7220);
+void func_800C7220(void) {
+    s16 t;
+    s32 o;
+    u8 *q;
+    u8 *p;
+
+    o = D_801590D4 << 5;
+    if (*(s16 *)((u8 *)D_801621F0 + 2 + o) == 0) {
+        p = &D_80153BF6;
+        *p |= 2;
+        D_800F8374 = 0xE;
+        *(s16 *)((u8 *)D_801621F0 + 2 + o) = 1;
+        *(s16 *)((u8 *)D_801621F0 + 4 + o) = 0xE;
+    } else {
+        t = *(s16 *)((u8 *)D_801621F0 + 4 + o);
+        if (t == 0) {
+            q = &D_80153BDD;
+            *q = (*q | 2) & 0xEF;
+            *(s16 *)((u8 *)D_801621F0 + o) = -1;
+            D_80153BDE = 1;
+            return;
+        }
+        *(s16 *)((u8 *)D_801621F0 + 4 + o) = t - 1;
+    }
+    func_800B60E0(3);
+    func_800C74A4();
+    if (!(D_80153BDD & 2)) {
+        func_800BA598(3);
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C7340);
 

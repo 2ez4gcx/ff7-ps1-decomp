@@ -4,6 +4,7 @@
 /* Declared here otherwise than in the other files (tools/work.py). */
 s32 func_80017108(u8 *arg0, s32 arg1);
 extern s32 D_80062E40;
+void func_800197B8(u32 arg0);
 
 s32 func_80016F90(s32 *arg0) {
     u32 t;
@@ -151,7 +152,93 @@ void func_80017F38(s32 arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80018028);
+void func_80018028(u32 a, s32 b, s32 c, u8 d)
+{
+  s32 id;
+  s32 n;
+  int new_var;
+  s32 i;
+  u8 b0;
+  u8 v;
+  s32 w;
+  b0 = a;
+  id = b0;
+  n = func_8001AC9C(id, a >> 8);
+  i = 0;
+  new_var = id * 0x14;
+  do
+  {
+    D_80062E54[i] = D_800730DF[new_var + i];
+    i++;
+  }
+  while (i < 5);
+  switch (D_800730DE[b0 * 0x14])
+  {
+    case 0x63:
+      func_800191A0(b0, n & 0xFF, b);
+      break;
+
+    case 0x51:
+      func_80019440(b0, n & 0xFF, b);
+      break;
+
+    case 0x59:
+      v = 1;
+      goto set78;
+
+    case 0x5A:
+      v = 2;
+      goto set78;
+
+    case 0x58:
+      func_80018C94(n & 0xFF, b);
+      break;
+
+    case 0x5D:
+      v = 8;
+      goto set78;
+
+    case 0x5C:
+      v = 0x10;
+      set78:
+    D_80062E78 = v;
+
+      func_80018D4C(b);
+      break;
+
+    case 0x57:
+      w = 1;
+      goto set84;
+
+    case 0x56:
+      w = 4;
+      set84:
+    *((s32 *) (&D_80062E84)) = w;
+
+      ((void (*)(s32, s32, u32)) func_800184C0)(b0, n & 0xFF, b);
+      break;
+
+    case 0x55:
+      *((s32 *) (&D_80062E84)) = 7;
+      func_8001840C(b0, n & 0xFF, b);
+      break;
+
+    case 0x54:
+      *((s32 *) (&D_80062E84)) = 8;
+      func_80018390(b0, n & 0xFF, b);
+      break;
+
+    case 0x5E:
+      func_80018220(n & 0xFF, b, d);
+      break;
+
+    case 0x5F:
+      ((void (*)(s32, s32, s32)) func_800182FC)(n & 0xFF, b, d);
+      break;
+
+  }
+
+}
 
 void func_80018220(s32 arg0, s32 arg1, s32 arg2) {
     u8 v1;
@@ -731,7 +818,73 @@ void func_80019690(u32 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_800197B8);
+void func_800197B8(u32 arg0) {
+    Obj1A *p;
+    u8 i;
+    s32 id;
+    u32 arg2;
+    u8 kind;
+    u8 b;
+    u32 hi;
+    u32 lo;
+
+    if (D_80063020 != 0) {
+        p = D_80062F7C;
+        for (i = 0; i < 8; i++) {
+            *(u16 *)((u8 *)p + 0xA + i * 2) = 0;
+        }
+    }
+    b = arg0;
+    id = b;
+    arg2 = arg0 >> 8;
+    if (id != 0xFF) {
+        func_80019978(id);
+        kind = D_800730DD[id].a;
+        hi = kind >> 4;
+        lo = kind & 0xF;
+        switch (lo) {
+        case 0:
+            func_8001A5B4(hi, b, arg2);
+            break;
+        case 1:
+            func_8001A980(hi, b, arg2);
+            break;
+        case 2:
+            func_80019D1C(hi, b, arg2);
+            break;
+        case 3:
+            func_80019F90(hi, b, arg2);
+            break;
+        case 4:
+            ((void (*)(s32, u32))func_8001A384)(b, arg2);
+            break;
+        case 5:
+            func_8001A174(hi, b, arg2);
+            break;
+        case 6:
+            func_8001B704(b, arg2);
+            break;
+        case 7:
+            func_8001A3B8(hi, b, arg2);
+            break;
+        case 8:
+            func_8001A440();
+            break;
+        case 9:
+            ((void (*)(s32, u32))func_8001B5E4)(b, arg2);
+            break;
+        case 10:
+            func_8001A4A8();
+            break;
+        case 11:
+            ((void (*)(s32, u32))func_8001B4A0)(b, arg2);
+            break;
+        case 12:
+            func_8001A518();
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80019978);
 
@@ -813,7 +966,51 @@ void func_80019E84(u8 arg0, u8 arg1) {
     D_80062FFC = 0x13;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_80019F90);
+void func_80019F90(s32 arg0, s32 arg1, s32 arg2) {
+    s32 id;
+    s32 n;
+    s32 idx;
+    s32 off;
+    Obj1A *q;
+
+    id = arg1 & 0xFF;
+    n = func_8001AC9C(id, arg2);
+    if (D_80063020 == 0) {
+        off = id * 0x14;
+        switch (D_800730DE[off]) {
+        case 0x15:
+            D_80062E8C = 2;
+            idx = func_80019608(2);
+            if (idx == -1) {
+                D_80069508[func_8001B834(2)].b = n;
+            } else {
+                D_80069508[idx].a = 2;
+                D_80069508[idx].b = n;
+            }
+            break;
+        case 0x16:
+            D_80062E90 = 2;
+            idx = func_80019608(3);
+            if (idx == -1) {
+                D_80069508[func_8001B834(3)].b = n;
+            } else {
+                D_80069508[idx].a = 3;
+                D_80069508[idx].b = n;
+            }
+            break;
+        case 0x17:
+            idx = func_80019608(4);
+            D_80069508[idx].a = D_800730DE[off];
+            D_80069508[idx].b = n;
+            break;
+        }
+    } else {
+        D_80062FFC = 0xE;
+        q = D_80062F7C;
+        q->a = D_800730DE[id * 0x14];
+        q->b = n;
+    }
+}
 
 void func_8001A174(s32 arg0, s32 arg1, M2C_UNK arg2) {
     s32 temp_a0;
@@ -1134,7 +1331,66 @@ void func_8001A9CC(arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_8001AB1C);
+void func_8001AB1C(arg0)
+{
+  s32 id;
+  s32 n;
+  s32 i;
+  u8 *p;
+  Obj1A *q;
+  u8 *new_var;
+  s32 last2;
+  s32 last3;
+  s32 b;
+  id = arg0 & 0xFF;
+  n = func_8001AC9C(id);
+  if (id == 7)
+  {
+    for (i = n; i > 0; i--)
+    {
+      new_var = D_8007316A;
+      b = new_var[i];
+      if (b != 0xFF)
+      {
+        last3 = b;
+        break;
+      }
+    }
+
+  }
+  else
+  {
+    for (i = n; i > 0; i--)
+    {
+      p = D_800730DE + (id * 0x14);
+      b = p[i];
+      if (b != 0xFF)
+      {
+        last2 = b;
+        break;
+      }
+    }
+
+  }
+  if (D_80063020 == 0)
+  {
+    if ((arg0 & 0xFF) == 7)
+    {
+      *((u16 *) (&D_80062E74)) += last3;
+    }
+    else
+    {
+      ((u16 *) (&D_80062E6C))[D_800730DE[(arg0 & 0xFF) * 0x14]] += last2;
+    }
+  }
+  else
+  {
+    q = D_80062F7C;
+    q->a = D_800730DE[(arg0 & 0xFF) * 0x14];
+    q->b = last2;
+    D_80062FFC = 9;
+  }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text3", func_8001AC9C);
 

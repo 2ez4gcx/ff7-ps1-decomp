@@ -35,6 +35,8 @@ M2C_UNK func_8001786C(s32);
 M2C_UNK func_80020058(s32);
 s32 func_800484A8();
 s32 func_80048540(M2C_UNK);
+extern u16 D_80062D78;
+extern u16 D_80062D80;
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001BDB0);
 
@@ -101,7 +103,94 @@ void func_8001C58C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001C5BC);
+s32 func_8001C5BC(void) {
+    s32 ret;
+    u8 a;
+    u8 *t;
+    u8 *p0;
+    u8 *p1;
+
+    ret = 0;
+    if (*(u8 *)&D_80062D71 != 0) {
+        func_8001C58C();
+    } else {
+        t = (u8 *)D_80062E9C;
+        D_80062E9C = (s32)(t + 1);
+        switch (*t) {
+        case 0:
+            p0 = (u8 *)D_80062E9C;
+            D_80062E9C = (s32)(p0 + 1);
+            a = *p0;
+            D_80062E94 = a;
+            D_80062E94 = a + (p0[1] << 8);
+            D_80062E9C = (s32)(p0 + 2);
+            break;
+        case 2:
+            ret = 0x1000;
+            goto done;
+        case 3:
+            ret = 0x4000;
+            goto done;
+        case 4:
+            ret = 0x8000;
+            goto done;
+        case 5:
+            ret = 0x2000;
+            goto done;
+        case 8:
+            ret = 0x80;
+            goto done;
+        case 9:
+            ret = 0x20;
+            goto done;
+        case 6:
+            ret = 0x10;
+            goto done;
+        case 7:
+            ret = 0x40;
+            goto done;
+        case 10:
+            ret = 8;
+            goto done;
+        case 11:
+            ret = 2;
+            goto done;
+        case 12:
+            ret = 4;
+            goto done;
+        case 13:
+            ret = 1;
+        done:
+            D_80062E94 = 0x14;
+            break;
+        case 16:
+            D_80062E9C = (s32)func_8001C4E8((u8 *)D_80062E9C);
+            D_80062E94 = 0x50;
+            break;
+        case 18:
+            p1 = (u8 *)D_80062E9C;
+            D_80062E9C = (s32)(p1 + 1);
+            a = *p1;
+            D_80062D72 = a;
+            D_80062D72 = a + (p1[1] << 8);
+            D_80062E9C = (s32)(p1 + 3);
+            a = p1[2];
+            D_80062D74 = a;
+            D_80062D74 = a + (p1[3] << 8);
+            D_80062E9C = (s32)(p1 + 4);
+            D_80062E94 = 0x3C;
+            break;
+        case 17:
+            func_8001F6E4(0, 0, 0);
+            D_80062FA0 = 0;
+            D_80062E94 = 0;
+            break;
+        default:
+            break;
+        }
+    }
+    return ret;
+}
 
 u16 func_8001C788(void) {
     u16 r;
@@ -166,11 +255,86 @@ end:
     return out | hi;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001C980);
+void func_8001C980(void) {
+    u16 t;
+    D_80062D90.a = D_80062D80;
+    D_80062D88 = D_80062D78;
+    t = D_80062D78 ^ D_80062D8A;
+    D_80062D8C.a = t & D_80062D78;
+    if (D_80062D78 != D_80062D8A) {
+        D_80062D68 = 0;
+        D_80062D6C = 0;
+    } else if (D_80062D68 != 0) {
+        if (D_80062D6C == 1) {
+            D_80062D8C.b = D_80062D78;
+            D_80062D6C = 0;
+        } else {
+            D_80062D6C += 1;
+            D_80062D8C.b = 0;
+        }
+    } else {
+        if (D_80062D6C == 7) {
+            D_80062D68 = 1;
+            D_80062D6C = 0;
+        } else {
+            D_80062D6C += 1;
+        }
+        D_80062D8C.b = 0;
+    }
+    t = D_80062D90.a ^ D_80062D90.b;
+    D_80062D94.a = t & D_80062D90.a;
+    if (D_80062D90.a != D_80062D90.b) {
+        D_80062D6A = 0;
+        D_80062D6E = 0;
+    } else if (D_80062D6A != 0) {
+        if (D_80062D6E == 1) {
+            D_80062D94.b = D_80062D90.a;
+            D_80062D6E = 0;
+        } else {
+            D_80062D6E += 1;
+            D_80062D94.b = 0;
+        }
+    } else {
+        if (D_80062D6E == 7) {
+            D_80062D6A = 1;
+            D_80062D6E = 0;
+        } else {
+            D_80062D6E += 1;
+        }
+        D_80062D94.b = 0;
+    }
+    D_80062D8C.b |= D_80062D8C.a;
+    D_80062D94.b |= D_80062D94.a;
+    D_80062D8A = D_80062D88;
+    D_80062D90.b = D_80062D90.a;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001CB48);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001CDA4);
+void func_8001CDA4(void) {
+    func_800468FC(D_80062F24);
+    func_80046870(D_80062F24, 1);
+    M2C_FIELD(D_80062F24, s16 *, 8) = 0;
+    M2C_FIELD(D_80062F24, s16 *, 0xA) = 5;
+    M2C_FIELD(D_80062F24, s16 *, 0x10) = 0x40;
+    M2C_FIELD(D_80062F24, s16 *, 0x12) = 5;
+    M2C_FIELD(D_80062F24, s16 *, 0x18) = 0;
+    M2C_FIELD(D_80062F24, s16 *, 0x1A) = 0x45;
+    M2C_FIELD(D_80062F24, s16 *, 0x20) = 0x40;
+    M2C_FIELD(D_80062F24, s16 *, 0x22) = 0x45;
+    M2C_FIELD(D_80062F24, s8 *, 0xC) = 0;
+    M2C_FIELD(D_80062F24, s8 *, 0xD) = 0;
+    M2C_FIELD(D_80062F24, u8 *, 0x14) = 0x80;
+    M2C_FIELD(D_80062F24, s8 *, 0x15) = 0;
+    M2C_FIELD(D_80062F24, s8 *, 0x1C) = 0;
+    M2C_FIELD(D_80062F24, u8 *, 0x1D) = 0x80;
+    M2C_FIELD(D_80062F24, u8 *, 0x24) = 0x80;
+    M2C_FIELD(D_80062F24, u8 *, 0x25) = 0x80;
+    M2C_FIELD(D_80062F24, s16 *, 0xE) = func_80046634(0, 0x1FE);
+    M2C_FIELD(D_80062F24, s16 *, 0x16) = func_8004656C(1, 0, 0x340, 0);
+    func_80046794(*(const s32 *)&D_80062FC4, (s32) D_80062F24);
+    D_80062F24 += 0x28;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_8001CF3C);
 

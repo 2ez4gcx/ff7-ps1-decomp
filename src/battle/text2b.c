@@ -85,7 +85,20 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CE21C);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CE384);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CE638);
+void func_800CE638(void) {
+    switch (D_801621F0[D_801590D4][1]) {
+    case 0:
+        D_801621F0[D_801590D4][2] = 3;
+        D_801621F0[D_801590D4][1]++;
+    case 1:
+        if (D_801621F0[D_801590D4][2] == 0) {
+            D_801621F0[D_801590D4][0] = -1;
+            func_800A3534(D_801621F0[D_801590D4][5], D_801621F0[D_801590D4][4]);
+        }
+        D_801621F0[D_801590D4][2]--;
+        break;
+    }
+}
 
 void func_800CE75C(void) {
     s16 v;
@@ -200,7 +213,11 @@ void func_800D06B8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D0760);
+void func_800D0760(void) {
+    s16 v;
+
+    if (D_80162978[D_8015169C].d == 0) { if (D_80162978[D_8015169C].c == 0) { D_80162978[D_8015169C].a = -1; return; } func_800DCF60(D_80151906[D_801590CC].a, D_8015123E[D_801590CC].a); D_80162978[D_8015169C].c--; return; } D_80162978[D_8015169C].d--;
+}
 
 void func_800D088C(s32 arg0, s32 arg1) {
     func_80033E34(arg0, arg1, 0x801B0000, 0);
@@ -268,7 +285,24 @@ void func_800D0AD4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D0B4C);
+void func_800D0B4C(s32 arg0) {
+    s32 i;
+
+    D_800F8CF0 = 0;
+    func_800D1530();
+    i = arg0 & 0xFF;
+    switch (D_80151906[i].a) {
+    case 4:
+        D_800EF9D8[D_80151906[i].pad[0]](D_80151774, D_801590CC);
+        break;
+    case 7:
+        func_801B037C(D_80151774, D_801590CC);
+        break;
+    case 8:
+        D_800EFFE0[D_80151906[i].pad[0]](D_80151774, D_801590CC);
+        break;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D0C80);
 
@@ -345,7 +379,19 @@ void func_800D26F8(void) {
     D_800F01DC = &D_800F4BAC;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D2710);
+void func_800D2710(s32 arg0, s32 arg1, s32 arg2) {
+    Unk80046D0C info;
+
+    func_80046CFC(arg0);
+    func_80046D0C(&info);
+    if (info.a != 0 && info.a_arg != 0) {
+        D_800F4B2C[D_800F01E0] = *(BtlRect *)info.a;
+        D_800F4B2C[D_800F01E0].x = D_800F4B2C[D_800F01E0].x + (arg1 & ~0xF);
+        D_800F4B2C[D_800F01E0].y = arg2 + D_800F4B2C[D_800F01E0].y;
+        func_800D2538((s32)&D_800F4B2C[D_800F01E0], info.a_arg);
+        D_800F01E0 = (D_800F01E0 + 1) & 7;
+    }
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D2828);
 
@@ -586,7 +632,34 @@ void func_800D4484(s32 arg0, s32 arg1) {
     D_80163C74 = temp_s0 + 0xC;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D44E8);
+INCLUDE_RODATA("../asm/us/battle/nonmatchings/text2b", D_800A0DB8);
+
+void func_800D44E8(MgSVec *arg0, MgMat *arg1) {
+    MgVec b;
+    MgVec c;
+    MgVec a;
+
+    c = D_800A0DB8;
+    a.vx = arg0->vx;
+    a.vy = arg0->vy;
+    a.vz = arg0->vz;
+    func_8003A08C(&a, &a);
+    b.vx = a.vz;
+    b.vy = 0;
+    b.vz = -a.vx;
+    func_8003A08C(&b, &b);
+    func_8003BA10(&a, &b, &c);
+    func_8003A08C(&c, &c);
+    arg1->m[0][0] = b.vx;
+    arg1->m[1][0] = b.vy;
+    arg1->m[2][0] = b.vz;
+    arg1->m[0][1] = c.vx;
+    arg1->m[1][1] = c.vy;
+    arg1->m[2][1] = c.vz;
+    arg1->m[0][2] = a.vx;
+    arg1->m[1][2] = a.vy;
+    arg1->m[2][2] = a.vz;
+}
 
 void func_800D461C(MgMat *m) {
     MgVec u;
@@ -926,7 +999,34 @@ void func_800D58D0(s32 arg0, s32 arg1, s32 arg2) {
     p->c = arg1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D5938);
+void func_800D5938(void) {
+    B20 *e;
+    s16 b;
+    s16 c;
+    s32 v;
+    s16 *p;
+
+    e = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        b = e->b;
+        c = e->c;
+        if (b >= c && (b - c) % (s16)e->d == 0) {
+            v = D_801517F0[e->a];
+            if (v == 0xFF) {
+                e->a = -1;
+            } else {
+                p = func_800D4FA8(0xA);
+                p[0] = v;
+                p[8] = e->a;
+                e->a++;
+                if (D_801517F0[e->a] == 0xFF) {
+                    e->a = -1;
+                }
+            }
+        }
+        e->b++;
+    }
+}
 
 void func_800D5A68(s16 arg0, s16 arg1) {
     B20 *p;

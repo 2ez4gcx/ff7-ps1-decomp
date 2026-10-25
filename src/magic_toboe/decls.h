@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0820();
+s32 func_801B0820();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -42,5 +42,19 @@ MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
 MgMat *func_8003B35C(MgMat *, MgVec *);
 MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
 extern u8 D_801B1570[];
+s32 func_800BBA84(s32, s32, s32);
+void func_800D2980(void *, s32, s32, s32);
+void func_800D5444(s32, s32, s32, void (*)(s32, s32));
+extern u8 D_801B089C[];
+void func_801B008C(void);
+typedef struct { s8 v; } MgByte;
+void func_800D4368(void *, s32, s32);
+u8 *func_800D4D90(void *, s32, s32, u8 *);
+extern MgByte D_801B1568;
+extern MgByte D_801B1569;
+extern MgByte D_801B156A;
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s32 func_80042DA8();
+u16 *func_800D4FA8(s32);
 
 #endif /* MAGIC_TOBOE_DECLS_H */

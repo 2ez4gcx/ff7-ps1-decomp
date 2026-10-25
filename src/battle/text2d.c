@@ -1,6 +1,12 @@
 #include "common.h"
 #include "battle/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+void func_800E53C8(s32 arg0);
+extern u8 D_8009C84E;
+extern u16 D_8009C862[];
+extern u8 D_800F33A6;
+
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2d", func_800E4C08);
 
 void func_800E5358(void) {
@@ -13,7 +19,43 @@ void func_800E5358(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2d", func_800E53C8);
+void func_800E53C8(s32 arg0) {
+    s32 i; u8 *p;
+    u8 pad[8];
+
+    i = 6; p = &D_800F33A6;
+    for (; i >= 0; i--) {
+        *p-- = 0;
+    }
+    D_800F5760 = 0xA;
+    D_800F5764 = 2;
+    D_800F33AA = 0;
+    switch (D_8009C84E) {
+    case 1:
+        arg0 = 3;
+        break;
+    case 2:
+        arg0 = 6;
+        break;
+    case 3:
+        arg0 = 9;
+        break;
+    case 4:
+        arg0 = 0xA;
+        break;
+    }
+    D_800F5774 = 0;
+    i = 0;
+    if (arg0 > 0) {
+        do {
+            if ((D_8009C862[0] >> i) & 1) {
+                D_80163B70[D_800F5774] = i;
+                D_800F5774++;
+            }
+            i++;
+        } while (i < arg0);
+    }
+}
 
 s32 func_800E54EC(void) {
     if (D_800F33A0 == 0) {

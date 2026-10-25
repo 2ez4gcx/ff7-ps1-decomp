@@ -1,7 +1,82 @@
 #include "common.h"
 #include "jet/decls.h"
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A0450);
+u16 func_800A0450(void) {
+    s32 *gp;
+    s32 *sc;
+    s32 *p88;
+    s32 a;
+    s32 pad[2];
+
+    func_800A2214();
+    func_80044A68(&D_800D9934, 0, 1, func_8004656C(1, 1, 0x300, 0) & 0xFFFF, 0);
+    D_800EE424 = D_800D1BF0;
+    func_800A2DE4(0, 0);
+    sc = &D_800A897C;
+    gp = &D_800D1964;
+    p88 = &D_800A8988;
+    D_800D1C58 = (JetPair *) *p88;
+    func_800A2DE4(1, 0);
+    D_800EE194 = (JetPair *) *p88;
+    func_800A2860();
+    func_80039BE0(D_800A89D0, D_800A89D4, 0x100);
+    D_800A8A74 = func_800A80F8(0x1E, 0, 0, 1, &D_800D16E4, 0x4B0, 0x32, 0xBB8, 0U, 0x3E8U, 0U);
+    while (1) {
+        if ((D_800D16E0 * 4) <= (D_800D1724 - 0x10)) {
+            if (D_800E2600 != 1) {
+                func_800A2E38();
+                if (D_800D16DC == 0) {
+                    func_800A2C50();
+                    func_800A35DC(*sc);
+                    func_800A1450();
+                    func_800A13AC();
+                    func_800A12EC();
+                    func_800A1B64(*gp, D_800A8A88, 5, 0x28, 0);
+                    ((void (*)(s32))func_800A372C)(*sc);
+                    func_800A46E8(*gp);
+                    ((void (*)())func_800A1CD8)(D_800D16D8, 0xF4, 0xC8, 0, 0);
+                    { s32 k27 = 0x27; func_800A1F18(7, 0xCC, 0xC8, 0x27, 0x11, 0, 0, k27, 0x11, 0); }
+                    { s32 kC = 0xC; func_800A1F18(0xB, 0x12, 0x56, 0xC, 0x8C, 0, 0x70, kC, 0x8C, 0); }
+                    func_800A1A64();
+                    if (*sc < 0x4000) {
+                        D_800A8338 = 0;
+                    } else {
+                        D_800A8338 = 0x7F;
+                    }
+                } else {
+                    func_800A1F18(9, 0xCA, 0xC0, 0x60, 0x20, 0, 0x50, 0x60, 0x20, 0);
+                    D_800A8338 = 0;
+                    D_800A833C = 0;
+                }
+                func_800A2B78();
+                func_800A2058();
+                func_800A1F18(0xA, 0xC8, 0xC0, 0x6F, 0x1F, 0, 0x30, 0x70, 0x20, 0);
+                func_80043DD8(0);
+                func_8003CEDC(0);
+                func_80043938(1);
+                func_800443B0((s32 *) *gp);
+                func_800444AC((void *)(*gp + 0x5C));
+                func_80043F6C(*gp, 0, 0, 0);
+                if (D_800E25F4 != 0) {
+                    func_8004433C(*gp + 0x406C);
+                    func_8004433C(*gp + 0x4364);
+                }
+                a = (s32) &D_800AB898;
+                *(volatile s32 *)&D_800E25FC = 0;
+                *gp = (*gp == a) ? a + 0x1265C : a;
+                func_80044244(*gp + 0x70, 0x1000);
+                func_80044244(*gp + 0x4098, 0xB4);
+                func_800A7FAC((void *)(*gp + 0x4368));
+                continue;
+            }
+        }
+        break;
+    }
+    D_8009A000 = 0xB8;
+    D_8009A004 = 0;
+    func_8002DA7C();
+    return (u16) D_800D16D8;
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A0874);
 
@@ -203,7 +278,60 @@ void func_800A2058(void) {
     ((JetDrawCtx4 *)*gp)->prim = p;
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2214);
+void func_800A2214(void) {
+    s32 i;
+
+    *(volatile s32 *)&D_800A8A84 = 0;
+    D_80110BB8 = 0x1F800000;
+    D_800D16D4 = 0x1F800000;
+    D_800D16DC = 0;
+    D_800D1BD0 = 0x1F800010;
+    D_800D1728 = 0x1F800030;
+    D_800D1A38 = 0x1F800050;
+    D_800D1A3C = 0x1F800058;
+    D_800A891C = 0x1F800060;
+    D_800A8920 = 0x1F800064;
+    *(s16 *)0x1F800030 = 0x1000;
+    *(s16 *)0x1F800032 = 0;
+    *(s16 *)0x1F800034 = 0;
+    *(s16 *)0x1F800036 = 0;
+    *(s16 *)0x1F800038 = 0x1000;
+    *(s16 *)0x1F80003A = 0;
+    *(s16 *)0x1F80003C = 0;
+    *(s16 *)0x1F80003E = 0;
+    *(s16 *)0x1F800040 = 0x1000;
+    func_800A7C88();
+    func_800A2420();
+    *(volatile s32 *)&D_800A8A84 = 0x99;
+    func_800A334C();
+    func_800A8010();
+    func_800A7AF8();
+    func_800A2BE0();
+    func_800A3AAC();
+    func_800A70D4();
+    for (i = 0; i < 100; i++) {
+        D_800D1730[i] = (s32) func_800A7B48(i);
+    }
+    D_800A897C = 0x2710;
+    D_800A89D0 = 0x28AA;
+    D_800A89D4 = 0x37DC;
+    D_800D16E0 = 0;
+    D_800D1C54 = 0;
+    D_800D16D8 = 0;
+    D_800E25F4 = 0;
+    D_800E2600 = 0;
+    D_800A8A88 = 0;
+    D_800E25E8 = 0;
+    D_800EE18C = 0;
+    D_800EE18E = 0;
+    D_800EE190 = 0;
+    D_800A8928 = 0;
+    D_800A8330 = 0x7F;
+    D_800A8334 = 0x7F;
+    D_800A8338 = 0;
+    D_800A833C = 0;
+    D_800A89CC = 0;
+}
 
 INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0000);
 
@@ -455,7 +583,172 @@ void func_800A2DE4(s32 arg0, s32 arg1) {
 void func_800A2E30(void) {
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A2E38);
+void func_800A2E38(void) {
+    s32 pad;
+
+    pad = ((s32 (*)(s32))func_8001C808)(1);
+    if (D_800D16DC == 0) {
+        s32 *d = &D_800A8A6C;
+        *d = 0;
+        D_800A8A7C = 0;
+        if (pad & 0x8000) {
+            *d = 4;
+        }
+        if (pad & 0x2000) {
+            *d = 6;
+        }
+        if (pad & 0x1000) {
+            *d = 8;
+            if (pad & 0x8000) {
+                *d = 7;
+            }
+            if (pad & 0x2000) {
+                *d = 9;
+            }
+        }
+        if (pad & 0x4000) {
+            s32 *d2 = &D_800A8A6C;
+            *d2 = 2;
+            if (pad & 0x8000) {
+                *d2 = 1;
+            }
+            if (pad & 0x2000) {
+                *d2 = 3;
+            }
+        }
+        if ((u8) D_800D1960 == 1) {
+            s8 *c4;
+            if (pad & 0x4000) {
+                s16 *q = (s16 *)&D_800E25F0;
+                *q += 5;
+            }
+            if (pad & 0x1000) {
+                s16 *q = (s16 *)&D_800E25F0;
+                *q -= 5;
+            }
+            if (pad & 0x8000) {
+                s16 *q = (s16 *)&D_800E25EC;
+                *q -= 5;
+            }
+            if (pad & 0x2000) {
+                s16 *q = (s16 *)&D_800E25EC;
+                *q += 5;
+            }
+            c4 = &D_800D1C4C;
+            *c4 = 0;
+            if (pad & 0x20) {
+                s16 *c5 = &D_800D1C5C;
+                u8 *c7;
+                s32 v7;
+                func_800A2AA0((u8) *c5);
+                if (*c5 >= 9) {
+                    *c5 -= 1;
+                }
+                c7 = (u8 *)&D_800D1C7C;
+                v7 = *c7;
+                if (v7 == 0) {
+                    u8 *c20 = &D_800D1720;
+                    *c7 = 1;
+                    *c4 = 1;
+                    *c20 = (u8) (*c20 + 3) % 15;
+                } else {
+                    *c7 = v7 - 1;
+                }
+            } else {
+                s16 *c5b;
+                func_800A2AA0(0);
+                c5b = &D_800D1C5C;
+                if (*c5b < 0x80) {
+                    *c5b += 1;
+                }
+            }
+            {
+                s16 *e = (s16 *)&D_800E25EC;
+                if (*e >= 0x141) {
+                    *e = 0x140;
+                }
+                if (*e < 0) {
+                    *e = 0;
+                }
+            }
+            {
+                s16 *f = (s16 *)&D_800E25F0;
+                if (*f >= 0xF1) {
+                    *f = 0xF0;
+                }
+                if (*f < 0) {
+                    *f = 0;
+                }
+            }
+        }
+        if (*(u8 *)&D_800D1960 == 0) {
+            if (pad & 0x4000) {
+                s32 *p = &D_800A89D4;
+                *p -= 0xA;
+            }
+            if (pad & 0x1000) {
+                s32 *p = &D_800A89D4;
+                *p += 0xA;
+            }
+            if (pad & 0x8000) {
+                s32 *p = &D_800A89D0;
+                *p -= 0xA;
+            }
+            if (pad & 0x2000) {
+                s32 *p = &D_800A89D0;
+                *p += 0xA;
+            }
+            if (pad & 0x40) {
+                D_800A83E0 -= 0x64;
+            }
+            if (pad & 0x10) {
+                D_800A83E0 += 0x64;
+            }
+            if (pad & 0x80) {
+                s32 *p = &D_800A83D8;
+                *p -= 0x64;
+            }
+            if (pad & 0x20) {
+                s32 *p = &D_800A83D8;
+                *p += 0x64;
+            }
+            if (pad & 8) {
+                D_800A83DC -= 0x64;
+            }
+            if (pad & 2) {
+                D_800A83DC += 0x64;
+            }
+            if (pad & 4) {
+                s32 *p = &D_800A897C;
+                *p += 0x400;
+            }
+            if (pad & 1) {
+                s32 *p = &D_800A897C;
+                if (*p >= 0x400) {
+                    *p -= 0x400;
+                }
+            }
+            if (pad & 0x800) {
+                D_800A897C = 0;
+            }
+        }
+    }
+    if (pad & 0x800) {
+        s32 *p = &D_800A8A80;
+        *p += 1;
+    } else {
+        D_800A8A80 = 0;
+    }
+    if (D_800A8A80 == 1) {
+        u8 *p = &D_800D16DC;
+        if (*p == D_800A8A80) {
+            *p = 0;
+        } else {
+            *p = 1;
+        }
+        func_800A29AC(0x3B);
+    }
+}
 
 void func_800A334C(void) {
     s32 i;
@@ -963,7 +1256,171 @@ void func_800A6B08(JetSpawn *arg0) {
     func_800A40F4((JetFld *)(p - 10), 0);
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A6BD8);
+void func_800A6BD8(arg0) {
+    JetEnA *a;
+    JetEnB *b;
+    s32 t;
+    s32 u;
+    s32 *p1;
+    s32 *p2;
+    s32 *p5;
+    s32 i;
+
+    a = (JetEnA *)arg0;
+    b = (JetEnB *)((u8 *)arg0 + 0x28);
+    if (*(s32 *)((u8 *)a + 0xA0) == 1) {
+        {
+            s32 *sc = &D_800D16D8;
+            *sc += b->f50;
+        }
+        i = 0;
+        p1 = &D_800D1CAC;
+        func_800A29AC(b->f98);
+        b->fC = 0;
+        do {
+            s32 x;
+            s32 y;
+            s32 z;
+            s32 r;
+            x = a->f0;
+            y = a->f4;
+            z = a->f8;
+            i++;
+            r = func_80042DA8();
+            *p1 = 0xCA;
+            p1[4] = 1;
+            D_800D1CB0 = 0;
+            D_800D1D2C = 0;
+            D_800D1C84.x = (s16) x;
+            D_800D1C88 = (s16) y;
+            D_800D1C8C = (s16) z;
+            D_800D1CB4 = (s16) (r - r / 3 * 3 + 0x3F);
+            func_800A40F4((JetFld *)(p1 - 10), 0, r / 3);
+        } while (i < 3);
+        D_800A89CC = 0x64;
+        D_800E25E8 = 1;
+        D_800EE18C = 0;
+        D_800EE18E = 0;
+        D_800EE190 = 0;
+        t = (s32) a->node;
+        u = (u16) ((JetNode *) t)->unk28;
+        t = b->f50;
+        D_800A8CC4 = t;
+        D_800A8A88 = u;
+    }
+    if (b->state == 2) {
+        {
+            s32 *sc = &D_800D16D8;
+            *sc += b->f50;
+        }
+        i = 0;
+        p2 = &D_800D1CAC;
+        func_800A29AC(b->f98);
+        b->fC = 0;
+        do {
+            s32 x;
+            s32 y;
+            s32 z;
+            s32 r;
+            x = a->f0;
+            y = a->f4;
+            z = a->f8;
+            i++;
+            r = func_80042DA8();
+            *p2 = 0xCB;
+            p2[4] = 1;
+            D_800D1CB0 = 0;
+            D_800D1D2C = 0;
+            D_800D1C84.x = (s16) x;
+            D_800D1C88 = (s16) y;
+            D_800D1C8C = (s16) z;
+            D_800D1CB4 = (s16) (r - r / 3 * 3 + 0x3C);
+            func_800A40F4((JetFld *)(p2 - 10), 0, r / 3);
+        } while (i < 3);
+        D_800A89CC = 0x64;
+        D_800E25E8 = 1;
+        D_800EE18C = 0;
+        D_800EE18E = 0;
+        D_800EE190 = 0;
+        t = (s32) a->node;
+        u = (u16) ((JetNode *) t)->unk28;
+        t = b->f50;
+        D_800A8CC4 = t;
+        D_800A8A88 = u;
+    }
+    if (b->state == 3) {
+        {
+            s32 *sc = &D_800D16D8;
+            *sc += b->f50;
+        }
+        t = b->f7C;
+        *(u16 *)((u8 *)a + 0x18) += t;
+    }
+    if (b->state == 4) {
+        {
+            s32 *sc = &D_800D16D8;
+            *sc += b->f50;
+        }
+        func_800A29AC(b->f98);
+        b->fC = 0;
+        D_800A89CC = 0x64;
+        D_800E25E8 = 1;
+        D_800EE18C = 0;
+        D_800EE18E = 0;
+        D_800EE190 = 0;
+        t = (s32) a->node;
+        u = (u16) ((JetNode *) t)->unk28;
+        t = b->f50;
+        D_800A8CC4 = t;
+        D_800A8A88 = u;
+    }
+    if (b->state == 5) {
+        {
+            s32 *sc = &D_800D16D8;
+            *sc += b->f50;
+        }
+        i = 0;
+        p5 = &D_800D1CAC;
+        func_800A29AC(b->f98);
+        b->fC = 0;
+        do {
+            s32 x;
+            s32 y;
+            s32 z;
+            s32 r;
+            x = a->f0;
+            y = a->f4;
+            z = a->f8;
+            i++;
+            r = func_80042DA8();
+            *p5 = 0xCB;
+            p5[4] = 1;
+            D_800D1CB0 = 0;
+            D_800D1D2C = 0;
+            D_800D1C84.x = (s16) x;
+            D_800D1C88 = (s16) y;
+            D_800D1C8C = (s16) z;
+            D_800D1CB4 = (s16) (r - r / 3 * 3 + 0x3F);
+            func_800A40F4((JetFld *)(p5 - 10), 0, r / 3);
+        } while (i < 0x64);
+        D_800A89CC = 0x64;
+        D_800E25E8 = 1;
+        D_800EE18C = 0;
+        D_800EE18E = 0;
+        D_800EE190 = 0;
+        t = (s32) a->node;
+        u = (u16) ((JetNode *) t)->unk28;
+        t = b->f50;
+        D_800A8CC4 = t;
+        D_800A8A88 = u;
+    }
+    {
+        s32 *sc = &D_800D16D8;
+        if (*sc >= 0x2710) {
+            *sc = 0x270F;
+        }
+    }
+}
 
 INCLUDE_RODATA("../asm/us/jet/nonmatchings/text", D_800A0410);
 

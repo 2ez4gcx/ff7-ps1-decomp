@@ -1,6 +1,9 @@
 #include "common.h"
 #include "battle/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+M2C_UNK func_800E53C8();
+
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800D93E4);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800D9BF4);
@@ -271,7 +274,35 @@ void func_800DF7BC(void) {
 void func_800DF7C4(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DF7CC);
+void func_800DF7CC(void) {
+    s32 a;
+    s32 v;
+
+    v = D_80163626;
+    a = 1;
+    if (v < 9) {
+        a = v < 3;
+    }
+    if (D_800F3896 == 2 && D_800F99E4 == 0) {
+        if (D_80062D7E & 0x20) {
+            if (a != 0) {
+                func_800BB9B8(1);
+                D_800F99E4 = 1;
+                D_800F3896 = -1;
+                func_800A4350(D_800F38A0, D_800F389C, D_800F389E, D_801516F8);
+                func_800D9F5C(1);
+                func_800D9F5C(2);
+            } else {
+                func_800BB9B8(3);
+            }
+        } else if (D_80062D7E & 0x2040) {
+            func_800BB9B8(4);
+            D_800F99E4 = 1;
+            D_800F3896 = 1;
+            func_800D9F5C(2);
+        }
+    }
+}
 
 void func_800DF8F0(void) {
 }
@@ -345,7 +376,38 @@ void func_800E0274(void) {
     func_800E53C8();
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E0294);
+void func_800E0294(void) {
+    BtlX440 *p;
+    u8 v;
+    u16 b;
+
+    p = &D_8009D8F8[D_800F38A1];
+    if (D_800F3896 == 0x1B && D_800F99E4 == 0) {
+        b = D_80062D7E;
+        if (b & 0x20) {
+            if (func_800E54EC() == 2) {
+                D_800F99E4 = 1;
+                func_800BB9B8(1);
+                D_800F38A2 = p->b[3];
+                v = p->b[0];
+                D_800FAFD4 = 0;
+                D_800F389E = v;
+                func_800E6B94();
+                func_800DDFEC();
+                func_800E5814();
+                func_800D9F5C(0x1B);
+                func_800D9F5C(1);
+            }
+        } else if (b & 0x40) {
+            if (func_800E54EC() == 0) {
+                func_800BB9B8(4);
+                D_800F99E4 = 1;
+                D_800F3896 = 1;
+                func_800D9F5C(0x1B);
+            }
+        }
+    }
+}
 
 void func_800E03C8(void) {
 }

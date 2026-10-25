@@ -9,6 +9,12 @@ void func_800A16CC(void);
 void func_800CF60C(void);
 extern volatile s16 D_80114488;
 u16 func_800A460C(s32 *, s32 *, M2C_UNK *, M2C_UNK);
+M2C_UNK func_800D8D78();
+extern u8 D_80062D98;
+extern u8 D_80062D99;
+extern volatile s32 D_8009D264;
+extern volatile s32 D_8009D268;
+extern u8 D_8009D2E7;
 
 void func_800110B8(void) {
 }
@@ -96,7 +102,60 @@ void func_8001146C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_8001155C);
+void func_8001155C(void)
+{
+
+  switch (*((volatile s16 *) (&D_80095DD4)))
+  {
+    case 0:
+      break;
+
+    case 1:
+      func_8001146C();
+      break;
+
+    case 2:
+      func_800D8D78();
+      break;
+
+    case 3:
+      func_800140A4();
+      break;
+
+    case 4:
+      func_80022B5C();
+      break;
+
+  }
+
+  if ((D_80062D98 == 0) && (D_80062D99 == 0))
+  {
+    D_8009D26C[0] += 0x444;
+    if ((D_8009D26C[0] >> 16) != 0)
+    {
+      ++D_8009D264;
+      D_8009D26C[0] &= 0xFFFF;
+    }
+
+    D_8009D270 += 0x444;
+    if ((D_8009D270 >> 16) != 0)
+    {
+      if (!(D_8009D2E7 & 2))
+      {
+        if (D_8009D268 != 0)
+        {
+          --D_8009D268;
+        }
+      }
+      else
+      {
+        ++D_8009D268;
+      }
+      D_8009D26C[1] &= 0xFFFF;
+    }
+  }
+  D_8007E768 = 1;
+}
 
 void func_8001171C(void) {
     func_8003D1B4();
@@ -284,4 +343,18 @@ s16 func_800135C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
     return (s16) (arg0 + ((s32) ((s16) (arg1 - arg0) * arg2) / arg3));
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80013624);
+void func_80013624(void) {
+    D_8009AC2B[1] = 0;
+    D_8009AC42 += 1;
+    D_8009AC42;
+    if ((s16)D_8009AC42 >= (s16)(*(volatile u16 *)&D_8009AC44)) {
+        (*(volatile u16 *)&D_8009AC4C) = (*(volatile u16 *)&D_8009AC52);
+        (*(volatile u16 *)&D_8009AC4E) = (*(volatile u16 *)&D_8009AC54);
+        (*(volatile u16 *)&D_8009AC50) = (*(volatile u16 *)&D_8009AC56);
+        D_8009AC42 = (*(volatile u16 *)&D_8009AC44);
+    }
+    (*(volatile u16 *)&D_8009AC46) = func_800135C0((s16)(*(volatile u16 *)&D_8009AC4C), (s16)(*(volatile u16 *)&D_8009AC52), (s16)D_8009AC42, (s16)(*(volatile u16 *)&D_8009AC44));
+    (*(volatile u16 *)&D_8009AC48) = func_800135C0((s16)(*(volatile u16 *)&D_8009AC4E), (s16)(*(volatile u16 *)&D_8009AC54), (s16)D_8009AC42, (s16)(*(volatile u16 *)&D_8009AC44));
+    (*(volatile u16 *)&D_8009AC4A) = func_800135C0((s16)(*(volatile u16 *)&D_8009AC50), (s16)(*(volatile u16 *)&D_8009AC56), (s16)D_8009AC42, (s16)(*(volatile u16 *)&D_8009AC44));
+    func_800131B8((s16)(*(volatile u16 *)&D_8009AC46), (s16)(*(volatile u16 *)&D_8009AC48), (s16)(*(volatile u16 *)&D_8009AC4A));
+}
