@@ -16,7 +16,21 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B008C);
+void func_801B008C(void) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, p->unk1A == 0 ? 0x1800 : 0x2800, 0);
+    D_801C0F7C[0] = p->unk2;
+    *(MgGesuiAnim **)&D_801C0F7C[-4] = D_801C0F80[p->unk1A];
+    D_801D8F8C = func_800D4D90(&D_801C0F7C[-4], D_801517C0 + 0x70, 0xC, D_801D8F8C);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801C0F80[p->unk1A]->unk4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B018C(u8 *arg0, u8 *arg1) {
     if (*arg0 == 0) {

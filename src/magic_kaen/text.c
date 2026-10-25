@@ -79,7 +79,23 @@ void func_801B046C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kaen/nonmatchings/text", func_801B04D8);
+void func_801B04D8(void) {
+    MgTask *p;
+    MgGasHold *q;
+
+    p = &D_801621F0[D_801590D4];
+    func_800D4368(&p->unk4, p->unk16 == 2 ? 0x2000 : 0x3000, 0);
+    q = &D_801D3EC8;
+    q->anim = D_801D3ED4[p->unk16];
+    D_801D3ED0 = p->unk2;
+    D_80163C74 = func_800D4D90(q, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == D_801D3ED4[p->unk16]->unk4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B05DC(void) {
     MgMat m[2];

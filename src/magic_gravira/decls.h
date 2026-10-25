@@ -20,5 +20,14 @@ typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; MgSVec unk8; MgSVec unk10; u8 pad18[8]; } MgObjVel;
 extern u8 D_80062D98;
 void func_801B0020(void);
+void func_801B0558(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+extern s8 D_801D0F3A;
+extern s8 D_801D0F39;
+extern s8 D_801D0F38;
+extern s16 D_801D0F3C[];
+void func_800D4368(void *, s32, s32);
+extern s32 D_801517C0;
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_GRAVIRA_DECLS_H */

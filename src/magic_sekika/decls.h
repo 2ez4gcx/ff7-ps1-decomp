@@ -36,5 +36,10 @@ M2C_UNK func_800D4368(void *, s32, s32);
 extern s32 *D_801CD778;
 extern u16 D_801CD780;
 s32 func_800D4D90(void *, s32, s32, s32);
+void func_801B1A5C(void);
+extern s16 D_801E5870[][4];
+extern s16 D_801E5C70[][4];
+extern s16 D_801E5C74[][4];
+extern s16 D_801E5874[][4];
 
 #endif /* MAGIC_SEKIKA_DECLS_H */

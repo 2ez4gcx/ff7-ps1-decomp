@@ -71,7 +71,32 @@ INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1684);
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1968);
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1C2C);
+void func_801B1C2C(void) {
+    MgMat m;
+    MgMat unused;
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003BF8C(&D_801D4B8C, &m);
+    func_8003A79C(&D_801ED19C, &m, &m);
+    func_8003B35C(&m, &D_801D4B6C);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    D_801ECB98 = (u8 *)func_800D29D4(D_801D4B7C, D_801517C0 + 0x70, 0xC, (s32)D_801ECB98);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (++p->unk2 == 7) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1D74);
 

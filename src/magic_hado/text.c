@@ -152,7 +152,22 @@ INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B10F0);
 
 INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B13F4);
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B1850);
+void func_801B1850(arg0, arg1) {
+    MgSVec v;
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC(func_801B13F4)];
+    func_800D3994(arg1, D_80151915[arg1][0], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    v.vx = p->unkC.vx - p->unk4.vx;
+    v.vy = p->unkC.vy - p->unk4.vy;
+    v.vz = p->unkC.vz - p->unk4.vz;
+    func_800D44E8(&v, &D_801D7214);
+    p->unk1C = arg0;
+    D_800F5B70 = D_800F5B71 = D_800F5B72 = 0;
+    func_800D52A0(0xC00, 0xA);
+    func_800BBA84(0xFA, arg1, 0x40);
+}
 
 void func_801B1990(arg0, arg1) {
     func_800BBEAC(&func_801B045C);

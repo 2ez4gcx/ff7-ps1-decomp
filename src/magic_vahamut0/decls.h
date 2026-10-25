@@ -34,5 +34,12 @@ s32 func_8003BC0C(MgSVec *, MgSVec *, MgSVec *, s32 *, s32 *, s32 *, s32 *, s32 
 extern MgSVec D_801FCDF4[];
 extern MgPolyT *D_80163C74;
 MgPolyT *func_801B4018(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+void func_800D3994(s32, s32, void *);
+extern s16 D_80151A4C[][0x5CE];
+extern s16 D_80151A50[][0x5CE];
+void func_8003BF3C(MgTask *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+void func_801B02D8(s32 arg0, s32 arg1, MgTask *arg2, MgSVec *arg3);
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */

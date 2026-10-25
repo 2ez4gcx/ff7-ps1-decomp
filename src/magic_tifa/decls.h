@@ -47,5 +47,12 @@ extern MgHalf D_801F3B7E;
 void func_801B258C(void);
 extern s16 D_801F3B88;
 extern MgHalf D_801F3B8A;
+void func_801B1258(MgTask *arg0, MgSVec *arg1, MgSVec *arg2);
+extern s16 D_800FA650;
+extern s16 D_800FA654;
+extern s16 D_800FA658;
+MgMat *func_8003BF3C(MgSVec *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+MgMat *func_8003A79C(MgMat *, MgTask *, MgMat *);
 
 #endif /* MAGIC_TIFA_DECLS_H */

@@ -79,7 +79,34 @@ void func_801B045C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hakugek2/nonmatchings/text", func_801B04C8);
+void func_801B04C8(void) {
+    MgMat m;
+    MgMat r;
+    s32 flag;
+    s16 i;
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m.m[i][0] = m.m[i][1] = m.m[i][2] = 0;
+    }
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = 0x3000;
+    func_8003B05C(&m, &D_800FA63C);
+    func_8003C21C((MgSVec *)&p->unkC, &r);
+    func_8003B05C(&m, &r);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801D2924[0] = p->unk2;
+    D_801EA96C = (u8 *)func_800D4D90(&D_801D2924[-4], D_801517C0 + 0x70, 0xC, (s32)D_801EA96C);
+    if (D_80062D98 == 0) {
+        if (++p->unk2 == D_801D2858) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hakugek2/nonmatchings/text", func_801B062C);
 

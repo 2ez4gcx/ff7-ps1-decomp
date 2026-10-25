@@ -17,7 +17,36 @@ s32 func_801B0074(MgVec *a, MgVec *b, MgVec *c) {
     return ang;
 }
 
-INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0150);
+void func_801B0150(s32 ang, MgMat *m, MgVec *v) {
+    s32 s;
+    s32 c;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 xx;
+    s32 yy;
+    s32 zz;
+    s32 omc;
+
+    s = func_80039A74(ang);
+    c = func_80039B40(ang);
+    x = v->vx;
+    y = v->vy;
+    z = v->vz;
+    omc = 0x1000 - c;
+    xx = (x * x) >> 12;
+    yy = (y * y) >> 12;
+    zz = (z * z) >> 12;
+    m->m[0][0] = xx + (((0x1000 - xx) * c) >> 12);
+    m->m[0][1] = ((((x * y) >> 12) * omc) >> 12) - ((z * s) >> 12);
+    m->m[0][2] = ((((x * z) >> 12) * omc) >> 12) + ((y * s) >> 12);
+    m->m[1][0] = ((((x * y) >> 12) * omc) >> 12) + ((z * s) >> 12);
+    m->m[1][1] = yy + (((0x1000 - yy) * c) >> 12);
+    m->m[1][2] = ((((y * z) >> 12) * omc) >> 12) - ((x * s) >> 12);
+    m->m[2][0] = ((((x * z) >> 12) * omc) >> 12) - ((y * s) >> 12);
+    m->m[2][1] = ((((y * z) >> 12) * omc) >> 12) + ((x * s) >> 12);
+    m->m[2][2] = zz + (((0x1000 - zz) * c) >> 12);
+}
 
 void func_801B02CC(MgSVec *p, MgSVec *o, MgVec *n) {
     MgVec d;
@@ -61,7 +90,38 @@ INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0B4C);
 
 INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0D34);
 
-INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B0F78);
+void func_801B0F78(void) {
+    MgTask *p;
+    s32 t;
+    s32 c;
+    s16 v;
+    MgByte *q;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t >= 10) {
+        c = -0x80 - (t - 10) * 21;
+    } else {
+        c = 0x80;
+    }
+    q = &D_801D36A8;
+    q->v = D_801D36A9.v = D_801D36AA.v = c;
+    v = p->unk14;
+    func_800D4368(&p->unk4, v, -(v >> 3));
+    D_801EB6B0 = func_800D4D90(q - 4, D_801517C0 + 0x70, 0xC, D_801EB6B0);
+    if (p->unk2 >= 0x10) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unkC -= p->unkC >> 3;
+        p->unkE += p->unkE >> 3;
+        p->unk10 -= p->unk10 >> 3;
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_wep3/nonmatchings/text", func_801B10EC);
 

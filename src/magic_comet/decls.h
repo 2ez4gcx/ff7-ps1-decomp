@@ -26,7 +26,6 @@ extern s32 D_801517C0;
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 s32 func_8003BBDC(void *, void *, s32 *, s32 *);
-void func_80046974(void *);
 s32 func_80042DA8(void);
 
 #endif /* MAGIC_COMET_DECLS_H */

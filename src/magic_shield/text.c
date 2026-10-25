@@ -27,7 +27,29 @@ INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B00E0);
 
 INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B01D8);
 
-INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B0388);
+void func_801B0388(void) {
+    MgTask *p;
+    MgTask *q;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        q = (MgTask *)&D_80162978[func_800BBEAC(func_801B01D8)];
+        q->unk4 = p->unk4;
+        q->unk6 = p->unk6;
+        q->unk8 = p->unk8;
+        q->unkC = p->unkC;
+        q->unkE = p->unkE;
+        q->unk10 = p->unk10;
+        q->unk16 = p->unk16;
+        p->unk2++;
+        if (p->unk2 == D_801C8F54) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_shield/nonmatchings/text", func_801B0490);
 

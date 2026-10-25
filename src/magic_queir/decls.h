@@ -16,5 +16,19 @@ extern MgTask *D_801DC4A4;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK func_801B2C08;
 extern s32 D_801DC4A8;
+void func_801B1894(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern s16 D_8015169C;
+extern u8 D_801C4474[];
+extern u16 D_801C4480;
+extern u16 D_801C4488;
+void func_800D4284(void *, s32, void *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern s32 D_801C4478;
+extern s32 D_801517C0;
+extern s32 D_801DC4A0;
+s32 func_800D6260(void *, s32, s32, s32);
+extern u8 D_80062D98;
 
 #endif /* MAGIC_QUEIR_DECLS_H */

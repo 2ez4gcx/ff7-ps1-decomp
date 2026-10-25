@@ -170,7 +170,24 @@ void func_801B11D8(MgRing *r, s32 v) {
     r->size = size;
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B1258);
+void func_801B1258(MgTask *arg0, MgSVec *arg1, MgSVec *arg2) {
+    MgSVec v;
+    MgMat m1;
+    MgMat m2;
+    s16 *q;
+
+    q = &D_800FA650;
+    v.vx = arg0->unk14 - *q;
+    v.vy = arg0->unk18 - D_800FA654;
+    v.vz = arg0->unk1C - D_800FA658;
+    func_8003BF3C((MgSVec *)(q - 10), &m1);
+    func_8003B2CC(&m1, &v, &v);
+    func_8003A79C(&m1, arg0, &m2);
+    func_8003B2CC(&m2, arg1, arg2);
+    arg2->vx += v.vx;
+    arg2->vy += v.vy;
+    arg2->vz += v.vz;
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B135C);
 

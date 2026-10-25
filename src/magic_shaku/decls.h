@@ -105,6 +105,8 @@ extern MgByte D_801D5729;
 extern s16 D_801D572C;
 extern s16 D_801D5738;
 s32 func_80039B40(s16);
-s32 func_80039A74(s16);
+s32 func_80039A74(s32);
+void func_801B0DAC(void);
+extern s16 D_801D56E0[];
 
 #endif /* MAGIC_SHAKU_DECLS_H */

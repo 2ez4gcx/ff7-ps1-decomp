@@ -20,5 +20,9 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16
 void func_801B0490();
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
+void func_801B0388(void);
+extern u8 D_80062D98;
+void func_801B01D8(void);
+s32 func_800BBEAC(void (*)());
 
 #endif /* MAGIC_SHIELD_DECLS_H */

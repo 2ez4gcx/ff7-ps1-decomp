@@ -348,7 +348,17 @@ INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B3A10);
 
 INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B3B3C);
 
-INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B3C14);
+void func_801B3C14(MgSVec *a, MgSVec *b, s32 k, MgSVec *out) {
+    MgVec d;
+
+    d.vx = b->vx - a->vx;
+    d.vy = b->vy - a->vy;
+    d.vz = b->vz - a->vz;
+    func_8003A08C(&d, &d);
+    out->vx = a->vx + ((k * d.vx) >> 12) - b->vx;
+    out->vy = a->vy + ((k * d.vy) >> 12) - b->vy;
+    out->vz = a->vz + ((k * d.vz) >> 12) - b->vz;
+}
 
 INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B3D10);
 

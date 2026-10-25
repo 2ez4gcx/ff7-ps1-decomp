@@ -21,5 +21,16 @@ void func_800D2980(void *, s32, s32, s32);
 extern s32 D_801CE998;
 s32 func_800D574C(s32);
 void func_800D55F4(s32, s32, s32);
+void func_801B0074(void);
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_801B6988;
+extern u8 D_801CE99C[];
+extern u8 D_801CE9A4[];
+void func_800D4368(void *, s32, s32);
+extern u8 D_801B6980[];
+extern s32 D_801517C0;
+extern s32 D_801CE98C;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
 
 #endif /* MAGIC_KUSAI_DECLS_H */

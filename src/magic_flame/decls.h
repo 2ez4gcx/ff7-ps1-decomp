@@ -12,13 +12,13 @@ s32 func_800D574C(s32);
 void func_801B1014();
 void func_801B00F0(s32 arg0);
 void func_801B01B4(s32 arg0);
-M2C_UNK func_801B1220();
+void func_801B1220();
 void func_801B1084(s32 arg0, M2C_UNK arg1);
 s32 func_800BBEAC(void (*)());
 void func_800D2980(void *, s32, s32, s32);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 extern M2C_UNK D_801B134C;
-extern M2C_UNK func_801B0EB8;
+void func_801B0EB8(s32 arg0, s32 arg1);
 void func_801B0FB4(void);
 void func_801B0048(void);
 extern s16 D_80151774;
@@ -43,5 +43,7 @@ void func_800D3994(s32, s32, void *);
 extern s32 D_801DD86C;
 void func_801B0908(void);
 void func_800D54EC(s32, void *);
+extern u8 D_80151918[][0xB9C];
+void func_801B0B38(void);
 
 #endif /* MAGIC_FLAME_DECLS_H */

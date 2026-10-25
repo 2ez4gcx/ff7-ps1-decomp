@@ -29,5 +29,19 @@ s32 func_801B0074(MgVec *a, MgVec *b, MgVec *c);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 void func_801B02CC(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_801B0150(s32 ang, MgMat *m, MgVec *v);
+void func_801B0F78(void);
+typedef struct { s8 v; } MgByte;
+extern MgByte D_801D36A8;
+extern MgByte D_801D36AA;
+extern MgByte D_801D36A9;
+void func_800D4368(void *, s32, s32);
+extern s32 D_801517C0;
+extern s32 D_801EB6B0;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
 
 #endif /* MAGIC_WEP3_DECLS_H */

@@ -27,11 +27,11 @@ void func_801B0DD4(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
-extern MgTask D_80162978[];
+extern MgObj20 D_80162978[];
 M2C_UNK func_800D4368(void *, s32, s32);
 extern s16 D_801D7244[];
 extern s32 D_801517C0;
-extern s32 D_801E72D0;
+extern u8 *D_801E72D0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s32 D_801D69C4;
@@ -47,5 +47,14 @@ extern s16 D_801D7178;
 void func_801B045C(void);
 extern s16 D_80162080;
 extern s32 D_801D715C[];
+void func_801B0E8C(void);
+extern s32 D_801D72B0;
+extern s32 D_801D72B8;
+extern s32 D_801D72B4;
+MgMat *func_8003B35C(MgMat *, s32 *);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+extern s16 D_801D7252[];
+extern u8 *D_801D7258[];
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_TBREATH_DECLS_H */

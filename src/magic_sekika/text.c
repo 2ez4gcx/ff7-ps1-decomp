@@ -91,7 +91,22 @@ INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B17A4);
 
 INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B18D0);
 
-INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B1A5C);
+void func_801B1A5C(void) {
+    s16 i;
+
+    i = 0;
+    do {
+        D_801E5870[i][0] += D_801E5C70[i][0];
+        D_801E5870[i][1] += D_801E5C70[i][1];
+        D_801E5874[i][0] += D_801E5C74[i][0];
+        D_801E5C70[i][1] += 0x14;
+        if (D_801E5870[i][1] > 0) {
+            D_801E5870[i][1] = 0;
+            D_801E5C70[i][1] = -D_801E5C70[i][1];
+        }
+        i++;
+    } while (i < 0x80);
+}
 
 INCLUDE_ASM("../asm/us/magic_sekika/nonmatchings/text", func_801B1B98);
 

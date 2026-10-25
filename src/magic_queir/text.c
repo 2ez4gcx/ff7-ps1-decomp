@@ -59,7 +59,34 @@ INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B104C);
 
 INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B17F4);
 
-INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B1894);
+void func_801B1894(void) {
+    MgTask *p;
+    s32 t;
+    s16 *ang;
+    u16 *q;
+
+    p = &D_80162978[D_8015169C];
+    D_801C4474[0] = *(u8 *)&p->unk12;
+    q = &D_801C4480;
+    *q = p->unk14;
+    ang = &p->unk14;
+    D_801C4488 = *ang;
+    func_800D4284(&p->unk4, -(*ang >> 4), q);
+    func_8003B48C((MgMat *)q);
+    func_8003B51C((MgMat *)q);
+    t = p->unk2;
+    if (t >= 4) {
+        D_801C4478 = 0x2E808080 - (t - 4) * 0x202020;
+    }
+    D_801DC4A0 = func_800D6260(&D_801C4474[-4], D_801517C0 + 0x70, 0xC, D_801DC4A0);
+    if (D_80062D98 == 0) {
+        p->unk6 += p->unk16;
+        p->unk16 += p->unk18;
+        if (++p->unk2 >= 8) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B19EC);
 

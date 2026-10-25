@@ -5,7 +5,31 @@ void func_801B0054(void) {
     func_801B04E4();
 }
 
-INCLUDE_ASM("../asm/us/magic_kusai/nonmatchings/text", func_801B0074);
+void func_801B0074(void) {
+    MgTask *p;
+    s32 i;
+    s32 j;
+    s16 v;
+
+    p = &D_80162978[D_8015169C];
+    D_801B6988.v = p->unk2;
+    j = p->unk18 * 0x10;
+    for (i = 0; i < 4; i++) {
+        v = *(u16 *)(D_801CE9A4 + j);
+        func_800D4368(D_801CE99C + j, v, -(v >> 2));
+        j += 0x10;
+        D_801CE98C = func_800D4D90(D_801B6980, D_801517C0 + 0x70, 0xC, D_801CE98C);
+        if (j >= 0xDE0) {
+            j = 0;
+        }
+    }
+    if (p->unk2 >= 0xB) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_kusai/nonmatchings/text", func_801B0190);
 

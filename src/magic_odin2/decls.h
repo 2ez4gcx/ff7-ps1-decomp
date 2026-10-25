@@ -54,5 +54,6 @@ void func_800D3994(s32, s32, void *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
+void func_801B3C14(MgSVec *a, MgSVec *b, s32 k, MgSVec *out);
 
 #endif /* MAGIC_ODIN2_DECLS_H */

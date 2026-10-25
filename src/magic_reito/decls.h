@@ -10,7 +10,7 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
 extern u8 D_801D4B98[];
-extern s32 D_801ECB98;
+extern u8 *D_801ECB98;
 extern s16 D_80162080;
 void func_801B1350(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -44,5 +44,12 @@ void func_801B15CC(void);
 void func_800D4368(void *, s32, s32);
 extern u16 D_801D4B08;
 extern s32 D_801D481C;
+void func_801B1C2C(void);
+extern MgSVec D_801D4B8C;
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+extern MgVec D_801D4B6C;
+void func_8003B69C(s32, s32, s32);
+extern u8 D_801D4B7C[];
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_REITO_DECLS_H */

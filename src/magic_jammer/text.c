@@ -16,7 +16,24 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jammer/nonmatchings/text", func_801B008C);
+void func_801B008C(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x1800, 0);
+    D_801D1274[0] = p->unk2;
+    *(MgAnim **)&D_801D1274[-4] = D_801D1278[p->unk14];
+    D_801E92D8 = func_800D4D90(&D_801D1274[-4], D_801517C0 + 0x70, 0xC, D_801E92D8);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unk2++;
+        if (p->unk2 == D_801D1278[p->unk14]->unk4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B01AC(void) {
     MgTask *p;
