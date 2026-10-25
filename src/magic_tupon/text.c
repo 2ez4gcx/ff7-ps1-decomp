@@ -31,7 +31,16 @@ INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B114C);
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B1C0C);
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B1E1C);
+void func_801B1E1C(void) {
+    s32 *p;
+    s32 i;
+
+    i = 299;
+    p = &D_801F03C0;
+    for (; i >= 0; i--) {
+        *p-- = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B1E40);
 

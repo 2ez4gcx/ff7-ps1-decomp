@@ -39,7 +39,40 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B015C);
+void func_801B015C(void) {
+    MgSpark *p;
+    MgSpark *q;
+    s32 i;
+    s32 k;
+    s16 n;
+
+    p = (MgSpark *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = 0;
+        do {
+            i++;
+            p->unk14 = (p->unk14 + (func_80042DA8() & 3) + 1) % D_801518F4[p->unk12].unk0;
+            q = (MgSpark *)&D_80162978[func_800BBEAC((s32 *)&func_801B0020)];
+            func_800D3994(p->unk12, p->unk14, &q->unk4);
+            k = 0xFA;
+            q->unk4 = q->unk4 - k + func_80042DA8() % 500;
+            k = 0xFA;
+            q->unk6 = q->unk6 - k + func_80042DA8() % 500;
+            k = 0xFA;
+            q->unk8 = q->unk8 - k + func_80042DA8() % 500;
+            q->unkD = p->unkD;
+            q->unkE = p->unkE;
+            q->unk10 = (func_80042DA8() & 0xFFF) + 0x1000;
+            q->unk16 = p->unk16;
+        } while (i < 2);
+        n = p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= 0x1E) {
+            func_800D5774(p->unk12);
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B03A0);
 
@@ -56,7 +89,16 @@ void func_801B0814(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0874);
+void func_801B0874(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    p->unkE = 0x7807;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    *((u8 *)p + 0xD) = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B08D4(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);
@@ -64,7 +106,16 @@ void func_801B08D4(s32 arg0, M2C_UNK arg1) {
     func_800D55F4(0x20, func_800D574C(arg0), 6);
 }
 
-INCLUDE_ASM("../asm/us/magic_carel/nonmatchings/text", func_801B0954);
+void func_801B0954(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B015C)];
+    *((u8 *)p + 0xD) = 0x40;
+    p->unkE = 0x7947;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B09B8(s32 arg0, M2C_UNK arg1) {
     func_800BBEAC(&func_801B0814);

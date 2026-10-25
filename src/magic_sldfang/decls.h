@@ -26,5 +26,9 @@ void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 extern MgLineG2 *D_801D4DC4;
 extern s32 D_801517C0;
+M2C_UNK *func_801B0054(s32 a, s32 b);
+void func_801B3028(s32, s32, s32);
+extern M2C_UNK D_801B94D4;
+M2C_UNK *func_801B007C(s32 a, s32 b);
 
 #endif /* MAGIC_SLDFANG_DECLS_H */

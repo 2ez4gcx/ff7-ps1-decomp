@@ -1,1 +1,3 @@
 // FIELD/FIELD.BIN: name = 0xADDRESS; // type:func
+D_800A0D60 = 0x800A0D60; // force_not_migration:True
+D_800A00DC = 0x800A00DC; // force_not_migration:True

@@ -12,5 +12,8 @@ extern MgObj20 D_80162978[];
 extern u8 D_801BCE60[];
 extern u8 *D_801DCE60;
 extern s16 D_80162080;
+void func_801B02F4(void);
+extern u8 D_801DCE6C;
+MgObj20 *func_801B0320(void);
 
 #endif /* MAGIC_ROLLFIRE_DECLS_H */

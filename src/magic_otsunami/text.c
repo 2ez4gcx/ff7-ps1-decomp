@@ -18,7 +18,18 @@ void func_801B0020(void) {
 
 INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B008C);
 
-INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B018C);
+void func_801B018C(u8 *arg0, u8 *arg1) {
+    if (*arg0 == 0) {
+        *arg0 = 0xFF;
+    } else {
+        *arg0 = -*arg0;
+    }
+    if (*arg1 == 0xFF) {
+        *arg1 = 0;
+    } else {
+        *arg1 = -*arg1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_otsunami/nonmatchings/text", func_801B01DC);
 

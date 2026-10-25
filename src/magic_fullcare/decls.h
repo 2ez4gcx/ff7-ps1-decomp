@@ -16,5 +16,7 @@ extern s16 D_8015169C;
 extern s16 D_80162080;
 extern u8 D_801C4994[];
 extern u8 *D_801E4994;
+void func_801B0020(void);
+extern s32 D_801E6494;
 
 #endif /* MAGIC_FULLCARE_DECLS_H */

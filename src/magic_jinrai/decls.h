@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B02B0();
+void func_801B02B0();
 extern M2C_UNK D_801B3470;
 void func_801B0028(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -25,5 +25,8 @@ M2C_UNK func_800BBEAC(M2C_UNK *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 void func_801B00E0(void);
+extern M2C_UNK D_801B0310;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 
 #endif /* MAGIC_JINRAI_DECLS_H */

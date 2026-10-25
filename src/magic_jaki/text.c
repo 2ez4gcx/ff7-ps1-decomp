@@ -30,6 +30,15 @@ void func_801B0970(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B09F0);
 
-INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B0AE0);
+void func_801B0AE0(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801D3740 = D_801B3740 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 3) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_jaki/nonmatchings/text", func_801B0B40);

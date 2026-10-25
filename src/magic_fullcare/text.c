@@ -5,7 +5,16 @@ void func_801B0000(void) {
     func_801B1034();
 }
 
-INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0020);
+void func_801B0020(void) {
+    s32 *p;
+    s32 i;
+
+    i = 199;
+    p = &D_801E6494;
+    for (; i >= 0; i--) {
+        *p-- = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0044);
 

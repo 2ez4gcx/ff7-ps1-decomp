@@ -20,7 +20,13 @@ INCLUDE_ASM("../asm/us/magic_magend/nonmatchings/text", func_801B0080);
 
 INCLUDE_ASM("../asm/us/magic_magend/nonmatchings/text", func_801B0174);
 
-INCLUDE_ASM("../asm/us/magic_magend/nonmatchings/text", func_801B03F4);
+void func_801B03F4(s32 arg0, s32 arg1) {
+    MgTask *p;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC(&func_801B0174)];
+    p->unk1C = arg0;
+    p->unk1E = arg1;
+}
 
 void func_801B0448(arg0, arg1) {
     func_800BBEAC(&func_801B0020);

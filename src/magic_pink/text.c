@@ -58,8 +58,32 @@ INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B0C94);
 
 INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B1030);
 
-INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B110C);
+void func_801B110C(void) {
+    MgObj20 *p;
+    s16 i;
 
-INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B1164);
+    p = D_801E2218;
+    for (i = 0; i < 150; i++) {
+        p->unk2 = 0;
+        p->unk0 = 0;
+        p++;
+    }
+    func_800BBEAC(&func_801B1030);
+}
+
+s32 func_801B1164(void) {
+    MgObj20 *p;
+    s16 i;
+
+    p = D_801E2218;
+    for (i = 0; i < 150; i++) {
+        if (p->unk0 == 0) {
+            p->unk0 = 1;
+            return i;
+        }
+        p++;
+    }
+    return func_800BBA84(6, -1, 0x40);
+}
 
 INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B11D4);

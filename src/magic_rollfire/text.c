@@ -9,9 +9,32 @@ INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B0020);
 
 INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B0230);
 
-INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B02F4);
+void func_801B02F4(void) {
+    s32 off;
+    s16 c;
 
-INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B0320);
+    c = -1;
+    off = 0x18E0;
+    do {
+        *(s16 *)(&D_801DCE6C + off) = c;
+        off -= 0x20;
+    } while (off >= 0);
+}
+
+MgObj20 *func_801B0320(void) {
+    s32 i;
+    s32 off;
+
+    for (i = 0; i < 200; i++) {
+        off = i * 0x20;
+        if (*(s16 *)(&D_801DCE6C + off) == -1) {
+            *(s16 *)(&D_801DCE6C + off) = 0;
+            *(s16 *)(&D_801DCE6C + 2 + off) = 0;
+            return (MgObj20 *)(&D_801DCE6C + off);
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("../asm/us/magic_rollfire/nonmatchings/text", func_801B0384);
 

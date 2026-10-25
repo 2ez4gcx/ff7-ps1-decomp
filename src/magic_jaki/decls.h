@@ -12,5 +12,10 @@ extern M2C_UNK func_801B08A8;
 extern MgTask D_80162978[];
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
+void func_801B0AE0(void);
+extern s16 D_8015169C;
+extern u8 D_801B3740[];
+extern u8 *D_801D3740;
+extern s16 D_80162080;
 
 #endif /* MAGIC_JAKI_DECLS_H */

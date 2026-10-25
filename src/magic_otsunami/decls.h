@@ -12,5 +12,6 @@ extern MgObj20 D_80162978[];
 extern u8 D_801C0F8C[];
 extern u8 *D_801D8F8C;
 extern s16 D_80162080;
+void func_801B018C(u8 *arg0, u8 *arg1);
 
 #endif /* MAGIC_OTSUNAMI_DECLS_H */

@@ -75,7 +75,21 @@ s16 func_801B03B0(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_dise/nonmatchings/text", func_801B0494);
+s32 func_801B0494(s32 x, s32 v, s32 a, s32 lim) {
+    s32 i;
+
+    x += v;
+    v += a;
+    for (i = 0; i < 99; i++) {
+        x += v;
+        v += a;
+        a -= a >> 4;
+        if (x >= lim && v > 0) {
+            break;
+        }
+    }
+    return i;
+}
 
 INCLUDE_ASM("../asm/us/magic_dise/nonmatchings/text", func_801B04E0);
 

@@ -52,5 +52,7 @@ extern s32 D_80163C74;
 extern M2C_UNK D_801EDBF0;
 extern M2C_UNK D_801EDC00;
 extern MgMat *D_801EDC20;
+void func_801B1E1C(void);
+extern s32 D_801F03C0;
 
 #endif /* MAGIC_TUPON_DECLS_H */

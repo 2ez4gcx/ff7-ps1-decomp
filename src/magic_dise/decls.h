@@ -30,5 +30,6 @@ extern s32 D_801CE148;
 extern s32 D_801CE14C;
 extern s32 D_801CE150;
 void func_801B15B4(void);
+s32 func_801B0494(s32 x, s32 v, s32 a, s32 lim);
 
 #endif /* MAGIC_DISE_DECLS_H */

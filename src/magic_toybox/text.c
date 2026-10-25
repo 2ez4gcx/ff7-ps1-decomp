@@ -3,11 +3,17 @@
 
 INCLUDE_ASM("../asm/us/magic_toybox/nonmatchings/text", func_801B0054);
 
-INCLUDE_ASM("../asm/us/magic_toybox/nonmatchings/text", func_801B0074);
+void func_801B0074(s32 a, s32 b) {
+    func_801B1530(a, b, 1);
+}
 
-INCLUDE_ASM("../asm/us/magic_toybox/nonmatchings/text", func_801B0094);
+void func_801B0094(s32 a, s32 b) {
+    func_801B1530(a, b, 2);
+}
 
-INCLUDE_ASM("../asm/us/magic_toybox/nonmatchings/text", func_801B00B4);
+void func_801B00B4(s32 a, s32 b) {
+    func_801B1530(a, b, 3);
+}
 
 s32 func_801B00D4(MgVec *a, MgVec *b, MgVec *c) {
     s32 dot;

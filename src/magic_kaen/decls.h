@@ -34,5 +34,16 @@ void func_801B0EAC(s32 arg0, s32 arg1);
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
 extern M2C_UNK func_801B0AEC;
 M2C_UNK func_800BBEAC(M2C_UNK *);
+void func_801B05DC(void);
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u16 unk14; s16 unk16; } MgGas;
+extern u16 D_801D3EE8;
+extern s8 D_801D3EE7;
+extern s8 D_801D3EE4;
+extern s8 D_801D3EE6;
+extern s8 D_801D3EE5;
+extern s32 D_801517C0;
+extern s32 D_80163C74;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
 
 #endif /* MAGIC_KAEN_DECLS_H */

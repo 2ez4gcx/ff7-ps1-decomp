@@ -526,7 +526,14 @@ void func_801BC65C(void) {
     p->unk0 = -1;
 }
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801BC6BC);
+void func_801BC6BC(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    func_801BB500(D_801ECF78);
+    func_801BB500(D_801ECF78 + 0x34);
+    p->unk0 = -1;
+}
 
 void func_801BC71C(void) {
     MgTask *temp_s0;

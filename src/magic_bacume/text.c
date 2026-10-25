@@ -20,7 +20,17 @@ INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B008C);
 
 INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B0294);
 
-INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B031C);
+MgObj14 *func_801B031C(void) {
+    s32 i;
+
+    for (i = 0; i < 200; i++) {
+        if (D_801B6F30[i].unk0 == 0) {
+            D_801B6F30[i].unk0 = 1;
+            return &D_801B6F30[i];
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("../asm/us/magic_bacume/nonmatchings/text", func_801B0368);
 

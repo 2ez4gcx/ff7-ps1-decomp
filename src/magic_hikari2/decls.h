@@ -41,5 +41,19 @@ void func_801B07CC(s32 arg0, s32 arg1);
 void func_801B039C(void);
 extern u8 D_80151918[][0xB9C];
 void func_800D3994(s32, s32, void *);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgHikariObj;
+s16 func_8003CC1C(s32, s32);
+void func_8003C21C(MgSVec *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+extern s16 D_801D0AE8[];
+extern s16 D_800F5B74;
+extern u8 D_80151909[][0xB9C];
+M2C_UNK func_800D5774(s16);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+extern u8 D_8015190F[][0xB9C];
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_HIKARI2_DECLS_H */

@@ -33,4 +33,7 @@ void func_801B01E4(s32 arg0, s32 arg1) {
     p->unk1E = arg1;
 }
 
-INCLUDE_ASM("../asm/us/magic_jinrai/nonmatchings/text", func_801B02B0);
+void func_801B02B0(arg0, arg1) {
+    func_800D2980(&D_801B0310, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B01E4);
+}

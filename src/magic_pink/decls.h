@@ -23,5 +23,11 @@ extern s32 D_801C9A28;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; } MgObj8;
 extern MgObj8 D_801E1BD8[];
 MgObj8 *func_801B0148(void);
+void func_801B110C(void);
+extern MgObj20 D_801E2218[];
+extern M2C_UNK func_801B1030;
+s32 func_800BBEAC(void *);
+s32 func_801B1164(void);
+s32 func_800BBA84(s32, s32, s32);
 
 #endif /* MAGIC_PINK_DECLS_H */

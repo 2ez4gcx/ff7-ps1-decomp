@@ -137,5 +137,7 @@ extern u8 D_801ED168[];
 extern u8 D_801ED174[];
 extern u16 D_801ED180;
 extern u16 D_801ED182;
+void func_801BC6BC(void);
+extern u8 D_801ECF78[];
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

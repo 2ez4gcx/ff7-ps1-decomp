@@ -16,5 +16,9 @@ void func_801B01B0(s32 ang, MgMat *m, MgVec *v);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 void func_801B032C(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B0408(MgSVec *p, MgSVec *q, MgVec *n);
+void func_801B0074(s32 a, s32 b);
+void func_801B1530(s32, s32, s32);
+void func_801B0094(s32 a, s32 b);
+void func_801B00B4(s32 a, s32 b);
 
 #endif /* MAGIC_TOYBOX_DECLS_H */

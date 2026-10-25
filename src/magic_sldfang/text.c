@@ -1,9 +1,15 @@
 #include "common.h"
 #include "magic_sldfang/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B0054);
+M2C_UNK *func_801B0054(s32 a, s32 b) {
+    func_801B3028(a, b, 0);
+    return &D_801B94D4;
+}
 
-INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B007C);
+M2C_UNK *func_801B007C(s32 a, s32 b) {
+    func_801B3028(a, b, 1);
+    return &D_801B94D4;
+}
 
 s32 func_801B00A4(MgVec *a, MgVec *b, MgVec *c) {
     s32 dot;

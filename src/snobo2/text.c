@@ -246,7 +246,30 @@ void func_800A47D0(void *arg0) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4870);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4A78);
+void func_800A4A78(SbObjA *p, s16 i) {
+    SbTbl *e;
+    SbRec12 *r;
+    u16 a;
+    s32 b;
+
+    p->unk3C = D_800B85D8 + p->unk10->unk8[i] * 0x374;
+    e = (SbTbl *)(((-p->unk10->unk18[i] & 0xFFF) << 2) + (u8 *)D_8004BC98);
+    a = e->a;
+    b = e->b;
+    p->unk1C = 0x1000;
+    p->unk16 = 0;
+    p->unk1A = 0;
+    p->unk1E = 0;
+    p->unk22 = 0;
+    p->unk18 = a;
+    p->unk14 = b;
+    p->unk20 = -a;
+    p->unk24 = b;
+    r = &p->unk10->unk1C[i];
+    p->unk34 = p->unk40 - r->unk0;
+    p->unk38 = p->unk48 - r->unk8;
+    func_8003B2CC(&p->unk14, &p->unk34, &p->unk34, b);
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4B78);
 
@@ -298,7 +321,29 @@ INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A56B8);
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5744);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A58F0);
+s32 func_800A58F0(SbPt3 *p, SbPt3 *a, SbPt3 *b, SbPt3 *c) {
+    s16 y1;
+    s16 z1;
+    s32 nx;
+    s32 ny;
+    s32 nz;
+    s32 x1;
+    s32 t1;
+    s32 t2;
+
+    y1 = a->y;
+    z1 = a->z;
+    nx = (y1 - b->y) * (z1 - c->z) - (y1 - c->y) * (z1 - b->z);
+    x1 = a->x;
+    t1 = nx * (x1 - p->x);
+    ny = (z1 - b->z) * (x1 - c->x) - (z1 - c->z) * (x1 - b->x);
+    nz = (x1 - b->x) * (y1 - c->y) - (x1 - c->x) * (y1 - b->y);
+    t2 = nz * (z1 - p->z);
+    if (ny != 0) {
+        ny = (t1 + t2) / ny;
+    }
+    return ny + y1;
+}
 
 s16 func_800A59E0(void *arg0, void *arg1) {
     s16 d;
@@ -320,7 +365,41 @@ void func_800A5A9C(void *arg0, void *arg1) {
     M2C_FIELD(arg1, s16 *, 4) = func_8003CC1C((s32) M2C_FIELD(arg0, s16 *, 0), (s32) M2C_FIELD(arg0, s16 *, 2));
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5AF8);
+void func_800A5AF8(s32 arg0, s32 arg1, void *arg2, void *arg3) {
+    u8 *base;
+    u8 *idx;
+    u8 *tbl;
+    SbVtx8 *a;
+    SbVtx8 *b;
+    SbVtx8 *c;
+    s32 rec;
+    s32 ax, ay, az;
+    s32 bx, by, bz;
+    s32 cx, cy, cz;
+
+    if (arg1 >= 0) {
+        rec = M2C_FIELD(D_80106AF8, u8 **, 8)[arg0] * 0x374;
+        base = rec + D_800B882C;
+        idx = base + arg1 * 4;
+        tbl = rec + (D_800B882C - 0x24C);
+        a = (SbVtx8 *)(tbl + idx[0] * 8);
+        b = (SbVtx8 *)(tbl + idx[1] * 8);
+        c = (SbVtx8 *)(tbl + idx[2] * 8);
+        by = b->y;
+        bz = b->z;
+        az = a->z;
+        cy = c->y;
+        ay = a->y;
+        cz = c->z;
+        bx = b->x;
+        cx = c->x;
+        ax = a->x;
+        M2C_FIELD(arg3, s16 *, 0x10) = ((bz - az) * (cy - by) - (by - ay) * (cz - bz)) >> 3;
+        M2C_FIELD(arg3, s16 *, 0x12) = ((bz - az) * (cx - bx) - (bx - ax) * (cz - bz)) >> 3;
+        M2C_FIELD(arg3, s16 *, 0x14) = ((by - ay) * (cx - bx) - (bx - ax) * (cy - by)) >> 3;
+        func_8003B2CC(D_80106A34, (u8 *)arg3 + 0x10, arg2);
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5C54);
 
@@ -556,7 +635,42 @@ s32 func_800A8DEC(void *arg0) {
     return 3;
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A8E7C);
+void func_800A8E7C(void *arg0, s32 arg1, void *arg2) {
+    s16 a;
+    s16 r;
+    s32 t;
+    s32 w;
+    u16 ca;
+    u16 cb;
+    SbTbl *e;
+
+    a = M2C_FIELD(arg0, s16 *, 0x12);
+    if (a < 0x19) {
+        r = M2C_FIELD(arg0, s16 *, 0x14);
+        t = (r * r) >> 15;
+        arg1 = (arg1 * (0x180 - t)) / 384;
+        if (a >= 9) {
+            arg1 = (arg1 * (0x18 - a)) >> 4;
+        }
+        e = (SbTbl *)((arg1 & 0x3FFC) + (u8 *)D_8004BC98);
+        ca = e->a;
+        cb = e->b;
+        M2C_FIELD(arg2, s16 *, 0x42) = 0;
+        M2C_FIELD(arg2, s16 *, 0x46) = 0;
+        M2C_FIELD(arg2, s16 *, 0x48) = 0x1000;
+        M2C_FIELD(arg2, s16 *, 0x4A) = 0;
+        M2C_FIELD(arg2, s16 *, 0x4E) = 0;
+        M2C_FIELD(arg2, s16 *, 0x44) = ca;
+        M2C_FIELD(arg2, s16 *, 0x40) = cb;
+        M2C_FIELD(arg2, s16 *, 0x50) = cb;
+        M2C_FIELD(arg2, s16 *, 0x4C) = -ca;
+        func_8003AB84((u8 *)arg2 + 0x40, (u8 *)arg0 + 0x34, (u8 *)arg2 + 0x20);
+        w = arg1 < 0 ? -arg1 : arg1;
+        t = (0x4000 - ((t * w) >> 4)) >> 2;
+        M2C_FIELD(arg0, s32 *, 0x34) = (t * M2C_FIELD(arg2, s32 *, 0x20)) >> 12;
+        M2C_FIELD(arg0, s32 *, 0x3C) = (t * M2C_FIELD(arg2, s32 *, 0x28)) >> 12;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A8FD0);
 
@@ -721,7 +835,45 @@ s16 func_800AA140(s32 arg0, s16 arg1, s32 arg2) {
     return (arg1 + d) & 0xFFF;
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800AA188);
+void func_800AA188(void *arg0, s32 arg1) {
+    s32 idx;
+    s16 a;
+    u16 c;
+    s16 d;
+
+    a = M2C_FIELD(arg0, s16 *, 0x14);
+    idx = M2C_FIELD(arg0, u8 *, 0xC) * 9;
+    if (a >= 0x201) {
+        idx += 1;
+    }
+    if (a >= 0x501) {
+        idx += 1;
+    }
+    if (arg1 >= 0x201) {
+        idx += 3;
+    }
+    if (arg1 >= 0x401) {
+        idx += 3;
+    }
+    c = D_800DE034[idx];
+    switch (c) {
+    case 0xFF:
+        break;
+    case 0xFE:
+        func_800A1C4C(3, 0x135, 0);
+        M2C_FIELD(arg0, s32 *, 0x34) -= M2C_FIELD(arg0, s32 *, 0x34) >> 2;
+        M2C_FIELD(arg0, s32 *, 0x3C) -= M2C_FIELD(arg0, s32 *, 0x3C) >> 2;
+        break;
+    case 8:
+        d = *(u16 *)&D_801069D0;
+        if ((s16)(d % 12) >= 7) {
+            c += 1;
+        }
+    default:
+        func_800A1C4C(3, 0xEF, 0);
+        M2C_FIELD(arg0, s16 *, 0xC) = c;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800AA2D4);
 

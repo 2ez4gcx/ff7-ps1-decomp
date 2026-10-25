@@ -49,4 +49,8 @@ INCLUDE_ASM("../asm/us/magic_whirl/nonmatchings/text", func_801B0F4C);
 
 INCLUDE_ASM("../asm/us/magic_whirl/nonmatchings/text", func_801B105C);
 
-INCLUDE_ASM("../asm/us/magic_whirl/nonmatchings/text", func_801B10E0);
+void func_801B10E0(arg0, arg1) {
+    func_800D2980(&D_801B1150, 0, 0, 0);
+    func_800BBEAC(&func_801B105C);
+    func_800D5444(arg0, arg1, 0x5A, &func_801B0F4C);
+}

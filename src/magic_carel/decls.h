@@ -12,9 +12,9 @@ s32 func_800D54BC(s32);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
 void func_801B0814(void);
-extern M2C_UNK func_801B0874;
+void func_801B0874();
 void func_801B09B8(s32 arg0, M2C_UNK arg1);
-extern M2C_UNK func_801B0954;
+void func_801B0954();
 void func_801B0A8C(s32 arg0, M2C_UNK arg1);
 void func_801B0A38(s32 arg0);
 void func_801B0B60(s32 arg0, M2C_UNK arg1);
@@ -45,5 +45,11 @@ extern u8 D_80062D98;
 extern MgTask D_80162978[];
 extern s32 func_801B03A0;
 extern s32 func_801B0648;
+void func_801B015C(void);
+typedef struct { s16 unk0; u16 unk2; u16 unk4; u16 unk6; u16 unk8; u8 padA[3]; u8 unkD; u16 unkE; u16 unk10; s16 unk12; s16 unk14; u16 unk16; } MgSpark;
+s32 func_80042DA8(void);
+extern struct { s16 unk0; u8 pad[0xB9A]; } D_801518F4[];
+void func_800D3994(s32, s32, void *);
+M2C_UNK func_800D5774(s16);
 
 #endif /* MAGIC_CAREL_DECLS_H */
