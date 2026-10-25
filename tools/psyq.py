@@ -86,7 +86,10 @@ FILE_OPTIONS = {
     'battle/text1b.c': {'gcc': '2.7.2', 'aspsx': '2.34', 'unit_start': True},
     'battle/text1c.c': {'gcc': '2.7.2', 'aspsx': '2.34'},
     'battle/text2.c': {'unit_start': True},
-    'battle/text2c.c': {'unit_start': True},
+    # text2c.c begins one of the game's files, built by GCC 2.7.2: func_800DEB18
+    # ends `lw ra; sh zero, 8(v1); jr ra; addiu sp` (and all its other
+    # functions in C match either way).
+    'battle/text2c.c': {'unit_start': True, 'gcc': '2.7.2'},
     'battle/text3.c': {'gcc': '2.7.2'},
     # FIELD.BIN's files, found where its jump tables change from 8-byte to
     # 4-byte alignment: text2.c and text4.c begin where the game's files

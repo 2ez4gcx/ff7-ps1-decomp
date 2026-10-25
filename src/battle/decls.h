@@ -990,6 +990,15 @@ void func_80043F6C(Rect16 *, s32, s32, s32);
 extern BtlCmd *D_800F01DC;
 extern BtlCmd D_800F4BAC[];
 void func_800C0088(s16 arg0, s16 arg1, s16 arg2);
+void func_800DEB18(void);
+typedef struct { u8 b[0x440]; } BtlX440;
+typedef struct { s16 w0; s16 w2; s16 w4; s16 w6; s16 w8; s8 bA; s8 bB; u8 bC; s8 bD; s8 bE; s8 bF; s8 b10; s8 b11; u8 pad[0x240 - 0x12]; } BtlX240;
+extern BtlX440 D_8009D86D[];
+extern u8 D_800F3163[];
+extern BtlX240 D_800F90B4[];
+extern s16 D_800F1EF0;
+extern s16 D_800F1F02;
+extern s8 D_800F977C;
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;

@@ -141,7 +141,34 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DE94C);
 void func_800DEB10(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DEB18);
+void func_800DEB18(void) {
+    s16 c;
+    s16 idx;
+    BtlX240 *p;
+
+    D_800F977C = 0;
+    func_800A4F60(D_800F38A0, 0);
+    c = D_8009D86D[D_800F38A0].b[0];
+    idx = c;
+    D_800F1EF0 = D_800F3163[idx];
+    D_800F1F02 = D_800F3163[idx];
+    p = &D_800F90B4[D_800F38A0];
+    if (D_800F57CC == 0) {
+        p->bA = 0;
+        p->bB = 0;
+        p->w0 = 0;
+        p->w2 = 0;
+    }
+    p->bD = 4;
+    p->w6 = 4;
+    p->bC = c;
+    p->w4 = c;
+    p->b10 = 0;
+    p->b11 = 1;
+    p->bE = 0;
+    p->bF = 0;
+    p->w8 = 0;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DEC10);
 

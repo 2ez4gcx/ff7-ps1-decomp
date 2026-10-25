@@ -415,6 +415,8 @@ def put(work, name):
                 if why2 is None:
                     why2 = overlays_match(known, mine)
                 if why2 is None:
+                    for sym, text in tables:
+                        keep_unmigrated(sym, text)
                     print(f'{name}: put in {src.relative_to(ROOT).as_posix()}, its changed declarations '
                           f'kept in the files that use them')
                     return
