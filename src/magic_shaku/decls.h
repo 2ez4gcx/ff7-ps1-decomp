@@ -76,7 +76,7 @@ extern s32 D_801D1C38;
 extern s16 D_801D56E4;
 extern s32 D_801D223C;
 s32 func_800BBEAC(void (*)());
-void func_801B1590();
+void func_801B1590(void);
 extern s16 D_801D575C;
 extern u8 D_80151917[][0xB9C];
 extern MgSVec D_801D5760;
@@ -108,5 +108,10 @@ s32 func_80039B40(s16);
 s32 func_80039A74(s32);
 void func_801B0DAC(void);
 extern s16 D_801D56E0[];
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s32 func_800BBA84(s32, s32, s32);
+s32 func_800BC04C(void (*)());
+void func_800D5774(s32);
+extern u16 D_801031EA;
 
 #endif /* MAGIC_SHAKU_DECLS_H */

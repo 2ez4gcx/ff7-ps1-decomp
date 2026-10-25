@@ -121,6 +121,67 @@ void func_801B1428(MgRtp *r, MgSVec *v0, MgSVec *v1, s32 color) {
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B1558);
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B1D54);
+void func_801B1D54(void) {
+    s32 i;
+    s32 n;
+    s32 v;
+    s16 t;
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B1F38);
+    D_80162978[D_8015169C].unk0 = -1;
+    for (i = 0; i < D_801DC898; i++) {
+        n = D_801DE05C[i].id;
+        func_800D3994(n, D_8015190F[n][0], &D_801DE05C[i].x);
+        v = (s16)D_801518F6[n][0] + 0x8C;
+        if (v >= 0x4F3) {
+            v = 0x4F2;
+        }
+        D_801DE05C[i].h = v;
+        D_801DE05C[i].unkC = 0;
+    }
+    D_80162978[func_800BBEAC(func_801B1558)].unk14 = 0;
+    func_800D3994(D_801DC89C, D_8015190F[D_801DC89C][0], D_801DC8A4);
+    D_801DC8AA = D_801518F6[D_801DC89C][0];
+    t = D_801DC8AA + 0x1F4;
+    D_801DC8AC = t;
+    if (t >= 0x76D) {
+        D_801DC8AC = 0x76C;
+    }
+}
+
+INCLUDE_RODATA("../asm/us/magic_matra/nonmatchings/text", D_801B001C);
+
+s32 func_801B1F38(arg0, arg1) {
+    MgSVec rot;
+    MgMat m;
+    s32 c;
+    s32 k;
+    s32 i;
+    s32 n;
+
+    D_801DC894 = &D_80162978[func_800BBEAC(D_801B001C)];
+    func_800D2980(D_801B20D4, 0, 0, 0);
+    c = -1;
+    for (k = 0x16C8; k >= 0; k -= 0xD8) {
+        *(s32 *)(D_801DC8BC + k) = c;
+    }
+    for (i = 0, n = 0; i < 10; i++) {
+        if ((arg0 >> i) & 1) {
+            D_801DE05C[n].id = i;
+            n++;
+        }
+    }
+    D_801DC8B0 = 0x400;
+    rot.vx = 0;
+    D_801DC898 = n;
+    D_801DC89C = arg1;
+    D_801DC8A0 = 0;
+    D_801DC8B4 = 0;
+    D_801DC8B8 = 0;
+    D_801DE0F0 = 1;
+    rot.vy = D_801518F6[arg1][0xA8];
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    func_8003AB84(&m, &D_801B8864, &D_801B8864);
+    func_800BBEAC(func_801B1D54);
+    return func_800D55F4(0x28, func_800D574C(arg0), 0x82);
+}

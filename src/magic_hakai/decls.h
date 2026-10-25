@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0448();
+s32 func_801B0448();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -15,6 +15,24 @@ extern s16 D_80162080;
 void func_801B03F4(s32 arg0, s32 arg1);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 s32 func_800BBEAC(void *);
-extern M2C_UNK func_801B0180;
+void func_801B0180(void);
+s32 func_800BBA84(s32, s32, s32);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)(s32, s32));
+extern M2C_UNK D_801B04C4;
+void func_801B008C(void);
+M2C_UNK func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s32 D_801B6754[];
+extern s16 D_801B675C;
+extern s32 *D_801B6760[];
+s32 func_80042DA8();
+s32 func_800C4FC8(s32, s32, s16);
+void func_800D3994(s32, s32, void *);
+void func_800D5774(s32);
+extern s16 D_801518F4[][0x5CE];
+extern s32 D_80163C74;
 
 #endif /* MAGIC_HAKAI_DECLS_H */

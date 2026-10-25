@@ -5,11 +5,76 @@ void func_801B0000(void) {
     func_801B0404();
 }
 
-INCLUDE_ASM("../asm/us/magic_echoes/nonmatchings/text", func_801B0020);
+void func_801B0020(void) {
+    MgTask *p;
+    MgMat *m;
 
-INCLUDE_ASM("../asm/us/magic_echoes/nonmatchings/text", func_801B0108);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    m = func_800D4368(&p->unk4, p->unk10, p->unk12);
+    m->t[0] = p->unkC + m->t[0];
+    m->t[1] = p->unkE + m->t[1];
+    func_8003B51C(m);
+    D_801B6878[0] = p->unk2;
+    D_801D687C = (u8 *)func_800D4D90(&D_801B6878[-4], D_801517C0 + 0x70, 0xC, (s32)D_801D687C);
+    if (D_80062D98 == 0) {
+        if (++p->unk2 >= D_801B64B8.v) {
+            p->unk0 = -1;
+        }
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_echoes/nonmatchings/text", func_801B02BC);
+void func_801B0108(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 a;
+    s32 v;
+    s32 r;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0xF) {
+            for (i = 0; i < 7; i++) {
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0020)];
+                *(MgSVec *)&q->unk4 = *(MgSVec *)&p->unk4;
+                a = func_80042DA8() & 0x7FF;
+                if (a < 0x400) {
+                    v = func_80039A74(a) - 0x1000;
+                } else {
+                    v = 0x1000 - func_80039A74(a);
+                }
+                q->unkC = (p->unkC * v) >> 12;
+                a = func_80042DA8() & 0x7FF;
+                if (a < 0x400) {
+                    v = func_80039A74(a) - 0x1000;
+                } else {
+                    v = 0x1000 - func_80039A74(a);
+                }
+                q->unkE = (p->unkE * v) >> 12;
+                r = func_80042DA8();
+                q->unk10 = r % 0x1000 + 0x2000;
+                q->unk12 = p->unk12;
+            }
+        } else {
+            func_800D5774(p->unk0);
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B02BC(arg0) {
+    MgTask *p;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B0108)];
+    p->unk0 = arg0;
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unk4);
+    p->unkC = p->unkE = (u32)(D_801518F6[arg0][0] * 3) >> 1;
+    t = D_801518F6[arg0][0];
+    p->unk12 = -t;
+    func_800D55F4(0x20, func_800D56A8(&p->unk4), 0x134);
+}
 
 void func_801B03A4(void) {
     MgObj20 *p;

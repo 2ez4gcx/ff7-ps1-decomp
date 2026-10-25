@@ -1,0 +1,2 @@
+// Symbols of magic_matra alone (the others it shares are listed before).
+D_801B001C = 0x801B001C; // force_not_migration:True

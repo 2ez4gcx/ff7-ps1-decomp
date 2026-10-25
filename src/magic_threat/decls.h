@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0364();
+s32 func_801B0364();
 void func_801B0304(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -12,5 +12,28 @@ extern MgObj20 D_80162978[];
 extern u8 D_801B8554[];
 extern u8 *D_801D8554;
 extern s16 D_80162080;
+s32 func_800BBEAC(void *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, s32, M2C_UNK, M2C_UNK *);
+s32 func_800D55F4(M2C_UNK, s32, M2C_UNK);
+s32 func_800D56A8(void *);
+extern s16 D_801518F6[][0x5CE];
+extern M2C_UNK D_801B0410;
+void func_801B01D8(s32 arg0, s32 arg1);
+void func_801B0020(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+M2C_UNK func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s32 D_801B8454;
+extern s16 D_801B8550[];
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+void func_800D3994(s32, s32, void *);
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_80151917[][0xB9C];
+void func_801B00DC(void);
+void func_800D4D4C(s32, s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_THREAT_DECLS_H */

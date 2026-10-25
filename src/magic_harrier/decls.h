@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0D58();
+s32 func_801B0D58();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -40,5 +40,24 @@ void func_800D44E8(MgSVec *, MgMat *);
 extern u8 D_8015190F[][0xB9C];
 extern u8 D_80151915[][0xB9C];
 void func_801B04B4(void);
+s32 func_800BBA84(s32, s32, s32);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)(s32, s32));
+extern M2C_UNK D_801B0F9C;
+void func_801B01D8(void);
+M2C_UNK func_800D4368(void *, s32, s32);
+extern s32 D_801C93C0[];
+extern u16 D_801C93C8;
+extern s32 *D_801C93CC[];
+extern s16 D_801C93D8[];
+void func_801B0324(void);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_8003B69C(s32, s32, s32);
+s32 func_800D29D4(void *, s32, s32, s32);
+extern u8 D_801B0DD4[];
+extern u8 D_801B0EB8[];
+extern MgVec D_801C93E0;
+extern u8 *D_801C93F0[];
+extern MgSVec D_801C9400;
 
 #endif /* MAGIC_HARRIER_DECLS_H */

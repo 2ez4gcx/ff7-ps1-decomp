@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0070(void);
-M2C_UNK func_801B1F38();
+s32 func_801B1F38();
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
@@ -36,5 +36,33 @@ extern u16 D_801B888C;
 void func_800D4368(void *, s32, s32);
 MgLineG2 *func_800D4D90(void *, s32, s32, MgLineG2 *);
 extern u8 D_80062D98;
+void func_801B1D54(void);
+typedef struct { s32 id; s16 x; s16 y; s16 z; s16 h; s32 unkC; s32 unk10; } MgMatraTgt;
+s32 func_800BBEAC(void *);
+void func_800D3994(s32, s32, void *);
+extern u8 D_8015190F[][0xB9C];
+extern u16 D_801518F6[][0x5CE];
+extern s32 D_801DC898;
+extern s32 D_801DC89C;
+extern u8 D_801DC8A4[];
+extern u16 D_801DC8AA;
+extern s16 D_801DC8AC;
+extern MgMatraTgt D_801DE05C[];
+void func_801B1558(void);
+MgMat *func_8003AB84(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_800D2980(void *, s32, s32, s32);
+s32 func_800D55F4(s32, s32, s32);
+s32 func_800D574C(s32);
+extern u8 D_801B20D4[];
+extern u8 D_801B001C[];
+extern MgMat D_801B8864;
+extern MgTask *D_801DC894;
+extern s32 D_801DC8A0;
+extern s16 D_801DC8B0;
+extern s16 D_801DC8B4;
+extern s16 D_801DC8B8;
+extern u8 D_801DC8BC[];
+extern s32 D_801DE0F0;
 
 #endif /* MAGIC_MATRA_DECLS_H */

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B059C();
+s32 func_801B059C();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -18,7 +18,7 @@ s32 func_800BBEAC(void *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern u8 D_80151917[][0xB9C];
-void func_801B02D0();
+void func_801B02D0(void);
 void func_801B0158(void);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
@@ -37,5 +37,15 @@ void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 void func_8003B69C(s32, s32, s32);
 s32 func_800D29D4(void *, s32, s32, s32);
+s32 func_800BBA84(s32, s32, s32);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)(s32, s32));
+void func_801B0080(void);
+M2C_UNK func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern s16 D_801B0B00[];
+extern s32 D_801B0898;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_ONPA_DECLS_H */
