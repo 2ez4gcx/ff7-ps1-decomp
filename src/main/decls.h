@@ -1458,6 +1458,10 @@ typedef struct { u8 pad[0x14]; } Prim20;
 extern s32 D_80049224[];
 void func_8001EC70(s32 x, s32 y, s32 value);
 extern s32 D_80049214[];
+u8 *func_80014E74(u8 *arg0, u8 *arg1_);
+extern s32 D_800FAFD0;
+extern s32 D_800F7ED0;
+extern struct { u8 pad[0xB8]; } D_800F5F44[];
 
 #endif /* MAIN_DECLS_H */
 extern MainSlot440 D_8009D85C[];

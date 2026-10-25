@@ -23,6 +23,7 @@ void func_80026F44(s16 arg0, s16 arg1, u8 *arg2, s32 arg3);
 s16 func_80026C5C(s16, s16, s32, s32);
 extern u8 D_80062DFD;
 s32 func_80028CA0(s16 arg0, s16 arg1, s8 arg2, s8 arg3, u16 arg4, u16 arg5, s16 arg6, s32 arg7);
+void func_80028E00(s32 arg0, s16 arg1, u32 value, s32 n, u8 clut);
 
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;
@@ -265,7 +266,75 @@ s32 func_80028CA0(s16 arg0, s16 arg1, s8 arg2, s8 arg3, u16 arg4, u16 arg5, s16 
     (*(void *volatile *)&D_80062F24) = (*(void *volatile *)&D_80062F24) + 0x14;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028E00);
+void func_80028E00(s32 arg0, s16 arg1, u32 value, s32 n, u8 clut) {
+  s32 x;
+  s16 y;
+  u32 div;
+  void * volatile *new_var;
+  s32 new_var2;
+  u32 rem;
+  s16 flag;
+  s16 i;
+  u32 digit;
+  div = 1;
+  flag = 1;
+  x = arg0;
+  y = arg1;
+  new_var2 = n;
+  for (i = 1; i < (new_var2 & 0xFF); i++)
+  {
+    div = div * 10;
+  }
+
+  rem = value;
+  if ((new_var2 & 0xFF) == 3)
+  {
+    if (rem >= 1000)
+    {
+      rem = 999;
+    }
+  }
+  for (i = 1; i < (new_var2 & 0xFF); i++)
+  {
+    *((s8 *) (((s8 *) (*(&D_80062F24))) + 3)) = 4;
+    *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 7)) = 0x64;
+    func_80046870(*((void * volatile *) (&D_80062F24)), 1);
+    digit = rem / div;
+    *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 8)) = x + ((i - 1) * 7);
+    new_var = (void * volatile *) (&D_80062F24);
+    *((s16 *) (((s8 *) (*new_var)) + 0xA)) = y;
+    *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xC)) = (digit * 8) + 0x88;
+    *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xD)) = 0;
+    *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0x10)) = 7;
+    *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0x12)) = 8;
+    *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xE)) = func_80046634(0x100, clut + 0x1E0);
+    if ((flag == 0) || (digit != 0))
+    {
+      flag = 0;
+      func_80046794(*((const s32 *) (&D_80062FC4)), (s32) (*((void * volatile *) (&D_80062F24))));
+      do
+      {
+      }
+      while (0);
+      *((void * volatile *) (&D_80062F24)) = (*((void * volatile *) (&D_80062F24))) + 0x14;
+    }
+    rem = rem % div;
+    div = div / 10;
+  }
+
+  *((s8 *) (((s8 *) (*(&D_80062F24))) + 3)) = 4;
+  *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 7)) = 0x64;
+  func_80046870(*((void * volatile *) (&D_80062F24)), 1);
+  *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 8)) = x + (((new_var2 & 0xFF) - 1) * 7);
+  *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xA)) = y;
+  *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xC)) = (rem * 8) + 0x88;
+  *((s8 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xD)) = 0;
+  *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0x10)) = 7;
+  *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0x12)) = 8;
+  *((s16 *) (((s8 *) (*((void * volatile *) (&D_80062F24)))) + 0xE)) = func_80046634(0x100, clut + 0x1E0);
+  func_80046794(*((const s32 *) (&D_80062FC4)), (s32) (*((void * volatile *) (&D_80062F24))));
+  *((void * volatile *) (&D_80062F24)) = (*((void * volatile *) (&D_80062F24))) + 0x14;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80029114);
 
