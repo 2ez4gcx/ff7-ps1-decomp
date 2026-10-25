@@ -497,7 +497,52 @@ void func_8002A798(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002A7E8);
+void func_8002A7E8(void)
+{
+  AkaoChannel *q;
+  s32 bit;
+  s32 mask;
+  s32 one;
+  s32 flags;
+  s32 m;
+  mask = (D_8009A108 | D_8009A128) & (~(D_80099FCC | D_80062F00));
+  if (mask != 0)
+  {
+    bit = 1;
+    one = 1;
+    q = D_80096608;
+    D_8009A10C = D_8009A110;
+    do
+    {
+      if (mask & bit)
+      {
+        if (func_80038E70(bit) == one)
+        {
+          flags = q->unk38;
+          if (flags & 0x200)
+          {
+            q->unk38 = flags | 0x400;
+          }
+          goto yes;
+        }
+        if (((q->unk38 & 0x600) == 0x600) && (((~(D_80099FCC | D_80062F00)) & (m = one << *(s32 *) ((u8 *) q + 0x28))) != 0) && (func_80038E70(m) == one))
+        {
+          yes:
+          D_8009A10C |= bit;
+        }
+        else
+        {
+          D_8009A10C &= ~bit;
+          D_8009A110 &= ~bit;
+        }
+        mask ^= bit;
+      }
+      q++;
+      bit *= 2;
+    }
+    while (mask != 0);
+  }
+}
 
 void func_8002A958(void) {
     AkaoChannel *ch;
@@ -630,7 +675,61 @@ void akao_song_resume(u16 slot)
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_8002AFB8);
+void func_8002AFB8(void) {
+    s32 *p;
+    s32 *q;
+    u16 k;
+    u16 i;
+    u16 n;
+    s32 f;
+    AkaoChannel *c;
+
+    k = 0x630;
+    p = (s32 *)D_80096608;
+    q = (s32 *)(D_80096608 + 0x18);
+    do {
+        k--;
+        *q++ = *p++;
+    } while (k != 0);
+    k = 0x18;
+    p = (s32 *)D_8009A104;
+    q = (s32 *)&D_8009A104[1];
+    do {
+        k--;
+        *q++ = *p++;
+    } while (k != 0);
+    p = (s32 *)D_80083580;
+    q = (s32 *)D_80083580 + 0xC00;
+    k = 0xC00;
+    do {
+        k--;
+        *q++ = *p++;
+    } while (k != 0);
+    c = (AkaoChannel *)&D_80097EC8;
+    k = 0x18;
+    do {
+        k--;
+        c->addr += 0x3000;
+        M2C_SFIELD(c, s32 *, 0x14) += 0x3000;
+        M2C_SFIELD(c, s32 *, 0x4) += 0x3000;
+        M2C_SFIELD(c, s32 *, 0x8) += 0x3000;
+        M2C_SFIELD(c, s32 *, 0xC) += 0x3000;
+        M2C_SFIELD(c, s32 *, 0x10) += 0x3000;
+        M2C_SFIELD(c, s32 *, 0x24) += 0x18;
+        c++;
+    } while (k != 0);
+    k = 0;
+    n = 0x18;
+    do {
+        D_8009C5A0[k].a = 0x7F8000;
+        D_8009C5A0[k].b = -(0x7F8000 / (D_80062FC8 * n));
+        D_8009C5A0[k].c = n * D_80062FC8;
+        k++;
+        n--;
+    } while (k < 0x18);
+    D_80062F68 = 0xFFFFFF;
+    D_80062FF8 &= ~0x100;
+}
 
 void func_8002B1A8(AkaoChannel *from, AkaoChannel *to, AkaoSong *song_from, AkaoSong *song_to) {
     s32 *src = (s32 *)from;
