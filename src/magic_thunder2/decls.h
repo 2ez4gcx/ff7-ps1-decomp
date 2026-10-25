@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B147C();
+s32 func_801B147C();
 void func_801B00B0(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -57,5 +57,32 @@ MgMat *func_8003B35C(MgMat *, MgVec *);
 MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
 extern s16 D_801D21EA[];
 s32 func_800D29D4(void *, s32, s32, s32);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800BBEAC(void (*)());
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+extern M2C_UNK D_801B151C;
+void func_801B13B8();
+extern u8 D_8015190F[][0xB9C];
+extern MgSVec D_801EA210;
+void func_800D3994(s32, s32, void *);
+extern M2C_UNK func_801B0D44;
+void func_801B0B50(void);
+s32 func_80039A74(s16);
+s32 func_80039B40(s16);
+s32 func_80042DA8(void);
+void func_801B06A8(void);
+s32 func_80039F5C(s32);
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_800D44E8(MgSVec *, MgMat *);
+extern u8 D_801D21B8[];
+extern u16 D_801D21BC;
+extern MgSVec D_801D21C0;
+extern MgSVec D_801D21C8;
+extern s16 D_801D21DA[];
 
 #endif /* MAGIC_THUNDER2_DECLS_H */

@@ -36,6 +36,7 @@ options:
   symbol_addrs_path:
     - config/symbols.us.main.txt
     - config/symbols.us.magic.txt
+    - config/symbols.us.magic_trainn.txt
   reloc_addrs_path:
     - config/reloc_addrs.us.magic.txt
   undefined_funcs_auto_path: build/us/undefined_funcs_auto.magic_trainn.txt

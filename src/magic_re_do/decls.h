@@ -95,7 +95,7 @@ s32 func_80039B40(s16);
 s32 func_80039A74(s16);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 s32 func_800D52A0(M2C_UNK, M2C_UNK);
-void func_801B1590();
+void func_801B1590(void);
 extern s8 D_800F5B70;
 extern s8 D_800F5B71;
 extern s8 D_800F5B72;
@@ -105,5 +105,13 @@ extern s16 D_801D572C;
 extern MgSVec D_801D5730;
 void func_801B0DAC(void);
 extern s16 D_801D56B0[];
+void func_8003A0B8(MgSVec *, MgSVec *);
+void func_800D44E8(MgSVec *, MgMat *);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s32 func_800BBA84(s32, s32, s32);
+s32 func_800BC04C(void (*)());
+void func_800D5774(s32);
+typedef struct { u16 v; } ReDoU16;
+extern ReDoU16 D_801031EA;
 
 #endif /* MAGIC_RE_DO_DECLS_H */
