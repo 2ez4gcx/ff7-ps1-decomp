@@ -30,5 +30,9 @@ s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 extern s32 D_801517C0;
 typedef struct { s32 head; s32 tail; s32 count; s32 size; s32 last; s32 prev; s32 buf[1]; } MgRing;
 void func_801B11D8(MgRing *r, s32 v);
+void func_801B00B0(s32 a, s32 b);
+void func_801BCE2C(s32, s32, s32);
+void func_801B00D0(s32 a, s32 b);
+void func_801B00F0(s32 a, s32 b);
 
 #endif /* MAGIC_TIFA_DECLS_H */

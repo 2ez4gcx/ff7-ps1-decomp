@@ -49,4 +49,8 @@ INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B0F60);
 
 INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B1070);
 
-INCLUDE_ASM("../asm/us/magic_tornado/nonmatchings/text", func_801B10F4);
+void func_801B10F4(arg0, arg1) {
+    func_800D2980(&D_801B1164, 0, 0, 0);
+    func_800BBEAC(&func_801B1070);
+    func_800D5444(arg0, arg1, 0x5A, &func_801B0F60);
+}

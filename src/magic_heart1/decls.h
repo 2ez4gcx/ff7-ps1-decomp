@@ -8,7 +8,7 @@ void func_801B153C();
 void func_801B137C(void);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
-M2C_UNK func_801B131C();
+void func_801B131C();
 extern s32 D_801CB140;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
@@ -76,5 +76,10 @@ typedef struct { s16 x; s16 y; u8 u; u8 v; u8 w; u8 h; s32 rgbc; u16 tpage; u16 
 M2C_UNK func_800D4368(void *, s32, s32);
 s32 func_800D6260(MgSprArg *, s32, s32, s32);
 extern u8 D_801B312C[];
+void func_801B10D8(void);
+typedef struct { s16 unk0; u16 unk2; u16 unk4; u16 unk6; u16 unk8; u8 padA[3]; u8 unkD; u16 unkE; u16 unk10; s16 unk12; s16 unk14; u16 unk16; } MgSpark;
+s32 func_80042DA8(void);
+M2C_UNK func_800D5774(s16);
+extern struct { s16 unk0; u8 pad[0xB9A]; } D_801518F4[];
 
 #endif /* MAGIC_HEART1_DECLS_H */

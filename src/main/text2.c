@@ -305,7 +305,33 @@ u8 *func_80014C80(s32 arg0) {
     return &D_80063690[off];
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80014CBC);
+INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_80010100);
+
+INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_8001010E);
+
+s32 func_80014CBC(s32 arg0, s32 arg1) {
+    u8 v;
+    s32 r;
+
+    v = 0xFF;
+    r = -1;
+    switch (arg0) {
+    case 0:
+    case 1:
+    case 2:
+        v = D_800708D4[D_80010100[arg0] + arg1].b;
+        break;
+    case 4:
+        if (arg1 < 0x80) {
+            v = D_800722DC[arg1].b;
+        }
+        break;
+    }
+    if (v != 0xFF) {
+        r = v;
+    }
+    return r;
+}
 
 u8 *func_80014D58(u8 *dst, u8 *src, s32 n) {
     u8 c;

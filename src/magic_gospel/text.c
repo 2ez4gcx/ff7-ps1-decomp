@@ -46,7 +46,16 @@ void func_801B120C(s32 arg0, s32 arg1, s16 arg2) {
     p->unk14 = arg2;
 }
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B1270);
+void func_801B1270(void) {
+    s32 *p;
+    s32 i;
+
+    i = 299;
+    p = &D_801E25DC;
+    for (; i >= 0; i--) {
+        *p-- = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B1294);
 

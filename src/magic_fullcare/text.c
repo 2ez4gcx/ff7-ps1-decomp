@@ -35,7 +35,16 @@ void func_801B0EF8(s32 arg0) {
     func_800D3994(arg0, D_8015190F[arg0][0], &p->unk4);
 }
 
-INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0F78);
+void func_801B0F78(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    D_801E4994 = D_801C4994 + p->unk2 * 0x10000;
+    p->unk2 ^= 1;
+    if (D_80162080 < 3) {
+        p->unk0 = -1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_fullcare/nonmatchings/text", func_801B0FD8);
 

@@ -47,4 +47,7 @@ INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B01C8);
 
 INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B03D8);
 
-INCLUDE_ASM("../asm/us/magic_boost/nonmatchings/text", func_801B046C);
+void func_801B046C(arg0, arg1) {
+    func_800D2980(&D_801B04CC, 0, 0, 0);
+    func_800D5444(arg0, arg1, 4, &func_801B03D8);
+}

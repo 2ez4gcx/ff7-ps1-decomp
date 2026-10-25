@@ -16,5 +16,10 @@ void func_801B015C(s32 ang, MgMat *m, MgVec *v);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 void func_801B02D8(MgSVec *p, MgSVec *o, MgVec *n);
 s16 func_801B03B4(MgSVec *p, MgSVec *q, MgVec *n);
+M2C_UNK *func_801B0498(s32 a, s32 b);
+void func_801B2618(s32, s32, s32);
+extern M2C_UNK D_801BBB4C;
+M2C_UNK *func_801B04C0(s32 a, s32 b);
+s32 func_801B0EB4(s32 x, s32 v, s32 a, s32 lim);
 
 #endif /* MAGIC_CONF_DECLS_H */

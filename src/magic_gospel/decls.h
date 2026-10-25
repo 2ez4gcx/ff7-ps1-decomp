@@ -29,5 +29,7 @@ extern M2C_UNK func_801B31BC;
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
 extern MgTask D_80162978[];
+void func_801B1270(void);
+extern s32 D_801E25DC;
 
 #endif /* MAGIC_GOSPEL_DECLS_H */

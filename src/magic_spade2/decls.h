@@ -8,7 +8,7 @@ void func_801B1540();
 void func_801B1380(void);
 M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
-M2C_UNK func_801B131C();
+void func_801B131C();
 extern s32 D_801CB22C;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
@@ -76,5 +76,6 @@ typedef struct { s16 x; s16 y; u8 u; u8 v; u8 w; u8 h; s32 rgbc; u16 tpage; u16 
 M2C_UNK func_800D4368(void *, s32, s32);
 extern u8 D_801B3218[];
 s32 func_800D6260(MgSprArg *, s32, s32, s32);
+extern s32 func_801B10D8;
 
 #endif /* MAGIC_SPADE2_DECLS_H */

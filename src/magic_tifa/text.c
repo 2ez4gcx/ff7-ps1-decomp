@@ -6,11 +6,17 @@ M2C_UNK *func_801B0088(void) {
     return &D_801CDC20;
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B00B0);
+void func_801B00B0(s32 a, s32 b) {
+    func_801BCE2C(a, b, 1);
+}
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B00D0);
+void func_801B00D0(s32 a, s32 b) {
+    func_801BCE2C(a, b, 2);
+}
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B00F0);
+void func_801B00F0(s32 a, s32 b) {
+    func_801BCE2C(a, b, 3);
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B0110);
 

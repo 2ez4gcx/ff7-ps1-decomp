@@ -20,7 +20,17 @@ INCLUDE_ASM("../asm/us/magic_aeroga/nonmatchings/text", func_801B008C);
 
 INCLUDE_ASM("../asm/us/magic_aeroga/nonmatchings/text", func_801B04E8);
 
-INCLUDE_ASM("../asm/us/magic_aeroga/nonmatchings/text", func_801B055C);
+MgObj14 *func_801B055C(void) {
+    s32 i;
+
+    for (i = 0; i < 200; i++) {
+        if (D_801B0AA8[i].unk0 == 0) {
+            D_801B0AA8[i].unk0 = 1;
+            return &D_801B0AA8[i];
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("../asm/us/magic_aeroga/nonmatchings/text", func_801B05A8);
 

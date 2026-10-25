@@ -14,5 +14,6 @@ extern MgObj20 D_80162978[];
 extern u8 D_801C1108[];
 extern u8 *D_801D9108;
 extern s16 D_80162080;
+void func_801B01AC(u8 *arg0, u8 *arg1);
 
 #endif /* MAGIC_GESUI_DECLS_H */

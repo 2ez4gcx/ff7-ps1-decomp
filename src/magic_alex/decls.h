@@ -45,5 +45,7 @@ extern M2C_UNK D_801EDE4C;
 typedef struct { s32 n; MgSVec v[1]; } MgSVecList;
 void func_801B1E24(MgSVecList *a, MgSVec *b, MgSVec *out);
 void func_801B1EB4(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
+void func_801B2AE4(void);
+extern s32 D_801F1C24;
 
 #endif /* MAGIC_ALEX_DECLS_H */

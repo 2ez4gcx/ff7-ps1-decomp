@@ -81,7 +81,68 @@ void func_801B046C(void) {
 
 INCLUDE_ASM("../asm/us/magic_gas/nonmatchings/text", func_801B04D8);
 
-INCLUDE_ASM("../asm/us/magic_gas/nonmatchings/text", func_801B05DC);
+void func_801B05DC(void) {
+    MgMat m[2];
+    MgSVec rot;
+    s32 flag;
+    MgGas *p;
+    MgMat *mp;
+    s16 n;
+    s16 i;
+    s16 scale;
+    s8 *col;
+    s8 c;
+    s32 t;
+
+    p = (MgGas *)&D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m[1].m[0][i] = m[1].m[1][i] = m[1].m[2][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 12) {
+        n = 20 - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C(&p->unk4, (MgVec *)m[1].t, &flag);
+    mp = &m[1];
+    scale = 0x2000;
+    if (p->unk16 < 4) {
+        scale = 0x1400;
+    }
+    m[1].m[0][0] = m[1].m[1][1] = m[1].m[2][2] = scale;
+    func_8003C21C(&rot, &m[0]);
+    func_8003B05C(mp, &m[0]);
+    func_8003B48C(mp);
+    func_8003B51C(mp);
+    D_801D3FB0 = p->unk16;
+    D_801D3FAF = (n == 8) ? 0x2C : 0x2E;
+    col = &D_801D3FAC;
+    c = n << 4;
+    D_801D3FAE = c;
+    D_801D3FAD = c;
+    *col = c;
+    D_80163C74 = func_800D4D90(col - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4.vx += p->unkC.vx;
+        p->unk4.vy += p->unkC.vy;
+        p->unk4.vz += p->unkC.vz;
+        if (p->unk4.vy > 0) {
+            p->unk4.vy = 0;
+            t = p->unkC.vy;
+            p->unkC.vy = -t;
+        }
+        p->unkC.vy += 0x14;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gas/nonmatchings/text", func_801B080C);
 

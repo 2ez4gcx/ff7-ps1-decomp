@@ -3,7 +3,56 @@
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A2314);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A2D5C);
+void func_800A2D5C(s32 unused, u8 *p) {
+    RECT16 r;
+    u32 a;
+    u32 b;
+    u8 *q;
+    u8 pad[0x28];
+
+    a = *(u32 *)p;
+    D_800E4D94 = a;
+    D_800E4D98 = *(u16 *)(p + 4);
+    D_800E4D9A = *(u16 *)(p + 6);
+    D_800E4D9C = *(u16 *)(p + 8);
+    D_800E4D9E = *(u16 *)(p + 0xA);
+    q = p + 0xC;
+    D_800E4D90 = q;
+    q += (a >> 2) * 4 - 0xC;
+    b = *(u32 *)q;
+    D_800E4DA8 = b;
+    q += 4;
+    D_800E4DAC = *(u16 *)q;
+    D_800E4DAE = *(u16 *)(q + 2);
+    q += 4;
+    D_800E4DB0 = *(u16 *)q * 2;
+    D_800E4DB2 = *(u16 *)(q + 2);
+    q += 4;
+    D_800E4DA4 = q;
+    q += (b >> 2) * 4 - 0xC;
+    D_800E4DD8 = *(s32 *)q;
+    q += 4;
+    D_800E4DDC = *(u16 *)q;
+    D_800E4DDE = *(u16 *)(q + 2);
+    q += 4;
+    D_800E4DE0 = *(u16 *)q * 2;
+    D_800E4DE2 = *(u16 *)(q + 2);
+    q += 4;
+    D_800E4DD4 = q;
+    r.x = 0;
+    r.y = 0x1E0;
+    r.w = 0x100;
+    r.h = 0x10;
+    func_80043DD8(0);
+    func_80044000(&r, D_800E4D90);
+    func_80043DD8(0);
+    D_800E4DB4 = func_800436C0(D_800E4DA4, 1, 0, D_800E4DAC, D_800E4DAE, D_800E4DB0, D_800E4DB2);
+    if (D_800E4DD8 != 0) {
+        func_80043DD8(0);
+        D_800E4DE4 = func_800436C0(D_800E4DD4, 1, 0, D_800E4DDC, D_800E4DDE, D_800E4DE0, D_800E4DE2);
+    }
+    func_80043DD8(0);
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A2F78);
 
@@ -48,7 +97,58 @@ s32 func_800A41CC(s32 arg0, M2C_UNK arg1) {
     return temp_s0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A424C);
+void func_800A424C(FdOsc *s) {
+    s16 t;
+    s16 u;
+    s16 w;
+    u16 x;
+
+    if (s->mode == 1) {
+        if (s->phase == 0) {
+            s->t = 0;
+            s->from = 0;
+            s->to = (s16)(D_800E0638[s->idx] * s->amp) / 256;
+            s->phase = 1;
+            s->idx++;
+            return;
+        }
+        t = s->t;
+        if (t > s->dur) {
+            s->t = 0;
+            s->from = s->to;
+            if ((s16)s->from < 0) {
+                s->to = (s16)(D_800E0638[s->idx] * s->amp) / 256;
+            } else {
+                s->to = -(s16)(D_800E0638[s->idx] * s->amp) / 256;
+            }
+            s->idx++;
+            return;
+        }
+        s->t = t + 1;
+        s->out = func_800A4134((s16)s->from, (s16)s->to, s->dur, s->t);
+    } else if (s->phase == 1) {
+        u = s->t;
+        if (u > s->dur) {
+            x = s->to;
+            s->t = 0;
+            s->to = 0;
+            s->phase = 0;
+            s->from = x;
+            s->idx++;
+            return;
+        }
+        s->t = u + 1;
+        s->out = func_800A4134((s16)s->from, (s16)s->to, s->dur, s->t);
+    } else {
+        w = s->t;
+        if (s->dur == w) {
+            s->out = 0;
+            return;
+        }
+        s->t = w + 1;
+        s->out = func_800A4134((s16)s->from, (s16)s->to, s->dur, s->t);
+    }
+}
 
 void func_800A4430(void) {
     if (D_8009AC13 == 0) {
@@ -201,7 +301,45 @@ s16 func_800A8620(u8 arg0) {
     return D_800DF120[arg0].b;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8640);
+s32 func_800A8640(FdVec *arg0, FdVec *arg1, s32 *arg2) {
+    s32 dx;
+    s32 dy;
+    s32 d;
+    s32 a;
+    s32 t;
+
+    dx = arg1->x - arg0->x;
+    dy = arg1->y - arg0->y;
+    t = dx * dx + dy * dy;
+    *arg2 = t;
+    d = (*arg2 = func_80039F5C(t));
+    dx = (dx << 12) / d / 32;
+    dy = (dy << 12) / d / 32;
+    if (dx * dx > dy * dy) {
+        if (dx > 0) {
+            if (dy > 0) {
+                a = D_800DEF88[dy * 2];
+            } else {
+                a = -D_800DEF88[-dy * 2];
+            }
+        } else if (dy > 0) {
+            a = -0x80 - D_800DEF88[dy * 2];
+        } else {
+            a = D_800DEF88[-dy * 2] - 0x80;
+        }
+    } else if (dy > 0) {
+        if (dx > 0) {
+            a = 0x40 - D_800DEF88[dx * 2];
+        } else {
+            a = D_800DEF88[-dx * 2] + 0x40;
+        }
+    } else if (dx > 0) {
+        a = D_800DEF88[dx * 2] - 0x40;
+    } else {
+        a = -0x40 - D_800DEF88[-dx * 2];
+    }
+    return (a + 0x40) & 0xFF;
+}
 
 s32 func_800A8858(FdMover *e, s16 step) {
     FdVec a;
@@ -279,7 +417,25 @@ s32 func_800A9B64(s16 arg0, FdVec *arg1) {
     return hit;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A9CE8);
+s32 func_800A9CE8(FdGate18 *g, s32 *pos, s32 *out) {
+    s32 t;
+
+    t = -(((g->x0 - pos[0]) * (g->x1 - g->x0) + (g->y0 - pos[1]) * (g->y1 - g->y0) + (g->z0 - pos[2]) * (g->z1 - g->z0)) << 8)
+        / ((g->x1 - g->x0) * (g->x1 - g->x0) + (g->y1 - g->y0) * (g->y1 - g->y0) + (g->z1 - g->z0) * (g->z1 - g->z0));
+    out[0] = ((t * (g->x1 - g->x0)) >> 8) + g->x0;
+    out[1] = ((t * (g->y1 - g->y0)) >> 8) + g->y0;
+    out[2] = ((t * (g->z1 - g->z0)) >> 8) + g->z0;
+    if ((g->x0 - out[0] >= 0 && g->x1 - out[0] <= 0) || (g->x0 - out[0] <= 0 && g->x1 - out[0] >= 0)) {
+        if ((g->y0 - out[1] >= 0 && g->y1 - out[1] <= 0) || (g->y0 - out[1] <= 0 && g->y1 - out[1] >= 0)) {
+            t = (out[0] - pos[0]) * (out[0] - pos[0]) + (out[1] - pos[1]) * (out[1] - pos[1]) + (out[2] - pos[2]) * (out[2] - pos[2]);
+        } else {
+            t = -1;
+        }
+    } else {
+        t = -1;
+    }
+    return t;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A9EEC);
 
@@ -420,7 +576,39 @@ void func_800AA870(u8 *p) {
     } while (i < 12);
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AA930);
+INCLUDE_RODATA("../asm/us/field/nonmatchings/text2", D_800A00DC);
+
+void func_800AA930(void) {
+    u32 i;
+    u8 **nv;
+    u32 t;
+    u8 *q;
+
+    D_800DFCA0 = 0x80128000;
+    t = func_800ADAA4(D_8007E770, D_8004A62C);
+    D_80075E10 = t;
+    D_800E0204 = t;
+    func_80033E74(D_800DA5C0[(s16)D_8009A05C * 6 + 2], D_800DA5C0[(s16)D_8009A05C * 6 + 3], 0x801B0000, 0);
+    while (func_80034B44() != 0) {
+    }
+    *(s32 *)0x1F800000 = (s32)&D_800DF08C;
+    *(s32 *)0x1F800004 = (s32)&D_800DF0D4;
+    D_80075E10 = func_800ADC90((u8 *)D_8007E770, (s32)D_8004A62C, D_80075E10, 1);
+    D_80075E10 = func_800AC35C(D_8007E770, D_8004A62C, &D_800A00DC, 0x801B0000);
+    for (i = 1; i < *(u8 *)D_8004A62C; i++) {
+        *(u8 *)(D_8004A62C[1] + i * 0x24) = 0;
+    }
+    for (i = 0; i < *(u8 *)D_8004A62C; i++) {
+        *(u8 *)0x1F800001 = 1;
+        *(u8 *)0x1F800002 = 0;
+        nv = &D_8004A62C[1];
+        *(u8 *)0x1F800003 = i;
+        q = (u8 *)(*nv + i * 0x24);
+        *(u8 *)0x1F800000 = 1;
+        func_800B1C7C(q, (u8 *)0x1F800000);
+    }
+    func_800AFDE4();
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AAB24);
 

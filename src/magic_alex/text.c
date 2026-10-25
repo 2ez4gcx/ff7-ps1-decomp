@@ -68,7 +68,16 @@ void func_801B1EB4(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t) {
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1F7C);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2AE4);
+void func_801B2AE4(void) {
+    s32 *p;
+    s32 i;
+
+    i = 199;
+    p = &D_801F1C24;
+    for (; i >= 0; i--) {
+        *p-- = 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2B08);
 

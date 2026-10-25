@@ -5,7 +5,26 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A1158);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A1798);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text", func_800A22C0);
+void func_800A22C0(s32 arg0) {
+    s32 i;
+
+    if (D_800E7A38 != -1) {
+        if (D_800E7A38 == arg0) {
+            return;
+        }
+        for (i = 0; i < 0x40; i++) {
+            if (D_800F6934[i].a == 6 && D_800F6934[i].c == D_800E7A38) {
+                break;
+            }
+        }
+        if (i == 0x40) {
+            D_800F5BE2[D_800E7A38][0] += 1;
+            func_800A56B0(D_800E7A38);
+            func_800A7254(0, D_800E7A38, 0, 0);
+        }
+    }
+    D_800E7A38 = arg0;
+}
 
 void func_800A23BC(s32 arg0) {
     if (D_800E7A38 == arg0) {

@@ -29,5 +29,8 @@ extern u8 D_801BD868[];
 extern u8 *D_801DD868;
 extern s16 D_80162080;
 void func_801B0DBC(s16 arg0, s16 arg1);
+void func_801B0484(void);
+extern u8 D_801DD874;
+MgObj20 *func_801B04B0(void);
 
 #endif /* MAGIC_FLAME_DECLS_H */

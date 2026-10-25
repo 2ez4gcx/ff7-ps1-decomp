@@ -22,7 +22,18 @@ void func_801B0040(void) {
 
 INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B00AC);
 
-INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B01AC);
+void func_801B01AC(u8 *arg0, u8 *arg1) {
+    if (*arg0 == 0) {
+        *arg0 = 0xFF;
+    } else {
+        *arg0 = -*arg0;
+    }
+    if (*arg1 == 0xFF) {
+        *arg1 = 0;
+    } else {
+        *arg1 = -*arg1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B01FC);
 

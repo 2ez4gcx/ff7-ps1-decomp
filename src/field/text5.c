@@ -602,7 +602,48 @@ void func_800D48C0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D493C);
+void func_800D493C(s16 n) {
+    s16 (*pb)[8];
+    u8 (*pa)[8];
+    s32 i;
+    u8 *a;
+    s16 *b;
+
+    if (n == 1) {
+        D_800832AA = 8;
+    } else {
+        D_8008327A[n].v = 0x95;
+    }
+    i = 0;
+    D_80083278[n].v = 8;
+    pb = D_800E4D48;
+    b = pb[n];
+    pa = D_800E4214;
+    a = pa[n];
+    D_8008327C[n].a = 0x130;
+    D_8008327C[n].b = 0x49;
+    D_80083280[n].v = 1;
+    D_80083282[n].v = 1;
+    D_800832A0[n].v = 0;
+    D_8008328D[n].v = 0;
+    D_8008328F[n].v = 0;
+    D_80083290[n].pad0[0] = 0;
+    D_80083290[n].b1 = 6;
+    D_8008329C[n].v = 0;
+    D_8008329E[n].v = 0;
+    D_800832A2[n].v = 0;
+    D_8008326C[n] = 0xFF;
+    for (; i < 8; i++) {
+        *a = 0;
+        *b = 0;
+        b++;
+        a++;
+    }
+    D_8011445C[n] = 0;
+    if (D_8009D820 & 3) {
+        func_800BECA4("mes reset=", n, 1);
+    }
+}
 
 s32 func_800D4B28(s32 arg0) {
     switch (D_800832A0[(s16)arg0].v) {
@@ -759,7 +800,33 @@ void func_800D6F6C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D707C);
+s32 func_800D707C(s16 n) {
+    s16 v;
+    s16 u;
+
+    if (D_8008326C[n] != D_800722C4) {
+        if (D_8009D820 & 3) {
+            func_800BECA4(D_800A10EC, n, 1);
+        }
+    } else {
+        v = D_80083280[n].v;
+        D_80083280[n].v = v < 8 ? 8 : v - D_8008327C[n].a / 4;
+        u = D_80083282[n].v;
+        D_80083282[n].v = u < 8 ? 8 : u - D_8008327C[n].b / 4;
+        if (D_80083280[n].v < 9) {
+            if (D_80083282[n].v < 9) {
+                D_80083286[n].v = 0;
+                do {
+                } while (0);
+                D_800832A0[n].v = 0;
+                D_8008326C[n] = 0xFF;
+                D_80071E2C--;
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D726C);
 

@@ -351,7 +351,16 @@ void func_801B0F9C(void) {
 
 INCLUDE_ASM("../asm/us/magic_spade2/nonmatchings/text", func_801B10D8);
 
-INCLUDE_ASM("../asm/us/magic_spade2/nonmatchings/text", func_801B131C);
+void func_801B131C(arg0) {
+    MgTask *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B10D8)];
+    *((u8 *)p + 0xD) = 0x40;
+    p->unkE = 0x7947;
+    p->unk12 = arg0;
+    p->unk14 = 0;
+    p->unk16 = 0x3A;
+}
 
 void func_801B1380(void) {
     func_801B131C();

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B046C();
+void func_801B046C();
 extern M2C_UNK D_801B868C;
 void func_801B0028(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
@@ -22,5 +22,9 @@ extern s32 D_80163C74;
 void func_801B00E0(void);
 extern s32 D_801B8530;
 extern u16 D_801BA278;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+extern M2C_UNK D_801B04CC;
+extern M2C_UNK func_801B03D8;
 
 #endif /* MAGIC_BOOST_DECLS_H */

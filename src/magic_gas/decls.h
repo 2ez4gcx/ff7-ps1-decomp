@@ -35,5 +35,16 @@ extern M2C_UNK D_801B0FF0;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK func_801B0EAC;
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+void func_801B05DC(void);
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u16 unk14; s16 unk16; } MgGas;
+extern u8 D_80062D98;
+extern s32 D_801517C0;
+extern s32 D_80163C74;
+extern s8 D_801D3FAC;
+extern s8 D_801D3FAD;
+extern s8 D_801D3FAE;
+extern s8 D_801D3FAF;
+extern u16 D_801D3FB0;
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_GAS_DECLS_H */

@@ -12,5 +12,8 @@ extern s16 D_80162080;
 extern MgObj20 D_80162978[];
 extern u8 D_801B1A48[];
 extern u8 *D_801C9A48;
+typedef struct { s16 unk0; u8 pad2[0x12]; } MgObj14;
+extern MgObj14 D_801B0AA8[];
+MgObj14 *func_801B055C(void);
 
 #endif /* MAGIC_AEROGA_DECLS_H */
