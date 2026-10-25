@@ -425,7 +425,58 @@ s32 func_800A3C4C(u8 *arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A3CB4);
+s32 func_800A3CB4(SbObjD *p) {
+    SbTbl *e;
+    SbTbl *tbl;
+    SbRec12 *r;
+    SbRec12 *rp;
+    s16 *q;
+    SbQ *h;
+    s16 i;
+    u16 a;
+    s32 b;
+    s32 res;
+
+    h = p->unk10;
+    i = p->unk2 + 1;
+    p->unk2 = i;
+    if (i >= *(s16 *)h) {
+        D_800DD744 = 1;
+        return 0;
+    }
+    q = &p->unk34;
+    tbl = D_8004BC98;
+    p->unk3C = (SbRecC *)(D_800C000C + h->unk8[i] * 0x374);
+    e = (SbTbl *)(((-p->unk10->unk18[i] & 0xFFF) << 2) + (u8 *)tbl);
+    a = e->a;
+    b = e->b;
+    p->unk16 = 0;
+    p->unk1C = 0x1000;
+    p->unk1A = 0;
+    p->unk1E = 0;
+    p->unk22 = 0;
+    p->unk18 = a;
+    p->unk14 = b;
+    p->unk20 = -a;
+    p->unk24 = b;
+    rp = &p->unk10->unk1C[i];
+    r = rp;
+    p->unk34 = p->unk40 - r->unk0;
+    p->unk38 = p->unk48 - r->unk8;
+    func_8003B2CC(&p->unk14, q, q);
+    if (p->unk38 > 0) {
+        p->unk38 = 0;
+    }
+    res = func_800A39CC(q, (s32)p->unk3C, p);
+    p->unk4 = res;
+    if ((s16)res < 0) {
+        return 1;
+    }
+    D_801027C4 = p->unk2;
+    D_801027C8 = p->unk4;
+    D_801028EC = p->unk63;
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A3E58);
 
