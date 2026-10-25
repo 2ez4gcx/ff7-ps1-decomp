@@ -20,10 +20,12 @@ void func_800E5358(void) {
 }
 
 void func_800E53C8(s32 arg0) {
-    s32 i; u8 *p;
+    s32 i;
+    u8 *p;
     u8 pad[8];
 
-    i = 6; p = &D_800F33A6;
+    i = 6;
+    p = &D_800F33A6;
     for (; i >= 0; i--) {
         *p-- = 0;
     }

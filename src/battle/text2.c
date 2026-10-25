@@ -456,7 +456,24 @@ void func_800B950C(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B9568);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800BA11C);
+void func_800BA11C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
+    BtlCoord34 *c;
+    u8 *r;
+    s32 i;
+
+    i = arg0 & 0xFF;
+    r = (u8 *)&D_800F8178[i];
+    c = (BtlCoord34 *)((u8 *)&D_800F8178[i] - 0x20);
+    func_8003C21C((s32)r, (s32)c);
+    func_800BAF34(c);
+    if (D_800F8178[i].z == arg3) {
+        D_800F8178[i].z = arg2;
+    }
+    D_800F8178[i].z = arg1 + D_800F8178[i].z;
+    func_800BA360(8, D_801517C0 + 0x70, 0xC, 0);
+    func_800BA360(9, D_801517C0 + 0x70, 0xC, 0);
+    func_800BA360(0xA, D_801517C0 + 0x70, 0xC, 0);
+}
 
 void func_800BA24C(void) {
     D_800F8180.b = 0;

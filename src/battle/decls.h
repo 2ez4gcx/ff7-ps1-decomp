@@ -1063,6 +1063,9 @@ extern u8 D_80162984[];
 extern u8 D_80162988[];
 extern u8 D_8016298C[];
 extern u8 D_80162990[];
+void func_800BA11C(s32 arg0, s32 arg1, s16 arg2, s16 arg3);
+typedef struct { u8 pad[0xC]; s16 z; u8 pad2[0x26]; } BtlC34z;
+extern BtlC34z D_800F8178[];
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;
