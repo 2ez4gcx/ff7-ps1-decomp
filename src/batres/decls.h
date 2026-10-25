@@ -24,5 +24,22 @@ extern s32 D_8009D7DC;
 extern s32 D_8009D7E0;
 extern BrSlotC D_8009D7EC[];
 extern BrSlot6 D_8009D808[];
+void func_801B0EF8(u8 *arg0, s32 arg1, s32 arg2);
+typedef struct { s32 rank; u8 id; u8 lvl; u8 pad6[2]; u16 base[8]; u16 stat[8]; u8 *p; s32 f2C; s32 f30; s32 f34; s32 f38; s32 c[16]; s32 f7C; s32 f80; } BrLvl;
+extern s32 D_80075D14[];
+extern s32 D_80075D24[];
+extern u8 D_80075DE4[];
+extern u8 D_80075DE8[];
+extern u8 D_80082484[];
+extern s8 D_80082485[];
+s32 func_801B14AC(NmLvl *arg0, s32 arg1);
+s32 func_801B1500(NmLvl *arg0, s32 arg1);
+void func_801B118C(NmLvl *arg0);
+extern u8 D_80082268[];
+extern u8 D_8008246C[];
+extern u8 D_80082478[];
+typedef struct { u8 pad0; u8 lvl; u8 s[6]; u8 pad8[0x19]; u8 pct; u8 pad22[0xC]; u16 f2E; u8 pad30[2]; u16 f32; u8 pad34[8]; s32 f3C; u8 pad40[0x40]; s32 f80; } NmOut;
+void func_801B108C(NmLvl *arg0, NmOut *arg1);
+void func_801B0D14(s32 arg0);
 
 #endif /* BATRES_DECLS_H */

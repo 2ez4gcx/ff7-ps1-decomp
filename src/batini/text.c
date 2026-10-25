@@ -48,7 +48,66 @@ void func_801B0490(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/batini/nonmatchings/text", func_801B0668);
+void func_801B0668(void) {
+    s32 tmp[10];
+    s32 i;
+    s32 max;
+    s32 v;
+    s32 w;
+    s32 mask;
+
+    mask = D_8016375A;
+    max = 0;
+    for (i = 0; i < 10; i++) {
+        D_800F5BBC[i][0] = 0;
+        v = 0;
+        if ((mask >> i) & 1) {
+            v = (u32)(func_800B2F50() & 0xFFFF) >> 1;
+            if (max < v) {
+                max = v;
+            }
+        }
+        tmp[i] = v;
+    }
+    for (i = 0; i < 10; i++) {
+        if ((mask >> i) & 1) {
+            switch (D_800F7DC8[0]) {
+            case 0:
+            case 5:
+                w = tmp[i] + 0xE000;
+                tmp[i] = w - max;
+                break;
+            case 2:
+            case 4:
+                if (i < 4) {
+                    tmp[i] = 0;
+                } else {
+                    w = tmp[i] + 0xF000;
+                    tmp[i] = w - max;
+                }
+                break;
+            default:
+                if (i < 4) {
+                    tmp[i] = 0xFFFE;
+                } else {
+                    tmp[i] = tmp[i] >> 3;
+                }
+                break;
+            }
+            if (D_800F83D0[0] & 8) {
+                if (i < 3) {
+                    tmp[i] = 0xFFFE;
+                } else {
+                    tmp[i] = 0;
+                }
+            }
+            D_800F5BBC[i][0] = tmp[i];
+        }
+    }
+    for (i = 0; i < 3; i++) {
+        D_8009D864[i][0] = D_800F5BBC[i][0];
+    }
+}
 
 void func_801B085C(s32 arg0) {
     D_800F7DA6 = 0x10000 / (((arg0 * 0x1E0) / 256 + 0x78) * 2);

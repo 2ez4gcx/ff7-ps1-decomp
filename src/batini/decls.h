@@ -62,5 +62,11 @@ extern u16 D_800F83CC;
 extern u8 D_800F83A8;
 extern u8 D_80163626;
 extern u16 D_800F5BBC[][0x22];
+void func_801B0668(void);
+s32 func_800B2F50();
+extern u16 D_800F7DC8[];
+extern u16 D_800F83D0[];
+extern u16 D_8016375A;
+extern u16 D_8009D864[][0x220];
 
 #endif /* BATINI_DECLS_H */

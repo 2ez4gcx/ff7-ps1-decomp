@@ -17,7 +17,19 @@ void func_800A0000(void) {
     func_800443B0(&D_800A06CC);
 }
 
-INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A00CC);
+void func_800A00CC(void) {
+    while (D_80095DD4 != 0) {
+    }
+    D_80075DEC = 1;
+    func_800A0000();
+    func_800A01A0();
+    if (*(u16 *)D_800707BE != 0) {
+        D_8009C560 = 2;
+        return;
+    }
+    D_8009C560 = 1;
+    func_80014540();
+}
 
 void func_800A015C(void) {
     if (func_80017108(0x801B0000, 0x801C0000) > 0) {
@@ -36,7 +48,21 @@ u32 func_800A0514(u32 arg0) {
     return (r << 10) | (b | g);
 }
 
-INCLUDE_ASM("../asm/us/brom/nonmatchings/text", func_800A0534);
+void func_800A0534(BromImg *img) {
+    u32 tw, th;
+    u16 w, h;
+    s32 i;
+    u32 c;
+
+    tw = img->w;
+    th = img->h;
+    w = (tw >> 8) | (tw << 8);
+    h = (th >> 8) | (th << 8);
+    for (i = 0; i < w * h; i++) {
+        c = img->data[i];
+        img->data[i] = func_800A0514((u16)((c >> 8) | (c << 8)));
+    }
+}
 
 s32 func_800A05D4(BromImg *arg0, s32 x, s32 y) {
     BromRect rect;

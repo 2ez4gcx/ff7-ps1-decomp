@@ -116,8 +116,8 @@ FILE_OPTIONS = {
     # folds %lo into the load (`addu $at, $at, $r; lbu $v0, %lo(x)($at)`),
     # with no nop before it. Every such access in their asm has that form.
     'batini/text.c': {'aspsx': '2.34', 'gcc': '2.7.2'},   # mfhi for a division result, 2.7.2's lhu
-    'batres/text.c': {'aspsx': '2.34'},
-    'brom/text.c': {'aspsx': '2.34'},
+    'batres/text.c': {'aspsx': '2.34', 'gcc': '2.7.2'},
+    'brom/text.c': {'aspsx': '2.34', 'gcc': '2.7.2'},
     'snobo/text.c': {'aspsx': '2.34'},
     'snobo2/text.c': {'aspsx': '2.34'},
     'magic_antlion/text.c': {'aspsx': '2.34'},
