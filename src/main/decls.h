@@ -1325,8 +1325,6 @@ extern u16 D_80077F62;
 extern s32 D_80095DA8;
 void func_8002D2D4(void);
 typedef struct { s16 f0; s16 f2; s16 f4; u16 x; u16 y; u16 w; s16 h; } MainBox;
-M2C_UNK func_80027B84(Rect16 *);
-M2C_UNK func_80028030(Rect16 *, s32);
 void func_80028484(MainBox *arg0);
 s32 func_8001FBAC(s32 arg0, s32 arg1, s32 arg2);
 typedef struct { u8 v; u8 pad[0x2B]; } Main2C;
@@ -1335,7 +1333,6 @@ extern Main24 D_80071E46[];
 extern u8 D_8009C755[][0x84];
 typedef struct { s16 hp; s16 maxhp; u8 pad[0x43C]; } MainSlot440;
 extern u8 D_8009C756[][0x84];
-extern MainSlot440 D_8009D85C[];
 void func_80025514(s32 arg0);
 extern u8 D_800494A4[];
 void func_8001D56C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
@@ -1347,3 +1344,4 @@ typedef struct { u8 pad[0x108]; struct { u8 a; u8 pad1; u8 b; u8 pad3[5]; } e[0x
 void func_80031D6C(AkaoChannel *arg0, AkaoSong *arg1);
 
 #endif /* MAIN_DECLS_H */
+extern MainSlot440 D_8009D85C[];

@@ -17,6 +17,8 @@ s32 func_80042BC0();
 s32 func_80042C98();
 extern void func_80030234();
 s32 func_80026B70(u8 *arg0);
+M2C_UNK func_80027B84(Rect16 *);
+M2C_UNK func_80028030(Rect16 *, s32);
 
 void func_80026A00(s32 arg0) {
     D_80062FC4 = arg0;

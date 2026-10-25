@@ -258,14 +258,12 @@ def locally_declared():
                 out.add(sym)
     if ad.TARGET == 'main':
         # Every overlay's decls.h includes main's: a symbol an overlay declares
-        # itself would clash with another type in main's decls.h, so a put
-        # into main declares it in its own file instead.
-        for decls in ROOT.glob('src/*/decls.h'):
-            if decls.parent.name != 'main':
-                for line in decls.read_text(encoding='utf-8').splitlines():
-                    sym = symbol_of(line) if line.rstrip().endswith(';') else None
-                    if sym:
-                        out.add(sym)
+        # itself would clash with another type in main's decls.h, and one it
+        # uses undeclared (an implicit `int f()`) would get a prototype its
+        # calls may not fit. A put into main declares those in its own file.
+        for f in ROOT.glob('src/*/*'):
+            if f.parent.name != 'main' and f.suffix in ('.c', '.h'):
+                out |= set(re.findall(r'\b(?:func|D)_[0-9A-F]{8}\b', f.read_text(encoding='utf-8')))
     return out
 
 
@@ -330,6 +328,37 @@ def compile_error(e):
     return '\n'.join(lines)[-600:]
 
 
+def overlays_match(known, mine):
+    """For a put into main: None when every overlay file that uses a symbol
+    whose declaration in main/decls.h changed (each overlay's decls.h includes
+    main's) still compiles and matches, else what does not."""
+    if ad.TARGET != 'main':
+        return None
+    old, new = set(known.splitlines()), set(mine.splitlines())
+    syms = {symbol_of(l) for l in old ^ new if l.rstrip().endswith(';')} - {None}
+    if not syms:
+        return None
+    uses = re.compile(r'\b(?:' + '|'.join(map(re.escape, sorted(syms))) + r')\b')
+    try:
+        for t, tg in targets.all_targets().items():
+            if t == 'main':
+                continue
+            files = sorted(tg.src.glob('*.c'))
+            if not (tg.decls.exists() and uses.search(tg.decls.read_text(encoding='utf-8'))):
+                files = [f for f in files if uses.search(f.read_text(encoding='utf-8'))]
+            if files:
+                # Not ad.use(t): it may tidy the overlay's decls.h under the
+                # lock this put already holds.
+                ad.TARGET, ad.SRC, ad.DECLS, ad.ASM = t, tg.src, tg.decls, tg.asm
+                for f in files:
+                    why = ad.file_matches(f)
+                    if why is not None:
+                        return f'{t}: {why}'
+    finally:
+        ad.use('main')
+    return None
+
+
 def put(work, name):
     with ad.Turn():
         found = where(name)
@@ -369,8 +398,11 @@ def put(work, name):
         ad.write(ad.DECLS, mine)
         ad.write(src, placed)
         changed = [l for l in known.splitlines() if l.strip() and l not in mine.splitlines()]
-        # Any change to decls.h is checked against every file of the target.
+        # Any change to decls.h is checked against every file of the target,
+        # and main's against the overlays that use what changed.
         why = ad.all_match() if mine != known else ad.file_matches(src)
+        if why is None and mine != known:
+            why = overlays_match(known, mine)
         if why is not None and changed:
             # The other files may have been written with the old declarations:
             # keep each file's own.
@@ -380,6 +412,8 @@ def put(work, name):
                 for f, text in files.items():
                     ad.write(f, text)
                 why2 = ad.all_match()
+                if why2 is None:
+                    why2 = overlays_match(known, mine)
                 if why2 is None:
                     print(f'{name}: put in {src.relative_to(ROOT).as_posix()}, its changed declarations '
                           f'kept in the files that use them')
