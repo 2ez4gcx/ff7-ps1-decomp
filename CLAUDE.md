@@ -26,13 +26,9 @@ what GCC needs, how batches of agents work).
 `py tools/progress.py` shows what is left per group. The usual next step is a batch of
 the ~30 smallest functions still in asm of one target (battle, field, world, the menus
 eqipmenu/namemenu/savemenu/shopmenu, then the minigames and the spell effects), given to
-a subagent with docs/matching.md, at most four at once. Known near misses that resisted
-(skip them in batches): main func_800297A4, func_80025A44, func_800258BC, func_80036244,
-func_80034D18; field func_800A2F78, func_800CDC28; battle func_800B38E0, func_800D41FC,
-func_800DE3CC, func_800A1798 (its jump table is shared rodata), func_800D84F8 (inline
-GTE, stays asm); world func_800B6EFC; menus
-statmenu func_801D14E0 (frame 8 bytes short), patymenu func_801D0250, itemmenu
-func_801D0E80.
+a subagent with docs/matching.md, at most two at once (the maintainer's limit). Known
+near misses that resisted, and handwritten functions, are listed in
+[docs/near-misses.md](docs/near-misses.md): skip them in batches.
 
 When a target's file holds several of the game's files (a switch function cannot be
 put because its jump table's alignment is off), split it where the jump tables change
