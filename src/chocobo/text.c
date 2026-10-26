@@ -113,7 +113,138 @@ void func_800A17F0(void) {
     func_8002DA7C();
 }
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A18BC);
+INCLUDE_RODATA("../asm/us/chocobo/nonmatchings/text", D_800A0018);
+
+void func_800A18BC(void) {
+    ChoF4 *a;
+    s32 tp;
+    s32 c;
+    ChoF4 *b;
+    s32 i;
+    ChoEnv *ev;
+    ChoRect rect;
+    ChoEnv *f;
+    s32 *p;
+    s32 h;
+    s32 *e;
+
+    rect = D_800A0018;
+    e = D_800F5030;
+    p = D_800B7530;
+    if (p != e) {
+loop:
+        *p = 0;
+        p++;
+        if (p != e) {
+            goto loop;
+        }
+    }
+    func_8003B6BC(0xA0, 0x78);
+    func_8003B6DC(0x10E);
+    func_80043D3C(1);
+    ev = &D_800D64D8;
+    h = 0xE8;
+    func_80043814(ev, 0, 0, 0x140, h);
+    f = &D_800F4FB8;
+    func_80043814(f, 0, 0xF0, 0x140, h);
+    tp = func_8004656C(0, 1, 0, 0);
+    ev++;
+    D_800F4FB8.tpage = D_800D64D8.tpage = tp;
+    D_800F4FB8.isbg = D_800D64D8.isbg = 0;
+    func_800438D4(ev, 0, 0xF0, 0x140, h);
+    func_800438D4(D_800F5014, 0, 0, 0x140, h);
+    D_800D64D8.dfe = D_800F4FB8.dfe = 1;
+    func_80044244(D_800B7A68, 0x1000);
+    func_80044244(D_800D6548, 0x1000);
+    func_8004418C(D_800D41A8.ot, 4);
+    func_8004418C(D_800F2C88.ot, 4);
+    func_80043F6C(&rect, 0, 0, 0);
+    func_8003B67C(0x40, 0x40, 0x40);
+    func_80043D3C(1);
+    func_800444AC(ev);
+    func_800443B0(f);
+    func_80042DB8(func_8003CEDC(-1));
+    func_800A1630();
+    D_800F5038 = 0;
+    D_800F503A = 0;
+    D_800F503C = 0;
+    func_800A28D8();
+    func_800A272C(D_8009D48F, D_8009D49F);
+    D_800F5054 = *D_800F5084->f38;
+    if (D_800B7A48 != 0) {
+        D_800F5054.b[0] = -1;
+    }
+    D_800F5054.b[0] = -1;
+    i = 0;
+    c = 0xFF;
+    b = D_800F2BF8;
+    a = D_800D4118;
+loop2:
+    func_800468E8(a);
+    func_800468E8(b);
+    if (i & 2) {
+        a->r = c;
+    } else {
+        a->r = 0;
+    }
+    if (i & 4) {
+        a->g = c;
+    } else {
+        a->g = 0;
+    }
+    if (i & 1) {
+        a->b = c;
+    } else {
+        a->b = 0;
+    }
+    if (i & 2) {
+        b->r = c;
+    } else {
+        b->r = 0;
+    }
+    if (i & 4) {
+        b->g = c;
+    } else {
+        b->g = 0;
+    }
+    if (i & 1) {
+        b->b = c;
+    } else {
+        b->b = 0;
+    }
+    b++;
+    a++;
+    i++;
+    if (i < 6) {
+        goto loop2;
+    }
+    D_800D5DC2[0] = D_800D5DC2[2] = 0;
+    D_800D5DC0[0] = D_800D5DC0[4] = 0;
+    D_800D5DC0[2] = D_800D5DC0[6] = 0x140;
+    D_800D5DC0[5] = D_800D5DC0[7] = 0xE8;
+    func_800468E8((u8 *)D_800D5DC0 - 8);
+    func_80046848((u8 *)D_800D5DC0 - 8, 1);
+    D_800F4898 = *(ChoF4B *)((u8 *)D_800D5DC0 - 8);
+    *(ChoFT4B *)((u8 *)D_800D5DC0 - 0x1C18) = D_800B1298;
+    func_800468FC(&D_800D41A8.ft0);
+    func_80046848(&D_800D41A8.ft0, 1);
+    D_800D41A8.ft0.clut = func_80046634(0x240, 0x80);
+    D_800D41A8.ft0.tpage = func_8004656C(0, 0, 0x180, 0);
+    D_800F2C88.ft0 = D_800D41A8.ft0;
+    D_800D41A8.ft1 = D_800B12C0;
+    func_800468FC(&D_800D41A8.ft1);
+    func_80046848(&D_800D41A8.ft1, 1);
+    D_800D41A8.ft1.clut = func_80046634(0x240, 0x81);
+    D_800D41A8.ft1.tpage = func_8004656C(0, 0, 0x180, 0);
+    D_800F2C88.ft1 = D_800D41A8.ft1;
+    func_800468E8(&D_800D41A8.f4a);
+    D_800D41A8.f4a.x0 = D_800D41A8.f4a.x2 = 0x19;
+    D_800D41A8.f4a.x1 = D_800D41A8.f4a.x3 = 0x1E;
+    D_800D41A8.f4a.y2 = D_800D41A8.f4a.y3 = 0xD1;
+    D_800F2C88.f4a = D_800D41A8.f4a;
+    func_800A1F40(D_800B1254, D_8009D48F);
+    func_800A9828();
+}
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A1F40);
 

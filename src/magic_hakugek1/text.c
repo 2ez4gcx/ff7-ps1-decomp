@@ -108,13 +108,228 @@ void func_801B04C8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B062C);
+void func_801B062C(void) {
+    MgMat m[2];
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    MgMat *mp;
+    s16 n;
+    s16 i;
+    s8 c;
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B0878);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    for (i = 0; i < 3; i++) {
+        m[1].m[0][i] = m[1].m[1][i] = m[1].m[2][i] = 0;
+    }
+    n = 8;
+    if (p->unk2 >= 12) {
+        n = 20 - p->unk2;
+    }
+    rot.vy = 0;
+    rot.vx = 0;
+    rot.vz = p->unk14;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m[1].t, &flag);
+    mp = &m[1];
+    m[1].m[0][0] = m[1].m[1][1] = m[1].m[2][2] = 0x2000;
+    func_8003C21C(&rot, &m[0]);
+    func_8003B05C(mp, &m[0]);
+    func_8003B48C(mp);
+    func_8003B51C(mp);
+    c = n << 4;
+    D_801D2A44[0] = p->unk16 % 3;
+    *(s32 *)&D_801D2A44[-4] = D_801D2A48[p->unk16 / 3];
+    D_801D2A40[0] = D_801D2A40[1] = D_801D2A40[2] = c;
+    D_80163C74 = func_800D4D90(&D_801D2A44[-4], D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unkE += 0x14;
+        p->unk14 += 0x200;
+        p->unk2++;
+        if (p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B09F0);
+void func_801B0878(void) {
+    MgSVec rot;
+    MgMat m;
+    MgMat w;
+    MgVec s;
+    MgTask *p;
+    s16 *c;
 
-INCLUDE_ASM("../asm/us/magic_hakugek1/nonmatchings/text", func_801B0D84);
+    rot.vx = rot.vz = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    rot.vy = p->unk14;
+    func_8003C21C(&rot, &m);
+    s.vy = 0x1000;
+    s.vx = s.vz = p->unk18;
+    func_8003B35C(&m, &s);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &w);
+    func_8003B48C(&w);
+    func_8003B51C(&w);
+    func_8003B69C(0, 0, 0);
+    c = &D_801D2A5E;
+    *c = p->unk2 * 200;
+    D_801EAA80 = func_800D29D4(c - 5, D_801517C0 + 0x70, 0xC, D_801EAA80);
+    if (D_80062D98 == 0) {
+        p->unk18 += 0x200;
+        p->unk14 += 0x80;
+        p->unk6 += p->unkE;
+        if (++p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B09F0(void) {
+    MgSVec rot;
+    MgMat m;
+    MgMat w;
+    MgVec s;
+    MgTask *p;
+    HakuWord *c;
+    HakuPtr *d;
+    s32 t;
+
+    rot.vx = rot.vz = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    rot.vy = t << 6;
+    func_8003C21C(&rot, &m);
+    s.vx = s.vy = s.vz = p->unk2 * 240 + 0x600;
+    func_8003B35C(&m, &s);
+    m.t[0] = p->unk4;
+    m.t[1] = 0;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &w);
+    func_8003B48C(&w);
+    func_8003B51C(&w);
+    func_8003B69C(0, 0, 0);
+    c = (HakuWord *)&D_801D2A68;
+    d = (HakuPtr *)((u8 *)c - 4);
+    c->v = 0x28;
+    d->p = &D_801D139C;
+    D_801D2A6E = 0x80 - p->unk2 * 6;
+    D_801EAA80 = func_800D29D4(d, D_801517C0 + 0x70, 0xC, D_801EAA80);
+    func_8003C21C(&rot, &m);
+    s.vx = s.vy = s.vz = p->unk2 * 320 + 0x800;
+    func_8003B35C(&m, &s);
+    m.t[0] = p->unk4;
+    m.t[1] = 0;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &w);
+    func_8003B48C(&w);
+    func_8003B51C(&w);
+    c->v = 0x28;
+    d->p = &D_801D1B14;
+    D_801D2A6E = 0x80 - p->unk2 * 6;
+    D_801EAA80 = func_800D29D4(d, D_801517C0 + 0x70, 0xC, D_801EAA80);
+    func_8003C21C(&rot, &m);
+    s.vx = s.vy = s.vz = p->unk2 * 240 + 0x600;
+    func_8003B35C(&m, &s);
+    m.t[0] = p->unk4;
+    m.t[1] = 0;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &w);
+    func_8003B48C(&w);
+    func_8003B51C(&w);
+    c->v = 0xA8;
+    d->p = &D_801D1708;
+    D_801D2A6E = p->unk2 * 48 + 0xC00;
+    D_801EAA80 = func_800D29D4(d, D_801517C0 + 0x70, 0xC, D_801EAA80);
+    c->v = 0xA8;
+    d->p = &D_801D20E4;
+    D_801D2A6E = p->unk2 * 96;
+    D_801EAA80 = func_800D29D4(d, D_801517C0 + 0x70, 0xC, D_801EAA80);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B0D84(void) {
+    MgTask *p;
+    MgTask *q;
+    MgSVec pos;
+    s16 i;
+    s16 j;
+    s32 a;
+    s32 ang;
+    u8 pad[0x28];
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            a = func_8003CC1C(p->unkC - p->unk4, p->unk10 - p->unk8);
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B04C8)];
+            func_800D3994(p->unk1E, D_8015191A[p->unk1E][0], &q->unk4);
+            q->unkC = 0;
+            q->unkE = a + 0x400;
+            q->unk10 = -0x200;
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B04C8)];
+            func_800D3994(p->unk1E, D_8015191A[p->unk1E][1], &q->unk4);
+            q->unkC = 0;
+            q->unkE = a + 0x400;
+            q->unk10 = -0x200;
+        }
+        if (p->unk2 == 0x14) {
+            i = 0;
+            do {
+                ang = ((i << 16) >> 5) + 0x200;
+                pos.vx = p->unkC + ((func_80039B40(ang) * 0x320) >> 12);
+                pos.vy = p->unkE;
+                pos.vz = p->unk10 + ((func_80039A74(ang) * 0x320) >> 12);
+                j = 0;
+                do {
+                    q = (MgTask *)&D_80162978[func_800BBEAC(func_801B062C)];
+                    q->unk4 = pos.vx + func_80042DA8() % 400 - 0xC8;
+                    q->unk8 = pos.vz + func_80042DA8() % 400 - 0xC8;
+                    q->unk6 = 0;
+                    func_801B01CC(-0x12C, 0x32, (MgSVec *)&q->unkC);
+                    j++;
+                    q->unk16 = func_80042DA8() % 9;
+                } while (j < 0x18);
+                j = 0;
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B09F0)];
+                q->unk4 = pos.vx;
+                q->unk6 = 0;
+                q->unk8 = pos.vz;
+                do {
+                    q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0878)];
+                    q->unk4 = pos.vx;
+                    q->unk6 = pos.vy;
+                    q->unk8 = pos.vz;
+                    q->unk6 = (j - 4) * 0x50;
+                    q->unk18 = D_801D2A74[j];
+                    q->unkE = (j - 4) * 10;
+                    q->unk14 = func_80042DA8() % 0x1000;
+                    j++;
+                } while (j < 5);
+                i++;
+            } while (i < 2);
+            func_800BBA84(0xFA, p->unk1C, 0);
+        }
+        if (p->unk2 == 0x23) {
+            func_800D5774(p->unk1C);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x2D) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B11B4(s32 arg0, s32 arg1) {
     MgTask *p;

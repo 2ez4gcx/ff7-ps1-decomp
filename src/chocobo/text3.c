@@ -171,7 +171,50 @@ s32 func_800A8A18(ChoSVec *arg0, ChoSVec *arg1) {
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800A8AE8);
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800A9828);
+INCLUDE_RODATA("../asm/us/chocobo/nonmatchings/text3", D_800A00C0);
+
+void func_800A9828(void) {
+    s32 buf[50];
+    s32 *src;
+    u32 i;
+
+    *(ChoRect *)buf = D_800A00C0;
+    for (i = 0; i < 48; i++) {
+        buf[i + 2] = D_800B2188[i];
+    }
+    if (D_800B7A48 != 0) {
+        switch (D_8009D499[0]) {
+        case 1:
+            src = D_800B2288;
+            break;
+        case 2:
+            src = D_800B2268;
+            break;
+        case 3:
+            src = D_800B2248;
+            break;
+        case 0:
+        case 4:
+            src = D_800B22A8;
+            break;
+        }
+        for (i = 0; i < 8; i++) {
+            buf[i + 2] = src[i];
+        }
+    }
+    if (D_8009D499[5] != 0) {
+        for (i = 8; i < 16; i++) {
+            buf[i + 2] = D_800B2248[i - 8];
+        }
+    }
+    func_80044000(buf, buf + 2);
+    if (D_800B7A48 != 0) {
+        D_800B1370 = D_800B1388[D_8009D499[0]];
+    }
+    if (D_8009D499[5] != 0) {
+        D_800B1374 = D_800B1375 = D_800B1376 = 0x80;
+    }
+}
 
 void func_800A9A94(void) {
     ChoRect r;
@@ -247,7 +290,76 @@ void func_800A9A94(void) {
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800A9D94);
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800AAC00);
+void func_800AAC00(u32 arg0, s32 arg1, s32 arg2) {
+    ChoSp pk[11];
+    s32 *pi;
+    u8 **pb;
+    s32 *pi2;
+    u8 **pb2;
+    s32 i;
+    ChoRowA *pa;
+    s32 idx1;
+    u8 *buf1;
+    s32 d;
+    ChoRowB *pc;
+    s32 idx2;
+    u8 *buf2;
+    ChoRowB *pd;
+    s32 idx3;
+    u8 *buf3;
+
+    D_800B159A = func_8004656C(0, 0, 0x280, 0x100);
+    pi = &D_800F5034;
+    pb = &D_800F5074;
+    pa = (ChoRowA *)((s32)*pb + *pi * 0x28);
+    pa->q = D_800B1584;
+    idx1 = *pi;
+    buf1 = *pb;
+    ((ChoRowT *)(buf1 + idx1 * 0x28))->tag.addr = ((ChoTag *)(buf1 + 0xF4))->addr;
+    ((ChoTag *)(buf1 + 0xF4))->addr = (u32)(buf1 + (idx1 * 0x28 + 0x4010));
+    *pi = idx1 + 1;
+    if (arg0 == 0) {
+        pk[0].u = 8;
+        pk[0].v = 0xF0;
+        pk[0].clut = 0x79E4;
+        pk[0].len = 3;
+        pk[0].x = arg1;
+        pk[0].y = arg2;
+        pk[0].rgbc = 0x7C808080;
+        pc = (ChoRowB *)((s32)*pb + *pi * 0x28);
+        pc->q = pk[0];
+        idx2 = *pi;
+        buf2 = *pb;
+        ((ChoRowT *)(buf2 + idx2 * 0x28))->tag.addr = ((ChoTag *)(buf2 + 0xF0))->addr;
+        ((ChoTag *)(buf2 + 0xF0))->addr = (u32)(buf2 + (idx2 * 0x28 + 0x4010));
+        *pi = idx2 + 1;
+        return;
+    }
+    for (i = 0; i < 11; i++) {
+        d = arg0 % 10;
+        pk[i].x = arg1 - i * 12;
+        pk[i].y = arg2;
+        if (arg0 != 0) {
+            pk[i].u = d * 16 + 8;
+        } else {
+            pk[i].u = 0xF0;
+        }
+        pk[i].clut = 0x79E4;
+        pk[i].v = 0xF0;
+        pk[i].len = 3;
+        pk[i].rgbc = 0x7C808080;
+        pb2 = &D_800F5074;
+        pi2 = &D_800F5034;
+        pd = (ChoRowB *)((s32)*pb2 + *pi2 * 0x28);
+        pd->q = pk[i];
+        idx3 = *pi2;
+        buf3 = *pb2;
+        ((ChoRowT *)(buf3 + idx3 * 0x28))->tag.addr = ((ChoTag *)(buf3 + 0xF0))->addr;
+        ((ChoTag *)(buf3 + 0xF0))->addr = (u32)(buf3 + (idx3 * 0x28 + 0x4010));
+        *pi2 = idx3 + 1;
+        arg0 /= 10;
+    }
+}
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800AAF1C);
 

@@ -60,7 +60,43 @@ void func_800A3308(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text2", func_800A34A8);
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text2", func_800A44E4);
+void func_800A44E4(void) {
+    s32 key[6];
+    s32 id[6];
+    s32 pad[10];
+    s32 i;
+    s32 j;
+    s32 t;
+
+    for (i = 0; i < 6; i++) {
+        key[i] = *(s16 *)((u8 *)D_800B75CC + i * 0xA4);
+        id[i] = i;
+    }
+    for (i = 0; i < 6; i++) {
+        for (j = i; j < 6; j++) {
+            if (key[i] < key[j]) {
+                t = key[i];
+                key[i] = key[j];
+                key[j] = t;
+                t = id[i];
+                id[i] = id[j];
+                id[j] = t;
+            }
+        }
+    }
+    for (i = 0; i < 6; i++) {
+        D_800B764E[id[i]].f0 = i;
+    }
+    D_800B733C = id[5];
+    for (i = 0; i < 6; i++) {
+        func_800A4888(i);
+    }
+    if (D_800B7A48 != 0) {
+        func_800A6E50(1);
+    } else {
+        func_800A6E50(0);
+    }
+}
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text2", func_800A4888);
 

@@ -209,7 +209,7 @@ extern s32 D_800C4C40;
 u32 func_800ACFBC(s32 arg0, s32 arg1, s32 arg2, s16 arg3);
 extern s32 D_800C4C48;
 void func_800AA9E4(s32 arg0, s32 arg1);
-M2C_UNK func_800AE98C(M2C_UNK, M2C_UNK);
+void func_800AE98C(s32 arg0, s16 arg1);
 extern s32 D_800B5114;
 extern struct { s16 unk0; u8 pad[0xB2]; } D_800BC75C[];
 extern s32 D_800BDFB4;
@@ -319,5 +319,13 @@ extern u8 D_8010FDC4[];
 extern u8 D_8010FDC8[];
 extern u8 D_8010FDCC[];
 extern u8 D_8010FDD0[];
+extern struct { u16 h; u8 pad[8]; } D_80110048[];
+extern u16 D_8011005A;
+void func_800A65B4(s32 arg0, s32 arg1, HwV3L *arg2);
+typedef struct { s32 unk0; s32 unk4; s32 unk8; u8 padC[0xC]; u8 unk18[0x12C]; } HwRoadPt;
+typedef struct { u8 pad0[0x30]; HwV3L unk30; s32 pad3C; HwV3L unk40; s32 pad4C; HwV3L unk50; s32 pad5C; HwV3L unk60; s32 pad6C; HwV3L unk70; } HwRoadTmp;
+extern HwRoadPt D_800BE558[];
+extern HwRoadTmp *D_80110BB8;
+M2C_UNK func_8003AB84(void *, void *, void *);
 
 #endif /* HIGHWAY_DECLS_H */
