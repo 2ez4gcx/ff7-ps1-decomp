@@ -42,7 +42,10 @@ original maspsx ignores `.extern` lines. `tools/maspsx-extern.patch` records tho
 variables (only to choose how to reach them, never to define them). It also adds
 `--nop-at-expansion`: a `nop` between a load and an instruction expanded through `$at`
 that uses the loaded register, which maspsx otherwise does only for ASPSX below 2.30
-but the game's `text2.c` code has with a newer one.
+but the game's `text2.c` code has with a newer one. And for ASPSX below 2.30 it waits
+after a load when the next instruction only writes the loaded register (`lw v0,0(v0);
+nop; lui v0,...`, a dummy read of a port in the libraries), which maspsx did only for a
+load followed by another load.
 
 ```bash
 git -C D:/FF7/toolchain/maspsx apply "$PWD/tools/maspsx-extern.patch"

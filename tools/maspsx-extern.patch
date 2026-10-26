@@ -23,10 +23,22 @@ index 78b742b..379d596 100644
          if not version_config.gp_allow:
              force_G0 = True
 diff --git a/maspsx/__init__.py b/maspsx/__init__.py
-index 0aade6d..81cf1b5 100644
+index 0aade6d..4f59472 100644
 --- a/maspsx/__init__.py
 +++ b/maspsx/__init__.py
-@@ -515,6 +515,8 @@ class MaspsxProcessor:
+@@ -111,6 +111,11 @@ def line_loads_from_reg(line: str, r_source: str, loads_to_reg=False) -> bool:
+     else:
+         return False
+ 
++    # ASPSX < 2.30 also waits after a load when the next instruction only
++    # writes the loaded register (a dummy read of a port, then a new value).
++    if loads_to_reg and op in ("li", "lui", "move", "addu", "addiu") and re.match(rf"^{r_source},", rest):
++        return True
++
+     if op in load_mnemonics:
+         # lwl	$9,7($2)
+         if re.match(rf"^.*\(\s*{r_source}\s*\)$", rest):
+@@ -515,6 +520,8 @@ class MaspsxProcessor:
  
          self.bss_entries: dict[str, int] = {}
          self.sbss_entries: dict[str, int] = {}
@@ -35,7 +47,7 @@ index 0aade6d..81cf1b5 100644
          self.sdata_entries: dict[str, int] = {}
  
          self.comm_symbols: set[str] = set()
-@@ -560,7 +562,14 @@ class MaspsxProcessor:
+@@ -560,7 +567,14 @@ class MaspsxProcessor:
                  continue
  
              if line.startswith(".extern"):
@@ -50,7 +62,7 @@ index 0aade6d..81cf1b5 100644
                  continue
  
              if line.startswith(".comm") or line.startswith(".lcomm"):
-@@ -623,6 +632,7 @@ class MaspsxProcessor:
+@@ -623,6 +637,7 @@ class MaspsxProcessor:
  
          self.bss_entries = {}
          self.sbss_entries = {}
@@ -58,7 +70,7 @@ index 0aade6d..81cf1b5 100644
          self.sdata_entries = {}
  
          self.preprocess_lines()
-@@ -731,7 +741,7 @@ class MaspsxProcessor:
+@@ -731,7 +746,7 @@ class MaspsxProcessor:
                      gp_allowed = True
  
                  if gp_allowed and (
@@ -67,7 +79,7 @@ index 0aade6d..81cf1b5 100644
                  ):
                      return True
  
-@@ -1042,7 +1052,7 @@ class MaspsxProcessor:
+@@ -1042,7 +1057,7 @@ class MaspsxProcessor:
                      gp_allowed = True
  
                  if gp_allowed and (
@@ -76,7 +88,7 @@ index 0aade6d..81cf1b5 100644
                  ):
                      res.append(f"{op}\t{r_dest},{gp_rel}")
                  else:
-@@ -1135,7 +1145,7 @@ class MaspsxProcessor:
+@@ -1135,7 +1150,7 @@ class MaspsxProcessor:
                      gp_allowed = False
  
                  if gp_allowed and (
