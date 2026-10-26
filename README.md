@@ -9,6 +9,12 @@ the disc turned back into assembly, then C, that rebuild to exactly the original
 
 This is an independent project: it is not based on the code of any other decomp.
 
+Most of the C here was written with AI assistance: Claude Code (Anthropic's Claude
+models), working as batches of agents from the game's assembly and m2c's drafts, as
+[docs/matching.md](docs/matching.md) describes. Nothing is taken on trust: a function
+goes in only when it compiles to exactly the game's instructions, and every executable
+is checked byte for byte against the disc.
+
 ## Status
 
 All 318 executables of disc 1 rebuild byte for byte, from C files: functions not
@@ -144,3 +150,18 @@ permuter, splitting a file).
    options for each part of the main executable.
 4. Decompile function by function: split `text.c` and `lib.c` into the game's own
    source files and libraries, name the AKAO driver's fields, move every overlay to C.
+
+## Contributing
+
+Fixes and functions are welcome as pull requests. Everyone works from their own disc
+(see Setup); a change is ready when `tools/build.py` still says that every target
+matches. [docs/matching.md](docs/matching.md) collects what the compilers need to match,
+and [docs/near-misses.md](docs/near-misses.md) lists the functions that resisted so far.
+Do not commit anything taken from the disc, and do not copy code from other FF7
+decompilations or from FFNx.
+
+## License
+
+The code in this repository is licensed under the GNU General Public License, version 3
+(see [LICENSE](LICENSE)). It covers this project's own work only: Final Fantasy VII and
+its data belong to Square Enix, and none of them is distributed here.
