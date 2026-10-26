@@ -5,7 +5,7 @@
 void func_80043F6C(Rect16 *arg0, u8 arg1, u8 arg2, u8 arg3);
 void func_80038FB8(s32 arg0);
 s32 func_80042C98(s32 arg0);
-M2C_UNK func_80042D98();
+M2C_UNK func_80042D98(u8 *, void *, s32);
 s32 func_80039A74(s32 arg0);
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
@@ -16,6 +16,8 @@ s32 func_80043BA8(s32 arg0);
 s32 func_80043D3C(s32 arg0);
 MainTag *func_8004418C(MainTag *arg0, s32 arg1);
 MainTag *func_80044244(MainTag *arg0, M2C_UNK arg1);
+s32 func_800440C8(Rect16 *rect, s32 x, s32 y);
+Spr *func_800443B0(Spr *arg0);
 
 INCLUDE_RODATA("../asm/us/main/nonmatchings/lib4", D_80010C98);
 
@@ -109,7 +111,21 @@ void func_80044064(void *arg0, M2C_UNK arg1) {
     M2C_FIELD(D_80062BF8, M2C_UNK (**)(s32, void *, M2C_UNK, M2C_UNK), 8)(M2C_FIELD(D_80062BF8, s32 *, 0x1C), arg0, 8, arg1);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800440C8);
+s32 func_800440C8(Rect16 *rect, s32 x, s32 y) {
+    MainWord *p;
+    s32 w0;
+
+    func_80043E44("MoveImage", rect);
+    if (rect->w == 0 || rect->h == 0) {
+        return -1;
+    }
+    p = &D_80062CB0;
+    w0 = M2C_FIELD(rect, s32 *, 0);
+    D_80062CB4.v = (y << 16) | (x & 0xFFFF);
+    p->v = w0;
+    D_80062CB8.v = M2C_FIELD(rect, s32 *, 4);
+    return M2C_FIELD(D_80062BF8, s32 (**)(s32, s32 *, s32, s32), 8)(M2C_FIELD(D_80062BF8, s32 *, 0x18), (s32 *) (p - 2), 0x14, 0);
+}
 
 MainTag *func_8004418C(MainTag *arg0, s32 arg1) {
     if (D_80062C02 >= 2) {
@@ -152,7 +168,21 @@ s32 func_8004433C(s32 arg0) {
     return M2C_FIELD(D_80062BF8, s32 (**)(s32, s32, M2C_UNK, M2C_UNK), 8)(M2C_FIELD(D_80062BF8, s32 *, 0x18), arg0, 0, 0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800443B0);
+Spr *func_800443B0(Spr *arg0) {
+    u8 *p;
+    MainWord *pkt;
+
+    p = &D_80062C02;
+    if (*p >= 2) {
+        D_80062BFC("PutDrawEnv(%08x)...\n", arg0);
+    }
+    pkt = (MainWord *) ((u8 *) arg0 + 0x1C);
+    func_80044AC0((s32) pkt, arg0);
+    pkt->v |= 0xFFFFFF;
+    M2C_FIELD(D_80062BF8, M2C_UNK (**)(s32, MainWord *, s32, s32), 0x8)(M2C_FIELD(D_80062BF8, s32 *, 0x18), pkt, 0x40, 0);
+    func_80042D98(p + 0xE, arg0, 0x5C);
+    return arg0;
+}
 
 s32 func_80044474(s32 arg0) {
     func_80042D98(arg0, D_80062C10, 0x5C);
@@ -243,7 +273,25 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044F58);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044FA0);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80045024);
+s32 func_80045024(Rect16 *arg0) {
+    s32 r;
+
+    switch (*(volatile u8 *) &D_80062C00) {
+    case 1:
+        if (D_80062C03 != 0) {
+            return 0x400 - arg0->x - arg0->w;
+        }
+        break;
+    case 2:
+        if (D_80062C03 != 0) {
+            r = 0x400 - arg0->x - arg0->w / 2;
+        } else {
+            r = arg0->x / 2;
+        }
+        return r;
+    }
+    return arg0->x;
+}
 
 s32 func_800450E0(void) {
     return *D_80062CD4;

@@ -13,6 +13,7 @@ s32 func_80036FFC(s32 arg0, MainWords *arg1);
 s32 func_80048540(s32 arg0);
 s32 func_80046D0C(s32 arg0);
 s32 func_800484A8(void);
+s32 func_8004656C(s32 tp, s32 abr, s32 x, s32 y);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004602C);
 
@@ -38,7 +39,12 @@ void func_80046530(u8 *arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004655C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004656C);
+s32 func_8004656C(s32 tp, s32 abr, s32 x, s32 y) {
+    if (((s32 (*)(void)) func_80043CC0)() == 1 || ((s32 (*)(void)) func_80043CC0)() == 2) {
+        return ((tp & 3) << 9) | ((abr & 3) << 7) | ((y & 0x300) >> 3) | ((x & 0x3FF) >> 6);
+    }
+    return ((tp & 3) << 7) | ((abr & 3) << 5) | ((y & 0x100) >> 4) | ((x & 0x3FF) >> 6) | ((y & 0x200) << 2);
+}
 
 s32 func_80046634(s32 arg0, s32 arg1) {
     return ((arg1 << 6) | ((arg0 >> 4) & 0x3F)) & 0xFFFF;

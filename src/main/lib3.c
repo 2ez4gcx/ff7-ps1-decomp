@@ -10,6 +10,7 @@ s32 func_80039A74(s32 arg0);
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
+s32 func_80042BC0(s32 arg0, s16 arg1, s32 arg2);
 
 s32 func_800404F4(s32 arg0, M2C_UNK arg1, s32 arg2) {
     s32 sp10;
@@ -146,7 +147,25 @@ s32 func_80040B84(s32 arg0, u32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80040BC4);
+s32 func_80040BC4(s32 *arg0, void **arg1) {
+    volatile u16 *p;
+
+    p = (u16 *) ((D_8009C550 << 5) + D_8009C6D4);
+    if (*p == 1) {
+        D_8009C550 = 0;
+        if (D_8009C6C8 != 0) {
+            *p = 0;
+        }
+        p = (u16 *) ((D_8009C550 << 5) + D_8009C6D4);
+    }
+    if (*p == 2) {
+        *p = 4;
+        *arg0 = (D_8009FE90 << 5) + D_8009C6D4 + D_8009C550 * 0x7E0;
+        *arg1 = (void *) p;
+        return 0;
+    }
+    return 1;
+}
 
 void func_80040C88(s32 arg0, s32 arg1, s32 arg2) {
     D_8009C6CC = arg0;
@@ -383,7 +402,35 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80042BA0);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80042BB0);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80042BC0);
+s32 func_80042BC0(s32 arg0, s16 arg1, s32 arg2) {
+    s32 n;
+    s32 mode;
+
+    n = arg0 & 0xFFFF;
+    mode = 0x48;
+    if (n >= 3) {
+        return 0;
+    }
+    D_80062B94[n].mode = 0;
+    D_80062B94[n].target = arg1;
+    if ((u32)n < 2) {
+        if (arg2 & 0x10) {
+            mode = 0x49;
+        }
+        if (!(arg2 & 1)) {
+            mode |= 0x100;
+        }
+    } else if (n == 2) {
+        if (!(arg2 & 1)) {
+            mode = 0x248;
+        }
+    }
+    if (arg2 & 0x1000) {
+        mode |= 0x10;
+    }
+    D_80062B94[n].mode = mode;
+    return 1;
+}
 
 s32 func_80042C60(s32 arg0) {
     s32 n;

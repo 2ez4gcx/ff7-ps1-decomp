@@ -1,1 +1,2 @@
 // MINI/SNOBO2.BIN: name = 0xADDRESS; // type:func
+D_800A03C0 = 0x800A03C0; // force_not_migration:True
