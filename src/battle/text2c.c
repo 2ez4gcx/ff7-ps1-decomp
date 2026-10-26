@@ -736,7 +736,38 @@ s32 func_800E1A2C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E1AC0);
+void func_800E1AC0(s16 arg0) {
+    BtlE1AC0Arg s;
+    s32 y;
+    u8 *p;
+
+    y = arg0 * 0x10 + 0x10;
+    s.a = 0x90;
+    s.b = y;
+    s.c = 0x3C;
+    s.d = 1;
+    s.e = D_8015174C[arg0] >> 8;
+    s.h = D_801517C8[arg0] >> 8;
+    p = D_8009D84C[arg0];
+    s.f = *(u16 *)(p + 0x12);
+    s.g = D_801031F4[arg0];
+    s.i = 0;
+    s.j = 0x80;
+    s.k = 0xFF;
+    func_80027408(&s);
+    s.a = 0xCF;
+    s.b = y;
+    s.c = 0x1E;
+    s.d = 1;
+    s.e = D_8015178C[arg0] >> 8;
+    s.h = D_8015187C[arg0] >> 8;
+    s.f = *(u16 *)(p + 0x16);
+    s.g = D_80151688[arg0];
+    s.i = 0;
+    s.j = 0xFF;
+    s.k = 0x80;
+    func_80027408(&s);
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E1C40);
 
