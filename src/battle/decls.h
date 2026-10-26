@@ -1327,12 +1327,15 @@ void func_800DE94C(void);
 extern S44h D_800F5BBA[];
 extern u16 D_800F7DA8;
 void func_800B2CFC(s32 arg0, s32 arg1);
-typedef struct { u8 p0[0xA]; volatile u16 f0A; u8 p1[4]; volatile u8 f10; u8 p2[0x2C - 0x11]; volatile u8 f2C; volatile u8 f2D; u8 p3[0x38 - 0x2E]; volatile s32 f38; u8 p4[0x44 - 0x3C]; } BtlGA;
-typedef struct { u8 p0[4]; volatile u32 f04; u8 p1[0x2C - 8]; volatile u16 f2C; u8 p2[2]; volatile u32 f30; u8 p3[0x48 - 0x34]; volatile u32 f48; u8 p4[0x68 - 0x4C]; } BtlGB;
+typedef struct { u8 p0[0xA]; u16 f0A; u8 p1[4]; u8 f10; u8 p2[0x2C - 0x11]; u8 f2C; u8 f2D; u8 p3[0x38 - 0x2E]; s32 f38; u8 p4[0x44 - 0x3C]; } BtlGA;
+typedef struct { u8 p0[4]; u32 f04; u8 p1[0x2C - 8]; u16 f2C; u8 p2[2]; u32 f30; u8 p3[0x48 - 0x34]; u32 f48; u8 p4[0x68 - 0x4C]; } BtlGB;
 extern BtlGA D_800F5BB4[];
 extern BtlGB D_800F83DC[];
 extern MgMat D_800A0D98;
 extern s8 D_800F021C;
+void func_800E3E10(void);
+void func_800D9BF4();
+void func_800E368C();
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;

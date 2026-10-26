@@ -947,7 +947,48 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E368C);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E3B64);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E3E10);
+void func_800E3E10(void) {
+    MainBox box;
+    T240 *p;
+    BtlX440 *e;
+    s32 k;
+    u8 *q;
+    s16 off;
+    s16 n;
+    s32 y;
+    s32 t;
+    s16 i;
+    s16 start;
+    s32 f;
+
+    box.f0 = 3;
+    box.f2 = 0x10;
+    p = &D_800F90EA[D_800F38A0];
+    i = (box.f4 = p->x2);
+    box.x = 0xEE;
+    box.w = 0xA;
+    box.h = 0x32;
+    e = &D_8009DB14[D_800F38A0];
+    box.y = 3;
+    func_80028484(&box);
+    f = (s8)p->xF;
+    start = p->x2;
+    ((void (*)(s32))func_80026B5C)(9);
+    off = f * 4;
+    n = off != 0 ? 4 : 3;
+    for (i = 0; i < n; i++) {
+        k = i;
+        q = (u8 *)((start + k) * 8 + (s32)e);
+        if (q[0] != 0xFF) {
+            t = func_80015248(1, q[0], 8);
+            y = k * 0x10 + 6;
+            func_80026F44(0x38, off + y, (void *)t, -((q[6] & 2) == 0) & 7);
+        }
+    }
+    func_80026A34(0, 1, 0x3E, 0);
+    func_800E368C(0x108, 0, 1);
+    func_800D9BF4(7);
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E3FB4);
 
