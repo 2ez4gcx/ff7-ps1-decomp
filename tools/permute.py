@@ -5,7 +5,7 @@
 
 WORK.c is a work file of tools/work.py (its own declarations, then the
 function) that compiles but does not match yet. This sets up
-build/us/permute/NAME/ for decomp-permuter
+build/us/permute/TARGET/NAME/ for decomp-permuter
 (https://github.com/simonlindholm/decomp-permuter, cloned to
 $FF7_TOOLCHAIN/decomp-permuter): base.c is the work file with decls.h and
 the headers expanded, `M2C_SFIELD` turned into named structs pycparser can
@@ -97,7 +97,8 @@ def main():
     if found is None:
         sys.exit(f'{args.name} is not an INCLUDE_ASM of src/{args.target}/')
     src = found[0]
-    out = ROOT / 'build' / 'us' / 'permute' / args.name
+    # One folder per target: spells share function names (func_801B0748...).
+    out = ROOT / 'build' / 'us' / 'permute' / args.target / args.name
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)
