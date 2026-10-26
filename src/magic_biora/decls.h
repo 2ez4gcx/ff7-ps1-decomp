@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0B90();
+void func_801B0B90();
 void func_801B0B30(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -25,5 +25,16 @@ extern u8 D_801CCC73;
 extern u8 D_801CCC72;
 extern u8 D_801CCC71;
 extern s16 D_801CCC74;
+void func_801B0A94(s32 arg0, s32 arg1);
+s32 func_800BBEAC(void (*)());
+void func_800D3994(s32, s32, void *);
+M2C_UNK func_800D55F4(M2C_UNK, M2C_UNK, M2C_UNK);
+extern u8 D_8015190F[][0xB9C];
+extern M2C_UNK func_801B0734;
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)(s32, s32));
+extern M2C_UNK D_801B0C00;
+void func_801B0588(void);
+s32 func_80042DA8();
 
 #endif /* MAGIC_BIORA_DECLS_H */

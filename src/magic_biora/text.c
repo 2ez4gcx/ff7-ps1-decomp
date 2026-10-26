@@ -55,11 +55,40 @@ void func_801B0410(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_biora/nonmatchings/text", func_801B0588);
+void func_801B0588(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 r;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (!(p->unk2 & 3)) {
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0410)];
+            r = func_80042DA8();
+            q->unk8 = p->unk8 + r % 2000 - 0x3E8;
+            q->unkA = 0;
+            q->unkC = p->unkC + func_80042DA8() % 2000 - 0x3E8;
+            q->unk10 = func_80042DA8() % 1280 + 0x1000;
+            q->unk12 = func_80042DA8() % 50 + 0x32;
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x14) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_biora/nonmatchings/text", func_801B0734);
 
-INCLUDE_ASM("../asm/us/magic_biora/nonmatchings/text", func_801B0A94);
+void func_801B0A94(s32 arg0, s32 arg1) {
+    MgObj20 *p;
+
+    p = &D_80162978[func_800BBEAC(&func_801B0734)];
+    p->unk4 = arg0;
+    p->unk6 = arg1;
+    func_800D3994(arg0, D_8015190F[arg0][0], p->pad);
+    func_800D55F4(0x20, 0x40, 0x5A);
+}
 
 void func_801B0B30(void) {
     MgObj20 *p;
@@ -72,4 +101,8 @@ void func_801B0B30(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_biora/nonmatchings/text", func_801B0B90);
+void func_801B0B90(arg0, arg1) {
+    func_800D2980(&D_801B0C00, 0, 0, 0);
+    func_800BBEAC((M2C_UNK *)func_801B0B30);
+    func_800D5444(arg0, arg1, 4, func_801B0A94);
+}

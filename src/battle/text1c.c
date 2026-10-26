@@ -2011,7 +2011,57 @@ void func_800AE070(void) {
 void func_800AE078(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AE080);
+void func_800AE080(void) {
+    s32 d[6];
+    u8 pad[8];
+    s32 n;
+    s32 i;
+    s32 j;
+    s32 r;
+    s32 t;
+    s32 sum;
+    s32 cnt;
+    s32 max;
+
+    n = M2C_FIELD(D_80063014, s32 *, 4) / 10;
+    if (n < 2) {
+        n = 2;
+    }
+    if (n >= 7) {
+        n = 6;
+    }
+    for (i = 0; i < 4; i++) {
+        D_80163774[i] = 0xFF;
+    }
+    sum = 0;
+    for (i = 0; i < n; i++) {
+        r = func_80014BA8(6);
+        d[i] = r;
+        t = sum + 1;
+        sum = t + r;
+        if (i & 1) {
+            D_80163774[i / 2] = (r << 4) | (D_80163774[i / 2] & 0xF);
+        } else {
+            D_80163774[i / 2] = r | 0xF0;
+        }
+        func_80014B54();
+    }
+    max = 0;
+    for (i = 0; i < 6; i++) {
+        cnt = 0;
+        for (j = 0; j < n; j++) {
+            if (d[j] == i) {
+                cnt++;
+            }
+        }
+        if (max < cnt) {
+            max = cnt;
+        }
+    }
+    t = sum * 100;
+    sum = t * max;
+    M2C_FIELD(D_80063014, s32 *, 0x214) = sum;
+}
 
 void func_800AE234(void) {
     M2C_FIELD(D_80063014, s32 *, 0x214) = (s32) (D_8009D2A2 + (D_8009D2A3 << 8));
@@ -2102,7 +2152,54 @@ void func_800AE764(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AE82C);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AE954);
+void func_800AE954(arg0) {
+    s32 a;
+    s32 b;
+    u32 f;
+    s32 t;
+    s32 v;
+
+    f = D_800F83E0[arg0].a;
+    a = 0;
+    b = 0;
+    if ((s32)f < 0) {
+        switch (D_800F7DC6) {
+        case 0:
+        case 3:
+            f |= 0x400;
+            break;
+        case 1:
+            f |= 0x02000000;
+            break;
+        }
+    }
+    if ((f & 0x401) == 0) {
+        a = D_800F7DA6;
+        b = 0x22;
+        if (!(f & 0x200)) {
+            a *= 2;
+            b = 0x44;
+            if (f & 0x100) {
+                a *= 2;
+                b = 0x88;
+            }
+        }
+    }
+    if (arg0 < 3) {
+        t = func_800B1218(arg0, D_800F83F4[arg0][0], 5) + 0x32;
+    } else {
+        t = D_800F83F4[arg0][0];
+    }
+    v = a * t / D_800F7DA8;
+    do {
+        if (f & 0x02004004) {
+            v = 0;
+        }
+    } while (0);
+    D_800F5BB8[arg0].a = a;
+    D_800F5BBA[arg0].a = v;
+    D_800F5BC2[arg0].a = b;
+}
 
 void func_800AEB20(s32 arg0, s32 arg1) {
     s32 i;
@@ -2742,7 +2839,40 @@ s32 func_800B17F0(s32 arg0) {
     return v;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B18A8);
+s32 func_800B18A8(arg0) {
+    s32 b;
+    s32 hi;
+    s32 lo;
+    s32 v;
+    s32 i;
+
+    b = ((BtlStk *)D_800F4AC4)->buf[((BtlStk *)D_800F4AC4)->sp++];
+    hi = b >> 4;
+    lo = b & 0xF;
+    D_800F4AC4[arg0 + 6] = hi;
+    D_800F4AC4[arg0 + 8] = lo;
+    switch (hi) {
+    case 0:
+        ((B1C1C_T *)D_800F4AC4)->mask[arg0] = 0x3FF;
+        v = func_800B17F0(lo);
+        for (i = 0; i < 10; i++) {
+            ((B1C1C_T *)D_800F4AC4)->w[arg0][i] = v;
+        }
+        break;
+    case 1:
+        ((B1C1C_T *)D_800F4AC4)->w[arg0][0] = func_800B17F0(2);
+        break;
+    case 2:
+        ((B1C1C_T *)D_800F4AC4)->mask[arg0] = func_800B17F0(2);
+        for (i = 0; i < 10; i++) {
+            if ((((B1C1C_T *)D_800F4AC4)->mask[arg0] >> i) & 1) {
+                ((B1C1C_T *)D_800F4AC4)->w[arg0][i] = func_800B17F0(lo);
+            }
+        }
+        break;
+    }
+    return b;
+}
 
 s32 func_800B1A5C(void) {
     s32 t;
@@ -2927,7 +3057,44 @@ void func_800B2CAC(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800B2CFC);
+void func_800B2CFC(s32 arg0, s32 arg1) {
+    s32 d;
+    s32 s;
+    s32 e;
+    s32 v;
+    s32 d2;
+    s32 s2;
+    s32 e2;
+
+    v = D_800F5BB4[arg1].f38;
+    D_800F5BB4[arg1].f10 = arg0;
+    D_800F5BB4[arg1].f38 = v | 1;
+    D_800F83DC[arg0].f30 = D_800F83DC[arg1].f30;
+    D_800F83DC[arg0].f2C = D_800F83DC[arg1].f2C;
+    D_800F83DC[arg0].f04 = D_800F83DC[arg1].f04;
+    D_800F83DC[arg0].f48 = D_800F83DC[arg1].f48;
+    d = (s32)D_800F5BC8[arg0];
+    D_800F5BB4[arg0].f0A = D_800F5BB4[arg1].f0A;
+    s = (s32)D_800F5BC8[arg1];
+    D_800F5BB4[arg0].f2C = D_800F5BB4[arg1].f2C;
+    e = d + 0x10;
+    D_800F5BB4[arg0].f2D = D_800F5BB4[arg1].f2D;
+    do {
+        *(u8 *)d = *(u8 *)s;
+        d++;
+        s++;
+    } while (d < e);
+    d2 = (s32)&D_800F5BD8[arg0];
+    s2 = (s32)&D_800F5BD8[arg1];
+    e2 = d2 + 8;
+    do {
+        *(u8 *)d2 = *(u8 *)s2;
+        d2++;
+        s2++;
+    } while (d2 < e2);
+    func_800AE954(arg0);
+    func_800B108C(arg0);
+}
 
 void *func_800B2EBC(arg0) {
     E1C *r;
