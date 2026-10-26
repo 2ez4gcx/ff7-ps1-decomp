@@ -233,7 +233,12 @@ s32 func_80046A9C(void *arg0, void *arg1) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046AD0);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046C50);
+void func_80046C50(DispEnv *arg0) {
+    D_80062BFC("disp   (%3d,%3d)-(%d,%d)\n", arg0->disp.x, arg0->disp.y, arg0->disp.w, arg0->disp.h);
+    D_80062BFC("screen (%3d,%3d)-(%d,%d)\n", arg0->screen.x, arg0->screen.y, arg0->screen.w, arg0->screen.h);
+    D_80062BFC("isinter %d\n", arg0->isinter);
+    D_80062BFC("isrgb24 %d\n", arg0->isrgb24);
+}
 
 s32 func_80046CFC(s32 arg0) {
     D_80070690 = arg0;

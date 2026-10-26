@@ -956,7 +956,29 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003D334);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003D51C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003D670);
+u16 *func_8003D670(void) {
+    u16 *p;
+    volatile u16 *q;
+    volatile u16 *s;
+    volatile s32 *r;
+
+    p = &D_800504AC;
+    if (*p == 0) {
+        return 0;
+    }
+    func_80042AF0();
+    q = D_8005153C;
+    r = D_80051540;
+    s = D_80051538;
+    D_800504DE = *q;
+    D_800504E0 = *r;
+    *q = 0;
+    *s = *q;
+    *D_80051540 &= 0x77777777;
+    func_80042AC0();
+    *p = 0;
+    return p;
+}
 
 u16 *func_8003D71C(void) {
     u16 *p;

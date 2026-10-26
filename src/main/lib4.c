@@ -14,6 +14,8 @@ s32 func_80043DD8(s32 arg0);
 s32 func_8004433C(s32 arg0);
 s32 func_80043BA8(s32 arg0);
 s32 func_80043D3C(s32 arg0);
+MainTag *func_8004418C(MainTag *arg0, s32 arg1);
+MainTag *func_80044244(MainTag *arg0, M2C_UNK arg1);
 
 INCLUDE_RODATA("../asm/us/main/nonmatchings/lib4", D_80010C98);
 
@@ -34,7 +36,22 @@ s32 func_80043BA8(s32 arg0) {
     return old;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043C14);
+s32 func_80043C14(s32 arg0) {
+    u8 *p;
+    u8 old;
+
+    p = &D_80062C01;
+    old = *p;
+    if (D_80062C02 >= 2) {
+        D_80062BFC("SetGrapQue(%d)...\n", arg0);
+    }
+    if (arg0 != *p) {
+        M2C_FIELD(D_80062BF8, M2C_UNK (**)(M2C_UNK), 0x34)(1);
+        *p = arg0;
+        func_8003D120(2, 0);
+    }
+    return old;
+}
 
 u8 func_80043CC0(void) {
     return D_80062C00;
@@ -94,9 +111,31 @@ void func_80044064(void *arg0, M2C_UNK arg1) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800440C8);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_8004418C);
+MainTag *func_8004418C(MainTag *arg0, s32 arg1) {
+    if (D_80062C02 >= 2) {
+        D_80062BFC("ClearOTag(%08x,%d)...\n", arg0, arg1);
+    }
+    arg1 -= 1;
+    if (arg1 != 0) {
+        do {
+            arg1 -= 1;
+            arg0->len = 0;
+            arg0->addr = (u32) (arg0 + 1);
+            arg0++;
+        } while (arg1 != 0);
+    }
+    *(u32 *) arg0 = (u32) &D_80062CBC & 0xFFFFFF;
+    return arg0;
+}
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044244);
+MainTag *func_80044244(MainTag *arg0, M2C_UNK arg1) {
+    if (D_80062C02 >= 2) {
+        D_80062BFC("ClearOTagR(%08x,%d)...\n", arg0, arg1);
+    }
+    M2C_FIELD(D_80062BF8, M2C_UNK (**)(MainTag *, M2C_UNK), 0x2C)(arg0, arg1);
+    *(u32 *) arg0 = (u32) &D_80062CBC & 0xFFFFFF;
+    return arg0;
+}
 
 void func_800442DC(void *arg0) {
     u8 temp_s1;

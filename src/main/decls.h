@@ -1308,7 +1308,7 @@ void func_8002C8DC(void);
 void func_8002F738(AkaoChannel *arg0, s32 arg1, s32 arg2);
 s32 func_80035F14(void);
 s32 *func_80035DC8(void);
-M2C_UNK func_80040AC8(s32 *);
+s32 func_80040AC8(s32 *arg0);
 M2C_UNK func_8004262C(s32 *, s32);
 extern s32 D_80077F3C;
 extern u16 D_80077F62;
@@ -1592,6 +1592,17 @@ extern u32 D_8004AB20;
 extern s32 D_8004AB24;
 extern volatile s32 *D_80062D20;
 extern volatile s32 *D_80062D28;
+s32 func_8004018C(s32 arg0, char *arg1);
+typedef struct { s32 id; s32 pad; char name[0x24]; } MainCdFile;
+extern MainCdFile D_8006E748[];
+s32 func_80043C14(s32 arg0);
+extern u8 D_80062C01;
+void func_80046C50(DispEnv *arg0);
+extern M2C_UNK D_80062CBC;
+u16 *func_8003D670(void);
+M2C_UNK func_80042AC0();
+extern volatile u16 *D_80051538;
+void func_80042044(volatile u32 *arg0, s32 arg1);
 
 #endif /* MAIN_DECLS_H */
 extern MainSlot440 D_8009D85C[];

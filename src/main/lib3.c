@@ -117,7 +117,25 @@ void func_80040A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     D_800756E4 = arg4;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80040AC8);
+s32 func_80040AC8(s32 *arg0) {
+    s32 idx;
+    s32 i;
+    s32 n;
+    void *p;
+    s32 pad;
+
+    idx = (arg0 - (s32 *) ((D_8009FE90 << 5) + D_8009C6D4)) / 504;
+    p = (void *) ((idx << 5) + D_8009C6D4);
+    n = M2C_FIELD(p, u16 *, 6);
+    if (M2C_FIELD(p, s16 *, 0) != 4) {
+        return 1;
+    }
+    for (i = 0; i < (s16) n; i++) {
+        *(u16 *) (((i + idx) << 5) + D_8009C6D4) = 0;
+    }
+    D_8009C550 = i + idx;
+    return 0;
+}
 
 s32 func_80040B84(s32 arg0, u32 arg1) {
     u32 i;
@@ -226,7 +244,22 @@ u16 func_80042038(u16 *arg0) {
     return *arg0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80042044);
+void func_80042044(volatile u32 *arg0, s32 arg1) {
+    s32 mask;
+
+    if (arg1 & 1) {
+        *arg0 = *arg0 & 0xF7FFFFFF;
+    } else {
+        *arg0 = *arg0 | 0x08000000;
+    }
+    mask = 0x02000000;
+    if (arg1 & 2) {
+        *arg0 = *arg0 | mask;
+    } else {
+        *arg0 = *arg0 & 0xFDFFFFFF;
+    }
+    func_80042270(arg0, *(volatile u16 *) arg0);
+}
 
 void func_800420C0(void) {
     func_80042304();
