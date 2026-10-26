@@ -14,17 +14,87 @@ s32 func_80048540(s32 arg0);
 s32 func_80046D0C(s32 arg0);
 s32 func_800484A8(void);
 s32 func_8004656C(s32 tp, s32 abr, s32 x, s32 y);
+M2C_UNK func_80042DC8();
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004602C);
+s32 func_8004602C(s32 arg0) {
+    D_80062D14 = ((s32 (*)(s32)) func_8003D23C)(0);
+    D_80062D08 = 0;
+    D_80062D04 = D_80062D08;
+    switch (arg0 & 7) {
+    case 0:
+        *D_80062CE0 = 0x401;
+        *D_80062CF0 |= 0x800;
+        *D_80062CD4 = 0;
+        func_80046530(D_80070590, 0, 0x100);
+        func_80046530(&D_8009AD40, 0, 0x1800);
+        break;
+    case 1:
+        *D_80062CE0 = 0x401;
+        *D_80062CF0 |= 0x800;
+        *D_80062CD4 = 0x02000000;
+        *D_80062CD4 = 0x01000000;
+        break;
+    }
+    ((s32 (*)(s32)) func_8003D23C)(D_80062D14);
+    if (!(arg0 & 7)) {
+        return func_80046450(arg0);
+    }
+    return 0;
+}
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046168);
+s32 func_80046168(s32 arg0) {
+    s32 n;
+
+    if (arg0 == 0) {
+        func_800462B0();
+        while (D_80062D04 != D_80062D08) {
+            func_80045D18();
+            if (func_800462E4() != 0) {
+                return -1;
+            }
+        }
+        while ((*D_80062CE0 & 0x01000000) || !(*D_80062CD4 & 0x04000000)) {
+            if (func_800462E4() != 0) {
+                return -1;
+            }
+        }
+        return 0;
+    }
+    n = (D_80062D04 - D_80062D08) & 0x3F;
+    if (n != 0) {
+        func_80045D18();
+    }
+    if ((*D_80062CE0 & 0x01000000) || !(*D_80062CD4 & 0x04000000)) {
+        if (n == 0) {
+            return 1;
+        }
+        return n;
+    }
+    return n;
+}
 
 void func_800462B0(void) {
     D_80062D18 = func_8003CEDC(-1) + 0xF0;
     D_80062D1C = 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_800462E4);
+s32 func_800462E4(void) {
+    if (func_8003CEDC(-1) > D_80062D18 || D_80062D1C++ > 0xF0000) {
+        *D_80062CD4;
+        func_80042DC8("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,", (D_80062D04 - D_80062D08) & 0x3F, *D_80062CD4, *D_80062CE0, *D_80062CD8);
+        func_80042DC8("func=(%08x)(%08x,%08x)\n", *(volatile s32 *) &D_80062CF4, D_80062CF8, D_80062CFC);
+        D_80062D14 = ((s32 (*)(s32)) func_8003D23C)(0);
+        D_80062D08 = 0;
+        D_80062D04 = D_80062D08;
+        *D_80062CE0 = 0x401;
+        *D_80062CF0 |= 0x800;
+        *D_80062CD4 = 0x02000000;
+        *D_80062CD4 = 0x01000000;
+        ((s32 (*)(s32)) func_8003D23C)(D_80062D14);
+        return -1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046450);
 
@@ -50,7 +120,17 @@ s32 func_80046634(s32 arg0, s32 arg1) {
     return ((arg1 << 6) | ((arg0 >> 4) & 0x3F)) & 0xFFFF;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004664C);
+void func_8004664C(s32 arg0) {
+    u16 t;
+
+    if (((s32 (*)(void)) func_80043CC0)() == 1 || ((s32 (*)(void)) func_80043CC0)() == 2) {
+        t = arg0;
+        D_80062BFC(D_80010EB0, (t >> 9) & 3, (t >> 7) & 3, (t << 6) & 0x7C0, (t << 3) & 0x300);
+    } else {
+        t = arg0;
+        D_80062BFC(D_80010EB0, (t >> 7) & 3, (t >> 5) & 3, (t << 6) & 0x7C0, ((t << 4) & 0x100) + ((t >> 2) & 0x200));
+    }
+}
 
 INCLUDE_RODATA("../asm/us/main/nonmatchings/lib5", D_80010EB0);
 
@@ -237,7 +317,22 @@ s32 func_80046A9C(void *arg0, void *arg1) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046AD0);
+void func_80046AD0(MainDrawEnv *arg0) {
+    u16 t;
+
+    D_80062BFC("clip (%3d,%3d)-(%d,%d)\n", arg0->clip.x, arg0->clip.y, arg0->clip.w, arg0->clip.h);
+    D_80062BFC("ofs  (%3d,%3d)\n", arg0->ofs[0], arg0->ofs[1]);
+    D_80062BFC("tw   (%d,%d)-(%d,%d)\n", arg0->tw.x, arg0->tw.y, arg0->tw.w, arg0->tw.h);
+    D_80062BFC("dtd   %d\n", arg0->dtd);
+    D_80062BFC("dfe   %d\n", arg0->dfe);
+    if (((s32 (*)(void)) func_80043CC0)() == 1 || ((s32 (*)(void)) func_80043CC0)() == 2) {
+        t = arg0->tpage;
+        D_80062BFC(D_80010EB0, (t >> 9) & 3, (t >> 7) & 3, (t << 6) & 0x7C0, (t << 3) & 0x300);
+    } else {
+        t = arg0->tpage;
+        D_80062BFC(D_80010EB0, (t >> 7) & 3, (t >> 5) & 3, (t << 6) & 0x7C0, ((t << 4) & 0x100) + ((t >> 2) & 0x200));
+    }
+}
 
 void func_80046C50(DispEnv *arg0) {
     D_80062BFC("disp   (%3d,%3d)-(%d,%d)\n", arg0->disp.x, arg0->disp.y, arg0->disp.w, arg0->disp.h);
@@ -268,9 +363,71 @@ void func_80046D74(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046DB4);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80047060);
+s32 func_80047060(u32 *arg0, u32 *arg1) {
+    u32 n;
+    u32 t;
+    u32 u;
+    u32 *p;
+    u32 x;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80047180);
+    if (*arg0++ != 0x10) {
+        return -1;
+    }
+    arg1[0] = *arg0++;
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("id  =%08x\n", 0x10);
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("mode=%08x\n", arg1[0]);
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("timaddr=%08x\n", (u32) arg0);
+    }
+    if (arg1[0] & 8) {
+        u = *arg0;
+        t = u;
+        p = arg0;
+        arg1[1] = (u32) (p + 1);
+        arg1[2] = (u32) (p + 3);
+        n = t >> 2;
+        arg0 += n;
+    } else {
+        n = 0;
+        arg1[1] = 0;
+        arg1[2] = 0;
+    }
+    x = *arg0;
+    arg1[3] = (u32) (arg0 + 1);
+    arg1[4] = (u32) (arg0 + 3);
+    x = x >> 2;
+    x += 2;
+    return n + x;
+}
+
+s32 func_80047180(u32 *arg0, s32 arg1, u32 *arg2, u32 *arg3, u32 *arg4) {
+    MainTmdObj *o;
+
+    o = (MainTmdObj *) (arg0 + 3);
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("analizing TMD...\n");
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("\tid=%08X, flags=%d, nobj=%d, objid=%d\n", arg0[0], arg0[1], arg0[2], arg1);
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("\tvert=%08X, nvert=%d\n", o[arg1].vert, o[arg1].nvert);
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("\tnorm=%08X, nnorm=%d\n", o[arg1].norm, o[arg1].nnorm);
+    }
+    if (((s32 (*)(void)) func_80043CD0)() == 2) {
+        func_80042DC8("\tprim=%08X, nprim=%d\n", o[arg1].prim, o[arg1].nprim);
+    }
+    *arg3 = (u32) o + o[arg1].vert;
+    *arg4 = (u32) o + o[arg1].norm;
+    *arg2 = (u32) o + o[arg1].prim;
+    return o[arg1].nprim;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80047318);
 

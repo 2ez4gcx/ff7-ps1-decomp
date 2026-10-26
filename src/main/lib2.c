@@ -78,7 +78,20 @@ void func_8003E2B0(void) {
     func_8003F830();
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003E2D0);
+s32 func_8003E2D0(s32 arg0, u8 *arg1) {
+    s32 i;
+    s32 s;
+    s32 m;
+
+    i = arg0 + 150;
+    arg1[2] = ((i % 75) / 10) * 16 + (i % 75) % 10;
+    i = i / 75;
+    m = i / 60;
+    s = i % 60;
+    arg1[1] = (s / 10) * 16 + s % 10;
+    arg1[0] = (m / 10) * 16 + m % 10;
+    return (s32) arg1;
+}
 
 s32 func_8003E3D4(void *arg0) {
     u8 temp_a1;
@@ -116,9 +129,56 @@ s32 func_8003F398(arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F420);
+s32 func_8003F420(void) {
+    u8 c;
+    u8 *q;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F500);
+    *D_800518EC = 1;
+    if (*D_800518F8 & 7) {
+        c = 7;
+        do {
+            *D_800518EC = 1;
+            *D_800518F8 = c;
+            *D_800518F4 = c;
+        } while (*D_800518F8 & 7);
+    }
+    D_80051906 = 0;
+    *(volatile u8 *) &D_80051905 = D_80051906;
+    do {
+        q = D_800518EC;
+        D_80051904 = 2;
+        *q = 0;
+    } while (0);
+    *D_800518F8 = 0;
+    *D_800518FC = 0x1325;
+    return 0x1325;
+}
+
+s32 func_8003F500(void) {
+    u8 b[4];
+
+    if (D_80051900[0xDC] == 0) {
+        if (D_80051900[0xDD] == 0) {
+            D_80051900[0xC0] = 0x3FFF;
+            D_80051900[0xC1] = 0x3FFF;
+        }
+    }
+    D_80051900[0xD8] = 0x3FFF;
+    D_80051900[0xD9] = 0x3FFF;
+    D_80051900[0xD5] = 0xC001;
+    b[2] = 0x80;
+    b[0] = 0x80;
+    b[3] = 0;
+    b[1] = 0;
+    *D_800518EC = 2;
+    *D_800518F4 = b[0];
+    *D_800518F8 = b[1];
+    *D_800518EC = 3;
+    *D_800518F0 = b[2];
+    *D_800518F4 = b[3];
+    *D_800518F8 = 0x20;
+    return 0;
+}
 
 void func_8003F5F4(void) {
     D_8005162C = 0;
@@ -133,7 +193,25 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F644);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F830);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F99C);
+s32 func_8003F99C(arg0, arg1) {
+    volatile u8 *q;
+
+    *D_800518EC = 0;
+    *D_800518F8 = 0x80;
+    *D_80051920 = 0x20943;
+    *D_800518FC = 0x1323;
+    *D_80051924 |= 0x8000;
+    *D_80051928 = arg0;
+    *D_8005192C = arg1 | 0x10000;
+    q = D_800518EC;
+    while (!(*q & 0x40)) {
+    }
+    *D_80051930 = 0x11000000;
+    while (*D_80051930 & 0x01000000) {
+    }
+    *D_800518FC = 0x1325;
+    return 0;
+}
 
 void func_8003FA9C(s32 arg0) {
     D_800518D0 = arg0;

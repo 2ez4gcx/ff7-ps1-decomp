@@ -23,7 +23,29 @@ INCLUDE_RODATA("../asm/us/main/nonmatchings/lib4", D_80010C98);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043938);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043A94);
+u8 func_80043A94(s32 arg0) {
+    u8 *p;
+    u8 old;
+    s32 v;
+
+    p = &D_80062C03;
+    old = *p;
+    if (D_80062C02 >= 2) {
+        D_80062BFC("SetGraphReverse(%d)...\n", arg0);
+    }
+    *p = arg0;
+    v = M2C_FIELD(D_80062BF8, s32 (**)(s32), 0x28)(8);
+    if (*p != 0) {
+        v |= 0x08000080;
+    } else {
+        v |= 0x08000000;
+    }
+    M2C_FIELD(D_80062BF8, M2C_UNK (**)(s32), 0x10)(v);
+    if (D_80062C00 == 2) {
+        M2C_FIELD(D_80062BF8, M2C_UNK (**)(s32), 0x10)(D_80062C03 != 0 ? 0x20000501 : 0x20000504);
+    }
+    return old;
+}
 
 s32 func_80043BA8(s32 arg0) {
     u8 *p;
@@ -94,7 +116,26 @@ s32 func_80043DD8(s32 arg0) {
     return M2C_FIELD(D_80062BF8, s32 (**)(s32), 0x3C)(arg0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043E44);
+s32 func_80043E44(char *arg0, Rect16 *arg1) {
+    s32 w;
+    s32 x;
+    s32 y;
+    s32 h;
+
+    switch (D_80062C02) {
+    case 1:
+        w = arg1->w;
+        if (D_80062C04 < w || (x = arg1->x, D_80062C04 < w + x) || (y = arg1->y, D_80062C06 < y) || (h = arg1->h, D_80062C06 < y + h) || w <= 0 || x < 0 || y < 0 || h <= 0) {
+            D_80062BFC("%s:bad RECT", arg0);
+            D_80062BFC("(%d,%d)-(%d,%d)\n", arg1->x, arg1->y, arg1->w, arg1->h);
+        }
+        break;
+    case 2:
+        D_80062BFC("%s:", arg0);
+        D_80062BFC("(%d,%d)-(%d,%d)\n", arg1->x, arg1->y, arg1->w, arg1->h);
+        break;
+    }
+}
 
 void func_80043F6C(Rect16 *arg0, u8 arg1, u8 arg2, u8 arg3) {
     func_80043E44("ClearImage", arg0);
@@ -297,7 +338,23 @@ s32 func_800450E0(void) {
     return *D_80062CD4;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800450F8);
+s32 func_800450F8(s32 arg0, s32 arg1) {
+    s32 t;
+
+    *D_80062CF0 |= 0x08000000;
+    *D_80062CEC = 0;
+    t = arg1 * 4 - 4;
+    *D_80062CE4 = arg0 + t;
+    *D_80062CE8 = arg1;
+    *D_80062CEC = 0x11000002;
+    func_800462B0();
+    while (*D_80062CEC & 0x01000000) {
+        if (func_800462E4() != 0) {
+            return -1;
+        }
+    }
+    return arg1;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800451E0);
 

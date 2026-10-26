@@ -11,6 +11,8 @@ DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
 s32 func_80042BC0(s32 arg0, s16 arg1, s32 arg2);
+s32 func_80041E30(s32 arg0, s32 arg1);
+s32 func_800436C0(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
 s32 func_800404F4(s32 arg0, M2C_UNK arg1, s32 arg2) {
     s32 sp10;
@@ -51,9 +53,87 @@ void func_80040628(void) {
     func_80040CA8();
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80040648);
+s32 func_80040648(s32 arg0) {
+    u8 sp10[8];
+    s32 r;
+    s32 i;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_8004076C);
+    func_8003E100(1, 0, (s32) sp10);
+    if (sp10[0] & 0x10) {
+        return 0x10;
+    }
+    r = func_8003E100(0x13, 0, (s32) sp10);
+    if (arg0 == 1) {
+        if (sp10[0] == 2 && r != 0) {
+            return 2;
+        }
+        return 5;
+    }
+    i = 0;
+    do {
+        if (sp10[0] & 2) {
+            if (sp10[0] == 2 && r != 0) {
+                return 2;
+            }
+            do {
+                func_8003CEDC(0x1E);
+                r = func_8003E100(0x13, 0, (s32) sp10);
+            } while (sp10[0] != 2 || r == 0);
+            return 2;
+        }
+        func_8003CEDC(0x1E);
+        r = func_8003E100(0x13, 0, (s32) sp10);
+        i++;
+    } while (i < 10);
+    return 5;
+}
+
+s32 func_8004076C(void) {
+    u8 loc[8];
+    u8 buf[0x800];
+    u8 result[8];
+    u8 mode;
+    s32 i;
+    s32 r;
+    s32 s;
+    s32 t;
+    s32 u;
+
+    mode = 0x80;
+    func_8003DE9C(1, 0, (s32) result);
+    if (result[0] & 0x10) {
+        return 0x10;
+    }
+    func_8003E2D0(0x10, loc);
+    func_8003DE9C(0xE, (s32) &mode, 0);
+    func_8003DE9C(0x1B, (s32) loc, 0);
+    i = 0;
+    do {
+        r = ((s32 (*)(s32, u8 *)) func_8003DE4C)(0, result);
+        i++;
+        if (r == 1) {
+            break;
+        }
+        if (i < 10) {
+            func_8003DE9C(0x1B, (s32) loc, 0);
+        }
+    } while (i < 10);
+    s = r;
+    if (s != 1) {
+        t = result[0];
+        if (t & 0x10) {
+            return 0x10;
+        }
+        u = t & 2;
+        return u != 0;
+    }
+    func_8003DE9C(9, 0, 0);
+    ((void (*)(u8 *, s32)) func_8003E268)(buf, 0x200);
+    if (func_80042D78(buf + 1, "CD001", 5) != 0) {
+        return 1;
+    }
+    return 2;
+}
 
 s32 func_80040898(void) {
     s32 temp_v0;
@@ -186,7 +266,33 @@ void func_80041620(s32 *arg0, s32 *arg1, u32 arg2) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80041654);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80041810);
+void func_80041810(s16 *arg0, s16 *arg1) {
+    s32 i;
+    s16 d;
+    u16 *p;
+
+    i = D_8009FE90;
+    *arg0 = 0;
+    d = (u16) D_8009C548 - (u16) D_8009C550;
+    *arg1 = d;
+    if (d < 0) {
+        i--;
+        for (; i >= 0; i--) {
+            p = (u16 *) ((i << 5) + D_8009C6D4);
+            if (*p == 1) {
+                break;
+            }
+        }
+        i++;
+        *arg1 = (u16) *arg1 + i;
+    }
+    while (--i >= 0) {
+        if (*(u16 *) ((i << 5) + D_8009C6D4) == 0) {
+            p = (u16 *) arg0;
+            *arg0 = (u16) *p + 1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_800418D8);
 
@@ -201,7 +307,23 @@ void func_80041CD4(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80041D28);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80041E30);
+s32 func_80041E30(s32 arg0, s32 arg1) {
+    s32 r;
+
+    do {
+        r = -1;
+        if (func_8003CEDC(-1) <= D_80051A3C[0] + 0x4B0) {
+            if (D_80051A3C[-2] < 0 || func_8003CEDC(-1) > D_80051A3C[-1] + 0x3C) {
+                func_80041AFC(1);
+                r = D_80051A3C[-7];
+            } else {
+                r = D_80051A3C[-2];
+            }
+        }
+    } while (arg0 == 0 && r > 0);
+    ((void (*)(s32, s32)) func_8003DE4C)(1, arg1);
+    return r;
+}
 
 s32 func_80041EFC(s32 arg0) {
     s32 temp_v0;
@@ -497,7 +619,26 @@ u8 *func_80043654(u8 *arg0, u8 *arg1, s32 arg2) {
     return arg0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_800436C0);
+s32 func_800436C0(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    s16 r[4];
+
+    r[0] = arg3;
+    r[3] = arg6;
+    r[1] = arg4;
+    switch (arg1) {
+    case 0:
+        r[2] = arg5 / 4;
+        break;
+    case 1:
+        r[2] = arg5 / 2;
+        break;
+    case 2:
+        r[2] = arg5;
+        break;
+    }
+    func_80044000(r, arg0);
+    return func_8004656C(arg1, arg2, arg3, arg4) & 0xFFFF;
+}
 
 s32 func_800437AC(void *arg0, s32 arg1, s32 arg2) {
     s16 r[4];
