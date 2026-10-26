@@ -651,7 +651,30 @@ s32 func_800437AC(void *arg0, s32 arg1, s32 arg2) {
     return func_80046634(arg1, arg2) & 0xFFFF;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3", func_80043814);
+s32 func_80043814(Spr *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4) {
+    func_80043928();
+    arg0->x = (u16) arg1;
+    arg0->y = (u16) arg2;
+    arg0->w = (u16) arg3;
+    M2C_FIELD(arg0, s16 *, 0xC) = 0;
+    M2C_FIELD(arg0, s16 *, 0xE) = 0;
+    M2C_FIELD(arg0, s16 *, 0x10) = 0;
+    M2C_FIELD(arg0, s16 *, 0x12) = 0;
+    arg0->rest[0] = 0;
+    arg0->rest[1] = 0;
+    arg0->rest[2] = 0;
+    arg0->pad16[0] = 1;
+    arg0->f = 0;
+    M2C_FIELD(arg0, s16 *, 8) = arg1;
+    M2C_FIELD(arg0, s16 *, 0xA) = arg2;
+    arg0->h = (u16) arg4;
+    if (((s32 (*)(void)) func_80043CC0)() != 1) {
+        func_80043CC0();
+    }
+    arg0->e = 0xA;
+    arg0->g = 0;
+    return (s32) arg0;
+}
 
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     arg0->disp.x = arg1;
