@@ -124,6 +124,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - The pause flag `D_80062D98` tested twice: plain `D_80062D98 == 0` tests match in most
   functions; when the first test's branch lands on the second test in the game, write one
   as `*(u8 *)0x80062D98 == 0`, or CSE retargets the branch past the second test.
+- A decremented halfword global (`lhu; addiu -1; sh; sll 16; bnez`) is `s16`; `u16` gives
+  `andi 0xFFFF`. `(u16)p->f` in an `s32` sum gives `lhu` where the plain field gives `lh`;
+  `t = *(s16 *)&G; t &= 0x1F;` keeps `lh` where the one-liner becomes `lhu`. A `u8` global
+  tested `x < 9` gives `sltiu`, `s32 t = D_x; t < 9` gives `slti`.
+- Reassigning a `u16` parameter (`arg2 >>= 4`) keeps the `andi 0xFFFF` a separate `u16`
+  local loses. An 8-byte struct parameter (`MgSVec v`) spills `a1`/`a2` to the caller's
+  frame and passes `&v` on.
+- A volatile struct field makes 2.6.3 re-read it after a branch instead of reusing the
+  earlier load (which also moves constants to other registers); after an `lh` of a field,
+  `((volatile T *)p)->f & 1` forces the `lhu` reload. A pause flag kept in a saved
+  register: `extern volatile u8 D_80062D98; z = D_80062D98; if (z == 0)`.
+- Spawn functions copy a 0x48-byte template: a struct type with the fields the function
+  writes, copied as `s->unk4 = *(T *)&D_x;`. A packed word filled field by field from an
+  uninitialised union of a `u32` and `u8` bitfields gives the `and`/`or` insertion chain
+  on a stale register; such a union kept in a register with `x.b.d2 += c` re-reads the
+  field for `if (x.b.d2 >= 10)` (`srl`), where `(x.b.d2 += c) >= 10` compares the masked
+  sum.
 
 ### Order of instructions
 
@@ -182,6 +199,27 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   arithmetic keeps `(x*4 + 0x70) + D`: `(s32)((u32 *)D + (v >> 2) + 0x1C)`.
 - The prologue's argument copies follow where each parameter is first copied: name the
   parameter differently and write `x = arg0;` after the initialisations to move it.
+- Cast stores keep later loads after them where struct-field stores let them float above:
+  `*(s32 *)(q + 0x14) = v` through a `u8 *q`; all-cast stores to a primitive in the game's
+  order (`*(s16 *)((u8 *)p + 0xA) = i;`, not `*(s16 *)&p->y`); cast stores through a
+  possibly-NULL slot pointer keep the `lw/nop/sw` alternation. `extern struct { u8 v; }
+  D_x;` keeps a byte load after a halfword store where a plain `u8` extern floats above
+  it.
+- Load/store pairs across fields stay in source order only when the fields belong to one
+  struct array under one base symbol; separate per-field arrays let the loads float above
+  the stores. A global read twice around stores through a struct pointer is reloaded only
+  when read as a struct member (`((MgSVec *)D_x)->vx`).
+- Equal-priority independent stores come out in source order. A store of 0 must be written
+  after the load it follows in the game, or it is hoisted ahead. In `d.vx = q->f = e` q is
+  stored first, and only the last store of a chain is forwarded without a reload; `p->w ==
+  0 || p->w > 0xFEFF` reloads after `p->w -= x` where a local copy forwards the stored
+  value. `*(u16 *)&D` read before a store to `D` loads the old halfword with `lhu` first.
+- An explicit address variable (`fp = &D_x;` before `col = &D_y;`, or `b = &tbl; sp = b +
+  n * 5`) puts that address first in the prologue. In `f(D + 0x70 + ((n >> 2) << 2), q)`
+  the operand written first decides which one the result's register ties to; `t = (n >> 2)
+  * 4 + 0x70; f(t + D, pkt);` as its own statement keeps the result in `a0`; `k = 0x70;`
+  before the call, written `((r >> 2) << 2) + k + D`, gives the `addiu 0x70` after the
+  global load.
 
 ### Registers
 
@@ -225,6 +263,29 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - When nothing else moves a register, a no-op `q++; q--;` after the pointer's last use,
   or a separate single-block temporary for a copy (a temporary used in other blocks
   coalesces with its copy), changes the priorities.
+- A `u8` copy defeats CSE: `g = f; if (c) g = f + 1;` with `s32 g` becomes `g += 1` in f's
+  register; `u8 g` keeps `move a1,a0` / `addiu a1,a0,1`. The same value written `h * 2` or
+  `h << 1`, `-t << 7` or `-t * 0x80`, changes temp creation order and can swap saved
+  registers: try arithmetic equivalents early.
+- Only element 0 of an array or struct global gets a shared `la` for repeated accesses
+  (offsets 2 and 4 get their own `lui`); a struct global used for related offsets
+  (`&D_A.m`, `&D_A`) keeps its address in a saved register, two symbols for the parts
+  avoid it. `*(u16 *)&G |= c` and pointer locals keep the address in a register: the first
+  access through it, later ones folded to `lui at`.
+- A scratchpad pointer assigned at the top lands in `s0` with its `lui` after the last
+  call; assigned right before use it takes a temporary. `mp = &m;` just before the first
+  call that uses it, inside a loop body, puts `&m` in a saved register hoisted before the
+  loop.
+- A constant kept in a register (`ori t0, 0x4D; addu v0, t0, v0`): `kx = 0x4D;` before the
+  loop and `kx + v` with the constant first; `v + 0x4D` gives `addiu`.
+- `% 16` contains a branch, so a `rand() & 0xFFF` temp around it is function-wide and
+  takes a register after `p`; with `% 6` it is block-local and gets `s1` before `p`.
+- Loop-invariant values in `s16` locals give the game's `move` copies before the loop
+  (`s32` copies do not); an explicit `s32 k = i;` copy of an `s16` counter takes the lower
+  saved register.
+- Spawn blocks: `id = arg0;` inside `if (arg1 != 0)` puts `move t2, a0` in the `beqz`
+  delay slot, a second block gets its own `id2 = arg0;`; blocks of different kinds need
+  their own `i`, `n`, `p`, `s`, blocks of one kind can share them.
 
 ### Control flow
 
@@ -283,6 +344,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `if (c) {A; r = x;} else {B; r = y;} return r;` both.
 - A non-void function falling off its end keeps `v0` live: reorg then cannot fill a
   `bnez` delay slot from the loop head, or leaves a `li v0` out of a delay slot.
+- `if (t == 0) {A} if (t == 0) {B}` loses the second `bnez` to CSE; `z = t == 0; if (z)
+  {B}` keeps it. `i = 0; if (i < n)` keeps a guard a repeated `if (n > 0)` loses to jump
+  threading. `if (A || B)` followed by a second test of the same field keeps the first
+  branch threaded to the else part.
+- An else-if chain cross-jumps a shared tail (`sra`); the ternary form keeps `j L; sra`
+  with the shift in the delay slot. `k = 0xBC; ... p->f = k;` gets the `li` into a branch
+  delay slot; a dead `id2 = arg0 & 0xFF;` in an else-if arm survives when `id2` is
+  assigned again at the join, and fills a delay slot as in the game.
+- `if (F & a) {...} else if (F & b) {...} else v = 0;` lets the flag's temp and `v` share
+  a register where `v = 0; if (F & b)` does not. `switch (t) { case 0: x = 1; case 2:
+  break; default: goto skip; }` reproduces a three-way test that if/else inverts. `m = 8;
+  ... k < m ...; m = r; if (m != 0)` gives `move v0, a0` before the branch.
+- An inlined callee's body: each `return` as `r = N; goto done;`, then test `r`. A search
+  loop with no final `move v0, zero` has no `return 0`: the `slti` result left in `v0` is
+  returned; an exit path reusing `v0`: `r = (void *)(i < 0x960); goto loop;` with `r = p;
+  goto done;` in the hit branch.
+- No form found yet: two constants `if (c) x = A; else x = B;` that the game branches over
+  always became `sltu/subu/andi` (condor func_800A427C).
 
 ### Loops
 
@@ -330,6 +409,18 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   loop hoists nothing, `do`/`while` with a temporary hoists all of it. Values carried over
   from the previous pass (the game skips a first pair of `rand` draws): uninitialised
   locals declared outside the loop.
+- Don't declare a strength-reduced pointer: the loop optimiser bases it on the textually
+  last access through `p` (`p->code` last gives `s0 = p + 7`), so reorder the parts of the
+  body to move the base; write `a->unkC`, not a second pointer `b = a + 0xC`. `p++; i++`
+  versus `i++; p++` in the tail decides which copies land in delay slots; array bases
+  hoisted into locals before the loop (`a = D_x; ... &a[i]`) give hoisted `la` registers
+  and (base, idx) order.
+- loop.c hoists constants out of `for`/`while`/`do` loops; in a goto loop they stay inside
+  and the delay slot is filled from above. Goto loops for both an inner and an outer loop
+  keep a function table's `la` from being hoisted and spilled around a call.
+- A loop-invariant load of a global pointer is hoisted only if the loop's stores are
+  struct-member accesses (scalar `*(s16 *)` casts block it); `-dL` reports "not desirable"
+  for a life-1 invariant when the loop has more than about 46 insns.
 
 ### Stack frame
 
@@ -347,6 +438,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   later nested block above them. A value spilled at `0x10(sp)` and reloaded in a loop, with
   a frame 8 bytes bigger, is a local array holding it (`s32 sp[4]; sp[0] = ot;`); several
   dead `s16` stores to one local survive only into an array (`s16 r[4]`).
+- `s16`/`u8` locals live across calls each take a slot; `u8 pad[8]` is one slot. Spilled
+  locals take slots in declaration order. Halfwords spilled at a 4-byte stride (`sh`/`lhu`
+  at sp+0x10, 0x14, 0x18, 0x1C) are two local `MgSVec` of which only `vx` and `vz` are
+  used. A union of a `u32` and a bitfield struct kept in a register can give a 40-byte
+  frame with no pad.
 
 ### How the scheduler and the allocator decide
 
@@ -448,6 +544,26 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   (`work.py diff` compares by position, so one extra instruction shifts every later
   word). `cc1 -dg -dl` dumps show the order pseudos are allocated in and the register
   each gets.
+- More arithmetic: `x % 2 * 64` on an `s16` field gives `sll 16; sra 10`, `(x % 2) << 6` a
+  plain `sll 6`; `-p->f << 9` gives `negu; sll 9`, `p->f * -0x200` `sll; negu`; `k =
+  (s16)t - 0x2D` (u16 t, s16 k) gives `addiu -45`, `k = t - 0x2D` `li 0xFFD3; addu`; `u16
+  a, b; s16 d = a - b;` is narrowed to HImode and not CSE'd with an `a - b >= 0` test; `x
+  - C + f() % n` folds C onto the remainder (one single-def local per call). A magic
+  multiplier is a division by a constant: 0x5D9F7391 with shift 7 is /350, 0x7482296B with
+  shift 10 /2250.
+- More addresses: `*(u32 *)((u8 *)tbl + ((i - 1) << 2))` keeps the -1 out of the
+  displacement; a pointer from one plain symbol (`p8 = &D_8015138F; ... (u16 *)(p8 -
+  0x25)`) gives one shared `la` with negative offsets; a local table of byte-aligned
+  structs indexed as `*(u8 *)(&t.b[2] + i * 6)` (`t.b[i * 6 + 2]` hoists `sp+16`).
+- Calls into C already in the file: a callee called without arguments is defined `void
+  f(arg0)` and declared `void f();` in the work file; a callback is passed as `(M2C_UNK
+  *)func_X` and defined with bare parameter names. A work file's extern replaces decls.h's
+  (never declare a symbol with another type than decls.h's), and `put` prints only cc1's
+  last stderr line.
+- More search helpers: a hill-climb over statement order with dependency constraints
+  (work/snobo9/hc3.py, work/spells19/hc.py) solved functions plain permutation could not;
+  the first scheduler's dump (`-dS`) gives each insn a priority, its depth in its
+  dependency chain.
 
 ## Hand-written assembly
 
