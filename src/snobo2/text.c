@@ -1,7 +1,47 @@
 #include "common.h"
 #include "snobo2/decls.h"
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A0448);
+void func_800A0448(void) {
+    func_800A1F58();
+    func_800A1FA0();
+    func_800A2050();
+    func_800A20A0();
+    D_800E1950 = 0;
+    func_8003B6BC(0, 0);
+    func_8003B6DC(0xA0);
+    func_80043F6C(&D_800B83E8, 0, 0, 0);
+    func_80043DD8(0);
+    func_80043D3C(1);
+    D_800E1944 = 1;
+    D_80103984 = 1;
+    D_800E194C = (M2C_UNK *)func_800A05FC;
+    switch (D_8009D507) {
+    case 2:
+        D_801069B8 = 1;
+        break;
+    case 8:
+        D_801069B8 = 2;
+        break;
+    default:
+        D_801069B8 = 0;
+        break;
+    }
+    if (*(u8 *)&D_800E1944 != 0) {
+        do {
+            func_800A1EB4();
+            func_800A235C();
+            ((void (*)(void))D_800E194C)();
+            D_80106A70 = func_80042B10(0x1F8003FC);
+            D_8010538C = func_800AD00C(0x80178000, D_80105380, D_8010538C);
+            func_80042B10(D_80106A70);
+            func_800A23DC();
+            func_80034B44();
+            D_8010537C += 1;
+        } while (*(u8 *)&D_800E1944 != 0);
+    }
+    func_800A2194();
+    func_800A1CC4();
+}
 
 void func_800A05FC(void) {
     func_800A1CC4();
@@ -3509,7 +3549,53 @@ void func_800B1CD8(void *arg0) {
     M2C_FIELD(arg0, u16 *, 0x1E) = (u16) (M2C_FIELD(arg0, u16 *, 0x1E) + 0x80);
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800B1D74);
+void func_800B1D74(s16 arg0, Sb2PosDc *arg1) {
+    Sb2SlotA *p;
+    Sb2SlotA *s;
+    Sb2V3 *q;
+    s32 i;
+    s32 n;
+    u8 one;
+
+    if (arg1->a == 4 || D_801053A4 == 0) {
+        one = 1;
+        n = 0x1F;
+        D_800DFEE4.unk38 = arg1->a;
+        D_800DFEE4.unkC = (((arg1->a + 0x1F0) << 6) & 0xFFFF) | 0x02000000;
+        D_800DFEE4.unk1C = arg1->id;
+        q = &D_800C5A8C[arg0];
+        D_800DFEE4.unk24 = (arg1->x + q->x) << 12;
+        i = D_801050F0;
+        D_800DFEE4.unk28 = (arg1->y + q->y) << 12;
+        D_800DFEE4.unk2C = (arg1->z + q->z) << 12;
+        D_800DFEE4.unk28 -= 0xC0000;
+        do {
+            p = (Sb2SlotA *)((u8 *)&D_80103F70 + i * 0x8C);
+            if (p->flag == 0) {
+                D_801050F0 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = one;
+            s->unk1 = 0;
+            s->unk2 = arg0;
+            s->unk4 = *(Sb2Block48 *)&D_800DFEE4;
+            s->unk6C.x = 0;
+            s->unk6C.y = 0;
+            s->unk6C.z = 0;
+            s->unk6C.w = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+}
 
 void func_800B1F34(Sb2FxR *arg0) {
     s32 t;
@@ -4004,7 +4090,67 @@ void func_800B2FB4(void *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800B2FF4);
+void func_800B2FF4(s16 arg0, Sb2PosDd *arg1) {
+    Sb2SlotA *p;
+    Sb2SlotA *s;
+    Sb2V3 *q;
+    void (*fn)(void *);
+    s32 i;
+    s32 n;
+    s32 t;
+    s16 v;
+    u8 one;
+
+    if (D_801053A4 == 0) {
+        fn = NULL;
+        if (arg1->c == 0) {
+            fn = func_800B31D8;
+        }
+        D_800E00E8.unk34 = fn;
+        D_800E00E8.unk1C = arg1->id;
+        q = &D_800C5A8C[arg0];
+        D_800E00E8.unk24 = (arg1->x + q->x) << 12;
+        t = (arg1->y + q->y) << 12;
+        D_800E00E8.unk28 = t;
+        D_800E00E8.unk2C = (arg1->z + q->z) << 12;
+        D_800E00E8.unk38 = arg1->d;
+        v = 0xF6;
+        if (arg1->d != 0) {
+            v = 0xF1;
+        }
+        one = 1;
+        n = 0x1F;
+        D_800E00E8.unk0 = v;
+        D_800E00E8.unk30 = t;
+        i = D_801050F0;
+        D_800E00E8.unk28 = t - (arg1->e << 12);
+        do {
+            p = (Sb2SlotA *)((u8 *)&D_80103F70 + i * 0x8C);
+            if (p->flag == 0) {
+                D_801050F0 = (i + 1) & 0x1F;
+                s = p;
+                goto found;
+            }
+            i = (i + 1) & 0x1F;
+        } while (--n != -1);
+        s = NULL;
+found:
+        if (s != NULL) {
+            s->flag = one;
+            s->unk1 = 0;
+            s->unk2 = arg0;
+            s->unk4 = *(Sb2Block48 *)&D_800E00E8;
+            s->unk6C.x = 0;
+            s->unk6C.y = 0;
+            s->unk6C.z = 0;
+            s->unk6C.w = 0;
+            s->unk84 = 0;
+            s->unk86 = 0;
+            s->unk88 = 0;
+            s->unk8A = 0;
+        }
+    }
+}
 
 void func_800B31D8(void *arg0) {
     s32 dx;

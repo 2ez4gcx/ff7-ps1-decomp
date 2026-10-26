@@ -38,5 +38,27 @@ void func_801B0564(void);
 void func_800D3994(s32, s32, void *);
 s32 func_80042DA8();
 extern u8 D_8015190F[][0xB9C];
+void func_801B0020(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { u8 pad0[0xA]; s16 w; } BgPacket;
+typedef struct { u8 b[8]; } BgB8;
+s32 func_80039A74(s32);
+void func_8003A63C(void *, MgMat *, MgMat *);
+void func_8003B48C(void *);
+void func_8003B51C(void *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern BgPacket D_801E37A0;
+extern MgMat D_801E37B0;
+extern BgB8 *D_801E361C[];
+extern BgB8 D_801C7CD4[];
+extern u8 D_800FA63C[];
+void func_800D52A0(s32, s32);
+s32 func_800D574C(s32);
+void func_800D55F4(s32, s32, s32);
+void func_800D5774(s32);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
+extern u16 D_801E37EC;
 
 #endif /* MAGIC_BIOGA2_DECLS_H */
