@@ -307,7 +307,171 @@ void func_801B5884(void *arg0) {
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B58DC);
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B5ACC);
+void func_801B5ACC(void) {
+    u8 pad[8];
+    MgMat m;
+    MgVec sc;
+    MgSat5 *p;
+    MgScr *sp;
+    MgTask *q;
+    s32 a;
+    s32 s2;
+    s32 s3;
+    s32 s4;
+    s32 v;
+
+    p = &D_801621F0[D_801590D4];
+    sp = (MgScr *)0x1F800000;
+    switch (p->unk14) {
+    case 0:
+        a = p->unk16;
+        s2 = a * 0xDB;
+        s3 = (a + 1) * 0xDB;
+        s4 = a << 8;
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (a == 0) {
+            func_800D55F4(0x20, func_800D574C(D_801E07B4), 0x14C);
+        }
+        if (p->unk16 < 0x10) {
+            break;
+        }
+        p->unk14 = 1;
+        p->unk16 = 0;
+    case 1:
+        s3 = 0xDB6;
+        s2 = 0xDB6;
+        s4 = 0x1000;
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (p->unk16 == 4) {
+            q = &D_80162978[func_800BBEAC(func_801B4F68)];
+            q->unkC = 0;
+            q->unkE = 0xE49;
+            func_800D55F4(0x20, func_800D574C(D_801E07B4), 0x189);
+        }
+        if (p->unk16 == 0x15) {
+            D_801E1A10 |= 0x40000040;
+            p->unk16 += 1;
+        }
+        if (p->unk16 < 0x20) {
+            break;
+        }
+        if (D_801E1A10 & 0x20000000) {
+            p->unk14 = 4;
+            p->unk16 = 0;
+        } else {
+            p->unk14 = 2;
+            p->unk16 = 0;
+        }
+        break;
+    case 2:
+        s3 = 0xDB6;
+        s2 = 0xDB6;
+        s4 = 0x1000;
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (p->unk16 == 1) {
+            func_800D55F4(0x20, func_800D574C(D_801E07B4), 0x14B);
+        }
+        v = p->unk16 << 8;
+        func_801B5760(D_801C58C8);
+        func_8003A28C(D_801BF984, D_801E0844, 0x135, v);
+        if (p->unk16 < 0x10) {
+            break;
+        }
+        p->unk14 = 3;
+        p->unk16 = 0;
+    case 3:
+        s3 = 0xDB6;
+        s2 = 0xDB6;
+        s4 = 0x1000;
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (p->unk16 == 0) {
+            func_800D55F4(0x20, func_800D574C(D_801E07B4), 0x1A5);
+        }
+        if (p->unk16 == 6) {
+            func_800BBEAC(func_801B4B98);
+        }
+        if (p->unk16 < 0x46) {
+            break;
+        }
+        p->unk14 = 4;
+        p->unk16 = 0;
+        break;
+    case 4:
+        a = p->unk16;
+        s2 = 0xDB6;
+        s3 = 0xDB6 - (a + 1) * 0x6D;
+        if (s3 < 0) {
+            s3 = 0;
+        }
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (a == 1) {
+            func_800D55F4(0x20, func_800D574C(D_801E07B4), 0x152);
+        }
+        if (p->unk16 < 0x21) {
+            break;
+        }
+        p->unk14 = 5;
+        p->unk16 = 0;
+        break;
+    case 5:
+        s4 = 0;
+        s3 = 0;
+        s2 = 0;
+        if (D_80062D98 != 0) {
+            break;
+        }
+        if (p->unk16 < 2) {
+            break;
+        }
+        p->unk14 = 6;
+        p->unk16 = 0;
+    case 6:
+        s4 = 0;
+        s3 = 0;
+        s2 = 0;
+        p->unk0 = -1;
+        D_801E1A10 |= 0x10000000;
+        break;
+    }
+    m = D_801E0824;
+    sc.vz = 0x1000;
+    sc.vx = 0x1000;
+    sc.vy = s2;
+    func_8003B35C(&m, &sc);
+    sp->unk0 = (u8 *)&D_801BF980;
+    sp->unk8 = 0xC;
+    sp->unk4 = D_801517C0 + 0x70;
+    sp->unkC = D_801E07AC;
+    if (p->unk14 < 4) {
+        func_8003A63C(&D_800FA63C, &m, &m);
+        func_8003B48C(&m);
+        func_8003B51C(&m);
+        sp->unk10 = 2;
+        sp->unk28 = 0x80808080;
+        D_801E07AC = func_801B0B5C(sp, s4);
+    } else {
+        func_8003A63C(&D_800FA63C, &m, (MgMat *)((u8 *)sp + 0x30));
+        func_8003B69C(0, 0, 0);
+        D_801E07AC = func_801B1DC0(sp, p->unk16 + 4);
+    }
+    func_801B58DC(sp, s3);
+    if ((D_801E1A10 & 0x40000000) == 0) {
+        if (D_80062D98 == 0) {
+            p->unk2++;
+            p->unk16++;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B6060);
 

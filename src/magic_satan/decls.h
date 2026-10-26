@@ -35,7 +35,6 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14; u8 pad16[0xA]; } MgObjC;
 extern M2C_UNK func_801B29CC;
 M2C_UNK func_800BC04C(M2C_UNK *);
-extern MgObj20 D_801621F0[];
 void func_801B5884(void *arg0);
 s32 func_801B0B5C();
 extern s32 D_801517C0;
@@ -78,5 +77,22 @@ void func_8003B51C(MgMat *);
 void func_8003B69C(s32, s32, s32);
 void func_800D4368(void *, s32, s32);
 s32 func_800D4D90(void *, s32, s32, s32);
+void func_801B5ACC(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad4[0x10]; s16 unk14; s16 unk16; u8 pad18[8]; } MgSat5;
+typedef struct { u8 *unk0; s32 unk4; s32 unk8; s32 unkC; s32 unk10; u8 pad14[0x14]; s32 unk28; } MgScr;
+s32 func_800BBEAC(void *);
+void func_8003A28C(void *, void *, s32, s32);
+void func_800D55F4(s32, s32, s32);
+s32 func_800D574C(s32);
+s32 func_801B1DC0(void *, s32);
+void func_801B5760(void *);
+void func_801B58DC(void *, s32);
+extern s16 D_801590D4;
+extern u8 D_801BF984[];
+extern u8 D_801C58C8[];
+extern u8 D_801E0844[];
+extern u8 func_801B4B98[];
+extern u8 func_801B4F68[];
+extern MgSat5 D_801621F0[];
 
 #endif /* MAGIC_SATAN_DECLS_H */

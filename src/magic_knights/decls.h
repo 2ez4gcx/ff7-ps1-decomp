@@ -124,7 +124,7 @@ extern s32 D_800F8368;
 extern u8 D_800FAFF4[][0x40F4];
 extern s32 D_801517C0;
 extern s32 D_8016209C;
-extern s32 D_80163C74;
+extern u8 *D_80163C74;
 extern s32 D_801EC4A0;
 extern u16 D_801EC4BC;
 extern u16 D_801EC4BE;
@@ -139,5 +139,15 @@ extern u16 D_801ED180;
 extern u16 D_801ED182;
 void func_801BC6BC(void);
 extern u8 D_801ECF78[];
+void func_801B3890(void);
+s32 func_80039B40(s32);
+void func_8003BC0C(void *, void *, void *, void *, void *, void *, void *, void *);
+s32 func_8003BD7C(s32, s32, s32, s32, void *, void *, void *, void *, void *, void *);
+void func_80046794(s32, void *);
+void func_801B33E0(void);
+void func_801B3748(s32, s32, s32);
+extern u8 *D_801EC834;
+extern s32 D_801EC880;
+extern u8 *D_801EC884;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

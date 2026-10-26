@@ -132,6 +132,7 @@ FILE_OPTIONS = {
     # other spells come out with other registers under 2.6.3).
     'magic_beam/text.c': {'gcc': '2.7.2'},
     'magic_wep3/text.c': {'gcc': '2.7.2'},
+    'magic_garyu/text.c': {'gcc': '2.7.2'},
     'magic_choco0/text.c': {'aspsx': '2.34'},
     'magic_ifleet/text.c': {'aspsx': '2.34'},
     'magic_siva/text.c': {'aspsx': '2.34'},
