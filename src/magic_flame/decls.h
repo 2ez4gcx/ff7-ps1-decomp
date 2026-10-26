@@ -45,5 +45,6 @@ void func_801B0908(void);
 void func_800D54EC(s32, void *);
 extern u8 D_80151918[][0xB9C];
 void func_801B0B38(void);
+void func_801B009C(void);
 
 #endif /* MAGIC_FLAME_DECLS_H */

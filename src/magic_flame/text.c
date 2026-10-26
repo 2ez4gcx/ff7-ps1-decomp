@@ -13,7 +13,11 @@ void func_801B0048(void) {
     func_800D55F4(0x20, func_800D574C((s32) D_80151774), 0x1FA);
 }
 
-INCLUDE_ASM("../asm/us/magic_flame/nonmatchings/text", func_801B009C);
+void func_801B009C(void) {
+    D_801DD870 = 1;
+    ((void (*)(s32))func_801B1084)((s32) D_80151774);
+    func_800D55F4(0x20, func_800D574C((s32) D_80151774), 0x1FA);
+}
 
 void func_801B00F0(s32 arg0) {
     D_801DD870 = 0;

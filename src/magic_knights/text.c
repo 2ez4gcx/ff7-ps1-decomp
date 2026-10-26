@@ -24,9 +24,25 @@ MgMat *func_801B0070(MgSVec *v, s16 scale, s32 dist) {
     return &D_801EC474;
 }
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B018C);
+void func_801B018C(s32 arg0, s32 arg1, MgSVec *arg2) {
+    MgMat m;
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B0264);
+    arg2->vx = D_80151A6C[arg0].c[arg1].x - D_801EE9AC.t[0];
+    arg2->vy = D_80151A6C[arg0].c[arg1].y - D_801EE9AC.t[1];
+    arg2->vz = D_80151A6C[arg0].c[arg1].z - D_801EE9AC.t[2];
+    func_8003BF3C(&D_801EE9AC, &m);
+    func_8003B2CC(&m, arg2, arg2);
+}
+
+void func_801B0264(MgMat *arg0, MgSVec *arg1) {
+    MgMat m;
+
+    arg1->vx = arg0->t[0] - D_801EE9AC.t[0];
+    arg1->vy = arg0->t[1] - D_801EE9AC.t[1];
+    arg1->vz = arg0->t[2] - D_801EE9AC.t[2];
+    ((void (*)(MgMat *, MgMat *, MgMat *))func_8003BF3C)(&D_801EE9AC, &m, arg0);
+    func_8003B2CC(&m, arg1, arg1);
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B02E8);
 

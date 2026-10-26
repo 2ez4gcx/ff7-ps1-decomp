@@ -112,7 +112,25 @@ void func_801B0214(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_heatbu/nonmatchings/text", func_801B05CC);
+void func_801B05CC(void) {
+    MgTask *p;
+    MgTask *base;
+    s32 v;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    func_800D3994(D_801D89F8, D_8015190F[D_801D89F8][8], &D_801D89FC);
+    base = D_80162978;
+    p = base + func_800BBEAC(&func_801B0214);
+    func_800D54EC(D_801D89F4, &p->unk4);
+    p->unk6 = -0x600;
+    p->unkC = 0x800;
+    p->unkE = 0x1000;
+    p->unk14 = 0xA3D;
+    v = p->unk6 >> 1;
+    p->unk10 = -v;
+    p->unk12 = -v * 3;
+    p->unk10 = p->unk10 << 1;
+}
 
 INCLUDE_RODATA("../asm/us/magic_heatbu/nonmatchings/text", D_801B0000);
 

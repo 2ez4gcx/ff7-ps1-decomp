@@ -24,8 +24,11 @@ extern s32 D_801D5C94;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern s32 D_801B0DD8;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-void func_801B0C9C(void);
+void func_801B0C9C(s32 arg0, s32 arg1);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+void func_800D3994(s32, s32, void *);
+extern u8 D_8015190F[][0xB9C];
+void func_801B0878(void);
 
 #endif /* MAGIC_YAMI_DECLS_H */

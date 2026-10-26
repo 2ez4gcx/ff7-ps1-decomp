@@ -6,7 +6,6 @@
 void func_801B0050(void);
 M2C_UNK func_801BE87C();
 void func_801B62D4(void *arg0);
-M2C_UNK func_801B0264(void *, M2C_UNK *);
 M2C_UNK func_801B603C(M2C_UNK *);
 void func_801B3154(s32 arg0, s32 arg1, s16 arg2);
 extern M2C_UNK *D_8016207C;
@@ -29,7 +28,6 @@ void *func_801BBC20(void *arg0, s32 arg1, void *arg2);
 void func_801B7C28(s32 arg0);
 extern u8 D_8015190F[][0xB9C];
 extern M2C_UNK D_801ECA58;
-M2C_UNK func_801B018C();
 void func_801B32DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 extern MgTask D_80162978[];
@@ -149,5 +147,10 @@ void func_801B3748(s32, s32, s32);
 extern u8 *D_801EC834;
 extern s32 D_801EC880;
 extern u8 *D_801EC884;
+extern struct { struct { s32 x; s32 y; s32 z; u8 pad[0x28]; } c[57]; u8 pad[8]; } D_80151A6C[];
+s32 func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+void func_8003BF3C(MgMat *, MgMat *);
+void func_801B018C(s32 arg0, s32 arg1, MgSVec *arg2);
+void func_801B0264(MgMat *arg0, MgSVec *arg1);
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

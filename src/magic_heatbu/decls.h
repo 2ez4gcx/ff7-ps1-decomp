@@ -26,7 +26,7 @@ extern u8 D_801B0774[];
 extern MgTask *D_801D89F0;
 extern s32 D_801D89F4;
 extern s32 D_801D89F8;
-extern M2C_UNK func_801B05CC;
+void func_801B05CC(void);
 extern M2C_UNK D_801B0000;
 void func_801B0214(void);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -37,5 +37,8 @@ extern MgByte D_800F5B71;
 extern MgByte D_800F5B72;
 extern struct { s16 v; } D_800F5B74;
 extern MgSVec D_801D89FC;
+void func_800D3994(s32, s32, void *);
+void func_800D54EC(s32, void *);
+extern u8 D_8015190F[][0xB9C];
 
 #endif /* MAGIC_HEATBU_DECLS_H */

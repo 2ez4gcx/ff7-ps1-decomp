@@ -39,7 +39,14 @@ INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0264);
 
 INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0878);
 
-INCLUDE_ASM("../asm/us/magic_yami/nonmatchings/text", func_801B0C9C);
+void func_801B0C9C(s32 arg0, s32 arg1) {
+    MgObjAwa *p;
+
+    p = (MgObjAwa *)&D_80162978[func_800BBEAC(&func_801B0878)];
+    func_800D3994(arg1, D_8015190F[arg1][9], &p->unk4);
+    func_800D3994(arg0, D_8015190F[arg0][0], &p->unkC);
+    p->unk1C = arg0;
+}
 
 void func_801B0D5C(arg0, arg1) {
     func_800BBEAC(&func_801B0020);
