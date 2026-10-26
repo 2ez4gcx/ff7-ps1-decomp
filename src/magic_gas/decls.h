@@ -33,7 +33,7 @@ extern s16 D_80162080;
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern M2C_UNK D_801B0FF0;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-extern M2C_UNK func_801B0EAC;
+void func_801B0EAC(s32 arg0, s32 arg1);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 void func_801B05DC(void);
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u16 unk14; s16 unk16; } MgGas;
@@ -56,5 +56,19 @@ extern MgTask D_801621F0[];
 extern MgGasHold D_801D3F90;
 extern u16 D_801D3F98;
 extern MgGasAnim *D_801D3F9C[];
+M2C_UNK func_800BBA84(M2C_UNK, s32, M2C_UNK);
+void func_801B0AEC(void);
+void func_801B080C(void);
+void func_800D44E8(void *, MgMat *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003A79C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+s32 func_800BC04C(void (*)());
+extern MgSVec D_801D3FB4;
+extern s32 D_801D3FBC;
+extern u8 D_801D3FCC[];
+extern s32 D_801D3FD8[];
+extern MgVec D_801B0000;
+M2C_UNK func_800D5774(s32);
 
 #endif /* MAGIC_GAS_DECLS_H */

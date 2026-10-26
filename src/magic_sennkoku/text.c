@@ -38,7 +38,98 @@ void func_801B00B8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_sennkoku/nonmatchings/text", func_801B01C8);
+void func_801B01C8(void) {
+    MgTask *p;
+    MgTask *q;
+    MgSenSc *sc;
+    MgSenPrim *prim;
+    MgTag *ot;
+    void *s;
+    void *t;
+    s32 n;
+    s32 i;
+
+    p = &D_80162978[D_8015169C];
+    sc = (MgSenSc *)0x1F800000;
+    if (D_801CD5EC == 0) {
+        if (D_80062D98 == 0) {
+            D_801CD5E8--;
+            if (D_801CD5E8 <= 0) {
+                D_801CD5DC++;
+                if (D_801CD5DC >= D_801CD5E0) {
+                    D_801CD5DC = 0;
+                }
+                n = D_801CD5E4 + 1;
+                D_801CD5E4 = n;
+                if (n >= 0x30) {
+                    if (D_801CD5AC == D_801CD5B4[D_801CD5DC]) {
+                        D_801CD5EC = 1;
+                    }
+                    D_801CD5E8 = D_801B5598;
+                } else {
+                    D_801CD5E8 = D_801B54DC[n];
+                }
+                t = sc->unk30;
+                i = D_801CD5B4[D_801CD5DC];
+                func_800D3994(i, D_8015190F[i][0], t);
+                func_800D55F4(0x20, func_800D56A8(t), 0x1E3);
+            }
+        }
+    }
+    s = sc->unk30;
+    i = D_801CD5B4[D_801CD5DC];
+    D_800D3544 = D_801CD5A8;
+    D_800D3546 = D_801CD5A4;
+    func_800D3994(i, D_8015190F[i][0], s);
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BBDC(s, &sc->p[0], &sc->unk4, &sc->unkC);
+    sc->p[1] = sc->p[2] = sc->p[3] = sc->p[0];
+    prim = D_80163C74;
+    if (i < 4) {
+        sc->p[0].x -= 0x18;
+        sc->p[2].x -= 0x18;
+        prim->unkC = 0x78480018;
+        prim->unk14 = 0x4D0000;
+        prim->unk1C = 0x1018;
+        prim->unk24 = 0x1000;
+    } else {
+        sc->p[1].x += 0x18;
+        sc->p[3].x += 0x18;
+        prim->unkC = 0x78480000;
+        prim->unk14 = 0x4D0018;
+        prim->unk1C = 0x1000;
+        prim->unk24 = 0x1018;
+    }
+    sc->p[2].y += 0x10;
+    sc->p[3].y += 0x10;
+    prim->xy0 = *(s32 *)&sc->p[0];
+    prim->xy1 = *(s32 *)&sc->p[1];
+    prim->xy2 = *(s32 *)&sc->p[2];
+    *(s32 *)((u8 *)prim + 0x20) = *(s32 *)&sc->p[3];
+    prim->tag.len = 9;
+    prim->col = 0x808080;
+    ((u8 *)prim)[7] = 0x2E;
+    ot = (MgTag *)D_801517C0;
+    prim->tag.addr = ot[0x1F].addr;
+    ot[0x1F].addr = (u32)prim;
+    prim++;
+    D_80163C74 = prim;
+    if (D_801CD5EC != 0) {
+        if (D_801CD5EC == 0xA) {
+            q = &D_80162978[func_800BBEAC(func_801B00B8)];
+            *(MgSVec *)&q->unk4 = *(MgSVec *)&p->unk4;
+            q->unkC = p->unkC;
+        }
+        if (D_801CD5EC >= 0x2D) {
+            p->unk0 = -1;
+        }
+        D_801CD5EC++;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_sennkoku/nonmatchings/text", func_801B0650);
 

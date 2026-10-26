@@ -168,7 +168,113 @@ INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B4424);
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B4454);
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B46C0);
+void func_801B46C0(void) {
+    MgTask *p;
+    MgSatObj *o;
+    MgSatLst *l;
+    u8 pad0[8];
+    MgMat m;
+    MgVec sc;
+    MgVec w;
+    MgVec un;
+    MgSVec v;
+    u8 pad1[8];
+    MgScratch *sp;
+    u8 *fr;
+    u8 *c;
+    s32 col;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 a;
+    MgSVec8 *q;
+
+    p = &D_80162978[D_8015169C];
+    o = &D_801E11F0[p->unk16];
+    l = &D_801E16B0[p->unk16];
+    if (D_80062D98 == 0) {
+        func_801B4454(o);
+        q = &D_801E1810[p->unk16];
+        q->v[l->unk0] = *(MgSVec *)&o->unk4;
+        func_801B43B0(l, &D_801E1810[p->unk16].v[l->unk0]);
+    }
+    switch (p->unk14) {
+    case 0:
+        if (o->unk0 < 0) {
+            func_8003B2CC(&D_801E0824, &D_801C8468[p->unkE], &v);
+            v.vx += D_801E0838;
+            v.vy += D_801E083C;
+            v.vz += D_801E0840;
+            w.vx = v.vx - o->unk4;
+            w.vy = 0;
+            w.vz = v.vz - o->unk8;
+            func_8003A08C(&w, &w);
+            i = 0x4B0;
+            o->unk34 = o->unk4 + ((w.vx * i) >> 12);
+            o->unk36 = o->unk6;
+            o->unk38 = o->unk8 + ((w.vz * i) >> 12);
+            o->unk4C = D_801C8468[p->unkE].unk20;
+            o->unk0 |= 0x40000000;
+            p->unk14 = 1;
+        }
+        break;
+    case 1:
+        o->unk36 -= 5;
+        break;
+    }
+    m = D_801E0824;
+    func_8003B16C(&o->unk78, &m);
+    m.t[0] = o->unk4;
+    m.t[1] = o->unk6;
+    m.t[2] = o->unk8;
+    sc.vx = sc.vy = sc.vz = p->unkC;
+    func_8003B35C(&m, &sc);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    sp = (MgScratch *)0x1F800000;
+    sp->unk0 = &D_801BEF4C;
+    ((MgScratch *)0x1F800000)->unk4 = 0x88;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    if (p->unk2 >= 0x2B) {
+        col = p->unk2 - 0x2B;
+        ((MgScratch *)0x1F800000)->unkA = col * 0x155;
+        col = 0x40 - col * 5;
+    } else {
+        ((MgScratch *)0x1F800000)->unkA = 0;
+        col = 0x40;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801E07AC = func_800D29D4(sp, D_801517C0 + 0x70, 0xC, D_801E07AC);
+    i = 0;
+    c = D_801C8694;
+    c[2] = col;
+    c[1] = col;
+    c[0] = col;
+    n = l->unk4;
+    k = 0x1F40;
+    if (l->unk8 > 0) {
+        fr = c + 4;
+        do {
+            if (n >= 8) {
+                n = 0;
+            }
+            *(s16 *)fr = i * 2;
+            func_800D4368(l->unkC[n], k, -(k >> 4));
+            n++;
+            D_801E07AC = func_800D4D90(fr - 8, D_801517C0 + 0x70, 0xC, D_801E07AC);
+            i++;
+        } while (i < l->unk8);
+    }
+    if (p->unk2 >= 0x37) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B4B98);
 

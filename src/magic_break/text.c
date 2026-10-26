@@ -1,11 +1,137 @@
 #include "common.h"
 #include "magic_break/decls.h"
 
-INCLUDE_ASM("../asm/us/magic_break/nonmatchings/text", func_801B0000);
+void func_801B0000(void) {
+    MgTask *p;
+    MgMat *m;
+    s16 *u;
+    MgVec *s;
+    s32 a;
+    s32 b;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/magic_break/nonmatchings/text", func_801B024C);
+    p = &D_80162978[D_8015169C];
+    a = (p->unk2 * 0x350 / 25 + 0x100) * p->unkC >> 12;
+    D_1F800028 = a;
+    s = (MgVec *)0x1F800020;
+    s->vx = a;
+    u = &p->unk2;
+    b = *u * 0x380 / 25 * p->unkC >> 12;
+    D_1F800024 = b;
+    m = (MgMat *)0x1F800000;
+    if (a > 0x7FFF) {
+        D_1F800028 = 0x7FFF;
+    }
+    if (b > 0x7FFF) {
+        D_1F800024 = 0x7FFF;
+    }
+    t = p->unk2;
+    if (t < 0xF) {
+        D_801CD2C2 = 0x80;
+    } else {
+        t -= 0xF;
+        if (t < 0xA) {
+            D_801CD2C2 = -(t << 7) / 10 + 0x80;
+        } else {
+            p->unk0 = -1;
+            return;
+        }
+    }
+    func_8003C21C(&D_801CD2B0, m);
+    m->t[0] = p->unk4;
+    m->t[1] = p->unk6;
+    m->t[2] = p->unk8;
+    func_8003B35C(m, s);
+    func_8003A63C(&D_800FA63C, m, m);
+    func_8003B48C(m);
+    func_8003B51C(m);
+    D_801ED328 = func_800D29D4(D_801CD2B8, D_801517C0 + 0x70, 0xC, D_801ED328);
+    if (D_80062D98 == 0) {
+        D_801CD2B0.vy -= 0xC0;
+        p->unk2++;
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_break/nonmatchings/text", func_801B0440);
+void func_801B024C(void) {
+    MgTask *p;
+    MgMat *m;
+    MgVec *s;
+    s32 v;
+    s32 t;
+
+    s = (MgVec *)0x1F800020;
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    m = (MgMat *)0x1F800000;
+    if (t < 5) {
+        D_801CD2CC = 0x88;
+        D_801CD2D2 = -(t << 12) / 5 + 0x1000;
+    } else {
+        t -= 5;
+        if (t < 0xF) {
+            D_801CD2CC = 0x80;
+            D_801CD2D2 = 0;
+        } else {
+            t -= 0xF;
+            if (t < 0xA) {
+                D_801CD2CC = 0x88;
+                D_801CD2D2 = (t << 12) / 10;
+            } else {
+                p->unk0 = -1;
+                return;
+            }
+        }
+    }
+    v = p->unkC * 3 >> 4;
+    if (v > 0x7FFF) {
+        v = 0x7FFF;
+    }
+    s->vx = s->vy = s->vz = v;
+    D_801CD2D8.t[0] = p->unk4;
+    D_801CD2D8.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &D_801CD2D8, m);
+    func_8003B35C(m, s);
+    func_8003B48C(m);
+    func_8003B51C(m);
+    D_801ED328 = func_800D29D4(D_801CD2C8, D_801517C0 + 0x70, 0xC, D_801ED328);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
+
+void func_801B0440(void) {
+    MgTask *p;
+    MgMat *m;
+    s32 v;
+    s32 t;
+
+    p = &D_80162978[D_8015169C];
+    v = (p->unk2 * 0x1100 / 20 + 0x400) * p->unkC >> 12;
+    if (v > 0x7FFF) {
+        v = 0x7FFF;
+    }
+    D_801CD2F8.m[0][0] = D_801CD2F8.m[2][2] = v;
+    D_801CD2F8.t[0] = p->unk4;
+    D_801CD2F8.t[2] = p->unk8;
+    m = (MgMat *)0x1F800000;
+    t = p->unk2;
+    if (t < 0) {
+        D_801CD322 = 0;
+    } else if (t < 0x14) {
+        D_801CD322 = (t << 12) / 20;
+    } else {
+        p->unk0 = -1;
+        return;
+    }
+    func_8003B69C(0, 0, 0);
+    func_8003A63C(&D_800FA63C, &D_801CD2F8, m);
+    func_8003B48C(m);
+    func_8003B51C(m);
+    D_801ED328 = func_800D29D4(D_801CD318, D_801517C0 + 0x70, 0xC, D_801ED328);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 void func_801B05E0(void) {
     MgTask *q;
