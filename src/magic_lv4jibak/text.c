@@ -93,7 +93,98 @@ void func_801B04A8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lv4jibak/nonmatchings/text", func_801B0574);
+void func_801B0574(void) {
+    MgTask *p;
+    MgTask *q;
+    MgRec57C *r;
+    void *sc;
+    s32 col;
+    s32 n;
+    s32 m;
+    s32 i;
+    s32 a;
+    s32 t;
+
+    p = &D_80162978[D_8015169C];
+    r = &D_801CFD40[p->unk10];
+    sc = (void *)0x1F800000;
+    switch (p->unk14) {
+    case 0:
+        r->unk8 = 0;
+        col = p->unk2 * 0x60606;
+        if (p->unk2 >= 7) {
+            p->unk14 = 1;
+        }
+        break;
+    case 1:
+        col = 0x303030;
+        r->unk8 = 0;
+        if (p->unk2 >= 0xB) {
+            p->unk14 = 2;
+        }
+        break;
+    case 2:
+        col = 0x303030;
+        t = p->unk2 - 0xB;
+        r->unk8 = t;
+        if (r->unk4 != t) {
+            goto draw;
+        }
+        p->unk14 = 3;
+        p->unk12 = p->unk2 + 4;
+        func_800D55F4(0x20, func_800D56A8(&p->unk4), 0xFA);
+        break;
+    case 3:
+        if (D_80062D98 == 0) {
+            n = p->unkC;
+            i = 0;
+            m = n * 2;
+            do {
+                q = &D_80162978[func_800BBEAC(func_801B04A8)];
+                *(MgSVec *)&q->unk4 = *(MgSVec *)&p->unk4;
+                q->unk4 += func_80042DA8() % m - n;
+                q->unk6 += func_80042DA8() % m - n;
+                q->unk8 += func_80042DA8() % m - n;
+                a = func_80042DA8();
+                t = a - a / 0x1000 * 0x1000 + 0x800;
+                q->unkC = (p->unkE * t) >> 12;
+                i++;
+            } while (i < 2);
+        }
+        if (p->unk2 >= p->unk12) {
+            p->unk14 = 4;
+            p->unk12 += 5;
+        }
+        break;
+    case 4:
+        if (p->unk2 >= p->unk12) {
+            p->unk14 = 5;
+        }
+        break;
+    case 5:
+        if (D_80062D98 == 0) {
+            func_800D5774(p->unk16);
+            p->unk14 = 6;
+            p->unk12 += 8;
+        }
+        break;
+    case 6:
+        if (p->unk2 >= p->unk12) {
+            p->unk0 = -1;
+        }
+        break;
+    }
+    if (r->unk4 != r->unk8) {
+draw:
+        func_801B0CF4(sc, r, col);
+        if (p->unk14 == 2) {
+            func_801B096C(sc, r);
+        }
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_lv4jibak/nonmatchings/text", func_801B096C);
 

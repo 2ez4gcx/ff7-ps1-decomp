@@ -968,7 +968,69 @@ void func_800ABF0C(SPRT16 *p, void *arg1) {
     func_80044A68(arg1, 0, 1, func_8004656C(0, 0, 0x3C0, 0x100) & 0xFFFF, 0);
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800ABFE8);
+void func_800ABFE8(u8 *arg0, s32 arg1, FdBox *arg2) {
+    FdUVec v;
+    s32 sp18;
+    s32 sp1C;
+    s16 i;
+    s32 j;
+    s16 *p;
+    s16 x;
+    s16 y;
+    FdIcon *q;
+    FdIcon *r;
+
+    if ((D_8009D5A6 == 1 && D_8009AC26 == 0) || D_8009D5A6 == 2) {
+        i = 0;
+        func_8003AE38();
+        func_8003B48C(arg1);
+        func_8003B51C(arg1);
+        do {
+            j = i;
+            if (M2C_FIELD(&D_800716C4[j], u8 *, 0x218) == 1) {
+                p = (s16 *)(j * 0x18 + (s32)arg2);
+                x = (p[0] + p[3]) / 2;
+                v.x = x;
+                y = (p[1] + p[4]) / 2;
+                v.y = y;
+                v.z = (p[2] + p[5]) / 2;
+                if (x != 0 || y != 0) {
+                    func_8003BBDC(&v, &v, &sp18, &sp1C);
+                    ((FdIcon *)(arg0 + j * 0x10 + 0x4000))->c0 = ((D_8011446C * 4) & 0x30) + 0x30;
+                    ((FdIcon *)(arg0 + j * 0x10 + 0x4000))->c1 = 0xD0;
+                    ((FdIcon *)(arg0 + j * 0x10 + 0x4000))->x = v.x - 7;
+                    ((FdIcon *)(arg0 + j * 0x10 + 0x4000))->y = v.y - 8;
+                    ((FdIcon *)(arg0 + j * 0x10 + 0x4000))->tag.addr = ((FdTag *)arg0)->addr;
+                    ((FdTag *)arg0)->addr = (u32)(arg0 + (j * 0x10 + 0x4000));
+                }
+            }
+            i++;
+        } while (i < 12);
+        for (i = 0; i < 12; i++) {
+            j = i;
+            if (M2C_FIELD((s32)D_800716C4 + (j << 4), s32 *, 0x230) != 0) {
+                v.x = M2C_FIELD((s32)D_800716C4 + (j << 4), u16 *, 0x224);
+                v.y = M2C_FIELD((s32)D_800716C4 + (j << 4), u16 *, 0x228);
+                v.z = M2C_FIELD((s32)D_800716C4 + (j << 4), u16 *, 0x22C);
+                func_8003BBDC(&v, &v, &sp18, &sp1C);
+                ((FdIcon *)(arg0 + j * 0x10 + 0x40C0))->c0 = ((D_8011446C * 4) & 0x30) + 0x30;
+                ((FdIcon *)(arg0 + j * 0x10 + 0x40C0))->c1 = 0xD0;
+                r = (FdIcon *)(arg0 + (j + 0xC) * 0x10 + 0x4000);
+                r->x = v.x - 7;
+                r->y = v.y - 8;
+                if (M2C_FIELD((s32)D_800716C4 + (j << 4), s32 *, 0x230) == 2) {
+                    r->e = func_80046634(0x100, 0x1E8);
+                }
+                ((FdIcon *)(arg0 + j * 0x10 + 0x40C0))->tag.addr = ((FdTag *)arg0)->addr;
+                ((FdTag *)arg0)->addr = (u32)(arg0 + (j * 0x10 + 0x40C0));
+            }
+        }
+        func_8003AED8();
+        ((FdTag *)(arg0 + 0x4180))->addr = ((FdTag *)arg0)->addr;
+        ((FdTag *)arg0)->addr = (u32)(arg0 + 0x4180);
+        D_8011446C += 1;
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800AC35C);
 

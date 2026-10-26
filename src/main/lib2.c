@@ -105,7 +105,16 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003EC60);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003EF30);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F398);
+s32 func_8003F398(arg0) {
+    *D_800518EC = 2;
+    *D_800518F4 = ((u8 *) arg0)[0];
+    *D_800518F8 = ((u8 *) arg0)[1];
+    *D_800518EC = 3;
+    *D_800518F0 = ((u8 *) arg0)[2];
+    *D_800518F4 = ((u8 *) arg0)[3];
+    *D_800518F8 = 0x20;
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003F420);
 

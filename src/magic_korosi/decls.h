@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B0BFC();
+s32 func_801B0BFC();
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
@@ -23,10 +23,23 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16
 extern s16 D_8015169C;
 extern MgTask D_80162978[];
 extern u16 D_801D11CC;
-void func_800D4368(void *, s32, s32);
+MgMat *func_800D4368(void *, s32, s32);
 extern s32 D_801517C0;
 extern s32 D_801E91D0;
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
+s32 func_800BBEAC(void *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+extern M2C_UNK D_801B0CBC;
+extern MgTask *D_801E91D4;
+extern s32 D_801E91D8;
+extern s32 D_801E91FC;
+extern M2C_UNK func_801B0AB0;
+extern u8 D_801B0000[];
+void func_801B048C(void);
+typedef struct { u32 addr : 24; u32 len : 8; } MgTag;
+extern u8 D_801D11BC[];
+extern struct { u8 v; } D_801D11BD;
+extern struct { u8 v; } D_801D11BE;
 
 #endif /* MAGIC_KOROSI_DECLS_H */

@@ -10,6 +10,9 @@ s32 func_80039A74(s32 arg0);
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
+s32 func_80048540(s32 arg0);
+s32 func_80046D0C(s32 arg0);
+s32 func_800484A8(void);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_8004602C);
 
@@ -237,7 +240,16 @@ s32 func_80046CFC(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046D0C);
+s32 func_80046D0C(s32 arg0) {
+    s32 t;
+
+    t = func_80047060(D_80070690, arg0);
+    if (t == -1) {
+        return 0;
+    }
+    D_80070690 += t * 4;
+    return arg0;
+}
 
 void func_80046D74(s32 arg0, s32 arg1) {
     D_800706A0 = func_80047180(arg0, arg1, &D_8007069C, &D_80070694, &D_80070698);
@@ -253,9 +265,39 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80047318);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80048498);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_800484A8);
+s32 func_800484A8(void) {
+    s32 zero;
+    volatile s32 tmp;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80048540);
+    zero = 0;
+    if (!(0x01000000 & *D_80062D28)) {
+        return zero;
+    }
+    if (((u32) (*D_80062D28 & 0x700) >> 8) != 4) {
+        return -1;
+    }
+    *D_80062D28 &= 0xFEFFFFFF;
+    tmp = *D_80062D28;
+    tmp = *D_80062D20;
+    if ((tmp & 0xFFFFFF) == 0xFFFFFF) {
+        return zero;
+        do {
+        } while (zero);
+    }
+    return tmp;
+}
+
+s32 func_80048540(s32 arg0) {
+    s32 i;
+
+    i = 0;
+    while (!(*D_80062D30 & 0x04000000)) {
+        if (arg0 < i++) {
+            return -1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_800485A0);
 

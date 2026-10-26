@@ -36,7 +36,48 @@ void func_801B0170(void) {
 
 INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B022C);
 
-INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B05A0);
+void func_801B05A0(void) {
+    MgMat m;
+    MgVec v;
+    SrObj *p;
+    SrObj *q;
+    s16 dx;
+    s16 dy;
+    s16 dz;
+    s16 len;
+    s16 i;
+
+    p = (SrObj *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            dx = p->unkC - p->unk4;
+            D_801B5434.v = dx;
+            dy = p->unkE - p->unk6;
+            D_801B5436.v = dy;
+            dz = p->unk10 - p->unk8;
+            D_801B5438.v = dz;
+            len = func_80039F5C(dx * dx + dy * dy + dz * dz);
+            for (i = 0; i < 4; i++) {
+                q = (SrObj *)&D_80162978[func_800BBEAC(&func_801B022C)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = p->unk8;
+                q->unkE = func_8003CC1C((s16)p->unkC - (s16)p->unk4, (s16)p->unk10 - (s16)p->unk8);
+                q->unk16 = i;
+                q->unk1C = len;
+                q->unk14 = len * 0x1500 / 2800;
+            }
+        }
+        if (p->unk2 == 0x10) {
+            func_800D5774(p->unk18);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x28) {
+            p->unk0 = -1;
+            func_800D52A0(0, 0xA);
+        }
+    }
+}
 
 void func_801B07B0(arg0, arg1) {
     MgSVec d;

@@ -160,7 +160,86 @@ s16 func_801B06F4(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_wpba/nonmatchings/text", func_801B07D8);
+void func_801B07D8(void) {
+    MgSVec rot;
+    MgMat m;
+    MgMat n;
+    MgVec v;
+    MgVec w;
+    MgTask *p;
+    s32 k;
+    s32 c;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 u;
+
+    p = &D_80162978[D_8015169C];
+    if (p->unk2 < 0xC) {
+        c = func_801B03C0(&D_801D3658, &D_801D3668, &w) / 190 + 1;
+        k = (-(func_80039A74(p->unkA) * 400) >> 12) * c;
+    } else {
+        k = p->unkA;
+    }
+    rot.vx = 0;
+    rot.vy = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    x = p->unk4;
+    m.t[0] = x;
+    y = p->unk6 + k;
+    m.t[1] = y;
+    z = p->unk8;
+    v.vx = x - D_801D3680.v;
+    m.t[2] = z;
+    v.vy = y - D_801D3682;
+    v.vz = z - D_801D3684;
+    func_8003A08C(&v, &v);
+    func_801B049C(func_801B03C0(&D_801BB624, &v, &w), &n, &w);
+    func_8003B16C(&n, &m);
+    if (D_80062D98 == 0) {
+        D_801D3680.v = m.t[0];
+        D_801D3682 = m.t[1];
+        D_801D3684 = m.t[2];
+    }
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    v.vx = 0;
+    v.vy = 0;
+    v.vz = 0x50;
+    func_8003AB84(&m, &v, &v);
+    m.t[0] += v.vx;
+    m.t[1] += v.vy;
+    m.t[2] += v.vz;
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk4 = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    ((MgScratch *)0x1F800000)->unk0 = D_801D3678;
+    if (p->unk2 >= 0x18) {
+        ((MgScratch *)0x1F800000)->unk4 = 0x88;
+        u = p->unk2;
+        ((MgScratch *)0x1F800000)->unkA = (u - 0x18) * 0x2AA;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801D3634 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D3634);
+    if (p->unk2 >= 0x1E) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unkA += p->unk12;
+        if (p->unk2 == 0xC) {
+            p->unkA = 0;
+            p->unk12 = -(func_80042DA8() % 30 + 0x3C);
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_wpba/nonmatchings/text", func_801B0BA0);
 

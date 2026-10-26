@@ -15,6 +15,8 @@ M2C_UNK func_80043F6C(Rect16 *, M2C_UNK, M2C_UNK, M2C_UNK);
 u32 func_80030234(void);
 s32 func_800354CC(void);
 s32 func_8002DF88(AkaoReq *cmd);
+M2C_UNK func_80039644(s32, s32);
+M2C_UNK func_800396C0(s32, s32);
 
 void func_80029A50(void) {
     func_80038FEC(0);

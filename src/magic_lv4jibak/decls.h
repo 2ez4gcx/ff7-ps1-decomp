@@ -36,5 +36,15 @@ extern u8 D_80062D98;
 extern s16 D_8015169C;
 extern MgTask D_80162978[];
 extern u16 D_801B7D28;
+void func_801B0574(void);
+typedef struct { u8 pad0[4]; s32 unk4; s32 unk8; u8 pad[0x570]; } MgRec57C;
+extern MgRec57C D_801CFD40[];
+void func_801B0CF4(void *, MgRec57C *, s32);
+void func_801B096C(void *, MgRec57C *);
+s32 func_800D56A8(void *);
+void func_800D55F4(s32, s32, s32);
+void func_800D5774(s32);
+s32 func_800BBEAC(void *);
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_LV4JIBAK_DECLS_H */

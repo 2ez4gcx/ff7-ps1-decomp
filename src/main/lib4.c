@@ -2,7 +2,7 @@
 #include "main/decls.h"
 
 /* Declared here otherwise than in the other files (tools/work.py). */
-M2C_UNK func_80043F6C(Rect16 *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_80043F6C(Rect16 *arg0, u8 arg1, u8 arg2, u8 arg3);
 void func_80038FB8(s32 arg0);
 s32 func_80042C98(s32 arg0);
 M2C_UNK func_80042D98();
@@ -10,6 +10,10 @@ s32 func_80039A74(s32 arg0);
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
+s32 func_80043DD8(s32 arg0);
+s32 func_8004433C(s32 arg0);
+s32 func_80043BA8(s32 arg0);
+s32 func_80043D3C(s32 arg0);
 
 INCLUDE_RODATA("../asm/us/main/nonmatchings/lib4", D_80010C98);
 
@@ -17,7 +21,18 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043938);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043A94);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043BA8);
+s32 func_80043BA8(s32 arg0) {
+    u8 *p;
+    u8 old;
+
+    p = &D_80062C02;
+    old = *p;
+    *p = arg0;
+    if (arg0 & 0xFF) {
+        D_80062BFC("SetGraphDebug:level:%d,type:%d reverse:%d\n", *p, D_80062C00, D_80062C03);
+    }
+    return old;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043C14);
 
@@ -40,13 +55,32 @@ s32 func_80043CE0(s32 arg0) {
     return temp_v0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043D3C);
+s32 func_80043D3C(s32 arg0) {
+    u8 *p;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043DD8);
+    p = &D_80062C02;
+    if (*p >= 2) {
+        D_80062BFC("SetDispMask(%d)...\n", arg0);
+    }
+    if (arg0 == 0) {
+        func_80046530(p + 0x6A, -1, 0x14);
+    }
+    return M2C_FIELD(D_80062BF8, s32 (**)(s32), 0x10)(arg0 != 0 ? 0x03000000 : 0x03000001);
+}
+
+s32 func_80043DD8(s32 arg0) {
+    if (D_80062C02 >= 2) {
+        D_80062BFC("DrawSync(%d)...\n", arg0);
+    }
+    return M2C_FIELD(D_80062BF8, s32 (**)(s32), 0x3C)(arg0);
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043E44);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80043F6C);
+void func_80043F6C(Rect16 *arg0, u8 arg1, u8 arg2, u8 arg3) {
+    func_80043E44("ClearImage", arg0);
+    M2C_FIELD(D_80062BF8, M2C_UNK (**)(s32, void *, M2C_UNK, s32), 8)(M2C_FIELD(D_80062BF8, s32 *, 0xC), arg0, 8, (arg3 << 0x10) | (arg2 << 8) | arg1);
+}
 
 s32 func_80044000(void *arg0, void *arg1) {
     func_80043E44("LoadImage", arg0);
@@ -72,7 +106,12 @@ void func_800442DC(void *arg0) {
     M2C_FIELD(D_80062BF8, M2C_UNK (**)(void *, u8), 0x14)(arg0 + 4, temp_s1);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_8004433C);
+s32 func_8004433C(s32 arg0) {
+    if (D_80062C02 >= 2) {
+        D_80062BFC("DrawOTag(%08x)...\n", arg0);
+    }
+    return M2C_FIELD(D_80062BF8, s32 (**)(s32, s32, M2C_UNK, M2C_UNK), 8)(M2C_FIELD(D_80062BF8, s32 *, 0x18), arg0, 0, 0);
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800443B0);
 

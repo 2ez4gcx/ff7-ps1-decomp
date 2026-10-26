@@ -279,7 +279,7 @@ extern s32 D_8009AC6C;
 s32 func_800CBD40(void);
 s32 func_800CBFDC(void);
 s32 func_800CAF60(void);
-s32 func_800D4EB4(u8, u8);
+s32 func_800D4EB4(u8 arg0, u8 arg1);
 s32 func_800CF200(void);
 void func_800CF368(volatile u8 *arg0);
 void func_800D348C(void);
@@ -665,6 +665,15 @@ extern struct { u16 a; u16 b; u8 pad[0x80]; } D_80074F10[];
 extern s32 D_8009AC70;
 typedef struct { u8 a; u8 b; u8 pad2[0x82]; } FdActEFE;
 extern FdActEFE D_80074EFE[];
+extern u16 D_8011446C;
+typedef struct { u16 x; u16 p0; u16 y; u16 p1; u16 z; u16 p2; s32 flag; } FdMark;
+typedef struct { s16 a[12]; } FdBox;
+typedef struct { u16 x; u16 y; u16 z; u16 pad; } FdUVec;
+typedef struct { FdTag tag; s32 pad; s16 x; s16 y; u8 c0; u8 c1; s16 e; } FdIcon;
+void func_800ABFE8(u8 *arg0, s32 arg1, FdBox *arg2);
+s32 func_800D579C(s32, s32);
+extern s16 D_800E4248[];
+M2C_UNK func_800D5C9C(s32);
 
 #endif /* FIELD_DECLS_H */
 extern u8 D_800716CC;

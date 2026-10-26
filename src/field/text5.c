@@ -797,7 +797,96 @@ void func_800D4E88(s16 arg0, s16 arg1) {
     D_8008327C[arg0].b = arg1;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D4EB4);
+s32 func_800D4EB4(u8 arg0, u8 arg1) {
+    s16 t;
+    s32 w;
+    s32 y;
+    s32 x;
+
+    switch (D_800832A0[arg0].v) {
+    case 0:
+        if (func_800D579C(arg0, arg1) != 0) {
+            return 1;
+        }
+        break;
+    case 1:
+        func_800D5A60(arg0);
+        return 0;
+    case 2:
+        func_800D5C9C(arg0);
+        return 0;
+    case 8:
+        func_800D6D44(arg0);
+        return 0;
+    case 12:
+        func_800D6E0C(arg0);
+        return 0;
+    case 13:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            D_800832A0[arg0].v = 2;
+            return 0;
+        }
+        break;
+    case 3:
+        t = D_8011445C[arg0];
+        if (t == 0) {
+            D_800832A0[arg0].v = 2;
+            return 0;
+        }
+        D_8011445C[arg0] = t - 1;
+        break;
+    case 4:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            w = D_8008328A[arg0].v;
+            y = (D_8008327C[arg0].b - 9) / 16;
+            x = D_801142CC[arg0] - 1;
+            if (w == y + x) {
+                D_800832A0[arg0].v = 8;
+                D_80083284[arg0].v = D_80083284[arg0].v - 2;
+                D_801142CC[arg0] = D_801142CC[arg0] + 1;
+                break;
+            }
+            return 0;
+        }
+        break;
+    case 6:
+        if (*(u16 *)((u8 *)D_800832A0 + 2 + arg0 * 0x30) & 1) {
+            return 0;
+        }
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            D_800832A0[arg0].v = 7;
+            func_800D707C(arg0);
+            return 0;
+        }
+        break;
+    case 14:
+        if (!(M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20)) {
+            break;
+        }
+        goto l9;
+    case 11:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            D_800832A0[arg0].v = 0xC;
+            D_800E4248[arg0 + 2] = D_8008328A[arg0].v * 0x10 + 0x11;
+            D_80083284[arg0].v = D_80083284[arg0].v - 2;
+            do {
+            } while (0);
+            return 0;
+        }
+        break;
+    case 9:
+l9:
+        func_800D6F6C(arg0);
+        return 0;
+    case 5:
+    case 7:
+        if (func_800D707C(arg0) != 0) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D5228);
 

@@ -43,6 +43,13 @@ void func_800D44E8(MgSVec *, void *);
 extern u8 D_80151918[][0xB9C];
 extern u8 D_8015190F[][0xB9C];
 extern u8 D_801B543C[];
-extern M2C_UNK func_801B05A0;
+void func_801B05A0(void);
+s32 func_80039F5C(s32);
+s16 func_8003CC1C(s32, s32);
+M2C_UNK func_800D5774(s16);
+extern struct { s16 v; } D_801B5434;
+extern struct { s16 v; } D_801B5436;
+extern struct { s16 v; } D_801B5438;
+extern M2C_UNK func_801B022C;
 
 #endif /* MAGIC_SEARCH_DECLS_H */

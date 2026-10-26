@@ -17,5 +17,18 @@ extern s32 D_801E23E0;
 extern s32 D_801E23E4;
 extern s32 D_801E23E8;
 void func_801B0B28(void);
+void func_801B007C(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgPart18;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+s32 func_80042DA8(void);
+void func_800D4368(void *, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
+extern u8 D_80062D98;
+extern s16 D_8015169C;
+extern s32 D_801517C0;
+extern u16 D_801CA3C8[];
+extern s32 D_801E23D8;
+extern MgPart18 D_801E23EC[][0x64];
 
 #endif /* MAGIC_LUNATIC_DECLS_H */
