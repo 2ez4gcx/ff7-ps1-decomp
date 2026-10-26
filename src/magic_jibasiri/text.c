@@ -178,9 +178,118 @@ void func_801B05C4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B0748);
+void func_801B0748(void) {
+    MgTask *p;
+    MgTask *q;
+    s16 a;
 
-INCLUDE_ASM("../asm/us/magic_jibasiri/nonmatchings/text", func_801B09B0);
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        q = (MgTask *)&D_80162978[func_800BBEAC(func_801B05C4)];
+        q->unkC = p->unk4;
+        q->unk10 = p->unk8;
+        q->unkE = 0;
+        q->unk16 = p->unk2;
+        p->unk4 += p->unkC;
+        p->unk8 += p->unk10;
+        q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0394)];
+        q->unk4 = p->unk4;
+        q->unk8 = p->unk8;
+        q->unk6 = 0;
+        a = func_80042DA8() % 0x1000;
+        q->unkC = (u32)(func_80039B40(a) * 25) >> 10;
+        q->unk10 = (u32)(func_80039A74(a) * 25) >> 10;
+        q->unkE = -func_80042DA8() % 200 - 0x64;
+        q->unk16 = func_80042DA8() % 16 + 4;
+        q = (MgTask *)&D_80162978[func_800BBEAC(func_801B02DC)];
+        q->unk4 = p->unk4 + func_80042DA8() % 600 - 0x12C;
+        q->unk8 = p->unk8 + func_80042DA8() % 600 - 0x12C;
+        q->unk6 = 0;
+        p->unk2++;
+        if (p->unk2 == 0xC) {
+            p->unk0 = -1;
+        }
+    }
+}
+
+void func_801B09B0(void) {
+    MgTask *p;
+    MgTask *q;
+    s16 i;
+    s16 a;
+    u8 pad[48];
+    u16 *r;
+    MgSVec *t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    D_80163C74 = func_800C4FC8(D_801C18DC, 0, 0);
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0x10) {
+            D_801C18DC += 4;
+        }
+        if (p->unk2 >= 0xF) {
+            D_801C18DC -= 4;
+        }
+        if (p->unk2 == 0) {
+            q = (MgTask *)&D_80162978[func_800BBEAC(&func_801B0748)];
+            t = (MgSVec *)D_801D98F4;
+            *(u16 *)&q->unk4 = t->vx;
+            *(u16 *)&q->unk6 = 0;
+            *(u16 *)&q->unk8 = D_801D98F8;
+            q->unkC = (p->unkC - t->vx) / 10;
+            q->unk10 = (p->unk10 - *(s16 *)&D_801D98F8) / 10;
+            q->unkE = 0;
+            D_8009A000.a = 0x28;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0x173;
+            func_8002DA7C();
+        }
+        if (p->unk2 == 0xA) {
+            i = 0;
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0394)];
+                q->unk4 = p->unkC + func_80042DA8() % 400 - 0xC8;
+                q->unk8 = p->unk10 + func_80042DA8() % 400 - 0xC8;
+                q->unk6 = 0;
+                a = func_80042DA8() % 0x1000;
+                q->unkC = (u32)(func_80039B40(a) * 25) >> 10;
+                q->unk10 = (u32)(func_80039A74(a) * 25) >> 10;
+                q->unkE = -func_80042DA8() % 200 - 0x64;
+                i++;
+                q->unk16 = func_80042DA8() % 20;
+            } while (i < 8);
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0180)];
+            q->unk4 = p->unkC;
+            q->unk6 = 0;
+            q->unk8 = p->unk10;
+            D_8009A000.a = 0x29;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0xFA;
+            func_8002DA7C();
+        }
+        if ((u16)p->unk2 - 7 < 7U) {
+            q = &D_801621F0[func_800BC04C(func_801B008C)];
+            q->unk4 = p->unkC + func_80042DA8() % 1200 - 0x258;
+            q->unk6 = p->unkE + func_80042DA8() % 1200 - 0x258;
+            q->unk8 = p->unk10 + func_80042DA8() % 1200 - 0x258;
+            q->unk16 = 0;
+            q = &D_801621F0[func_800BC04C(func_801B008C)];
+            q->unk4 = p->unkC + func_80042DA8() % 1600 - 0x320;
+            q->unk6 = p->unkE + func_80042DA8() % 1600 - 0x320;
+            q->unk8 = p->unk10 + func_80042DA8() % 1600 - 0x320;
+            q->unk16 = 1;
+            r = &D_801031EA;
+            *r = (u16)(*r + 0x20) - p->unk2 % 2 * 64;
+        }
+        if (p->unk2 == 0xC) {
+            func_800D5774(p->unk1C);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0FD0(s32 arg0, s32 arg1) {
     MgTask *p;

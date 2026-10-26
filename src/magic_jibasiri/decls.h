@@ -55,7 +55,7 @@ extern u8 D_801C18BF;
 extern u8 D_801C18BC;
 extern u8 D_801C18BE;
 extern u8 D_801C18BD;
-void func_801B09B0();
+void func_801B09B0(void);
 extern u8 D_801D98F4[];
 extern u8 D_8015190F[][0xB9C];
 void func_800D3994(s32, s32, void *);
@@ -65,5 +65,16 @@ M2C_UNK func_800D44E8(MgSVec *, MgMat *);
 extern MgSVec D_801C18C4;
 M2C_UNK func_8003A79C(MgMat *, MgMat *, MgMat *);
 extern s16 D_801C18D6;
+void func_801B0748(void);
+s32 func_80039A74(s16);
+s32 func_80039B40(s16);
+s32 func_80042DA8(void);
+s32 func_800BC04C(void (*)());
+s32 func_800C4FC8(s16, s32, s32);
+M2C_UNK func_800D5774(s32);
+s32 func_8002DA7C();
+extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
+extern u16 D_801031EA;
+extern s16 D_801C18DC;
 
 #endif /* MAGIC_JIBASIRI_DECLS_H */
