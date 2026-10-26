@@ -915,7 +915,7 @@ typedef struct { s16 x; s16 y; s16 z; } SbS16Vec3;
 extern SbH8 D_800BFE90;
 extern SbH8 D_800BFEA0;
 extern SbS16Vec3 D_800FF770;
-void func_800A36C4(void *arg0, void *arg1);
+void func_800A36C4(s32 *arg0, s32 *arg1);
 void func_800A56C4(void *arg0);
 void func_800A212C(s32 arg0, s32 arg1, s32 arg2);
 void func_800A5E80(void);
@@ -1236,5 +1236,15 @@ extern s32 D_800DCA80;
 extern s32 D_800DCA84;
 extern s32 D_800DCA88;
 extern s32 D_800DCA8C;
+typedef struct { s32 x; s32 y; s32 z; s32 w; } Sb2Vec4;
+typedef struct { u16 unk0; u16 unk2; u8 pad4[2]; u16 unk6; u16 unk8; u8 padA[6]; u8 *unk10; u8 pad14[0x20]; s16 unk34; u8 pad36[2]; u16 unk38; u8 pad3A[2]; s16 *unk3C; s32 unk40; u8 pad44[4]; s32 unk48; u8 pad4C[4]; s32 unk50; u8 pad54[4]; s32 unk58; } Sb2ScrDa;
+extern u8 D_800BFF28[];
+extern s32 (*D_800BFF68[])();
+void func_800A4488(void);
+extern u16 D_801028E4;
+extern u16 D_801028E8;
+typedef struct { u8 pad0[0x34]; s32 unk34; u8 pad38[4]; s32 unk3C; } Sb2PlDa;
+typedef struct { u8 pad0[0x20]; s32 unk20; u8 pad24[4]; s32 unk28; } Sb2PlDb;
+void func_800A7D90(Sb2PlDa *arg0, s32 arg1, Sb2PlDb *arg2);
 
 #endif /* SNOBO_DECLS_H */
