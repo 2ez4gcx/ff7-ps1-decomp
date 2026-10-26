@@ -934,5 +934,14 @@ M2C_UNK func_800AF3D8(Sb2FxG *);
 void func_800AF258(Sb2FxG *p);
 typedef struct { u8 unk0; u8 unk1; u8 pad2[2]; s16 unk4; s16 unk6; u8 pad8[0x18]; u16 unk20; u8 pad22[2]; s16 unk24; u8 pad26[2]; u32 unk28; s32 unk2C; volatile s32 unk30; u8 pad34[4]; void (*unk38)(); u8 pad3C[0x30]; s32 unk6C; s32 unk70; s32 unk74; u8 pad78[0xC]; s16 unk84; } Sb2FxJ;
 void func_800AE3A4(Sb2FxJ *p);
+void func_800AEC70(void *arg0);
+extern M2C_UNK func_800AECBC;
+void func_800AFA08(void *arg0);
+extern M2C_UNK func_800AFA54;
+typedef struct Sb2Fx { s8 unk0; u8 unk1; s16 unk2; s16 unk4; s16 unk6; u8 pad8[0xC]; s16 unk14; s16 unk16; u8 pad18[2]; u8 unk1A; u8 unk1B; u8 unk1C; u8 unk1D; u8 pad1E[0xA]; s32 unk28; u8 pad2C[4]; s32 unk30; u8 pad34[4]; void (*unk38)(); u8 pad3C[4]; struct Sb2Fx *volatile unk40; struct Sb2Fx *unk44; u8 pad48[0x24]; s32 unk6C; u8 pad70[4]; s32 unk74; u8 pad78[0xC]; u16 unk84; } Sb2Fx;
+s32 func_80042DA8();
+void func_800B0788(Sb2Fx *p);
+typedef struct { u8 unk0; u8 unk1; u8 pad2[0x12]; s16 unk14; u8 pad16[0xA]; u16 unk20; u8 pad22[2]; s16 unk24; u8 pad26[6]; s32 unk2C; u8 pad30[8]; void (*unk38)(); u8 pad3C[8]; s32 unk44; u16 unk48; u8 pad4A[0x22]; s32 unk6C; u8 pad70[4]; s32 unk74; u8 pad78[4]; s32 unk7C; s32 unk80; s16 unk84; u16 unk86; s16 unk88; u16 unk8A; } Sb2FxS;
+void func_800B398C(Sb2FxS *p);
 
 #endif /* SNOBO2_DECLS_H */
