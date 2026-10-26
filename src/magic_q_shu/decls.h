@@ -37,5 +37,26 @@ s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 extern s32 D_801BD8E4;
 extern s16 D_801BDAB8;
+void func_801B04B4(void);
+s32 func_80042DA8();
+extern s32 D_801BD9AC;
+extern s16 D_801BDAD0;
+void func_801B08E0(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003C21C(MgSVec *, MgMat *);
+s32 func_800D29D4(void *, s32, s32, s32);
+extern MgMat D_800FA63C;
+extern MgScratch D_801B0000;
+extern u16 D_801BDAD4;
+extern MgVec D_801BDAD8;
+void func_800BBA84(s32, s32, s32);
+void func_800D5774(s32);
+extern s16 D_801518F4[][0x5CE];
 
 #endif /* MAGIC_Q_SHU_DECLS_H */
