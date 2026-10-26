@@ -294,7 +294,50 @@ void func_800A496C(void) {
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A4BEC);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A5FB4);
+void func_800A5FB4(void) {
+    FdVec sp10;
+    FdVec sp20;
+    FdVec sp30;
+    s16 n;
+    s32 t;
+    s32 u;
+    s32 t2;
+    s32 u2;
+    s32 v2;
+    s16 i;
+
+    if (D_8009AC26 == 0) {
+        n = D_8009AC1E;
+        D_800965E0 = n;
+        D_80074EAC[n].s6A = D_8009AC16;
+        do {
+        } while (0);
+        if ((s16)D_8009ABF8 == 0x7FFF) {
+            D_80074EAC[n].x = ((M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 0) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 8) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 16)) / 3) << 12;
+            D_80074EAC[n].y = ((M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 2) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 10) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 18)) / 3) << 12;
+            D_80074EAC[n].z = ((M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 4) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 12) + M2C_FIELD(D_80074EAC[n].s6A * 0x18 + D_800E4274, s16 *, 20)) / 3) << 12;
+        } else {
+            D_80074EAC[n].x = (s16)D_8009ABF8 << 12;
+            D_80074EAC[n].y = (s16)D_8009ABFA << 12;
+            t = D_80074EAC[n].s6A * 0x18;
+            u = t + 8;
+            func_800A8DF4(&sp10, u + D_800E4274, t + D_800E4274);
+            t2 = D_80074EAC[D_800965E0].s6A * 0x18;
+            u2 = t2 + 0x10;
+            v2 = t2 + 8;
+            func_800A8DF4(&sp20, u2 + D_800E4274, v2 + D_800E4274);
+            sp30.x = (s16)D_8009ABF8;
+            sp30.y = (s16)D_8009ABFA;
+            D_80074EAC[D_800965E0].z = func_800A8E34(&sp10, &sp20, &sp30, (s16 *)(D_80074EAC[D_800965E0].s6A * 0x18 + D_800E4274)) << 12;
+        }
+        D_80074F10[D_800965E0].a = (D_8009AC04[0] * 0x11) >> 8;
+        D_80074F14[D_800965E0 * 66] = D_8009AC04[0] * 2;
+        D_80074F04[D_800965E0 * 66] = 0x10;
+    }
+    for (i = 0; i < D_8009AC1C[0]; i++) {
+        D_80074EAC[i].b2D = 0;
+    }
+}
 
 void func_800A635C(s32 arg0, s16 arg1) {
     if (D_8009AC26 == 0) {
