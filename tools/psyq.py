@@ -134,6 +134,7 @@ FILE_OPTIONS = {
     'magic_wep3/text.c': {'gcc': '2.7.2'},
     'magic_garyu/text.c': {'gcc': '2.7.2'},
     'magic_choco0/text.c': {'aspsx': '2.34'},
+    'magic_lasboss3/text.c': {'aspsx': '2.34'},   # disc 3's SNOVA/LASBOSS3.BIN
     'magic_ifleet/text.c': {'aspsx': '2.34'},
     'magic_siva/text.c': {'aspsx': '2.34'},
     'magic_sting/text.c': {'aspsx': '2.34'},
