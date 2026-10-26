@@ -1,0 +1,1 @@
+// SNOVA/LASBOSS3.BIN: name = 0xADDRESS; // type:func

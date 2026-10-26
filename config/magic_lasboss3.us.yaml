@@ -1,0 +1,60 @@
+# splat configuration for SNOVA/LASBOSS3.BIN of Final Fantasy VII (USA, disc 3 only), loaded at
+# 0x801b0000. Made by tools/new_overlay.py; the overlay itself is
+# never part of this repository.
+name: magic_lasboss3
+sha1: 4037c07ed8a599557d9206628e6f0dd6e128aab6
+options:
+  basename: magic_lasboss3
+  target_path: disks/us/SNOVA/LASBOSS3.BIN
+  elf_path: build/us/magic_lasboss3.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/us/magic_lasboss3
+  asset_path: assets/us/magic_lasboss3
+  src_path: src/magic_lasboss3
+  build_path: build/us
+  ld_script_path: build/us/magic_lasboss3.ld
+  ld_dependencies: False
+  # PSY-Q's linker packs sections back to back.
+  ld_align_section_vram_end: False
+  ld_align_segment_vram_end: False
+  # .bss gets its own section, so its alignment never pads the image.
+  ld_bss_is_noload: True
+
+  find_file_boundaries: True
+  gp_value: 0x80062D44
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  # GCC 2.6.3 puts top-level asm ahead of the functions around it; this
+  # INCLUDE_ASM wraps each in a function maspsx unwraps, keeping the order.
+  include_asm_macro_style: maspsx_hack
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - config/symbols.us.main.txt
+    - config/symbols.us.magic_lasboss3.txt
+  reloc_addrs_path:
+    - config/reloc_addrs.us.magic_lasboss3.txt
+  undefined_funcs_auto_path: build/us/undefined_funcs_auto.magic_lasboss3.txt
+  undefined_syms_auto_path: build/us/undefined_syms_auto.magic_lasboss3.txt
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: magic_lasboss3
+    type: code
+    start: 0x0
+    vram: 0x801b0000
+    subsegments:
+      - [0x0, .rodata, text]
+      - [0x40, c, text]
+      - [0xa9b0, data, data]
+  - [0x4c71c]

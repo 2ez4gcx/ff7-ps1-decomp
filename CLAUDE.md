@@ -1,6 +1,6 @@
 # Notes for Claude Code
 
-A matching decompilation of Final Fantasy VII (PS1, USA, disc 1): C that the game's own
+A matching decompilation of Final Fantasy VII (PS1, USA, all three discs): C that the game's own
 compilers turn back into exactly the bytes on the disc. Start with [README.md](README.md)
 (setup, building, progress), [docs/toolchain.md](docs/toolchain.md) (compilers, options
 per file, rodata) and [docs/matching.md](docs/matching.md) (how to match a function,

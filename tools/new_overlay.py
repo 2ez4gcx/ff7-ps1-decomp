@@ -25,7 +25,7 @@ TARGETS = ROOT / 'config' / 'targets.txt'
 JR_RA = 0x03E00008
 
 TEMPLATE = """\
-# splat configuration for {disc} of Final Fantasy VII (USA, disc 1), loaded at
+# splat configuration for {disc} of Final Fantasy VII (USA), loaded at
 # {vram:#010x}{packed_note}. Made by tools/new_overlay.py; the overlay itself is
 # never part of this repository.
 name: {name}

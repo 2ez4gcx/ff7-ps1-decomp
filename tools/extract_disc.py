@@ -2,6 +2,10 @@
 """Copy the files of a Final Fantasy VII (USA) disc image into disks/us/.
 
     python tools/extract_disc.py "path/to/Final Fantasy VII (USA) (Disc 1).cue"
+    python tools/extract_disc.py "path/to/Final Fantasy VII (USA) (Disc 3).cue" --only SNOVA/
+
+Discs 2 and 3 hold the same executables as disc 1 (the main one renamed
+SCUS_941.64/SCUS_941.65); disc 3 adds SNOVA/, whose LASBOSS3.BIN is code.
 
 The image is the player's own: a .cue with one MODE2/2352 data track (or the
 .bin itself). Files are read through the ISO 9660 file system; sectors of
@@ -83,12 +87,17 @@ def main():
     ap.add_argument('image', help='the disc .cue (or .bin)')
     ap.add_argument('--out', type=Path, default=ROOT / 'disks' / 'us')
     ap.add_argument('--skip', default='MOVIE/', help='comma-separated path prefixes left out')
+    ap.add_argument('--only', default='', help='comma-separated path prefixes kept (all if empty); '
+                    'disc 3: --only SNOVA/ adds its own files to disc 1\'s')
     args = ap.parse_args()
     disc = Disc(bin_of(args.image))
     skip = tuple(s for s in args.skip.split(',') if s)
+    only = tuple(s for s in args.only.split(',') if s)
     count = 0
     for path, lba, size in disc.walk():
         if skip and path.startswith(skip):
+            continue
+        if only and not path.startswith(only):
             continue
         dst = args.out / path
         dst.parent.mkdir(parents=True, exist_ok=True)

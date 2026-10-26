@@ -317,3 +317,4 @@ magic_zenbaku.us.yaml MAGIC/ZENBAKU.BIN plain
 magic_angermax.us.yaml MAGIC/ANGERMAX.BIN plain
 magic_carel.us.yaml MAGIC/CAREL.BIN plain
 magic_kujata.us.yaml MAGIC/KUJATA.BIN plain
+magic_lasboss3.us.yaml SNOVA/LASBOSS3.BIN plain

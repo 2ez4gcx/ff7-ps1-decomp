@@ -17,7 +17,7 @@ is checked byte for byte against the disc.
 
 ## Status
 
-All 318 executables of disc 1 rebuild byte for byte, from C files: functions not
+All 319 executables of the three discs rebuild byte for byte, from C files: functions not
 decompiled yet are still included as asm (`INCLUDE_ASM`). The compilers are the ones
 PSY-Q used (GCC 2.6.3 and 2.7.2, see [docs/toolchain.md](docs/toolchain.md)), and each
 executable is split into source files by how its parts were compiled. Progress, as
@@ -27,13 +27,13 @@ executable is split into source files by how its parts were compiled. Progress, 
 |---|---|---|---|
 | Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 757 of 1071 (71%) | 41% |
 | Field (`src/field/`) | 1 | 361 of 435 (83%) | 41% |
-| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 608 of 838 (73%) | 28% |
+| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 637 of 838 (76%) | 32% |
 | World map (`src/world/`) | 1 | 419 of 459 (91%) | 56% |
 | Menus (`src/*menu/`) | 13 | 213 of 243 (88%) | 39% |
-| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 867 of 1317 (66%) | 27% |
+| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 956 of 1317 (73%) | 34% |
 | Ending, disc change (`src/ending/`, `dschange/`) | 2 | 55 of 64 (86%) | 54% |
-| Spell effects (`src/magic_*/`) | 289 | 1917 of 3928 (49%) | 28% |
-| **All** | **318** | **5197 of 8355 (62%)** | **31%** |
+| Spell effects (`src/magic_*/`) | 290 | 1999 of 3997 (50%) | 29% |
+| **All** | **319** | **5397 of 8424 (64%)** | **33%** |
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code
@@ -58,6 +58,7 @@ functions use the driver's real data layouts: the song commands
 | `MENU/*.MNU` (13 files) | Menus: items, magic, equipment, materia, save, shops... | 0x801D0000 |
 | `MINI/*.BIN` (7 files) | Minigames: `CHOCOBO`, `CONDOR`, `HIGHWAY`, `JET`, `SNOBO`, `SNOBO2`, `SUBMAR` | 0x800A0000 |
 | `MAGIC/*.BIN` (289 files) | Spell, summon, limit break and enemy attack effects | 0x801B0000 |
+| `SNOVA/LASBOSS3.BIN` (disc 3) | Safer Sephiroth's Supernova (`src/magic_lasboss3/`) | 0x801B0000 |
 
 **Packed overlays:** many files (`*.X`, `FIELD.BIN`, `WORLD.BIN`, `MINI/*.BIN`) are a
 gzip stream after an 8-byte header `{u32 unpacked size, u32 ...}`. Their byte-matching
@@ -66,7 +67,11 @@ unpacks them from the disc into `disks/us/unpacked/`). Packing them back into th
 original files needs the original gzip compressor: zlib comes close (1112 of 1116 bytes
 of `BROM.X`) but does not match yet.
 
-Only disc 1 of the USA release is used; overlays found only on discs 2 and 3 come later.
+**Three discs:** discs 2 and 3 of the USA release carry the same executables as disc 1,
+byte for byte (the main one renamed `SCUS_941.64` and `SCUS_941.65`); only data files
+differ between them. Disc 3 adds one executable, `SNOVA/LASBOSS3.BIN` (its `SNOVA*.LZS`
+files are compressed data). So disc 1 plus disc 3's `SNOVA/` folder is all the code of
+the game.
 
 ## Setup (Windows)
 
@@ -101,10 +106,12 @@ All of it lives in one toolchain folder: `toolchain/` next to this repository's 
 
 ```bash
 .venv/Scripts/python tools/extract_disc.py "Final Fantasy VII (USA) (Disc 1).cue"
+.venv/Scripts/python tools/extract_disc.py "Final Fantasy VII (USA) (Disc 3).cue" --only SNOVA/
 .venv/Scripts/python tools/build.py --split
 ```
 
-`extract_disc.py` copies the files of your disc into `disks/us/` (movies left out).
+`extract_disc.py` copies the files of your disc into `disks/us/` (movies left out); from
+disc 3 only its own `SNOVA/` folder is needed.
 `build.py` runs splat (each executable into asm under `asm/`), compiles the C, assembles
 with GNU as, links with the linker scripts splat writes (overlays link against the main
 executable's symbols), and compares SHA-1s with the originals. Success reads
@@ -142,8 +149,8 @@ permuter, splitting a file).
 
 ## Roadmap
 
-1. ~~Add the overlays to the configs, each rebuilding byte for byte.~~ Done for disc 1;
-   left: the overlays of discs 2/3, each overlay's BSS size, the original gzip packer.
+1. ~~Add the overlays to the configs, each rebuilding byte for byte.~~ Done for the three
+   discs; left: each overlay's BSS size, the original gzip packer.
 2. Name known functions and variables (from the work on FF7 Recompiled: the AKAO sound
    driver, field, battle...).
 3. ~~Build the original compiler (PSY-Q, GCC 2.x).~~ Done: GCC 2.6.3 + maspsx, with
