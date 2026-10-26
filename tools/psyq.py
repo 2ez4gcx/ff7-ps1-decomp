@@ -60,13 +60,16 @@ FILE_OPTIONS = {
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     # Sony's libraries were assembled by two ASPSX versions: the unfolded
-    # `lui; addiu; addu; lw 0($at)` of a global plus a register is 2.21 (lib2:
-    # libcd, from bios.c; lib4: libgpu, from sys.c), the folded `%lo(x)($at)` 2.34.
+    # `lui; addiu; addu; lw 0($at)` of a global plus a register, and a nop after
+    # a load overwritten next, are 2.21 (lib2: libcd, from bios.c; lib3b; lib4
+    # and lib5: libgpu, from sys.c on), the folded `%lo(x)($at)` 2.34.
     'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
     'main/lib2.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib3.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
+    'main/lib3b.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
+    'main/lib3c.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
     'main/lib4.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
-    'main/lib5.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
+    'main/lib5.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     # The menus (MENU/*.MNU) were built by GCC 2.7.2.
     'bginmenu/text.c': {'gcc': '2.7.2'},
     'chngmenu/text.c': {'gcc': '2.7.2'},

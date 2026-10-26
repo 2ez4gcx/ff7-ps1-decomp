@@ -96,7 +96,26 @@ s32 func_800462E4(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046450);
+s32 func_80046450(s32 arg0) {
+    *D_80062CD4 = 0x10000007;
+    if ((*D_80062CD0 & 0xFFFFFF) != 2) {
+        *D_80062CD0 = (*D_80062CD4 & 0x3FFF) | 0xE1001000;
+        *D_80062CD0;
+        if (!(*D_80062CD4 & 0x1000)) {
+            return 0;
+        }
+        if (!(arg0 & 8)) {
+            return 1;
+        }
+        *D_80062CD4 = 0x20000504;
+        return 2;
+    }
+    if (!(arg0 & 8)) {
+        return 3;
+    }
+    *D_80062CD4 = 0x09000001;
+    return 4;
+}
 
 void func_80046530(u8 *arg0, s32 arg1, s32 arg2) {
     s32 i;

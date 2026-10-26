@@ -67,9 +67,11 @@ Each executable is split into C files by how each part was compiled
 | `src/main/akao.c` | 0x80029A50–0x80036297, AKAO sound driver, CD/movie code | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
 | `src/main/lib.c` | 0x80036298–0x8003DDBB, PSY-Q libraries (libapi, libetc...) | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
 | `src/main/lib2.c` | 0x8003DDBC–0x800404F3, libcd (from `bios.c`) | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
-| `src/main/lib3.c` | 0x800404F4–0x80043937, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/main/lib3.c` | 0x800404F4–0x80042167, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/main/lib3b.c` | 0x80042168–0x80042C5F, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
+| `src/main/lib3c.c` | 0x80042C60–0x80043937, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
 | `src/main/lib4.c` | 0x80043938–0x8004602B, libgpu (from `sys.c`) | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
-| `src/main/lib5.c` | 0x8004602C–0x80048D17, PSY-Q libraries | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
+| `src/main/lib5.c` | 0x8004602C–0x80048D17, libgpu and the rest | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
 | `src/battle/text.c` | BATTLE.X up to 0x800B30E4 | GCC 2.7.2 | `-O2 -G0` | `-G0`, ASPSX 2.34 |
 | `src/battle/text2.c` | BATTLE.X, 0x800B30E4–0x800E5F2F | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
 | `src/battle/text3.c` | BATTLE.X from 0x800E5F30 | GCC 2.7.2 | `-O2 -G0` | `-G0`, ASPSX 2.21 |
