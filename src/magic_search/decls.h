@@ -50,6 +50,20 @@ M2C_UNK func_800D5774(s16);
 extern struct { s16 v; } D_801B5434;
 extern struct { s16 v; } D_801B5436;
 extern struct { s16 v; } D_801B5438;
-extern M2C_UNK func_801B022C;
+s32 func_801B022C(void);
+typedef struct { u16 vx; s16 vy; s16 vz; s16 pad; } SrSVec;
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; u16 unkA; u16 unkC; u16 unkE; u16 unk10; u16 unk12; s16 unk14; u16 unk16; u16 unk18; u16 unk1A; u16 unk1C; u16 unk1E; } SrObj2;
+typedef struct { void *unk0; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } SrDraw;
+s32 func_80039A74(s32);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003A79C(void *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+void func_8003BADC(MgSVec *, void *, void *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern u8 D_801B4994[];
+extern u8 D_801B4D78[];
+extern s16 D_801B5418;
+extern SrDraw D_801B541C;
 
 #endif /* MAGIC_SEARCH_DECLS_H */

@@ -124,9 +124,98 @@ void func_801B0640(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B070C);
+void func_801B070C(void) {
+    MgVec dv;
+    MgVec n;
+    MgVec c;
+    MgSVec v;
+    KrTask *p;
+    KrTask *q;
+    s32 ang;
+    s32 h;
+    s32 k;
+    s32 r;
+    s32 w;
 
-INCLUDE_ASM("../asm/us/magic_korosi/nonmatchings/text", func_801B0AB0);
+    if (D_80062D98 == 0) {
+        p = (KrTask *)&D_80162978[D_8015169C];
+        if (p->unk2 == 2 || p->unk2 == 6 || p->unk2 == 9) {
+            if (D_801E91FC != 0) {
+                dv.vx = D_80158D00 - p->pos.vx;
+                dv.vy = 0;
+                dv.vz = D_80158D04 - p->pos.vz;
+                func_8003A08C(&dv, &n);
+                w = func_801B0074(&D_801D1178, &n, &c);
+                ang = w;
+                func_801B0150(ang, &D_801E91DC, &c);
+                D_801E91FC = 0;
+            }
+            q = (KrTask *)&D_80162978[func_800BBEAC(&func_801B0640)];
+            q->pos = p->pos;
+            k = func_80042DA8() % (p->unkC >> 1) + (p->unkC >> 1);
+            v.vx = (k * D_801D1188[p->unk14].vx) >> 12;
+            h = p->unk14;
+            v.vy = (k * D_801D118C[h].vx) >> 12;
+            v.vz = 0;
+            func_8003B2CC(&D_801E91DC, &v, &v);
+            q->pos.vx += v.vx;
+            q->pos.vy += v.vy;
+            q->pos.vz += v.vz;
+            r = func_80042DA8() % 0x800;
+            w = r + 0xA00;
+            q->unkC = (((p->unkC << 12) / 350) * w) >> 12;
+            p->unk14++;
+        }
+        if (p->unk2 == 2) {
+            func_800D55F4(0x20, func_800D56A8(&p->pos), 0x1A5);
+        }
+        if (p->unk2 == 0xC) {
+            q = (KrTask *)&D_80162978[func_800BBEAC(&func_801B048C)];
+            q->pos = p->pos;
+            q->unkC = (p->unkC << 12) / 800;
+            func_800D55F4(0x20, func_800D56A8(&p->pos), 0x1A4);
+        }
+        if (p->unk2 == 0x23) {
+            func_800D5774(D_801E91D8);
+            func_800D55F4(0x20, func_800D56A8(&p->pos), 0x1A8);
+        }
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B0AB0(void) {
+    MgTask *q;
+    MgTask *base;
+    s32 v;
+    s32 t;
+    s32 i;
+    s32 n;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    n = func_800BBEAC(&func_801B070C);
+    base = D_80162978;
+    q = base + n;
+    func_800D3994(D_801E91D8, D_8015190F[D_801E91D8][0], &q->unk4);
+    v = D_801518F6[D_801E91D8].v + 0xE0;
+    if (v >= 0x4F3) {
+        v = 0x4F2;
+    }
+    q++;
+    q--;
+    i = 0;
+    q->unkC = v;
+    q->unkE = v * 2;
+    q->unk14 = 0;
+    t = -((s16)q->unk6 >> 1);
+    q->unk10 = t;
+    q->unk12 = t * 2;
+    for (; i < 3; i++) {
+        func_8003A08C(&D_801D1188[i], &D_801D1188[i]);
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_korosi/nonmatchings/text", D_801B0000);
 

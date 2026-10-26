@@ -34,7 +34,102 @@ void func_801B0170(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_search/nonmatchings/text", func_801B022C);
+s32 func_801B022C(void) {
+    MgMat m;
+    MgMat pad;
+    SrSVec a;
+    SrSVec b;
+    SrSVec c;
+    MgVec scale;
+    s32 flag;
+    SrObj2 *p;
+    SrObj2 *q;
+    s16 k;
+    s32 t1; s32 t2; s32 t3; s32 t4;
+    s16 w;
+    u8 *model;
+    SrDraw *s;
+    s16 *wp;
+
+    p = (SrObj2 *)&D_80162978[D_8015169C];
+    k = ((s16)p->unk16 >> 1) * 2 - 1;
+    t1 = (func_80039A74(p->unk2 << 8) / 40) * k;
+    a.vx = t1;
+    b.vx = t1;
+    t2 = (func_80039A74(p->unk2 << 7) >> 5) * k;
+    a.vz = 0;
+    b.vz = 0;
+    a.vx -= 0x400;
+    a.vy = t2;
+    b.vy = t2;
+    func_8003C21C((MgSVec *)&a, &m);
+    func_8003A79C(D_801B543C, &m, &m);
+    scale.vy = p->unk14;
+    t3 = 0x1E00;
+    if (!(p->unk16 & 1)) {
+        t3 = 0x1400;
+    }
+    scale.vz = t3;
+    scale.vx = t3;
+    func_8003B35C(&m, &scale);
+    m.t[0] = (s16)p->unk4;
+    m.t[1] = (s16)p->unk6;
+    m.t[2] = (s16)p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    
+    model = D_801B4994;
+    
+    s = &D_801B541C;
+    
+    wp = &s->unkA;
+    
+    if (!(p->unk16 & 1)) {
+        model = D_801B4D78;
+    }
+    wp++; wp--;
+    s->unk0 = model;
+    if (!(p->unk16 & 1)) {
+        t4 = D_801B5418;
+        w = 0x1000 - (t4 << 5);
+    } else {
+        w = 0x1000 - D_801B5418 * 0x18;
+    }
+    *wp = w;
+    D_801CD45C = func_800D29D4(&D_801B541C, D_801517C0 + 0x70, 0xC, D_801CD45C);
+    if (D_80062D98 == 0) {
+        if (!(p->unk16 & 1)) {
+            q = (SrObj2 *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0170)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            c.vx = 0;
+            c.vy = 0;
+            c.vz = p->unk1C;
+            func_8003C21C((MgSVec *)&b, &m);
+            func_8003A79C(D_801B543C, &m, &m);
+            m.t[0] = (s16)q->unk4;
+            m.t[1] = (s16)q->unk6;
+            m.t[2] = (s16)q->unk8;
+            func_8003B48C(&m);
+            func_8003B51C(&m);
+            func_8003BADC((MgSVec *)&c, &q->unk4, &flag);
+            q->unkC = 0; q->unkE = p->unkE; q->unk10 = 0;
+        }
+        if (p->unk2 < 8) {
+            D_801B5418++;
+        }
+        if (p->unk2 >= 0x19) {
+            D_801B5418--;
+        }
+        p->unk2++;
+        if (p->unk2 == 0x20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B05A0(void) {
     MgMat m;
