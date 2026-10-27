@@ -925,7 +925,23 @@ void func_800E084C(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E08C4);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E0BE0);
+void func_800E0BE0(s16 arg0) {
+    D_800F1E58[arg0].f1 -= D_800F1E58[arg0].w / 4;
+    D_800F1E58[arg0].f2 -= D_800F1E58[arg0].h / 4;
+    if (D_800F1E58[arg0].f1 <= 0) {
+        if (D_800F1E58[arg0].f2 <= 0) {
+            D_800F514C[arg0] = 0;
+        }
+        if (D_800F1E58[arg0].f1 <= 0) {
+            D_800F1E58[arg0].f1 = 1;
+        }
+    }
+    if (D_800F1E58[arg0].f2 <= 0) {
+        D_800F1E58[arg0].f2 = 1;
+    }
+    D_800F1E54[arg0].hw = (s16)D_800F1E54[arg0].w / 2 - (s16)(u16)D_800F1E54[arg0].f1 / 2;
+    D_800F1E54[arg0].hh = (s16)D_800F1E54[arg0].h / 2 - (s16)(u16)D_800F1E54[arg0].f2 / 2;
+}
 
 void func_800E0DF4(void) {
     s16 i;
@@ -1112,7 +1128,42 @@ void func_800E3E10(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E3FB4);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E4180);
+void func_800E4180(void) {
+    s16 rect[4];
+    volatile BtlSprt *p;
+    volatile BtlSprt *volatile *pp;
+
+    func_80026F44(0xA, 6, D_800F32F8, 7);
+    func_80026F44(0x20, 0x13, D_800F3314, 5);
+    func_80026F44(0x20, 0x1F, D_800F3318, 5);
+    func_80026F44(0x20, 0x2B, D_800F3320, 5);
+    func_80028E00(0x52, 0x15, D_80151840, 0xA, 7);
+    func_80028E00(0x52, 0x21, *D_8009D260 - D_80151840, 0xA, 7);
+    func_80028E00(0x52, 0x2D, *D_8009D260, 0xA, 7);
+    rect[0] = 0;
+    rect[1] = 0;
+    rect[2] = 0x100;
+    rect[3] = 0x100;
+    func_80026A34(0, 1, 0x3F, (s32)rect);
+    pp = &D_80062F24;
+    func_80046960(*pp);
+    func_80046870(*pp, 1);
+    D_80062F24->x = 3;
+    D_80062F24->y = 3;
+    D_80062F24->u = ((D_800F1998 * 2) & 0x3F) + 3;
+    D_80062F24->v = 3 - (D_800F1998 & 0x1F);
+    D_80062F24->w = 0x9E;
+    ((BtlSprt *)D_80062F24)->h = 0x34;
+    D_80062F24->clut = func_80046634(0x110, 0x1E0);
+    p = *pp;
+    *(volatile BtlSprt **)pp = p + 1;
+    func_80046794(D_80062FC4, (s32)p);
+    rect[0] = 0xC0;
+    rect[1] = 0x20;
+    rect[2] = 0x40;
+    rect[3] = 0x20;
+    func_80026A34(0, 1, 0x1F, (s32)rect);
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E4394);
 
