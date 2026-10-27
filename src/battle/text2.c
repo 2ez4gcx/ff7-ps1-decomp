@@ -2181,9 +2181,9 @@ void func_800C4B60(s16 arg0) {
         return;
     }
     D_80163C74 = func_800C4DC8(0, D_801621F0[arg0][5], 0x140, 0x2F, D_800EA25C);
-    D_80163C74 = func_800C4DC8(0, D_801621F0[arg0][5] + 0x2F, 0x140, 0x20, D_800EA258);
+    D_80163C74 = func_800C4DC8(0, (s16)(D_801621F0[arg0][5] + 0x2F), 0x140, 0x20, D_800EA258);
     D_80163C74 = func_800C4DC8(0, D_801621F0[arg0][4], 0x140, 0x20, D_800EA260);
-    D_80163C74 = func_800C4DC8(0, D_801621F0[arg0][4] + 0x20, 0x140, 0x2F, D_800EA25C);
+    D_80163C74 = func_800C4DC8(0, (s16)(D_801621F0[arg0][4] + 0x20), 0x140, 0x2F, D_800EA25C);
     D_801621F0[arg0][4] += 4;
     D_801621F0[arg0][5] -= 4;
     D_801621F0[arg0][2]--;
@@ -2205,7 +2205,48 @@ void func_800C4D10(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C4DC8);
+u8 *func_800C4DC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
+    BtlWinBuf *p;
+    s16 x;
+    s16 y;
+
+    p = (BtlWinBuf *)D_80163C74;
+    func_80044A68(p, 1, 0, 0x40, 0);
+    func_80044A68(&p->tag90, 1, 0, 0x20, 0);
+    do {
+        func_80046910(&p->poly);
+        func_80046848(&p->poly, 1);
+        x = arg0;
+        y = arg1;
+        p->poly.r0 = arg4[0];
+        p->poly.g0 = arg4[0];
+        p->poly.b0 = arg4[0];
+        p->poly.r1 = arg4[0];
+        p->poly.g1 = arg4[0];
+        p->poly.b1 = arg4[0];
+        p->poly.r2 = arg4[1];
+        p->poly.g2 = arg4[1];
+        p->poly.b2 = arg4[1];
+        p->poly.r3 = arg4[1];
+        p->poly.g3 = arg4[1];
+        p->poly.b3 = arg4[1];
+        p->poly.x0 = x;
+        p->poly.y0 = y;
+        p->poly.x1 = arg0 + arg2;
+        p->poly.y1 = y;
+        p->poly.x2 = x;
+        p->poly.y2 = arg1 + arg3;
+        p->poly.x3 = arg0 + arg2;
+        p->poly.y3 = arg1 + arg3;
+        p->tag90.addr = ((BtlTag *)(D_801517C0 + 0x40EC))->addr;
+        ((BtlTag *)(D_801517C0 + 0x40EC))->addr = (u32)&p->tag90;
+        p->poly.tag.addr = ((BtlTag *)(D_801517C0 + 0x40EC))->addr;
+        ((BtlTag *)(D_801517C0 + 0x40EC))->addr = (u32)&p->poly;
+        p->tag0.addr = ((BtlTag *)(D_801517C0 + 0x40EC))->addr;
+        ((BtlTag *)(D_801517C0 + 0x40EC))->addr = (u32)p;
+    } while (0);
+    return (u8 *)p + 0x384;
+}
 
 void func_800C4FC8(s32 arg0, s32 arg1, s32 arg2) {
     func_800C5040(arg0 & 0xFF, arg1 & 0xFF, arg2 & 0xFF, 1, D_801517C0 + 0x4084);

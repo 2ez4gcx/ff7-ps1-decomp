@@ -1302,7 +1302,7 @@ typedef struct { s16 a; s16 b; s16 x4; s16 x6; s16 x8; s16 xA; s16 xC; s16 xE; s
 extern u8 D_80151850[];
 extern u8 D_801518B0[];
 void func_800C3F44(u8 arg0);
-u8 *func_800C4DC8(s32 arg0, s16 arg1, s32 arg2, s32 arg3, void *arg4);
+u8 *func_800C4DC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4);
 extern u8 D_800EA258[];
 extern u8 D_800EA25C[];
 extern u8 D_800EA260[];
@@ -1482,6 +1482,9 @@ typedef struct { u16 a; u16 b; u8 pad[0x70]; } BtlU74a;
 typedef struct { u16 a; u8 pad[0x72]; } BtlU74;
 extern BtlU74a D_80151238[];
 extern BtlU74 D_8015123C[];
+typedef struct { u32 addr : 24; u32 len : 8; } BtlTag;
+typedef struct { BtlTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 r1; u8 g1; u8 b1; u8 pad1; s16 x1; s16 y1; u8 r2; u8 g2; u8 b2; u8 pad2; s16 x2; s16 y2; u8 r3; u8 g3; u8 b3; u8 pad3; s16 x3; s16 y3; } BtlPolyG4;
+typedef struct { BtlTag tag0; u8 pad0[0x8C]; BtlTag tag90; u8 pad1[0x2CC]; BtlPolyG4 poly; } BtlWinBuf;
 
 #endif /* BATTLE_DECLS_H */
 extern u32 D_8009D264;
