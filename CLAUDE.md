@@ -26,7 +26,7 @@ what GCC needs, how batches of agents work).
 `py tools/progress.py` shows what is left per group. The usual next step is a batch of
 the ~30 smallest functions still in asm of one target (battle, field, world, the menus
 eqipmenu/namemenu/savemenu/shopmenu, then the minigames and the spell effects), given to
-a subagent with docs/matching.md, one at a time (the maintainer's limit). Known
+a subagent with docs/matching.md, at most three at once (the maintainer's limit). Known
 near misses that resisted, and handwritten functions, are listed in
 [docs/near-misses.md](docs/near-misses.md): skip them in batches.
 
