@@ -1,6 +1,9 @@
 #include "common.h"
 #include "chocobo/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern u8 D_8009D499[];
+
 INCLUDE_RODATA("../asm/us/chocobo/nonmatchings/text3", D_800A0068);
 
 void func_800A7924(ChoMat *arg0, ChoSVec *arg1, ChoSVec *arg2) {

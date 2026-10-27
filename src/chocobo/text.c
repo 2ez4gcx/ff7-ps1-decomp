@@ -1,6 +1,27 @@
 #include "common.h"
 #include "chocobo/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern u8 D_8009D48E;
+extern u8 D_8009D499;
+typedef struct { u8 b[4]; } ChoC4C;
+typedef struct { u8 cnt; u8 pad1[3]; u8 *prims; } ChoGfxC;
+typedef struct { u8 pad0[5]; u8 b5; u8 pad6; u8 b7; u8 pad8[4]; s32 wC; u8 pad10[0x14]; } ChoPrimC;
+typedef struct { u8 pad0[6]; u16 flags; u8 pad8[7]; u8 idx; } ChoEntC;
+typedef struct { u8 pad0[0x3C]; u32 n; ChoEntC *ents; } ChoWorkC;
+extern s32 D_800F5120;
+extern u8 *D_800B1250;
+extern u8 D_800B66CC;
+extern ChoC4C D_800B1270[];
+extern ChoC4C D_800B1284[];
+extern ChoC4C D_800B1258[];
+extern ChoC4C D_800B7518[];
+extern u8 D_800B751C;
+extern u8 D_800B751D;
+extern u8 D_800B751E;
+extern u8 D_8009D49E;
+void func_800A1F40(ChoGfxC *arg0, s32 arg1);
+
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A02D0);
 
 void func_800A1260(void) {
@@ -246,7 +267,137 @@ loop2:
     func_800A9828();
 }
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A1F40);
+void func_800A1F40(ChoGfxC *arg0, s32 arg1) {
+    s32 po;
+    s32 n;
+    WmHdr3 *p;
+    ChoEntC *e;
+    s32 k;
+    u32 i;
+    s32 h;
+    s32 ro;
+
+    D_800F5120 = arg1 ? 0x801AE000 : 0x801AE800;
+    *(s32 *)0x1F800000 = 3;
+    *(s32 *)0x1F800200 = 1;
+    for (i = 0; i < 6; i++) {
+        D_800B75CC[i].f92 = i;
+        p = (WmHdr3 *)(arg0->prims + i * 0x24);
+        p->f16 = 0x280;
+        D_800F5120 = func_800AD91C(p, D_800F5120, i);
+        if (D_8009D49E != 0 && i == 1) {
+            D_800B1250[0] = 0x9C;
+            D_800B1250[1] = 0xFF;
+            D_800B1250[2] = 0x9C;
+            D_800B1250[3] = 0xFF;
+            D_800B1250[4] = 0x9C;
+            D_800B1250[5] = 0xFF;
+            D_800B1250[6] = i;
+            D_800B66CC = 0;
+            func_800B00DC(p, D_800B1250);
+            D_800B66CC = i;
+            func_800B00DC(p, D_800B1250);
+            D_800B751C = D_800B751D = D_800B751E = 0x40;
+        } else if (D_800B7A48 != 0 && i == 0) {
+            n = D_8009D499;
+            D_800B7518[0] = D_800B1270[n];
+            D_800B1250[0] = D_800B1270[n].b[0];
+            D_800B1250[1] = (s8)D_800B1270[n].b[0] >> 7;
+            D_800B1250[2] = D_800B1270[n].b[1];
+            D_800B1250[3] = (s8)D_800B1270[n].b[1] >> 7;
+            D_800B1250[4] = D_800B1270[n].b[2];
+            D_800B1250[5] = (s8)D_800B1270[n].b[2] >> 7;
+            D_800B1250[6] = 1;
+            D_800B66CC = 0;
+            func_800B00DC(p, D_800B1250);
+            D_800B1250[0] = D_800B1284[n].b[0];
+            D_800B1250[1] = (s8)D_800B1284[n].b[0] >> 7;
+            D_800B1250[2] = D_800B1284[n].b[1];
+            D_800B1250[3] = (s8)D_800B1284[n].b[1] >> 7;
+            D_800B1250[4] = D_800B1284[n].b[2];
+            D_800B1250[5] = (s8)D_800B1284[n].b[2] >> 7;
+            D_800B1250[6] = 1;
+            D_800B66CC = 1;
+            func_800B00DC(p, D_800B1250);
+        } else {
+            D_800B7518[i] = D_800B1258[i];
+            D_800B1250[0] = D_800B1258[i].b[0];
+            D_800B1250[1] = (s8)D_800B1258[i].b[0] >> 7;
+            D_800B1250[2] = D_800B1258[i].b[1];
+            D_800B1250[3] = (s8)D_800B1258[i].b[1] >> 7;
+            D_800B1250[4] = D_800B1258[i].b[2];
+            D_800B1250[5] = (s8)D_800B1258[i].b[2] >> 7;
+            D_800B1250[6] = 1;
+            D_800B66CC = 0;
+            func_800B00DC(p, D_800B1250);
+            D_800B1250[0] = D_800B1258[i].b[0];
+            D_800B1250[1] = (s8)D_800B1258[i].b[0] >> 7;
+            D_800B1250[2] = D_800B1258[i].b[1];
+            D_800B1250[3] = (s8)D_800B1258[i].b[1] >> 7;
+            D_800B1250[4] = D_800B1258[i].b[2];
+            D_800B1250[5] = (s8)D_800B1258[i].b[2] >> 7;
+            D_800B1250[6] = 1;
+            D_800B66CC = 1;
+            func_800B00DC(p, D_800B1250);
+        }
+    }
+    n = 6;
+    if (D_800B7A48 != 0) {
+        D_800B75CC[0].f90 = D_8009D48E + 6;
+        p = (WmHdr3 *)(arg0->prims + (D_8009D48E * 0x24 + 0xD8));
+    } else {
+        D_800B75CC[0].f90 = 10;
+        p = (WmHdr3 *)(arg0->prims + 10 * 0x24);
+    }
+    p->f16 = 0x280;
+    D_800F5120 = func_800AD91C(p, D_800F5120, n++);
+    if (D_8009D49E != 0) {
+        D_800B75CC[1].f90 = 9;
+        p = (WmHdr3 *)(arg0->prims + 9 * 0x24);
+    } else {
+        D_800B75CC[1].f90 = 0xB;
+        p = (WmHdr3 *)(arg0->prims + 0xB * 0x24);
+    }
+    p->f16 = 0x280;
+    D_800F5120 = func_800AD91C(p, D_800F5120, n++);
+    i = 0xC;
+    h = 0x280;
+    po = 0x1B0;
+    ro = 0x148;
+loop3:
+    do {
+        *(s16 *)((u8 *)&D_800B75CC[0].f90 + ro) = i;
+        p = (WmHdr3 *)(arg0->prims + po);
+        p->f16 = h;
+        D_800F5120 = func_800AD91C(p, D_800F5120, n++);
+        ro += 0xA4;
+        i++;
+        po += 0x24;
+    } while (0);
+    if (i < 0x10) {
+        goto loop3;
+    }
+    for (i = 0x10; i < arg0->cnt; i++) {
+        p = (WmHdr3 *)(arg0->prims + i * 0x24);
+        p->f16 = 0x280;
+        D_800F5120 = func_800AD91C(p, D_800F5120, n);
+        n++;
+    }
+    for (i = 0; i < arg0->cnt; i++) {
+        p = (WmHdr3 *)(arg0->prims + i * 0x24);
+        ((ChoPrimC *)p)->b5 = 0xC0;
+        ((ChoPrimC *)p)->wC = 0;
+        ((ChoPrimC *)p)->b7 = 0x80;
+    }
+    for (i = 0; i < ((ChoWorkC *)D_800F5084)->n; i++) {
+        e = (ChoEntC *)((i << 4) + (s32)((ChoWorkC *)D_800F5084)->ents);
+        if (e->flags & 1) {
+            k = e->idx;
+            *(u8 *)0x1F800200 = 0xFF;
+            func_800B0E7C((WmHdr3 *)(arg0->prims + k * 0x24), (u8 *)0x1F800200);
+        }
+    }
+}
 
 INCLUDE_RODATA("../asm/us/chocobo/nonmatchings/text", D_800A0020);
 
