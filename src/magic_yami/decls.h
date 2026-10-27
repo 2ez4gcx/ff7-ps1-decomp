@@ -54,7 +54,6 @@ s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 void func_8003BF8C(MgSVec *, MgMat *);
 void func_8003C8DC(s32, MgMat *);
 void func_80046794(s32, void *);
-void func_80046974(void *);
 s32 func_800D29D4(void *, s32, s32, s32);
 extern MgMat D_800FA63C;
 extern MgVec D_801D5D70;

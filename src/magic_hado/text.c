@@ -176,7 +176,82 @@ void func_801B07A0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B08E8);
+void func_801B08E8(void) {
+    MgMat m;
+    MgMat lw;
+    MgSVec rot;
+    u8 pad[24];
+    MgVec scale;
+    MgTask *p;
+    MgTask *q;
+    s16 i;
+    s16 a;
+    s16 k;
+    s32 t;
+    s32 v;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    rot.vy = p->unk2 * 0x40;
+    rot.vx = rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    scale.vx = scale.vy = scale.vz = p->unk2 * 0x12C + 0x1000;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    D_801D7190[0] = 0x28;
+    D_801D7190[-1] = (s32)D_801D4EA8;
+    D_801D7196 = D_801D7188 * 8;
+    D_801EF234 = (u8 *)func_800D29D4(&D_801D7190[-1], D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    D_801D7190[0] = 0xA8;
+    D_801D7190[-1] = (s32)D_801D6C4C;
+    v = 0x1000 - ((s16)D_801D7188 << 9);
+    D_801D7196 = v;
+    D_801EF234 = (u8 *)func_800D29D4(&D_801D7190[-1], D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    rot.vy = -p->unk2 * 0x40;
+    rot.vx = rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    scale.vx = scale.vy = scale.vz = p->unk2 * 0x118 + 0x800;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    D_801D7190[0] = 0x28;
+    D_801D7190[-1] = (s32)D_801D4EA8;
+    D_801D7196 = D_801D7188 * 8;
+    D_801EF234 = (u8 *)func_800D29D4(&D_801D7190[-1], D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0x16) {
+            k = p->unk2 * 0x50;
+            i = 0;
+            do {
+                a = func_80042DA8() % 0x1000;
+                q = &D_801621F0[func_800BC04C(func_801B04C8)];
+                q->unk4 = p->unk4 + (func_80039B40(a) * k >> 12);
+                i++;
+                q->unk8 = p->unk8 + (func_80039A74(a) * k >> 12);
+                q->unk6 = -0x96;
+                q->unk16 = 2;
+            } while (i < 6);
+        }
+        t = D_801031EA[0] - 8;
+        t += (p->unk2 % 2) << 4;
+        D_801031EA[0] = t;
+        if (p->unk2 >= 0xF) {
+            D_801D7188 -= 1;
+        }
+        if (++p->unk2 == 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0D04(void) {
     MgObjAwa *p;
@@ -237,7 +312,57 @@ void func_801B0EF8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B10F0);
+void func_801B10F0(void) {
+    MgMat m;
+    MgMat lw;
+    s32 ext;
+    MgTask *p;
+    MgMat *mp;
+    u16 *frame;
+    s32 **q;
+
+    D_801D7208.vx = 0;
+    D_801D7208.vy = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    D_801D7208.vz = p->unk18 * p->unk2 / 6;
+    D_801D7228[0] = p->unk4;
+    mp = (MgMat *)((u8 *)D_801D7228 - 0x14);
+    D_801D7228[1] = p->unk6;
+    D_801D7228[2] = p->unk8;
+    func_8003B48C(mp);
+    func_8003B51C(mp);
+    func_8003BADC(&D_801D7208, &D_801D7208, &ext);
+    func_8003C21C(&D_801D7200, &m);
+    func_8003A79C(mp, &m, &m);
+    func_8003B35C(&m, &D_801D71D4);
+    m.t[0] = D_801D7208.vx;
+    m.t[1] = D_801D7208.vy;
+    m.t[2] = D_801D7208.vz;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    frame = &D_801D71EE;
+    q = (s32 **)((u8 *)frame - 0xA);
+    M2C_SFIELD(q, s32 **, 0) = D_801D2C28;
+    *frame = D_801D71D0 * 0x10;
+    D_801EF234 = (u8 *)func_800D29D4(q, D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    *q = D_801D3BCC;
+    D_801EF234 = (u8 *)func_800D29D4(q, D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    *q = D_801D4B70;
+    D_801EF234 = (u8 *)func_800D29D4(q, D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    func_800D4368(&D_801D7208, 0x3000, 0);
+    D_801D71F8[0] = D_801D71F8[1] = D_801D71F8[2] = (s16)D_801D71D0 * 0x14;
+    D_801D71FC = p->unk2 % 2;
+    D_801EF234 = (u8 *)func_800D4D90(&D_801D71F8[-4], D_801517C0 + 0x70, 0xC, (s32)D_801EF234);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 3) {
+            D_801D71D0 -= 1;
+        }
+        if (++p->unk2 == 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B13F4);
 
