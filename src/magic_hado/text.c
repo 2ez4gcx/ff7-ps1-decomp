@@ -364,7 +364,82 @@ void func_801B10F0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B13F4);
+void func_801B13F4(void) {
+    MgSVec v;
+    u8 pad[16];
+    MgTask *p;
+    MgTask *q;
+    s16 i;
+    s16 d;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0DC0)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            if (p->unk2 == 0) {
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0EF8)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = p->unk8;
+                v.vx = p->unkC - q->unk4;
+                v.vy = p->unkE - q->unk6;
+                v.vz = p->unk10 - q->unk8;
+                d = func_80039F5C(v.vx * v.vx + v.vy * v.vy + v.vz * v.vz);
+                q->unk1A = 0;
+                q->unk18 = d * 0x1200 / 3000;
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B10F0)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = p->unk8;
+                q->unk18 = d;
+                q->unk1A = 0;
+            }
+        }
+        if ((u16)(p->unk2 - 7) < 7U) {
+            i = 0;
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0D04)];
+                q->unk4 = p->unkC + func_80042DA8() % 1200 - 0x258;
+                q->unk6 = p->unkE + func_80042DA8() % 1200 - 0x258;
+                i++;
+                q->unk8 = p->unk10 + func_80042DA8() % 1200 - 0x258;
+            } while (i < 2);
+        }
+        if (p->unk2 == 0xA) {
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B08E8)];
+            q->unk4 = p->unkC;
+            q->unk6 = 0;
+            q->unk8 = p->unk10;
+            q->unk16 = 0;
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B07A0)];
+            q->unk4 = p->unkC;
+            i = 0;
+            q->unk6 = -0x12C;
+            q->unk8 = p->unk10;
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC(func_801B0584)];
+                q->unk4 = p->unkC;
+                q->unk8 = p->unk10;
+                q->unk6 = 0;
+                func_801B01CC(-0xFA, 0x64, (MgSVec *)&q->unkC);
+                q->unk16 = func_80042DA8() % 7;
+                i++;
+            } while (i < 0x14);
+            func_800BBA84(0x176, p->unk1C, 0x40);
+        }
+        if (p->unk2 == 0x23) {
+            func_800D5774(p->unk1C);
+        }
+        p->unk2++;
+        if (p->unk2 == 0x2D) {
+            p->unk0 = -1;
+            func_800D52A0(0, 0xA);
+        }
+    }
+}
 
 void func_801B1850(arg0, arg1) {
     MgSVec v;
