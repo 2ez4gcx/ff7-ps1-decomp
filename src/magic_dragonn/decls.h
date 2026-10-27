@@ -42,5 +42,9 @@ s32 func_800BBEAC(M2C_UNK *);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 s32 func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
+void func_801B0720(void);
+typedef struct { u8 b[8]; } DrB8;
+extern s16 D_801C2944[];
+void func_800D5774(s32);
 
 #endif /* MAGIC_DRAGONN_DECLS_H */

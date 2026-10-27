@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B0BC8();
+s32 func_801B0BC8();
 void func_801B0020(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -25,5 +25,24 @@ extern s32 D_801517C0;
 extern MgGesuiAnim *D_801C0F80[];
 u8 *func_800D4D90(void *, s32, s32, u8 *);
 extern u8 D_80062D98;
+s32 func_80039A74(s32);
+s32 func_800BBA84(s32, s32, s32);
+s32 func_800BBEAC(void *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_800D3994(s32, s32, void *);
+void func_800D54EC(s32, void *);
+void func_801B07CC(void);
+extern u8 D_80151918[][0xB9C];
+extern M2C_UNK D_801B0D20;
+extern s16 D_801C0F70;
+extern s16 D_801DAF90;
+s32 func_80042DA8(void);
+void func_800D52A0(s32, s32);
+void func_800D5774(s32);
+void func_801B0270(void);
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+extern u8 D_8015190F[][0xB9C];
 
 #endif /* MAGIC_OTSUNAMI_DECLS_H */

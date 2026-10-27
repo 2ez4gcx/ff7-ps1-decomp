@@ -174,7 +174,45 @@ void func_801B054C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_dragonn/nonmatchings/text", func_801B0720);
+void func_801B0720(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        k = p->unk18;
+        if (p->unk2 == D_801C2944[k]) {
+            if (k < 8) {
+                if (k < 4) {
+                    q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B037C)];
+                    *(DrB8 *)&q->unk4 = *(DrB8 *)&p->unk4;
+                    q->unkC = 0;
+                    q->unkE = p->unkE;
+                    q->unk10 = p->unk10;
+                    q->unk12 = p->unk12;
+                    q->unk18 = p->unk18;
+                } else {
+                    q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B054C)];
+                    *(DrB8 *)&q->unk4 = *(DrB8 *)&p->unk4;
+                    q->unkC = 0x200;
+                    q->unkE = p->unkE;
+                    q->unk10 = p->unk14;
+                    q->unk12 = p->unk16;
+                    q->unk18 = p->unk18 - 4;
+                }
+                p->unk18++;
+            }
+        }
+        if (p->unk2 == 0x37) {
+            func_800D5774(D_801DA95C);
+        }
+        if (p->unk2 >= 0x3C) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_dragonn/nonmatchings/text", func_801B08E0);
 
