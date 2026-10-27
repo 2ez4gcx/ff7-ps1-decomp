@@ -519,7 +519,105 @@ s32 func_800A8858(FdMover *e, s16 step) {
     return 1;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A8968);
+s32 func_800A8968(u16 *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    s32 side;
+    s32 *sp;
+    s32 t1;
+    s32 u1;
+    s32 t2;
+    s32 u2;
+    s32 v2;
+    s32 t3;
+    s32 u3;
+    s32 c0;
+    s32 c1;
+    s32 c2;
+    s32 x;
+    s32 y;
+    u16 w;
+    u16 idx;
+    s16 *e;
+
+    side = 0;
+    sp = (s32 *)0x1F800000;
+    D_1F800030[0] = arg1[0] / 4096;
+    D_1F800034 = arg1[1] / 4096;
+    D_1F800038 = 0;
+    D_80113F28 = 0xFFFF;
+    while (1) {
+        t1 = *arg0 * 0x18;
+        u1 = t1 + 8;
+        func_800A8DF4(sp, u1 + D_800E4274, t1 + D_800E4274);
+        t2 = *arg0 * 0x18;
+        u2 = t2 + 0x10;
+        v2 = t2 + 8;
+        func_800A8DF4(sp + 4, u2 + D_800E4274, v2 + D_800E4274);
+        t3 = *arg0 * 0x18;
+        u3 = t3 + 0x10;
+        func_800A8DF4(sp + 8, t3 + D_800E4274, u3 + D_800E4274);
+        idx = *arg0;
+        x = sp[12];
+        e = (s16 *)(idx * 0x18 + D_800E4274);
+        y = sp[13];
+        c0 = (x - e[0]) * sp[1] - (y - e[1]) * sp[0];
+        c1 = (x - e[4]) * sp[5] - (y - e[5]) * sp[4];
+        c2 = (x - e[8]) * sp[9] - (y - e[9]) * sp[8];
+        if (c0 >= 0 && c1 >= 0 && c2 >= 0) {
+            break;
+        }
+        if (c0 < 0) {
+            w = *(u16 *)(idx * 6 + D_80114458);
+            if ((s16)w >= 0 && !((D_8009ACA6[(s16)w >> 3] >> ((s16)w - (((s16)w >> 3) << 3))) & 1)) {
+                *arg0 = w;
+                continue;
+            }
+            arg3[0] = sp[0];
+            arg3[1] = sp[1];
+            arg3[2] = sp[2];
+            side = -8;
+            if (sp[0] * arg2[0] + sp[1] * arg2[1] >= 0) {
+                side = 8;
+            }
+            D_80113F28 = *arg0;
+            D_801144CC = 0;
+            break;
+        } else if (c1 < 0) {
+            w = *(u16 *)(idx * 6 + D_80114458 + 2);
+            if ((s16)w >= 0 && !((D_8009ACA6[(s16)w >> 3] >> ((s16)w - (((s16)w >> 3) << 3))) & 1)) {
+                *arg0 = w;
+                continue;
+            }
+            arg3[0] = sp[4];
+            arg3[1] = sp[5];
+            arg3[2] = sp[6];
+            side = -8;
+            if (sp[4] * arg2[0] + sp[5] * arg2[1] >= 0) {
+                side = 8;
+            }
+            D_80113F28 = *arg0;
+            D_801144CC = 1;
+            break;
+        } else if (c2 < 0) {
+            w = *(u16 *)(idx * 6 + D_80114458 + 4);
+            if ((s16)w >= 0 && !((D_8009ACA6[(s16)w >> 3] >> ((s16)w - (((s16)w >> 3) << 3))) & 1)) {
+                *arg0 = w;
+                continue;
+            }
+            arg3[0] = sp[8];
+            arg3[1] = sp[9];
+            arg3[2] = sp[10];
+            side = -8;
+            if (sp[8] * arg2[0] + sp[9] * arg2[1] >= 0) {
+                side = 8;
+            }
+            D_80113F28 = *arg0;
+            D_801144CC = 2;
+            break;
+        }
+    }
+    arg1[2] = func_800A8E34((FdVec *)sp, (FdVec *)(sp + 4), (FdVec *)(sp + 12), (s16 *)(*arg0 * 0x18 + D_800E4274));
+    return side;
+}
 
 void func_800A8DF4(void *arg0, void *arg1, void *arg2) {
     M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg1, s16 *, 0) - M2C_FIELD(arg2, s16 *, 0));
