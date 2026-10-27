@@ -37,7 +37,63 @@ void func_801B008C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_reiki/nonmatchings/text", func_801B016C);
+void func_801B016C(void) {
+    MgMat m;
+    MgMat m2;
+    MgSVec rot;
+    MgTask *p;
+    u8 *r;
+    u8 c;
+    u8 *q;
+    u16 *h;
+    s32 t;
+    s32 u;
+    s16 n;
+
+    rot.vz = 0;
+    rot.vx = 0;
+    rot.vy = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003BF8C(&rot, &m);
+    D_801D6264.vx = D_801D6264.vy = D_801D6264.vz = p->unk2 << 10;
+    func_8003B35C(&m, &D_801D6264);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m2);
+    func_8003B48C(&m2);
+    func_8003B51C(&m2);
+    D_801D61C8.unk0 = D_801D10D8;
+    D_801D61C8.unk4 = 0xA8;
+    t = D_801D620C;
+    D_801D61C8.unkA = 0x1000 - (t << 7);
+    r = func_800D29D4(&D_801D61C8, D_801517C0 + 0x70, 0xC, D_801EE294);
+    D_801EE294 = r;
+    D_801D61C8.unk0 = D_801D61D8[p->unk2 % 10];
+    D_801D61C8.unk4 = 0x28;
+    D_801D61C8.unkA = D_801D620C * 8;
+    D_801EE294 = func_800D29D4(&D_801D61C8, D_801517C0 + 0x70, 0xC, r);
+    func_800D4368(&p->unk4, 0x2000, 0);
+    q = &D_801D6204;
+    c = D_801D620C * 8;
+    D_801D6206 = c;
+    D_801D6205 = c;
+    *q = c;
+    D_801EE294 = func_800D4D90(q - 4, D_801517C0 + 0x70, 0xC, D_801EE294);
+    if (D_80062D98 == 0) {
+        h = &D_801031EA;
+        u = *h + 0x20;
+        *h = u - p->unk2 % 2 * 64;
+        if (p->unk2 >= 0xF) {
+            D_801D620C--;
+        }
+        n = p->unk2 + 1;
+        p->unk2 = n;
+        if (n == 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0430(void) {
     MgObjAwa *p;

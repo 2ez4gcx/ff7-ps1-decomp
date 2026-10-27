@@ -31,5 +31,25 @@ void func_801B008C(void);
 s32 func_800C4FC8(M2C_UNK, M2C_UNK, s16);
 extern s32 D_80163C74;
 extern s16 D_801D61C4;
+void func_801B016C(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+void func_8003BF8C(MgSVec *, MgMat *);
+extern MgVec D_801D6264;
+void func_8003B35C(MgMat *, MgVec *);
+extern MgMat D_800FA63C;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern MgScratch D_801D61C8;
+extern u8 D_801D10D8[];
+extern s16 D_801D620C;
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern u8 *D_801D61D8[];
+extern u8 D_801D6204;
+extern u8 D_801D6206;
+extern u8 D_801D6205;
+extern u16 D_801031EA;
 
 #endif /* MAGIC_REIKI_DECLS_H */
