@@ -56,7 +56,186 @@ void func_800A2D5C(s32 unused, u8 *p) {
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A2F78);
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A3020);
+void func_800A3020(FdPrim10 *arg0, FdPrim14 *arg1, u8 *arg2, FdObj12 *arg3) {
+    FdMdlHdr *h;
+    s16 *p;
+    FdSrc8 *src8;
+    FdSrcE *srcE;
+    u16 *sp18;
+    u16 cnt1;
+    u16 cnt2;
+    s16 n;
+
+    cnt1 = 0;
+    cnt2 = 0;
+    D_8011448C = 0;
+    D_801144D0 = 0;
+    h = *D_8009D848;
+    p = (s16 *)(h + 1);
+    src8 = (FdSrc8 *)((u8 *)h + h->off0);
+    sp18 = (u16 *)((u8 *)h + h->off4);
+    while (1) {
+        if (p[0] == 0x7FFF) {
+            p++;
+            break;
+        }
+        if (p[0] == 0x7FFE) {
+            func_80044A68(arg3, 0, 1, *sp18++, 0);
+            D_8011448C++;
+            arg3++;
+        } else {
+            n = p[2];
+            if (n != 0) {
+                do {
+                    func_8004694C(arg0);
+                    func_80046870(arg0, 1);
+                    func_80046848(arg0, 0);
+                    arg0->r = 0x80;
+                    arg0->g = 0x80;
+                    arg0->b = 0x80;
+                    arg0->w8 = src8->w0;
+                    arg0->wA = src8->w2;
+                    arg0->bC = src8->b4;
+                    arg0->bD = src8->b5;
+                    arg0->wE = src8->w6;
+                    src8++;
+                    arg0++;
+                    arg2 += 2;
+                    n--;
+                    cnt1++;
+                } while (n != 0);
+            }
+        }
+        p += 3;
+    }
+    D_8011448C = cnt1 - D_8011448C;
+    srcE = (FdSrcE *)((u8 *)*D_8009D848 + (*D_8009D848)->off8);
+    while (1) {
+        if (p[0] == 0x7FFF) {
+            p++;
+            break;
+        }
+        n = p[2];
+        if (n != 0) {
+            do {
+                func_80044A68(arg3, 0, 1, srcE->w8, 0);
+                D_801144D0++;
+                func_8004694C(arg0);
+                func_80046870(arg0, 1);
+                arg3++;
+                if (!(srcE->bC & 0x80)) {
+                    func_80046848(arg0, 0);
+                } else {
+                    func_80046848(arg0, 1);
+                }
+                arg0->r = srcE->wA;
+                arg0->g = srcE->wA >> 8;
+                arg0->b = 0x80;
+                arg0->w8 = srcE->w0;
+                arg0->wA = srcE->w2;
+                arg0->bC = srcE->b4;
+                arg0->bD = srcE->b5;
+                arg0->wE = srcE->w6;
+                arg2[0] = srcE->bC;
+                arg2[1] = srcE->bD;
+                srcE++;
+                arg0++;
+                n--;
+                arg2 += 2;
+                cnt1++;
+            } while (n != 0);
+        }
+        p += 3;
+    }
+    D_801144C8 = cnt1;
+    D_8007EBD4 = (FdSrcA *)((u8 *)*D_8009D848 + (*D_8009D848)->offC);
+    while (1) {
+        if (p[0] == 0x7FFF) {
+            p++;
+            break;
+        }
+        if (p[0] == 0x7FFE) {
+            func_80044A68(arg3, 0, 1, *sp18, 0);
+            arg3++;
+            sp18++;
+        } else {
+            p[1] = cnt2;
+            n = p[2];
+            if (n != 0) {
+                do {
+                    func_80046960(arg1);
+                    func_80046870(arg1, 1);
+                    if (!(D_8007EBD4->b8 & 0x80)) {
+                        func_80046848(arg1, 0);
+                    } else {
+                        func_80046848(arg1, 1);
+                    }
+                    arg1->p.r = 0x80;
+                    arg1->p.g = 0x80;
+                    arg1->p.b = 0x80;
+                    arg1->p.w8 = D_8007EBD4->w0;
+                    arg1->p.wA = D_8007EBD4->w2;
+                    arg1->p.bC = D_8007EBD4->b4;
+                    arg1->p.bD = D_8007EBD4->b5;
+                    arg1->w10 = 0x20;
+                    arg1->w12 = 0x20;
+                    arg1->p.wE = D_8007EBD4->w6;
+                    arg2[0] = D_8007EBD4->b8;
+                    arg2[1] = D_8007EBD4->b9;
+                    arg1++;
+                    n--;
+                    arg2 += 2;
+                    cnt2++;
+                    D_8007EBD4++;
+                } while (n != 0);
+            }
+        }
+        p += 3;
+    }
+    while (1) {
+        if (p[0] == 0x7FFF) {
+            p++;
+            break;
+        }
+        if (p[0] == 0x7FFE) {
+            func_80044A68(arg3, 0, 1, *sp18, 0);
+            arg3++;
+            sp18++;
+        } else {
+            p[1] = cnt2;
+            n = p[2];
+            if (n != 0) {
+                do {
+                    func_80046960(arg1);
+                    func_80046870(arg1, 1);
+                    if (!(D_8007EBD4->b8 & 0x80)) {
+                        func_80046848(arg1, 0);
+                    } else {
+                        func_80046848(arg1, 1);
+                    }
+                    arg1->p.r = 0x80;
+                    arg1->p.g = 0x80;
+                    arg1->p.b = 0x80;
+                    arg1->p.w8 = D_8007EBD4->w0;
+                    arg1->p.wA = D_8007EBD4->w2;
+                    arg1->p.bC = D_8007EBD4->b4;
+                    arg1->p.bD = D_8007EBD4->b5;
+                    arg1->w10 = 0x20;
+                    arg1->w12 = 0x20;
+                    arg1->p.wE = D_8007EBD4->w6;
+                    arg2[0] = D_8007EBD4->b8;
+                    arg2[1] = D_8007EBD4->b9;
+                    arg1++;
+                    n--;
+                    arg2 += 2;
+                    cnt2++;
+                    D_8007EBD4++;
+                } while (n != 0);
+            }
+        }
+        p += 3;
+    }
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text2", func_800A364C);
 
