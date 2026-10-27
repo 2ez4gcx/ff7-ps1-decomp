@@ -1,1 +1,2 @@
 // MINI/HIGHWAY.BIN: name = 0xADDRESS; // type:func
+D_800A0050 = 0x800A0050; // force_not_migration:True
