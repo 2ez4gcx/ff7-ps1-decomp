@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0010(void);
-M2C_UNK func_801B0E20();
+void func_801B0E20();
 void func_801B065C(void *arg0, void *arg1);
 s32 func_80039A74(s16);
 s32 func_80039B40(s16);
@@ -26,12 +26,42 @@ extern u8 D_80062D98;
 extern s32 D_801B2F8C;
 void func_801B0D30(s32 arg0, s32 arg1);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
-void func_801B082C();
+void func_801B082C(void);
 s32 func_800BBEAC(void *);
 extern u8 D_80151917[][0xB9C];
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern s16 D_801B3050;
-void func_801B0558();
+void func_801B0558(void);
+typedef struct { s16 unk0; s16 unk2; u8 pad4[0x10]; } Lz2Obj;
+extern Lz2Obj D_801B306C[];
+Lz2Obj *func_801B02B4(void);
+M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void *);
+extern M2C_UNK D_801B0EE0;
+void func_801B0340(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; } MgPart;
+s32 func_8003BD7C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+void func_80046794(s32, void *);
+void func_801B009C(void);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+extern s32 D_801B2F24;
+extern s16 D_801B305C;
+extern MgVec D_801B0000;
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+extern MgMat D_800FA63C;
+void func_801B06EC(void);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s16 func_8003CC1C(s32, s32);
+s32 func_80042DA8();
+void func_800D5774(s32);
+extern u8 D_800FA6D4;
+extern u8 D_80151919[][0xB9C];
 
 #endif /* MAGIC_LASER2_DECLS_H */
