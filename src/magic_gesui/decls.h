@@ -27,5 +27,17 @@ extern u8 D_80062D98;
 extern s32 D_801517C0;
 extern s16 D_801C10F8[];
 extern MgGesuiAnim *D_801C10FC[];
+void func_801B07EC(void);
+extern s8 D_800F5B72;
+extern s8 D_800F5B71;
+extern s8 D_800F5B70;
+void func_800D52A0(s32, s32);
+void func_801B0290(void);
+s32 func_800BBEAC(void *);
+extern s16 D_801DB10C;
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
+s32 func_80042DA8(void);
+void func_800D5774(s32);
 
 #endif /* MAGIC_GESUI_DECLS_H */
