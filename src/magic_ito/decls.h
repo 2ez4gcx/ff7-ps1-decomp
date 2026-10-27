@@ -57,7 +57,6 @@ extern u8 D_80151919[][0xB9C];
 void func_801B02F4(u32 arg0);
 void func_8003B48C(void *);
 void func_8003B51C(void *);
-void func_800469C4(void *);
 s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 void func_80046794(s32, void *);
 extern u8 D_800FA63C[];

@@ -44,7 +44,40 @@ MgObj8 *func_801B0148(void) {
     return NULL;
 }
 
-INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B01C8);
+void func_801B01C8(MgTask *p) {
+    MgSVec rot;
+    MgSVec pt;
+    MgMat m;
+    s32 flag;
+    s16 i;
+    s16 k;
+
+    rot.vx = rot.vz = 0;
+    rot.vy = p->unk14;
+    func_8003C21C(&rot, &m);
+    m.t[0] = m.t[1] = m.t[2] = 0;
+    for (i = 0; i < 200; i++) {
+        if (D_801E1BD8[i].unk0 != 0) {
+            pt.vx = ((func_80039B40(D_801E1BD8[i].unk4) * D_801E1BD8[i].unk2 * D_801E1BD8[i].unk6) / 20 * (p->unk1A + 0x100)) >> 20;
+            pt.vy = ((func_80039A74(D_801E1BD8[i].unk4) * D_801E1BD8[i].unk2 * D_801E1BD8[i].unk6) / 20 * (p->unk1A + 0x100)) >> 20;
+            pt.vz = 0;
+            func_8003B48C(&m);
+            func_8003B51C(&m);
+            func_8003BADC(&pt, &pt, &flag);
+            pt.vx += p->unk4 + p->unkC * D_801E1BD8[i].unk6;
+            pt.vy += p->unk6 + p->unkE * D_801E1BD8[i].unk6;
+            pt.vz += p->unk8 + p->unk10 * D_801E1BD8[i].unk6;
+            if (D_801E1BD8[i].unk6 >= 0x11) {
+                k = 0x19 - D_801E1BD8[i].unk6;
+            } else {
+                k = 8;
+            }
+            func_800D4368(&pt, (s16)(D_801E1BD8[i].unk6 * 0x40 + 0x800), 0);
+            D_801C9B60[0] = D_801C9B60[1] = D_801C9B60[2] = k << 4;
+            D_801E1BD0 = func_800D4D90(&D_801C9B60[-4], D_801517C0 + 0x70, 0xC, D_801E1BD0);
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_pink/nonmatchings/text", func_801B04EC);
 

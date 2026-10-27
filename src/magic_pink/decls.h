@@ -32,5 +32,15 @@ s32 func_800BBA84(s32, s32, s32);
 extern u16 D_801E34D8;
 void func_801B0884();
 extern s16 D_801C9B4C;
+void func_801B01C8(MgTask *p);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern u8 D_801C9B60[];
+MgMat *func_8003C21C(MgSVec *, MgMat *);
+s32 func_80039B40(s32);
+s32 func_80039A74(s32);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
 
 #endif /* MAGIC_PINK_DECLS_H */
