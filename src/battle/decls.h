@@ -526,7 +526,6 @@ void func_800E58CC(void);
 extern u32 D_800F5778[];
 extern u8 D_80163600;
 void func_800A6B88(s32 arg0, s32 arg1);
-typedef struct { u16 a; u16 b; u8 c; u8 d; } S6;
 u16 func_800A64B4(s32 arg0);
 void func_800A6D88(s32 arg0);
 s32 func_800ACE14(s32 arg0);
