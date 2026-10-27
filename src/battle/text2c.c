@@ -460,7 +460,60 @@ void func_800DF24C(void) {
     p->x8 = 0;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DF2CC);
+void func_800DF2CC(void) {
+    T240 *p;
+    BtlInvSlot *tab;
+    BtlInvSlot *q;
+    u16 t;
+    s16 id;
+    s32 m;
+    s32 r;
+
+    tab = D_801671B8;
+    p = &D_800F90C6[D_800F38A0];
+    if (D_800F3896 == 5) {
+        if (D_80166F75 != 0) {
+            D_80166F75 = 0;
+            D_800F99E4 = 1;
+        }
+        if (D_800F99E4 == 0) {
+            func_800264A8(p);
+            if (p->x8 == 0) {
+                t = D_80062D7E;
+                if (t & 0x20) {
+                    D_800F99E4 = 1;
+                    id = (u16)p->x2 + ((s8)p->xA + (s8)p->xB);
+                    if (D_800F389D == 3 || D_800F389D == 0xA) {
+                        m = tab[id].c & 2;
+                    } else {
+                        m = tab[id].c & 8;
+                    }
+                    if (m == 0 && (q = (BtlInvSlot *)(id * 6 + (s32)tab), q->a != 0xFFFF)) {
+                        func_800BB9B8(1);
+                        D_800F389E = q->a;
+                        D_800F38A2 = q->kind;
+                        D_800FAFD4 = id;
+                        func_800E6B94();
+                        D_800F3896 = 0;
+                        D_800F3894 = 5;
+                        r = func_80014CBC(4, q->a);
+                        D_8016208C = r;
+                        if ((s16)r != -1) {
+                            func_800D9E0C(-1, -1, 0x15);
+                        }
+                    } else {
+                        func_800BB9B8(3);
+                    }
+                } else if (t & 0x40) {
+                    func_800BB9B8(4);
+                    D_800F99E4 = 1;
+                    D_800F3896 = 1;
+                    func_800D9F5C(5);
+                }
+            }
+        }
+    }
+}
 
 void func_800DF528(void) {
 }
@@ -983,7 +1036,70 @@ s32 func_800E15D8(void) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800E16B8);
+void func_800E16B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s16 rect[4];
+    BtlSprt *q;
+    BtlSprt *p;
+    BtlSprt *r;
+    s32 i;
+    s32 d;
+
+    q = (BtlSprt *)D_80163C74;
+    q->len = 4;
+    q->code = 0x64;
+    func_80046870(q, 1);
+    q->x = arg1 + 0x20;
+    q->y = arg2;
+    if (arg3 & 1) {
+        q->u = 0xA8;
+    } else {
+        q->u = 0xA0;
+    }
+    q->v = 0x50;
+    q->w = 8;
+    q->h = 0x15;
+    q->clut = func_80046634(0x100, 0x1EC);
+    func_80046794(arg0, q++);
+    if (arg3 >= 0x1770) {
+        arg3 = 0x176F;
+    }
+    p = q;
+    for (i = 0; i < 4; i++) {
+        d = arg3 / D_800F316C[i];
+        p->len = 4;
+        p->code = 0x64;
+        func_80046870(q, 1);
+        p->x = arg1;
+        p->y = arg2;
+        p->u = d % 5 * 0x10 - 0x50;
+        if (d >= 5) {
+            p->v = 0x68;
+        } else {
+            p->v = 0x50;
+        }
+        p->w = 0x10;
+        p->h = 0x15;
+        p->clut = func_80046634(0x100, 0x1EC);
+        r = p;
+        p++;
+        q++;
+        func_80046794(arg0, r);
+        if (i == 1) {
+            arg1 += 8;
+        }
+        arg1 += 0x10;
+        arg3 = arg3 % D_800F316C[i];
+    }
+    rect[2] = 0x100;
+    rect[3] = 0x100;
+    rect[0] = 0;
+    rect[1] = 0;
+    func_80044A68(q, 0, 1, 0x3F, rect);
+    p = q;
+    q = (BtlSprt *)((u8 *)q + 0xC);
+    func_80046794(arg0, p);
+    D_80163C74 = (u8 *)q;
+}
 
 void func_800E1938(s16 arg0, s16 arg1, s32 arg2) {
     u32 t;

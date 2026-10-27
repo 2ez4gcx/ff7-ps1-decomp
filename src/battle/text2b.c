@@ -308,7 +308,24 @@ void func_800CF4A8(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF5BC);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CF8C0);
+void func_800CF8C0(s16 arg0, s16 arg1, s8 arg2) {
+    s32 n;
+
+    n = (u8)func_800BBF7C(func_800CFB14);
+    D_801620AC[n][4] = arg0;
+    D_801620AC[n][5] = D_800F99E8;
+    D_801620AC[n][2] = arg1;
+    *(s8 *)&D_801620AC[n][12] = arg2;
+    if (D_800F99E8 == arg0) {
+        D_801620AC[n][6] = 0;
+        D_801620AC[n][7] = 0;
+        D_801620AC[n][3] = 0;
+    } else {
+        D_801620AC[n][6] = ((s16)D_80163C80[arg0].a - (s16)D_80151A4C[arg0].v.a) / arg1;
+        D_801620AC[n][7] = ((s16)D_80163C80[arg0].c - (s16)D_80151A4C[arg0].v.c) / arg1;
+        D_801620AC[n][3] = ((s16)D_80163C80[arg0].b - (s16)D_80151A4C[arg0].v.b) / arg1;
+    }
+}
 
 void func_800CFB14(void) {
     s16 i;
@@ -1513,7 +1530,50 @@ void func_800D6394(s32 arg0, s16 arg1) {
     D_800F14D4 &= ~2;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D650C);
+void func_800D650C(void) {
+    BtlSVec sp10;
+    MgMat sp18;
+    s32 sp38[3];
+    s16 *e;
+    u8 *c;
+    s32 t;
+    s16 a;
+
+    e = D_801621F0[D_801590D4];
+    c = (u8 *)&D_801518E4[e[4]];
+    func_8003C21C((s32)(c + 0x160), (s32)&sp18);
+    sp38[0] = sp38[1] = sp38[2] = *(s16 *)(c + 6);
+    func_8003B35C(&sp18, sp38);
+    func_800D3994(e[4], c[0x2B], &sp10);
+    sp10.vx = sp10.vx - ((func_80039A74(*(s16 *)(c + 0x162)) * (*(s16 *)(c + 0x12) + 0x64)) >> 12);
+    sp10.vz = sp10.vz - ((func_80039B40(*(s16 *)(c + 0x162)) * (*(s16 *)(c + 0x12) + 0x64)) >> 12);
+    sp18.t[0] = (sp10.vx * *(s16 *)(c + 6)) >> 12;
+    sp18.t[1] = (sp10.vy * *(s16 *)(c + 6)) >> 12;
+    sp18.t[2] = (sp10.vz * *(s16 *)(c + 6)) >> 12;
+    func_8003A63C(&D_800FA63C, &sp18, &sp18);
+    func_8003B48C(&sp18);
+    func_8003B51C(&sp18);
+    t = e[1];
+    if (t < 4) {
+        a = 0x1000 - (t << 12) / 4;
+    } else {
+        t -= 4;
+        a = 0;
+        if (t >= 8) {
+            t -= 8;
+            if (t < 4) {
+                a = (t << 12) / 4;
+            } else {
+                e[0] = -1;
+                return;
+            }
+        }
+    }
+    if (D_80062D98 == 0) {
+        e[1]++;
+    }
+    func_800D6394(*(s32 *)&e[2], (s16)a);
+}
 
 INCLUDE_RODATA("../asm/us/battle/nonmatchings/text2b", D_800A0DC8);
 
