@@ -115,6 +115,48 @@ void func_801B07EC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B0BE8);
+s32 func_801B0BE8(arg0, arg1) {
+    MgTask *p;
+    s16 i;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/magic_gesui/nonmatchings/text", func_801B0D44);
+    func_800D2980(D_801B0E9C, 0, 0, 0);
+    i = 0;
+    D_801DB10C = arg0;
+    do {
+        D_801D910C[i] = func_80039A74(i);
+        i++;
+    } while (i < 0x1000);
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B07EC)];
+    func_800D3994(arg1, D_80151918[arg1][0], &p->unk4);
+    func_800D54EC(arg0, (u8 *)p + 0xC);
+    if (p->unk8 > p->unk10) {
+        t = D_801C10EC;
+        D_801C10EC = -t;
+    }
+    func_800BBA84(0x132, arg1, 0x40);
+    return func_800BBEAC(func_801B0040);
+}
+
+s32 func_801B0D44(arg0, arg1) {
+    MgTask *p;
+    s16 i;
+    s32 t;
+
+    func_800BBEAC(func_801B0040);
+    func_800D2980(D_801B0E9C, 0, 0, 0);
+    i = 0;
+    D_801DB10C = arg0;
+    do {
+        D_801D910C[i] = func_80039A74(i);
+        i++;
+    } while (i < 0x1000);
+    p = (MgTask *)&D_80162978[func_800BBEAC(func_801B07EC)];
+    func_800D3994(arg1, D_80151918[arg1][0], &p->unk4);
+    func_800D54EC(arg0, (u8 *)p + 0xC);
+    if (p->unk8 < p->unk10) {
+        t = D_801C10EC;
+        D_801C10EC = -t;
+    }
+    return func_800BBA84(0x132, arg1, 0x40);
+}
