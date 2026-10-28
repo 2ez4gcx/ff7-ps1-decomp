@@ -1503,6 +1503,6 @@ extern u8 D_800F83F2[];
 void func_800B0910(void);
 void func_800E16B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 extern s32 D_800F316C[];
+extern u32 D_8009D264;
 
 #endif /* BATTLE_DECLS_H */
-extern u32 D_8009D264;

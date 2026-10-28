@@ -966,9 +966,9 @@ s32 func_800A460C(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3);
 extern u8 D_800BE5E8[];
 typedef struct WmActA { u8 pad0[8]; struct WmActA *parent; s32 fC; s32 f10; s32 f14; u8 pad18[4]; s32 f1C; s32 f20; s32 f24; u8 pad28[0x14]; u16 f3C; u16 f3E; u8 pad40[2]; u16 f42; s16 f44; u8 pad46[2]; s16 f48; u8 pad4A[6]; u8 f50; u8 f51; u8 pad52; u8 f53; u8 pad54[4]; u8 f58; u8 f59; u8 pad5A[3]; s8 f5D; } WmActA;
 typedef struct { u8 pad0[1]; s8 b1; u8 pad2[2]; u8 b4; u8 b5; u8 b6; u8 b7; s32 w8; s32 wC; s32 w10; u8 pad14[6]; u16 h1A; u8 *p1C; } WmAnimA;
-
-#endif /* WORLD_DECLS_H */
 extern u8 D_80071E30;
 extern u8 D_80071E34;
 extern u8 D_8009D391;
 extern u8 D_8009D5F0[];
+
+#endif /* WORLD_DECLS_H */
