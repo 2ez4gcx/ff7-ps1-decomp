@@ -362,5 +362,10 @@ extern u16 D_8012C5D4;
 void func_800A77EC(void);
 s16 func_800A698C();
 extern s16 D_8012C4DC;
+void func_800A4DFC(void);
+extern struct { u8 *p; s32 pad[2]; } D_8012C01C[];
+extern struct { u8 *p; s32 pad[2]; } D_8012C020[];
+extern struct { s16 n; s16 pad[5]; } D_8012C024[];
+extern s32 D_8012C364;
 
 #endif /* CONDOR_DECLS_H */

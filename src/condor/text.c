@@ -391,7 +391,141 @@ void func_800A4BB0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A4DFC);
+void func_800A4DFC(void) {
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 n;
+    s32 f;
+    u8 *dst;
+    u8 *src;
+    u8 *q;
+    s16 a;
+    s16 b;
+    CondorPix *p;
+    u16 t;
+    s32 c;
+
+    if (D_8012C364 != 0) {
+        for (i = 0; i < D_8012C364; i++) {
+            dst = D_8012C01C[i].p;
+            f = D_8012C024[i].n;
+            src = D_8012C020[i].p;
+            n = f & 0x8000;
+            f &= 0x7FFF;
+            if (!n) {
+                for (j = 0; j < f; j++) {
+                    q = dst + D_8012C3F0 * 0x1C;
+                    q[4] = src[0];
+                    q[5] = src[1];
+                    q[6] = src[2];
+                    q[0xC] = src[3];
+                    q[0xD] = src[4];
+                    q[0xE] = src[5];
+                    q[0x14] = src[6];
+                    q[0x15] = src[7];
+                    q[0x16] = src[8];
+                    src += 0xC;
+                    dst += 0x50;
+                }
+            } else {
+                for (j = 0; j < f; j++) {
+                    a = src[0];
+                    q = dst + D_8012C3F0 * 0x1C;
+                    if (a < src[1]) {
+                        a = src[1];
+                    }
+                    if (a < src[2]) {
+                        a = src[2];
+                    }
+                    b = a >> 1;
+                    q[6] = a;
+                    q[5] = b;
+                    q[4] = b;
+                    a = src[3];
+                    if (a < src[4]) {
+                        a = src[4];
+                    }
+                    if (a < src[5]) {
+                        a = src[5];
+                    }
+                    b = a >> 1;
+                    q[0xE] = a;
+                    q[0xD] = b;
+                    q[0xC] = b;
+                    a = src[6];
+                    if (a < src[7]) {
+                        a = src[7];
+                    }
+                    if (a < src[8]) {
+                        a = src[8];
+                    }
+                    dst += 0x50;
+                    b = a >> 1;
+                    src += 0xC;
+                    q[0x15] = b;
+                    q[0x14] = b;
+                    q[0x16] = a;
+                }
+            }
+        }
+        D_8012C364 = 0;
+    }
+    switch (D_8012C47C) {
+    case 1:
+        p = (CondorPix *)(D_80121EEC + D_8012C3F0 * 0x69BC);
+        k = 0;
+        c = p->r;
+        if (c < 0x80) {
+            do {
+                p->r += 0x10;
+                p->g += 0x10;
+                p->b += 0x10;
+                p++;
+                k++;
+            } while (k < 0x126);
+            return;
+        }
+        if (D_8012C3F0 == 0) {
+            D_8012C480 = 0;
+        } else {
+            D_8012C484 = 0;
+        }
+        if ((D_8012C480 | D_8012C484) == 0) {
+            t = D_8012C47C;
+            D_8012C47C = 0;
+            D_8012C488 = t;
+        }
+        return;
+    case 2:
+        func_800A4BB0();
+        return;
+    case 3:
+        p = (CondorPix *)(D_80121EEC + D_8012C3F0 * 0x69BC);
+        k = 0;
+        if (p->r > 0x30) {
+            do {
+                p->r += 0xF0;
+                p->g += 0xF0;
+                p->b += 0xF0;
+                p++;
+                k++;
+            } while (k < 0x126);
+            return;
+        }
+        if (D_8012C3F0 == 0) {
+            D_8012C480 = 0;
+        } else {
+            D_8012C484 = 0;
+        }
+        if ((D_8012C480 | D_8012C484) == 0) {
+            t = D_8012C47C;
+            D_8012C47C = 0;
+            D_8012C488 = t;
+        }
+        return;
+    }
+}
 
 void func_800A5210(s16 arg0, s32 arg1) {
     arg1 += 0x27;
