@@ -1254,7 +1254,6 @@ void func_80021C4C(s32 arg0, s32 arg1, s32 arg2);
 void func_80025174(void);
 extern u8 D_8009D2A4;
 extern u8 D_8009D2A5;
-extern void func_80024A3C();
 extern u32 D_80076C68[];
 void func_8001B5E4(s32 arg0);
 void func_800128B8(void);
@@ -1689,5 +1688,11 @@ extern s32 D_80070578;
 extern s32 D_8007057C;
 void func_80039450(s32 arg0, u16 arg1, s32 arg2, s32 arg3, u16 arg4);
 extern MainSlot440 D_8009D85C[];
+extern u8 D_80049320[];
+extern void (*D_800493FC[])(s32);
+extern s16 D_80062EA8;
+extern s16 D_80062FF4;
+extern s8 D_80063024;
+extern u8 D_80069844[][0x50];
 
 #endif /* MAIN_DECLS_H */
