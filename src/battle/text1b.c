@@ -1,6 +1,9 @@
 #include "common.h"
 #include "battle/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern s8 D_80163798;
+
 void func_800A2BF4(s32 arg0) {
     Ent8 *e;
     s32 start;
