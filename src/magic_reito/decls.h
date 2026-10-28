@@ -55,7 +55,7 @@ void func_800BBA84(s32, s32, s32);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 s32 func_800D52A0(s32, s32);
 void func_800D5444(s32, s32, s32, void (*)(s32, s32));
-void func_801B1158();
+void func_801B1158(void);
 extern s8 D_800F5B70;
 extern s8 D_800F5B71;
 extern s8 D_800F5B72;
@@ -71,5 +71,11 @@ extern u8 D_801D4B5C[];
 void func_8003BADC(MgSVec *, MgSVec *, s32 *);
 void func_800D5774(s32);
 void func_801B1684();
+typedef struct { s16 a; s16 b; s16 c; s16 d; } ReiSort;
+extern s16 D_801ECB9C[];
+extern s16 D_801ECC9C[];
+extern ReiSort D_801ECD9C[];
+extern s32 D_801D3FE0;
+extern u8 D_801D3FE4[];
 
 #endif /* MAGIC_REITO_DECLS_H */

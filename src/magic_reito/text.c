@@ -9,7 +9,48 @@ INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0020);
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0A48);
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1158);
+static inline s16 depth_of(s32 arg0, s32 arg1, s16 arg2) {
+    return *(s16 *)(arg0 + *(s16 *)(arg1 + arg2 * 16) + 2);
+}
+
+void func_801B1158(void) {
+    s16 i;
+    s16 j;
+    s16 k;
+    s16 max;
+    s16 y;
+    ReiSort *q;
+    s32 prim;
+    s32 base;
+
+    for (i = 0; i < 0x50; i++) {
+        D_801ECC9C[i] = 0;
+        q = &D_801ECD9C[i];
+        q->c = 0;
+        q->b = 0;
+        D_801ECD9C[i].a = 0;
+    }
+    base = (s32)D_801D3FE4;
+    prim = D_801D3FE0 + base;
+    prim += 4;
+    for (i = 0; i < 0x50; i++) {
+        max = -0x8000;
+        for (j = 0; j < 0x50; j++) {
+            if (D_801ECC9C[j] == 0) {
+                y = depth_of(base, prim, j);
+                if (max < y) {
+                    max = y;
+                    k = j;
+                }
+            }
+        }
+        D_801ECB9C[i] = k;
+        D_801ECC9C[k] = 1;
+    }
+    for (i = 0; i < 0x50; i++) {
+        D_801ECC9C[i] = 0;
+    }
+}
 
 void func_801B12E4(void) {
     MgObj20 *p;
