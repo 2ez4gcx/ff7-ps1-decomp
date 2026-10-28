@@ -195,5 +195,17 @@ extern s16 D_800D5DC2[];
 extern ChoF4B D_800F4898;
 extern ChoFT4B D_800B1298;
 extern ChoFT4B D_800B12C0;
+void func_800AB410(void);
+typedef struct { s16 f0; s8 f2; s8 f3; u8 pad4; u8 f5; u8 f6; u8 f7; } ChoSlot;
+typedef struct { u8 pad0[3]; u8 len; u8 pad4[0x24]; } ChoPkt;
+extern s32 D_800B22D0;
+extern s32 D_800B232C;
+extern s32 D_800B2380;
+extern s32 D_800B23C0;
+extern s32 *D_800B7458[];
+extern ChoSlot D_800B7480[];
+extern u8 D_800D5DD0[];
+extern u8 D_800F48B3[];
+extern u32 *D_800F502C;
 
 #endif /* CHOCOBO_DECLS_H */

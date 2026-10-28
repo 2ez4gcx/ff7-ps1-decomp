@@ -366,6 +366,137 @@ void func_800AAC00(u32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800AAF1C);
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text3", func_800AB410);
+void func_800AB410(void) {
+    s32 t[2][16];
+    s32 *p;
+    s32 n;
+    s32 found;
+    s32 last;
+    s32 cnt;
+    s32 r;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 x;
+    s32 u;
+    s32 *t0;
+    s32 **tp;
+    u8 *e;
+    u8 *e2;
+    ChoSlot *s;
+
+    switch (D_800F5098) {
+    case 0:
+        D_800B7458[0] = &D_800B23C0;
+        break;
+    case 1:
+        D_800B7458[0] = &D_800B2380;
+        break;
+    case 2:
+        D_800B7458[0] = &D_800B232C;
+        break;
+    case 3:
+        D_800B7458[0] = &D_800B22D0;
+        break;
+    }
+    n = 0;
+    found = 0;
+    t0 = D_800B7458[0];
+    cnt = *t0;
+    D_800B7458[0] = t0 + 1;
+    *(s32 *)(u8 *)&D_800B745C = ((s32 *)(u8 *)&D_800B745C)[1] = ((s32 *)(u8 *)&D_800B745C)[2] = -1;
+    last = -1;
+    tp = &D_800B7458[0];
+    p = &D_800B745C;
+    do {
+        r = func_80042DA8() % cnt;
+        e = (u8 *)(r * 4 + (s32)*tp);
+        if (e[0] != *(s32 *)(u8 *)&D_800B745C && e[0] != ((s32 *)(u8 *)&D_800B745C)[1] && e[0] != ((s32 *)(u8 *)&D_800B745C)[2]) {
+            if (e[1] != 0) {
+                if (found == 0 || e[3] == 0) {
+                    if (D_800B747C != 0) {
+                        *p++ = e[0];
+                        n++;
+                    }
+                    e2 = (u8 *)(r * 4 + (s32)*tp);
+                    if (e2[3] != 0) {
+                        last = e2[0];
+                        found = -1;
+                    }
+                    if (n >= 3) {
+                        break;
+                    }
+                }
+            } else if (found == 0 || e[3] == 0) {
+                *p++ = e[0];
+                n++;
+                if (e[3] != 0) {
+                    last = e[0];
+                    found = -1;
+                }
+                if (n >= 3) {
+                    break;
+                }
+            }
+        }
+    } while (n != 3);
+    for (n = 0; n < 3; n++) {
+        for (j = 0; j < 2; j++) {
+            if (((s32 *)(u8 *)&D_800B745C)[j] > ((s32 *)(u8 *)&D_800B745C)[j + 1]) {
+                x = ((s32 *)(u8 *)&D_800B745C)[j];
+                ((s32 *)(u8 *)&D_800B745C)[j] = ((s32 *)(u8 *)&D_800B745C)[j + 1];
+                ((s32 *)(u8 *)&D_800B745C)[j + 1] = x;
+            }
+        }
+    }
+    if (last != -1) {
+        if (*(s32 *)(u8 *)&D_800B745C == last) {
+            u = ((s32 *)(u8 *)&D_800B745C)[2];
+            ((s32 *)(u8 *)&D_800B745C)[2] = last;
+            *(s32 *)(u8 *)&D_800B745C = u;
+        } else if (((s32 *)(u8 *)&D_800B745C)[1] == last) {
+            u = ((s32 *)(u8 *)&D_800B745C)[2];
+            ((s32 *)(u8 *)&D_800B745C)[2] = last;
+            ((s32 *)(u8 *)&D_800B745C)[1] = u;
+        }
+    }
+    for (n = 0; n < 7; n++) {
+        t[0][n] = *(s32 *)(u8 *)&D_800B745C;
+        t[1][n] = 0;
+    }
+    for (n = 7; n < 12; n++) {
+        t[0][n] = ((s32 *)(u8 *)&D_800B745C)[1];
+        t[1][n] = 1;
+    }
+    for (n = 12; n < 15; n++) {
+        t[0][n] = ((s32 *)(u8 *)&D_800B745C)[2];
+        t[1][n] = 2;
+    }
+    for (n = 0; n < 100; n++) {
+        j = func_80042DA8() % 15;
+        k = func_80042DA8() % 15;
+        x = t[0][j];
+        t[0][j] = t[0][k];
+        t[0][k] = x;
+        x = t[1][j];
+        t[1][j] = t[1][k];
+        t[1][k] = x;
+    }
+    for (i = 0; i < 3; i++) {
+        for (n = 0; n < 5; n++) {
+            s = (ChoSlot *)((u8 *)D_800B7480 + (i * 8 + n * 0x18));
+            s->f0 = 0;
+            s->f2 = 0;
+            s->f3 = 0;
+            s->f6 = t[0][i * 5 + n];
+            s->f7 = t[1][i * 5 + n];
+            s->f5 = 2;
+            ((ChoPkt *)((u8 *)D_800D5DD0 + (i * 0x28 + n * 0x78)))->len = 9;
+            D_800F48B3[i * 0x28 + n * 0x78] = 9;
+        }
+    }
+    D_800F502C = D_8009D260;
+    D_800B753C = 0;
+}
 
 INCLUDE_RODATA("../asm/us/chocobo/nonmatchings/text3", D_800A01B8);
