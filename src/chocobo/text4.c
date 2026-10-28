@@ -19,9 +19,9 @@ void func_800AD52C(void) {
     s32 idx;
     u8 *buf;
 
-    func_800AD7B8(D_800B23EC[D_800B745C], 0x10, 0x25, 0xAC);
-    func_800AD7B8(D_800B23EC[D_800B7460], 0x10, 0x25, 0xC0);
-    func_800AD7B8(D_800B23EC[D_800B7464], 0x10, 0x25, 0xD4);
+    func_800AD7B8(D_800B23EC[D_800B745C[0]], 0x10, 0x25, 0xAC);
+    func_800AD7B8(D_800B23EC[D_800B745C[1]], 0x10, 0x25, 0xC0);
+    func_800AD7B8(D_800B23EC[D_800B745C[2]], 0x10, 0x25, 0xD4);
     i = 0;
     pb = &D_800F5074;
     pi = &D_800F5034;
