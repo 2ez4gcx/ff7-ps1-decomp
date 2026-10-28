@@ -15,6 +15,7 @@ void func_800396C0(s32 arg0);
 M2C_UNK func_80042DC8();
 s32 func_80039B40(s32 arg0);
 void func_80039BE0(s32 arg0, s32 arg1, s32 arg2);
+s32 func_8003CC1C(s32 arg0, s32 arg1);
 
 void func_80036298(void) {
     func_800362B8(0);
@@ -579,7 +580,56 @@ void func_80038C48(s32 arg0) {
     func_8003D0F0(9, arg0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_80038C6C);
+s32 func_80038C6C(s32 arg0, u32 arg1) {
+    u32 mask;
+    u32 hi;
+    u16 lo16;
+    u16 hi16;
+    s32 v;
+
+    mask = arg1 & 0xFFFFFF;
+    lo16 = mask;
+    hi = mask >> 16;
+    hi16 = hi;
+    if (arg0 != 0) {
+        if (arg0 == 1) {
+            if (D_8004AAEC & 1) {
+                D_80077F28[0] = lo16;
+                D_80077F28[1] = hi16;
+                D_8004A6B8 |= 1;
+                D_8004A6B4 = mask | D_8004A6B4;
+                if (D_80077F28[2] & mask) {
+                    D_80077F28[2] = D_80077F28[2] & ~mask;
+                }
+                if (D_80077F28[3] & hi) {
+                    D_80077F28[3] = D_80077F28[3] & ~hi;
+                }
+            } else {
+                v = mask | D_8004A68C;
+                D_8004AAF4[0xC4] = lo16;
+                D_8004AAF4[0xC5] = hi16;
+                D_8004A68C = v;
+            }
+        }
+    } else {
+        if (D_8004AAEC & 1) {
+            D_80077F28[2] = lo16;
+            D_80077F28[3] = hi16;
+            D_8004A6B8 |= 1;
+            D_8004A6B4 = ~mask & D_8004A6B4;
+            if (D_80077F28[0] & mask) {
+                D_80077F28[0] = D_80077F28[0] & ~mask;
+            }
+            if (D_80077F28[1] & hi) {
+                D_80077F28[1] = D_80077F28[1] & ~hi;
+            }
+        } else {
+            D_8004AAF4[0xC6] = lo16;
+            D_8004AAF4[0xC7] = hi16;
+            D_8004A68C &= ~mask;
+        }
+    }
+}
 
 s32 func_80038E70(s32 arg0) {
     s32 i;
@@ -1052,7 +1102,49 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003C8DC);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003CA7C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003CC1C);
+s32 func_8003CC1C(s32 arg0, s32 arg1) {
+    s32 neg1;
+    s32 neg0;
+    s32 r;
+
+    neg1 = 0;
+    neg0 = 0;
+    if (arg1 < 0) {
+        neg1 = 1;
+        arg1 = -arg1;
+    }
+    if (arg0 < 0) {
+        neg0 = 1;
+        arg0 = -arg0;
+    }
+    if (arg1 == 0 && arg0 == 0) {
+        return 0;
+    }
+    if (arg0 < arg1) {
+        if (arg0 & 0x7FE00000) {
+            arg0 = arg0 / (arg1 >> 10);
+            r = D_8004FC98[arg0];
+        } else {
+            arg0 = (arg0 << 10) / arg1;
+            r = D_8004FC98[arg0];
+        }
+    } else {
+        if (arg1 & 0x7FE00000) {
+            arg0 = arg1 / (arg0 >> 10);
+            r = 0x400 - D_8004FC98[arg0];
+        } else {
+            arg0 = (arg1 << 10) / arg0;
+            r = 0x400 - D_8004FC98[arg0];
+        }
+    }
+    if (neg1 != 0) {
+        r = 0x800 - r;
+    }
+    if (neg0 != 0) {
+        r = -r;
+    }
+    return r;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003CD9C);
 

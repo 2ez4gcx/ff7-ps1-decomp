@@ -358,9 +358,104 @@ s32 func_800450F8(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_800451E0);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80045400);
+s32 func_80045400(Rect16 *arg0, u32 *arg1) {
+    u16 h;
+    s32 dir;
+    s32 n;
+    s32 words;
+    s32 blocks;
+    s32 rest;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80045654);
+    dir = 0;
+    func_800462B0();
+    arg0->w = arg0->w < 0 ? 0 : ((s16) *(volatile u16 *) &D_80062C04 < arg0->w ? *(volatile u16 *) &D_80062C04 : arg0->w);
+    h = arg0->h < 0 ? 0 : ((s16) *(volatile u16 *) &D_80062C06 < arg0->h ? *(volatile u16 *) &D_80062C06 : arg0->h);
+    arg0->h = h;
+    n = arg0->w * (s16) h + 1;
+    words = n / 2;
+    if (words <= 0) {
+        return -1;
+    }
+    rest = words >> 4;
+    t = rest;
+    rest = words - (t << 4);
+    blocks = t;
+    if (!(*D_80062CD4 & 0x04000000)) {
+        do {
+            if (func_800462E4() != 0) {
+                return -1;
+            }
+        } while (!(*D_80062CD4 & 0x04000000));
+    }
+    *D_80062CD4 = 0x04000000;
+    *D_80062CD0 = 0x01000000;
+    *D_80062CD0 = dir != 0 ? 0xB0000000 : 0xA0000000;
+    *D_80062CD0 = ((s32 *) arg0)[0];
+    *D_80062CD0 = ((s32 *) arg0)[1];
+    while (--rest != -1) {
+        *D_80062CD0 = *arg1++;
+    }
+    if (blocks != 0) {
+        *D_80062CD4 = 0x04000002;
+        *D_80062CD8 = (s32) arg1;
+        *D_80062CDC = (blocks << 16) | 0x10;
+        *D_80062CE0 = 0x01000201;
+    }
+    return 0;
+}
+
+s32 func_80045654(Rect16 *arg0, u32 *arg1) {
+    s32 t;
+    u16 h;
+    s32 n;
+    s32 words;
+    s32 blocks;
+    s32 rest;
+
+    func_800462B0();
+    arg0->w = arg0->w < 0 ? 0 : ((s16) *(volatile u16 *) &D_80062C04 < arg0->w ? *(volatile u16 *) &D_80062C04 : arg0->w);
+    h = arg0->h < 0 ? 0 : ((s16) *(volatile u16 *) &D_80062C06 < arg0->h ? *(volatile u16 *) &D_80062C06 : arg0->h);
+    arg0->h = h;
+    n = arg0->w * (s16) h + 1;
+    words = n / 2;
+    if (words <= 0) {
+        return -1;
+    }
+    rest = words >> 4;
+    t = rest;
+    rest = words - (t << 4);
+    blocks = t;
+    if (!(*D_80062CD4 & 0x04000000)) {
+        do {
+            if (func_800462E4() != 0) {
+                return -1;
+            }
+        } while (!(*D_80062CD4 & 0x04000000));
+    }
+    *D_80062CD4 = 0x04000000;
+    *D_80062CD0 = 0x01000000;
+    *D_80062CD0 = 0xC0000000;
+    *D_80062CD0 = ((s32 *) arg0)[0];
+    *D_80062CD0 = ((s32 *) arg0)[1];
+    if (!(*D_80062CD4 & 0x08000000)) {
+        do {
+            if (func_800462E4() != 0) {
+                return -1;
+            }
+        } while (!(*D_80062CD4 & 0x08000000));
+    }
+    while (--rest != -1) {
+        *arg1++ = *D_80062CD0;
+    }
+    if (blocks != 0) {
+        *D_80062CD4 = 0x04000003;
+        *D_80062CD8 = (s32) arg1;
+        *D_80062CDC = (blocks << 16) | 0x10;
+        *D_80062CE0 = 0x01000200;
+    }
+    return 0;
+}
 
 void func_800458F0(s32 arg0) {
     *D_80062CD4 = arg0;

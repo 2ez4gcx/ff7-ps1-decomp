@@ -380,7 +380,42 @@ void func_80046D74(s32 arg0, s32 arg1) {
     D_800706A0 = func_80047180(arg0, arg1, &D_8007069C, &D_80070694, &D_80070698);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80046DB4);
+void *func_80046DB4(MainTmdPrim *arg0) {
+    s32 n;
+
+    n = func_80047318(D_8007069C, arg0);
+    if (n < 0) {
+        return NULL;
+    }
+    arg0->vtab = D_80070694;
+    arg0->ntab = D_80070698;
+    arg0->n[0].vx = ((MainSVec *) D_80070698)[arg0->ni[0]].vx;
+    arg0->n[0].vy = ((MainSVec *) D_80070698)[arg0->ni[0]].vy;
+    arg0->n[0].vz = ((MainSVec *) D_80070698)[arg0->ni[0]].vz;
+    arg0->n[1].vx = ((MainSVec *) D_80070698)[arg0->ni[1]].vx;
+    arg0->n[1].vy = ((MainSVec *) D_80070698)[arg0->ni[1]].vy;
+    arg0->n[1].vz = ((MainSVec *) D_80070698)[arg0->ni[1]].vz;
+    arg0->n[2].vx = ((MainSVec *) D_80070698)[arg0->ni[2]].vx;
+    arg0->n[2].vy = ((MainSVec *) D_80070698)[arg0->ni[2]].vy;
+    arg0->n[2].vz = ((MainSVec *) D_80070698)[arg0->ni[2]].vz;
+    D_8007069C += n;
+    arg0->n[3].vx = ((MainSVec *) D_80070698)[arg0->ni[3]].vx;
+    arg0->n[3].vy = ((MainSVec *) D_80070698)[arg0->ni[3]].vy;
+    arg0->n[3].vz = ((MainSVec *) D_80070698)[arg0->ni[3]].vz;
+    arg0->v[0].vx = ((MainSVec *) D_80070694)[arg0->vi[0]].vx;
+    arg0->v[0].vy = ((MainSVec *) D_80070694)[arg0->vi[0]].vy;
+    arg0->v[0].vz = ((MainSVec *) D_80070694)[arg0->vi[0]].vz;
+    arg0->v[1].vx = ((MainSVec *) D_80070694)[arg0->vi[1]].vx;
+    arg0->v[1].vy = ((MainSVec *) D_80070694)[arg0->vi[1]].vy;
+    arg0->v[1].vz = ((MainSVec *) D_80070694)[arg0->vi[1]].vz;
+    arg0->v[2].vx = ((MainSVec *) D_80070694)[arg0->vi[2]].vx;
+    arg0->v[2].vy = ((MainSVec *) D_80070694)[arg0->vi[2]].vy;
+    arg0->v[2].vz = ((MainSVec *) D_80070694)[arg0->vi[2]].vz;
+    arg0->v[3].vx = ((MainSVec *) D_80070694)[arg0->vi[3]].vx;
+    arg0->v[3].vy = ((MainSVec *) D_80070694)[arg0->vi[3]].vy;
+    arg0->v[3].vz = ((MainSVec *) D_80070694)[arg0->vi[3]].vz;
+    return arg0;
+}
 
 s32 func_80047060(u32 *arg0, u32 *arg1) {
     u32 n;
@@ -486,9 +521,60 @@ s32 func_80048540(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_800485A0);
+void func_800485A0(MainTag *arg0, u32 arg1) {
+    MainTag *p;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_800487F0);
+    D_800965F0.len = 5;
+    *D_80062D30 = 0x10000002;
+    D_800965F0.code[0] = (*D_80062D2C & 0xFFFFF) | 0xE2000000;
+    *D_80062D30 = 0x10000003;
+    D_800965F0.code[1] = (*D_80062D2C & 0xFFFFF) | 0xE3000000;
+    *D_80062D30 = 0x10000004;
+    D_800965F0.code[2] = (*D_80062D2C & 0xFFFFF) | 0xE4000000;
+    *D_80062D30 = 0x10000005;
+    D_800965F0.code[3] = (*D_80062D2C & 0x7FFFFF) | 0xE5000000;
+    D_800965F0.code[4] = (*D_80062D30 & 0x7FF) | 0xE1000000;
+    p = arg0;
+    if (((MainTag *) (p->addr | 0x80000000))->addr != 0xFFFFFF) {
+        do {
+            p = (MainTag *) (p->addr | 0x80000000);
+        } while (((MainTag *) (p->addr | 0x80000000))->addr != 0xFFFFFF);
+    }
+    if (arg1 != 0) {
+        D_800965F0.addr = arg1;
+    } else {
+        D_800965F0.addr = p->addr;
+    }
+    p->addr = (u32) &D_800965F0;
+    *D_80062D30 = 0x04000002;
+    *D_80062D20 = (s32) arg0;
+    *D_80062D24 = 0;
+    *D_80062D28 = 0x01000401;
+}
+
+void func_800487F0(MainTag *arg0, u32 arg1) {
+    MainTag *p;
+
+    D_800965F0.len = 2;
+    D_800965F0.code[0] = (*D_80062D30 & 0x7FF) | 0xE1000000;
+    D_800965F0.code[1] = 0;
+    p = arg0;
+    if (((MainTag *) (p->addr | 0x80000000))->addr != 0xFFFFFF) {
+        do {
+            p = (MainTag *) (p->addr | 0x80000000);
+        } while (((MainTag *) (p->addr | 0x80000000))->addr != 0xFFFFFF);
+    }
+    if (arg1 != 0) {
+        D_800965F0.addr = arg1;
+    } else {
+        D_800965F0.addr = p->addr;
+    }
+    p->addr = (u32) &D_800965F0;
+    *D_80062D30 = 0x04000002;
+    *D_80062D20 = (s32) arg0;
+    *D_80062D24 = 0;
+    *D_80062D28 = 0x01000401;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib5", func_80048968);
 
