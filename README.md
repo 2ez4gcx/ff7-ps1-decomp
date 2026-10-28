@@ -25,15 +25,15 @@ executable is split into source files by how its parts were compiled. Progress, 
 
 | Part | Executables | Functions in C | Code in C |
 |---|---|---|---|
-| Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 793 of 1071 (74%) | 46% |
-| Field (`src/field/`) | 1 | 370 of 435 (85%) | 45% |
-| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 667 of 838 (80%) | 37% |
+| Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 802 of 1071 (75%) | 48% |
+| Field (`src/field/`) | 1 | 379 of 435 (87%) | 52% |
+| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 678 of 838 (81%) | 40% |
 | World map (`src/world/`) | 1 | 419 of 459 (91%) | 56% |
 | Menus (`src/*menu/`) | 13 | 213 of 243 (88%) | 39% |
-| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1025 of 1317 (78%) | 42% |
+| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1033 of 1317 (78%) | 43% |
 | Ending, disc change (`src/ending/`, `dschange/`) | 2 | 55 of 64 (86%) | 54% |
-| Spell effects (`src/magic_*/`) | 290 | 2231 of 3997 (56%) | 35% |
-| **All** | **319** | **5773 of 8424 (69%)** | **39%** |
+| Spell effects (`src/magic_*/`) | 290 | 2302 of 3997 (58%) | 37% |
+| **All** | **319** | **5881 of 8424 (70%)** | **41%** |
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code

@@ -154,6 +154,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `addiu v1, v1, 0`. `addiu s5, s4, -0xF0` between two tables means one symbol with
   offsets: declare one struct, not two arrays. A dead local copied from rodata (`c =
   D_x;`) is kept.
+- A global read as `lh D_a` and later through `la D_a+0x18` is one struct (count at 0,
+  bytes at 0x18); separate externs give the second access its own `lui`. A global declared
+  as an array (`extern s32 D_x[]; D_x[0] = v;`) gives a shared `la reg; sw 0(reg)` where a
+  scalar gives `lui at; sw`; the words of one packet buffer are one array, a GPU packet `{
+  u32 addr:24; u32 len:8; u32 code[N]; }`. Two externs for adjacent halfwords stop the
+  shared `la` of element 0.
+- `s32 x = T[i]; s16 id = x;` gives `lh; move` with the sign-extension redone later, a
+  single `s16` gives `lhu` plus `sll/sra`. A `u8` parameter used directly as `D[arg0]`
+  (with `i = arg0` for an early use) keeps the prologue copy order and the repeated `andi`
+  that `s32` plus masks loses; `s32 arg5; u8 mode = arg5;` gives `lbu; ... andi 0xFF`;
+  `u16 arg1` instead of `s32` moves the prologue `andi a1, 0x7FFF`. A `u8` local used as
+  an index gives `andi 0xff`, an `s16` one a plain `move`. `(s32)f(x) << 11 >> 12` gives
+  `sra` where a `u32` prototype gives `srl`.
+- Stack argument slots holding dead values: `sh` at 0x10/0x14(sp) before a one-argument
+  call are `vx`/`vz` of a local `MgSVec m` used as `f(m.vx * m.vx + m.vz * m.vz)`. A
+  second name for one address (`(Spr *)((u8 *)&D_x - 4)`) stops CSE from keeping a
+  call-argument address in a saved register.
 
 ### Order of instructions
 
@@ -262,6 +279,35 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   when the stores are in ascending order of the constant. A 32-byte struct copy followed
   by `f(&m, &D_x)` gives `lw`x4/`sw`x4 groups; a K&R `f()` called `f(&m)`, with the base
   left in `a1`, gives the game's 3/3/2 grouping.
+- Stores through a global pointer cast to a struct: CSE reloads the pointer after each
+  byte store but keeps it across halfword and word stores, and the scheduler moves a run's
+  byte store ahead of the group: write each run as the halfword/word group first and the
+  byte store last. A one-field struct global (`MgByte`) written after `q->f` stores stays
+  after them where plain `s8` externs float above; `*(s16 *)((u8 *)w + 4) = 0;` keeps a
+  following `lhu` after it where `w[2] = 0` lets it float up.
+- Stores to distinct stack slots reorder freely; a statement that loads before them keeps
+  them after that load (write `a.x, a.y, a.z, b.x, b.y, b.z`). A load through a pointer
+  written before a store to the same array (`w = ((s32 *)p)[1];`) keeps load-before-store.
+  Trying every order of a group of stores (work/battle20/stperm.py,
+  work/spells27/perm.py), or swapping two adjacent field stores, often finishes a
+  function.
+- Chained stores through a struct global: `D_x.vx = D_x.vz = v;` stores `vz` first, three
+  separate byte externs `D_94 = D_95 = D_96 = v` store 96 first; with a ternary on the
+  right (`D.r = D.g = D.b = c ? A : B;`) the three addresses are built before the branch
+  and the stores come after the join. A ternary stored straight to memory emits a store
+  per arm: set a local in if/else and store it once, through a one-field struct pointer
+  (`MgHalf *f = (MgHalf *)((u8 *)q + 0xA); ... f->v = c;`).
+- Frame descriptors below an array symbol: `MgHalf D_x[]; D_x[0].v = ...; *(s32 *)&D_x[-4]
+  = ptr; f(&D_x[-4], ...)` gives `sw -8(frame)` in the call's delay slot; as a struct
+  global, `T *q = &D_x; q->a = ptr; q->f = ...; f(q, ...)`, where a `u16 *` store
+  schedules the argument first. `M2C_SFIELD(frame, u16 *, 0) = v;` schedules a later `lw`
+  differently from `*frame = v`.
+- `f(..); flag = 1;` puts the flag's `li` in the `jal` delay slot, `flag = 1; f(..)`
+  before it; `f(x); x++;` keeps an increment after the call, `f(x++)` or `r = p; p++; f(a,
+  r);` puts it before. `if (A && (f = x | y | z, !(B & 4)) && !(f & 0x800))` puts the
+  loads of `f` ahead of an earlier test. `*(volatile s32 *)&D_x` as an argument gives
+  `lui; addiu; ... lw a3, 0(v0)`; a volatile global read twice with its address kept in a
+  register is `volatile u32 *t = &D_x; *t / 3600 ... *t % 3600`.
 
 ### Registers
 
@@ -347,6 +393,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `p++` written as its own statement raises the pointer's reference count and can flip
   `s0`/`s1`; two frame-address variables instead of one reused pointer change the temp
   registers.
+- Parameters used in place (`arg1 += 8`, `arg2 = arg2 % 0x1000; if (arg2 < 0) arg2 +=
+  0x1000;`) instead of copies keep their saved registers and the prologue copy order; `s16
+  mode = arg0;` at the top gives an extra `move` copy of a parameter. One variable reused
+  for two values (`v = f(v); if (c) v = 0; r = g(v);`, or one `h` for a clamp and a later
+  `x % N`) shares one register; `p->e -= p->e / 4; p->f += p->e;` written directly kept
+  the registers an `s16` temporary swapped.
+- A clamp written as one nested ternary with no user locals (`p->w = p->w < 0 ? 0 : (D <
+  p->w ? D : p->w);`) kept registers that if/else with locals swapped; elsewhere separate
+  locals per block matched. Two typed source pointers for adjacent loops matched where one
+  shared `u8 *src` flipped registers. Goto loops lower the loop weight and can flip which
+  variable gets the lower saved register.
+- HImode narrowing: `lh v0; move v1, v0; slti v0, v0, K` is the then-arm of `if (x >= K) {
+  c = C - f; c <<= 4; } else c = K2;` with `s16 c` (`(C - f) * 0x10` has no copy); storing
+  `k << 4` from an `s16 k` into a byte gives `sll v0, s0, 4`, `k * 0x10` gives `sll 16;
+  srl 12`. `f((u16)(i | 0xC600))` loads `li -14848`, `j = i | 0xC600; f(j);` gives `ori`.
 
 ### Control flow
 
@@ -437,6 +498,15 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   loses. `d = d < 0 ? -d : d;` gives `bgez; nop; negu` where the if form hoists the next
   load above the branch. `(r & 0xFF)` on a single-set or bounded `r` is dropped by
   combine; a second, unbounded set keeps the `andi`.
+- `while (1) { if (p[0] == END) { p++; break; } ... }` gives a `bne/j` exit with `p++` in
+  the delay slot; `p += 3` once after an if/else join gives one shared back-edge (in both
+  arms: two increments and no reduced pointer). `if (!(x & 0x80)) f(p, 0); else f(p, 1);`
+  keeps the branches a 0/1 ternary folds into `srl`.
+- Switch case order sets the block order (`case 1, 2, 3, 4, 0xB..0xF, 7, 5, 6, default`);
+  `case 0xF: base += 0x100; case 0xD:` as a fallthrough chain gives the game's compare
+  tree; cases 4, 8, 9, 0xB, 0xC become a jump table, so a `== 4 / (u32)(x - 8) < 2 /
+  (u32)(x - 0xB) < 2` chain comes from `||` tests. An explicit `default` plus one shared
+  `return 0` after the switch gives the delay-slot `move v0, zero`.
 
 ### Loops
 
@@ -510,6 +580,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - 2.7.2 `-funroll-loops` (chocobo) gives up ("Loop too big") when twice the body exceeds
   100 insns, and unrolls modulo-style when the bounds are not constant; goto loops are
   never unrolled, hoisted or strength-reduced.
+- Strength reduction uses a knife-edge size test (`-dL`: `giv ... not worth while, 56 vs
+  57`): one extra insn in the loop (`(u8)u` for `u & 0xFF`) loses a stepping pointer, and
+  a pointer variable shared by two loops makes its giv not worth it: one pointer per loop.
+  `e = e0 + i * 8` with `e0 = tab` read before the loop gives an unbiased stepping
+  register where `e += 8` or `e[5]` reads get rebased.
+- Base registers: `tab = D_x;` before the outer loop with `tab[i]` inside, or `v =
+  &D_tbl[i]; v->vx = ...`, hoist the base and give the (idx, base) order (`D_tbl[i].vx`
+  rematerialises it); base pointers assigned inside each of two loops and used as
+  `&base[i]` give hoisted bases. `D[a].f[i]` and a pointer `w = D[a].g; w[0x12 + i]` give
+  two stepping registers. Strided clears over interleaved globals: `D_x[off] = 0` with
+  `off += 0x18`; a flag array as fields of a struct array (`D_x[i].pad3[2]`) gives the
+  `lui/addiu/addu at, s0` form where `D_x[i * 0x18]` becomes an address giv.
+- Loop invariants are hoisted in statement order (`fp = &v[1]; a = ...; b = a + 8;` before
+  the loop); hoisted constants come out in stream order with a `col = 0` at the loop top
+  ahead of them, and a variable set inside a conditional block is never hoisted. `for (i =
+  0, n = 6; i < n; i++)` puts `i`'s init before the bound; `do {} while` lets a constant
+  be hoisted into a saved register, a goto loop keeps it inline.
 
 ### Stack frame
 
@@ -537,6 +624,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   loops need them. Locals sit in declaration order from the lowest address: an unused `u8
   pad[8/16/24]` before or after a local moves it to the game's slot, and two locals' order
   decides which sits at sp+0x10.
+- A frame 8 bytes short (also a leaf with `addiu sp, sp, -8`) takes a `u8 pad[8]`, after
+  the last array local or first; a larger pad (`u8 pad[0x20]`, `u8 pad[88]`) before a
+  local moves it to the game's slot. A halfword read into a local and then `D[i]++` is
+  merged by CSE into one load whose dead pseudo adds 8 bytes; a store to another global
+  between them keeps both loads and the frame. Slots of address-taken locals follow the
+  first `&`: `s32 v[2]` for two out-parameters.
 
 ### How the scheduler and the allocator decide
 
@@ -676,6 +769,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   work/spells24/search.py replaces a snippet by each line of a variants file and scores
   the results; constraining the game's relative order of a few lines (`A::B` in
   work/spells19/hc.py) found matches where unconstrained hill-climbs stalled.
+- Arithmetic order, more: `x + (w.y - 0x800)` is reassociated to `(x - 0x800) + w.y`
+  (single-def locals keep the game's form); `(t * 0x258 >> 12) + 0x258 + (k * 0xC8 >> 12)`
+  keeps the add order where nesting folds the constant; `(u16)t >> 1` on `0x80 - x * 16`
+  folds to `andi 0xFFF0; srl 1`, `(u32)(t << 16) >> 17` keeps it; `(i << 16) >> 9` gives
+  `sll 16; sra 9` where `i << 7` gives `sll 7`; `v *= 3; v >>= 1;` gives `addu a0, a0,
+  v0`.
+- A function whose first instructions the scheduler moved above `addiu sp` can be cut by
+  splat into a rodata symbol (the moved words) and a function at the `addiu sp`: highway's
+  code starts at its entry 0x800A00D0, seven words before the function splat had found.
+  tools/work.py cannot parse multi-line K&R definitions with typed parameters.
 
 ## Hand-written assembly
 
