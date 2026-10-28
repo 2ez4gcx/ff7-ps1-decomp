@@ -1,7 +1,94 @@
 #include "common.h"
 #include "highway/decls.h"
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A00EC);
+void func_800A00D0(void) {
+    s32 i;
+    s32 a;
+    u8 *p;
+    u8 pad[88];
+
+    D_800BDFB4 = 0;
+    D_80110B90 = 0;
+    D_800BC4D4 = D_8009D3FB;
+    D_800BE2F0 = 1;
+    D_80110B90 = D_8009D4F6 << 8;
+    D_80110B90 += D_8009D4F5;
+    func_800AD7AC();
+    i = 0x174;
+    func_800A37C4();
+    func_800A3668();
+    func_800AD8C8();
+    func_800AD94C(0xB3, 4, 0);
+    func_800AD94C(0x12B, 3, 0);
+    while (*(u8 *)&D_80110B88 == 0) {
+        D_800B43C0 = D_80110A90 + 0x1C4 + D_800BD558 * 4;
+        func_800AC540();
+        func_800ADD6C();
+        func_800ADCB4();
+        func_800A70E4(D_8011668C, D_80110A90);
+        if (*(u8 *)&D_800BC4DC != 0) {
+            D_800BC4DC = func_800AE6B4((HwFadeCtx *)D_80110A90, *(u8 *)&D_800BC4DC);
+        }
+        func_800A057C(D_80110A90);
+        func_800AD47C(D_80110A90);
+        func_800B01AC(D_80110A90);
+        if (D_800BC4D4 == 1) {
+            func_800A34A4((HwDrawCtx *)D_80110A90);
+        } else {
+            func_800AEB88(D_80110A90);
+        }
+        func_800AB738(D_8011668C);
+        func_80043DD8(0);
+        func_8003CEDC(2);
+        func_80043938(1);
+        func_800443B0(D_80110A90);
+        func_800444AC((M2C_UNK *)(D_80110A90 + 0x5C));
+        func_80043F6C(D_80110A90, 0, 0, 0);
+        func_8004433C(D_80110A90 + 0x5084);
+        func_8004433C(D_80110A90 + 0x4094);
+        func_8004433C(D_80110A90 + 0x94);
+        a = (s32)&D_800C4C4C;
+        p = &D_800B43BC;
+        *p ^= 1;
+        if (D_80110A90 == a) {
+            a += 0x24360;
+        }
+        D_80110A90 = a;
+        func_80044244(D_80110A90 + 0x98, 0x1000);
+        func_80044244(D_80110A90 + 0x5038, 0x14);
+        func_80044244(D_80110A90 + 0x70, 0xA);
+        func_800A3AA0((u8 **)(D_80110A90 + 0x5088));
+    }
+    if (D_800BC4D4 == 1) {
+        if ((u32)D_800BDFB4 > (u32)D_80110B90) {
+            D_80110B90 = D_800BDFB4;
+        }
+        D_8009D4F4 = (u32)D_800BDFB4 >> 8;
+        D_8009D4F6 = D_80110B91;
+        D_8009D4F5 = D_80110B90;
+        D_8009D4F3 = D_800BDFB4;
+    } else {
+        D_8009D288[i] = D_80110046[0].h;
+        i++;
+        D_8009D288[i] = D_80110046[0].h >> 8;
+        i++;
+        D_8009D288[i] = D_80110046[1].h;
+        i++;
+        D_8009D288[i] = D_80110046[1].h >> 8;
+        i++;
+        D_8009D288[i] = D_80110046[3].h;
+        i++;
+        D_8009D288[i] = D_80110046[3].h >> 8;
+        i++;
+        D_8009D288[i] = D_80110046[2].h;
+        i++;
+        D_8009D288[i] = D_80110046[2].h >> 8;
+        i++;
+        D_8009D288[i] = D_80110046[4].h;
+        i++;
+        D_8009D288[i] = D_80110046[4].h >> 8;
+    }
+}
 
 void func_800A0554(void) {
     D_800B3BF8 = func_8003CEDC(1);
@@ -2544,5 +2631,3 @@ INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B404C);
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B4114);
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B414C);
-
-INCLUDE_RODATA("../asm/us/highway/nonmatchings/text", D_800A00D0);

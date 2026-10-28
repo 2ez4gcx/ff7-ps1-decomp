@@ -437,5 +437,24 @@ s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 extern s32 D_800B57B0;
 extern s32 D_800B57B8;
+void func_800A00D0(void);
+extern u8 D_800B43BC;
+extern s32 D_800B43C0;
+extern u8 D_8009D288[];
+extern u8 D_8009D4F3;
+extern u8 D_8009D4F4;
+extern u8 D_8009D4F5;
+extern u8 D_8009D4F6;
+extern u8 D_8009D3FB;
+extern s32 D_800BE2F0;
+extern u8 D_80110B91;
+void func_800ADD6C();
+M2C_UNK func_800A057C(s32);
+M2C_UNK func_800AB738(s32);
+M2C_UNK func_80043DD8(s32);
+M2C_UNK func_800443B0(s32);
+M2C_UNK func_80043F6C(s32, s32, s32, s32);
+M2C_UNK func_8004433C(s32);
+void func_800B01AC(s32 arg0);
 
 #endif /* HIGHWAY_DECLS_H */

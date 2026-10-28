@@ -55,6 +55,6 @@ segments:
     # file header: unpacked 0x14f4c, second word 0x6176c
     subsegments:
       - [0x0, .rodata, text]
-      - [0xec, c, text]
+      - [0xd0, c, text]
       - [0x141c8, data, data]
   - [0x14f4c]
