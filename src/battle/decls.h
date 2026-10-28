@@ -577,7 +577,7 @@ void func_800A66A4(s32 arg0, s32 arg1);
 void func_800A67B8(s32 arg0);
 void func_800A4350(s16 arg0, s16 arg1, s16 arg2, s32 arg3);
 s32 func_800E5FB4(s32 arg0, s32 arg1);
-void func_800B0B94(s32 arg0);
+s32 func_800B0B94(s32 arg0);
 extern u8 D_800F83EF[][0x68];
 extern u8 D_800F83F4[][0x68];
 void func_800B3C50(void);

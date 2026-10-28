@@ -3223,8 +3223,8 @@ void func_800B0378(void) {
         s0 = 0xFF;
     }
     s2 = M2C_FIELD(D_80063014, s32 *, 0x260) + func_800B1218(M2C_FIELD(D_80063014, s32 *, 0), e->pad[0x10], 5) / 4;
-    s1 = ((s32 (*)(s32))func_800B0B94)(M2C_FIELD(D_80063014, s32 *, 0));
-    v = ((s32 (*)(s32))func_800B0B94)(M2C_FIELD(D_80063014, s32 *, 0x208));
+    s1 = func_800B0B94(M2C_FIELD(D_80063014, s32 *, 0));
+    v = func_800B0B94(M2C_FIELD(D_80063014, s32 *, 0x208));
     if (s0 == -1) {
         s0 = func_800B0E5C(s2 + s1 - v);
     }
@@ -3366,7 +3366,7 @@ void func_800B0910(void) {
 void func_800B0B8C(void) {
 }
 
-void func_800B0B94(s32 arg0) {
+s32 func_800B0B94(s32 arg0) {
     s32 v;
 
     if (arg0 < 4) {
@@ -3374,7 +3374,7 @@ void func_800B0B94(s32 arg0) {
     } else {
         v = D_800F83EF[arg0][0];
     }
-    func_800B1218(arg0, v, 4);
+    return func_800B1218(arg0, v, 4);
 }
 
 void func_800B0C14(void) {
