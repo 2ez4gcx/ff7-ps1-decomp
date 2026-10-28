@@ -10,6 +10,8 @@ s32 func_80039A74(s32 arg0);
 DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
+M2C_UNK func_80042DC8();
+s32 func_8003FB8C(MainCdlFile *arg0, char *arg1);
 
 char *func_8003DDBC(s32 arg0) {
     u32 i;
@@ -219,13 +221,164 @@ void func_8003FA9C(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003FAAC);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003FB8C);
+s32 func_8003FB8C(MainCdlFile *arg0, char *arg1) {
+    char buf[0x20];
+    char *p;
+    char *q;
+    s32 dir;
+    s32 level;
+    MainCdlFile *e;
+
+    if (D_80051938 != D_80051640) {
+        if (func_8003FE98() == 0) {
+            return 0;
+        }
+        D_80051938 = D_80051640;
+    }
+    dir = 1;
+    if (arg1[0] != 0x5C) {
+        return 0;
+    }
+    buf[0] = 0;
+    p = arg1;
+    level = 0;
+    while (1) {
+        q = buf;
+        while (*p != 0x5C) {
+            if (*p == 0) {
+                break;
+            }
+            *q++ = *p++;
+        }
+        if (*p == 0) {
+            break;
+        }
+        p++;
+        *q = 0;
+        dir = func_8004018C(dir, buf);
+        if (dir == -1) {
+            buf[0] = 0;
+            break;
+        }
+        level++;
+        if (level >= 8) {
+            break;
+        }
+    }
+    if (level >= 8) {
+        if (D_80051634 > 0) {
+            func_80042DC8("%s: path level (%d) error\n", arg1, level);
+            return 0;
+        }
+        return 0;
+    }
+    if (buf[0] == 0) {
+        if (D_80051634 > 0) {
+            func_80042DC8("%s: dir was not found\n", arg1);
+        }
+        return 0;
+    }
+    *q = 0;
+    if (func_80040238(dir) == 0) {
+        if (D_80051634 > 0) {
+            func_80042DC8("CdSearchFile: disc error\n");
+            return 0;
+        }
+        return 0;
+    }
+    level = 0;
+    if (D_80051634 >= 2) {
+        func_80042DC8("CdSearchFile: searching %s...\n", buf);
+    }
+    for (; level < 0x40; level++) {
+        if (D_8006E14C[level].name[0] == 0) {
+            break;
+        }
+        if (func_8003FE74((s32) D_8006E14C[level].name, (s32) buf) != 0) {
+            if (D_80051634 >= 2) {
+                func_80042DC8("%s:  found\n", buf);
+            }
+            e = (MainCdlFile *) ((u8 *) &D_8006E14C[level] - 8);
+            *arg0 = *e;
+            return (s32) e;
+        }
+    }
+    if (D_80051634 > 0) {
+        func_80042DC8("%s: not found\n", buf);
+    }
+    return 0;
+}
 
 s32 func_8003FE74(s32 arg0, s32 arg1) {
     return func_80042D78(arg0, arg1, 0xC) == 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003FE98);
+s32 func_8003FE98(void) {
+    MainBytes4 loc;
+    s32 r;
+    u8 *p;
+    s32 i;
+    s32 n;
+    s32 len;
+    s32 n2;
+    u8 *name;
+
+    r = func_800404F4(1, 0x10, (s32) D_8006FD44);
+    if (r != 1) {
+        if (D_80051634 > 0) {
+            func_80042DC8("CD_newmedia: Read error in cd_read(PVD)\n");
+        }
+        return 0;
+    }
+    if (func_80042D78(D_8006FD44 + 1, "CD001", 5) != 0) {
+        if (D_80051634 > 0) {
+            func_80042DC8("CD_newmedia: Disc format error in cd_read(PVD)\n");
+        }
+        return 0;
+    }
+    loc = D_8006FDD0;
+    if (func_800404F4(1, *(s32 *) &loc, (s32) D_8006FD44) != 1) {
+        if (D_80051634 > 0) {
+            func_80042DC8("CD_newmedia: Read error (PT:%08x)\n", *(s32 *) &loc);
+        }
+        return 0;
+    }
+    p = D_8006FD44;
+    if (D_80051634 >= 2) {
+        func_80042DC8("CD_newmedia: sarching dir..\n");
+    }
+    i = 0;
+    while (p < D_8006FD44 + 0x800) {
+        if (*p == 0) {
+            break;
+        }
+        *(MainBytes4 *) &D_8006E744[i].loc = *(MainBytes4 *) (p + 2);
+        name = D_8006E744[i].name;
+        n = i + 1;
+        D_8006E744[i].parent = p[6];
+        D_8006E744[i].num = n;
+        func_80040560(name, p + 8, p[0]);
+        name[p[0]] = 0;
+        len = p[0];
+        n2 = (len & 1) + 8;
+        p += len + n2;
+        if (D_80051634 >= 2) {
+            func_80042DC8("\t%08x,%04x,%04x,%s\n", D_8006E744[i].loc, D_8006E744[i].num, D_8006E744[i].parent, name);
+        }
+        i = n;
+        if (i >= 0x80) {
+            break;
+        }
+    }
+    if (i < 0x80) {
+        D_8006E744[i].parent = 0;
+    }
+    D_80051934 = 0;
+    if (D_80051634 >= 2) {
+        func_80042DC8("CD_newmedia: %d dir entries found\n", i);
+    }
+    return 1;
+}
 
 s32 func_8004018C(s32 arg0, char *arg1) {
     s32 i;
