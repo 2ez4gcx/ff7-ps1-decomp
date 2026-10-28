@@ -801,5 +801,27 @@ extern u8 D_800716CC;
 extern u8 D_800716D4;
 extern u8 D_80071E34;
 extern u8 D_8009AC2D;
+s32 func_800A2314(void);
+typedef struct { u8 b[8]; } FdRect8;
+typedef struct { FdTag tag; u8 b4; u8 b5; u8 pad6[2]; s16 x; s16 y; u8 padC[4]; } FdSpr10;
+typedef struct { FdTag tag; u8 pad4[4]; s16 x; s16 y; u8 padC[8]; } FdSpr14;
+typedef struct { FdTag ot[0x1000]; u8 pad4000[0x914]; FdSpr10 spr[0x9C4]; FdSpr14 big[0x200]; u8 attr[0xBC4][2]; u8 obj[0x53C0]; } FdBuf;
+typedef struct { u8 b0; u8 b1; s16 s2; u8 pad4[0x26]; u16 w2A; u8 pad2C[0x8]; u8 b34; u8 pad35[0x33]; s32 w68; u8 pad6C[0x1C]; u16 w88; u8 pad8A[0x1E]; } FdMain;
+extern FdRect8 D_800A0024;
+extern FdRect8 D_800A002C;
+extern FdRect8 D_800A0034;
+extern FdRect8 D_800A003C;
+extern FdRect8 D_800A0044;
+extern FdRect8 D_800A004C;
+extern s32 D_8007EB90;
+extern s32 D_8007EB94;
+extern u16 **D_8009A044;
+extern FdBuf D_800E4DF0[2];
+extern FdMain D_8009ABF4;
+extern s8 D_80071C0C;
+extern s32 D_80114454;
+extern s32 D_80114478;
+extern s32 D_8011447C;
+extern u8 D_80113F2C[];
 
 #endif /* FIELD_DECLS_H */
