@@ -63,7 +63,10 @@ FILE_OPTIONS = {
     # `lui; addiu; addu; lw 0($at)` of a global plus a register, and a nop after
     # a load overwritten next, are 2.21 (lib2: libcd, from bios.c; lib3b; lib4
     # and lib5: libgpu, from sys.c on), the folded `%lo(x)($at)` 2.34.
-    'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
+    # lib.c's jump tables all sit on 8 bytes from its rodata's start, as from the
+    # start of the game's files they come from (func_80039450 pads its first
+    # table to get there): it keeps them on 8 like a file of its own.
+    'main/lib.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'unit_start': True},
     'main/lib2.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     'main/lib3.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0},
     'main/lib3b.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},

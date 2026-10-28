@@ -732,7 +732,74 @@ void func_800393C8(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_80039450);
+void func_80039450(s32 arg0, u16 arg1, s32 arg2, s32 arg3, u16 arg4) {
+    volatile s32 i;
+    volatile s32 n;
+    s32 t0;
+    s32 r;
+    s32 m;
+
+    arg1 &= 0x7FFF;
+    t0 = 0;
+    arg0 = arg0 * 8;
+    switch ((s16) (arg3 - 1)) {
+    case 0:
+        t0 = 0x8000;
+        break;
+    case 1:
+        t0 = 0x9000;
+        break;
+    case 2:
+        t0 = 0xA000;
+        break;
+    case 3:
+        t0 = 0xB000;
+        break;
+    case 4:
+        t0 = 0xC000;
+        break;
+    case 5:
+        t0 = 0xD000;
+        break;
+    case 6:
+        t0 = 0xE000;
+        break;
+    }
+    r = arg2 & 0x7FFF;
+    arg2 = 0;
+    D_8004AAF4[arg0] = arg1 | t0;
+    m = arg4;
+    switch ((s16) (m - 1)) {
+    case 0:
+        arg2 = 0x8000;
+        break;
+    case 1:
+        arg2 = 0x9000;
+        break;
+    case 2:
+        arg2 = 0xA000;
+        break;
+    case 3:
+        arg2 = 0xB000;
+        break;
+    case 4:
+        arg2 = 0xC000;
+        break;
+    case 5:
+        arg2 = 0xD000;
+        break;
+    case 6:
+        arg2 = 0xE000;
+        break;
+    }
+    D_8004AAF4[arg0 + 1] = r | arg2;
+    n = 1;
+    i = 0;
+    while (i < 2) {
+        n *= 0xD;
+        ++i;
+    }
+}
 
 void func_800395C8(s32 arg0, u16 arg1) {
     volatile s32 i;
