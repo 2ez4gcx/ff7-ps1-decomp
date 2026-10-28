@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0000(void);
-M2C_UNK func_801B13F8();
+void func_801B13F8();
 extern M2C_UNK D_801C2648;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
@@ -42,5 +42,40 @@ extern u8 D_801C48B5;
 extern u8 D_801C48B6;
 extern u8 D_801C48B7;
 extern u16 D_801C48B8;
+s32 func_800BBEAC(void (*)());
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void *func_800D54EC(s32, void *);
+void func_801B111C(void);
+extern M2C_UNK D_801B1484;
+extern s16 D_801DC8D4;
+void func_801B0FD0(void);
+M2C_UNK func_8003A63C(MgMat *, MgMat *, MgMat *);
+M2C_UNK func_8003B35C(MgMat *, MgVec *);
+u8 *func_800D29D4(void *, s32, M2C_UNK, u8 *);
+extern s16 D_801C48CA;
+void func_801B0898(void);
+M2C_UNK func_8003B69C(M2C_UNK, M2C_UNK, M2C_UNK);
+s32 func_801B04D0(s16 *arg0, MgSVec *arg1, s32 arg2);
+extern MgVec D_801C4868;
+extern M2C_UNK D_801C4878;
+extern MgSVec D_801C4888;
+s32 func_8003CC1C(s32, s32);
+void func_800BBA84(s32, s32, s32);
+void func_800D5774(s32);
+void func_801B0A30(void);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+void func_8003C8DC(s32, MgMat *);
+extern u8 D_80151915[][0xB9C];
+extern u16 D_80151A46[][0x5CE];
+typedef struct { u16 a; u16 b; u8 pad[0x30]; } DynEnt;
+extern struct { DynEnt c[56]; u8 pad[0x3C]; } D_80151A78[];
+extern struct { DynEnt c[56]; u8 pad[0x3C]; } D_80151A7C[];
+extern MgVec D_801C4890;
+extern M2C_UNK D_801C48A0;
+s32 func_8003BBDC(MgSVec *, u8 *, s32 *, s32 *);
+void func_80046794(s32, u8 *);
+extern MgSVec D_801C4858;
+extern MgSVec D_801C4860;
+extern s16 D_801C4864;
 
 #endif /* MAGIC_DYNAMITE_DECLS_H */

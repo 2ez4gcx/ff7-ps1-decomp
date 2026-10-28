@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B2354();
+s32 func_801B2354();
 void func_801B12E4(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -51,5 +51,25 @@ extern MgVec D_801D4B6C;
 void func_8003B69C(s32, s32, s32);
 extern u8 D_801D4B7C[];
 s32 func_800D29D4(void *, s32, s32, s32);
+void func_800BBA84(s32, s32, s32);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+s32 func_800D52A0(s32, s32);
+void func_800D5444(s32, s32, s32, void (*)(s32, s32));
+void func_801B1158();
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+extern M2C_UNK D_801B2400;
+void func_801B149C(void);
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+extern s32 D_801D49A4;
+extern u16 D_801D4AFC;
+void func_801B1968(void);
+s32 func_80042DA8(void);
+extern u8 D_801D4B5C[];
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+void func_800D5774(s32);
+void func_801B1684();
 
 #endif /* MAGIC_REITO_DECLS_H */
