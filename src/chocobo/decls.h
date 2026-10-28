@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 typedef struct { u8 pad0[2]; u8 a; u8 cnt; u8 pad4[0x12]; s16 f16; u16 off; s32 base; s32 f20; } WmHdr3;
-s32 func_800AD9D8(s32, s32, s32, s32);
+s32 func_800AD9D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800AF9E4(WmHdr3 *, s16, s32);
 s32 func_800AD91C(WmHdr3 *arg0, s32 arg1, s32 arg2);
 s32 func_800B00DC(WmHdr3 *arg0, u8 *arg1);
@@ -205,5 +205,20 @@ extern ChoSlot D_800B7480[];
 extern u8 D_800D5DD0[];
 extern u8 D_800F48B3[];
 extern u32 *D_800F502C;
+typedef struct { u8 pad0[4]; u8 n[8]; u8 padC[2]; u16 offE; u16 off10; u16 off12; u16 off14; u16 off16; s32 base; s32 out; } FdPrimHdr;
+typedef struct { u32 f0; u32 c[4]; u32 idx; } FdSrcGT4;
+typedef struct { u32 f0; u32 c[3]; u32 idx; } FdSrcGT3;
+typedef struct { u32 f0; u32 c; u32 idx; } FdSrcFT;
+typedef struct { u32 f0; u32 c; } FdSrcF;
+typedef struct { u32 f0; u32 c[3]; } FdSrcG3;
+typedef struct { u32 f0; u32 c[4]; } FdSrcG4;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 uv0[2]; u16 clut; u8 rgb1[4]; u8 xy1[4]; u8 uv1[2]; u16 tpage; u8 rgb2[4]; u8 xy2[4]; u8 uv2[2]; u16 pad24; u8 rgb3[4]; u8 xy3[4]; u8 uv3[2]; u16 pad32; } FdPrGT4;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 uv0[2]; u16 clut; u8 rgb1[4]; u8 xy1[4]; u8 uv1[2]; u16 tpage; u8 rgb2[4]; u8 xy2[4]; u8 uv2[2]; u16 pad26; } FdPrGT3;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 uv0[2]; u16 clut; u8 xy1[4]; u8 uv1[2]; u16 tpage; u8 xy2[4]; u8 uv2[2]; u16 pad1E; u8 xy3[4]; u8 uv3[2]; u16 pad26; } FdPrFT4;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 uv0[2]; u16 clut; u8 xy1[4]; u8 uv1[2]; u16 tpage; u8 xy2[4]; u8 uv2[2]; u16 pad1E; } FdPrFT3;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; } FdPrF;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; } FdPrG3;
+typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; u8 xy2[4]; u8 rgb3[4]; } FdPrG4;
+u8 func_80043CC0(void);
 
 #endif /* CHOCOBO_DECLS_H */
