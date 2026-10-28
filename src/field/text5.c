@@ -1,6 +1,15 @@
 #include "common.h"
 #include "field/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+s32 func_800D579C(s16 arg0, s16 arg1);
+typedef struct { u8 pad0[4]; u8 *f4; s16 f8; s16 fA; s16 fC; s16 fE; s16 f10; s16 f12; u16 f14; s16 f16; s16 f18; s16 f1A; u8 pad1C[2]; u8 f1E; u8 pad1F[0x11]; } FdWinBox;
+extern u8 *D_800E4234[];
+extern s16 D_800E4278[];
+extern s16 D_80114470[];
+extern s16 D_8011451C[];
+extern FdWinBox D_80083270[];
+
 s32 func_800D2794(void) {
     u16 *temp_v1_2;
     u8 temp_v1;
@@ -1011,7 +1020,46 @@ void func_800D5750(void) {
     func_8002DA7C();
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text5", func_800D579C);
+s32 func_800D579C(s16 arg0, s16 arg1) {
+    if (D_8007E7A8 == NULL) {
+        ((void (*)(u8 *))func_800D4848)(D_800A10DC);
+        return 1;
+    }
+    if (D_8008326C[arg0] != 0xFF) {
+        if (D_8009D820 & 3) {
+            func_800BECA4(D_800A10EC, arg0, 1);
+        }
+        return 0;
+    }
+    D_8008326C[arg0] = D_800722C4;
+    D_80083270[arg0].f10 = D_80083270[arg0].fC / 4;
+    D_80083270[arg0].f12 = D_80083270[arg0].fE / 4;
+    if (D_80083270[arg0].f12 < 8) {
+        D_80083270[arg0].f12 = 8;
+    }
+    if (D_80083270[arg0].f10 < 8) {
+        D_80083270[arg0].f10 = 8;
+    }
+    D_80083270[arg0].f4 = D_800E4944[arg0];
+    D_80083270[arg0].f14 = 0;
+    D_80083270[arg0].f16 = 0;
+    D_80083270[arg0].f18 = 0;
+    D_80083270[arg0].f1A = 0;
+    D_80083270[arg0].f1E = 0;
+    D_800E4944[arg0][0] = 0xFF;
+    D_800E4234[arg0] = D_8007E7A8;
+    D_800E4234[arg0] += ((u8 *)D_8007E7A8)[arg1 * 2 + 2];
+    D_800E4234[arg0] += ((u8 *)D_8007E7A8)[arg1 * 2 + 3] << 8;
+    D_80071E2C++;
+    D_80114480[arg0] = 1;
+    D_80114470[arg0] = 0;
+    D_801142CC[arg0] = 0;
+    D_800E4278[arg0] = 0;
+    D_800E4280[arg0] = 0;
+    D_8011451C[arg0] = -1;
+    D_800832A0[arg0].v = 1;
+    return 0;
+}
 
 void func_800D5A60(s16 n) {
     if (D_8008326C[n] != D_800722C4) {
