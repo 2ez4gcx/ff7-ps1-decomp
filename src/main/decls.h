@@ -1668,7 +1668,6 @@ extern s8 D_80051904;
 extern u8 D_80051905;
 extern volatile u8 D_80051906;
 void func_800487F0(MainTag *arg0, u32 arg1);
-typedef struct { u32 addr : 24; u32 len : 8; u32 code[2]; } MainDrPrim;
 extern volatile s32 *D_80062D24;
 extern s16 D_8004FC98[];
 extern volatile u16 D_80077F28[];
@@ -1682,6 +1681,12 @@ s32 func_80047318(s32, void *);
 void *func_80046DB4(MainTmdPrim *arg0);
 s32 func_80045654(Rect16 *arg0, u32 *arg1);
 s32 func_80045400(Rect16 *arg0, u32 *arg1);
+s32 func_800451E0(Rect16 *arg0, s32 arg1);
+extern s32 D_80070550[];
+extern s32 D_80070570[];
+extern s32 D_80070574;
+extern s32 D_80070578;
+extern s32 D_8007057C;
 
 #endif /* MAIN_DECLS_H */
 extern MainSlot440 D_8009D85C[];
