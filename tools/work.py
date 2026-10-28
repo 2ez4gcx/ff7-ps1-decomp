@@ -14,6 +14,9 @@ source file is built and prints both codes side by side, `*` on each word
 that differs. `put` checks that it matches, then replaces the function's
 INCLUDE_ASM with it and moves its declarations into decls.h; if a changed
 declaration makes another function stop matching, nothing is changed.
+A `static inline` helper may come before the function, for code GCC
+inlined (the game has no copy of its own of it): `put` places it right
+before the function, once per file.
 Several people (or agents) can `put` at once: they take turns.
 """
 import argparse
@@ -43,16 +46,45 @@ def where(name):
     return None
 
 
+INLINE = re.compile(r'^static inline\b[^;{]*\(.*\)\s*\{$', re.M)
+
+
+def helpers_of(head):
+    """(the rest of a work file's head, its `static inline` helpers). GCC
+    inlines a helper into each caller and emits no code for it, so the game
+    has none: a function that matches only with one keeps it in C."""
+    found = []
+    while True:
+        m = INLINE.search(head)
+        if m is None:
+            return head, found
+        depth = 0
+        for i in range(m.start(), len(head)):
+            if head[i] == '{':
+                depth += 1
+            elif head[i] == '}':
+                depth -= 1
+                if depth == 0:
+                    break
+        else:
+            raise SystemExit('a static inline helper in the work file does not end')
+        helper = head[m.start():i + 1]
+        if re.search(r'\bstatic\b|\basm\s*\(|__asm__', helper[len('static inline'):]):
+            raise SystemExit("no static data or asm in a helper: keep the game's tables in asm (extern)")
+        found.append(helper)
+        head = head[:m.start()] + head[i + 1:]
+
+
 def split_work(text, name):
-    """(declarations, function) of a work file. The function must be the last
-    thing in it, with no data of its own: a static or constant table would be
-    placed elsewhere once its whole file is compiled (GCC puts such data at
-    the end of a file), so the game's tables stay in asm and are declared
-    extern."""
+    """(declarations, helpers, function) of a work file. The function must be
+    the last thing in it, with no data of its own: a static or constant table
+    would be placed elsewhere once its whole file is compiled (GCC puts such
+    data at the end of a file), so the game's tables stay in asm and are
+    declared extern."""
     m = re.search(rf'^[A-Za-z_][\w \*]*?\b{name}\(.*\)\s*\{{$', text, re.M)
     if m is None:
         raise SystemExit(f'no definition of {name} in the work file')
-    head = text[:m.start()]
+    head, helpers = helpers_of(text[:m.start()])
     decls = [l for l in head.splitlines() if l.strip() and not l.startswith('#')]
     body = text[m.start():].rstrip() + '\n'
     depth, end = 0, None
@@ -71,7 +103,7 @@ def split_work(text, name):
     for d in decls:
         if '=' in d or re.search(r'\basm\s*\(|__asm__', d):
             raise SystemExit(f'only declarations before the function, no definitions: {d!r}')
-    return decls, body
+    return decls, helpers, body
 
 
 def symbol_of(decl):
@@ -138,16 +170,18 @@ def merged(known, decls, name, proto):
 
 def standalone(work, name):
     """A file to compile for the work file: decls.h as merged() makes it,
-    then the function. Returns (path, merged decls.h, function)."""
-    decls, body = split_work(work.read_text(encoding='utf-8'), name)
+    then its helpers and the function. Returns (path, merged decls.h,
+    function, prototype, helpers)."""
+    decls, helpers, body = split_work(work.read_text(encoding='utf-8'), name)
     proto = ad.prototype(ad.HEAD.search(body).group(1))
     mine = merged(ad.DECLS.read_text(encoding='utf-8'), decls, name, proto)
     # One name per process: agents diffing the same NAME at once (two targets
     # can have one) must not compile each other's work.
     path = Path(tempfile.gettempdir()) / f'ff7_work_{os.getpid()}_{name}.c'
-    path.write_text('#include "common.h"\n' + mine + '\n\n' + body, encoding='utf-8')
+    path.write_text('#include "common.h"\n' + mine + '\n\n' + ''.join(h + '\n\n' for h in helpers) + body,
+                    encoding='utf-8')
     atexit.register(path.unlink, missing_ok=True)
-    return path, mine, body, proto
+    return path, mine, body, proto, helpers
 
 
 def show(name):
@@ -370,8 +404,8 @@ def put(work, name):
         if found is None:
             raise SystemExit(f'{name} is not an INCLUDE_ASM of src/{ad.TARGET}/ (already in C?)')
         src, seg, asm_path = found
-        path, mine, body, proto = standalone(work, name)
-        tables, rest = named_tables(asm_path, body)
+        path, mine, body, proto, helpers = standalone(work, name)
+        tables, rest = named_tables(asm_path, ''.join(helpers) + body)
         try:
             why = match.check(path, ad.TARGET, only={name}, like=src,
                               rodata=rest if tables else None).get(name, 'not compiled')
@@ -390,7 +424,16 @@ def put(work, name):
                 written.append(table)
         head = ''.join(include.replace('INCLUDE_ASM', 'INCLUDE_RODATA').replace(f', {name});', f', {sym});')
                        + '\n\n' for sym, _ in tables)
-        placed = before.replace(include, head + body.rstrip('\n'), 1)
+        # A helper goes right before the function, once per file: one an
+        # earlier function already has stays, one a later function has moves
+        # up here.
+        placed = before
+        for helper in helpers:
+            at = placed.find(helper + '\n')
+            if at < 0 or at > placed.index(include):
+                placed = placed.replace(helper + '\n\n', '', 1)
+                head += helper + '\n\n'
+        placed = placed.replace(include, head + body.rstrip('\n'), 1)
         # A symbol some file declares in its own block stays out of decls.h:
         # this file gets its declaration in its own block too.
         own = locally_declared()
@@ -455,7 +498,7 @@ def main():
         return
     found = where(name)
     like = found[0] if found else diff_func.file_of(name, args.target)
-    path, _, _, _ = standalone(work, name)
+    path = standalone(work, name)[0]
     sys.argv = ['diff_func', str(path), name, '--target', args.target, '--like', str(like)]
     diff_func.main()
 

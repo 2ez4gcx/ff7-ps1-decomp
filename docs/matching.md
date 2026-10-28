@@ -1013,9 +1013,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   inline_fn(u16 x) { return (s16)x; }` (a distinct HImode pseudo per use): plain code may
   not reproduce it. `put` drops a work file's declaration of a function already defined
   in C, so a callee defined `void f(void)` that new code calls with an argument has to
-  become `void f(arg0)` in the source first. `tools/work.py` takes one function: one that
-  matches only with a `static inline` helper (condor func_800A3304 and func_800A3A98,
-  reito func_801B1158) stays asm for now.
+  become `void f(arg0)` in the source first. A function that matches only with code GCC
+  inlined (an inlined helper is a scheduling barrier no block or `do { } while (0)`
+  replaces) takes the helper as a `static inline` function before it in the work file:
+  `put` places it right before the function, once per file (reito func_801B1158).
 
 ## Hand-written assembly
 
