@@ -1688,6 +1688,6 @@ extern s32 D_80070574;
 extern s32 D_80070578;
 extern s32 D_8007057C;
 void func_80039450(s32 arg0, u16 arg1, s32 arg2, s32 arg3, u16 arg4);
+extern MainSlot440 D_8009D85C[];
 
 #endif /* MAIN_DECLS_H */
-extern MainSlot440 D_8009D85C[];
