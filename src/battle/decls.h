@@ -6,7 +6,7 @@
 void func_800A6590(void);
 void func_800A4D88();
 void func_800A7988(void);
-M2C_UNK func_800AF9C8();
+s32 func_800AF9C8(void);
 void func_800A8E34(void);
 M2C_UNK func_800A79CC();
 void func_800AEBF0(void);
@@ -1638,5 +1638,9 @@ extern BtlQ20 D_801620B0[];
 void func_800A3ED0(void);
 extern s32 D_80062F54;
 extern u16 D_80163780;
+extern u8 D_800F5BC4[];
+extern u16 D_800F7DCC;
+extern u16 D_80163766;
+extern u16 D_80163772;
 
 #endif /* BATTLE_DECLS_H */
