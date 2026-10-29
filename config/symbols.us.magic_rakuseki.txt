@@ -1,0 +1,2 @@
+// Symbols of magic_rakuseki alone (the others it shares are listed before).
+D_801B0000 = 0x801B0000; // force_not_migration:True
