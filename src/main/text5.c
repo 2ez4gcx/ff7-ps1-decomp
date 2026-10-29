@@ -18,7 +18,7 @@ s32 func_80042C98();
 extern void func_80030234();
 s32 func_80026B70(u8 *arg0);
 M2C_UNK func_80027B84(Rect16 *);
-M2C_UNK func_80028030(Rect16 *, s32);
+M2C_UNK func_80028030(Rect16 *arg0, s32 arg1);
 void func_80026F44(s16 arg0, s16 arg1, u8 *arg2, s32 arg3);
 s16 func_80026C5C(s16, s16, s32, s32);
 extern u8 D_80062DFD;
@@ -220,7 +220,74 @@ void func_80027990(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80027B84);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_80028030);
+M2C_UNK func_80028030(Rect16 *arg0, s32 arg1) {
+    void *temp_a1;
+    void *temp_a1_2;
+    void *temp_a1_3;
+    void *temp_a1_4;
+    void *temp_a1_5;
+
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 8) = (u16) M2C_FIELD(arg0, u16 *, 0);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xA) = (u16) M2C_FIELD(arg0, u16 *, 2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xC) = (u16) ((M2C_FIELD(arg0, u16 *, 0) + M2C_FIELD(arg0, u16 *, 4)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xE) = (u16) M2C_FIELD(arg0, u16 *, 2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 4) = 0xF0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 5) = 0xF0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 6) = 0xF0;
+    temp_a1 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 8) = (u16) M2C_FIELD(arg0, u16 *, 0);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xA) = (u16) ((M2C_FIELD(arg0, u16 *, 2) + M2C_FIELD(arg0, u16 *, 6)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xC) = (u16) ((M2C_FIELD(arg0, u16 *, 0) + M2C_FIELD(arg0, u16 *, 4)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xE) = (u16) ((M2C_FIELD(arg0, u16 *, 2) + M2C_FIELD(arg0, u16 *, 6)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 4) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 5) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 6) = 0x40;
+    temp_a1_2 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1_2 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1_2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 8) = (u16) M2C_FIELD(arg0, u16 *, 0);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xA) = (u16) M2C_FIELD(arg0, u16 *, 2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xC) = (u16) M2C_FIELD(arg0, u16 *, 0);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xE) = (u16) ((M2C_FIELD(arg0, u16 *, 2) + M2C_FIELD(arg0, u16 *, 6)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 4) = 0xC8;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 5) = 0xC8;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 6) = 0xC8;
+    temp_a1_3 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1_3 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1_3);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x40;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 8) = (u16) ((M2C_FIELD(arg0, u16 *, 0) + M2C_FIELD(arg0, u16 *, 4)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xA) = (u16) M2C_FIELD(arg0, u16 *, 2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xC) = (u16) ((M2C_FIELD(arg0, u16 *, 0) + M2C_FIELD(arg0, u16 *, 4)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xE) = (u16) ((M2C_FIELD(arg0, u16 *, 2) + M2C_FIELD(arg0, u16 *, 6)) - 1);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 4) = 0x70;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 5) = 0x70;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 6) = 0x70;
+    temp_a1_4 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1_4 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1_4);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 3) = 3;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), s8 *, 7) = 0x60;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 8) = (u16) M2C_FIELD(arg0, u16 *, 0);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xA) = (u16) M2C_FIELD(arg0, u16 *, 2);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xC) = (u16) M2C_FIELD(arg0, u16 *, 4);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u16 *, 0xE) = (u16) M2C_FIELD(arg0, u16 *, 6);
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 4) = 0xA0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 5) = 0xA0;
+    M2C_FIELD((*(void *volatile *)&D_80062F24), u8 *, 6) = 0xA0;
+    temp_a1_5 = (*(void *volatile *)&D_80062F24);
+    (*(void *volatile *)&D_80062F24) = temp_a1_5 + 0x10;
+    func_80046794(D_80062FC4, (s32) temp_a1_5);
+}
 
 void func_80028484(MainBox *arg0) {
     Rect16 r;

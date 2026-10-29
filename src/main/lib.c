@@ -216,7 +216,124 @@ s32 func_80036FFC(s32 arg0, MainWords *arg1) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_80037050);
+s32 func_80037050(s32 arg0, s32 arg1, s32 arg2) {
+    s32 w;
+    s32 len;
+    s32 off;
+    s32 pad;
+    s32 rem;
+    s32 n;
+    u32 addr;
+
+    w = D_8004AB58[arg0].w0;
+    addr = arg1;
+    len = D_8004AB58[arg0].w4;
+    off = addr - (w & 0x0FFFFFFF);
+    if (D_8004A698 == 0) {
+        pad = 0;
+    } else {
+        pad = (0x10000 - D_8004A69C) << D_8004AB1C;
+    }
+    if (w & 0x40000000) {
+        rem = len - off - pad;
+    } else {
+        rem = len - off;
+    }
+    if (rem < arg2) {
+        return -1;
+    }
+    if (w & 0x40000000) {
+        if (off > 0) {
+            s32 m;
+
+            m = D_8004AB54;
+            if (D_8004AB50 - 2 < m) {
+                return -1;
+            }
+            D_8004AB54 = m + 1;
+            D_8004AB58[m].w4 = off;
+            D_8004AB58[m].w0 = (D_8004AB58[m].w0 & 0x0FFFFFFF) | 0x80000000;
+            D_8004AB58[D_8004AB54].w0 = addr;
+            D_8004AB58[D_8004AB54].w4 = arg2;
+        } else {
+            s32 m;
+
+            m = D_8004AB54;
+            if (D_8004AB50 - 1 < m) {
+                return -1;
+            }
+            D_8004AB58[m].w4 = arg2;
+            D_8004AB58[m].w0 &= 0x0FFFFFFF;
+        }
+        D_8004AB54 += 1;
+        D_8004AB58[D_8004AB54].w0 = ((w & 0x0FFFFFFF) + off + arg2) | 0x40000000;
+        D_8004AB58[D_8004AB54].w4 = len - off - arg2;
+    } else if (off > 0) {
+        MainWords *p;
+        s32 a;
+        s32 b;
+
+        if (rem == arg2) {
+            if (D_8004AB50 - 2 < D_8004AB54) {
+                return -1;
+            }
+        } else {
+            if (D_8004AB50 - 1 < D_8004AB54) {
+                return -1;
+            }
+        }
+        D_8004AB58[arg0].w4 = off;
+        n = D_8004AB54;
+        p = &D_8004AB58[n];
+        a = p->w0;
+        b = p->w4;
+        p->w0 = addr;
+        p->w4 = arg2;
+        D_8004AB54 = n + 1;
+        p[1].w0 = a;
+        p[1].w4 = b;
+        if (rem >= arg2) {
+            MainWords *q;
+            s32 c;
+            s32 d;
+
+            q = &D_8004AB58[D_8004AB54];
+            c = q->w0;
+            d = q->w4;
+            q->w0 = ((w & 0x0FFFFFFF) + off + arg2) | 0x80000000;
+            q->w4 = rem - arg2;
+            D_8004AB54 += 1;
+            q[1].w0 = c;
+            q[1].w4 = d;
+        }
+    } else {
+        if (arg2 < rem) {
+            if (D_8004AB50 - 1 < D_8004AB54) {
+                return -1;
+            }
+        }
+        D_8004AB58[arg0].w4 = arg2;
+        D_8004AB58[arg0].w0 &= 0x0FFFFFFF;
+        if (arg2 < rem) {
+            MainWords *p;
+            s32 a;
+            s32 b;
+            s32 m;
+
+            m = D_8004AB54;
+            p = &D_8004AB58[m];
+            a = p->w0;
+            b = p->w4;
+            p->w0 = ((w & 0x0FFFFFFF) + arg2) | 0x80000000;
+            p->w4 = rem - arg2;
+            D_8004AB54 = m + 1;
+            p[1].w0 = a;
+            p[1].w4 = b;
+        }
+    }
+    func_80037664();
+    return addr;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_800373AC);
 

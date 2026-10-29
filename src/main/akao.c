@@ -17,6 +17,11 @@ s32 func_800354CC(void);
 s32 func_8002DF88(AkaoReq *cmd);
 M2C_UNK func_80039644(s32, s32);
 M2C_UNK func_800396C0(s32, s32);
+s32 func_80034FC8(s32 arg0, s32 arg1);
+extern s16 D_8009A000;
+extern s32 D_8009A004;
+extern s32 D_8009A008;
+extern s32 *D_80083270;
 
 void func_80029A50(void) {
     func_80038FEC(0);
@@ -3762,7 +3767,94 @@ void func_80034F5C(void) {
     } while (r != 0);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034FC8);
+s32 func_80034FC8(s32 arg0, s32 arg1) {
+    u16 x;
+
+    if (D_80071A60 != 0) {
+L_ret0:
+        return 0;
+    }
+    D_8009A004 = 0x1E;
+    D_8009A008 = 0x7FFF;
+    if (D_80071A64 == 1) {
+        if (arg1 == 0x26) {
+            D_8009A008 = 0;
+        } else if (arg1 == 0x31) {
+            D_8009A008 = 0x1800;
+        }
+    }
+    D_8009A000 = 0xC9;
+    func_8002DA7C();
+    func_80041F14(1);
+    ((MainTri *) &D_80095DA8)->f0 = 0;
+    ((MainTri *) &D_80095DA8)->f8 = 0;
+    ((MainTri *) &D_80095DA8)->f4 = 0;
+    x = D_8009A1F4[arg1].f12;
+    D_80075DF0.f0 = 0;
+    D_80075DF0.f10 = 0x140;
+    D_80075DF0.f12 = 0xE0;
+    D_80075D00 = (void *) &D_80075DF0;
+    D_80095DC4 = x;
+    D_8006E118 = 0;
+    D_80075DF0.f2 = 0;
+    D_80075DF0.f4 = 0;
+    D_80075DF0.f6 = 0;
+    D_80075DF0.fC = 0;
+    D_80075DF0.f14 = 0;
+    D_80075DF0.f18 = 0;
+    D_80075DF0.f8 = 0;
+    D_8006E110 = 1;
+    D_8006E114 = 0;
+    switch (D_80095DC4) {
+    case 0:
+        D_80095D88.f0 = D_8009A1F4[arg1].f8;
+        D_80095D88.f4 = D_8009A1F4[arg1].fA;
+        D_80095D88.f10 = D_8009A1F4[arg1].f10;
+        D_80095D88.f14 = arg0;
+        D_80095D88.f8 = 0x140;
+        D_80095D88.fC = 0xE0;
+        arg0 += 0x19B00;
+        D_80095D88.f18 = arg0;
+        arg0 += 0x19B00;
+        D_80095D88.f1C = arg0;
+        arg0 += 0x2D00;
+        func_8003DBA0(arg0, 0x24);
+        arg0 += 0x12000;
+        D_80083270 = &D_80077F3C;
+        func_80042144((s32) func_80036038);
+        func_80040A40(1, 0, -1, 0, 0);
+        func_80033DAC(D_8009A1F4[arg1].f0, (s32) func_80035D64);
+        func_80033C20(D_8009A1F4[arg1].fC, 0, D_8009A1F4[arg1].fE, 0);
+        D_800965E4 = 0;
+        D_8009A060 = 0;
+        return arg0;
+    case 1:
+        goto L_ret0;
+    case 2:
+    case 3:
+        D_80095D88.f0 = D_8009A1F4[arg1].f8;
+        D_80095D88.f4 = D_8009A1F4[arg1].fA;
+        D_80095D88.f10 = D_8009A1F4[arg1].f10;
+        D_80095D88.f8 = D_8009A1F4[arg1].fC;
+        D_80095D88.fC = D_8009A1F4[arg1].fE;
+        D_8006E0FC = arg0;
+        arg0 += (u32) (D_8009A1F4[arg1].f4 + 3) / 4 * 4;
+        D_80095D88.f14 = arg0;
+        arg0 += 0xC800;
+        D_80095D88.f18 = arg0;
+        arg0 += 0xC800;
+        D_80095D88.f1C = arg0;
+        arg0 += 0x1C00;
+        func_80042144((s32) func_80036190);
+        func_80033C20(0xFF, 0, 0xFF, 0);
+        func_80040A40(0, 0, -1, 0, 0);
+        func_80033E34(D_8009A1F4[arg1].f0, D_8009A1F4[arg1].f4, D_8006E0FC, (s32) func_80035D64);
+        D_800965E4 = 1;
+        D_8009A060 = 1;
+        break;
+    }
+    return arg0;
+}
 
 void func_80035430(void) {
     s16 sp10;

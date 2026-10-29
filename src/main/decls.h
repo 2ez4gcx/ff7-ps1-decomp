@@ -1144,7 +1144,6 @@ void func_800328F8(AkaoChannel *ch);
 void func_8002CC44(u8 *cmd);
 extern s16 D_80062FB8;
 void func_80032718(AkaoChannel *ch);
-extern M2C_UNK D_8009A1F4;
 void func_80029AF0(s32 arg0);
 M2C_UNK func_80037C40(M2C_UNK);
 M2C_UNK func_80037E1C(s32 *);
@@ -1733,6 +1732,14 @@ extern u16 D_80069500;
 extern u16 D_80069502;
 extern u16 D_80069504;
 extern u16 D_80069506;
-void func_80012DB0(s16, s16, s16);
+void func_80012DB0(s16 arg0, s16 arg1, s16 arg2);
+extern u8 D_8009A074[];
+s32 func_80037050(s32 arg0, s32 arg1, s32 arg2);
+typedef struct { s32 f0; s32 f4; s32 f8; } MainTri;
+typedef struct { s32 f0; s32 f4; u16 f8; u16 fA; u16 fC; u16 fE; u16 f10; u16 f12; } MainMovie;
+extern struct { s16 f0; s16 f2; s16 f4; s16 f6; s32 f8; s32 fC; s16 f10; s16 f12; s32 f14; s32 f18; } D_80075DF0;
+extern struct { s32 f0; s32 f4; s32 f8; s32 fC; u32 f10; s32 f14; s32 f18; s32 f1C; } D_80095D88;
+extern s32 D_8006E110;
+extern MainMovie D_8009A1F4[];
 
 #endif /* MAIN_DECLS_H */

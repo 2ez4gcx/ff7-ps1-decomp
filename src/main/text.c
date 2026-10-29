@@ -318,7 +318,24 @@ void func_800129D0(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80012A8C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_80012DB0);
+void func_80012DB0(s16 arg0, s16 arg1, s16 arg2) {
+    u8 *b;
+
+    func_80044244(&D_8007E7A0[(s16) D_80075DEC * 4], 1);
+    b = D_8009A074;
+    ((Tile16 *) (D_8009A074 + (s16) D_80075DEC * 0x30))->r0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg0 / 256;
+    ((Tile16 *) (D_8009A074 + (s16) D_80075DEC * 0x30))->g0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg1 / 256;
+    ((Tile16 *) (D_8009A074 + (s16) D_80075DEC * 0x30))->b0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg2 / 256;
+    ((Tile16 *) (D_8009A074 + 0x10 + (s16) D_80075DEC * 0x30))->r0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg0 / 256;
+    ((Tile16 *) (D_8009A074 + 0x10 + (s16) D_80075DEC * 0x30))->g0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg1 / 256;
+    ((Tile16 *) (D_8009A074 + 0x10 + (s16) D_80075DEC * 0x30))->b0 = (s16) *(volatile u16 *) (D_8009AC2B + 0x17) * arg2 / 256;
+    ((MainTag *) (D_8009A074 + (s16) D_80075DEC * 0x30))->addr = ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr;
+    ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr = (u32) (D_8009A074 + (s16) D_80075DEC * 0x30);
+    ((MainTag *) (D_8009A074 + 0x10 + (s16) D_80075DEC * 0x30))->addr = ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr;
+    ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr = (u32) (b + (s16) D_80075DEC * 0x30 + 0x10);
+    ((MainTag *) (D_8009A074 - 0xC + (s16) D_80075DEC * 0x30))->addr = ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr;
+    ((MainTag *) (D_8007E7A0 + (s16) D_80075DEC * 4))->addr = (u32) (D_8009A074 - 0xC + (s16) D_80075DEC * 0x30);
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text", func_800131B8);
 
