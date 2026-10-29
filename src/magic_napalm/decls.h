@@ -36,7 +36,7 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK func_801B17AC;
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
 void func_801B06F0(void);
-extern u8 D_80062D98;
+extern volatile u8 D_80062D98;
 extern s32 func_801B04C8;
 void func_801B0D2C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -59,5 +59,12 @@ extern s8 D_801D880D;
 extern s8 D_801D880E;
 typedef struct { u16 v; } MgHalf;
 extern MgHalf D_801D8810;
+void func_801B0B10(void);
+typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgGas;
+extern u16 D_801D885C;
+extern s8 D_801D885B;
+extern s8 D_801D8858;
+extern s8 D_801D885A;
+extern s8 D_801D8859;
 
 #endif /* MAGIC_NAPALM_DECLS_H */
