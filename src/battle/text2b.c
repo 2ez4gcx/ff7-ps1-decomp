@@ -61,7 +61,68 @@ void func_800CD82C(void) {
     D_801621F0[D_801590D4][0] = -1;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800CD860);
+void func_800CD860(s16 arg0, s32 arg1, s16 arg2, void *arg3, u16 arg4, void *arg5) {
+    s16 s0;
+    s16 s1;
+    s16 t0;
+    s16 t1;
+    s32 sum1;
+    s32 cnt;
+    s16 sumA;
+    s16 sumB;
+    s32 i;
+    s32 mask;
+    s32 off;
+    s32 w0;
+    s32 w1;
+
+    if (D_801031F0 == 0) {
+        s0 = 0x800 - D_8015122C[D_800F99E8][0];
+        s1 = ((arg2 * D_801518EA[arg0].a) >> 12) + ((D_801518F6[D_800F99E8][0] * D_801518EA[D_800F99E8].a) >> 12);
+    } else {
+        sum1 = 0;
+        cnt = 0;
+        sumA = 0;
+        sumB = 0;
+        i = 0;
+        mask = D_80151774;
+        off = 0;
+        for (; i < 10; i++) {
+            if ((mask >> i) & 1) {
+                cnt++;
+                sum1 += *(s16 *)((u8 *)D_801518FC + off);
+                sumB += *(u16 *)((u8 *)D_801518F6 + off);
+                sumA += *(u16 *)((u8 *)D_801518EA + off);
+            }
+            off += 0xB9C;
+        }
+        sum1 = sum1 / (cnt & 0xFF);
+        sumB = sumB / (cnt & 0xFF);
+        sumA = sumA / (cnt & 0xFF);
+        s0 = 0x800 - sum1;
+        s1 = ((arg2 * D_801518EA[arg0].a) >> 12) + ((sumB * sumA) >> 12);
+    }
+    t0 = M2C_FIELD(arg5, u16 *, 0) - ((func_80039A74(s0) * s1) >> 12);
+    t1 = M2C_FIELD(arg5, u16 *, 4) + ((func_80039B40(s0) * s1) >> 12);
+    cnt = func_800BBF7C(arg3);
+    D_801620B0[cnt & 0xFF].a6 = D_800F99E8;
+    D_801620B0[cnt & 0xFF].a4 = arg0;
+    if (D_800F99E8 == arg0) {
+        D_801620B0[cnt & 0xFF].a8 = 0;
+        D_801620B0[cnt & 0xFF].aA = 0;
+    } else {
+        D_801620B0[cnt & 0xFF].a8 = (t0 - (s16)D_80151A4C[arg0].v.a) / (s16)arg4;
+        D_801620B0[cnt & 0xFF].aA = (t1 - (s16)D_80151A50[arg0][0]) / (s16)arg4;
+    }
+    w0 = *(s32 *)0x1F800000;
+    w1 = *(s32 *)0x1F800004;
+    D_801620B0[cnt & 0xFF].b15 = *(u8 *)0x1F800008;
+    D_801620B0[cnt & 0xFF].b16 = *(u8 *)0x1F80000C;
+    D_801620B0[cnt & 0xFF].a0 = arg4;
+    D_801620B0[cnt & 0xFF].aC = w0;
+    D_801620B0[cnt & 0xFF].b10 = w1;
+    D_801620B0[cnt & 0xFF].b14 = D_80166F58;
+}
 
 void func_800CDD44(s16 arg0) {
     D_8015191F[arg0][0] = 1;
