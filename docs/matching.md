@@ -208,6 +208,20 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `lw` (main func_8003FE98). `*(volatile u16 *)(D_8009AC2B + 0x15)` through the
   neighbouring array gives `la; lhu 0(reg)`, `*(volatile T *)&D_x` the direct `lui; lhu
   %lo`.
+- A table that put keeps as `INCLUDE_RODATA` and the C reads must be `extern const`: the
+  scheduler then lifts its load above earlier stores (battle func_800A9DA0: `const s8
+  D_800A0398` moved the `lb` above the first `sw` and removed a `nop`).
+- A run of scalar globals declared as one struct global (`D_80095D88.f0`...) keeps table
+  loads in source order where separate scalars get hoisted; three adjacent globals
+  written through a cast struct pointer pin a load after them (main func_80034FC8). Splat
+  may name a vector's second field as a symbol of its own: `D_801D5358.vx += 0x12C;
+  D_801D5358.vy += 0x190;` gives load, load, add, add, store, store, where a separate
+  `extern s32 D_801D535C` does not match (nadare func_801B19CC).
+- A pointer local to such a constant address instead of the volatile neighbour form folds
+  back to `lui; lhu` (main batch 10). In 5-primitive draw functions, `u8` colour constants
+  (0xF0/0xC8/0xA0) give `ori` where `s8` gives `addiu -16` (main func_80028030).
+- A function that falls off its end must be `s32` to keep the last loop's `bnez; nop`
+  (nadare func_801B11C4).
 
 ### Order of instructions
 
@@ -409,6 +423,35 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   and `sym(reg)` for the direct access. A ternary on the right of a chained cast store,
   `*(u8 *)(D + g + K1) = *(u8 *)(D + g + K2) = (x & 8) ? 0xB0 : 0x50;`, gives one address
   register per store with the stores after the join.
+- A stored halfword is not forwarded to a later load that spells the address differently:
+  `D_801D5372 = c;` then `*(s16 *)((u8 *)&D_801D536C + 6) != 0x80` gives the game's `sh`
+  then `lh` (nadare func_801B19CC); a store in both arms instead lets cross-jumping move
+  it to the join.
+- `h = &p->unk2; *h += 1; if (*h >= D_x[4])` keeps the global pointer load after the `sh`
+  where `p->unk2++` lets it float up (beat func_801B0778). A store through a one-field
+  struct pointer, `fd->p = ptr`, keeps a following global pointer load below it; `*fd =
+  ptr` on a `u8 **` lets it float above (saikyo func_801B035C).
+- `D_x[a].f--; D_x[a].f &= 0x1F;` keeps `addiu -1` and a reload after the byte store; `-=
+  1` forwards the value as `addiu 255` (battle func_800C1908).
+- `(*(s16 *)(q + 0x10) << 2) < *(s16 *)(q + 0x12)` schedules the two loads as the game,
+  `* 4` does not (battle func_800A3ED0); `if (v > best)` and `if (best < v)` order a load
+  and an `sll` differently (nadare func_801B11C4).
+- Scale vector stores `sc.vz`, `sc.vy`, `sc.vx` in that order give `0x30, 0x2C, 0x28`
+  (beat func_801B01BC). `q->unk10 = 0` written after the `unkE` statement leaves the
+  `nop` after the first `mfhi` unfilled (iyashi func_801B0A74).
+- `f(D + 0x70 + ((r >> 2) << 2), q)` with the global first keeps `r` in `a0` and the
+  `addiu 0x70` before the add; `((r >> 2) << 2) + 0x70 + D` does not (iyashi
+  func_801B0624). `tab = base; j = 0; tab += D_x;` with `j * 16 + (s32)tab` gives the
+  preheader and `addu` operand order (nadare func_801B1350).
+- A pointer local used in one expression (`b = D_8009A074; ... b + 0x10`) puts the
+  `+0x10` after the add (`addu; addiu 16`) while other uses of `D_8009A074 + 0x10` stay
+  in a hoisted register (main batch 10); `b = D_x;` keeps `(base + idx) + 0x270` unfolded
+  only when `b` lives across calls (iyashi func_801B0D64).
+- Re-reading `D_8004AB54` after `D_8004AB54 += 1` as the index stops `(n+1)*8` folding
+  into `n*8+8` (main batch 10). `id = T[D]; e[8] = D; D++; e[0] = id;` gives `lh`, `move
+  v1,a0`, `addiu a1,v1,1` (hiwind func_801B08DC).
+- `r = f(); q = (MgTask *)((u8 *)D_80162978 + 4); g(..., (u8 *)q + (r << 5));` gives the
+  base `lui; addiu` after the call and `q` in `s1` (nadare func_801B1C54).
 
 ### Registers
 
@@ -541,6 +584,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   bytes); if/else or a ternary reloads it after the call. Packet links through a bitfield
   tag (`pk->tag.addr = ot->addr; ot->addr = (u32)pk;`) put `0xFF000000` in the game's
   register where the mask form swaps them.
+- Block-scope locals become local pseudos and get `v0..a3`; function-level temporaries
+  compete with the arguments (main batch 10). A temp shared by several statements takes a
+  saved register across calls; one single-use temp per statement keeps it in `v0` (saikyo
+  func_801B0A68).
+- A permuter run found a parameter copy `u32 addr = arg1;` between two table loads that
+  fixed the parameter-copy order and the saved register (main func_80037050).
+- A spawn pointer used in two blocks (a loop and a later `if`) is allocated high; one
+  variable per block put the loop's in `s0` (iyashi func_801B0A74), while hiwind
+  func_801B05B4 matched with one shared `q`.
+- User locals assigned in the game's order before a loop (`code = 0x6A; head =
+  0x02000000; layer = 0x40;`) give the hoisted-constant registers; a user variable gets a
+  lower pseudo than an expression temp, so it takes the higher register on ties (fubuki
+  func_801B032C). `one = 1; p = &D_x;` as locals before a loop put the constant in `t2`
+  and the address in `t1`; without the local the address is not hoisted (battle
+  func_800A9DA0).
+- `tab = base + D_x; tab += 4;` in two statements gives `tab` more references so it
+  outranks `idx` (nadare func_801B11C4). A variable of its own for a middle loop's value
+  stops it taking `s0` (battle func_800A3ED0); reusing a loop counter for a call result
+  moves it from `a3` to `t2` (battle func_800CD860).
+- `D_x++ / 32 % 3` inline in a call argument keeps the post-increment temp as the
+  dividend, adjusted in place (`move a1,v0; addiu a1,a1,31`); a named `t = D_x++` does
+  not (battle func_800A3ED0).
 
 ### Control flow
 
@@ -673,6 +738,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A variable divisor (`d = 100000; x / d`) gives `divu` with `bnez; break 7`, a literal
   divisor the multiply sequence. A constant hoisted out of a loop (`li a3, 1`) lands in
   the stall slot before a `div` macro.
+- An if / else-if chain with a call in each arm gives one shared `jal`; a `goto` into a
+  shared call (m2c's shape) does not. An `s16` parameter with an `s32` counter gets an `i
+  << 16` giv (battle func_800A38FC).
+- The same comparison with a global load written in both arms of an if/else, each with
+  its own `return -1`, cross-jumps only the `slt; bnez; li v0,-1` tail; computing the
+  limit into one variable gives one load after the join (main batch 10).
+- A switch over a `u16` global with `case 1: goto ret0` shares the early `return 0` block
+  and ends the CSE path before the next case, so a constant `1` is not kept across calls
+  in `s3` (main batch 10).
+- `if (f >= 12) k = 0x14 - f; else k = 8;` gives `bnez; ori sN, K` with the else constant
+  in the delay slot; `k = 8;` before the `if` is hoisted instead (hiwind func_801B0730).
+  `p->unk2 ^= 1` written after `if (D_x < 2)` lands in the `jr` delay slot (iyashi
+  func_801B0D04).
+- `t = p->unk2; if ((u16)(t - 0x1E) < 0x12U) { k = p->unk2 - 0x1E; ... }` keeps `k`'s
+  subtraction as its own `addiu` in the call's delay slot (nadare func_801B15C8).
 
 ### Loops
 
@@ -817,6 +897,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   indexed through a pointer (`((s32 *)D_x)[k]`) it is unrolled completely (chocobo
   func_800AB410). Unrolled 3x5 output loops need two-term indices (`i * 8 + n * 0x18`)
   for the game's stepping registers.
+- `for (i = 0; i < 10; i++) { if (...) }` matched where the same loop as `do { ...; i++;
+  } while (i < 10)` let reorg rewrite `sll v1,a0,1` after `move a0,s0` into `sll v1,s0,1`
+  (nadare func_801B1C54; seen with `-fno-delayed-branch` and the `.dbr` dump).
+- `q = D_8009D84C[i]; p = (u8 *)&D_800F83E0[i];` bases each pointer giv at field 0 as the
+  game; hand-advanced `p += 0x68` is rebased to the last field (battle func_800A3ED0).
+  `off += 0xB9C` with `*(s16 *)((u8 *)D_x + off)` shares one stepping register across
+  three arrays; `*(s16 *)&D_x[i]` gets a pointer giv of its own (battle func_800CD860).
+- `i = 0;` then `for (; i < 3; i++)` gives the game's prologue order (battle
+  func_800A9DA0). Word scratchpad values read into locals before struct-member stores
+  hoist above the byte stores (battle func_800CD860).
 
 ### Stack frame
 
@@ -857,6 +947,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `D[i].fn/.a/.b` instead of `s32 D[i * 6]` removed 24 bytes of dead locals (main
   func_80045D18); a cast-offset address `*((u8 *)D + 1 + i * 0xB9C)` can spill to an
   otherwise unused 8-byte slot where the typed `D[i].g` does not.
+- `MgMat m; u8 pad[8];` (pad after the matrix) gives a 0x40 frame with `m` at sp+0x10;
+  the pad first moves `m` (iyashi func_801B082C). `u8 pad[0x28]` before `rot` (nadare
+  func_801B19CC) and `u8 pad[0x40]` (nadare func_801B1C54; iyashi func_801B0A74 for its
+  0x68 frame) rebuild larger frames.
 
 ### How the scheduler and the allocator decide
 
@@ -1017,6 +1111,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   inlined (an inlined helper is a scheduling barrier no block or `do { } while (0)`
   replaces) takes the helper as a `static inline` function before it in the work file:
   `put` places it right before the function, once per file (reito func_801B1158).
+- A ring-buffer quad drawn by func_8003BD7C with the colour word per quad: `*(u32 *)(q +
+  4) = *(u32 *)(q + 0xC) = col` (iyashi func_801B0624).
+- work/main10/mk34FC8n.py brute-forces where a few independent stores sit around a fixed
+  chain (under 350 compiles for main func_80034FC8); work/spells34/decl_perm.py tries
+  declaration orders.
 
 ## Hand-written assembly
 
