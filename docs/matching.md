@@ -222,6 +222,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   (0xF0/0xC8/0xA0) give `ori` where `s8` gives `addiu -16` (main func_80028030).
 - A function that falls off its end must be `s32` to keep the last loop's `bnez; nop`
   (nadare func_801B11C4).
+- `(s16)*(u16 *)p - 7` gives `addiu -7` where plain `u16 - 7` gives `li 0xFFF9; addu`
+  (battle func_800C223C). `k = 0x4B0; q->f = q->f - k + rand() % N;` keeps the constant
+  on the field where `(u16)q->f - 0x4B0` makes a hoisted HImode constant (64336) that
+  takes a saved register (thundg2, rakuseki func_801B0D04); `u = i * 0x258 - 0x12C; t =
+  ang + u;` keeps `addiu -300` unfolded where `ang + (i * 0x258 - 0x12C)` folds it
+  (rocket func_801B11FC).
+- `k << 4` on an `s16 k` stored to a byte gives `sll 4`, `k * 0x10` gives `sll 16; srl
+  12` (ho_den func_801B0148). An `s8 c = D_x * 6;` colour local stored into several byte
+  globals gives the game's load order where `s32 c` does not (osen func_801B02DC); a `u8`
+  global read once into an `s32 c` used twice (a halfword store and the 4th argument)
+  gives `lbu a3` directly, where `u8 c` adds `t0` and a `move` (thundg2).
+- An `s16` parameter used only in `sh` stores keeps its `move s2,a2` out of the prologue;
+  `s32` swapped three registers (rakuseki func_801B00AC). A callee defined with one
+  parameter that the game calls with two is called through a cast prototype (altema
+  func_801B0580).
+- A pause-flag test that needs `andi v0,v1,0xFF` matched with `extern volatile u8
+  D_80062D98` in that spell's decls.h; CSE then reuses the register as the zero of a
+  later `0 < n` loop guard (rocket func_801B0D98).
 
 ### Order of instructions
 
@@ -452,6 +470,39 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   v1,a0`, `addiu a1,v1,1` (hiwind func_801B08DC).
 - `r = f(); q = (MgTask *)((u8 *)D_80162978 + 4); g(..., (u8 *)q + (r << 5));` gives the
   base `lui; addiu` after the call and `q` in `s1` (nadare func_801B1C54).
+- Stores the game places after a call go after it in source, and each zero store after
+  the load it follows in the game (rakuseki func_801B02F8, func_801B0A54;
+  work/spells27/perm.py found the order of about nine blocks in spells batch 38).
+- Byte globals as array elements, `D_x[2] = D_x[1] = D_x[0] = 0`, keep a following
+  `p->unk2` reload after them; consecutive word or halfword globals as array elements
+  keep the game's load/store alternation (thundg1 func_801B0724, altema func_801B0074;
+  not everywhere: `D_800F8380` as an array broke its `lui; lbu`). `*bp = D_09.v = D_0A.v
+  = e` with `MgByte` globals keeps the three stores ahead of later loads, and `extern
+  struct { s16 v; } D_x` scalars stop pointer loads moving above their stores; a
+  neighbour read as `*(s16 *)((u8 *)&D_58 + 2)` does not share the address register of
+  `D_x` (ho_den func_801B06C4, heart2 func_801B0F9C).
+- Packet stores as `*(s32 *)((u8 *)p + N) = v` keep a later `D_801517C0` load after all
+  of them where struct-member stores let it float above; `((u8 *)p)[7] = code;` written
+  last gives the `p+7` stepping register (reazer func_801B102C). `q->unk8 = p->unk8;
+  q->unkA = 0;` (copy first) gives the early `lhu` (thundg1).
+- Scratchpad: `D_1F800000[0..3]` as an `extern s32` array keeps later global loads after
+  the stores (seald func_801B0974). A pointer local `s = (MgSVec *)0x1F800000` assigned
+  at the top keeps the stores in source order, but only when `s` itself is the call
+  argument: with the literal address GCC deletes the stores (grenade func_801B0880,
+  func_801B03EC); used for the offset-0 store and the argument it shares `lui a0` (faiga
+  func_801B0284). A struct-member store before the call stops the `lui a0,0x1F80`
+  argument being hoisted (seald func_801B0D4C).
+- More frame descriptors: `D_x[0] = v; f(&D_x[-5], ...)` lets a later argument load float
+  above the store, `frame = &D_x; *frame = v;` keeps it after (osen func_801B08F0, tail
+  func_801B0894). A pointer stored through a one-field struct, `((HoPtr *)frame)->p =
+  ptr`, lets later `lw` argument loads float above it; `*(u8 **)frame = ptr` keeps them
+  below (ho_den func_801B06C4). `*p = 0; D_x[2] = ...; m = (MgMat *)(p - 5)` on a
+  descriptor pointer gives `addiu s0,a1,-0x14` in a `beqz` delay slot (choco0
+  func_801B1F68); `D_x[0] = v; f(&D_x[-4])` with plain externs matches where extern
+  pointer variables add saved registers (choco0 func_801B1B40).
+- After a base-before-index spawn (`a = D_80162978; p = &a[f()];`), later plain
+  `&D_80162978[f()]` reuse the CSE'd base; `p = &b[D_8015169C]` inside `if (D_80062D98 ==
+  0) {` puts its loads after the branch (faiga func_801B0D48, func_801B062C).
 
 ### Registers
 
@@ -606,6 +657,40 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `D_x++ / 32 % 3` inline in a call argument keeps the post-increment temp as the
   dividend, adjusted in place (`move a1,v0; addiu a1,a1,31`); a named `t = D_x++` does
   not (battle func_800A3ED0).
+- One variable per role (not one `v`/`t`/`n` reused across blocks) keeps live ranges
+  apart: it fixed three registers in battle func_800AF9C8, and one variable per clamp arm
+  matched altema func_801B0850. Not always: one loop counter shared by three loops (with
+  its own inner `j`) matched thundg2 func_801B0908, and one multi-set `q` for three
+  divisions in different blocks ties the `subu` result to the sign register and stops
+  tail merging (fullcare func_801B0AB4). Try both.
+- `k -= 1;` in place inside an if / else-if chain on `k` keeps the game's `v0`/`v1` and
+  the delay-slot `li` where a temp `k - 1` swaps them (thundg1 func_801B002C, choco0
+  func_801B14A8). `((MgScratch *)0x1F800000)->unkA = c = 0x80;` keeps the constant in
+  `a0` for a later `c - ...` where a separate `c = 0x80;` does not (altema
+  func_801B01E0). A named mask `mk = 0x400040; if (v & mk)` puts the `lui` early in a
+  delay slot (battle func_800AF9C8).
+- `if (1 << i & D) { n++; if (n == 1) ... }` with a literal 1 shares one register for `1
+  << i` and `n == 1` and hoists the global load (faiga func_801B0D48).
+- Two `i == 0 ? A : B` ternaries on an `s16 i` in one loop are merged by CSE across a
+  call into a sign-extension in an extra saved register (frame 0x70 instead of 0x68);
+  storing each ternary straight to memory, `q->f = i == 0 ? A : B;`, gives `sll v0,s2,16;
+  bnez` per test (rakuseki func_801B07E4, func_801B0A54).
+- `u16 *g = &D_x; *g += a * b;` gives `lui; addiu a0; lhu 0(a0); sh 0(a0)` (rakuseki
+  func_801B0C58); `u = *g; r = p->unk2 % 2; u -= 8; u += r * 0x10; *g = u;` with an `s32
+  u` gives `lhu; addiu -8` where one expression gives `li 0xFFF8; addu` (rocket
+  func_801B0D98).
+- `n = p->unk14; p->unk14++; D[f()][0] = n;` avoids an HImode copy of `n` before the call
+  and its spill slot; `p->unk14 = n + 1` keeps both (reazer func_801B17F8). `k = amp >>
+  1; k *= k;` gives `sra s2,s4,1; mult s2,s2` where `(amp >> 1) * (amp >> 1)` uses `v0`.
+- `D[i][0] += x` on a `u16 D[][0x5CE]` recomputes `lui/addiu/addu` per use as the game
+  does; `*(u16 *)D[i] += x` shares one address (heart2 func_801B1518). `pa = &ta[i];
+  pa->vx` gives `addu base,idx` and `ta[i].vx` with a hoisted `ta` gives `addu idx,base`
+  (rocket func_801B0D98); `i * 4 + (s32)pk` gives `(off, base)` and `&pk[i]` the reverse
+  (battle func_800C223C).
+- A pointer variable for a second frame descriptor (`frame2 = &D_x; ... (u8 *)frame2 -
+  8`) with `i++` after the call put `i` in `s0` and the pointer in `s2` (napalm
+  func_801B07D4). Reload hands out registers round-robin: a spilled loop limit reloads
+  into `a2`, then `a3` (seald func_801B0074).
 
 ### Control flow
 
@@ -753,6 +838,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B0D04).
 - `t = p->unk2; if ((u16)(t - 0x1E) < 0x12U) { k = p->unk2 - 0x1E; ... }` keeps `k`'s
   subtraction as its own `addiu` in the call's delay slot (nadare func_801B15C8).
+- `(f & 4) && (f & 8)` folds into `(f & 0xC) == 0xC`; a temp `t4 = f & 4` for the first
+  test only, with the later `(f & 4) == 0` inline, keeps two tests and the delay-slot
+  `andi` (battle func_800AF9C8).
+- Shared store blocks: `if (t < 0xD) { k = 0xD; k -= t; goto store; } if (t >= 0x16) { k
+  = t - 0x16; store: ... }` (faiga func_801B0284; `k = 0xD - t` put the second test in
+  the first branch's delay slot); with a fail arm, `if (t < 2) { c = t << 6; goto store;
+  } if ((t -= 2) < 0x1E) { c = 0x80; store: ... } else { p->unk0 = -1; return; }` (heart2
+  func_801B11C4), or the fail block first and the label after the if/else (fullcare
+  func_801B0AB4). A `copy: c = k;` label after the if/else, not inside the third arm,
+  keeps two copies (at the join and in the second arm's delay slot) instead of a
+  cross-jump (heart2 func_801B0F9C).
+- `i = 0;` written once after an if/else join lands the `move` in one arm's `j` delay
+  slot and at the end of the other; set inside each arm it floats up (reazer
+  func_801B102C).
+- Identical case bodies are cross-jumped; three identical cases stayed apart only when
+  followed by an outer case with an inner switch of two or more cases (battle
+  func_800C679C, not the whole rule).
 
 ### Loops
 
@@ -907,6 +1009,19 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `i = 0;` then `for (; i < 3; i++)` gives the game's prologue order (battle
   func_800A9DA0). Word scratchpad values read into locals before struct-member stores
   hoist above the byte stores (battle func_800CD860).
+- Strength reduction: `D_x[i * 0x74] = 3` becomes a pointer giv; `n = i * 0x74; D_x[n] =
+  3;` in the then-arm keeps `addu at,at,s1` (grenade func_801B0C64). `D_x[off]` with `off
+  = i * 0x44` gives `lui at; addu at,at,a1` with a stepping integer (battle
+  func_800AF9C8), and `off = i * 0xB9C;` at the top of the body with `(u8 *)D + off`
+  gives unfused `sym+reg` loads and `addiu s2,s2,0xB9C` (heart2 func_801B17A0). An
+  `M2C_SFIELD` store in the loop lets loop.c hoist the global pointer as `move a2,a1`.
+- Loop base pointers (`ta`, `tb`, `td`) set before `n = ...` hoist their `lui/addiu`
+  above the guard and let the `&D_x` register be reused as the counter (rocket
+  func_801B0D98). Padding a loop body with dead arithmetic that flow deletes later stops
+  a small invariant (`addiu v0,sp,0x28`) being hoisted (battle func_800C223C), as in
+  field func_800ACC5C.
+- A `for` loop put `addiu v0,s3,1` in the branch delay slot where `do { } while` left a
+  `nop` (tail func_801B0FA4).
 
 ### Stack frame
 
@@ -951,6 +1066,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   the pad first moves `m` (iyashi func_801B082C). `u8 pad[0x28]` before `rot` (nadare
   func_801B19CC) and `u8 pad[0x40]` (nadare func_801B1C54; iyashi func_801B0A74 for its
   0x68 frame) rebuild larger frames.
+- An `s16` local copy of a field used in a compare and in later arithmetic (`s16 t =
+  p->unk2;`, or `s16 k; k = 8; if (p->unk2 >= N) k = M - p->unk2;`) gives `lh v0; move
+  v1,v0; slti` and 8 more bytes of frame; an `s32` gives one register (rakuseki
+  func_801B0520, rocket func_801B0A34).
+- A local copy of a rodata table as a byte struct (`typedef struct { u8 b[24]; } T; tbl =
+  D_x;`), read as `*(s16 *)&tbl.b[i * 2]`, with `u8 pad[0x20]` before it to rebuild the
+  frame (reazer func_801B17F8).
 
 ### How the scheduler and the allocator decide
 
@@ -1116,6 +1238,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - work/main10/mk34FC8n.py brute-forces where a few independent stores sit around a fixed
   chain (under 350 compiles for main func_80034FC8); work/spells34/decl_perm.py tries
   declaration orders.
+- More magic multipliers: 0x64D319FF with shift 8 is /650; 0x57619F1 is /750 (shift 4)
+  and /24000 (shift 9); 0x1A6D01A7 is /620 and /19840; 0x1B4E81B5 is /600 and /19200.
+- work/spells38/declperm.py tries every order of a block of declarations;
+  work/spells19/hc.py with two `A::B` constraints placed a store group in 2 iterations
+  (reazer func_801B17F8). A helper named `types.py` in a work folder shadows the stdlib
+  module for every script run from there: give helpers distinctive names.
 
 ## Hand-written assembly
 
@@ -1144,11 +1272,14 @@ folder each, only `tools/work.py put` changes the repository, no git, no
 `tools/build.py`, give up on a function after about 20 tries without getting closer,
 and report what was put, what was not (with what still differs) and any finding. Two
 to eight agents ran at once at first; now one at a time, the maintainer's limit (each
-permuter run with `--jobs 2`). An agent stopped by a usage limit keeps its context: stop its leftover
-permuter processes, build everything, commit what it put, and resume it later with a
-message. On Windows, agents must never run `python3`/`python` (the Microsoft Store
-aliases) or `python -` reading stdin: such processes hang at 100% CPU and outlive their
-command; scripts are written to a file and run with the venv's Python. Agents never
+permuter run with `--jobs 2`). An agent stopped by a usage limit keeps its context:
+stop its leftover permuter processes, build everything, commit what it put, and resume
+it later with a message. On Windows, agents must never run `python3`/`python` (the
+Microsoft Store aliases) or any Python reading stdin (`python -`, the venv's Python with
+`-` or with no script): such processes hang at 100% CPU and outlive their command;
+scripts are written to a file and run with the venv's Python. Agents still type
+`.venv/Scripts/python -` now and then: say it in every prompt and check for hung
+processes after each batch. Agents never
 delete files (`rm`, `Remove-Item`...): Claude Code asks the user about every deletion
 even when it may run everything else, so an unattended batch stalls; they overwrite
 files or use new names instead (`work/` is ignored by git).
