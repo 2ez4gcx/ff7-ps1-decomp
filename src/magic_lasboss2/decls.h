@@ -104,8 +104,6 @@ void func_8003B64C(s32 *, s32 *);
 void func_8003B6BC(s32, s32);
 s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 void func_80046794(s32, void *);
-void func_80046848(void *, s32);
-void func_80046974(void *);
 extern MgMat D_801CD6CC;
 typedef struct { s16 flag; s16 frame; s16 vx; s16 vy; s16 vz; s16 pad[5]; } Lb2Rec;
 
