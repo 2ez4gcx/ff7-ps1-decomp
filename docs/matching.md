@@ -240,6 +240,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A pause-flag test that needs `andi v0,v1,0xFF` matched with `extern volatile u8
   D_80062D98` in that spell's decls.h; CSE then reuses the register as the zero of a
   later `0 < n` loop guard (rocket func_801B0D98).
+- A global m2c types `u16` that the code also reads with `lh` is `s16`: `extern s16
+  D_x[]; D_x[0] += -D / 2 + p->unk2 % 2 * D;` gives `la a1; lhu 0(a1); sh 0(a1)` and
+  reloads `p->unk2` after the store (lasboss func_801B21C8).
+- `(u32)(f(x) * 0x19) >> 7` stored into an `s16` gives `srl`: keep the shared `s32`
+  prototype and cast at the use (atomic func_801B03AC). `x * 0x200` gives `lh` where `x
+  << 9` gives `lhu`; `-p->unk2 * 6` gives `negu` before the multiply, `p->unk2 * -6` does
+  not (lasboss2 func_801B04F4, func_801B0A34). `(u32)((u16)p->unk2 - 10) < 0xF` gives
+  `lhu; addiu -10; sltiu`.
+- `D_x[0] = D_x[1] = D_x[2] = c` with `u8 c` puts the colour in `v1` and the base in
+  `v0`; `s32`, `s16` or `s8 c` swap them, and `s8 c` gives `li v1,-128` for 0x80 (club2
+  func_801B1468).
+- m2c's `return 1` after `D_x = 1;` can be wrong: when the `li v0,1` only serves the
+  store, the function is `void` (lasboss2 func_801B1834, lasboss func_801B2A50). `extern
+  M2C_UNK D_801B0000; f(&D_801B0000)` gives `lui; addiu a0,a0,0` where `(u8 *)0x801B0000`
+  drops the `addiu` (hatena func_801B105C).
+- An extra splat symbol right after a struct is its field: `D_801D33FC` written as
+  `D_801D33F8.vz` groups load, load, store, store and keeps a following reload after the
+  stores (comet).
 
 ### Order of instructions
 
@@ -503,6 +521,44 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - After a base-before-index spawn (`a = D_80162978; p = &a[f()];`), later plain
   `&D_80162978[f()]` reuse the CSE'd base; `p = &b[D_8015169C]` inside `if (D_80062D98 ==
   0) {` puts its loads after the branch (faiga func_801B0D48, func_801B062C).
+- A struct view on a `u8` symbol, `((Rec *)(D_x + o))->f` with a local `typedef struct {
+  s16 flag; s16 frame; s16 vx; s16 vy; s16 vz; s16 pad[5]; } Rec;`, keeps decls.h's `u8
+  D_x[]` for earlier callers, the `lui at; addiu at; addu at,at,o` form, and a later
+  `frame` load after the `vz` store where scalar casts let it float above; `((Rec
+  *)D_x)[i]` hoists the base into saved registers, and `++((Rec *)(D_x + o))->frame ==
+  0x1E` forwards the value without a reload (lasboss2 func_801B0D8C).
+- One-field struct and array globals keep their stores ahead of later loads: `D_x[0] =
+  D_y.v = expr;` with `D_y` an `MgWord` keeps a following `lh p->unk2` reload after it
+  (atomic func_801B09C8); `extern u8 D[]` elements keep their `lbu` after a struct-member
+  `sh` where a plain `u8` extern hoists it (h_blow func_801B04DC); `D_x[0] = D_x[1] =
+  D_x[2] = c` on a `u8` array with `(u8 *)D_y - 8` for the frame keeps `lhu p->f` after
+  the byte stores (spark func_801B0FAC, mizufuki func_801B05E0); a halfword global
+  written as `D[0] = v` keeps a final `lhu` after it (club2 func_801B2BD8).
+- More frame descriptors: `extern T *D_x[]; D_x[0] = ptr; f(D_x, ..)` gives `sw 0(s0)`
+  then `sw 0(a0)` (comet func_801B0608); `extern struct { u8 *src; s32 mode; s16 pad; s16
+  val; } D_x;` keeps later `p->unk2` loads below its stores (comet func_801B0850); a byte
+  colour descriptor `extern u8 D_x[]; D_x[0] = c; *(s32 *)&D_x[-4] = tbl[...]; f((s32
+  *)&D_x[-4], ...)` gives `sw -4(v1)` where `col = &D_x; *(s32 *)(col - 4) = ..` folds to
+  `lui at; sw`, and the colour-only twins match with `col = &D_x; *col = c; f((s32 *)(col
+  - 4), ..)` (lasboss2 func_801B013C, func_801B0948). `t = &D_x; m = (MgMat *)((u8 *)t -
+  0x14); ... *t = 0;` keeps the symbol address in `v0` (lasboss func_801B2A50). Unsolved:
+  the game loads `D_801517C0 + 0x70` into `a1` above a pointer store `sw ptr,-0xA(s0)`
+  (atomic func_801B0B44, tbreath func_801B071C).
+- Scratchpad: stores through `((MgScratch *)0x1F800000)->f` let symbol loads float above
+  them where raw `*(s16 *)0x1F8000xx` stores keep a table load below (club2
+  func_801B1164); a final store repeated in each arm of an if chain matched where one
+  store at the join sank below the argument loads (club2 func_801B1E38, func_801B1C2C).
+- `MgMat D_x; D_x.m[0][0] = D_x.m[1][1] = D_x.m[2][2] = v;` keeps the game's order and a
+  shared `la a1` (comet func_801B0608); `m.t[0] = m.t[1] = m.t[2] = 0` stores `t[2]`
+  first. Zero stores go after the load they follow: `t = p->unk8; q->unk1A = 0; q->unk8 =
+  t;` (triangle func_801B0BDC), `rot.vx = ..; rot.vy = ..; rot.vz = 0;` (hyper
+  func_801B179C, club2 func_801B1A54), `rot.vy = ..; rot.vx = rot.vz = 0;` (triangle
+  func_801B091C).
+- `p->unk16 = D;` before `p->unk2++; if (p->unk2 == N)` forwards the incremented value
+  instead of reloading it (atomic). Products written inline keep the game's
+  `lhu`/`lhu`/`mult` order where a temp loads the shared field first (lasboss2
+  func_801B0824). Packet constants are materialised in the order of their first store in
+  source (spark func_801B0700).
 
 ### Registers
 
@@ -691,6 +747,27 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   8`) with `i++` after the call put `i` in `s0` and the pointer in `s2` (napalm
   func_801B07D4). Reload hands out registers round-robin: a spilled loop limit reloads
   into `a2`, then `a3` (seald func_801B0074).
+- More on one variable per role: one `k` for two multiplier groups put the multiplier in
+  `a1` as the game (spark func_801B0700); one `r1`...`r7` per `rand()` and one `k` per
+  field avoid `move a1,v0` copies (triangle func_801B0DC4); a separate `r` for `rand()`
+  next to a function-wide `t` avoided a saved register (mizufuki func_801B0E40).
+- Store of a call result after later work: `r = f(..); k = field / 65; D_x = r; g(k, k,
+  k);` keeps `v0` live through the divide and the temporaries in `a1`/`v1` (lasboss2
+  func_801B06DC); `q = (x << 12) / 10; D_x = q;` gives `subu v1,v0,v1` where `D_x = (x <<
+  12) / 10;` gives `v0` (h_blow func_801B01E0). `p->f + (rand() % N - K)` keeps `-K` on
+  the remainder (cometeo func_801B0C4C).
+- `a = D_x;` read once and used as the index of two byte stores keeps the index register;
+  reading the global each time reloads it after the `sb` (h_blow func_801B078C). `ab =
+  D_80151A24;` inside the first block plus `pb = ab + 0x28;` keeps `addiu s0,s6,0x28`
+  unfolded where an inline cast symbol folds the constant into the `lwl` displacement
+  (h_blow func_801B0BAC).
+- `if (p->unk2 < 0xC) D = p->unk2; else D = (p->unk2 - 0xC) % 4 + 0xC;` with no local
+  gives `lh a0; move v1,a0`; locals swapped `a0`/`v1` or added 8 bytes of frame (club2
+  func_801B1468). With `s16 n = p->unkE;`, `p->unk6 += p->unkE;` and `+= n` give opposite
+  `addu` operand orders (atomic func_801B0B44).
+- A constant-address pointer keeps `2($s)` offsets only after a loop or label, where CSE
+  loses the constant equivalence; in straight-line code `t->vy` folds to `lui; lh sym+2`
+  (spark func_801B0A38, unsolved).
 
 ### Control flow
 
@@ -855,6 +932,18 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Identical case bodies are cross-jumped; three identical cases stayed apart only when
   followed by an outer case with an inner switch of two or more cases (battle
   func_800C679C, not the whole rule).
+- `p->f += 0x50;` in one arm and `-= 0x28` in the other gives `lhu; addiu` and one shared
+  `sh`; a temp stored once gives `v1` (lasboss func_801B1620). Complementary tests as two
+  ifs, `if (p->unk2 < 8) {...} if (p->unk2 >= 8) {...}`, give a reload of `unk2` after
+  the `sh` (lasboss2 func_801B04F4).
+- A call argument with an inline ternary, `f(&p->unk4, k2 + (p->unk16 == 0 ? 0x1000 :
+  0x2000), ...)`, puts `addiu a0,s0,4` early; a local set in an if/else keeps it late
+  (atomic func_801B0548). `D[0] = D[1] = D[2] = c ? A : B;` on an `s32` array builds the
+  address registers before the branch and stores after the join (atomic func_801B0E88).
+- Reorg fills a `bne` slot with the nearest independent instruction above it: `c = 0x60;
+  if (x == 4) c = 0x40;` got `ori a1,0x60` into the slot only with the following pointer
+  setup written after the `if` (triangle func_801B008C); `i = 0;` written after a `% 4`
+  store (a new basic block) is pulled into the `bgez` slot (triangle func_801B0DC4).
 
 ### Loops
 
@@ -1022,6 +1111,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   field func_800ACC5C.
 - A `for` loop put `addiu v0,s3,1` in the branch delay slot where `do { } while` left a
   `nop` (tail func_801B0FA4).
+- `j = i * 8; off = i * 0xB9C;` at the top of a loop body gives the offset-register givs
+  in the game's init and increment order (spark func_801B2014). Loop base pointers
+  assigned in the order `ba, bb, bd` before the loop give t6/t5/t4, whatever the
+  declaration order (hyper func_801B1AC0). Unsolved: h_blow func_801B0640 keeps an
+  unfolded loop guard `ori s2,zero,0x200; slti; bnez` that GCC folds in every loop form.
 
 ### Stack frame
 
@@ -1073,6 +1167,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A local copy of a rodata table as a byte struct (`typedef struct { u8 b[24]; } T; tbl =
   D_x;`), read as `*(s16 *)&tbl.b[i * 2]`, with `u8 pad[0x20]` before it to rebuild the
   frame (reazer func_801B17F8).
+- `MgSVec unused; s32 flag;` rather than `MgVec` fixed a frame (hyper func_801B07A0);
+  pads: `u8 pad[8]` after the last matrix (hyper func_801B1EA4), `u8 pad[0x30]` (triangle
+  func_801B0DC4); `rot` declared last puts `m` at sp+0x10 (lasboss func_801B1C60).
+  Aggregates sit lowest in declaration order, address-taken scalars above them.
+- `s32 f(void)` falling off its end keeps the `bnez; nop` loop tail and passes `v0` on to
+  a caller that returns it (hyper func_801B1160, func_801B254C).
 
 ### How the scheduler and the allocator decide
 
@@ -1244,6 +1344,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   work/spells19/hc.py with two `A::B` constraints placed a store group in 2 iterations
   (reazer func_801B17F8). A helper named `types.py` in a work folder shadows the stdlib
   module for every script run from there: give helpers distinctive names.
+- More magic multipliers: 0x88888889 with shift 10 is /1920, 0x78787879 with shift 5 is
+  /68, 0x66666667 with shift 3 is /20.
+- tools/work.py tidies a target's decls.h whenever it uses the target (`show`, `diff`,
+  `put`), dropping declarations main/decls.h already has: another spell's decls.h
+  changing during a batch is expected and right.
 
 ## Hand-written assembly
 
