@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B1840();
+s32 func_801B1840();
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 extern u8 D_8015190F[][0xB9C];
@@ -56,5 +56,43 @@ MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
 extern s16 D_801D7252[];
 extern u8 *D_801D7258[];
 s32 func_800D29D4(void *, s32, s32, s32);
+void func_801B0948(void);
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+extern u16 D_801D71A0[];
+extern s32 D_801D71A4[];
+extern u16 D_801D71AC[];
+s32 func_800BBA84(s32, s32, s32);
+s32 func_800BBEAC(void *);
+M2C_UNK func_800D2980(void *, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_800D52A0(s32, s32);
+void func_800D54EC(s32, void *);
+void func_801B15C4(void);
+extern s8 D_800F5B70;
+extern s8 D_800F5B71;
+extern s8 D_800F5B72;
+extern u8 D_80151918[][0xB9C];
+extern u8 D_801B1934[];
+extern s16 D_801E72D4;
+void func_801B04C0(void);
+extern u16 D_801D716C[];
+extern s32 *D_801D7170[];
+s32 func_800BC04C(void *);
+void func_800D5774(s32);
+void func_801B071C();
+void func_801B0A2C();
+void func_801B10E4(void);
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_8003B69C(s32, s32, s32);
+extern s32 D_801D1AB4[];
+extern s32 D_801D1CA8[];
+extern s16 D_801D727E[];
+extern MgSVec D_801D7284;
+extern s16 D_801D7286;
+extern s16 D_801D7288;
+extern s32 D_801D72C0[];
+extern s32 D_801D72C4;
+extern s32 D_801D72C8;
 
 #endif /* MAGIC_TBREATH_DECLS_H */
