@@ -1,0 +1,3 @@
+// Symbols of magic_conf alone (the others it shares are listed before).
+D_801B002C = 0x801B002C; // force_not_migration:True
+D_801B001C = 0x801B001C; // force_not_migration:True
