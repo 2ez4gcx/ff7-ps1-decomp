@@ -32,8 +32,8 @@ executable is split into source files by how its parts were compiled. Progress, 
 | Menus (`src/*menu/`) | 13 | 225 of 243 (93%) | 47% |
 | Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1037 of 1317 (79%) | 44% |
 | Ending, disc change (`src/ending/`, `dschange/`) | 2 | 55 of 64 (86%) | 54% |
-| Spell effects (`src/magic_*/`) | 290 | 2566 of 3998 (64%) | 44% |
-| **All** | **319** | **6213 of 8425 (74%)** | **46%** |
+| Spell effects (`src/magic_*/`) | 290 | 2775 of 3998 (69%) | 49% |
+| **All** | **319** | **6422 of 8425 (76%)** | **49%** |
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code

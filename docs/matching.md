@@ -258,6 +258,18 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - An extra splat symbol right after a struct is its field: `D_801D33FC` written as
   `D_801D33F8.vz` groups load, load, store, store and keeps a following reload after the
   stores (comet).
+- A table several functions use needs its type settled before the first put: graviga1
+  func_801B0AC8 matches only with `D_801D17B4` as an array of 0x24-byte structs (pointer
+  givs from `D[i].f`), but func_801B0A34 and func_801B1464 were put first with it as
+  `u8[]`, put refuses the type change, and casts of the byte array give other code. Put
+  the function that fixes the type first.
+- `D[i][0] = (u16)D[i][0] + c` on an `s16` array global gives `lhu` (sting
+  func_801B3F1C). `v << 15 >> 16` on an `s16` parameter gives `sll 15; sra 16` (dia
+  func_801B06E4); `(u32)f() >> 1` stored to an `s16` gives `srl` (dia func_801B118C). `c
+  = c << 1;` on a `u8 c` gives a plain `sll` where `c *= 2` adds an `andi` (conf
+  func_801B0800).
+- Stack arguments `sp10`/`sp14` at a 4-byte stride are `&v.vx`, `&v.vz` of a local
+  `MgSVec` (brizag func_801B0074, timedmg func_801B06E0).
 
 ### Order of instructions
 
@@ -559,6 +571,33 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `lhu`/`lhu`/`mult` order where a temp loads the shared field first (lasboss2
   func_801B0824). Packet constants are materialised in the order of their first store in
   source (spark func_801B0700).
+- Plain symbol stores written as one-field structs (`extern ChWord D_x; D_x.v = k;`) stay
+  ahead of a following struct-pointer store and its `lh` (cho_kyu func_801B0F24); a plain
+  `u16` global read after a struct-member store floats above it, read as `((DiHalf
+  *)&D_x)->v` it stays after (dia func_801B07F0). Casting the first stores as `*(s16
+  *)((u8 *)q + 0xC) = ..` keeps the next scalar-global load after them where
+  struct-member stores let it hoist (wpyu func_801B14A4, func_801B1878). Scratchpad adds
+  through `*(u16 *)sv += D_x; ((u16 *)sv)[1] += ..` keep later symbol loads in place
+  where `sv->vx += D_x` lets them float up (graviga2 func_801B09D0).
+- Frame descriptors: `s16 *frame = &D_x; *frame = v; f((u8 *)frame - 0xA, D_801517C0 +
+  0x70, 0xC, D)` puts `li a2` and the `sh` before the argument loads, `extern s16 D_x[];
+  D_x[0] = v; f((u8 *)D_x - 0xA, ...)` gives the loads first (dia func_801B1004,
+  func_801B07F0); other functions of the same spell matched with the `frame` form
+  (func_801B04C8, func_801B05D4), so try both. `q = D_x; q[0] = v; m = (MgMat *)(q - 5);
+  D_x[1] = ..; D_x[2] = ..;` matched a pointer-first-store plus array-element descriptor
+  (cho_kyu func_801B19C4). `q++; D_x = (s32)q;` matched where `D_x = (s32)(q + 1);` gave
+  `addiu v1,s0,40` (sflea func_801B07C8).
+- Repeat a store chain in each arm of an if chain (`D_a = D_b = D_c = expr;` per arm)
+  where one chain after the join gives other registers or lets the scheduler hoist the
+  next argument setup above the stores: the arms are cross-jumped together only after
+  scheduling (graviga1 func_801B0634, func_801B03A8, timedmg func_801B0F74; `u8 c[3]`
+  form in graviga2 func_801B0CF8). `D_x[0] = D_x[1] = D_x[2] = c` gave byte stores in
+  0xE, 0xD, 0xC order (timedmg func_801B0F74).
+- `q->unk18 = d; q->unk16 = q->unk14 / d;` reloads `q->unk14`: stores to neighbouring
+  halfwords block forwarding (brizag func_801B210C).
+- A single-set pointer `s = &D_x` is moved to its first use by the scheduler wherever it
+  is written, so an early `lui s0; addiu s0` after a call is not reproduced that way
+  (conf func_801B2350, unsolved).
 
 ### Registers
 
@@ -768,6 +807,30 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A constant-address pointer keeps `2($s)` offsets only after a loop or label, where CSE
   loses the constant equivalence; in straight-line code `t->vy` folds to `lui; lh sym+2`
   (spark func_801B0A38, unsolved).
+- A dead test with identical arms, `if (t + i + j) { f(); } else { f(); }`, keeps values
+  live across a call in saved registers as the game does: it survives allocation and
+  jump2 cross-jumps it away; the permuter found the first form, `if (t) { p->unk2++; }
+  else { p->unk2++; }` after the join (sting func_801B37F8, with a comment in the
+  source). Use it only when the asm keeps values in saved registers that nothing reads.
+- `do { } while (0)` changes the allocation order: around `b = (MgTask *)D_80162978;` it
+  swapped the saved registers of `b` and `&p->unk4` (sflea func_801B17C8, found with
+  wrap.py); around the statements of one if-chain arm it flipped a saved-register swap no
+  declaration order fixed (timedmg func_801B0F74, found with the permuter).
+- One function-level `s32 k` reused as a multi-set temp (`k = p->unk2 <= 0; if (k) ..`,
+  later `k = rand..`) puts the loop temps in `a1` as the game does; declared and used
+  once it stays in `v0` (conf func_801B05D0, func_801B0A40). `u = p->unk2; t = u;` then
+  `u -= 10; ... u -= 5` stays an in-place `addiu a1,a1,-10` where `t = p->unk2; u = t;`
+  folds to `t - 15`; a repeated `a = 0` in a later arm survives only if the earlier `a =
+  0` sits inside its own arm (timedmg func_801B0DD0).
+- `b = D_80162978;` inside the branch gives `move s3,a0`; `for (i = 0, b = ..; ..)`
+  orders the moves; `(MgTask *)((f() << 5) + (s32)b)` gives `addu idx, base` where
+  `&b[f()]` gives `addu base, idx` (graviga2 func_801B1220, wpyu func_801B23C8, conf
+  func_801B1D64). Two loops with a block-local angle each: one shared variable becomes
+  global and swaps s0/s1 (graviga2 func_801B0EDC).
+- An 8-byte struct copy is `movstrsi` (v1, a0, a1, a2 as scratch); a destination pointer
+  used in two copy blocks becomes global-allocated and takes `a2` with the source in `a1`
+  as the game (graviga2 func_801B1AB8). Constants kept in registers by chained scratchpad
+  stores, `((MgScratch *)0x1F800000)->unk4 = c8 = 8;` (dethper func_801B11FC).
 
 ### Control flow
 
@@ -944,6 +1007,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   if (x == 4) c = 0x40;` got `ori a1,0x60` into the slot only with the following pointer
   setup written after the `if` (triangle func_801B008C); `i = 0;` written after a `% 4`
   store (a new basic block) is pulled into the `bgez` slot (triangle func_801B0DC4).
+- A master timeline `t = p->unk2; if (t == 0) {..} t -= 4; if (t == 0) {..} if (t == 0xC)
+  ..` is sequential ifs on a modified `t`; a `switch` gives a binary tree with reloads
+  (graviga1 func_801B0E54).
+- `if (p->unk2 <= 0) { p->unk2++; return; }` before the loop gives the game's `bgtz` over
+  the first-placed else arm (conf func_801B05D0, func_801B0A40).
 
 ### Loops
 
@@ -1116,6 +1184,19 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   assigned in the order `ba, bb, bd` before the loop give t6/t5/t4, whatever the
   declaration order (hyper func_801B1AC0). Unsolved: h_blow func_801B0640 keeps an
   unfolded loop guard `ori s2,zero,0x200; slti; bnez` that GCC folds in every loop form.
+- A `for` loop with `n++` as the increment matched where `i++` lands in the `beqz`/`blez`
+  delay slot (sting func_801B3AB0, func_801B35F0); `a + (i * 0x34 + 0x174)` gives a giv
+  starting at 0x174 (sting). `for (i = 0; i < n; m++, d += 10, i++)` with a variable
+  bound gave the delay-slot order of the increments and explained an 8-byte frame pad
+  that `do { } while` needed by hand (brizag func_801B0E48). A `for` loop with a `break`
+  at the top keeps a `D_80162080` guard inside the loop where `do { } while` rotates it
+  (conf func_801B05D0).
+- Locals for loop-invariant addresses set at the top (`fd = &D_x; tbl = D_y;`) sink below
+  the first calls; arrays used directly in a `for (i = 0; i < 3; i++)` put the sets where
+  the game has them (dia func_801B0CC4).
+- A table indexed `(i*16 + j) * 4`: an explicit byte offset (`off = i << 6; ... *(s16
+  *)((u8 *)D + off) = ..; off += 4;`) puts the `sll` before the pointer-copy `move`, an
+  index `k = i * 16; D[k]` gives the other order (timedmg func_801B06E0).
 
 ### Stack frame
 
@@ -1201,6 +1282,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   order. A store written before a call stays before it.
 - To stop a constant being hoisted out of a loop, set it in a local just before
   (shorter life), or give the loop more instructions.
+- cho_kyu func_801B1B3C: reorg rewrites the first `sll` of a loop index chain from the
+  copy in `a0` to `s0` (the post-reload RTL and `-fno-delayed-branch` both give the
+  game's `a0`); about 60 variants did not move it.
+- A volatile byte read stored into a `u16` field keeps a redundant `andi 0xFF`; volatile
+  globals were needed to keep a loop's load/store alternation (sflea func_801B1938, near
+  miss).
 
 ### More forms
 
@@ -1349,6 +1436,8 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - tools/work.py tidies a target's decls.h whenever it uses the target (`show`, `diff`,
   `put`), dropping declarations main/decls.h already has: another spell's decls.h
   changing during a batch is expected and right.
+- Magic multipliers: `0x10624DD3` with `sra 6` is `/ 1000` (`sra 7` is `/ 2000`),
+  `0x68DB8BAD` with `sra 9` is `/ 1250`, `0x2AAAAAAB` with `sra 1` is `/ 12`.
 
 ## Hand-written assembly
 
