@@ -25,7 +25,6 @@ void func_801B008C(void) {
     p = &D_80162978[D_8015169C];
     func_800D4368(&p->unk4, 0x2000, 0);
     frame = &D_801D30C8;
-
     M2C_SFIELD(frame, u16 *, 0) = p->unk2;
     c = 0x60;
     if (p->unk14 == 4) {
