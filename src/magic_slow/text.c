@@ -5,9 +5,34 @@ void func_801B0000(void) {
     func_801B07FC();
 }
 
-INCLUDE_ASM("../asm/us/magic_slow/nonmatchings/text", func_801B0020);
+void func_801B0020(void *arg0, void *arg1, s32 arg2) {
+    MgSVec *p;
+    MgSVec *q;
+    s32 i;
 
-INCLUDE_ASM("../asm/us/magic_slow/nonmatchings/text", func_801B013C);
+    p = arg0;
+    q = arg1;
+    for (i = 0; i < 0x112; i++) {
+        D_801BA88C[i].x = (q->vx - p->vx) / arg2;
+        D_801BA88C[i].y = (q->vy - p->vy) / arg2;
+        D_801BA88C[i].z = (q->vz - p->vz) / arg2;
+        p++;
+        q++;
+    }
+}
+
+void func_801B013C(void *arg0) {
+    SlowVtx *p;
+    s32 i;
+
+    p = arg0;
+    for (i = 0; i < 0x112; i++) {
+        p->x += D_801BA88C[i].x;
+        p->y += D_801BA88C[i].y;
+        p->z += D_801BA88C[i].z;
+        p++;
+    }
+}
 
 void func_801B01B8(void) {
     MgMat m;
@@ -174,4 +199,52 @@ void func_801B079C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_slow/nonmatchings/text", func_801B07FC);
+s32 func_801B07FC(arg0) {
+    MgSVec a;
+    MgSVec b;
+    MgMat m;
+    MgVec v;
+    s32 flag;
+    MgTask *q;
+    u16 *g;
+    s32 i;
+    s32 t;
+    s32 *d;
+    s32 *s;
+
+    func_800D2980(D_801B0A28, 0, 0, 0);
+    func_800BBEAC(func_801B079C);
+    s = D_801B6C6C;
+    d = D_801B4A88;
+    for (i = 0; i < 0x21E4; i += 4) {
+        *d = *s;
+        s++;
+        d++;
+    }
+    D_801BB11C = arg0;
+    func_800D54EC(arg0, &D_801BB120);
+    q = (MgTask *)&D_80162978[func_800BBEAC(func_801B01B8)];
+    func_8003BC6C((MgSVec *)&D_801BB120, &v, &flag);
+    if (v.vx < 0) {
+        a.vx = 0x7D0;
+    } else {
+        a.vx = -0x7D0;
+    }
+    if (v.vy < 0) {
+        a.vy = 0x3E8;
+    } else {
+        a.vy = -0x3E8;
+    }
+    g = &D_800FA650;
+    a.vx -= *g;
+    a.vy -= D_800FA654;
+    a.vz = -D_800FA658;
+    func_8003BF3C((MgSVec *)(g - 10), &m);
+    func_8003B2CC(&m, &a, (MgSVec *)&q->unk4);
+    b.vx = q->unkC = (D_801BB120 - q->unk4) / 30;
+    t = q->unk6 + 0x3E8;
+    b.vy = q->unkE = (D_801BB122 - t) / 30;
+    b.vz = q->unk10 = (D_801BB124.v - q->unk8) / 30;
+    func_800D44E8(&b, &D_801BB128);
+    return func_800D55F4(0x20, func_800D574C(arg0), 0x41);
+}

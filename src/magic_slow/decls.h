@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0000(void);
-M2C_UNK func_801B07FC();
+s32 func_801B07FC();
 void func_801B079C(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
@@ -29,8 +29,8 @@ void func_8003BA10(MgVec *, MgVec *, MgVec *);
 void func_8003C21C(MgSVec *, MgMat *);
 u8 *func_800D29D4(void *, s32, s32, u8 *);
 void func_800D5774(s32);
-void func_801B0020(void *, void *, s32);
-void func_801B013C(void *);
+void func_801B0020(void *arg0, void *arg1, s32 arg2);
+void func_801B013C(void *arg0);
 extern u8 D_80062D98;
 extern MgMat D_800FA63C;
 extern s32 D_801517C0;
@@ -44,5 +44,26 @@ extern MgPrim D_801BA86C;
 extern MgPrim D_801BA87C;
 extern s16 D_801BB11C;
 extern MgMat D_801BB128;
+typedef struct { u16 x; u16 y; u16 z; u16 pad; } SlowVtx;
+extern SlowVtx D_801BA88C[];
+void func_800D2980(void *, s32, s32, s32);
+s32 func_800BBEAC(void *);
+M2C_UNK func_800D54EC();
+s32 func_800D574C();
+s32 func_800D55F4(s32, s32, s32);
+void func_800D44E8(MgSVec *, MgMat *);
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+MgMat *func_8003BF3C(MgSVec *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+extern u8 D_801B0A28[];
+extern s32 D_801B4A88[];
+extern s32 D_801B6C6C[];
+extern s16 D_801BB120;
+extern s16 D_801BB122;
+typedef struct { s16 v; } MgHalf;
+extern MgHalf D_801BB124;
+extern u16 D_800FA650;
+extern u16 D_800FA654;
+extern u16 D_800FA658;
 
 #endif /* MAGIC_SLOW_DECLS_H */

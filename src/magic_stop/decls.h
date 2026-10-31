@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B0DB8();
+s32 func_801B0DB8();
 void func_801B02AC(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
@@ -30,5 +30,17 @@ void func_8003B69C(s32, s32, s32);
 extern M2C_UNK D_801B2E94;
 extern s16 D_801B3270[];
 extern u16 D_801B3278[];
+s32 func_800BBEAC(void *);
+void func_800D2980(void *, s32, s32, s32);
+M2C_UNK func_800D5444(s32, s32, s32, M2C_UNK *);
+s32 func_800D55F4(s32, s32, s32);
+s32 func_800D574C(s32);
+extern u8 D_801B0000[];
+extern u8 D_801B0E54[];
+extern MgTask *D_801CB284;
+extern M2C_UNK func_801B0890;
+void func_801B0074(void);
+M2C_UNK func_800D5774(s16);
+extern M2C_UNK D_801B2EF0;
 
 #endif /* MAGIC_STOP_DECLS_H */

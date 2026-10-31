@@ -41,5 +41,17 @@ void func_8003B51C(void *);
 void func_8003C21C(void *, void *);
 u8 *func_800D29D4(void *, s32, s32, u8 *);
 void func_800D5138(s32);
+void func_801B0680(void);
+void func_800D4368(void *, s32, s32);
+u8 *func_800D6260(void *, s32, s32, u8 *);
+extern u8 D_801B5368[];
+extern u8 D_801B5370[];
+void func_801B03C0(void);
+typedef struct { s16 x; s16 y; s16 z; s16 pad; s16 vx; s16 vy; s16 vz; s16 pad2; } HvPart;
+s32 func_8003BC6C(void *, void *, void *);
+extern MgMat D_800FA63C;
+extern u8 D_801B5338[];
+extern u8 D_801B5340[];
+extern HvPart D_801B53B8[];
 
 #endif /* MAGIC_HVSHOT_DECLS_H */

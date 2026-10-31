@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0054(void);
-M2C_UNK func_801B089C();
+s32 func_801B089C();
 extern M2C_UNK D_801B0A70;
 extern s32 D_801CD5B0;
 M2C_UNK *func_801B0084(void);
@@ -46,5 +46,14 @@ s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 s32 func_800BBEAC(void *);
+void func_800D2980(void *, s32, s32, s32);
+extern u8 D_801B0930[];
+void func_801B0650(void);
+s32 func_80042DA8();
+extern u8 D_80151919[][0xB9C];
+extern u16 D_80151A46[][0x5CE];
+typedef struct { u16 v; } MgHalf;
+extern MgHalf D_80163758;
+extern MgHalf D_80163766;
 
 #endif /* MAGIC_SENNKOKU_DECLS_H */

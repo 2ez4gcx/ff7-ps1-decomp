@@ -5,7 +5,60 @@ void func_801B0054(void) {
     func_801B0DB8();
 }
 
-INCLUDE_ASM("../asm/us/magic_stop/nonmatchings/text", func_801B0074);
+void func_801B0074(void) {
+    MgSVec a;
+    MgSVec b;
+    MgSVec c;
+    MgMat m;
+    MgMat n;
+    MgVec scale;
+    MgTask *p;
+
+    a.vx = 0;
+    p = &D_80162978[D_8015169C];
+    a.vy = p->unkE;
+    a.vz = p->unkC;
+    func_8003BF8C(&a, &m);
+    b.vx = 0;
+    b.vy = p->unkE;
+    b.vz = 0;
+    func_8003BF8C(&b, &n);
+    c.vx = 0;
+    c.vy = 0;
+    c.vz = -p->unk10;
+    func_8003B27C(&n, &c, (MgVec *)m.t);
+    m.t[0] += p->unk4;
+    m.t[1] += p->unk6;
+    m.t[2] += p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unk14;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk0 = &D_801B2EF0;
+    ((MgScratch *)0x1F800000)->unk4 = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    D_801CB280 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801CB280);
+    if (p->unk2 >= 0x23) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x19) {
+            func_800D5774(p->unk1C);
+        }
+        if (p->unk2 < 4) {
+            p->unk14 += p->unk16;
+        }
+        if (p->unk2 >= 0x19) {
+            p->unkC += 0x80;
+            p->unk14 -= p->unk1A;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B02AC(void) {
     MgSVec rot1;
@@ -161,4 +214,11 @@ void func_801B0510(void) {
 
 INCLUDE_ASM("../asm/us/magic_stop/nonmatchings/text", func_801B0890);
 
-INCLUDE_ASM("../asm/us/magic_stop/nonmatchings/text", func_801B0DB8);
+INCLUDE_RODATA("../asm/us/magic_stop/nonmatchings/text", D_801B0000);
+
+s32 func_801B0DB8(arg0, arg1) {
+    D_801CB284 = &D_80162978[func_800BBEAC(D_801B0000)];
+    func_800D2980(D_801B0E54, 0, 0, 0);
+    func_800D5444(arg0, arg1, 1, &func_801B0890);
+    return func_800D55F4(0x20, func_800D574C(arg0), 0x57);
+}

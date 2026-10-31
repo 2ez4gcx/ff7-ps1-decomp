@@ -68,8 +68,8 @@ extern MgVec D_801BB624;
 extern MgSVec D_801D3648;
 extern MgSVec D_801D3650;
 extern MgVec D_801D3658;
-extern void func_801B0E6C(void);
-extern void func_801B10B0(void);
+void func_801B0E6C(void);
+void func_801B10B0(void);
 void func_801B07D8(void);
 typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
 extern MgVec D_801D3668;
@@ -87,5 +87,17 @@ void func_8003B51C(MgMat *);
 void func_8003B69C(s32, s32, s32);
 s32 func_80042DA8(void);
 s32 func_800D29D4(void *, s32, s32, s32);
+s32 func_80039F5C(s32);
+void func_800D5774(s32);
+s32 func_800D56A8(void *);
+void func_800D55F4(s32, s32, s32);
+typedef struct { s16 v; } MgHalf;
+extern MgHalf D_801D3652;
+extern MgHalf D_801D3654;
+extern s32 D_801D366C;
+extern s32 D_801D3670;
+extern MgHalf D_801D364A;
+extern MgHalf D_801D364C;
+void func_801B0BA0(void);
 
 #endif /* MAGIC_WPBA_DECLS_H */

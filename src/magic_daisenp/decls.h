@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B0E38();
+void func_801B0E38();
 extern s32 D_801CF2F4;
 void func_801B007C(void);
 void func_801B0250(void);
@@ -28,5 +28,29 @@ s32 func_80039F5C(s32);
 s32 func_8003A08C(void *, void *);
 void func_800D4368(void *, s32, s32);
 s32 func_800D4D90(void *, s32, s32, s32);
+s32 func_800BBEAC(void *);
+void func_800D2980(void *, s32, s32, s32);
+void func_800D55F4(s32, s32, s32);
+s32 func_800D574C(s32);
+extern u8 D_801B0000[];
+extern u8 D_801B0ED8[];
+extern MgTask *D_801CF2F0;
+extern s32 D_801CF2F8;
+extern s32 D_801CF2FC;
+void func_801B0B18(void);
+void func_801B00A8(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+extern u16 D_801B72DC;
+s32 func_80042DA8();
+M2C_UNK func_800D54EC();
+extern M2C_UNK func_801B04AC;
+extern MgSVec D_801CFCC0;
+extern s32 D_801CFCC8;
+extern s32 D_801CFCCC;
+extern s32 D_801CFCD0;
+extern MgVec D_801CFCD8;
+extern MgVec D_801CFCE8;
 
 #endif /* MAGIC_DAISENP_DECLS_H */

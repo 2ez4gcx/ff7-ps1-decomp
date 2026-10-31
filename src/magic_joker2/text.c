@@ -315,7 +315,60 @@ void func_801B0E9C(void) {
     func_8003AB84(&m, &D_801C0234, &D_801D8280);
 }
 
-INCLUDE_ASM("../asm/us/magic_joker2/nonmatchings/text", func_801B0F9C);
+void func_801B0F9C(void) {
+    MgSVec a;
+    MgSVec b;
+    MgSVec c;
+    MgMat m;
+    MgMat n;
+    MgVec scale;
+    MgTask *p;
+
+    a.vx = 0;
+    p = &D_80162978[D_8015169C];
+    a.vy = p->unkE;
+    a.vz = p->unkC;
+    func_8003BF8C(&a, &m);
+    b.vx = 0;
+    b.vy = p->unkE;
+    b.vz = 0;
+    func_8003BF8C(&b, &n);
+    c.vx = 0;
+    c.vy = 0;
+    c.vz = -p->unk10;
+    func_8003B27C(&n, &c, (MgVec *)m.t);
+    m.t[0] += p->unk4;
+    m.t[1] += p->unk6;
+    m.t[2] += p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unk14;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    ((MgScratch *)0x1F800000)->unk0 = &D_801BFEA4;
+    ((MgScratch *)0x1F800000)->unk4 = 0x80;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    D_801D8254 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D8254);
+    if (p->unk2 >= 0x23) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x19) {
+            func_800D5774(p->unk1C);
+        }
+        if (p->unk2 < 4) {
+            p->unk14 += p->unk16;
+        }
+        if (p->unk2 >= 0x19) {
+            p->unkC += 0x80;
+            p->unk14 -= p->unk1A;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B11D4(void) {
     MgSVec rot1;

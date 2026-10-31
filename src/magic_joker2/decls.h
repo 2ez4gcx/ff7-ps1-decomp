@@ -79,5 +79,8 @@ void func_8003B69C(s32, s32, s32);
 extern M2C_UNK D_801BFE48;
 extern s16 D_801C0244[];
 extern u16 D_801C024C[];
+void func_801B0F9C(void);
+M2C_UNK func_800D5774(s16);
+extern M2C_UNK D_801BFEA4;
 
 #endif /* MAGIC_JOKER2_DECLS_H */
