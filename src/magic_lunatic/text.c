@@ -81,15 +81,226 @@ void func_801B007C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lunatic/nonmatchings/text", func_801B0484);
+void func_801B0484(void) {
+    MgTask *p;
+    u8 *rgb;
+    s16 t;
+    s16 v;
+    u8 c;
 
-INCLUDE_ASM("../asm/us/magic_lunatic/nonmatchings/text", func_801B05F0);
+    p = &D_80162978[D_8015169C];
+    D_801CA3D4[0] = p->unk2;
+    t = p->unk2;
+    if (t >= 7) {
+        c = 0x60 - (t - 7) * 12;
+    } else {
+        c = 0x60;
+    }
+    rgb = D_801CA3D0;
+    rgb[2] = c;
+    rgb[1] = c;
+    rgb[0] = c;
+    v = p->unk14;
+    func_800D4368(&p->unk4, v, -(v >> 3));
+    D_801E23D8 = func_800D4D90(rgb - 4, D_801517C0 + 0x70, 0xC, D_801E23D8);
+    if (p->unk2 >= 0xF) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        p->unk2++;
+        p->unkC -= p->unkC >> 3;
+        p->unk10 -= p->unk10 >> 3;
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_lunatic/nonmatchings/text", func_801B0798);
+void func_801B05F0(void) {
+    MgSVec rot;
+    MgMat m;
+    MgVec scale;
+    MgTask *p;
+    MgScratch *s;
+    s32 t;
+    s32 c;
+    u32 n;
 
-INCLUDE_ASM("../asm/us/magic_lunatic/nonmatchings/text", func_801B0944);
+    rot.vx = 0;
+    rot.vy = 0;
+    rot.vz = 0;
+    p = &D_80162978[D_8015169C];
+    func_8003BF8C(&rot, &m);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unkC;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    n = (u16)p->unk2 & 3;
+    s = (MgScratch *)0x1F800000;
+    s->unk0 = &D_801C8FF8;
+    ((MgScratch *)0x1F800000)->unk4 = 0x28;
+    ((MgScratch *)0x1F800000)->unkA = 0x80;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    ((MgScratch *)0x1F800000)->unk8 = (n & 1) << 7;
+    ((MgScratch *)0x1F800000)->unkC = (n >> 1) | 0x20;
+    t = p->unk2;
+    if (t < 8) {
+        c = t * 0x10;
+        goto store;
+    }
+    if (t >= 0x16) {
+        t -= 0x16;
+        c = 0x80 - t * 0x10;
+store:
+        ((MgScratch *)0x1F800000)->unkA = c;
+    }
+    D_801E23D8 = func_800D29D4(s, D_801517C0 + 0x70, 0xC, D_801E23D8);
+    if (p->unk2 >= 0x1E) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_lunatic/nonmatchings/text", func_801B0B28);
+void func_801B0798(void) {
+    MgSVec rot;
+    MgMat m;
+    MgVec scale;
+    MgTask *p;
+    MgScratch *s;
+    s32 t;
+    s32 c;
+    s32 n;
+
+    rot.vx = 0;
+    rot.vy = 0;
+    rot.vz = 0;
+    p = &D_80162978[D_8015169C];
+    func_8003BF8C(&rot, &m);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    scale.vx = scale.vy = scale.vz = p->unkC;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    n = p->unk2 + 2;
+    s = (MgScratch *)0x1F800000;
+    s->unk0 = &D_801C936C;
+    ((MgScratch *)0x1F800000)->unk4 = 0x28;
+    ((MgScratch *)0x1F800000)->unkA = 0x80;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    ((MgScratch *)0x1F800000)->unk8 = (n & 1) << 7;
+    ((MgScratch *)0x1F800000)->unkC = ((n & 2) >> 1) | 0x20;
+    t = p->unk2;
+    if (t < 8) {
+        c = t * 0x10;
+        goto store;
+    }
+    if (t >= 0x16) {
+        t -= 0x16;
+        c = 0x80 - t * 0x10;
+store:
+        ((MgScratch *)0x1F800000)->unkA = c;
+    }
+    D_801E23D8 = func_800D29D4(s, D_801517C0 + 0x70, 0xC, D_801E23D8);
+    if (p->unk2 >= 0x1E) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
+
+void func_801B0944(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 k;
+    s32 i;
+
+    if (D_80062D98 == 0) {
+        p = &D_80162978[D_8015169C];
+        k = p->unk2;
+        if (k == 1) {
+            q = &D_80162978[func_800BBEAC(func_801B05F0)];
+            *(MgB8 *)&q->unk4 = *(MgB8 *)&p->unk4;
+            q->unkC = (p->unkC << 13) / 750;
+            q = &D_80162978[func_800BBEAC(func_801B0798)];
+            *(MgB8 *)&q->unk4 = *(MgB8 *)&p->unk4;
+            q->unkC = (p->unkC << 13) / 350;
+            if (p->unk2 == k) {
+                q = &D_80162978[func_800BBEAC(func_801B007C)];
+                *(MgB8 *)&q->unk4 = *(MgB8 *)&p->unk4;
+                q->unkC = p->unkC;
+                q->unk14 = p->unk14;
+                for (i = 0; i < 0x64; i++) {
+                    D_801E23EC[p->unk14][i].unk0 = 0;
+                }
+            }
+        }
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B0B28(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 a;
+
+    if (D_80062D98 == 0) {
+        p = &D_80162978[D_8015169C];
+        if (p->unk2 == 0) {
+            for (i = 0; i < 10; i++) {
+                if (1 << i & D_801E23E0) {
+                    q = &D_80162978[func_800BBEAC(func_801B0944)];
+                    func_800D3994(i, D_8015190F[i][0], &q->unk4);
+                    q->unk6 = 0;
+                    q->unkC = D_801518F6[i][0] + 0x12C;
+                    q->unk14 = i;
+                }
+            }
+            func_800D55F4(0x20, func_800D574C(D_801E23E0), 0x182);
+        }
+        if (p->unk2 < 8) {
+            D_800F5B70[0] = 0x48;
+            D_800F5B70[1] = 0x40;
+            D_800F5B70[2] = 0;
+            a = p->unk2 << 8;
+        } else {
+            if (p->unk2 >= 0x20) {
+                a = 0x800 - ((p->unk2 - 0x20) << 8);
+            } else {
+                a = 0x800;
+            }
+        }
+        if (p->unk2 == 0x23) {
+            for (i = 0; i < 10; i++) {
+                if (1 << i & D_801E23E0) {
+                    func_800D5774(i);
+                }
+            }
+        }
+        if (p->unk2 >= 0x28) {
+            a = 0;
+            D_800F5B70[1] = 0;
+            D_800F5B70[0] = 0;
+            p->unk0 = -1;
+            func_800D55F4(0x20, func_800D574C(D_801E23E0), 0);
+        }
+        D_800F5B74[0] = a;
+        p->unk2++;
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_lunatic/nonmatchings/text", D_801B0000);
 

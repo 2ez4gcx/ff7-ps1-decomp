@@ -537,7 +537,7 @@ s32 func_801B38E8(arg0, arg1) {
     func_8003C21C(&D_801E7AD8, &D_801E8258);
     for (i = 0; i < 10; i++) {
         if ((D_801E8278 >> i) & 1) {
-            D_801E827C[i] = *(LamB8 *)D_80151A4C[i];
+            D_801E827C[i] = *(MgB8 *)D_80151A4C[i];
         }
     }
     func_800BBEAC(&func_801B3214);

@@ -147,12 +147,186 @@ void func_801B0634(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0774);
+void func_801B0774(void) {
+    MgSVec rot;
+    MgSVec q;
+    MgMat m2;
+    MgMat m1;
+    MgVec scale;
+    MgVec v;
+    MgVec w;
+    MgVec x;
+    MgVec y;
+    MgTask *p;
+    void *tbl;
+    s32 ang;
+    s32 len;
+    s32 dot;
+    s32 k;
+    s32 ax;
+    s32 ay;
+    s32 az;
+    s32 bx;
+    s32 by;
+    s32 bz;
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0C40);
+    v.vx = D_801DFA14.vx - D_801DFA1C.vx;
+    v.vy = 0;
+    v.vz = D_801DFA14.vz - D_801DFA1C.vz;
+    p = &D_80162978[D_8015169C];
+    func_8003A08C(&v, &v);
+    ang = func_801B00A8(&D_801C79D8, &v, &w);
+    func_801B0184(ang, &m1, &w);
+    w.vx = D_801DFA14.vx - D_801DFA1C.vx;
+    w.vy = D_801DFA14.vy - D_801DFA1C.vy;
+    w.vz = D_801DFA14.vz - D_801DFA1C.vz;
+    len = func_8003A08C(&w, &w);
+    ang = func_801B00A8(&v, &w, &x);
+    func_801B0184(ang, &m2, &x);
+    func_8003B16C(&m2, &m1);
+    ax = D_801DFA14.vx - D_801DFA1C.vx;
+    ay = D_801DFA14.vy - D_801DFA1C.vy;
+    az = D_801DFA14.vz - D_801DFA1C.vz;
+    bx = D_80158D00.vx - D_801DFA1C.vx;
+    by = D_80158D00.vy - D_801DFA1C.vy;
+    bz = D_80158D00.vz - D_801DFA1C.vz;
+    y.vx = ax;
+    y.vy = ay;
+    y.vz = az;
+    x.vx = bx;
+    x.vy = by;
+    x.vz = bz;
+    q = D_801DFA1C;
+    dot = (ax * bx + ay * by + az * bz) >> 12;
+    q.vx += dot * w.vx >> 12;
+    q.vy += dot * w.vy >> 12;
+    q.vz += dot * w.vz >> 12;
+    x.vx = D_80158D00.vx - q.vx;
+    x.vy = D_80158D00.vy - q.vy;
+    x.vz = D_80158D00.vz - q.vz;
+    func_8003A08C(&x, &x);
+    dot = func_801B00A8(&D_801C79C8, &x, &y);
+    func_8003BA10(&w, &x, &y);
+    if (y.vy > 0) {
+        dot = -dot;
+    }
+    rot.vx = dot;
+    rot.vy = 0;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m2);
+    m2.t[0] = D_801DFA1C.vx;
+    m2.t[1] = D_801DFA1C.vy;
+    m2.t[2] = D_801DFA1C.vz;
+    func_8003B16C(&m1, &m2);
+    dot = (func_80039F5C(len) << 12) / 1525;
+    if (p->unk2 < 3) {
+        dot = dot / 3 * p->unk2;
+    }
+    scale.vx = dot;
+    scale.vy = scale.vz = p->unkC;
+    func_8003B35C(&m2, &scale);
+    func_8003A63C(&D_800FA63C, &m2, &m2);
+    func_8003B48C(&m2);
+    func_8003B51C(&m2);
+    tbl = &D_801C5978;
+    if (D_801DFA34 != 0) {
+        tbl = &D_801C63E4;
+    }
+    ((MgScratch *)0x1F800000)->unk0 = tbl;
+    ((MgScratch *)0x1F800000)->unk4 = 0x88;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    k = p->unk2;
+    if (k >= 4) {
+        ((MgScratch *)0x1F800000)->unkA = (k - 4) * 0x2AA;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801DFA00 = func_800D29D4((void *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801DFA00);
+    if (p->unk2 >= 0xA) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
+
+void func_801B0C40(void) {
+    u8 pad[0x48];
+    MgTask *p;
+    MgScratch *s;
+    void *tbl;
+    s16 v;
+    s32 t;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    v = p->unkC;
+    func_800D4368(&D_801DFA1C, v, -(v >> 3));
+    s = (MgScratch *)0x1F800000;
+    tbl = &D_801C6E50;
+    if (D_801DFA34 != 0) {
+        tbl = &D_801C740C;
+    }
+    s->unk0 = tbl;
+    ((MgScratch *)0x1F800000)->unk4 = 0x88;
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = 0;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    t = p->unk2;
+    if (t < 6) {
+        k = 0x1000 - t * 0x2AA;
+        goto store;
+    }
+    if (t >= 0xA) {
+        k = (t - 0xA) * 0x2AA;
+store:
+        ((MgScratch *)0x1F800000)->unkA = k;
+    }
+    func_8003B69C(0, 0, 0);
+    D_801DFA00 = func_800D29D4(s, D_801517C0 + 0x70, 0xC, D_801DFA00);
+    if (p->unk2 >= 0x10) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 6) {
+            p->unkC -= p->unkE;
+            p->unkE -= p->unkE / 9;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B0E1C);
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B147C);
+void func_801B147C(void) {
+    u8 pad[8];
 
-INCLUDE_ASM("../asm/us/magic_beam/nonmatchings/text", func_801B1564);
+    D_80162978[D_8015169C].unk0 = -1;
+    D_8016298C[func_800BBEAC(&func_801B0E1C)].unk0 = 0;
+    func_800D3994(D_801DFA0C, D_8015190F[D_801DFA0C][0], &D_801DFA14);
+    D_801DFA1A = D_801518F6[D_801DFA0C][0] + 0x100;
+}
+
+INCLUDE_RODATA("../asm/us/magic_beam/nonmatchings/text", D_801B0000);
+
+void func_801B1564(mask, arg1) {
+    s32 i;
+    s32 n;
+
+    D_801DFA04 = &D_80162978[func_800BBEAC(&D_801B0000)];
+    func_800D2980(&D_801B1630, 0, 0, 0);
+    func_800BBEAC(&func_801B147C);
+    D_801DFA08 = mask;
+    for (i = 0, n = 0; i < 10; i++) {
+        if ((mask >> i) & 1) {
+            n++;
+            if (n == 1) {
+                D_801DFA0C = i;
+            }
+        }
+    }
+    D_801DFA10 = arg1;
+}
