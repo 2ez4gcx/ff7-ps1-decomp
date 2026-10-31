@@ -270,6 +270,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B0800).
 - Stack arguments `sp10`/`sp14` at a 4-byte stride are `&v.vx`, `&v.vz` of a local
   `MgSVec` (brizag func_801B0074, timedmg func_801B06E0).
+- An `s16` local copy of an `s32` field load (`s16 t = k;`) with the arithmetic in a
+  separate `s32` (`n = t - 0xF`) fixed the saved-register order without sign extensions
+  (antlion func_801B338C). `p->unk2 * 0x100` gives `lh` where `<< 8` gives `lhu` (gaisei
+  func_801B1EA0); `z = pos.vz` as `s32` loads with `lh` where `s16` gives `lhu` (bushin2
+  func_801B1D2C).
+- `t = f() * k >> 12; D = t; c = (s16)t;` with an `s32 c` gives `sll v0,v1,16; sra
+  a0,v0,16` and stores the raw `t`; an `s16 c` keeps a raw copy instead (bushin2
+  func_801B1FC8). `s16 h = p->unk12 >> 1; a = h; d = a * 2;` keeps `sra s2,s0,16; sll
+  s1,s2,1` instead of folding to `sra 15` (queig func_801B2274).
+- An `s32` global passed to an `s16` parameter (`f(D)`) is loaded with `lh`, and two such
+  reads share one `la` register (bushin2 func_801B1818).
+- `extern volatile u8 D_80062D98; z = D_80062D98; if (z == 0)` gives `lbu; andi
+  a0,v0,0xFF` and reuses `a0` as the zero of the next loop guard (gaisei func_801B28DC).
+- When work.py prints only "request for member `x` in something not a structure" for a
+  global struct pointer, a typedef the work file uses is missing from the target's
+  decls.h: the parse error cascades and only cc1's last line shows (antlion, MgVec). A
+  redeclaration of a global with another type than decls.h's passes `put` and fails only
+  the whole-file check (lamu).
 
 ### Order of instructions
 
@@ -598,6 +616,25 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A single-set pointer `s = &D_x` is moved to its first use by the scheduler wherever it
   is written, so an early `lui s0; addiu s0` after a call is not reproduced that way
   (conf func_801B2350, unsolved).
+- Constant stores such as `q->unkC = 0x200` go after the statement with the last `rand()`
+  call: the game fills the divide stalls with them (gospel func_801B1A48, func_801B3414).
+- One temp for two copies, `t = A; X = t; t = B; Y = t;`, keeps the second load after the
+  first store (gospel func_801B3914). Read a table into a temp before scratchpad stores
+  through `((MgScratch *)0x1F800000)->f` to keep its load above them (nanntoka
+  func_801B0FAC); in a scratchpad store block, `unk0 = D_x[p->unk14]` written as the
+  first store put the table load first (queig func_801B29E0).
+- `f(p->unk1C); i = 0;` gives `lh a0` before `move s0,zero`; `i = 0; f(..)` swaps them
+  (blaster func_801B12C8).
+- A final block of field stores matched in plain field-offset order (unk0, unk2, unk4,
+  ...) where a hand-picked order did not (lamu func_801B1C24, found by hc.py).
+  Read-modify-write order decides the load order: `p->unk14 += 0x60;` before `n = p->unk2
+  + 1; p->unk2 = n;` gave the game's `lhu` order (bushin2 func_801B0740); fields in unk4,
+  unk6, unk8, then unk2 order (func_801B0494).
+- A local holding the scratchpad address of a source variable (`k = 0x1F800000; *(s16 *)k
+  = ..`) changed the prologue schedule to the game's (lamu func_801B1A10, found by the
+  permuter).
+- `n = 6 - p->unk2` as a temp stops reassociation (gaisei func_801B2EEC); `u = *g; u +=
+  0x20; u -= x; *g = u;` keeps the game's add order (gaisei func_801B2DFC).
 
 ### Registers
 
@@ -831,6 +868,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   used in two copy blocks becomes global-allocated and takes `a2` with the source in `a1`
   as the game (graviga2 func_801B1AB8). Constants kept in registers by chained scratchpad
   stores, `((MgScratch *)0x1F800000)->unk4 = c8 = 8;` (dethper func_801B11FC).
+- A dead `k = 0;` after a copy `n = k;` keeps CSE from folding `n` back into `k`, so `n`
+  stays block-local and takes `s1` with `p` in `fp` as the game; `n = k;` has to follow
+  the first call or two address registers swap (blaster func_801B08FC).
+- Arms of an if chain setting a function-level `u`, then `k = u;` after the join, with
+  address locals (`mp = &m;`, `ep = ..;`) also written after the join, gave the game's
+  `s0`..`s3` order (antlion func_801B2DF8).
+- A global struct pointer reloaded after a call and used for `addiu a0,s,0x10` lands in
+  `a1` only as a variable assigned twice: `s = D; f(&s->m); s = D; s->m.t[0] = ..;
+  g(&s->m);` (gospel func_801B2D34, func_801B286C, func_801B2620).
+- `t = (t << 12) / N;` in place on a multi-set `t` puts `t`, the temps and the colour in
+  the game's `v1`/`a0`; where the quotient is used once, a separate variable (gospel
+  func_801B22E8, func_801B2D34, func_801B1A48 vs func_801B286C).
+- Two tests `t = p->unk2; if (t < K)` in a row match `lh; move v1,v0; slti` with one
+  `s16` variable per test; one reused variable gives `lhu` or one register (bushin2
+  func_801B1D2C). Two spawn loops each reducing `% 256` want one function-level variable
+  reused by both; separate variables add a saved register (lamu func_801B2050).
+- The dead identical-arm test again: `if (p->unk12) { ang = t << 10; } else { ang = t <<
+  10; }` raised `ang`'s priority so it took `s0` and the scratchpad pointer `s2` (hakou
+  func_801B0488).
+- A pointer variable for a leftover argument (`id = D_x; .. f(.., id, q)`, where the game
+  leaves `&D_x` in `a2`) changed which table pointer took `a1` (bushin2 func_801B352C,
+  found by the permuter).
 
 ### Control flow
 
@@ -1012,6 +1071,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   (graviga1 func_801B0E54).
 - `if (p->unk2 <= 0) { p->unk2++; return; }` before the loop gives the game's `bgtz` over
   the first-placed else arm (conf func_801B05D0, func_801B0A40).
+- A range test the game does as `slti; bltz` is nested ifs with the else arm written
+  twice (`if (t < 8) { if (t >= 0) {..} else {..} } else {..}`); `t < 8 && t >= 0`
+  becomes one `sltiu` (queig func_801B2F34, func_801B2BBC).
+- A tail the game shares after an if/else is written in full in both arms (or the whole
+  expression inline in both, `7 - t` / `t - 9`); cross-jumping rebuilds the game's jump,
+  and a call result stored after the join is `D_x = f()` in each arm (raise
+  func_801B1D04, func_801B14BC, queig func_801B29E0). The same call written in both arms
+  matched where a pointer chosen first and one call did not (lamu func_801B38E8).
+- A reload of a field into the register an earlier compare loaded is deleted by reorg
+  (jump threading): the branch jumps past it (queig func_801B2274, func_801B1CDC near
+  misses).
+- An else arm `p->unk0 = -1; return;` gives the game's `j` to the epilogue (gospel
+  func_801B2418, func_801B22E8, func_801B3414). A 6-entry jump table needs the trailing
+  empty `case 5: break;` (nanntoka func_801B14B8).
+- A slot allocator in array-index form, `for (i..) if (T[i] == 0) { T[i] = a; S[i].f = 0;
+  return &S[i]; }`, gives both of the game's address registers; pointer variables did not
+  (gospel func_801B1294).
 
 ### Loops
 
@@ -1197,6 +1273,29 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A table indexed `(i*16 + j) * 4`: an explicit byte offset (`off = i << 6; ... *(s16
   *)((u8 *)D + off) = ..; off += 4;`) puts the `sll` before the pointer-copy `move`, an
   index `k = i * 16; D[k]` gives the other order (timedmg func_801B06E0).
+- The first constant written in a call-free loop body is the one hoisted: writing the `i
+  * 7 / 10` divide first hoisted its magic multiplier as the game, where a `0x606060`
+  store at the top hoisted that constant (nanntoka func_801B0C74). `k = 0x320;` inside
+  the loop body keeps `(u16)p->f - k + rand() % N` as `addiu -0x320`; outside, it is
+  hoisted into a saved register (gospel func_801B31BC).
+- The order of two adjacent stores at the end of a loop body decides where the counter
+  increment lands: `q->unk10 = 0;` before `q->unk14 = 0x200;` put `addiu s2,s2,1` after
+  the second `jal` (hakou func_801B1090, found by the permuter).
+- `for (i = 0; i < cnt; i++)` with `i = 0` in the header gave the game's `beqz` guard on
+  an `s32 cnt` loaded as `u16`; `i = 0;` before the loop gave `blez` (queig
+  func_801B0074, func_801B034C). A `for` loop around an `if (n > 0)` arm put the `i + 1`
+  copy in the `blez` delay slot and dropped the stray nop of the do/while form (bushin2
+  func_801B1580).
+- `&D_x[i]` instead of a hand-advanced byte offset gave the game's stepping registers
+  (hakou func_801B11D0); a `len = cnt;` copy before a loop put `move s3,t3` ahead of a
+  hoisted `lui s4`, and one counter and one `e = &tc[..]` pointer shared by three loops
+  gave the game's registers (gaisei func_801B28DC).
+- A constant multiplier stays a register `mult` only when it sits in a local first (`m =
+  0x22AA;` before the loop); `0x22AA * k` becomes shifts and adds (raise func_801B07A4,
+  func_801B04F0).
+- Unsolved: h_blow func_801B0640 and gospel func_801B2F00 keep an unfolded loop guard `li
+  s1,0x100; beqz s1` that GCC folds; no loop form, inline helper, field or array element
+  kept it.
 
 ### Stack frame
 
@@ -1254,6 +1353,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   Aggregates sit lowest in declaration order, address-taken scalars above them.
 - `s32 f(void)` falling off its end keeps the `bnez; nop` loop tail and passes `v0` on to
   a caller that returns it (hyper func_801B1160, func_801B254C).
+- Frame pads: `u8 pad[0x20]` before an 8-byte struct local and `u8 pad2[8]` after it
+  rebuilt a 0x60 frame (bushin2 func_801B0A30); `u8 pad[0x40]` before an `MgSVec`
+  (func_801B0D34); `u8 pad[8]` after an `MgVec` (func_801B02F0); `u16 w[4]` plus `u8
+  pad[8]` reproduce stack halfwords `sp18`/`sp1C` and a 0x40 frame (blaster
+  func_801B12C8); an `s16` local copy of a halfword limit gave `move a0,v1` and 8 bytes
+  of frame (gaisei func_801B2128).
+- Three adjacent stack locals as `s32 tmp[3]` with `f(&tmp[0], &tmp[1]); tmp[2] = ..`
+  gave the game's frame and `lhu` reloads each iteration (nanntoka func_801B0240).
 
 ### How the scheduler and the allocator decide
 
@@ -1438,6 +1545,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   changing during a batch is expected and right.
 - Magic multipliers: `0x10624DD3` with `sra 6` is `/ 1000` (`sra 7` is `/ 2000`),
   `0x68DB8BAD` with `sra 9` is `/ 1250`, `0x2AAAAAAB` with `sra 1` is `/ 12`.
+- Frame descriptor: `D[0] = v; M2C_SFIELD(&D_x[-5], s32 *, 0) = (s32)ptr; f(&D_x[-5],
+  ..)` gives `sw -0xA(s0)` plus `addiu s2,s0,-0xA` and keeps a later global load below
+  the store (cosmo func_801B070C). The last argument written `D_801517C0 + 0x70 + (w->z
+  >> 2) * 4` puts the table pointer in `v0` (antlion func_801B3708).
+- `(u32)((t << 12) / 40) >> 8` gives `div` then `srl 8` (gospel func_801B2418).
+- ASPSX 2.34: `*(volatile s16 *)&p->unk0 = arg0` gives `lui; addiu; addu; sh 0(reg)`
+  (antlion func_801B3B24).
 
 ## Hand-written assembly
 
