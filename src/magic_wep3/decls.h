@@ -55,5 +55,28 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 s32 func_800D29D4(void *, s32, s32, s32);
+typedef struct { s32 head; s32 tail; s32 count; s32 size; s32 last; s32 prev; s32 buf[1]; } MgRing;
+void func_801B048C(MgRing *r, s32 v);
+void func_801B0510(void);
+extern u8 D_801D266C[];
+void func_8003B69C(s32, s32, s32);
+void func_801B1514(void);
+void func_801B0B4C(void);
+void func_801B096C(void);
+extern u8 D_801D2C28[];
+extern MgVec D_801D3660;
+extern MgVec D_801EB6D8;
+extern MgVec D_801D3670;
+extern u8 D_801D3698[];
+extern s16 D_801EB6C8;
+extern s16 D_801EB6CA;
+extern s16 D_801EB6CC;
+void func_801B0774(void);
+typedef struct { u8 b[8]; } MgB8;
+typedef struct { MgRing r; s32 pad[9]; } WpFx;
+extern WpFx D_801EB6E8[];
+extern MgB8 D_801EB8E8[][10];
+extern u8 D_801D368C[];
+void func_801B10EC(void);
 
 #endif /* MAGIC_WEP3_DECLS_H */

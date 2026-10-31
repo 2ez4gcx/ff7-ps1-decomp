@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0070(void);
-M2C_UNK func_801B1858();
+void func_801B1858();
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
@@ -39,12 +39,37 @@ extern u16 D_801B7D28;
 void func_801B0574(void);
 typedef struct { u8 pad0[4]; s32 unk4; s32 unk8; u8 pad[0x570]; } MgRec57C;
 extern MgRec57C D_801CFD40[];
-void func_801B0CF4(void *, MgRec57C *, s32);
-void func_801B096C(void *, MgRec57C *);
+void func_801B0CF4(void *sc, MgRec57C *r, s32 col);
 s32 func_800D56A8(void *);
 void func_800D55F4(s32, s32, s32);
 void func_800D5774(s32);
 s32 func_800BBEAC(void *);
 s32 func_80042DA8(void);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
+s32 func_800D574C(s32);
+extern M2C_UNK D_801B1904;
+extern MgTask *D_801CFD30;
+extern s16 D_801CFD3A;
+extern s32 D_801CFD3C;
+void func_801B128C(s32 arg0, s32 arg1);
+extern u8 D_801B001C[];
+void func_801B0DF0(void *sc, u8 *r, s32 col);
+void func_801B0FE4(void *, u8 *, s32);
+typedef struct { MgTag tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } JbPolyG3;
+typedef struct { s32 unk0; s32 sxy; s32 otz; s32 flag; MgSVec p0; MgSVec p1; u8 pad[0xA0]; MgVec d0; MgVec d1; } JbScratch;
+s32 func_8003BC0C(void *, void *, void *, void *, void *, void *, void *, void *);
+void func_801B096C(JbScratch *sc, MgRec57C *r);
+typedef struct { MgSVec p; MgVec n; s32 ang; } JbEnt;
+typedef struct { u8 pad0[4]; s32 cnt; u8 pad8[0xC]; MgVec a; MgVec b; u8 pad34[8]; JbEnt e[1]; } JbRec;
+typedef struct { s32 u0; s32 u4; s32 u8; s32 uC; MgSVec p10; MgSVec p18; MgSVec p20; u8 pad28[0x38]; s32 s60; s32 s64; s32 s68; u8 pad6C[0xC]; s32 s78; u8 pad7C[0x44]; MgVec c0; MgVec d0; MgVec e0; MgVec f0; } JbSc2;
+extern u8 D_8015190F[][0xB9C];
+extern s16 D_801518F6[][0x5CE];
+extern s16 D_801CFD34;
+extern s16 D_801CFD36;
+extern s16 D_801CFD38;
+extern MgVec D_801B7D00;
+s32 func_80039F5C(s32);
+void func_800D3994(s32, s32, void *);
 
 #endif /* MAGIC_LV4JIBAK_DECLS_H */
