@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0040(void);
-M2C_UNK func_801B3AB8();
+s32 func_801B3AB8();
 extern M2C_UNK D_801DB958;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -127,5 +127,24 @@ void func_801B18F0(void);
 extern s32 D_801EF128;
 extern s16 D_801EF12E;
 extern s16 D_801EF136;
+void func_801B31D8(void);
+typedef struct { u8 b[8]; } MgB8;
+void func_800D52A0(s32, s32);
+void func_800D55F4(s32, s32, s32, s32, s32);
+void func_800C610C(void);
+void func_800D2980(void *, s32, s32, s32);
+void func_800D5774(s32);
+void func_801B2810(void);
+void func_801B2DA8(void);
+void func_801B2238(void);
+extern M2C_UNK D_801B3BF8;
+extern u8 D_800F8380;
+extern u8 D_800F5B70[];
+extern s32 D_801EFC88;
+void func_800D54EC(s32, MgSVec *);
+extern u8 D_80151A50[];
+extern MgSVec D_801EEE78;
+extern M2C_UNK D_801EEEC0;
+extern M2C_UNK D_801EEFF0;
 
 #endif /* MAGIC_VAHAMUT_DECLS_H */
