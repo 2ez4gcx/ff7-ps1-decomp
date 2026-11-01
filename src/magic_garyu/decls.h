@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0060(void);
-M2C_UNK func_801B36B0();
+s32 func_801B36B0();
 extern M2C_UNK D_801D48D8;
 M2C_UNK *func_801B0088(void);
 void func_801B3780();
@@ -18,7 +18,7 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 extern MgObj20 D_80162994[];
 extern s32 D_801D62F4;
 extern s32 D_801D62F8;
-void func_801B35F0();
+void func_801B35F0(void);
 void func_801B1400(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgPart18;
@@ -39,5 +39,40 @@ extern s16 D_8015169C;
 extern MgTask D_80162978[];
 extern u16 D_801D62C8[];
 extern MgPart18 D_801D63B0[][0x30];
+s32 func_800BBEAC(void *);
+s32 func_800BC04C(void *);
+void func_800D2980(void *, s32, s32, s32);
+extern M2C_UNK D_801B381C;
+void func_801B3434();
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgMat D_800FA63C;
+void func_8003A79C(MgMat *, MgMat *, MgMat *);
+void func_8003B2CC(MgMat *, u16 *, u16 *);
+void func_8003BF3C(MgMat *, MgMat *);
+void func_801B12FC(MgMat *arg0, u16 *arg1, u16 *arg2);
+void func_801B27B0(void);
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+void func_8003BF8C(MgSVec *, MgMat *);
+s32 func_800D29D4(void *, s32, s32, s32);
+void func_800D4284(void *, s32, MgMat *);
+extern s32 D_801D62D8[];
+extern u8 D_801D3A04;
+void func_801B2918(void);
+extern MgMat D_800FA6E0[];
+extern u8 D_801D3DE0;
+void func_801B00B0(void);
+extern void *D_801D6268[];
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_801B2654(void);
+extern s8 D_801D62D0;
+extern s8 D_801D62D1;
+extern s8 D_801D62D2;
+extern u16 D_801D62D4[];
+void func_801B2AF4(void);
 
 #endif /* MAGIC_GARYU_DECLS_H */
