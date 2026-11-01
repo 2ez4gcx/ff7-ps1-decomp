@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 void func_801B0054(void);
-M2C_UNK func_801B39A8();
+void func_801B39A8();
 void func_801B3934(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
 void func_801B2A4C();
@@ -31,5 +31,19 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 s32 func_800D29D4(void *, s32, s32, s32);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+void D_801B0000();
+extern s8 D_800FAFDC;
+extern M2C_UNK D_801B3A98;
+extern MgTask *D_801ECF70;
+extern s32 D_801ECF78;
+extern s32 D_801EF50C[];
+extern s32 D_801EF534;
+void func_801B2918(void);
+void func_800D4368(s16 *, s32, s32);
+s32 func_800D4D90(u8 *, s32, s32, s32);
+extern u16 D_801D4F50;
+void func_801B08D0(void);
+extern s32 D_801D4F18[];
 
 #endif /* MAGIC_WEP4_DECLS_H */

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0054(void);
-M2C_UNK func_801B31B4();
+void func_801B31B4();
 extern M2C_UNK D_801B9658;
 void func_801B0978(void *arg0, M2C_UNK arg1, M2C_UNK arg2);
 s32 func_8003BBDC(void *, void *, s32 *, s32 *);
@@ -38,5 +38,33 @@ MgMat *func_8003BF3C(MgSVec *, MgMat *);
 void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
 MgMat *func_8003A79C(MgMat *, MgTask *, MgMat *);
 void func_801B0B1C(MgTask *arg0, MgSVec *arg1, MgSVec *arg2);
+s32 func_800BBEAC(M2C_UNK *);
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+extern MgTask D_80162978[];
+extern M2C_UNK D_801B3248;
+extern MgTask *D_801D665C;
+extern s32 D_801D6660;
+extern s32 D_801D6664;
+extern s32 D_801D687C;
+extern M2C_UNK D_801B0000;
+extern M2C_UNK func_801B2E14;
+typedef struct { u8 pad0[8]; s32 unk8; u8 padC[0x24]; s32 unk30; s32 unk34; u8 pad38[0x48]; s32 unk80; s32 unk84; u8 pad88[0x48]; s32 unkD0; } DeathQuad;
+void func_801B07A8(DeathQuad *q, s32 arg1, s32 arg2);
+typedef struct { u8 pad0[0x30]; s32 a[10]; s32 za[10]; s32 b[10]; s32 zb[10]; } DeathRing;
+void func_801B0494(DeathRing *r, s32 arg1, s32 arg2);
+void func_801B1D20(void);
+MgTask *func_800D4FA8(s32);
+s32 func_800D56A8(s16 *);
+void func_800D55F4(s32, s32, s32);
+void func_800D5774(s32);
+void func_801B0EFC();
+extern s16 D_8015169C;
+extern s32 D_801D6670;
+extern s32 D_801D6674;
+extern s32 D_801D6678;
+extern u8 D_801D668A[];
+void func_801B1AF4(void);
+void func_801B0C20();
+extern s16 D_801517B4;
 
 #endif /* MAGIC_DEATH_DECLS_H */
