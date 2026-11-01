@@ -295,6 +295,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A callee whose result the game keeps in `fp` for much later use (`move fp,v0` in the
   delay slot of a later `jal`) is declared `s32` (`len = func_8003A08C(&w, &w)`, beam
   func_801B0774).
+- `*(u16 *)(q + 0xC) = 0x8000` gives `ori`, the `s16` cast `li -32768` (queir
+  func_801B2144). `k = D_x << 11; rot.vy = k;` keeps the `lw` that a direct store to an
+  `s16` field narrows to `lhu`; `*(s32 *)&D_x` reads a word global that decls.h types as
+  `u16` without changing the declaration (satan).
+- `func_800BBEAC(fn);` called with one argument keeps an earlier loop's hoisted `li a1,1`
+  as its second argument (sldfang func_801B3028). A callee declared with an `s16`
+  parameter that the game passes unextended is called through a cast, `((void (*)(s32,
+  s32, s32))func_801B1C9C)(..)` (catastro func_801B4AB0).
+- When an earlier C function fixed `u8 D_x[]` and `put` refuses a type change, a struct
+  view anchored at an address-only symbol 8 bytes lower (`extern struct { s32 pad[2];
+  SatNode node[1]; } D_801E4D38;`) gives the struct-array `lui at; addiu at; addu
+  at,at,reg` form without touching the earlier declaration (satan).
+- `px = *(volatile u16 *)&D[i];` for the first read and plain `D[i]` for the later ones
+  gives exactly two `lhu` of one halfword: CSE does not merge across the volatile read
+  (odin2 func_801B4B98).
 
 ### Order of instructions
 
@@ -684,6 +699,37 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Operand grouping: `t = D_x + (0x400 + (rand() & 0x7FF))` gave the game's order (deadsef
   func_801B3108); `((t << 12) * 3) / 200` gave `sll 12; sll 13; addu` (deadsef
   func_801B361C).
+- Particle update tails: `p->unk4 += p->unkC; p->unk8 += p->unk10; p->unk2++; p->unkC -=
+  p->unkC >> 4; p->unk10 -= p->unk10 >> 4;` (the increment after the last add, the decays
+  last) gives the game's load order (sldfang func_801B1720); the same under GCC 2.7.2
+  with `>> 3` (garyu func_801B2654); `unk2++` after `unk14 += unk16` (garyu
+  func_801B00B0).
+- m2c's order of tail statements is often not the game's: s_beam func_801B1550 needs
+  `unk4 += unkC` before `unk6 += unkE` and the `sv->vz = 0` store last. An all-orders
+  search over the tail lines, run in parallel, takes seconds for 6 lines and solved
+  s_beam func_801B1550, func_801B1F78 and ifleet func_801B34AC: run it over an update
+  tail before anything else.
+- Scratchpad words written in natural order `m->t[0]`, `[1]`, `[2]` give the game's 0x14,
+  0x1C, 0x18 store order: the scheduler moves the middle load, and hand-picked orders
+  matched worse (vahamut func_801B2970). Copy a twin's packet store order verbatim:
+  re-sorting the stores into the emitted order cost an 8-minute hill-climb and still left
+  an inversion (titan func_801B3014 from gaisei func_801B181C).
+- Three words written through a cast, `((MgVec *)&D_801E0838)->vx = ..; ->vy = 0; ->vz =
+  ..`, keep the game's load/store order with the zero store after the load where scalar
+  casts hoisted the loads; `q = &e->pos;` assigned before the compare puts its `addiu` in
+  the first branch's delay slot (satan func_801B58DC, func_801B639C). `*(s16 *)((u8 *)q +
+  k) = ..` cast stores keep later loads below them only when the loaded values come from
+  a global; loads through a local pointer still float up (vahamut func_801B2DA8).
+- `v.vz > *(s16 *)(table + o)` instead of `table < v.vz` puts the stack-local load before
+  the table address (odin2 func_801B5264). A `w = (c2 * c0) >> 12;` temp written before
+  `cb` put that multiply first (queir func_801B0ECC).
+- One variable per axis computed in place with the two axes interleaved (`x = sum; x /=
+  4; z = sum; z /= 4; x += 0x888; z += 0xE70; x /= 0x200; z /= 0x200;`) keeps `+0x888`
+  out of the `+0x1FF` of the negative-case add; `r = z * 0x24 + (s32)tab; cell = (s32
+  *)(x * 4 + r);` gives the `addu` operand order (satan func_801B2048, func_801B1E60).
+- `m = 0x3E8; (u16)f - m + r1 % 2000` with one single-set variable per `rand()` result
+  avoids a hoisted `li 0xFC18` and `move a2,v0` copies (catastro func_801B40C8,
+  func_801B3184).
 
 ### Registers
 
@@ -973,6 +1019,42 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   *)0x1F800060;`) land in saved registers (mrain func_801B0A08, freeze func_801B026C).
   Single-element arrays `D_x[0] ^= 0x80; D_y[0] += ..` share one `la` for element 0
   (mrain func_801B0A08).
+- Reusing a variable for a second value fixed registers: `y = (x * x + z * z) / k;` into
+  the variable that held the average `y` (queir func_801B0094, func_801B033C); the last
+  temp `ang = rand() % 2560 + 0x800` reusing `ang` (garyu func_801B2AF4). `n = t + 1; if
+  (n >= 0x36) { n = t - 0x35; .. }` shares one saved register between both values
+  (catastro func_801B42A8).
+- A function returning its pointer argument (`return arg1;`) keeps `arg1` in the
+  lowest-priority saved register and stores through `v0` (queir func_801B0ECC). `d = k;
+  scale.vx = d; scale.vy = p->unk16; scale.vz = k;` put a quotient in `v1` (queir
+  func_801B237C, still 4 words off).
+- A call result used by several stores stays in `v0` only with its own block-scope
+  variable; a function-level `q` assigned in several arms gets `move v1,v0` and swaps
+  `v0`/`v1` with the temps (titan func_801B4910). A function-level `w` used for one call
+  result only also stays in `v0` (vahamut func_801B31D8). Several functions took their
+  temps from separate block-scope variables (`ax`/`ay`/`az`, `lo`/`hi`) rather than
+  function-level ones (ifleet, s_beam).
+- `extern struct { s32 t0; s32 t1; s32 t2; } D_801D3930; D_801D3930.t0 = ..; f((MgMat
+  *)((u8 *)&D_801D3930 - 0x14), ..);` gives `sw v1,0(v0)` and a related-value `addiu
+  a1,v0,-0x14` with the load/store alternation; scalar externs and an `MgMat *m` computed
+  first did not (titan func_801B40A0).
+- Copy-first prologue: use the parameter in place (`arg0 = -arg0;`); a separate `dx =
+  arg0` puts its `move` in the branch delay slot (odin2 func_801B2F70).
+- `if (t < 10) k = 0x1000; else {..}` puts the constant in the `bnez` delay slot and `k`
+  in `v0`, where `k = 0x1000;` before the `if` gave `a0` (vahamut func_801B18F0); `a =
+  0x1800; D = t << 10;` instead of the reverse moved `a` to `a0` (vahamut func_801B1C48).
+  Likewise `if (!(x & 1)) D.v = -0x64; else D.v = 0x64;` through a one-field `MgHalf`
+  global puts `ori v0` in the `bnez` delay slot, where a preset `c = 0x64; if (..) c =
+  -0x64;` put `c` in `a0` or `v1`; a second extern view at a lower symbol (`extern struct
+  { s16 pad; s16 v; } D_800FA664;`) for the second store gives its own `lui at; sh`
+  instead of a shared `la` (catastro func_801B1D00).
+- A byte global read after an `sh` store as an array element `D_x[0]` keeps the `lbu`
+  after the store (catastro func_801B2BA4, func_801B2C64). Divisors held in locals (`kx =
+  23; kz = 28;`) give `div` with them in saved registers (satan func_801B5388).
+- A function-level `q` for both spawn blocks with a plain `&D_80162978[f()]` (no base
+  variable) gave the game's `s0`/`s1` split; a scratchpad base held in the loop counter
+  variable (`i = 0x1F800000;` then `i = 0;`) matched; `e = D_801D9860; e = e + f() %
+  137;` loads the base after the call (ifleet func_801B1E58).
 
 ### Control flow
 
@@ -1182,6 +1264,22 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `D_x = f(..)` written in both arms of an if/else is cross-jumped into one store at the
   join (riva func_801B1744); an if/else with the constant in the else arm gives the
   game's delay-slot `ori` (lunatic func_801B0B28).
+- A jump-table state machine whose last case falls into `default: p->unk0 = -1;` puts
+  without trouble; `q->unk4` first, `q->unk6 = 0` second, `q->unk8` third in cases 4-6
+  gave the load order (queir func_801B2590).
+- `if (c) { copies } else { p->unk0 = -1; return; }` gives the game's kill-block-last
+  layout where `goto kill` put the kill block inline (s_beam func_801B0028).
+- Timeline functions with shared tails: labels inside the later arms (`call4434:`,
+  `test0:`, `call:`) with `goto` from the earlier arms merge the tails as the game; `b =
+  D_80162978; p = &b[..]; q = &b[..]` keeps the base in `s1` (odin2 func_801B4DD4).
+  Sequential range tests `t -= N; if (t < M) { ..; goto end; }` with spawn blocks matched
+  on first drafts (titan func_801B4910, func_801B3358, vahamut func_801B31D8); there
+  `(f() << 5) + (s32)b` gives the operand order of the later spawns, and `D[0] = D[1] =
+  D[2] = 0` against `D[2] = D[1] = D[0] = 0` picks the order of three zero-byte stores.
+- When two arms' computations differ only in a register, give the second arm its own
+  variable, or cross-jumping merges the tails (odin2 func_801B3D10). A random pick
+  written as the same call in both arms of an if/else matched, where `a = &X; if (r &
+  0x100) a = &Y;` left the `andi` after the address load (vahamut func_801B3AB8).
 
 ### Loops
 
@@ -1408,6 +1506,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   0x18` keeps `lui at; addiu at; addu at,at,o`, and a `u8 *q` stepping `q += 0x18` beside
   it gives the game's three stepping registers (sdust func_801B05BC). `for (k = 0, v = 0;
   ..; k++, v += 0x18)` puts `move k,zero` in the backward branch's delay slot.
+- `p = &D[i]; p->count = 0; p->tail = 0; D[i].head = 0;` in a loop gives a giv based at
+  offset 0 with a `move a0,v0` init (sldfang func_801B0754).
+- Index records as a struct `{ u16 a; u16 b; u16 c; u16 pad[5]; }` stepped with `t++`
+  give the game's `beqz` guard on an `lhu` count and a derived pointer giv for `b` and
+  `c`; a plain `u16 *e` with `e[0..2]` gives neither (queir func_801B0094). For
+  quad-centroid loops a record struct `{ u16 a, b, c, d; u16 pad[N]; }` stepped with
+  `l++` gives the game's `s5 = l + 6` stepping register (brizag2 func_801B123C,
+  func_801B17E8).
+- Pointer-increment loops with `d[i].vx` indexing for the destination and `b++; a++;`
+  (source first) give an unsplit destination pointer and the game's increment order;
+  diagonal matrix stores written in each arm of a `t < 10 / else if` chain are not sunk
+  below the argument setup (ifleet func_801B14E8).
+- `for (i = 0; i < 0x121; i++) { off = i * 8; .. (q + off) .. }` gives one
+  strength-reduced base register and unreduced `sym+off` for the others (vahamut
+  func_801B1804); `o = i * 0xB9C;` written after the first copy statement gives an
+  unreduced byte-offset register beside two pointer givs (satan func_801B58DC). A table
+  base assigned inside the loop right before its use is hoisted after a magic multiplier,
+  assigned before the loop it is hoisted first; a do-while with `i++` written right after
+  the first load puts the increment in the `beq` delay slot (satan func_801B2048).
+- In a call-free loop, `reg + &sym` for an 8-byte copy becomes a reduced pointer giv
+  (`lwl 3(t2)`) where the game keeps `lui at; addiu at,sym+3; addu at,at,t0` (titan
+  func_801B5190, unsolved).
 
 ### Stack frame
 
@@ -1478,6 +1598,8 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `u8 pad[8]`.
 - The permuter's score ignores the frame size: its "score 0" on death func_801B2E14 was 8
   bytes of frame off; check a permuter result with dd.py before trusting it.
+- With quad-centroid loops, declaring `cnt` before `l` swaps their spill slots 0x10/0x18
+  (brizag2 func_801B123C).
 
 ### How the scheduler and the allocator decide
 
@@ -1512,6 +1634,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A volatile byte read stored into a `u16` field keeps a redundant `andi 0xFF`; volatile
   globals were needed to keep a loop's load/store alternation (sflea func_801B1938, near
   miss).
+- Scheduler priority (ifleet func_801B3BB0, `-dS` dump): an `andi` of a call result whose
+  destination pseudo is set only once gets priority `0x7f000001`, sits right before the
+  branch, and the later argument's `lui; addiu` lands above it. One multi-set `u` for
+  three values (`u = t + 0x1388` / `u = t - 0x1388` in the two arms, then `u = f() &
+  0x100`) removes the bump.
 
 ### More forms
 
@@ -1673,6 +1800,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   division chain (hvshot func_801B0680).
 - The night/lgirl ring-push helper matched unchanged under GCC 2.7.2 (wep3
   func_801B048C).
+- Open forms (near misses): an unfolded loop guard `ori s1,0x400; slti v0,s1,0x100; bnez`
+  with an 8-byte bigger frame (vahamut func_801B2810, func_801B2238, the family of h_blow
+  func_801B0640 and gospel func_801B2F00); the `/3` quotient copies `subu v1,v1,v0; ..
+  move s0,v1` that combine merges (brizag2 func_801B0F78, func_801B1524); `(p->unk0 - 1)
+  * 16` folded into the table offset where the game keeps `addiu -1; sll 4` (odin2
+  func_801B3F54); a hoisted table `la` sunk after a call (sldfang func_801B2D80).
 
 ## Hand-written assembly
 
