@@ -288,6 +288,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   decls.h: the parse error cascades and only cc1's last line shows (antlion, MgVec). A
   redeclaration of a global with another type than decls.h's passes `put` and fails only
   the whole-file check (lamu).
+- A work file's `extern u8 D_x[]` replaces decls.h's `u8 D_x[][N]` for the whole file and
+  broke an earlier function in it (lgirl func_801B093C): reuse decls.h's declaration.
+- `D_x[0] = p->unk2 << 5` narrows the field load to `lbu`; going through `s32 w = p->unk2
+  << 5;` keeps the game's `lh` (mrain func_801B1B24).
+- A callee whose result the game keeps in `fp` for much later use (`move fp,v0` in the
+  delay slot of a later `jal`) is declared `s32` (`len = func_8003A08C(&w, &w)`, beam
+  func_801B0774).
 
 ### Order of instructions
 
@@ -635,6 +642,48 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   permuter).
 - `n = 6 - p->unk2` as a temp stops reassociation (gaisei func_801B2EEC); `u = *g; u +=
   0x20; u -= x; *g = u;` keeps the game's add order (gaisei func_801B2DFC).
+- Colour bytes as array elements `D[0] = D[1] = D[2] = c` give the game's store order
+  where a chain of scalars swapped it (lgirl func_801B07D4); a flag byte as `D[3]`
+  reloads `p->unk2` after the byte store as the game (lgirl func_801B00F8). Byte globals
+  stored as array elements (`D_800F5B70[0] = 0x48`) make the next `p->unk2` reload as the
+  game (lunatic func_801B0B28). Colour bytes through `rgb = D_x` written `rgb[2]`,
+  `rgb[1]`, `rgb[0]` give `lui at` stores for the first two and `0(s0)` for the last
+  (lunatic func_801B0484).
+- A struct view for a count byte, `typedef struct { u8 cnt; u8 pad[2]; Fx e[1]; }`, lets
+  the count load hoist above scalar byte stores (lgirl func_801B00F8). A store through a
+  one-field struct pointer (`struct { s16 v; } *p3; p3->v = ..`) lets the next global
+  pointer load hoist above it where a plain `s16 *` store keeps it below (deadsef
+  func_801B2908).
+- A plain-global byte store before a later `p->unk2` read in the same arm makes CSE
+  reload the field and the scheduler hoist the `lh` above the `sb` (`D_800F8380 &= 0xF8;
+  k = 0x1000 - (p->unk2 - 0x48) * 0x200;`): the game's plain reload, no volatile needed
+  (sdust func_801B2F04).
+- `extern struct { s16 v; s16 y; s16 z; } D_x;` lets `D_x.y`/`.z` stores keep the next
+  field loads below them (wpsi func_801B1ADC). A frame descriptor seen as a struct `{ s32
+  unk0; s32 unk4; s16 unk8; s16 unkA; }` and stored through members keeps the `p->unk2`
+  reload after the stores where plain externs do not (freeze func_801B0AC0). A halfword
+  global written `D_x.v = ..` through `MgHalf` as the first store of a chain stays ahead
+  of later loads (freeze func_801B0CA8, func_801B0828, mrain func_801B0A08).
+- G4 packet functions storing through `*(s32 *)((u8 *)p + N)` with xy3 (`+0x20`) written
+  fourth and the code byte `((u8 *)p)[7] = 0x3A` last keep the `D_801517C0` load below
+  the stores (wpsi func_801B078C, death func_801B07A8; twin of reazer func_801B102C).
+- A `%` expansion has a branch: an `i++` written before the `%` statement is hoisted to
+  the loop top (into the first call's delay slot), so write it after (m_break
+  func_801B04E8); a constant store `d = 0xFC0;` written after `q->unkC = r % 0x1000;`
+  lands in the `bgez` delay slot, before it in the earlier `jal` slot (daisenp
+  func_801B0B18). `r = f() % 3000 + 0x7D0;` as one statement puts the magic constant
+  before the `move`, where `r = f(); r %= 3000;` does not (freeze func_801B026C).
+- A separate single-set `p = q - 0x2E76;` written right after a call puts its `addiu` in
+  that call's delay slot; `q -= K` or `q = &D - K` float it into the first call's slot
+  (deadsef func_801B384C). `(u8 *)frame - 0xA` written at each call, with a pointer
+  variable per branch, schedules the add right before the call (riva func_801B1744).
+- `n = (u16)p->unk2 & 3;` read before the scratchpad stores hoists its `lhu` above them;
+  `t -= 0x16; c = 0x80 - t * 0x10;` keeps `t` in place (lunatic func_801B05F0). `k = a +
+  b + c + d; k = k >> 4;` as two statements fixed the load order and registers (death
+  func_801B0494, permuter).
+- Operand grouping: `t = D_x + (0x400 + (rand() & 0x7FF))` gave the game's order (deadsef
+  func_801B3108); `((t << 12) * 3) / 200` gave `sll 12; sll 13; addu` (deadsef
+  func_801B361C).
 
 ### Registers
 
@@ -890,6 +939,40 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A pointer variable for a leftover argument (`id = D_x; .. f(.., id, q)`, where the game
   leaves `&D_x` in `a2`) changed which table pointer took `a1` (bushin2 func_801B352C,
   found by the permuter).
+- `k = p->unk0; k = k * 0x10; e = D; e = e + k;` and `k = p->unk0 * 0x10; e = D + k;`
+  pick different registers: try both in each arm (hvshot func_801B0680 needs the split
+  form in arm 1 and the combined one in arm 2). A constant local `one = 1;` with `m &
+  (one << i)` keeps `li 1` in a register and the `and` operand order (sennkoku
+  func_801B0650).
+- Values stored into address-taken locals and then used in a dot product come from
+  separate `s32` temps, or GCC reloads them from the stack; `scale.vy = scale.vz = x`
+  stores `vz` first; one local reused for dot, angle and scale kept `s2` (beam
+  func_801B0774).
+- `do { } while (0)` around three colour byte stores keeps the `addiu a0,s0,8` argument
+  after them (m_break func_801B0370); around a loop-init block it fixed a pointer/counter
+  swap (aqua func_801B0254); `do { sc->vx = k; *(s32 *)0x1F800024 = k; } while (0);`
+  after a `store:` label fixed a swap between the scale pointer and the task pointer
+  (tornado func_801B0A1C, whirl func_801B0A08); around `t = func_80042DA8(c) & 0x100;` it
+  fixed the `andi` position (riva func_801B309C, wrap.py, with the permuter's `D_801F49AC
+  = id = arg1;` and `int c` for `u8 c`).
+- `u16 *tbl = D_x; .. tbl[1] / tbl[k]` stops GCC hoisting `&tbl[1]` into its own
+  register, and arms written `if (k >= 2) {tbl[k]} else {tbl[1]}` give the game's order
+  (bioga1 func_801B0C8C). GCC 2.7.2: `s = (MgScratch *)0x1F800000;` assigned before `tbl
+  = &A; if (flag) tbl = &B;` kept the flag load behind the table address, with only the
+  first scratchpad store through `s` and the rest through the cast constant (beam
+  func_801B0C40).
+- One multi-set `x` shared by a call result and a loop temp (lv4jibak func_801B128C), and
+  `k = 0x17C0` inside the loop with `k = 0;` before it (wep3 func_801B1514), keep the
+  game's `v0` copies and `li a1`; a temp `k = D_8015190F[arg1][0]` swapped `k`/`n` to the
+  game's registers (lv4jibak func_801B128C, permuter).
+- Separate counters for a clearing loop and a later search loop (sdust func_801B3418,
+  death func_801B1D20), and `b = D_80162978; p = &b[f()]`, fixed the register order.
+- Block-scope temps `w1`/`w2` in each arm, a function-level `q` and cast stores `*(s16
+  *)((u8 *)q + 4) = w1` put `q` in `a1` and keep the plain-global load after the stores
+  (freeze func_801B13A8). Scratchpad pointer locals assigned at the top (`sv = (MgSVec
+  *)0x1F800060;`) land in saved registers (mrain func_801B0A08, freeze func_801B026C).
+  Single-element arrays `D_x[0] ^= 0x80; D_y[0] += ..` share one `la` for element 0
+  (mrain func_801B0A08).
 
 ### Control flow
 
@@ -1088,6 +1171,17 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A slot allocator in array-index form, `for (i..) if (T[i] == 0) { T[i] = a; S[i].f = 0;
   return &S[i]; }`, gives both of the game's address registers; pointer variables did not
   (gospel func_801B1294).
+- Kill-label layout: `if (t < 4) {A} else { t -= 4; if (t >= 4) goto kill; B }`, then the
+  stores, `goto draw; kill: p->unk0 = -1; return; draw: ..` gives the game's block order
+  (m_break func_801B0258); a final `if (p->unkA > 0) { kill: p->unk0 = -1; }` that
+  earlier tests jump into matches a shared kill block (m_break func_801B0370, hvshot
+  func_801B0680, func_801B03C0).
+- Kill block with a shared tail: arm A calls and does `goto tail`; arm B's stores come
+  first, then `else { kill; return; }`, then arm B's call, with `tail:` on the flag test
+  (riva func_801B21B0).
+- `D_x = f(..)` written in both arms of an if/else is cross-jumped into one store at the
+  join (riva func_801B1744); an if/else with the constant in the else arm gives the
+  game's delay-slot `ori` (lunatic func_801B0B28).
 
 ### Loops
 
@@ -1296,6 +1390,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Unsolved: h_blow func_801B0640 and gospel func_801B2F00 keep an unfolded loop guard `li
   s1,0x100; beqz s1` that GCC folds; no loop form, inline helper, field or array element
   kept it.
+- `off = i * 0xB9C;` at the top of a loop body gives the game's init order of the
+  stepping register and a hoisted constant (lgirl func_801B093C).
+- A word-copy loop `*d = *s; s++; d++;` with an extra `i += 4` counter gives two pointer
+  bivs plus a byte counter (slow func_801B07FC); `p++` gives the `p + 4` stepping pointer
+  of a table loop (slow func_801B013C, func_801B0020). Pointer-increment loops `a->vx +=
+  b->vx; a->vy += b->vy; a->vz += b->vz; a++; b++;` over `MgSVec *` parameters give the
+  game's split pointers, one for `vx` and one at +4 for `vy`/`vz` (riva func_801B2670,
+  func_801B254C, func_801B1744).
+- Giv reduction (`-dL` dump): a giv is reduced when `lifetime * benefit * threshold >=
+  insn_count`; a load and a store to the same address combine into one giv with two uses
+  and get reduced. Writing the store through another symbol view (`*(s16 *)(D_801B4458 -
+  4 + o)` for a store to `D_801B4454 + o`) stops the combining and keeps the game's
+  unreduced `sym(reg)` form; one more RTL insn in the loop can flip the decision (deadsef
+  func_801B2908).
+- A loop over a `u8[]` symbol: an explicit offset `((SdPart *)(D_x + o))->f0` with `o +=
+  0x18` keeps `lui at; addiu at; addu at,at,o`, and a `u8 *q` stepping `q += 0x18` beside
+  it gives the game's three stepping registers (sdust func_801B05BC). `for (k = 0, v = 0;
+  ..; k++, v += 0x18)` puts `move k,zero` in the backward branch's delay slot.
 
 ### Stack frame
 
@@ -1361,6 +1473,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   of frame (gaisei func_801B2128).
 - Three adjacent stack locals as `s32 tmp[3]` with `f(&tmp[0], &tmp[1]); tmp[2] = ..`
   gave the game's frame and `lhu` reloads each iteration (nanntoka func_801B0240).
+- `s32 t = p->unk2` instead of an `s16` copy saved 8 bytes of frame (mrain
+  func_801B1608); sibling functions with frames of 0x58 or 0x40 need `u8 pad[0x38]` or
+  `u8 pad[8]`.
+- The permuter's score ignores the frame size: its "score 0" on death func_801B2E14 was 8
+  bytes of frame off; check a permuter result with dd.py before trusting it.
 
 ### How the scheduler and the allocator decide
 
@@ -1552,6 +1669,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `(u32)((t << 12) / 40) >> 8` gives `div` then `srl 8` (gospel func_801B2418).
 - ASPSX 2.34: `*(volatile s16 *)&p->unk0 = arg0` gives `lui; addiu; addu; sh 0(reg)`
   (antlion func_801B3B24).
+- `t <<= 7; t = -t; if (t < 0) t += 7; c = (t >> 3) - 0x80;` keeps the game's in-place
+  division chain (hvshot func_801B0680).
+- The night/lgirl ring-push helper matched unchanged under GCC 2.7.2 (wep3
+  func_801B048C).
 
 ## Hand-written assembly
 
