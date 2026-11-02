@@ -310,6 +310,17 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `px = *(volatile u16 *)&D[i];` for the first read and plain `D[i]` for the later ones
   gives exactly two `lhu` of one halfword: CSE does not merge across the volatile read
   (odin2 func_801B4B98).
+- A second struct view anchored at an address-only symbol (`SvShard2` at `D_801F92C8`)
+  gives `sym+reg` accesses to the upper half of a record whose first view hides it behind
+  a pad (siva func_801B3644). Adjacent halfword globals as one `{ u16 x, y, z; }` struct
+  keep a load, store, load, store order (siva func_801B2FAC); a one-field `{ u16 v; u16
+  pad; }` view of matrix words read as halfwords does the same (siva func_801B47B4, odin1
+  func_801B5A74).
+- An `s32` global read through a big struct view (`((Vh0Big *)D_801FD928)->a[i]`) hoists
+  the 0x10080/0x10104 offsets into saved registers and lets the global's reload be CSE'd
+  as in the game (vahamut0 func_801B563C).
+- A function its caller calls with no arguments is defined with bare parameter names,
+  `void f(arg0, arg1)` (vahamut2 func_801B7C4C).
 
 ### Order of instructions
 
@@ -730,6 +741,30 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `m = 0x3E8; (u16)f - m + r1 % 2000` with one single-set variable per `rand()` result
   avoids a hoisted `li 0xFC18` and `move a2,v0` copies (catastro func_801B40C8,
   func_801B3184).
+- `p->unk4 = p->unk4;` is kept as `lhu; sh` and holds the load order of a tail (odin1
+  func_801B3660); several tails matched only in plain field-offset order `unk4, unk6,
+  unk8` (siva func_801B3188), found by the parallel all-orders search in under a minute;
+  over a 5-line store block it found `t[0], t[1], t[2], v0/v8, v4`, one swap from the
+  natural order (vahamut0 func_801B3708).
+- A packet tag stored through a one-field struct `((MgWord *)k)->v = 0x06000000;` while
+  the other stores are casts lets the `D_801517C0` load float above the tag store only
+  (odin1 func_801B4A38, func_801B47E0). `*((u8 *)p + 0x14) += 8` casts keep a tail's byte
+  loads in the game's order where struct byte fields do not (vahamut2 func_801B6868,
+  func_801B3904); `*(s16 *)((u8 *)p + 4)` loads stay after the earlier global stores
+  (kujata func_801B521C).
+- Direct `D_x->m.t[i]` accesses keep one pointer load where a local `s = D_x` hoists it
+  (kujata func_801B7028, func_801B7CFC); a constant assigned first to a local moves its
+  `lui`/`ori` to the prologue, and `M2C_SFIELD(D_x, s32 *, 0x24)` keeps the pointer load
+  after the stores (kujata func_801B66F8); `t = (u16)pt->a - 0x100; pt->a = t + r %
+  0x200;` keeps the `lhu` first (kujata func_801B42B8).
+- `n -= 0x100` written before the last `rand()` statement of a spawn loop lands in the
+  `beqz` delay slot; a constant store goes after the statement holding the `%` expansion
+  (vahamut2 func_801B48E8, func_801B6A2C). work/spells71/sweep.py moves one statement
+  through every position of a body and scores each: it found the first.
+- Two independent division chains with fix-up branches (`f = ((s16)(t % 16) << 12) / 16;`
+  and `q = t / 16;`) match only with `f` first (tupon func_801B22B4). `m = &D; tp = (u16
+  *)((u8 *)m + 0x14); f(m, ..)` makes `tp` derive from `a0` instead of the reverse; `i =
+  0;` after the first call fixed the prologue order (odin1 func_801B379C).
 
 ### Registers
 
@@ -1055,6 +1090,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   variable) gave the game's `s0`/`s1` split; a scratchpad base held in the loop counter
   variable (`i = 0x1F800000;` then `i = 0;`) matched; `e = D_801D9860; e = e + f() %
   137;` loads the base after the call (ifleet func_801B1E58).
+- A signed division by a constant assigned to a fresh single-set variable (`u = (t << 12)
+  / 60;`) gives the game's in-place `mfhi a0; addu a0,a0,v0; sra; subu a0,a0,v0`;
+  reassigning `t` adds a copy at the end (tupon func_801B2CD0, func_801B2760), while `t =
+  (t << 12) / 5;` keeps the quotient in `t`'s register (kujata func_801B5D88). A quotient
+  used once inside an expression wants to stay an expression temp (tupon func_801B2A50).
+- One function-level `k` for the quotients of several arms, or for a quotient and a later
+  value (`k = (t << 12) / N; D = k;` .. `k = 0x1000 - *g;`), puts them in the game's
+  registers, `a1` where a single-set variable tied to `v0` (vahamut0 func_801B5B90,
+  func_801B493C; vahamut2 func_801B3904, func_801B606C; kujata func_801B5AE0,
+  func_801B62C0).
+- A multi-set `t` stops combine from folding `(n << 12) >> 1` into `n << 11`: `u = t <<
+  12; t = u >> 1;` keeps `sll 12; sra 1`; an `s16 c = k;` copy at the join gives `move
+  v0,a0` (kujata func_801B521C).
+- `func_8003B35C(m, s)` with `s` itself as the second argument leaves the reloaded
+  pointer in `a1`; `&s->v8` gives the other form (vahamut2 func_801B6868).
+  `func_800D44E8(&D_801F0310[i], m = &D_801F0B74[i])` fixed which stepping giv gets `s2`
+  and which `s3` (siva func_801B3E00). `tp = &D_801DD634; *tp = v.vx; m = (MgMat *)(tp -
+  5)` gives `addiu s0,v1,-0x14` (odin1 func_801B65A0).
+- `D_801F2A44[off] = q[5] = q[6] = c;` with `q = D_801F2A40 + off` matches colour byte
+  stores 4/5/6 (odin1 func_801B4DBC); chained byte stores `p->u0 = p->u2 = t0` elsewhere
+  make loop-invariant copies, and separate stores in the game's order with `u8 t0, a3`
+  give a per-arm `move t0,v0` (tupon func_801B3464).
 
 ### Control flow
 
@@ -1280,6 +1337,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   variable, or cross-jumping merges the tails (odin2 func_801B3D10). A random pick
   written as the same call in both arms of an if/else matched, where `a = &X; if (r &
   0x100) a = &Y;` left the `andi` after the address load (vahamut func_801B3AB8).
+- A scale `c = expr << 10 >> 12` written in each arm, the default arm `c = 0xC00`, is
+  cross-jumped into the game's shared tail; one multi-set `c` gave `a3`/`a2` instead of
+  `v0` (odin1 func_801B4654). Likewise a `mult` whose result is stored at a join matches
+  when the store is written in each arm: the merged tail is `lui; lw; mflo; sra; sw` with
+  `mult` in the `j` delay slot (vahamut2 func_801B6EF4, func_801B57F4).
+- Timelines with a shared store tail: positive tests with the early arms first (`if (t <
+  A) { zero stores } else { t -= A; if (t < B) { c = K; stores } else .. }`), the stores
+  written in every arm with their own variable per arm so they land in `v0`, cross-jump
+  into `bnez v0,SHARED` with the `li` in the delay slot (vahamut0 func_801B2888).
+- Kill blocks: an early-return kill (`if (t >= N) { kill; return; }`) where the asm shows
+  the kill inline, a positive test where it shows it last (kujata func_801B5EDC,
+  func_801B6034, func_801B6CE0); `goto done; kill: p->unk0 = -1; return; done:` after a
+  timeline's shared store puts it at the end of the timeline (vahamut2 func_801B4AE4); a
+  kill block shared by two chains is laid out with a label inside an `if` arm (tupon
+  func_801B2A50).
 
 ### Loops
 
@@ -1528,6 +1600,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - In a call-free loop, `reg + &sym` for an 8-byte copy becomes a reduced pointer giv
   (`lwl 3(t2)`) where the game keeps `lui at; addiu at,sym+3; addu at,at,t0` (titan
   func_801B5190, unsolved).
+- A global used inline in a loop (`&D[i * 6 + 3]`, `D_801EDC44` as element 0) is hoisted
+  into the preheader after the guard; a user variable holding it is set before the guard
+  (tupon func_801B4E00, func_801B592C). A one-field struct view of a table read inside a
+  loop (`MgWord D_x[]`, `.v`) stops loop.c from hoisting its `la` (vahamut0
+  func_801B3398); a spawn loop with `p` and `q` both `&D_80162978[i]` keeps one hoisted
+  `la`, a goto loop keeps it inside as the game (vahamut0 func_801B60CC). `k = 0x7D0;`
+  assigned inside the loop gives a `mult` with the constant hoisted at loop entry (kujata
+  func_801B54CC).
+- Dropping an offset variable `o += 0x30` for `i * 0x30 + (s32)&D[k]` everywhere gives
+  the game's three stepping registers (tupon func_801B4E00); elsewhere explicit running
+  offsets `k = 0x1080; row = k; col = 0; .. col += 0x78; k += 0x780` give the prologue
+  order and loop registers where an `i`-derived `k` merges with the giv (vahamut0
+  func_801B5884). `MgSVec D[][6]` indexed `[n][j]` gives `n*48 + j*8` with `j*8` shared
+  (tupon func_801B51E0); `i++` between two row loads with `(u8 *)base + (i << 7)` forms
+  matched an unfolded second row (kujata func_801B7CFC).
+- `s32 n = *(s16 *)..` instead of `s16 n` kept a loop bound as `s7 + s6` in the condition
+  (siva func_801B3938). `i = b * 5; n = i; for (; i < n + 5; i++)` gives a folded-compare
+  guard `ori v0,1; beqz v0,end` (odin1 func_801B32BC).
 
 ### Stack frame
 
@@ -1600,6 +1690,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   bytes of frame off; check a permuter result with dd.py before trusting it.
 - With quad-centroid loops, declaring `cnt` before `l` swaps their spill slots 0x10/0x18
   (brizag2 func_801B123C).
+- A `for` loop with a variable bound gives the 8-byte dead compare slot, so a 0x58 frame
+  needs no pad (tupon func_801B57A8, func_801B4E00); `s32 flag[3]` as an out-parameter
+  local adds a missing 8 bytes where `u8 pad[8]` moved `flag` instead (vahamut0
+  func_801B3E0C); `u8 pad[8]` again for kujata func_801B731C, func_801B521C,
+  func_801B42B8. `extern volatile s16 D_80162084;` restores the position of a leaf `addiu
+  sp,-8` and an empty `bnez` delay slot (odin1 func_801B5088).
 
 ### How the scheduler and the allocator decide
 
@@ -1639,6 +1735,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   branch, and the later argument's `lui; addiu` lands above it. One multi-set `u` for
   three values (`u = t + 0x1388` / `u = t - 0x1388` in the two arms, then `u = f() &
   0x100`) removes the bump.
+- The unfolded loop guard (vahamut2, spells 71): the compare reaches combine unfolded
+  with its constant set in the same block, and combine simplifies it with `nonzero_bits`:
+  `n = ((t << 7) & 0xFF) + 0x80; while (n >= 0x100)` gives `beqz v0` and a 0x28 frame
+  (vahamut2 func_801B5A48), and the game's `ori s1,0x100; beqz s1` is the same rule for
+  `(ge s1 0x100)` with `nonzero_bits` 0x100. The extra 8 bytes of frame are the dead
+  compare pseudo: class `ST_REGS`, no hard register and a stale ref count, so it gets a
+  stack slot. `-fno-rerun-cse-after-loop` keeps the guard but changes the preheader; an
+  identical-arm dead test survives cse1 and cse2 folds it once the arms merge.
 
 ### More forms
 
@@ -1806,6 +1910,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   move s0,v1` that combine merges (brizag2 func_801B0F78, func_801B1524); `(p->unk0 - 1)
   * 16` folded into the table offset where the game keeps `addiu -1; sll 4` (odin2
   func_801B3F54); a hoisted table `la` sunk after a call (sldfang func_801B2D80).
+- A literal `(t << 12) / 0` compiles to the game's `div` with its `break 7`/`break 6`
+  checks (kujata func_801B6034, func_801B6CE0).
+- Open forms (spells 67-72): the unfolded loop guard with an 8-byte bigger frame now
+  covers siva func_801B3408, vahamut0 func_801B38D0 and func_801B42F0 (an unfolded entry
+  guard before the kept loop guard), vahamut2 func_801B3804 and func_801B712C (about 25
+  source forms tried); a quotient that lands in `v0` where the game keeps it in place in
+  `v1` (tupon func_801B2460, 1 word); an `andi; beqz` on `v1` where the game has `v0`
+  (kujata func_801B88A4, 2 words).
 
 ## Hand-written assembly
 
