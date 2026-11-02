@@ -164,5 +164,18 @@ extern u8 D_801F3CDC[];
 extern u8 D_801F3CE8[];
 extern MgHalf D_801F3CF4;
 extern MgHalf D_801F3CF6;
+s32 func_800BBEAC(void *);
+extern u8 D_800FAFDC;
+extern MgTask *D_801F3D54;
+extern s32 D_801F3D58;
+extern s32 D_801F3D70;
+extern u8 D_801B0020[];
+void func_801B3B84(void);
+void func_801B4798(void);
+void func_801B54E8(void);
+void func_801B6938(void);
+void func_801B7574(void);
+void func_801B96B4(void);
+void func_801BBA30(void);
 
 #endif /* MAGIC_TIFA_DECLS_H */

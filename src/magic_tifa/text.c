@@ -1223,4 +1223,43 @@ void func_801BCD98(void) {
     func_801B1CD8(0x20, 0x180, D_801F5234);
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BCE2C);
+void func_801BCE2C(s32 arg0, s32 arg1, s32 arg2) {
+    MgTask *p;
+
+    D_801F3D54 = &D_80162978[func_800BBEAC(D_801B0020)];
+    switch (arg2) {
+    case 1:
+        p = &D_80162978[func_800BBEAC(func_801B3B84)];
+        break;
+    case 2:
+        p = &D_80162978[func_800BBEAC(func_801B4798)];
+        break;
+    case 3:
+        p = &D_80162978[func_800BBEAC(func_801B54E8)];
+        break;
+    case 4:
+        p = &D_80162978[func_800BBEAC(func_801B6938)];
+        break;
+    case 5:
+        p = &D_80162978[func_800BBEAC(func_801B7574)];
+        break;
+    case 6:
+        p = &D_80162978[func_800BBEAC(func_801B96B4)];
+        break;
+    case 7:
+        p = &D_80162978[func_800BBEAC(func_801BBA30)];
+        D_800FAFDC = 1;
+        break;
+    case 0:
+    default:
+        break;
+    }
+    p->unk14 = func_801BCD54(arg0);
+    p->unk16 = arg2;
+    p->unk18 = 0;
+    D_801F3D58 = arg0;
+    D_801F3D5C = arg1;
+    D_801F3D70 = 0;
+}
+
+INCLUDE_RODATA("../asm/us/magic_tifa/nonmatchings/text", D_801B0020);
