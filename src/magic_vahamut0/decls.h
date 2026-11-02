@@ -110,7 +110,6 @@ typedef struct { s32 v0; s32 v4; s32 v8; s32 padC; MgMat m; } Vh0Eff;
 extern Vh0Eff *D_801FCEA8;
 extern MgSVec D_801FCEA0;
 extern M2C_UNK D_801FCE90;
-void func_8003B35C(MgMat *, Vh0Eff *);
 void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_800D4484(s32, s32);
 extern MgSVec D_801FCD08;
@@ -176,5 +175,20 @@ extern MgWord D_801FCD30[];
 extern MgSVec D_801FCD44;
 extern MgMat *D_801FCD4C;
 MgPolyT *func_800D4D90(void *, s32, s32, MgPolyT *);
+void func_801B2888(void);
+extern s16 D_801FCC02;
+extern s16 D_801FCC12;
+extern MgVec D_801FCC18;
+extern MgVec D_801FCC28;
+extern Vh0Eff *D_801FCC38;
+extern M2C_UNK D_801FCBF8;
+extern M2C_UNK D_801FCC08;
+void func_801B4090(void);
+typedef struct { s32 w0; s32 v4; s32 v8; s32 padC; MgMat m; s16 sx; s16 sy; s32 otz; s32 ext; s32 flag; s32 px; s32 py; } Vh0Fx;
+extern Vh0Fx *D_801FCE0C;
+s32 func_8003BBDC(void *, void *, s32 *, s32 *);
+void func_8003B64C(s32 *, s32 *);
+s32 func_8003B66C();
+void func_8003B35C(MgMat *, Vh0Fx *);
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */
