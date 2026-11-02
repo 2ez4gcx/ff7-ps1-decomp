@@ -129,5 +129,8 @@ extern u16 D_801F05F8[];
 extern u16 D_801F05FC;
 extern s16 D_801F0600[];
 void func_801B359C(void);
+void func_801B402C(void);
+extern u16 D_801031EA[];
+extern u16 D_80158D02[];
 
 #endif /* MAGIC_ALEX_DECLS_H */

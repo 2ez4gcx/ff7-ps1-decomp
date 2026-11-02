@@ -373,7 +373,30 @@ s32 func_801B3EA0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B402C);
+void func_801B402C(void) {
+    MgTask *p;
+    s32 t;
+    s32 a;
+    u8 pad[8];
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        a = (t << 12) / 10;
+        a = (0x1000 - a) * 0x28 >> 12;
+        if (t & 1) {
+            D_80158D02[0] += a;
+            D_801031EA[0] += a;
+        } else {
+            D_80158D02[0] -= a;
+            D_801031EA[0] -= a;
+        }
+        p->unk2++;
+        if (p->unk2 >= 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B4118(void) {
     MgTask *p;
