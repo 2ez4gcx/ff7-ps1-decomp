@@ -317,7 +317,7 @@ extern u8 D_801ECC14[];
 extern u8 D_801ECC28[];
 extern MgSVec D_801ECC0C;
 extern KnRig2 *D_801ECC3C;
-extern s32 func_801B9834;
+void func_801B9834(void);
 s32 func_801BA604(void);
 extern u8 D_801ECD5C[];
 extern MgSVec D_801ECD54;
@@ -389,5 +389,13 @@ void func_8003BA68(MgVec *, MgVec *, MgVec *);
 extern KnPrtI D_801DDB24[];
 extern u8 D_801C76B4[];
 extern s32 D_801C76B0;
+void func_801B3DB0(void);
+typedef struct { MgSVec rot; MgMat a; MgMat b; } KnRig7;
+u8 *func_801B0DA8(void *, s32, s32, u8 *, s32, s32);
+extern u8 D_801EC888[];
+extern s16 D_801EC892;
+extern s16 D_801EC8A0[];
+extern KnRig7 *D_801EC8B8;
+extern s32 func_801B9408;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

@@ -409,7 +409,48 @@ void func_801B3708(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_antlion/nonmatchings/text", func_801B3910);
+void func_801B3910(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 t;
+    s32 k;
+    s32 r;
+    s32 s;
+    s32 a;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        if (t < 0x1E) {
+            a = (t << 12) / 30;
+            k = ((a * 3) << 8) >> 12;
+        } else {
+            t -= 0x1E;
+            k = 0x300;
+            if (t >= 0x3C) {
+                t -= 0x3C;
+                if (t >= 0x1E) {
+                    p->unk0 = -1;
+                    return;
+                }
+                a = (t << 12) / 30;
+                k = (((0x1000 - a) * 3) << 8) >> 12;
+            }
+        }
+        D_801E4060 = k + D_801E4060;
+        while (k >= 0x100) {
+            k -= 0x100;
+            q = (MgTask *)&D_80162978[func_800BBEAC(&func_801B3708)];
+            r = func_80042DA8() & 0xFFF;
+            s = (((D_801E4164 << 12) >> 12) * (func_80042DA8() & 0xFFF)) >> 12;
+            q->unk4 = (func_80039A74(r) * s) >> 12;
+            q->unk8 = (func_80039B40(r) * s) >> 12;
+            q->unk6 = func_801B2FB0((MgSVec *)&q->unk4);
+            q->unkE = -(func_80042DA8() % 100 + 0xC8);
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B3B24(s32 arg0) {
     u8 f;

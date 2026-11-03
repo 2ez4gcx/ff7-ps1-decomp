@@ -44,5 +44,11 @@ extern s32 D_801DB3AC;
 extern s32 D_1F800000[];
 void func_8003B69C(s32, s32, s32);
 extern u8 D_801C22A8[];
+typedef struct { u8 pad0[0x24]; s32 unk24; u8 pad28[0x58]; MgVec d0; MgVec d1; MgVec d2; } SdCtx;
+typedef struct { s16 ax; s16 ay; s16 az; s16 pad6; s16 bx; s16 by; s16 bz; u8 padE[10]; } SdSpark;
+void func_8003A08C(MgVec *, MgVec *);
+void func_8003BA10(MgVec *, MgVec *, MgVec *);
+extern SdSpark D_801DB3C0[];
+void *func_801B0074(SdCtx *arg0, u8 *arg1, u16 *arg2);
 
 #endif /* MAGIC_SEALD_DECLS_H */

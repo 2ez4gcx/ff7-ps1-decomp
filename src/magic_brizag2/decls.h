@@ -95,5 +95,6 @@ BzIdx4 *func_801B123C(BzCtx *ctx, u8 *verts, BzList4 *list);
 typedef struct { u16 a; u16 b; u16 c; u16 d; u16 pad[8]; } BzIdx4b;
 typedef struct { u16 cnt; u16 pad; BzIdx4b e[1]; } BzList4b;
 BzIdx4b *func_801B17E8(BzCtx *ctx, u8 *verts, BzList4b *list);
+void func_801B46E0(void);
 
 #endif /* MAGIC_BRIZAG2_DECLS_H */

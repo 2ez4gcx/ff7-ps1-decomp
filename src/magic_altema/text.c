@@ -332,7 +332,64 @@ void func_801B0850(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_altema/nonmatchings/text", func_801B0BBC);
+void func_801B0BBC(void) {
+    MgTask *p;
+    MgTask *q;
+    MgTask *r;
+    s32 t;
+    s32 k;
+    s32 i;
+    s32 v;
+
+    if (D_80062D98 == 0) {
+        p = (MgTask *)&D_80162978[D_8015169C];
+        t = p->unk2;
+        if (t <= 0) {
+            k = p->unk16;
+            i = 0;
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0074)];
+                q->unk6 = -0x1E;
+                q->unk4 = 0;
+                q->unk8 = 0x1000;
+                q->unkC = D_801C1E20[k] * 2;
+                q->unkE = D_801C1E50[k] * 2;
+                q->unk10 = D_801C1E80[k] * 4;
+                v = q->unk12 = func_80042DA8() % 0x1000 + 0x800;
+                i++;
+                q->unk16 = (u16)v >> 3 & 1;
+                k++;
+            } while (i < 0x18);
+            p->unk16 = k;
+        } else if (t < 3) {
+            i = 0;
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0074)];
+                q->unk6 = -0x1E;
+                q->unk4 = 0;
+                q->unk8 = 0x1000;
+                q->unkC = (func_80042DA8() % 0x80 - 0x40) * 2;
+                q->unkE = (func_80042DA8() % 0x80 - 0x40) * 2;
+                q->unk10 = ((q->unkC & 0xF) + 0xA) * 4;
+                v = func_80042DA8() % 0x1000 + 0x800;
+                i++;
+                q->unk12 = v;
+                q->unk16 = (u16)v >> 3 & 1;
+            } while (i < 0x18);
+        }
+        if (p->unk2 >= 2) {
+            q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0420)];
+            q->unkC = 0;
+            q->unkE = 0x12;
+            q->unk16 = 0;
+            r = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B0850)];
+            *(s32 *)&r->unk4 = 0;
+            *(s32 *)&r->unk8 = 0x242424;
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B0E7C(void) {
     D_80162978[D_8015169C].unk0 = -1;

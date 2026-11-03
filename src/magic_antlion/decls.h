@@ -84,7 +84,7 @@ extern M2C_UNK D_800FA63C;
 extern u8 D_800FAFDC;
 extern M2C_UNK func_801B290C;
 void func_801B2DF8(void);
-extern M2C_UNK func_801B3910;
+void func_801B3910(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 typedef struct { MgSVec rot; MgVec v; MgMat mat; } AlWork;
 typedef struct { u8 pad0[8]; u16 unk8; u16 unkA; s16 unkC; u8 padE[0x132]; MgMat unk140; u8 pad160[8]; MgSVec unk168; u8 pad170[0x2C]; s16 unk19C; u8 pad19E[2]; s16 unk1A0; } AlRec;
@@ -114,5 +114,8 @@ s32 func_8003BBDC(s16 *, void *, s32 *, s32 *);
 void func_80046794(s32, void *);
 extern s32 D_801E4058;
 extern AlWork2 *D_801E405C;
+s32 func_80039B40(s32);
+s32 func_80042DA8();
+extern s32 D_801E4060;
 
 #endif /* MAGIC_ANTLION_DECLS_H */

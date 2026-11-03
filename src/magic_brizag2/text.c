@@ -627,7 +627,45 @@ void func_801B4124(void) {
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B438C);
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B46E0);
+void func_801B46E0(void) {
+    MgVec v;
+    MgTask *p;
+    MgTask *q;
+    s32 h;
+    s32 d;
+    s32 n;
+    s32 i;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if ((u16)p->unk2 - 1 < 9U) {
+            k = 0x2BC0;
+            h = (s16)((s16)p->unk10 >> 1);
+            d = h >> 1;
+            i = 0;
+            do {
+                q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B3F24)];
+                v.vx = func_80042DA8() % 0x1000 - 0x800;
+                v.vy = -(func_80042DA8() % 0x800);
+                v.vz = func_80042DA8() % 0x1000 - 0x800;
+                func_8003A08C(&v, &v);
+                i++;
+                n = h + func_80042DA8() % d;
+                q->unk4 = p->unk4 + (n * v.vx >> 12);
+                q->unk6 = n * v.vy >> 12;
+                q->unk8 = p->unk8 + (n * v.vz >> 12);
+                *(MgVec *)&q->unkC = v;
+                q->unk1C = k * (func_80042DA8() % 0x1100 + 0xA00) >> 12;
+                q->unk1E = func_80042DA8() % 210 + 0x82;
+            } while (i < 8);
+        }
+        if (p->unk2 >= 0x10) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B498C);
 

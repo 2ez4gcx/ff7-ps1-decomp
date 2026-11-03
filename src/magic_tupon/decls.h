@@ -193,7 +193,7 @@ void func_801B592C(void);
 void func_801B2CD0(void);
 void func_801B2A50(void);
 void func_801B2760(void);
-extern s32 func_801B2460;
+void func_801B2460(void);
 typedef struct { MgVec sc; MgMat m; } TuRig2;
 extern TuRig2 *D_801EDAF0;
 extern s16 D_801EDAEA;
@@ -205,5 +205,8 @@ extern u8 D_801EDAB4[][4];
 extern MgByte D_800F5B70;
 extern MgByte D_800F5B71;
 extern MgByte D_800F5B72;
+extern TuRig *D_801EDADC;
+extern s16 D_801EDAD6;
+extern M2C_UNK D_801EDACC;
 
 #endif /* MAGIC_TUPON_DECLS_H */

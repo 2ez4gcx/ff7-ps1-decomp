@@ -5,7 +5,51 @@ void func_801B0054(void) {
     func_801B0E98();
 }
 
-INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0074);
+void *func_801B0074(SdCtx *arg0, u8 *arg1, u16 *arg2) {
+    u16 *e;
+    s16 *a;
+    s16 *b;
+    s16 *c;
+    s32 i;
+    s32 n;
+    s32 cnt;
+    s32 s;
+    s32 t;
+
+    e = arg2 + 2;
+    cnt = *arg2;
+    n = arg0->unk24;
+    for (i = 0; i < cnt; i++) {
+        a = (s16 *)(arg1 + e[1]);
+        b = (s16 *)(arg1 + e[2]);
+        c = (s16 *)(arg1 + e[0]);
+        arg0->d0.vx = a[0] - b[0];
+        arg0->d0.vy = a[1] - b[1];
+        arg0->d0.vz = a[2] - b[2];
+        arg0->d1.vx = c[0] - a[0];
+        arg0->d1.vy = c[1] - a[1];
+        arg0->d1.vz = c[2] - a[2];
+        s = func_80042DA8() % 4000 + 0x3E8;
+        t = s / 12;
+        func_8003BA10(&arg0->d0, &arg0->d1, &arg0->d2);
+        func_8003A08C(&arg0->d2, &arg0->d2);
+        if (i < 0x80) {
+            arg0->d2.vx = -arg0->d2.vx;
+            arg0->d2.vy = -arg0->d2.vy;
+            arg0->d2.vz = -arg0->d2.vz;
+        }
+        D_801DB3C0[n].ax = s * arg0->d2.vx >> 12;
+        D_801DB3C0[n].ay = s * arg0->d2.vy >> 12;
+        D_801DB3C0[n].az = s * arg0->d2.vz >> 12;
+        D_801DB3C0[n].bx = t * arg0->d2.vx >> 12;
+        D_801DB3C0[n].by = t * arg0->d2.vy >> 12;
+        D_801DB3C0[n].bz = t * arg0->d2.vz >> 12;
+        n++;
+        e += 8;
+    }
+    arg0->unk24 = n;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0330);
 

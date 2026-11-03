@@ -413,7 +413,77 @@ void func_801B22B4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B2460);
+void func_801B2460(void) {
+    MgTask *p;
+    s32 t;
+    s32 i;
+    s32 u;
+    s32 k;
+    s32 k2;
+    s32 k3;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    u = t + p->unk0;
+    if (u >= 0x5A) {
+        u -= 0x5A;
+        if (u >= 10) {
+            goto kill;
+        }
+        u = (u << 12) / 10;
+        D_801EDAD6 = u;
+        for (i = 0; i < 3; i++) {
+            u = func_80039A74(u / 4);
+        }
+        k = p->unk18 * ((u << 12 >> 12) + 0x1000) >> 12;
+        D_801EDADC->sc.vx = D_801EDADC->sc.vz = k;
+        D_801EDADC->sc.vy = p->unk18;
+        goto rig;
+    }
+    u = t;
+    if (t < 5) {
+        u = (u << 12) / 5;
+        D_801EDAD6 = 0x1000 - u;
+        goto mid;
+    }
+    u -= 5;
+    if (u < 5) {
+        D_801EDAD6 = 0;
+        goto mid;
+    }
+    u = t - 10;
+    if (u >= 5) {
+kill:
+        p->unk0 = -1;
+        return;
+    }
+    u = (u << 12) / 5;
+    D_801EDAD6 = u;
+mid:
+    u = (p->unk2 << 12) / 15;
+    k2 = (-(u << 11) >> 12) + 0x1000;
+    k3 = p->unk18 * k2 >> 12;
+    D_801EDADC->sc.vx = D_801EDADC->sc.vy = D_801EDADC->sc.vz = k3;
+rig:
+    D_801EDADC->rot.vx = ((TuObj *)p)->c0 << 4;
+    D_801EDADC->rot.vy = ((TuObj *)p)->c1 << 4;
+    D_801EDADC->rot.vz = ((TuObj *)p)->c2 << 4;
+    func_8003C21C(&D_801EDADC->rot, &D_801EDADC->m);
+    func_8003B35C(&D_801EDADC->m, &D_801EDADC->sc);
+    D_801EDADC->m.t[0] = p->unk4;
+    D_801EDADC->m.t[1] = p->unk6;
+    D_801EDADC->m.t[2] = p->unk8;
+    func_8003A63C(&D_801EDDF8, &D_801EDADC->m, &D_801EDADC->m);
+    func_8003B48C(&D_801EDADC->m);
+    func_8003B51C(&D_801EDADC->m);
+    func_8003B69C(0, 0, 0);
+    D_80163C74 = func_800D29D4(&D_801EDACC, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unk6 += p->unkE;
+        ((TuObj *)p)->c1 += 0x10;
+    }
+}
 
 void func_801B2760(void) {
     MgTask *p;

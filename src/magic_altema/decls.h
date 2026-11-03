@@ -10,7 +10,7 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
-extern M2C_UNK func_801B0BBC;
+void func_801B0BBC(void);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D55F4(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
 extern M2C_UNK D_801B0000;
@@ -53,5 +53,9 @@ extern u8 D_800F5B70[];
 extern u16 D_800F5B74;
 extern u8 D_800F8380;
 extern u16 D_801C1E1C;
+s32 func_80042DA8(void);
+extern u16 D_801C1E20[];
+extern u16 D_801C1E50[];
+extern u16 D_801C1E80[];
 
 #endif /* MAGIC_ALTEMA_DECLS_H */
