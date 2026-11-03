@@ -87,7 +87,7 @@ M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void func_800D3994(s32, s32, void *);
 M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
 void func_800D54EC(s32, void *);
-void func_801B1024();
+void func_801B1024(void);
 extern s16 D_8009A000;
 extern s32 D_8009A004;
 extern s32 D_8009A008;
@@ -106,5 +106,14 @@ s32 func_8003BBDC(void *, void *, s32 *, s32 *);
 void func_80046794(s32, void *);
 extern MgMat D_801CD6CC;
 typedef struct { s16 flag; s16 frame; s16 vx; s16 vy; s16 vz; s16 pad[5]; } Lb2Rec;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
+M2C_UNK func_800C610C();
+MgTask *func_800D4FA8(s32);
+M2C_UNK func_800D5774(s32);
+extern u8 D_800F8380;
+extern u8 D_80151909[][0xB9C];
+extern u16 D_801CD6EC;
+extern u16 D_801CD6F0[];
+extern s16 D_801E5EEC[];
 
 #endif /* MAGIC_LASBOSS2_DECLS_H */

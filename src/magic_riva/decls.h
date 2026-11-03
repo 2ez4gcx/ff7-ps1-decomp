@@ -119,5 +119,19 @@ extern u8 D_801F337C[];
 extern u8 D_801518E4[][0xB9C];
 extern s16 D_80151A50[][0x5CE];
 void func_801B29B0(void);
+typedef struct { u8 b[8]; } MgB8;
+extern MgMat D_800FA63C;
+extern MgSVec D_801F3668;
+extern MgSVec D_801F3670;
+extern MgTask *D_801F36D8;
+extern MgTask *D_801F49A0;
+extern u16 D_801DD266;
+extern u8 D_8015190F[][0xB9C];
+extern s16 D_801518F6[][0x5CE];
+void func_801B1C10(void);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+void func_800D55F4(s32, s32, s32);
+void func_800D5774(s32);
+MgTask *func_800D4FA8(s32);
 
 #endif /* MAGIC_RIVA_DECLS_H */

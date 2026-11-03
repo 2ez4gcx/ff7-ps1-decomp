@@ -76,7 +76,7 @@ extern u16 D_801518F6[][0x5CE];
 MgTask *func_800D4FA8(s32);
 void func_800D3994(s32, s32, void *);
 void func_801B0DCC(void);
-extern M2C_UNK func_801B1ADC;
+void func_801B1ADC(void);
 extern u8 D_801B95C0[];
 typedef struct { s16 pad; SdPart e[180]; } SdParts;
 extern SdParts D_801E1602;
@@ -88,5 +88,7 @@ extern u8 D_801B95CC[];
 typedef struct { s16 pad; SdPart e[120]; } SdParts2;
 extern SdParts2 D_801E26E2;
 void func_800D4284(void *, s32, MgMat *);
+extern u8 D_801B95D4[];
+extern u8 D_801B95D8[];
 
 #endif /* MAGIC_SDUST_DECLS_H */
