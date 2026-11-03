@@ -696,7 +696,106 @@ s32 func_80016320(void *arg0) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80016340);
+s32 func_80016340(MainHuft *tl, MainHuft *td, s32 bl, s32 bd) {
+    u32 e;
+    u32 n;
+    u32 d;
+    s32 w;
+    MainHuft *t;
+    u32 ml;
+    u32 md;
+    u32 b;
+    u32 k;
+
+    b = D_80062E48;
+    k = D_80062E4C;
+    w = D_80062E34;
+    ml = D_80048F3C[bl];
+    md = D_80048F3C[bd];
+    while (1) {
+        while (k < bl) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        t = tl + (b & ml);
+        e = t->e;
+        if (e > 16) {
+            do {
+                if (e == 99) {
+                    return 1;
+                }
+                b >>= t->b;
+                k -= t->b;
+                e -= 16;
+                while (k < e) {
+                    b |= D_80062E3C[D_80062E38++] << k;
+                    k += 8;
+                }
+                t = t->v.t + (b & D_80048F3C[e]);
+                e = t->e;
+            } while (e > 16);
+        }
+        b >>= t->b;
+        k -= t->b;
+        if (e == 16) {
+            *(u8 *) (D_80062E40 + w++) = t->v.n;
+            continue;
+        }
+        if (e == 15) {
+            break;
+        }
+        while (k < e) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        n = t->v.n + (b & D_80048F3C[e]);
+        b >>= e;
+        k -= e;
+        while (k < bd) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        t = td + (b & md);
+        e = t->e;
+        if (e > 16) {
+            do {
+                if (e == 99) {
+                    return 1;
+                }
+                b >>= t->b;
+                k -= t->b;
+                e -= 16;
+                while (k < e) {
+                    b |= D_80062E3C[D_80062E38++] << k;
+                    k += 8;
+                }
+                t = t->v.t + (b & D_80048F3C[e]);
+                e = t->e;
+            } while (e > 16);
+        }
+        b >>= t->b;
+        k -= t->b;
+        while (k < e) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        d = w - t->v.n - (b & D_80048F3C[e]);
+        b >>= e;
+        k -= e;
+        e = n;
+        if (n != 0) {
+            do {
+                *(u8 *) (D_80062E40 + w++) = *(u8 *) (D_80062E40 + d++);
+                e--;
+            } while (e != 0);
+        }
+        n = 0; /* keeps n, not its copy e, as the guard register (cse) */
+    }
+    D_80062E34 = w;
+    D_80062E48 = b;
+    D_80062E4C = k;
+    return 0;
+}
 
 s32 func_800166C0(void) {
     u32 b;

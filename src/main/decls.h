@@ -1350,7 +1350,6 @@ extern s32 D_80049484;
 extern s32 D_80049488;
 void func_8001FCDC(s32 arg0, u32 arg1, s32 arg2);
 s32 func_80015D64(s32 *, M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK *, void **, s32 *);
-s32 func_80016340(void *, void *, s32, s32);
 extern M2C_UNK D_80048E44;
 extern M2C_UNK D_80048E84;
 extern M2C_UNK D_80048EC4;
@@ -1741,5 +1740,8 @@ extern struct { s16 f0; s16 f2; s16 f4; s16 f6; s32 f8; s32 fC; s16 f10; s16 f12
 extern struct { s32 f0; s32 f4; s32 f8; s32 fC; u32 f10; s32 f14; s32 f18; s32 f1C; } D_80095D88;
 extern s32 D_8006E110;
 extern MainMovie D_8009A1F4[];
+typedef struct MainHuft { u8 e; u8 b; union { u16 n; struct MainHuft *t; } v; } MainHuft;
+extern u16 D_80048F3C[];
+s32 func_80016340(MainHuft *tl, MainHuft *td, s32 bl, s32 bd);
 
 #endif /* MAIN_DECLS_H */
