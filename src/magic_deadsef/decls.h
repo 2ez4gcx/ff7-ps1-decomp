@@ -75,7 +75,7 @@ extern u8 *D_801B43C4;
 extern u16 D_801B444C;
 void func_801B2748(void);
 void func_800D41FC(MgMat *, void *, MgMat *);
-s32 func_801B1FD0(s32, s32);
+s32 func_801B1FD0(s32 arg0, s32 arg1);
 extern s16 D_801C73D8[];
 extern s16 D_801CD2AC[];
 void func_801B338C(void);
@@ -103,5 +103,8 @@ extern s32 D_801B42D4;
 extern s32 D_801B42DC;
 extern u16 D_801B4448;
 extern u16 D_801B444E;
+typedef struct { u16 x; u16 p0; u16 y; u16 p1; u16 z; u16 p2; u16 p3[2]; } DsV;
+s32 func_8003BC6C(s32, void *, void *);
+extern u8 *D_801B4314;
 
 #endif /* MAGIC_DEADSEF_DECLS_H */

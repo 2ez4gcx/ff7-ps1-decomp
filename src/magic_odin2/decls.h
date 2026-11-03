@@ -158,5 +158,23 @@ extern u8 D_801F1DB4[];
 extern u16 D_801F1DB6;
 extern u16 D_801F1DBA;
 extern u8 D_801F6260[];
+typedef struct { u8 za[6]; s16 s06; u8 zb[8]; s16 s10; u8 zc[2]; s16 s14; u8 zd[0xF]; u8 b25; u8 ze[2]; u8 b28; u8 b29; u8 b2A; u8 zf[0x14]; u8 b3F[0x129]; s16 s168; s16 s16A; s16 s16C; } OdAct;
+typedef struct { u16 vv[3]; u8 zg[0x12]; MgMat mm; } OdObj;
+void func_8003B2CC(MgMat *, s16 *, OdObj *);
+s16 *func_800D4FA8(s32);
+s32 func_801B1C40(s16 *, s32, s32, s32);
+void func_801B3F54(void);
+extern u16 D_801DCCBC;
+extern u16 D_801DCCC0;
+extern s16 D_801F1D4C[];
+extern OdAct *D_801F1D54;
+extern s32 D_801F1D6C[];
+extern s32 D_801F1D70;
+extern s32 D_801F1D74;
+extern M2C_UNK D_801F1D78;
+extern s16 D_801F1D92[];
+extern s32 D_801F1D98;
+extern s32 D_801F1D9C;
+extern OdObj *D_801F1DA0;
 
 #endif /* MAGIC_ODIN2_DECLS_H */

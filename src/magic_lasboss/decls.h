@@ -101,11 +101,13 @@ extern s16 D_801E6BE0;
 extern s32 D_801E6BFC;
 extern s32 D_801E6C00;
 extern s32 D_801E6C04;
-extern M2C_UNK func_801B22EC;
+void func_801B22EC(void);
 void func_801B1620(void);
 void func_8003BADC(MgSVec *, MgSVec *, s32 *);
 void func_8003C4AC(MgSVec *, MgMat *);
 extern u8 D_801D6ADC[];
 extern MgSVec D_801D6AEC;
+void func_800D5774(s32);
+extern struct { s16 a; s16 pad; s32 b; s32 c; } D_8009A000;
 
 #endif /* MAGIC_LASBOSS_DECLS_H */

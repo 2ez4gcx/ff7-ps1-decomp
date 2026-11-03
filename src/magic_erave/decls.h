@@ -63,5 +63,9 @@ extern MgVec D_801D1340;
 extern u16 D_801D1384;
 void func_801B0E58(void);
 extern void *D_801D1360[];
+void func_801B1074(void);
+typedef struct { u8 b[8]; } MgB8;
+extern s16 D_800FA666;
+void func_801B0494(void);
 
 #endif /* MAGIC_ERAVE_DECLS_H */

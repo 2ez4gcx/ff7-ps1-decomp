@@ -96,5 +96,15 @@ extern s8 D_801D750E;
 extern u16 D_801EF556;
 extern u16 D_801EF558;
 extern s16 D_801EF57C;
+void func_8003B05C(MgMat *, MgMat *);
+void func_8003B69C(s32, s32, s32);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *, s32);
+extern M2C_UNK D_801D1680;
+extern M2C_UNK D_801D5EAC;
+extern s16 D_801D74BC;
+extern s32 D_801D74C4[];
+extern s16 D_801D74CA;
+extern s32 D_801D74D0[];
+extern MgVec D_801D7538;
 
 #endif /* MAGIC_QUASAR_DECLS_H */
