@@ -11,6 +11,7 @@ DispEnv *func_800438D4(DispEnv *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80046794(MainTag *arg0, MainTag *arg1);
 s32 func_80036FFC(s32 arg0, MainWords *arg1);
 M2C_UNK func_80042DC8();
+extern char *strcpy();
 s32 func_8003FB8C(MainCdlFile *arg0, char *arg1);
 
 char *func_8003DDBC(s32 arg0) {
@@ -394,4 +395,61 @@ s32 func_8004018C(s32 arg0, char *arg1) {
     return -1;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_80040238);
+s32 func_80040238(s32 arg0) {
+    u8 *rec;
+    s32 n;
+    s32 loc;
+    u8 *p;
+
+    if (arg0 == D_80051934) {
+        return 1;
+    }
+    p = D_8006FD44;
+    if (func_800404F4(1, D_8006E720[arg0].a, (s32) p) != 1) {
+        if (D_80051634 > 0) {
+            func_80042DC8("CD_cachefile: dir not found\n");
+        }
+        return -1;
+    }
+    rec = p;
+    if (D_80051634 >= 2) {
+        func_80042DC8("CD_cachefile: searching...\n");
+    }
+    n = 0;
+    while (rec < D_8006FD44 + 0x800) {
+        if (rec[0] == 0) {
+            break;
+        }
+        *(MainBytes4 *) &loc = *(MainBytes4 *) (rec + 2);
+        func_8003E2D0(loc, D_8006E144[n].loc);
+        *(MainBytes4 *) &D_8006E144[n].size = *(MainBytes4 *) (rec + 10);
+        switch (n) {
+        case 0:
+            strcpy(D_8006E144[0].name, ".");
+            break;
+        case 1:
+            strcpy(D_8006E144[1].name, "..");
+            break;
+        default:
+            func_80040560(D_8006E144[n].name, rec + 0x21, rec[0x20]);
+            D_8006E144[n].name[rec[0x20]] = 0;
+            break;
+        }
+        if (D_80051634 >= 2) {
+            func_80042DC8("\t(%02x:%02x:%02x) %8d %s\n", D_8006E144[n].loc[0], D_8006E144[n].loc[1], D_8006E144[n].loc[2], D_8006E144[n].size, D_8006E144[n].name);
+        }
+        n++;
+        rec += rec[0];
+        if (n >= 0x40) {
+            break;
+        }
+    }
+    D_80051934 = arg0;
+    if (n < 0x40) {
+        D_8006E144[n].name[0] = 0;
+    }
+    if (D_80051634 >= 2) {
+        func_80042DC8("CD_cachefile: %d files found\n", n);
+    }
+    return 1;
+}

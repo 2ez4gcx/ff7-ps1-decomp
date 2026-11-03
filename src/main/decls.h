@@ -1697,7 +1697,7 @@ extern s32 D_80051640;
 typedef struct { char name[0x18]; } MainCdName;
 extern MainCdName D_8006E14C[];
 s32 func_8003FE98(void);
-s32 func_80040238();
+s32 func_80040238(s32 arg0);
 typedef struct { s32 num; s32 parent; s32 loc; char name[0x20]; } MainCdDir;
 extern MainCdDir D_8006E744[];
 extern u8 D_8006FD44[];
@@ -1743,5 +1743,7 @@ extern MainMovie D_8009A1F4[];
 typedef struct MainHuft { u8 e; u8 b; union { u16 n; struct MainHuft *t; } v; } MainHuft;
 extern u16 D_80048F3C[];
 s32 func_80016340(MainHuft *tl, MainHuft *td, s32 bl, s32 bd);
+extern struct { s32 a; u8 pad[0x28]; } D_8006E720[];
+extern struct { u8 loc[4]; s32 size; char name[16]; } D_8006E144[];
 
 #endif /* MAIN_DECLS_H */
