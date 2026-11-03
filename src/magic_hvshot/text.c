@@ -58,7 +58,53 @@ kill:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hvshot/nonmatchings/text", func_801B0258);
+void func_801B0258(void) {
+    MgTask *p;
+    s32 t;
+    u8 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 4) {
+        s32 k;
+        u8 *e;
+
+        t <<= 5;
+        k = p->unk0;
+        k = k * 0x10;
+        e = D_801B5308;
+        e = e + k;
+        e[0xA] = t;
+        c = t;
+        e[9] = c;
+        D_801B5310[k] = t;
+    } else {
+        t -= 4;
+        if (t < 4) {
+            s32 k;
+            u8 *e;
+
+            k = p->unk0;
+            k = k * 0x10;
+            e = D_801B5308;
+            e = e + k;
+            e[0xA] = 0x80;
+            e[9] = 0x80;
+            D_801B5310[k] = 0x80;
+        } else {
+            p->unk0 = -1;
+            return;
+        }
+    }
+    func_800D4368(&p->unk8, p->unk18, 0);
+    D_801D59F8 = func_800D6260(D_801B5308 + p->unk0 * 0x10, D_801517C0 + 0x70, 0xC, D_801D59F8);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unk8 += p->unk10;
+        p->unkA += p->unk12;
+        p->unkC += p->unk14;
+    }
+}
 
 void func_801B03C0(void) {
     MgMat m;

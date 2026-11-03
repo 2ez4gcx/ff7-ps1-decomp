@@ -685,4 +685,41 @@ s32 func_801B34BC(void) {
     return func_800BBA84(6, -1, 0x40);
 }
 
-INCLUDE_ASM("../asm/us/magic_bushin2/nonmatchings/text", func_801B352C);
+void func_801B352C(arg0, arg1) {
+    MgTask *q;
+    u16 (*tab)[0x5CE];
+    s32 c;
+    s32 t;
+    u8 *id;
+    u8 pad[8];
+
+    func_800BBEAC(&func_801B0030);
+    func_800D2980(&D_801B378C, 0, 0, 0);
+    D_801F3390 = arg0;
+    D_801F3394 = arg1;
+    func_800D54EC(arg0, &D_801F3398);
+    q = &D_80162978[func_800BBEAC(&func_801B20A4)];
+    tab = D_80151A4C;
+    q->unk4 = tab[arg1][0];
+    q->unk6 = tab[arg1][1];
+    q->unk8 = tab[arg1][2];
+    id = D_801517F0;
+    q->unkC = tab[D_801517F0[0]][0];
+    q->unkE = tab[id[0]][1];
+    c = q->unk10 = tab[id[0]][2];
+    t = D_801518F6[D_801517F0[0]][0] + 0x5DC;
+    if ((s16)c < q->unk8) {
+        c = (s16)c + (s16)t;
+    } else {
+        c = (s16)c - (s16)t;
+    }
+    q->unk10 = c;
+    q->unkC = (q->unkC - q->unk4) / 4;
+    q->unk10 = (q->unk10 - q->unk8) / 4;
+    D_800F5B71 = 0;
+    D_800F5B72 = 0;
+    D_800F5B70 = 0x60;
+    func_800D52A0(0x1000, 0xA, id, q);
+    D_800FAFDC = 1;
+    func_801B3464();
+}

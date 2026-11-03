@@ -74,7 +74,163 @@ s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_heist/nonmatchings/text", func_801B048C);
+void func_801B048C(void) {
+    MgSVec a;
+    MgSVec b;
+    MgSVec c;
+    MgMat m0;
+    MgMat m1;
+    MgMat m2;
+    MgVec sc;
+    MgVec d0;
+    MgVec d1;
+    MgVec d2;
+    MgTask *p;
+    s32 n;
+    s32 k;
+    s32 m;
+
+    p = &D_80162978[D_8015169C];
+    a.vx = p->unk14;
+    a.vy = p->unkC - 0x400 + p->unk10;
+    a.vz = 0;
+    func_8003BF8C(&a, &m0);
+    a.vz = p->unk12;
+    func_8003BF8C(&a, &m2);
+    b.vx = 0;
+    b.vy = p->unkE + p->unk10;
+    b.vz = 0;
+    func_8003BF8C(&b, &m1);
+    c.vx = p->unk16;
+    c.vy = 0;
+    c.vz = 0;
+    func_8003B27C(&m1, &c, (MgVec *)m0.t);
+    m = p->unk2 * 3;
+    k = m;
+    if (k >= 0x3D) {
+        k = 0x3C;
+    }
+    c.vx += k;
+    func_8003B27C(&m1, &c, (MgVec *)m2.t);
+    m0.t[0] = p->unk4 + m0.t[0];
+    m0.t[1] += p->unk6;
+    m0.t[2] = p->unk8 + m0.t[2];
+    m2.t[0] += p->unk4;
+    m2.t[1] += p->unk6;
+    m2.t[2] += p->unk8;
+    if (p->unk1C == 0) {
+        if (p->unk2 >= 0x14) {
+            d0.vx = p->unk4 - m0.t[0];
+            d0.vy = 0;
+            d0.vz = p->unk8 - m0.t[2];
+            d1.vx = D_801031E8.vx - D_80158D00.vx;
+            d1.vy = 0;
+            d1.vz = D_801031E8.vz - D_80158D00.vz;
+            func_8003A08C(&d0, &d0);
+            func_8003A08C(&d1, &d1);
+            m = func_801B0074(&d1, &d0, &d2);
+            if (m < 0x81) {
+                p->unk1C = 4;
+            }
+            if ((u32)(m - 0x780) < 0x101) {
+                p->unk1C = 2;
+            }
+            if ((u32)(m - 0x380) < 0x101) {
+                if (d2.vy > 0) {
+                    p->unk1C = 3;
+                } else {
+                    p->unk1C = 1;
+                }
+            }
+        }
+    }
+    if (p->unk1C != 0) {
+        switch (p->unk1C) {
+        case 2:
+            n = 0x10;
+            b.vx = 0x40;
+            b.vy = -0x50;
+            b.vz = 0;
+            break;
+        case 3:
+            n = 0xC;
+            b.vx = 0x20;
+            b.vy = 0x40;
+            b.vz = 0;
+            break;
+        case 4:
+            n = 0xA;
+            b.vx = -0x40;
+            b.vy = -0x60;
+            b.vz = 0;
+            break;
+        case 1:
+            n = 0x15;
+            b.vx = -0x50;
+            b.vy = 0x60;
+            b.vz = 0;
+            break;
+        }
+
+        func_8003BF8C(&b, &m1);
+        c.vx = D_80158D00.vx - D_801031E8.vx;
+        c.vy = D_80158D00.vy - D_801031E8.vy;
+        c.vz = D_80158D00.vz - D_801031E8.vz;
+        func_8003B2CC(&D_800FA63C, &c, &c);
+        func_8003B2CC(&m1, &c, &c);
+        func_8003BF3C(&D_800FA63C, &m1);
+        func_8003B2CC(&m1, &c, &c);
+        c.vx += D_801031E8.vx;
+        c.vy += D_801031E8.vy;
+        c.vz += D_801031E8.vz;
+        m = p->unk2 - 0x14;
+        m0.t[0] += ((c.vx - m0.t[0]) / n) * m;
+        m0.t[1] += ((c.vy - m0.t[1]) / n) * m;
+        m0.t[2] += ((c.vz - m0.t[2]) / n) * m;
+        m2.t[0] += ((c.vx - m2.t[0]) / n) * m;
+        m2.t[1] += ((c.vy - m2.t[1]) / n) * m;
+        m2.t[2] += ((c.vz - m2.t[2]) / n) * m;
+    }
+    sc.vx = sc.vy = sc.vz = p->unk18;
+    func_8003A63C(&D_800FA63C, &m0, &m1);
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    func_8003B51C(&m1);
+    ((MgWord *)0x1F800000)->v = (s32) D_801B92D4;
+    *((s32 *)0x1F800004) = 0x80;
+    *((s16 *)0x1F800008) = 0;
+    *((s16 *)0x1F80000A) = 0;
+    *((s16 *)0x1F80000C) = 0;
+    *((s16 *)0x1F80000E) = 0;
+    D_801D2FA8 = func_800D29D4((void *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D2FA8);
+    func_8003A63C(&D_800FA63C, &m2, &m1);
+    m1.t[2] -= p->unk2 * 2;
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    func_8003B51C(&m1);
+    *((u8 **)0x1F800000) = D_801B9288;
+    D_801D2FA8 = func_800D29D4((void *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801D2FA8);
+    if (p->unk2 >= 0x29) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unkC -= 0x100;
+        p->unk12 += 0x180;
+        if (p->unk1C != 0) {
+            p->unkC += 0x180;
+            p->unk14 += 0x40;
+        }
+        if (p->unk1C == 0) {
+            p->unkE -= 0x100;
+        }
+        if (p->unk2 < 0x14) {
+            p->unk18 += p->unk1A;
+        }
+        if ((p->unk2 < 0x14) || (p->unk1C != 0)) {
+            p->unk2++;
+        }
+    }
+}
 
 void func_801B0C5C(MgB8 *src) {
     s32 i;

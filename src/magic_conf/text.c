@@ -444,7 +444,50 @@ void func_801B1E7C(void) {
     p->unk2++;
 }
 
-INCLUDE_ASM("../asm/us/magic_conf/nonmatchings/text", func_801B2170);
+void func_801B2170(void) {
+    MgTask *p;
+    MgTask *q;
+    MgTask *a;
+    MgSVec v;
+    M2C_UNK *f;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 id;
+
+    i = 0;
+    n = 0;
+    for (; i < 10; i++) {
+        if (1 << i & D_801DF48C) {
+            n++;
+            if (n == 1) {
+                id = i;
+            }
+        }
+    }
+    q = &D_80162978[D_8015169C];
+    q->unk0 = -1;
+    a = D_80162978;
+    p = &a[func_800BBEAC(&func_801B0D24)];
+    if (n == 1) {
+        func_800D3994(id, D_8015190F[id][0], &p->unk4);
+        k = 0x460;
+        func_800D3994(id, D_80151919[id][0], &v);
+        p->unk6 = v.vy - 0x1C0;
+        f = &func_801B1D64;
+    } else {
+        func_800D54EC(D_801DF48C, &p->unk4);
+        k = 0xA80;
+        p->unk6 = -0x620;
+        f = &func_801B1E7C;
+    }
+    q = (MgTask *)((func_800BBEAC(f) << 5) + (s32)a);
+    *(CfB8 *)&q->unk4 = *(CfB8 *)&p->unk4;
+    q->unk10 = k;
+    p->unk6 -= 0x2A0;
+    p->unkC = (D_80151A46[D_801DF494][0] + 0x800) & 0xFFF;
+    p->unk16 = 0x2A;
+}
 
 void func_801B2350(void) {
     MgSVec v;

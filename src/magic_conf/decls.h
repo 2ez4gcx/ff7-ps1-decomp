@@ -30,7 +30,7 @@ extern M2C_UNK D_801B26C0;
 extern MgTask *D_801DF488;
 extern s32 D_801DF48C;
 extern s32 D_801DF494;
-extern M2C_UNK func_801B2170;
+void func_801B2170(void);
 void func_801B2350(void);
 void func_801B04E8(void);
 void func_800D4368(void *, s32, s32);
@@ -88,5 +88,6 @@ extern s32 D_801DF4B4;
 extern M2C_UNK func_801B0F00;
 typedef struct { s32 v; } MgWord;
 extern MgWord D_801DF4B0;
+void func_800D54EC(s32, void *);
 
 #endif /* MAGIC_CONF_DECLS_H */

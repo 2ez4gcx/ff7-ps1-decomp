@@ -128,7 +128,70 @@ void func_801B15CC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B1684);
+void func_801B1684(void) {
+    MgMat m;
+    MgMat m2;
+    MgTask *p;
+    ReiPoly *e;
+    s16 i;
+    s16 j;
+    s32 k;
+    s32 *tbl;
+    u16 u;
+    s32 *b;
+    s32 base;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003C21C(&D_801D4B10, &m);
+    func_8003B35C(&m, &D_801D4B18);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B69C(0, 0, 0);
+    if (p->unk2 < 0x1E) {
+        func_8003B48C(&m);
+        func_8003B51C(&m);
+        u = p->unk2;
+        b = D_801D4B38;
+        if ((s16)u < 0x10) {
+            tbl = &b[(s16)u >> 1];
+        } else {
+            tbl = &b[7];
+        }
+        D_801D4B28 = *tbl;
+        D_801ECB98 = (u8 *)func_800D29D4(&D_801D4B28, D_801517C0 + 0x70, 0xC, (s32)D_801ECB98);
+    } else {
+        func_8003C21C(&D_801D4B10, &m2);
+        D_801ECB98 = (u8 *)func_801B0020(&D_801D4B28, D_801517C0 + 0x70, 0xC, (s32)D_801ECB98, D_801ECD9C, &m, &m2);
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x1E) {
+            i = 0;
+            if (D_801D4B0C != 0x50) {
+                do {
+                    k = D_801ECB9C[D_801D4B0C];
+                    D_801D4B0C++;
+                    D_801ECC9C[k] = 1;
+                } while (++i < 4);
+            }
+            base = (s32)D_801D3FE8;
+            base = D_801D3FE0 + base;
+            for (j = 0; j < 0x50; j++) {
+                if (D_801ECC9C[j] == 1) {
+                    D_801ECD9C[j].b += 0x14;
+                    e = (ReiPoly *)(j * 16 + base);
+                    if (e->unk6 != 0) {
+                        e->unk6 -= 0x10;
+                    }
+                }
+            }
+        }
+        if (++p->unk2 == 0x3C) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B1968(void) {
     MgMat m;

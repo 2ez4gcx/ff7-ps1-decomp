@@ -66,5 +66,7 @@ extern u8 D_8015190F[][0xB9C];
 extern u8 D_80151A4C[][0xB9C];
 extern u16 D_80151A46[][0x5CE];
 void func_801B0258(void);
+extern u8 D_801B5308[];
+extern u8 D_801B5310[];
 
 #endif /* MAGIC_HVSHOT_DECLS_H */
