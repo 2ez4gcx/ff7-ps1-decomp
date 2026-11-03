@@ -180,5 +180,15 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16
 extern s32 D_801EF448;
 extern s16 D_801EF452;
 extern Vh2Fx *D_801EF458;
+void func_801B4AE4(void);
+extern M2C_UNK D_801EF284;
+extern s16 D_801EF28E;
+extern M2C_UNK D_801EF294;
+extern M2C_UNK D_801EF2A4;
+extern Vh2Fx *D_801EF2C4;
+extern u16 D_801F1768;
+extern s32 D_801F177C;
+extern s32 D_801F1780;
+extern s32 D_801F1784;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

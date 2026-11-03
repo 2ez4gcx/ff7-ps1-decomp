@@ -167,5 +167,10 @@ void func_801B39D0(void);
 extern s32 D_801EC814;
 extern u8 D_801EDA0C[];
 extern u8 D_801F99BC[];
+void func_801B2F34(void);
+typedef struct { u8 b[8]; } MgB8;
+extern s32 D_801EC798;
+extern void func_801B2C04(void);
+void func_801B3210(void);
 
 #endif /* MAGIC_PHOENIX_DECLS_H */

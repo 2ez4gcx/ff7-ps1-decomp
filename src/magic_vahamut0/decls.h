@@ -208,10 +208,11 @@ extern s32 D_801C167C[];
 extern s32 D_801C1680[];
 extern void func_801B2C9C(void);
 extern void func_801B38D0(void);
-extern void func_801B42F0(void);
+void func_801B42F0(void);
 extern void func_801B4470(void);
 extern void func_801B4D20(void);
 extern void func_801B5094(void);
 extern void func_801B5884(void);
+extern s32 D_801FD104;
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */

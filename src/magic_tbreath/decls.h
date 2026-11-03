@@ -79,7 +79,7 @@ extern u16 D_801D716C[];
 extern s32 *D_801D7170[];
 s32 func_800BC04C(void *);
 void func_800D5774(s32);
-void func_801B071C();
+void func_801B071C(void);
 void func_801B0A2C();
 void func_801B10E4(void);
 s32 func_80039A74(s32);
@@ -94,5 +94,14 @@ extern s16 D_801D7288;
 extern s32 D_801D72C0[];
 extern s32 D_801D72C4;
 extern s32 D_801D72C8;
+typedef struct { s32 v; } MgWord;
+extern s32 D_801D6498[];
+extern s32 D_801D673C[];
+extern s16 D_801D7186[];
+extern u8 D_801D718C[];
+extern volatile s32 D_801D728C;
+extern s32 D_801D7290[];
+extern s32 D_801D7294;
+extern s32 D_801D7298;
 
 #endif /* MAGIC_TBREATH_DECLS_H */

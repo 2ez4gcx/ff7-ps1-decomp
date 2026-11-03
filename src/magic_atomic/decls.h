@@ -90,6 +90,17 @@ void func_800D5774(s32);
 extern u8 D_800F5B70[];
 extern s32 D_801D6A94[];
 extern MgTask *D_801D6AA0;
-extern void func_801B0B44(void);
+void func_801B0B44(void);
+extern s32 D_801D1E60[];
+extern s32 D_801D4AD4[];
+extern s32 D_801D5278[];
+extern u16 D_801D699C;
+extern s16 D_801D699E;
+extern MgVec D_801D69A0;
+extern MgVec D_801D69B0;
+extern s16 D_801D69CA[];
+extern s16 D_801D69DA[];
+extern s32 D_801D69E0[];
+extern s16 D_801D69F4[];
 
 #endif /* MAGIC_ATOMIC_DECLS_H */

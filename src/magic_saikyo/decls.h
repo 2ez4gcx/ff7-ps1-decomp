@@ -62,5 +62,19 @@ s32 func_800BBA84(M2C_UNK, s32, M2C_UNK);
 void func_800D5774(s32);
 void func_801B035C(void);
 void func_801B0A68(void);
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+s32 func_80042DA8();
+void func_8003B69C(s32, s32, s32);
+void func_8003C21C(MgSVec *, MgMat *);
+extern M2C_UNK D_801D12EC;
+extern M2C_UNK D_801D14E0;
+extern s16 D_801D60B6[];
+extern MgSVec D_801D60BC;
+extern s16 D_801D60BE;
+extern s16 D_801D60C0;
+extern s32 D_801D60E4;
+extern s32 D_801D60E8;
+extern s32 D_801D60EC;
 
 #endif /* MAGIC_SAIKYO_DECLS_H */

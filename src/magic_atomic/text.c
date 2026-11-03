@@ -220,7 +220,72 @@ void func_801B09C8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_atomic/nonmatchings/text", func_801B0B44);
+void func_801B0B44(void) {
+    MgSVec rot;
+    MgMat lw;
+    MgMat m;
+    MgTask *p;
+    s16 n;
+    s16 k;
+    s32 t;
+
+    rot.vx = rot.vy = rot.vz = 0;
+    p = &D_80162978[D_8015169C];
+    func_8003C21C(&rot, &m);
+    func_8003B35C(&m, &D_801D69A0);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    D_801D69CA[0] = (8 - D_801D699C) * 0x10;
+    *(s32 *)&D_801D69CA[-5] = D_801D69E0[D_801D69F4[D_801D699E]];
+    D_801EEAA4 = func_800D29D4(&D_801D69CA[-5], D_801517C0 + 0x70, 0xC, D_801EEAA4);
+    func_8003B69C(0, 0, 0);
+    t = (s16)D_801D699C;
+    D_801D69DA[0] = t << 9;
+    ((MgWord *)&D_801D69DA[-5])->v = (s32)D_801D4AD4;
+    D_801EEAA4 = func_800D29D4(&D_801D69DA[-5], D_801517C0 + 0x70, 0xC, D_801EEAA4);
+    *(s32 *)&D_801D69DA[-5] = (s32)D_801D5278;
+    D_801EEAA4 = func_800D29D4(&D_801D69DA[-5], D_801517C0 + 0x70, 0xC, D_801EEAA4);
+    rot.vx = 0;
+    t = p->unk2 << 6;
+    rot.vy = rot.vz = t;
+    func_8003C21C(&rot, &m);
+    func_8003B35C(&m, &D_801D69B0);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    *(s32 *)&D_801D69DA[-5] = (s32)D_801D1E60;
+    D_801EEAA4 = func_800D29D4(&D_801D69DA[-5], D_801517C0 + 0x70, 0xC, D_801EEAA4);
+    if (D_80062D98 == 0) {
+        n = p->unkE;
+        if (n < 0) {
+            p->unk6 += p->unkE;
+            p->unkE += 0xA;
+        }
+        if (p->unkE == 0) {
+            if (D_801D699E != 0x20) {
+                k = D_801D699E + 1;
+            } else {
+                k = 1;
+            }
+            D_801D699E = k;
+        }
+        if (p->unk2 >= 0x49) {
+            D_801D699C++;
+        }
+        p->unk16 = D_801D699C;
+        p->unk2++;
+        if (p->unk2 == 0x50) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_atomic/nonmatchings/text", D_801B0000);
 

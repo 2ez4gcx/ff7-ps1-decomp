@@ -177,5 +177,14 @@ void func_801B6938(void);
 void func_801B7574(void);
 void func_801B96B4(void);
 void func_801BBA30(void);
+s32 func_800D56A8(void *);
+void func_800D55F4(s32, s32, s32);
+void func_800D5774(s32);
+void func_800D3E8C(s32);
+void func_801B5C74(void);
+extern s16 D_800FA666;
+void func_801BADB8(void);
+extern s32 D_80163C74;
+extern s32 D_801F3C04[];
 
 #endif /* MAGIC_TIFA_DECLS_H */

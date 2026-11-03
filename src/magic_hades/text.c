@@ -1319,7 +1319,52 @@ void func_801BA404(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801BA75C);
+void func_801BA75C(void) {
+    MgTask *q;
+    MgObj20 *b;
+    MgVec v;
+    MgSVec loc;
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 k;
+    u16 w;
+    u16 *p;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    b = D_80162978;
+    q = (MgTask *)&b[func_800BBEAC((void *)func_801BA404)];
+    func_800D54EC(D_801F1244, &q->unk4);
+    func_8003C21C(&D_801F0CA0, &D_801F7938);
+    v.vx = v.vy = v.vz = 0xE00;
+    func_8003B35C(&D_801F7938, &v);
+    D_801F7938.t[0] = 0;
+    D_801F7938.t[1] = -0x681;
+    D_801F7938.t[2] = 0;
+    t = q->unk8;
+    if (t < D_80151A50[D_801F1248][0]) {
+        k = t + 0x157C;
+        D_801F0C7C.v = k;
+    } else {
+        D_801F0CA0.vy = 0x800;
+        k = q->unk8 - 0x157C;
+        D_801F0C7C.v = k;
+    }
+    func_8003C21C(&D_801F0CA0, &D_801F0C60);
+    loc.vx = 0;
+    loc.vy = 0x64;
+    loc.vz = 0;
+    func_8003C21C(&loc, &D_801F0C80);
+    p = D_801BAA92;
+    for (i = 0; i < 15; i++) {
+        w = *p++;
+        D_801F7978[i][0] = 0;
+        for (j = 0; j < 15; j++) {
+            D_801F7978[j][(j + i) % 15 + 1] = w;
+        }
+    }
+    ((void (*)(s32, s32, s32))func_801B2B1C)((s32)D_801F0E38, (s32)&D_801F0C60, D_801F1248);
+}
 
 s32 func_801BA978(arg0, arg1) {
     s32 temp_v0;

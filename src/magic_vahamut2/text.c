@@ -647,7 +647,67 @@ void func_801B48E8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B4AE4);
+void func_801B4AE4(void) {
+    MgTask *p;
+    s32 t;
+    s16 n;
+    s32 u;
+
+    p = &D_80162978[D_8015169C];
+    if (p->unk2 == 0) {
+        D_801EF2C4->rot.vx = 0;
+        D_801EF2C4->rot.vy = 0x400;
+        D_801EF2C4->rot.vz = 0;
+        func_8003C21C((s16 *)D_801EF2C4, &D_801F1768);
+        D_801F177C = 0x3E8;
+        D_801F1780 = 0x1388;
+        D_801F1784 = 0;
+        D_801EF2C4->v8 = (D_801EF2C4->vC = (D_801EF2C4->v10 = 0x3800));
+        ((void (*)(MgMat *, s32 *))func_8003B35C)((MgMat *)(&D_801F1768), &D_801EF2C4->v8);
+    }
+    t = p->unk2;
+    if (t < 0xDA) {
+        D_801EF28E = 0;
+        goto done;
+    }
+    t -= 0xDA;
+    if (t < 0x2A) {
+        t = (t << 12) / 42;
+        goto set;
+    }
+    t -= 0x2A;
+    if (t >= 0) {
+        goto kill;
+    }
+    u = (t << 12) / 42;
+    t = 0x1000 - u;
+set:
+    D_801EF28E = ((u32)(t * 3)) >> 2;
+    goto done;
+kill:
+    p->unk0 = -1;
+    return;
+done:
+    func_8003A63C(&D_801F1AC0, &D_801F1768, &D_801EF2C4->m);
+    func_8003B48C(&D_801EF2C4->m);
+    func_8003B51C(&D_801EF2C4->m);
+    func_8003B69C(0, 0, 0);
+    D_80163C74 = func_800D29D4(&D_801EF284, D_801517C0 + 0x4068, 0, D_80163C74);
+    func_8003A63C(&D_801F1AC0, &D_801EF2A4, &D_801EF2C4->m);
+    func_8003B48C(&D_801EF2C4->m);
+    func_8003B51C(&D_801EF2C4->m);
+    func_800D4484(D_801517C0 + 0x4064, 0x20);
+    D_80163C74 = func_800D29D4(&D_801EF294, D_801517C0 + 0x4064, 0, D_80163C74);
+    func_800D4484(D_801517C0 + 0x4064, 0x40);
+    if (D_80062D98 == 0) {
+        n = (u16)p->unk2 + 1;
+        *(u16 *)&p->unk2 = n;
+        D_801F1780 = 0x1388;
+        D_801F1784 = 0;
+        t = (n << 12) / 260;
+        D_801F177C = ((-(t * 2000)) >> 12) + 0x3E8;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B4DD4);
 

@@ -62,7 +62,7 @@ extern MgObj20 D_801BA9FC;
 extern s32 D_801F1244;
 extern s32 D_801F1248;
 extern s32 D_801F78D4;
-void func_801BA75C();
+void func_801BA75C(void);
 void func_801BA1EC(s32 arg0);
 extern u8 D_8015190F[][0xB9C];
 extern s16 D_801518F6[][0x5CE];
@@ -165,5 +165,12 @@ extern MgB4 D_801F1174;
 extern s32 D_801F1178;
 extern s32 D_801F117C;
 extern MgMat D_801F78F8;
+typedef struct { s32 v; } MgWord;
+extern MgWord D_801F0C7C;
+extern u16 D_801F7978[][16];
+extern u16 D_801BAA92[];
+extern s16 D_80151A50[][0x5CE];
+extern u8 D_801F0E38[];
+void func_800D54EC(s32, s16 *);
 
 #endif /* MAGIC_HADES_DECLS_H */

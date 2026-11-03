@@ -52,7 +52,7 @@ extern u16 D_801518F6[][0x5CE];
 void func_801B2590(void);
 void func_801B2A04(void);
 typedef struct { u8 b[8]; } MgB8;
-extern void func_801B237C();
+void func_801B237C(void);
 void func_801B2144(void);
 typedef struct { u32 addr : 24; u32 len : 8; } MgTag;
 s32 func_8003BD7C(MgSVec *, MgSVec *, MgSVec *, MgSVec *, void *, void *, void *, void *, void *, void *);
@@ -66,5 +66,7 @@ void *func_801B0094(QrCtx *arg0, u8 *arg1, s32 *arg2);
 void *func_801B033C(QrCtx *arg0, u8 *arg1, s32 *arg2);
 typedef struct { u16 a; u16 b; u16 c; u16 d; u16 pad[6]; } QrIdx4;
 extern void func_801B19EC();
+extern u8 D_801C2EE8[];
+extern u8 D_801C307C[];
 
 #endif /* MAGIC_QUEIR_DECLS_H */

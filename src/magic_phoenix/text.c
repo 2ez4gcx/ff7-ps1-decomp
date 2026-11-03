@@ -699,7 +699,37 @@ void func_801B28D0(void) {
 
 INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B2C04);
 
-INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B2F34);
+void func_801B2F34(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 u;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = (p->unk2 * 0x100 & 0xFF) + 0x100;
+        if (i >= 0x100) {
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B2C04)];
+                *(MgB8 *)&q->unk4 = *(MgB8 *)&p->unk4;
+                q->unkC = 0;
+                q->unkE = 0;
+                u = (func_80042DA8() & 0x7FF) + 0x400;
+                q->unk10 = D_801EC798 = (u + D_801EC798) & 0xFFF;
+                q->unk14 = func_80042DA8() % 200 + 0x64;
+                q->unk16 = func_80042DA8() % 0x30 + 0x10;
+                if (func_80042DA8() & 1) {
+                    q->unk16 = -q->unk16;
+                }
+                i -= 0x100;
+            } while (i >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x36) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B30D0(void) {
     MgTask *p;
@@ -726,7 +756,33 @@ void func_801B30D0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_phoenix/nonmatchings/text", func_801B3210);
+void func_801B3210(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 ang;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = (p->unk2 * 0x200 & 0xFF) + 0x200;
+        if (i >= 0x100) {
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B30D0)];
+                ang = func_80042DA8() & 0xFFF;
+                q->unk4 = (u32)(func_80039A74(ang) * 0xE1) >> 9;
+                q->unk6 = (u32)(func_80039B40(ang) * 0xE1) >> 9;
+                q->unk8 = 0;
+                q->unk10 = func_80042DA8() % 200 + 0x12C;
+                q->unk14 = func_80042DA8() % 0x2000 + 0x1000;
+                i -= 0x100;
+            } while (i >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x23) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B3384(MgSVec *arg0, u16 *arg1) {
     s32 sp10;

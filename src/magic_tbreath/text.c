@@ -130,7 +130,45 @@ void func_801B063C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B071C);
+void func_801B071C(void) {
+    MgMat m;
+    MgMat lw;
+    MgSVec rot;
+    MgTask *p;
+    s32 n;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (p->unk2 >= 0x14) {
+        n = 0x1C - p->unk2;
+    } else {
+        n = 8;
+    }
+    rot.vx = rot.vz = 0;
+    D_801D728C = n;
+    rot.vy = p->unk2 << 6;
+    func_8003C21C(&rot, &m);
+    D_801D7290[0] = D_801D7294 = D_801D7298 = p->unk2 * 0x258;
+    func_8003B35C(&m, D_801D7290);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    D_801D7186[0] = D_801D728C * 0x10;
+    ((MgWord *)&D_801D7186[-5])->v = (s32)D_801D6498;
+    D_801E72D0 = (u8 *)func_800D29D4(&D_801D7186[-5], D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    ((MgWord *)&D_801D7186[-5])->v = (s32)D_801D673C;
+    D_801E72D0 = (u8 *)func_800D29D4(&D_801D7186[-5], D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    func_800D4368(&p->unk4, (s16)(p->unk2 % 2 * 0x400 + 0x1000), 0);
+    D_801E72D0 = (u8 *)func_800D4D90(D_801D718C, D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 0x1C) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0948(void) {
     MgTask *p;

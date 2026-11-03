@@ -355,7 +355,75 @@ void func_801B2144(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_queir/nonmatchings/text", func_801B237C);
+void func_801B237C(void) {
+    MgSVec rot;
+    MgMat m;
+    MgVec scale;
+    MgScratch *sc;
+    MgTask *p;
+    u8 *tbl;
+    s32 k;
+    s32 c;
+    s32 d;
+    s32 f;
+    s16 a;
+    s16 b;
+    s16 w;
+
+    p = &D_80162978[D_8015169C];
+    rot.vx = 0;
+    rot.vy = (u16)p->unkE + (u16)p->unk10;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    k = (p->unk12 << 12) / 2500;
+    d = k;
+    scale.vx = d;
+    scale.vy = p->unk16;
+    scale.vz = k;
+    func_8003B35C(&m, &scale);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    do {
+        func_8003B48C(&m);
+        func_8003B51C(&m);
+    } while (0);
+    tbl = D_801C2EE8;
+    f = p->unk14;
+    if (f != 0) {
+        tbl = D_801C307C;
+    }
+    sc = (MgScratch *)0x1F800000;
+    sc->unk0 = tbl;
+    sc->unk4 = 8;
+    sc->unk8 = 0;
+    sc->unkA = (c = 0x80);
+    sc->unkC = 0x20;
+    sc->unkE = 0;
+    a = p->unk2;
+    b = p->unkC;
+    if (a > b) {
+        d = (a - b) * 0x10;
+        if (d >= 0x81) {
+            d = 0x80;
+        }
+        sc->unkA = c - d;
+    }
+    D_801DC4A0 = func_800D29D4(sc, D_801517C0 + 0x70, 0xC, D_801DC4A0);
+    if (p->unk2 >= (p->unkC + 8)) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unkE = (u16)p->unkE - 0x20;
+        w = (u16)p->unk16 + (u16)p->unk18;
+        p->unk16 = w;
+        if (w >= 0x1001) {
+            p->unk16 = 0x1000;
+        }
+        p->unk2 += 1;
+    }
+}
 
 void func_801B2590(void) {
     MgTask *p;
