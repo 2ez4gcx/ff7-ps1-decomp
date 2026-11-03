@@ -844,6 +844,25 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   out of the saved registers; a dead `s = len` copy right after a call keeps `move s2,v0`
   next to the `jal`; a second product computed into a temp early (`y = (w2 * v.vz) >>
   12`) fixed the `mult`/`mflo` schedule (conf func_801B0F00).
+- A pointer local assigned before the call, `b = D_80162978; q = &b[func_800BBEAC(..)];`,
+  puts the `lui/addiu` before the `sll` where `&D[f()]` puts the `sll` first (hades
+  func_801BA75C); `i = 0;` written after `q = &b[f()]` inside the `if`, not before it,
+  gives `lui a0; addiu a0; lh v0; nop; sll` and lets reorg take `move s1,zero` into the
+  `bnez` slot from the fall-through (saikyo func_801B0A68).
+- Store forms that stay where the plain form moves: a zero store between two stores
+  written as a one-field struct (`D_801DF4B0.v = 0`) stays ahead of the loads (conf
+  func_801B2350); `((MgWord *)q)->v = b->unk4;` keeps the `*q` store after plain-global
+  stores (thundg2 func_801B0224); `*(s16 *)((u8 *)p + 4) = ax;` stays early where
+  `p->unk4 = ax;` sank and changed `ax`'s register (s_beam func_801B0028); a cast store
+  `*(u16 *)&p->unk2 = n;` keeps the `sh` right after the `mult` and `n` in `v0` (vahamut2
+  func_801B4AE4); the chained cast store `*(s32 *)((u8 *)p + 0xC) = *(s32 *)((u8 *)p + 4)
+  = c1;` stores +4 first and swaps the temps (sldfang func_801B04BC).
+- A frame descriptor's pointer store written `((MgWord *)&D_x[-5])->v = (s32)ptr;` (or
+  `((MgWord *)0x1F800000)->v = (s32)D_x;` for a scratchpad descriptor) lets the
+  `D_801517C0 + 0x70` load float above it as in the game (atomic func_801B0B44, tbreath
+  func_801B071C, heist func_801B048C); `a.vy = p->unkC - 0x400 + p->unk10;` gives the
+  game's `lhu` order and `addu` operand order (heist); `q->unk4 = 0;` before `q->unk6 =
+  0x96;` fixed a `lhu` register (vahamut0 func_801B42F0).
 
 ### Registers
 
@@ -1236,6 +1255,33 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A saved-register swap between `p` and `m` was fixed by reusing `m` for a later `x`
   after the join and wrapping the `p`-heavy tail in a dead identical-arm test (`if (q)
   {tail} else {tail}`, merged back by cross-jumping) (club2 func_801B2040).
+- Local pseudos are allocated before global ones: a pointer variable set twice, even in
+  disjoint ranges, is global and takes its register after the temps and the `movstrsi`
+  scratch registers; `q = &D_80162978[D_8015169C]; q->unk0 = -1;` for the first store,
+  instead of a direct element store, moved `q` from `v0` to `a2` as in the game (conf
+  func_801B2170).
+- Quotient registers: `u = (p->unk2 << 12) / 15;` into an existing function-level `u` set
+  elsewhere, instead of a fresh `k`, puts the quotient in `v1` (tupon func_801B2460);
+  reusing `t` for a later sum (`t = (p->unk2 << 12) / 10; .. t = (t * 0xE00 >> 12) +
+  0x200;`) puts it in `a0` (s_beam func_801B1760); one variable for a quotient and a call
+  result (`r = (t << 12) / 30; D = r; r = f(r, ..)`) (antlion func_801B290C); a fresh
+  variable for `rand() % 0x400 + C` used by three products gives the game's in-place `v1`
+  expansion where a shared function-level `k` gave `a1` and a `move v1,v0` (knights
+  func_801B9408).
+- `s32 h; h = (s16)((s16)p->unk10 >> 1); d = h >> 1;` puts the `sll 16; sra 16` of `h`
+  before `d`'s `sra` (brizag2 func_801B46E0); `c = q->unk10 = tab[id[0]][2];` gives the
+  in-place sign extension (bushin2 func_801B352C); a byte copy through a function-level
+  `u8 c` (`c = t; e[9] = c;`) fixed a `k`/`e` swap (hvshot func_801B0258); `t = k;`
+  placed after a `k == 0` early return instead of before it fixed the `k`/`t` registers
+  (antlion func_801B290C).
+- The sched1 bump puts an `andi` after `lui/addiu a0` when its output is in `v0`; a
+  variable set in two places escapes the bump, but local-alloc does not tie a multi-set
+  output to a dying input, so it lands in another register (kujata func_801B88A4, still 2
+  words off).
+- reorg rewrites the first use after a `move a0,s0` that carries `REG_DEAD s0`: `.greg`,
+  `.sched2` and `.jump2` dumps have `move a0,s0; sll v1,a0,1`, the `.dbr` dump `sll
+  v1,s0,1`, where the game keeps `a0` (jammer2 and daionpa func_801B06E4, cho_kyu
+  func_801B1B3C; no source form found).
 
 ### Control flow
 
@@ -1494,6 +1540,22 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - The first jump pass rewrites `if (c) x = load; else x = const;` into `x = const; if
   (!c) x = load;` with the constant before the branch; no source form put the game's `li`
   into the delay slot (reazer func_801B058C).
+- A range test `p->unk2 == 0 || (p->unk2 >= 2 && p->unk2 <= 4)` is folded into one range
+  check whose `save_expr` copy gives the game's `lh v0; beqz; move v1,v0; addiu v0,v1,-2;
+  sltiu` and 8 more bytes of frame; `(u32)(x - 2) < 3` written by hand gives neither
+  (hades func_801B7594).
+- Delay-slot fills: hoisting `k = n + 0x80;` above its `if (n != 0)` guard lets reorg put
+  it in the `beqz` slot, with that one statement wrapped in `do { } while (0);` for the
+  saved registers (knights func_801B9834); `if (t >= N) { t -= N; f = 1; } else { f = 0;
+  }` instead of `f = 0; if (..) { ..; f = 1; }` keeps `f = 0` out of the first branch
+  slot (knights func_801B3DB0); `c = t < 0x11; if (c) ..` puts `t` in `v1` (erave
+  func_801B1AD0). reorg copies the first instruction of a branch target into a delay slot
+  only when it is a single instruction: a join that starts with the two-instruction `lw`
+  of a global gets a `nop` where the game's starts with `addiu a0,s1,24` (knights
+  func_801BCF1C, still 6 words off).
+- `k = ((a * 3) << 8) >> 12;` written inline in each arm gives the cross-jumped `sll 8;
+  sra 12` tail with the game's registers, where a temp (`s16` or `s32`) does not (antlion
+  func_801B3910).
 
 ### Loops
 
@@ -1780,6 +1842,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   (odin1 func_801B5D14); a zero-fill loop over `D_x + i * 0x18` stops reloading the
   global when written `t = D_x + 0x948; for (..; i--, t -= 0x18) *(s16 *)t = 0;` (tifa,
   spells 79).
+- The unfolded loop guard: the game tests a counter before a loop that GCC would fold
+  (`ori s1,0x100; beqz s1`, or `li s2,0x200; slti v0,s2,0x100; bnez`) and its frame is 8
+  bytes bigger. It is a variable-start accumulator whose masked part is always zero: `n =
+  (p->unk2 * C & 0xFF) + C;` with C the guard's constant (0x100 gives `ori; beqz`, 0x200,
+  0x400 and 0x800 `slti; bnez`), then `if (n >= 0x100) { do { ..; n -= 0x100; } while (n
+  >= 0x100); }` or a plain `while (n >= 0x100) { .. }`. cse1 cannot fold the guard and
+  combine folds the masked product to 0 later; the extra pseudo gives the 8 bytes, so
+  drop any `u8 pad[8]` (twelve functions in phoenix, vahamut, vahamut0, vahamut2, gospel,
+  h_blow, siva, knights, spells 83 and 84). `n -= 0x100;` as the last statement of the
+  body, after the last `rand()` statement, lands in the `bgez` delay slot; `t = p->unk2;`
+  before the first store loads it early (vahamut2 func_801B712C, knights func_801B9408).
+- A loop invariant written as its own statement before the loop guard (`kk = k * 2;`
+  right after `h = k >> 1;`) lets reorg fill the guard's `beqz` slot with its `sll`,
+  where an inline `% (k * 2)` is hoisted after the `lui/addiu` (tifa func_801B6938); `for
+  (i = 0; i < cnt; i++)` with a bound from a `u16` gives the game's spill slots (`cnt` at
+  sp+0x10, the dead compare at 0x18) with no pad (seald func_801B0074); loop.c reduces a
+  pointer `h` used with offsets 12/8/4 to `h+4` where the game keeps `h` (hades
+  func_801B3578, 5 words off).
 
 ### Stack frame
 
@@ -1870,6 +1950,9 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   (lasboss2 func_801B1024); a second read of the same `s16` member (`c = p->unk14++`)
   adds 8 bytes; an out-parameter array `s32 flag[2]` gave 0x18 missing bytes (satan
   func_801B3AD4).
+- Besides the unfolded loop guard, a folded range test also adds 8 bytes of frame (hades
+  func_801B7594): when the frame is 8 bytes short, look for an extra pseudo the game's
+  source had before reaching for `u8 pad[8]`.
 
 ### How the scheduler and the allocator decide
 
@@ -1933,6 +2016,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   instruction (`slt s0,s0,s2`, `mflo s2`); a pseudo set in two blocks is global and
   escapes that tie: merging conf's `n` into a two-block `k` gave the game's `slt
   v0,s0,s2` (conf func_801B0F00).
+- work/spells19/dump.py with `-dS -dR` prints each insn's priority and the "ready list at
+  T-n" lines. GCC 2.6.3 schedules a block backwards, so its first insns are picked last;
+  ties among priority-1 insns go to the higher INSN_LUID (the later one in source order),
+  and the producers of the last-picked insn get a boost (printed 7f000001).
+  work/spells84/rtlsum.py prints one line per insn of a dump, work/spells84/s1order.sh
+  the sched1/sched2 start order.
+- The prologue stores (`addiu sp`, `sw ra`, `sw s0`) are scheduled like other
+  instructions and float into `mult` or load stalls (death func_801B0858 has `addiu sp`
+  after its first `mult`); reazer func_801B1D54 and goblinp func_801B0D14 still differ
+  there (the game has `la a0, lh, li, sw s0, la s0`).
 
 ### More forms
 
@@ -2136,6 +2229,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B9834, jammer2 and daionpa func_801B06E4 (`sll v1,s0,1` where the game has
   `a0`).
 - `0x51EB851F` with `sra 6` is `/200` (`sra 5` is `/100`) (odin1 func_801B5D14).
+- Permuter results that matched near misses, each a small change: `v = q->unk12 = f() %
+  0x1000 + 0x800;` (altema func_801B0BBC); `do { f(&m); g(&m); } while (0);` around a
+  call pair (queir func_801B237C); `w = p->unk6; m1.t[1] = w;` with temps reused in the
+  else arm (tifa func_801BADB8); `base = (s32)D_801D3FE8; base = D_801D3FE0 + base;` as
+  two statements keeps a hoisted `addu` (reito func_801B1684); a dead `sp = (MgB8
+  *)D_80151A4C[i];` with the copy source written out again fixed an `addu`/`lui` order
+  (erave func_801B1AD0).
 
 ## Hand-written assembly
 
@@ -2187,8 +2287,12 @@ before using it. `tools/permute.py` needs bash, so agents start it from Git Bash
 PowerShell. For the order of a few blocks of statements, `work/spells19/hc.py` with
 `A::B` constraints (A before B) found the game's order in under 60 iterations where a
 full permutation would take thousands. From functions of about 500 instructions up, a
-batch matches a third or less of its functions; a batch retrying the misses left 1 or 2
-words off, with the forms found since, is worth running now and then.
+batch matches a third or less of its functions. Batches retrying the near misses, with
+the forms found since, did better: spells batches 82 to 85 matched 8 of 15 functions 1
+or 2 words off, 11 of 18 at 3 or 4 words, 14 of 18 at 5 or 6 (nine of them one pattern
+solved in the batch before) and 7 of 18 at 6 to 10. Such a batch starts each function
+from its best draft with one 10-minute permuter run, which found about a third of the
+matches within minutes.
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
 of one representative per group of identical functions, largest groups first, then
