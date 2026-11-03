@@ -74,5 +74,13 @@ extern s8 D_801D62D1;
 extern s8 D_801D62D2;
 extern u16 D_801D62D4[];
 void func_801B2AF4(void);
+void func_801B0C9C(void);
+typedef struct { u8 b[8]; } MgB8;
+extern struct { s32 t0; s32 t1; s32 t2; } D_801D62A8;
+extern MgSVec D_801D9DD0;
+extern s16 D_80163C78;
+void func_801B02B0(void);
+void func_801B0480(s32, s32);
+void func_801B0808(s32, s32, s32, s32);
 
 #endif /* MAGIC_GARYU_DECLS_H */

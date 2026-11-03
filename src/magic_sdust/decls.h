@@ -19,7 +19,6 @@ typedef struct { s16 f0; s16 f2; s16 f4; s16 f6; s16 f8; s16 fA; s16 fC; s16 fE;
 s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 s32 func_80042DA8(void);
-void func_800D4368(void *, s32, s32);
 s32 func_800D4D90(void *, s32, s32, s32);
 extern u8 D_80062D98;
 extern s16 D_8015169C;
@@ -76,7 +75,18 @@ extern u8 D_8015190F[][0xB9C];
 extern u16 D_801518F6[][0x5CE];
 MgTask *func_800D4FA8(s32);
 void func_800D3994(s32, s32, void *);
-extern M2C_UNK func_801B0DCC;
+void func_801B0DCC(void);
 extern M2C_UNK func_801B1ADC;
+extern u8 D_801B95C0[];
+typedef struct { s16 pad; SdPart e[180]; } SdParts;
+extern SdParts D_801E1602;
+void func_801B09AC(void *, void *, s32, s32);
+MgMat *func_800D4368(void *, s32, s32);
+void func_801B1424(void);
+extern u8 D_801B95C8[];
+extern u8 D_801B95CC[];
+typedef struct { s16 pad; SdPart e[120]; } SdParts2;
+extern SdParts2 D_801E26E2;
+void func_800D4284(void *, s32, MgMat *);
 
 #endif /* MAGIC_SDUST_DECLS_H */

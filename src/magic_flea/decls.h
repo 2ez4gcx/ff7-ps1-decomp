@@ -64,5 +64,12 @@ extern M2C_UNK D_801D327C;
 void func_801B03EC(void);
 void func_801B0074(void);
 extern M2C_UNK D_801D2058;
+extern u16 D_801D3518[];
+extern u16 D_801D3578[];
+typedef struct { s16 v; } MgHalf;
+extern u8 D_800F5B70[];
+extern MgHalf D_800F5B74;
+s32 func_800D56A8(void *);
+void func_800D5774(s32);
 
 #endif /* MAGIC_FLEA_DECLS_H */

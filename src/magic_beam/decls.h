@@ -53,7 +53,7 @@ extern u8 D_8015190F[][0xB9C];
 extern MgTask D_8016298C[];
 extern MgSVec D_801DFA14;
 extern s16 D_801DFA1A;
-extern M2C_UNK func_801B0E1C;
+void func_801B0E1C(void);
 void func_801B0C40(void);
 typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
 void func_8003B69C(s32, s32, s32);
@@ -75,5 +75,10 @@ extern MgVec D_801C79C8;
 extern MgVec D_801C79D8;
 extern M2C_UNK D_801C5978;
 extern M2C_UNK D_801C63E4;
+typedef struct { u8 b[8]; } MgB8;
+extern MgVec D_801DFA24;
+s32 func_800D56A8(void *);
+void func_800D55F4();
+void func_800D5774(s32);
 
 #endif /* MAGIC_BEAM_DECLS_H */
