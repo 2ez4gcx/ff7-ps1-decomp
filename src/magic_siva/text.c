@@ -495,7 +495,43 @@ void func_801B3188(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B3408);
+void func_801B3408(void) {
+    MgObj20 *p;
+    SvTask *q;
+    MgSVec *v;
+    s32 n;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        n = (p->unk2 * 0x400 & 0xFF) + 0x400;
+        while (n >= 0x100) {
+            q = (SvTask *)&D_80162978[func_800BBEAC(&func_801B3188)];
+            q->unk6 = -0xBB8;
+            q->unk4 = 0;
+            q->unk8 = 0x3E8;
+            D_801F030C->v.vx = func_80042DA8() & 0xFFF;
+            D_801F030C->v.vy = 0x400;
+            D_801F030C->v.vz = func_80042DA8() % 1024 - 0x200;
+            func_8003C21C(&D_801F030C->v, &D_801F030C->m);
+            v = (MgSVec *)&q->unkC;
+            k = func_80042DA8() % 500 + 0x5DC;
+            D_801F030C->v.vy = 0;
+            D_801F030C->v.vz = 0;
+            D_801F030C->v.vx = k;
+            func_8003B2CC(&D_801F030C->m, (M2C_UNK *)&D_801F030C->v, (s32)v);
+            func_800D44E8(v, &D_801F03F4[D_801F0308]);
+            q->unk14 = &D_801F03F4[D_801F0308];
+            D_801F0308 = (D_801F0308 + 1) % 60;
+            n -= 0x100;
+            q->pad18 = func_80042DA8() % 192 + 0x40;
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 s32 func_801B3644(s32 *arg0, s32 k) {
     u8 *base;

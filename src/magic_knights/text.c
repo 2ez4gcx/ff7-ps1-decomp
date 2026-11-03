@@ -1716,7 +1716,47 @@ void func_801B91C8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B9408);
+void func_801B9408(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 n;
+    s32 k;
+    s32 r;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        n = (p->unk2 * 0x100 & 0xFF) + 0x100;
+        if (n >= 0x100) {
+            do {
+                q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B91C8)];
+                D_801ECBF8->vx = func_80042DA8() % 8000 - 0xFA0;
+                D_801ECBF8->vy = 0;
+                D_801ECBF8->vz = func_80042DA8() % 8000 - 0xFA0;
+                q->unk4 = D_801ECBE8.vx + D_801ECBF8->vx;
+                q->unk6 = D_801ECBE8.vy;
+                q->unk8 = D_801ECBE8.vz + D_801ECBF8->vz;
+                D_801ECBF8->vx = D_801ECBF0.vx - D_801ECBE8.vx;
+                D_801ECBF8->vy = D_801ECBF0.vy - D_801ECBE8.vy;
+                D_801ECBF8->vz = D_801ECBF0.vz - D_801ECBE8.vz;
+                r = func_80042DA8() % 0x400 + 0x1400;
+                q->unkC = (D_801ECBF8->vx * r) >> 12;
+                q->unkE = (D_801ECBF8->vy * r) >> 12;
+                q->unk10 = (D_801ECBF8->vz * r) >> 12;
+                *(s32 *)&q->unk14 = func_80042DA8() & 0xFFFFFF;
+                *((u8 *)q + 0x18) = func_80042DA8() % 4 - 2;
+                *((u8 *)q + 0x19) = func_80042DA8() % 4 - 2;
+                *((u8 *)q + 0x1A) = func_80042DA8() % 4 - 2;
+                k = func_80042DA8();
+                q->unk1C = k % 0x1000 + 0x2000;
+                n -= 0x100;
+            } while (n >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B9700(void) {
     MgTask *p;

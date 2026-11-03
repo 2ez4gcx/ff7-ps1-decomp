@@ -396,6 +396,9 @@ extern u8 D_801EC888[];
 extern s16 D_801EC892;
 extern s16 D_801EC8A0[];
 extern KnRig7 *D_801EC8B8;
-extern s32 func_801B9408;
+void func_801B9408(void);
+extern MgSVec D_801ECBE8;
+extern MgSVec D_801ECBF0;
+extern MgSVec *D_801ECBF8;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

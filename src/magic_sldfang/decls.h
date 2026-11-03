@@ -85,5 +85,8 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B16C(MgMat *, MgMat *);
 void func_8003B35C(MgMat *, MgVec *);
 extern u16 D_801BCDB4;
+typedef struct { u8 pad0[8]; s32 unk8; u8 padC[0x34]; s32 unk40; s32 unk44; u8 pad48[0x48]; s32 unk90; s32 unk94; u8 pad98[0x48]; s32 unkE0; s32 unkE4; s32 unkE8; s32 unkEC; } SfQuad;
+void func_8003B710(void *, s32, void *);
+void func_801B04BC(SfQuad *q, s32 arg1, s32 arg2);
 
 #endif /* MAGIC_SLDFANG_DECLS_H */

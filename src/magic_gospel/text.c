@@ -698,7 +698,33 @@ void func_801B2D34(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B2F00);
+void func_801B2F00(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 n;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        n = (p->unk2 * 0x100 & 0xFF) + 0x100;
+        if (n >= 0x100) {
+            do {
+                n -= 0x100;
+                q = &D_80162978[func_800BBEAC(&func_801B2D34)];
+                D_801E097C += (func_80042DA8() & 0x7FF) + 0x400;
+                q->unk4 = (u32)(func_80039A74(D_801E097C) * 0x7D) >> 10;
+                q->unk6 = -0x1D4C;
+                q->unk8 = (u32)(func_80039B40(D_801E097C) * 0x7D) >> 10;
+                q->unkC = 0xC0;
+                q->unk10 = 0;
+                q->unkE = D_801E097C;
+            } while (n >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0xF) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B3034(void) {
     MgTask *p;

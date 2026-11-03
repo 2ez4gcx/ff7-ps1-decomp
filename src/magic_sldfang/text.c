@@ -80,7 +80,31 @@ s16 func_801B03D8(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_sldfang/nonmatchings/text", func_801B04BC);
+void func_801B04BC(SfQuad *q, s32 arg1, s32 arg2) {
+    MgTag *p;
+    s32 k;
+    s32 c1;
+    s32 c2;
+
+    func_8003B710(&q->unkE4, (0x1000 / arg2) * arg1, &q->unkE8);
+    p = (MgTag *)D_801D4DC4;
+    c1 = q->unkE8;
+    k = (q->unkE0 + q->unk8) >> 3;
+    c2 = q->unkEC;
+    *(s32 *)((u8 *)p + 8) = q->unk40;
+    *(s32 *)((u8 *)p + 0x10) = q->unk44;
+    *(s32 *)((u8 *)p + 0x18) = q->unk90;
+    *(s32 *)((u8 *)p + 0x20) = q->unk94;
+    *(s32 *)((u8 *)p + 0xC) = *(s32 *)((u8 *)p + 4) = c1;
+    *(s32 *)((u8 *)p + 0x14) = c2;
+    p->len = 8;
+    *(s32 *)((u8 *)p + 0x1C) = c2;
+    ((u8 *)p)[7] = 0x3A;
+    p->addr = ((MgTag *)D_801517C0 + k + 0x1C)->addr;
+    ((MgTag *)D_801517C0 + k + 0x1C)->addr = (u32)p;
+    p = (MgTag *)((u8 *)p + 0x24);
+    D_801D4DC4 = (MgLineG2 *)p;
+}
 
 void func_801B05DC(void *arg0, M2C_UNK arg1, M2C_UNK arg2) {
     s32 temp_s1;

@@ -207,7 +207,7 @@ extern s32 D_801B7A50[];
 extern s32 D_801C167C[];
 extern s32 D_801C1680[];
 extern void func_801B2C9C(void);
-extern void func_801B38D0(void);
+void func_801B38D0(void);
 void func_801B42F0(void);
 extern void func_801B4470(void);
 extern void func_801B4D20(void);

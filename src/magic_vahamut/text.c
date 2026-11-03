@@ -643,7 +643,42 @@ void func_801B2170(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut/nonmatchings/text", func_801B2238);
+void func_801B2238(void) {
+    MgTask *p;
+    MgTask *q;
+    MgSVec *sv;
+    MgVec *vec;
+    s32 *flag;
+    s32 i;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        sv = (MgSVec *)0x1F800000;
+        vec = (MgVec *)0x1F800008;
+        flag = (s32 *)0x1F800018;
+        func_8003B48C(&D_801EEE80);
+        func_8003B51C(&D_801EEE80);
+        i = (p->unk2 * 0x200 & 0xFF) + 0x200;
+        if (i >= 0x100) {
+            do {
+                q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B2170)];
+                sv->vx = func_80042DA8() % 8000 - 0xFA0;
+                sv->vy = func_80042DA8() % 4000 - 0xFA0;
+                sv->vz = func_80042DA8() % 10000 + 0x1388;
+                func_8003BC6C(sv, vec, flag);
+                q->unk4 = (u16)vec->vx;
+                q->unk6 = (u16)vec->vy;
+                q->unk8 = (u16)vec->vz;
+                q->unk14 = func_80042DA8() % 0x3800 + 0x3000;
+                i -= 0x100;
+            } while (i >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0xF) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B2464(void) {
     MgTask *p;
@@ -682,7 +717,35 @@ draw:
 
 INCLUDE_ASM("../asm/us/magic_vahamut/nonmatchings/text", func_801B25E4);
 
-INCLUDE_ASM("../asm/us/magic_vahamut/nonmatchings/text", func_801B2810);
+void func_801B2810(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 r;
+    s16 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = (p->unk2 * 0x400 & 0xFF) + 0x400;
+        if (i >= 0x100) {
+            do {
+                q = &D_80162978[func_800BBEAC(&func_801B25E4)];
+                q->unkC = func_80042DA8() & 0xFFF;
+                q->unkE = -0x400;
+                r = func_80042DA8();
+                q->unk10 = r % 0x800 - 0x400;
+                k = func_80042DA8() % 500 + 0x3E8;
+                q->unk4 = k;
+                q->unk6 = -k / 10;
+                i -= 0x100;
+            } while (i >= 0x100);
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B2970(void) {
     MgTask *p;

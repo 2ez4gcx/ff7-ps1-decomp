@@ -429,7 +429,26 @@ void func_801B3754(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B3804);
+void func_801B3804(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 n;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        n = (p->unk2 * 0x400 & 0xFF) + 0x400;
+        while (n >= 0x100) {
+            n -= 0x100;
+            q = &D_80162978[func_800BBEAC((s32 *)func_801B3754)];
+            func_801B34C8(&q->unk4);
+            q->unk18 = func_80042DA8() % 0x3000 + 0x5000;
+        }
+        p->unk2++;
+        if (p->unk2 >= 4) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B3904(void) {
     Vh2Task *p;
@@ -1057,7 +1076,34 @@ void func_801B6EAC(s16 arg0) {
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6EF4);
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B712C);
+void func_801B712C(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 n;
+    u16 t;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        n = (p->unk2 * 0x100 & 0xFF) + 0x100;
+        while (n >= 0x100) {
+            q = &D_80162978[func_800BBEAC(&func_801B6EF4)];
+            t = p->unk2;
+            q->unk4 = -0x1388;
+            q->unk6 = -0x4E20;
+            q->unk8 = 0;
+            q->unkE = 0;
+            q->unkC = 0;
+            q->unk0 = t;
+            q->unk10 = func_80042DA8() % 0x800 - 0x200;
+            q->unk18 = func_80042DA8() % 0x1000 + 0x800;
+            n -= 0x100;
+        }
+        p->unk2++;
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B7254(void) {
     s32 i;

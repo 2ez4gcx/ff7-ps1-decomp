@@ -6,7 +6,114 @@ M2C_UNK *func_801B0000(void) {
     return &D_801C3740;
 }
 
-INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B0028);
+void func_801B0028(void) {
+    MgTask *p;
+    u16 *v;
+    u16 *b;
+    s32 *otz;
+    s32 *fl;
+    BmLine *pk;
+    s32 t;
+    s32 n;
+    u16 c;
+    s32 r;
+
+    otz = (s32 *)0x1F800008;
+    fl = (s32 *)0x1F80000C;
+    b = (u16 *)0x1F800010;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    v = (u16 *)0x1F800000;
+    t = p->unk2;
+    if (t < 5) {
+        s32 ax;
+        s32 ay;
+        s32 az;
+        s32 u;
+        s32 w;
+        s16 *h;
+
+        h = &p->unk10;
+        ax = p->unkC;
+        u = (t << 12) / 5;
+        w = 0x1000 - u;
+        ax = (u32)(ax * u + p->unk4 * w) >> 12;
+        v[0] = ax;
+        *(s16 *)((u8 *)p + 4) = ax;
+        ay = (u32)(p->unkE * u + p->unk6 * w) >> 12;
+        *(u16 *)0x1F800002 = ay;
+        p->unk6 = ay;
+        az = (u32)(*h * u + p->unk8 * w) >> 12;
+        *(u16 *)0x1F800004 = az;
+        p->unk8 = az;
+        r = 0x140;
+    } else {
+        n = t - 5;
+        if (n < 5) {
+            c = p->unkC;
+            v[0] = c;
+            c = p->unkE;
+            *(u16 *)0x1F800002 = c;
+            c = p->unk10;
+            *(u16 *)0x1F800004 = c;
+            r = -(n * 0x130) / 5 + 0x140;
+        } else {
+            r = 0x10;
+            if (p->unk0 + t < 0x41) {
+                c = p->unkC;
+                v[0] = c;
+                c = p->unkE;
+                *(u16 *)0x1F800002 = c;
+                c = p->unk10;
+                *(u16 *)0x1F800004 = c;
+            } else {
+                p->unk0 = -1;
+                return;
+            }
+        }
+    }
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BBDC(v, b, otz, fl);
+    if (!(*fl & 0x60000)) {
+        s32 lo;
+        s32 hi;
+
+        pk = (BmLine *)D_801E5640;
+        pk->w0 = 0x03000000;
+        pk->w1 = 0x40FFFFFF;
+        pk->x0 = pk->x1 = b[0];
+        lo = (s16)b[1] - r;
+        if (lo < 0) {
+            lo = 0;
+        }
+        pk->y0 = lo;
+        hi = (s16)b[1] + r;
+        if (hi >= 0xA7) {
+            hi = 0xA6;
+        }
+        pk->y1 = hi;
+        func_80046794(D_801517C0 + 0x4084, (u8 *)pk);
+        pk++;
+        pk->w0 = 0x03000000;
+        pk->w1 = 0x40FFFFFF;
+        pk->y0 = pk->y1 = b[1];
+        lo = (s16)b[0] - r;
+        if (lo < 0) {
+            lo = 0;
+        }
+        pk->x0 = lo;
+        hi = (s16)b[0] + r;
+        if (hi >= 0x141) {
+            hi = 0x140;
+        }
+        pk->x1 = hi;
+        func_80046794(D_801517C0 + 0x4084, (u8 *)pk);
+        D_801E5640 = (u8 *)(pk + 1);
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B03A0);
 
@@ -274,7 +381,34 @@ void func_801B1550(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_s_beam/nonmatchings/text", func_801B1760);
+void func_801B1760(void) {
+    MgTask *p;
+    s16 *q;
+    s32 t;
+    s32 k;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = (p->unk2 << 12) / 10;
+    q = &D_801C55F6;
+    *q = -(t << 7) >> 12;
+    *q += 0x80;
+    t = (t * 0xE00 >> 12) + 0x200;
+    k = (u32)(p->unk16 * t) >> 12;
+    D_801C55FC.m[0][0] = D_801C55FC.m[1][1] = D_801C55FC.m[2][2] = k;
+    D_801C55FC.t[0] = p->unk4;
+    D_801C55FC.t[1] = 0;
+    D_801C55FC.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &D_801C55FC, D_801C561C);
+    func_8003B48C(D_801C561C);
+    func_8003B51C(D_801C561C);
+    D_801E5640 = func_800D29D4((u8 *)q - 0xA, D_801517C0 + 0x406C, 0, D_801E5640);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 >= 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B18D8(void) {
     MgTask *p;

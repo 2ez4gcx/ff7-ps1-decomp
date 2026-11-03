@@ -146,5 +146,6 @@ extern u8 D_80151A50[];
 extern MgSVec D_801EEE78;
 extern M2C_UNK D_801EEEC0;
 extern M2C_UNK D_801EEFF0;
+extern s32 func_801B25E4;
 
 #endif /* MAGIC_VAHAMUT_DECLS_H */

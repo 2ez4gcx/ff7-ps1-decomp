@@ -82,6 +82,7 @@ extern s16 D_80161DE8;
 extern MgMat D_801E34CC;
 extern MgVec D_801E34E0;
 extern MgSVec *D_801C34B4;
-extern M2C_UNK func_801B0640;
+void func_801B0640(void);
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_H_BLOW_DECLS_H */

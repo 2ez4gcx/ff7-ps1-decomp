@@ -190,5 +190,9 @@ extern u16 D_801F1768;
 extern s32 D_801F177C;
 extern s32 D_801F1780;
 extern s32 D_801F1784;
+void func_801B3804(void);
+M2C_UNK func_801B34C8(s16 *);
+void func_801B712C(void);
+extern s32 func_801B6EF4;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

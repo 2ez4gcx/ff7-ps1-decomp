@@ -150,6 +150,7 @@ extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
 extern M2C_UNK D_800FA63C;
-extern s32 func_801B2F00;
+void func_801B2F00(void);
+extern s32 D_801E097C;
 
 #endif /* MAGIC_GOSPEL_DECLS_H */

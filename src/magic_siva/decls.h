@@ -160,6 +160,9 @@ extern M2C_UNK D_801F020C;
 extern M2C_UNK D_801F0234;
 extern M2C_UNK D_801F0270;
 extern u8 D_800F5B70[];
-extern M2C_UNK func_801B3408;
+void func_801B3408(void);
+extern SvRot *D_801F030C;
+extern s32 D_801F0308;
+extern MgMat D_801F03F4[];
 
 #endif /* MAGIC_SIVA_DECLS_H */

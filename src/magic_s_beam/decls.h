@@ -87,5 +87,10 @@ extern u8 *D_801C5598[];
 extern s16 D_801C55A2;
 extern MgSVec D_801C55A8;
 void func_800D5774(s32);
+typedef struct { s32 w0; s32 w1; s16 x0; s16 y0; s16 x1; s16 y1; } BmLine;
+s32 func_8003BBDC(u16 *, u16 *, s32 *, s32 *);
+extern s16 D_801C55F6;
+extern MgMat D_801C55FC;
+extern MgMat *D_801C561C;
 
 #endif /* MAGIC_S_BEAM_DECLS_H */

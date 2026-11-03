@@ -140,7 +140,39 @@ void func_801B04DC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_h_blow/nonmatchings/text", func_801B0640);
+void func_801B0640(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 ang;
+    s32 r;
+    s16 n;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = (p->unk2 * 0x200 & 0xFF) + 0x200;
+        if (i >= 0x100) {
+            do {
+                q = (MgTask *)&D_80162978[func_800BBEAC(&func_801B04DC)];
+                ang = func_80042DA8() & 0xFFF;
+                q->unk4 = (u32)(func_80039A74(ang) * 0x19) >> 10;
+                q->unk6 = (func_80039B40(ang) * 0x64 >> 12) - 0x1F4;
+                q->unk8 = -0x1F4;
+                r = func_80042DA8();
+                q->unkC = r % 0x80 - 0x240;
+                q->unk1C = 0x2000;
+                q->unkE = 0;
+                q->unk10 = ang;
+                i -= 0x100;
+            } while (i >= 0x100);
+        }
+        n = p->unk2 + 1;
+        p->unk2 = n;
+        if (n >= 5) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B078C(void) {
     MgTask *p;

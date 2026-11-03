@@ -71,5 +71,17 @@ extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
 extern u16 D_801D1E88;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_8003B35C(MgMat *, MgVec *);
+M2C_UNK func_8003B69C(M2C_UNK, M2C_UNK, M2C_UNK);
+void func_8003C21C(MgSVec *, MgMat *);
+extern u16 D_801D1DD8;
+extern s32 D_801D1DDC;
+extern u16 D_801D1DE2;
+extern u16 D_801D1DF2;
+extern s32 D_801D1E0C;
+typedef struct { s32 v; } MgWord;
+extern s32 D_801D1E10;
+extern s32 D_801D1E14;
 
 #endif /* MAGIC_THUNDG2_DECLS_H */
