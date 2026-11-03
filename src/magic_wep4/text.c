@@ -5,7 +5,28 @@ void func_801B0054(void) {
     func_801B39A8();
 }
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B0074);
+void func_801B0074(s16 arg0, s16 *arg1, s16 *arg2) {
+    MgSVec v;
+    s32 lo;
+    s32 hi;
+    s32 i;
+    s32 t;
+
+    lo = 0x7FFF;
+    hi = -0x8000;
+    for (i = 0; i < D_801518F4[arg0][0]; i++) {
+        func_800D3994(arg0, i, &v);
+        t = v.vy;
+        if (t < lo) {
+            lo = t;
+        }
+        if (hi < t) {
+            hi = t;
+        }
+    }
+    *arg1 = lo;
+    *arg2 = hi;
+}
 
 INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B0178);
 
