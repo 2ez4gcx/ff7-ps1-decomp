@@ -1649,5 +1649,10 @@ extern s32 D_800F16BC;
 extern s32 D_800F16C0;
 extern s32 D_800F16C4;
 extern s32 D_800F16C8;
+extern BtlX440 D_8009D898[];
+extern u8 D_80070864;
+extern u8 D_80070865;
+extern T6 D_800F3A04[];
+extern u8 D_800F9DA0;
 
 #endif /* BATTLE_DECLS_H */

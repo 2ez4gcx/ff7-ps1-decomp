@@ -611,7 +611,107 @@ s32 func_800A50E0(s32 arg0, u32 arg1, s32 arg2, s32 arg3) {
     return ret;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5250);
+void func_800A5250(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+    volatile u8 *e;
+    s32 m;
+    s32 id;
+    u8 s0;
+    s32 v;
+    s32 o;
+    u8 w;
+    s32 k;
+
+    p = D_8009D898[arg0].b;
+    p[3] = 0;
+    m = (u32)arg1 >> 11;
+    m &= 1;
+    if (((D_80163762 >> arg0) & 1 && m == 0) || (D_800F83D0[0] & 8)) {
+        p[0] = 0x14;
+        p[1] = D_80070864;
+        p[2] = D_80070865;
+        p[5] = 0;
+    } else if (p[4] != 0 && m == 0) {
+        p[0] = D_800F39F0[arg0].a;
+        p[1] = D_800F39F0[arg0].b[0];
+        p[2] = D_800F39F0[arg0].b[1];
+        p[5] = D_800F39F0[arg0].b[4];
+    } else {
+        p[0] = D_800F3A04[arg0].a;
+        p[1] = D_800F3A04[arg0].b[0];
+        p[2] = D_800F3A04[arg0].b[1];
+        p[5] = D_800F3A04[arg0].b[4];
+    }
+    o = arg0 * 0x44;
+    e = p + 6;
+    do {
+        id = *(u8 *)e;
+        k = id - 2;
+        if (id != 0xFF) {
+            s0 = e[3];
+            s0 &= 0xED;
+            switch (k) {
+            case 0:
+            case 19:
+                func_800A4F60(arg0, 1);
+                v = *((u8 *)D_800F5BC6 + o) & 0x20;
+                if (v != 0) {
+                    s0 |= 2;
+                }
+                break;
+            case 1:
+            case 20:
+                func_800A4F60(arg0, 2);
+                v = *((u8 *)D_800F5BC6 + o) & 0x40;
+                if (v != 0) {
+                    s0 |= 2;
+                }
+                break;
+            case 11:
+                func_800A4F60(arg0, 3);
+                v = *((u8 *)D_800F5BC6 + o) & 0x80;
+                if (v != 0) {
+                    s0 |= 2;
+                }
+                break;
+            case 2:
+            case 21:
+                v = D_800F9DA0 & 0x20;
+                if (v != 0) {
+                    s0 |= 2;
+                }
+                break;
+            case 3:
+            case 15:
+                if (e[4] == 0) {
+                    e[1] = 7;
+                }
+                break;
+            }
+            if (m != 0) {
+                switch (id) {
+                case 2:
+                case 4:
+                case 21:
+                case 23:
+                    break;
+                default:
+                    s0 |= 2;
+                    break;
+                }
+            }
+            w = e[2];
+            if ((w & 8) && e[4] == 0) {
+                e[2] = w & 0xF3;
+            }
+            if ((e[2] & 0xC) == 0xC) {
+                s0 |= 0x10;
+            }
+            e[3] = s0;
+        }
+        e += 6;
+    } while ((s32)e < (s32)(p + 0x60));
+}
 
 void func_800A555C(s32 arg0, s32 arg1) {
     Ent8 *p;
@@ -759,8 +859,6 @@ s32 func_800A5990(void) {
     }
     return r;
 }
-
-INCLUDE_RODATA("../asm/us/battle/nonmatchings/text1c", D_800A0240);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5A5C);
 
