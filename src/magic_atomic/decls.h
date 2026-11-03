@@ -8,7 +8,7 @@ typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern MgTask D_80162978[];
-extern M2C_UNK func_801B1050;
+void func_801B1050(void);
 void func_801B1978();
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800BBEAC(M2C_UNK *);
@@ -82,5 +82,14 @@ extern s32 D_801D6A48;
 extern s32 D_801D6A4C[];
 extern s32 D_801D6A50;
 extern s32 D_801D6A54;
+s16 func_80039F5C(s32);
+s32 func_80042DA8();
+void func_800D44E8(MgSVec *, void *);
+void func_800D52A0(s32, s32);
+void func_800D5774(s32);
+extern u8 D_800F5B70[];
+extern s32 D_801D6A94[];
+extern MgTask *D_801D6AA0;
+extern void func_801B0B44(void);
 
 #endif /* MAGIC_ATOMIC_DECLS_H */

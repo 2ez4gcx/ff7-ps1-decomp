@@ -163,5 +163,12 @@ extern u8 D_801C8790[];
 extern u8 D_801C879C[];
 extern MgHalf D_801C87A8;
 extern u16 D_801C87AA;
+void func_801B3AD4(void);
+typedef struct { MgSVec cur; MgSVec dst; MgSVec step; } SatCam;
+typedef struct { MgVec dir; SatCam cam[3]; } SatCamSys;
+extern SatCamSys D_801E1A14;
+extern MgSVec D_80158D00;
+extern MgSVec D_801031E8;
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
 
 #endif /* MAGIC_SATAN_DECLS_H */
