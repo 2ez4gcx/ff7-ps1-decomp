@@ -45,5 +45,14 @@ s32 func_800D4D90(u8 *, s32, s32, s32);
 extern u16 D_801D4F50;
 void func_801B08D0(void);
 extern s32 D_801D4F18[];
+void func_801B164C(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgPart18;
+extern u8 D_801D4F24[];
+extern u16 D_801D4F2C;
+extern u16 D_801ECF88;
+extern u8 D_801ECF8C[];
+void func_800D3994(s32, s32, void *);
+void func_800D4284(void *, s32, MgMat *);
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_WEP4_DECLS_H */
