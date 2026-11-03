@@ -321,6 +321,32 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   as in the game (vahamut0 func_801B563C).
 - A function its caller calls with no arguments is defined with bare parameter names,
   `void f(arg0, arg1)` (vahamut2 func_801B7C4C).
+- Particle arrays declared as `u8[]`: a struct-array view anchored 2 bytes below the
+  symbol, `typedef struct { s16 pad; SdPart e[180]; } SdParts; extern SdParts
+  D_801E1602;`, gives the game's loop with the counter eliminated, the exit compare on
+  the pointer and `sym(reg)` field accesses; `((SdPart *)(D + o))->f` views hoist and
+  combine per-field pointers, and `e[i].f2++` keeps its store as `sym+reg` while the
+  loads use the stepping pointer (sdust func_801B0DCC, func_801B1424).
+- One-field struct views pin a global's place in source order: a scalar store target `{
+  s16 v; }` (`D_80153BBE.v = 0xE00`) is not filled into a `jal` delay slot and keeps `lh
+  v0,2(a2)` after a halfword store (hades func_801B8084, func_801B4600); `extern MgHalf
+  D_x; .. = D_x.v` keeps an `lhu` after zero stores (knights func_801B7498); `MgByte D_x;
+  n >= D_x.v` (knights func_801B6F9C, func_801B5F0C) and `((MgByte *)&D_801DEA40)->v`
+  (alex func_801B4118) keep an `lbu` after `sh` stores where a plain `u8` extern hoists
+  it.
+- A struct view (`KnCam *`) of a camera pointer instead of `u8 *` and casts lets a later
+  global pointer load float above its field stores (knights func_801B67C4). Reading
+  `D_801DFA14.pad` of a bigger symbol instead of the separate splat symbol `D_801DFA1A`
+  gives the game's base register (beam func_801B0E1C).
+- A global declared `s32` but read twice with `lhu`: one read through `(u8 *)&D_801EC34C
+  + 4` and the other through `(u8 *)&D_801EC348 + 8` gives each its own `lui`, where
+  `*(u16 *)&D_801EC350` shares one (knights func_801B5C5C); `D_80158D02[0] += a;` on a
+  `u16` scalar gives the pointer form `lui/addiu a0; lhu 0(a0); sh 0(a0)` (alex
+  func_801B402C).
+- A callee with an `s16` parameter that the game passes an unextended `s32` is called
+  through a cast prototype (alex func_801B53B0, func_801B3BAC, func_801B5584); an
+  uninitialised local returned (`s32 r; .. if (..) r = i; return r;`) reproduces a
+  garbage return in `a2` (tifa func_801BCD54).
 
 ### Order of instructions
 
@@ -765,6 +791,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   and `q = t / 16;`) match only with `f` first (tupon func_801B22B4). `m = &D; tp = (u16
   *)((u8 *)m + 0x14); f(m, ..)` makes `tp` derive from `a0` instead of the reverse; `i =
   0;` after the first call fixed the prologue order (odin1 func_801B379C).
+- `u = D.a; if (D.b == 0) t = u + K; else t = u - K;` loads `b` first and puts the else
+  arm in the `bnez` delay slot; `t = a - K; if (..) t = a + K;` loads `a` first (hades
+  func_801B8084). Writing `D->vx = 0` first moves a pointer load early (knights
+  func_801BA2E8); cast loads `*(s32 *)((u8 *)D_x + 0x18)` pin the order of three loads
+  that otherwise hoist (phoenix func_801B3D30).
+- `f(.., q); r += 0x18; q += 0x18;` after the call matched where a `pk = q` copy did not
+  (phoenix func_801B2138); `h->pos[i++] = p;` with `h->pad10 = cur;` before it and the
+  four field stores at the end puts `sw cur` in the `bne` delay slot (hades
+  func_801B35F0). work/spells63/pperm.py found pause-flag tail orders of 4-5 field
+  updates in seconds (tifa func_801B7090, func_801B8128; knights func_801B7090,
+  func_801B5C5C).
+- An OT link written inline twice, `q->tag.addr = ((MgTag *)D_801517C0 + (D->r >> 2) +
+  0x1C)->addr;` and the same expression on the left of the next store, re-reads `D->r` as
+  the game (knights func_801B4BF8); reading `p->unk14` afresh in each
+  `D_80151A4C[p->unk14].vx/vy/vz` reproduces the reloads (tifa func_801B8380).
 
 ### Registers
 
@@ -1112,6 +1153,29 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   stores 4/5/6 (odin1 func_801B4DBC); chained byte stores `p->u0 = p->u2 = t0` elsewhere
   make loop-invariant copies, and separate stores in the game's order with `u8 t0, a3`
   give a per-arm `move t0,v0` (tupon func_801B3464).
+- cse.c `make_regs_eqv` makes the register that lives longest past the block the
+  canonical one, so `u = t; t -= K` becomes `t = u - K`; a constant in a spare variable
+  (`t = 4; .. *(void **)(c + t)`) fixed it (phoenix func_801B39D0).
+- The pause flag in the loop counter or the call-result variable: `i = D_80062D98 == 0;
+  if (i) {` fixed a rotation between the counter and hoisted constants (alex
+  func_801B359C), `k = D_80062D98 == 0; if (k)` with `k` also the call result gave the
+  multiply operand its copy (knights func_801B6CAC); both found by the permuter.
+- Random values: `ang = rand(); ang &= 0xFFF;` as two statements swaps `s0`/`s1` (phoenix
+  func_801B1F80); `r = 0; r = func_80042DA8(); a = r / 0x1000; a = r - a * 0x1000;` puts
+  `r` in `a1` (sdust func_801B0DCC); `t = rand(); t %= 0x600;` with an `s16 h = u * (t +
+  w) >> 12;` local gave in-place registers (hades func_801B9DD4); `s16 t = rand() % 4`
+  hoists the `i++` of a four-iteration spawn loop (hades func_801B6C34).
+- One variable for several roles: a function-wide temp reused as the loop counter (`i =
+  0x1000 / n * a;` then `for (i = 0; ..)`) shares the game's saved register (hades
+  func_801B2D04); one function-level `k` for every quotient of a camera timeline's arms
+  and `s = const` after the call fixed saved-register swaps (knights func_801B9AA0,
+  func_801BA604, func_801B9E4C, func_801B786C); with separate temps `w = k << 8; t = s *
+  f2();`, reusing `w` for a later call argument (`w = D_801517C0 + 0x4064;`) fixed a
+  swapped order (knights func_801BB548, func_801BB8C4). Storing `m.t[1]` in each arm
+  instead of through a shared local gave the game's `v0` (tifa func_801B135C).
+- `t = (t << 12) / 57; t = (t * 0x300) >> 12;` as in-place statements keeps everything in
+  `v1`; the same shape with `<< 10` wants the single-expression form (knights
+  func_801BBA64, func_801BB6EC).
 
 ### Control flow
 
@@ -1352,6 +1416,17 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   timeline's shared store puts it at the end of the timeline (vahamut2 func_801B4AE4); a
   kill block shared by two chains is laid out with a label inside an `if` arm (tupon
   func_801B2A50).
+- if/else with `k = 0` in the else arm puts `move s1,zero` in the `bnez` delay slot where
+  a preset `k = 0` hoists it (tifa func_801B2980); an `s32 f(void)` with an early
+  `return;` that falls off the end keeps `v0` live and leaves the pause test's `bnez v0;
+  nop` unfilled (knights func_801BAD78).
+- Kill blocks: `if (t < 10) { .. } else { kill; return; }` puts the kill last (knights
+  func_801B8744); `goto done; kill: .. done:` after three byte stores puts it after them
+  (knights func_801BBCE0); `goto kill` from the first test into a later `if (unk6 > 0) {
+  kill: .. } else { rest }` (alex func_801B3924). Nested `t -= K; if (t < N) .. else`
+  blocks match a timeline whose arms `bnez`-skip and `j` to the tail (hades
+  func_801BA404); `i = 0; if (i < n)` for a second identical guard avoids jump threading
+  (wep4 func_801B164C).
 
 ### Loops
 
@@ -1618,6 +1693,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `s32 n = *(s16 *)..` instead of `s16 n` kept a loop bound as `s7 + s6` in the condition
   (siva func_801B3938). `i = b * 5; n = i; for (; i < n + 5; i++)` gives a folded-compare
   guard `ori v0,1; beqz v0,end` (odin1 func_801B32BC).
+- Angle tables: `f(i * step)` with `step = 0x1000 / n` computed before the loop gives the
+  game's angle register with its init after the guard, where `ang = 0; ang += step`
+  hoists the `move` above the divide; `p = &d[i]` inside `for (i = 0; i < n; i++)` gives
+  one reduced pointer where `p++` splits it (tifa func_801B1CD8, func_801B1BEC).
+- Inside a loop with an explicit `a += 4` biv, `b = (u16 *)a + 2;` becomes a giv whose
+  preheader `addiu t0,a0,8` lands after loop.c's other givs (knights func_801B5B7C). A
+  goto loop over an `s32` byte address (`e += 0x18; if (e < end) goto loop;`) stops GCC
+  splitting a stepping pointer into `e` and `e+2` (wep4 func_801B164C); an outer pointer
+  loop with unreduced field offsets matched only as a goto loop (hades func_801B8404).
+- A search loop `while (T[D] != 0) D = (D + 1) % 20;` puts the table base before the
+  guard and its constant in `a2`, where `if (..) do {} while` does not (phoenix
+  func_801B2490). `D[idx] <= D[idx - 1]` keeps the `-1` out of the displacement (a
+  hoisted `D - 1` register), `D[idx - 1] >= D[idx]` folds it (knights func_801B5E4C);
+  `D_801F1250[i].num = 0; D_801F1250[i].start = 0;` with an `s32 i` gives the game's
+  addressing (hades func_801B51F0).
 
 ### Stack frame
 
@@ -1696,6 +1786,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B3E0C); `u8 pad[8]` again for kujata func_801B731C, func_801B521C,
   func_801B42B8. `extern volatile s16 D_80162084;` restores the position of a leaf `addiu
   sp,-8` and an empty `bnez` delay slot (odin1 func_801B5088).
+- Five knights functions have a frame 8 bytes bigger than their locals (func_801B9834,
+  func_801B9408, func_801BAF80, func_801BCB04, func_801B56D4); `u8 pad[8]` matched
+  func_801BAF80 and func_801BCB04. A pad is not an "unused variable" in the style rule's
+  sense: say so in agent prompts, as one agent left both out. The pointer form
+  `(&D_80162978[i])->f` adds an 8-byte spill slot, and the permuter's score ignores the
+  frame size, so check the frame of a score-0 result (hades func_801BA75C).
 
 ### How the scheduler and the allocator decide
 
@@ -1918,6 +2014,33 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   source forms tried); a quotient that lands in `v0` where the game keeps it in place in
   `v1` (tupon func_801B2460, 1 word); an `andi; beqz` on `v1` where the game has `v0`
   (kujata func_801B88A4, 2 words).
+- A constant in a variable stops a fold: `v = 0xA00; .. (p->unk2 * 20 - v)` keeps `A - (B
+  - C)` apart, `k = 0x190; q->f + k - rand() % 800` keeps the `addiu` on the field, and
+  inside a loop the variable must be set in the body or it is hoisted into a register
+  (sdust, beam, wep4, jammer2, spells 77); `x = -0x3E8; f = x - *(u16 *)p` keeps `addiu
+  -1000` where `-0x3E8 - *(u16 *)p` gives `ori 0xFC18` (knights func_801B7C84); `(t + 4)
+  - n` stays unfolded only through a temp `w = t + 4` (tifa func_801BADB8); `a = (u8
+  *)&D; D2 = a + 0x9000;` keeps `ori 0x9000; addu` (tifa func_801BCD98); `rr = rand(); r
+  = a / 3; u = rr % 1194 - 0x100; ang = r + u;` keeps `- 0x100` out of the quotient (alex
+  func_801B53B0).
+- Shifts and narrowing: `/ 4 >> 3` gives `addiu 3` plus `srl 5` where `/ 32` gives `addiu
+  31` (knights func_801BA964); `q->f = (q->s16field << 10) >> 16` gives `lh; sra 6` where
+  `>> 6` gives `lhu; sll 16; sra 22` (knights func_801B440C); `(i + D_x) & 0xFFF` narrows
+  the global's `lw` to `lhu`, and an `s32` temp `u = (D + 1) & 0xFF; D = u;` keeps the
+  `lw` where a `u16` temp does not (sdust func_801B1424); `(u32)((u16)p->unk2 - 0x30) >=
+  0x12U` gives `sltiu`; `m[1][1] = m[2][2] = 0x200` stores `m[2][2]` first.
+- wep4 is GCC 2.7.2 code (`mfhi`/`mflo` into `$t0` for each division, as beam and garyu):
+  its six functions in C matched under both compilers, and under 2.7.2 func_801B164C and
+  the old near miss func_801B0074 matched. A scan of the asm still in asm for
+  `mfhi`/`mflo` into `$t` registers found no other such spell.
+- Open forms (spells 68, 73-77): the unfolded loop guard now also covers phoenix
+  func_801B2F34 and func_801B3210 (fixed-point spawn accumulators; their twin
+  func_801B1978 with a variable start `((unk2 * 0xC0) & 0xFF) + 0xC0` matched) and
+  knights func_801B9408; twenty option sets (-O1, -O3, -funroll-loops, several -fno-*)
+  kept none of the guards (work/spells68/flags.py). One-word near misses: hades
+  func_801B7594 (a `move v1,v0` after `lh; beqz`), knights func_801B3DB0 and
+  func_801B9834, jammer2 and daionpa func_801B06E4 (`sll v1,s0,1` where the game has
+  `a0`).
 
 ## Hand-written assembly
 

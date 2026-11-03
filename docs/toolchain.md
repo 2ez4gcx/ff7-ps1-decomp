@@ -142,7 +142,12 @@ of its own (`static` or global data): GCC puts static data at the end of its fil
 in our larger files is not where the game has it, so the game's tables stay in asm and
 the C declares them `extern` (`tools/work.py put` refuses such data, keeps a table the C
 reads by name in an asm file of its own with an `INCLUDE_RODATA`, and checks the whole
-file).
+file). `put` writes that `INCLUDE_RODATA` before the function. When the function's own
+jump table comes first in the game's rodata, that order is wrong, because GCC emits the
+jump table where the function is. Then write the `INCLUDE_RODATA` after the function by
+hand, and keep the table out of migration in `config/symbols.us.<target>.txt`
+(`force_not_migration:True`) so a split writes it as an asm file of its own (tifa
+func_801BCE2C).
 
 C code may name any address as `D_80012345` or `func_80012345`; `build.py` gives each such
 name its address (`build/us/<target>.addresses.ld`), whether or not splat named it.
