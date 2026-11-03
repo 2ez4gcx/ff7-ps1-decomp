@@ -625,158 +625,136 @@ void func_801B21C8(void) {
     }
 }
 
-void func_801B22EC(void)
-{
-  MgTask *p;
-  MgTask *q;
-  s16 i;
-  s16 t;
-  u16 n;
-  s16 k;
-  u8 pad[0x38];
-  p = (MgTask *) (&D_80162978[D_8015169C]);
-  if (D_80062D98 == 0)
-  {
-    if (p->unk2 == 0)
-    {
-      q = &D_80162978[func_800BBEAC((void *) func_801B1620)];
-      q->unk4 = p->unk4;
-      q->unk6 = p->unk6;
-      k = p->unk8;
-      q->unk18 = 0;
-      q->unk8 = k;
-      D_8009A000.a = 0x28;
-      D_8009A000.b = 0x40;
-      D_8009A000.c = 0x13D;
-      func_8002DA7C();
-    }
-    t = p->unk2;
-    if (t < 0x46)
-    {
-      if (t < 0x28)
-      {
-        q = &D_80162978[func_800BBEAC((void *) func_801B1A1C)];
-        q->unk4 = p->unk4;
-        q->unk6 = -0x190;
-        q->unk8 = p->unk8;
-        q->unkE = -0x32;
-        q->unk14 = (func_80042DA8() % 0x800) - 0x400;
-        q->unk18 = (func_80042DA8() % 1000) + 0x1F4;
-        q->unk1A = 0x3000;
-      }
-      else
-      {
-        i = 0;
-        do
-        {
-          q = &D_80162978[func_800BBEAC((void *) func_801B1A1C)];
-          q->unk4 = p->unk4;
-          q->unk6 = -0x190;
-          q->unk8 = p->unk8;
-          q->unkE = -0x32;
-          q->unk14 = (func_80042DA8() % 0x800) - 0x400;
-          q->unk18 = (func_80042DA8() % 3000) + 0x3E8;
-          q->unk1A = 0x4000;
-          i++;
+void func_801B22EC(void) {
+    MgTask *p;
+    MgTask *q;
+    s16 i;
+    s16 t;
+    u16 n;
+    s16 k;
+    u8 pad[0x38];
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            q = &D_80162978[func_800BBEAC((void *)func_801B1620)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            k = p->unk8;
+            q->unk18 = 0;
+            q->unk8 = k;
+            D_8009A000.a = 0x28;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0x13D;
+            func_8002DA7C();
         }
-        while (i < 2);
-      }
-    }
-    if (p->unk2 == 0x46)
-    {
-      func_800BBEAC((void *) func_801B1288);
-      q = &D_80162978[func_800BBEAC((void *) func_801B1C60)];
-      q->unk4 = p->unk4;
-      q->unk6 = p->unk6;
-      q->unk8 = p->unk8;
-      D_8009A000.a = 0x28;
-      D_8009A000.b = 0x40;
-      D_8009A000.c = 0x182;
-      func_8002DA7C();
-      D_8009A000.a = 0x29;
-      D_8009A000.b = 0x40;
-      D_8009A000.c = 0x241;
-      func_8002DA7C();
-    }
-    if (p->unk2 == 0x6E)
-    {
-      q = &D_80162978[func_800BBEAC((void *) func_801B1F04)];
-      q->unk4 = p->unk4;
-      q->unk6 = p->unk6;
-      q->unk8 = p->unk8;
-    }
-    if (p->unk2 == 0x82)
-    {
-      D_8009A000.a = 0x2A;
-      D_8009A000.b = 0x40;
-      D_8009A000.c = 0x13E;
-      func_8002DA7C();
-    }
-    n = p->unk2;
-    if ((n - 0x82) < 0x3CU)
-    {
-      if (((s16) (((s16) n) % 10)) == 0)
-      {
-        q = &D_80162978[func_800BBEAC((void *) func_801B2098)];
-        q->unk4 = p->unk4;
-        q->unk6 = p->unk6;
-        q->unk8 = p->unk8;
-        q = &D_80162978[func_800BBEAC((void *) func_801B2098)];
-        q->unk4 = p->unk4;
-        q->unk6 = p->unk6;
-        q->unk8 = ((u16) p->unk8) - 0x1B53;
-      }
-      if (!(func_80042DA8() & 1))
-      {
-        q = &D_80162978[func_800BBEAC((void *) func_801B14D4)];
-        q->unk4 = 0x3E8;
-        q->unk6 = (((u16) p->unk6) + (func_80042DA8() % 1000)) - 0x1F4;
-        q->unk8 = (func_80042DA8() % 4000) - 0x7D0;
-        q->unkC = 0;
-        q->unkE = 0;
-        q->unk10 = (func_80042DA8() % 0x400) - 0x600;
-      }
-      i = 0;
-      do
-      {
-        q = &D_80162978[func_800BBEAC((void *) func_801B1B6C)];
-        q->unk4 = (func_80042DA8() % 600) + 0x640;
-        q->unk8 = (func_80042DA8() % 4000) - 0x3E8;
-        q->unk6 = (-func_80042DA8()) % 400;
-        q->unkE = -0xC8;
-        q->unkC = 0;
-        q->unk10 = (func_80042DA8() % 100) + 0x190;
-        i++;
-      }
-      while (i < 3);
-      if (p->unk2 >= 0xAA)
-      {
-        D_801D6A3C = ((u16) D_801D6A3C) - 0x258;
-      }
-    }
-    if (p->unk2 == 0xB4)
-    {
-      i = 0;
-      do
-      {
-        if ((D_801E6BDC >> i) & 1)
-        {
-          func_800D5774(i);
+        t = p->unk2;
+        if (t < 0x46) {
+            if (t < 0x28) {
+                q = &D_80162978[func_800BBEAC((void *)func_801B1A1C)];
+                q->unk4 = p->unk4;
+                q->unk6 = -0x190;
+                q->unk8 = p->unk8;
+                q->unkE = -0x32;
+                q->unk14 = func_80042DA8() % 0x800 - 0x400;
+                q->unk18 = func_80042DA8() % 1000 + 0x1F4;
+                q->unk1A = 0x3000;
+            } else {
+                i = 0;
+                do {
+                    q = &D_80162978[func_800BBEAC((void *)func_801B1A1C)];
+                    q->unk4 = p->unk4;
+                    q->unk6 = -0x190;
+                    q->unk8 = p->unk8;
+                    q->unkE = -0x32;
+                    q->unk14 = func_80042DA8() % 0x800 - 0x400;
+                    q->unk18 = func_80042DA8() % 3000 + 0x3E8;
+                    q->unk1A = 0x4000;
+                    i++;
+                } while (i < 2);
+            }
         }
-        i++;
-      }
-      while (i < 0xA);
+        if (p->unk2 == 0x46) {
+            func_800BBEAC((void *)func_801B1288);
+            q = &D_80162978[func_800BBEAC((void *)func_801B1C60)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            D_8009A000.a = 0x28;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0x182;
+            func_8002DA7C();
+            D_8009A000.a = 0x29;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0x241;
+            func_8002DA7C();
+        }
+        if (p->unk2 == 0x6E) {
+            q = &D_80162978[func_800BBEAC((void *)func_801B1F04)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+        }
+        if (p->unk2 == 0x82) {
+            D_8009A000.a = 0x2A;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0x13E;
+            func_8002DA7C();
+        }
+        n = p->unk2;
+        if (n - 0x82 < 0x3CU) {
+            if ((s16)((s16)n % 10) == 0) {
+                q = &D_80162978[func_800BBEAC((void *)func_801B2098)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = p->unk8;
+                q = &D_80162978[func_800BBEAC((void *)func_801B2098)];
+                q->unk4 = p->unk4;
+                q->unk6 = p->unk6;
+                q->unk8 = (u16)p->unk8 - 0x1B53;
+            }
+            if (!(func_80042DA8() & 1)) {
+                q = &D_80162978[func_800BBEAC((void *)func_801B14D4)];
+                q->unk4 = 0x3E8;
+                q->unk6 = (u16)p->unk6 + func_80042DA8() % 1000 - 0x1F4;
+                q->unk8 = func_80042DA8() % 4000 - 0x7D0;
+                q->unkC = 0;
+                q->unkE = 0;
+                q->unk10 = func_80042DA8() % 0x400 - 0x600;
+            }
+            i = 0;
+            do {
+                q = &D_80162978[func_800BBEAC((void *)func_801B1B6C)];
+                q->unk4 = func_80042DA8() % 600 + 0x640;
+                q->unk8 = func_80042DA8() % 4000 - 0x3E8;
+                q->unk6 = -func_80042DA8() % 400;
+                q->unkE = -0xC8;
+                q->unkC = 0;
+                q->unk10 = func_80042DA8() % 100 + 0x190;
+                i++;
+            } while (i < 3);
+            if (p->unk2 >= 0xAA) {
+                D_801D6A3C = (u16)D_801D6A3C - 0x258;
+            }
+        }
+        if (p->unk2 == 0xB4) {
+            i = 0;
+            do {
+                if ((D_801E6BDC >> i) & 1) {
+                    func_800D5774(i);
+                }
+                i++;
+            } while (i < 0xA);
+        }
+        if (++p->unk2 == 0xC8) {
+            D_8009A000.a = 0x28;
+            D_8009A000.b = 0x40;
+            D_8009A000.c = 0;
+            func_8002DA7C();
+            D_800FAFDC = 0;
+            p->unk0 = -1;
+        }
     }
-    if ((++p->unk2) == 0xC8)
-    {
-      D_8009A000.a = 0x28;
-      D_8009A000.b = 0x40;
-      D_8009A000.c = 0;
-      func_8002DA7C();
-      D_800FAFDC = 0;
-      p->unk0 = -1;
-    }
-  }
 }
 
 void func_801B2A50(arg0, arg1) {
