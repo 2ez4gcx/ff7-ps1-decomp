@@ -27,7 +27,9 @@ s32 func_801D0448(s32 arg0) {
     D_80062F24->r = D_801D4EC4;
     D_80062F24->g = D_801D4EC4;
     D_80062F24->b = D_801D4EC4;
-    p = *pp; *(volatile SvPrim **)pp = p + 1; func_80046794(D_80062FC4, (s32)p);
+    p = *pp;
+    *(volatile SvPrim **)pp = p + 1;
+    func_80046794(D_80062FC4, (s32)p);
     rect[0] = 0;
     rect[1] = 0;
     rect[2] = 0xFF;
@@ -494,7 +496,9 @@ s32 func_801D2B98(s32 arg0) {
     D_80062F24->r = D_801E2CF4;
     D_80062F24->g = D_801E2CF4;
     D_80062F24->b = D_801E2CF4;
-    p = *pp; *(volatile SvPrim **)pp = p + 1; func_80046794(D_80062FC4, (s32)p);
+    p = *pp;
+    *(volatile SvPrim **)pp = p + 1;
+    func_80046794(D_80062FC4, (s32)p);
     rect[0] = 0;
     rect[1] = 0;
     rect[2] = 0xFF;

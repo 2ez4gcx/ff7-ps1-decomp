@@ -1080,7 +1080,8 @@ void func_800D3D88(void) {
 
     p = D_801621F0[D_801590D4];
     i = p[0];
-    off = i * 0xB9C; c = D_8015191A[off + (p[1] & 1)];
+    off = i * 0xB9C;
+    c = D_8015191A[off + (p[1] & 1)];
     if (c != 0xFF) {
         q = D_801621F0[func_800BC04C(func_800D3BF0)];
         func_800D3994(i, c, (BtlSVec *)&q[2]);

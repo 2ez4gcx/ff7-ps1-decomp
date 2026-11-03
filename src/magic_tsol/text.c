@@ -11,13 +11,15 @@ void func_801B007C(void) {
     MgTask *t;
     s32 *p;
     s32 i;
-    s32 r; s32 *base;
+    s32 r;
+    s32 *base;
 
     t = &D_80162978[D_8015169C];
     func_8003A63C(&D_800FA63C, &D_801CDBCC, &D_801CDBEC);
     i = 0;
     do {
-        base = D_801B5B5C; p = &base[i];
+        base = D_801B5B5C;
+        p = &base[i];
         if (*p != 0) {
             if (*p == 1) {
                 r = func_80042DA8();

@@ -4133,7 +4133,12 @@ void func_800B1304(s32 arg0, s32 arg1) {
 }
 
 s32 func_800B1368(void) {
- s32 v; v = D_800F4AC0[D_800F4AC4[1]++]; v |= D_800F4AC0[D_800F4AC4[1]++] << 8; return v; }
+    s32 v;
+
+    v = D_800F4AC0[D_800F4AC4[1]++];
+    v |= D_800F4AC0[D_800F4AC4[1]++] << 8;
+    return v;
+}
 
 s32 func_800B13B0(s32 arg0, s32 arg1, void **arg2) {
     if (arg1 < 0x2000) {

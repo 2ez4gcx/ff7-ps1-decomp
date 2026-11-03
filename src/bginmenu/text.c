@@ -19,7 +19,13 @@ void func_801D00C4(void) {
         func_8001EB2C(0, D_801D07FE + (D_801D086B << 6) + 0x20);
     }
     func_80026F44(0x10, 0xB, D_801D0804, 7);
-    i = 0; p = D_801D07F4; do { func_8001E040(p); i++; p += 8; } while (i < 2);
+    i = 0;
+    p = D_801D07F4;
+    do {
+        func_8001E040(p);
+        i++;
+        p += 8;
+    } while (i < 2);
     func_800264A8(D_801D0860 + D_801D07F0 * 0x12);
     if (D_80062D7E & 0x40) {
         func_8002305C(5, 0);

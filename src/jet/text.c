@@ -35,8 +35,16 @@ u16 func_800A0450(void) {
                     ((void (*)(s32))func_800A372C)(*sc);
                     func_800A46E8(*gp);
                     ((void (*)())func_800A1CD8)(D_800D16D8, 0xF4, 0xC8, 0, 0);
-                    { s32 k27 = 0x27; func_800A1F18(7, 0xCC, 0xC8, 0x27, 0x11, 0, 0, k27, 0x11, 0); }
-                    { s32 kC = 0xC; func_800A1F18(0xB, 0x12, 0x56, 0xC, 0x8C, 0, 0x70, kC, 0x8C, 0); }
+                    {
+                        s32 k27 = 0x27;
+
+                        func_800A1F18(7, 0xCC, 0xC8, 0x27, 0x11, 0, 0, k27, 0x11, 0);
+                    }
+                    {
+                        s32 kC = 0xC;
+
+                        func_800A1F18(0xB, 0x12, 0x56, 0xC, 0x8C, 0, 0x70, kC, 0x8C, 0);
+                    }
                     func_800A1A64();
                     if (*sc < 0x4000) {
                         D_800A8338 = 0;
@@ -1088,7 +1096,12 @@ void func_800A3C04(u32 arg0, u32 arg1, JetV3 *arg2, s32 arg3) {
 
 void func_800A3D50(JetDrawCtx2 *arg0) {
     u8 *p;
-    s32 x; s32 y; s16 x0; s16 y0; s16 x1; s16 y1;
+    s32 x;
+    s32 y;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
 
     p = arg0->prim;
     x = D_800E25EC;
@@ -1700,7 +1713,9 @@ JetUnk28 *func_800A7C54(s32 arg0) {
 }
 
 void func_800A7C88(void) {
-    u8 *p; u8 *q; s32 off = 0x12674;
+    u8 *p;
+    u8 *q;
+    s32 off = 0x12674;
 
     p = (u8 *)&D_800AB898;
     func_80043814((Spr *)p, 0, 0, 0x140, 0xF0);

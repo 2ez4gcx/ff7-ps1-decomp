@@ -50,7 +50,8 @@ void func_801B01E0(void) {
     s32 scale;
 
     p = (MgTask *)&D_80162978[D_8015169C];
-    scale = -(p->unk2 * 3 << 12) / 40 + 0x3000; t = p->unk2;
+    scale = -(p->unk2 * 3 << 12) / 40 + 0x3000;
+    t = p->unk2;
     if (t < 0x14) {
         c = (t << 7) / 20;
         D_801D0F1C = D_801D0F1D = D_801D0F1E = c;
@@ -183,10 +184,15 @@ void func_801B06D4(void) {
             func_800D3994(p->unk4, D_8015190F[p->unk4][0], &v);
             q = (GrObj *)&D_80162978[func_800BBEAC(&func_801B033C)];
             q->pos = v;
-            n = -D_801518F6[p->unk4].v; q->vel.vx = q->vel.vy = q->vel.vz = 0; q->unk18 = n;
+            n = -D_801518F6[p->unk4].v;
+            q->vel.vx = q->vel.vy = q->vel.vz = 0;
+            q->unk18 = n;
             q = (GrObj *)&D_80162978[func_800BBEAC(&func_801B033C)];
             q->pos = v;
-            q->unk18 = -D_801518F6[p->unk4].v; q->vel.vx = 0; q->vel.vy = 0x400; q->vel.vz = 0;
+            q->unk18 = -D_801518F6[p->unk4].v;
+            q->vel.vx = 0;
+            q->vel.vy = 0x400;
+            q->vel.vz = 0;
         }
         if (p->unk2 == 8) {
             q = (GrObj *)&D_80162978[func_800BBEAC(&func_801B0558)];

@@ -3425,7 +3425,8 @@ void func_800C7CE8(void) {
     if (D_8009D820 & 3) {
         func_800BEAD4("mova", 1);
     }
-    i = D_800831FC[D_800722C4]; func_800C7D5C((D_8009C6DC + i)[1]);
+    i = D_800831FC[D_800722C4];
+    func_800C7D5C((D_8009C6DC + i)[1]);
 }
 
 s32 func_800C7D5C(u8 arg0) {

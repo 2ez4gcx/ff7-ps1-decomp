@@ -915,7 +915,13 @@ void func_800B7DB4(void) {
 }
 
 void func_800B7F6C(void) {
- u8 pad[8]; while (D_80062D99 != 0) { func_800B7FB4(); } D_80062D98 = 0; }
+    u8 pad[8];
+
+    while (D_80062D99 != 0) {
+        func_800B7FB4();
+    }
+    D_80062D98 = 0;
+}
 
 void func_800B7FB4(void) {
     D_801518DC = func_80034B44();

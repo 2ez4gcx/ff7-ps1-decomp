@@ -57,7 +57,8 @@ void func_800A157C(void) {
 
     for (i = 0, g = &D_800B1254; i < 6; i++) {
         c = &D_800B75CC[i];
-        pr = (*g)->prims; p = &pr[c->f92];
+        pr = (*g)->prims;
+        p = &pr[c->f92];
         (*g)->prims[c->f90].r = p->r = 0xC0;
         (*g)->prims[c->f90].g = p->g = 0;
         (*g)->prims[c->f90].b = p->b = 0x80;
@@ -466,9 +467,17 @@ void func_800A28D8(void) {
 INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A2984);
 
 void func_800A2AFC(void) {
-    s32 t; s32 u; s32 a; s32 b; s32 n;
+    s32 t;
+    s32 u;
+    s32 a;
+    s32 b;
+    s32 n;
 
-    n = D_800F5084->cnt; t = D_800B7598; u = D_800F507C; a = (t + n) % n; b = (u + n) % n;
+    n = D_800F5084->cnt;
+    t = D_800B7598;
+    u = D_800F507C;
+    a = (t + n) % n;
+    b = (u + n) % n;
     D_800F5034 = 0;
     if (b < a) {
         func_800A2BD4(0, b);

@@ -150,12 +150,15 @@ void func_801B03DC(void) {
             q = (MgTask *)&D_80162978[func_800BBEAC((void *)func_801B01D8)];
             func_800D3994(p->unk1C, D_8015190F[D_800FA6D4][0], &q->unk4);
             r1 = func_80042DA8();
-            t1 = (u16)q->unk4 - 0x190; q->unk4 = t1 + r1 % 800;
+            t1 = (u16)q->unk4 - 0x190;
+            q->unk4 = t1 + r1 % 800;
             r2 = func_80042DA8();
-            t2 = (u16)q->unk6 - 0x190; q->unk6 = t2 + r2 % 800;
+            t2 = (u16)q->unk6 - 0x190;
+            q->unk6 = t2 + r2 % 800;
             r3 = func_80042DA8();
             q->unk14 = 0x3000;
-            t3 = (u16)q->unk8 - 0x190; q->unk8 = t3 + r3 % 800;
+            t3 = (u16)q->unk8 - 0x190;
+            q->unk8 = t3 + r3 % 800;
             q->unk16 = -*(u16 *)D_801518F6[D_800FA6D4];
         }
         if (p->unk2 == 0xF) {

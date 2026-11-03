@@ -45,7 +45,10 @@ s32 func_801B022C(void) {
     SrObj2 *p;
     SrObj2 *q;
     s16 k;
-    s32 t1; s32 t2; s32 t3; s32 t4;
+    s32 t1;
+    s32 t2;
+    s32 t3;
+    s32 t4;
     s16 w;
     u8 *model;
     SrDraw *s;
@@ -89,7 +92,8 @@ s32 func_801B022C(void) {
     if (!(p->unk16 & 1)) {
         model = D_801B4D78;
     }
-    wp++; wp--;
+    wp++;
+    wp--;
     s->unk0 = model;
     if (!(p->unk16 & 1)) {
         t4 = D_801B5418;
@@ -116,7 +120,9 @@ s32 func_801B022C(void) {
             func_8003B48C(&m);
             func_8003B51C(&m);
             func_8003BADC((MgSVec *)&c, &q->unk4, &flag);
-            q->unkC = 0; q->unkE = p->unkE; q->unk10 = 0;
+            q->unkC = 0;
+            q->unkE = p->unkE;
+            q->unk10 = 0;
         }
         if (p->unk2 < 8) {
             D_801B5418++;

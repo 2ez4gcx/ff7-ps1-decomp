@@ -142,7 +142,8 @@ void func_801B06C4(s32 arg0, s32 arg1) {
     p->unkC = (D_801C4614->bx - D_801C4614->a.vx) / 16;
     p->unkE = -200;
     p->unk10 = (D_801C4614->bz - D_801C4614->a.vz) / 16;
-    p->unk1C = (0xAF0 - D_801C4614->a.vy) / 98; p->unk14 = p->unk16 = p->unk18 = 0;
+    p->unk1C = (0xAF0 - D_801C4614->a.vy) / 98;
+    p->unk14 = p->unk16 = p->unk18 = 0;
 }
 
 void func_801B08E0(void) {

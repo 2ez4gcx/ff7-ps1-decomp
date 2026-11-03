@@ -27,7 +27,9 @@ s32 func_801D01D8(s32 arg0) {
     D_80062F24->r = D_801D1CF8;
     D_80062F24->g = D_801D1CF8;
     D_80062F24->b = D_801D1CF8;
-    p = *pp; *(volatile Prim **)pp = p + 1; func_80046794(D_80062FC4, (s32)p);
+    p = *pp;
+    *(volatile Prim **)pp = p + 1;
+    func_80046794(D_80062FC4, (s32)p);
     rect[0] = 0;
     rect[1] = 0;
     rect[2] = 0xFF;

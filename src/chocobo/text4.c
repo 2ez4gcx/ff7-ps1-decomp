@@ -67,7 +67,8 @@ void func_800AD7E8(void) {
     u8 c;
 
     if (D_800B7514 != 0) {
-        src = (ChoSpr *)(D_800F5074 + 0x1EA70); sp10 = *src;
+        src = (ChoSpr *)(D_800F5074 + 0x1EA70);
+        sp10 = *src;
         sp10.e = func_8004656C(0, 2, 0, 0);
         sp10.g = 0;
         func_80044AC0((s32)sp70, (Spr *)&sp10);
