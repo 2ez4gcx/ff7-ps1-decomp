@@ -347,6 +347,19 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   through a cast prototype (alex func_801B53B0, func_801B3BAC, func_801B5584); an
   uninitialised local returned (`s32 r; .. if (..) r = i; return r;`) reproduces a
   garbage return in `a2` (tifa func_801BCD54).
+- `D_x += v` on an `s16` global loads it with `lhu`; a negative constant stored to a
+  `u16` global becomes `li 0xEC78` and needs an `s16` global to stay `addiu -0x1388`;
+  `D_x[1] += v` keeps the symbol address in a register (`lui/addiu a1; lhu 0(a1); sh
+  0(a1)`) under both compilers (spells 78).
+- After `t = (u16)p->unk2` into an `s32`, a second test `!(p->unk2 & 3)` reloads the
+  field: the sign- and zero-extending loads are not merged (jibaku2 func_801B0D10). A
+  `u16` field read as `(s16)D_x[e].h` takes 8 bytes of frame less than `(s16)*(u16
+  *)&D_x[e].h` (matra func_801B1558); `lhu; sll 16; sra 15` wants a `u16` variable and
+  `(x << 16) >> 15`, where an `s16` variable gives `lh` (lasboss2 func_801B1024).
+- dia func_801B16DC matched only with `-func_80042DA8() % 0x4B0` written without a
+  variable, one pointer variable instead of two of the same type, no stray third argument
+  to a two-argument callee (an extra `v.vz` forced `sll/sra` and moved the temps), and
+  `lhu` once into a `u16` local, then `(s16)uu % 5`.
 
 ### Order of instructions
 
@@ -806,6 +819,31 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   0x1C)->addr;` and the same expression on the left of the next store, re-reads `D->r` as
   the game (knights func_801B4BF8); reading `p->unk14` afresh in each
   `D_80151A4C[p->unk14].vx/vy/vz` reproduces the reloads (tifa func_801B8380).
+- Chain stores go innermost first: `q->a = q->b = x` stores `b` first; `D->b28 = D->b29 =
+  D->b2A = 0;` through a global pointer loads it once and stores 2A, 29, 28, where
+  separate statements reload it after each byte store (odin2 func_801B447C); `D[0] = D[1]
+  = D[2] = 0xFF;` on a `u8` array reloads a later `p->unk2` after the stores (sflea
+  func_801B0F7C); `q->unk16 = rot.vy = (u32)(i << 16) >> 8` matched where two statements
+  did not (jibaku2 func_801B0D10); `q->unkE = D = ..` forwards the stored value (odin1
+  func_801B5D14).
+- 8-byte copies: through a local source pointer, `sp = (MgB8 *)D_80151A4C[i]; *(MgB8
+  *)&D_x = *sp;`, the destination `lui/addiu` moves after the index arithmetic and the
+  copy registers change (erave func_801B1AD0, 29 to 17 words); `dst = base + off; ptr =
+  dst; *(MgB8 *)ptr = *(MgB8 *)src;` puts the destination address before the source's
+  (riva, spells 79).
+- `c = p->unk14++` or another read of the same member makes cse emit the game's `move
+  a1,a0` copies; `(u16)q->unk4 + (rand() % n - C)` instead of `.. - C + rand() % n` keeps
+  `C` from being hoisted into a saved `li`; vector initialisers in `vx, vy, vz` order
+  schedule closer to the game than m2c's order (tifa, titan, spells 79).
+- `t <<= 16; t >>= 16; t -= 0xF; t >>= 2;` as separate statements gives the in-place
+  chain (jibaku2 func_801B0D10); a block-scope `g = D + 0x400; D = g + (r & 0x7FF);`
+  keeps the game's add order (odin1 func_801B5D14); `MgHalf D_801EBD60; D.v = k` keeps a
+  later `lhu p->unk2` after the store (sflea func_801B0F7C).
+- A pointer local assigned between a call and the arithmetic (`m = rand(); g =
+  D_801DF4A0; t3 = m % 66 + 0x84; g[0] = t3;`) puts the `la` early and keeps the pointer
+  out of the saved registers; a dead `s = len` copy right after a call keeps `move s2,v0`
+  next to the `jal`; a second product computed into a temp early (`y = (w2 * v.vz) >>
+  12`) fixed the `mult`/`mflo` schedule (conf func_801B0F00).
 
 ### Registers
 
@@ -1176,6 +1214,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `t = (t << 12) / 57; t = (t * 0x300) >> 12;` as in-place statements keeps everything in
   `v1`; the same shape with `<< 10` wants the single-expression form (knights
   func_801BBA64, func_801BB6EC).
+- Merging two user variables into one (`n` into `s`, `i` into `c`) gives it two sets: a
+  variable with a single constant set lets combine turn `s + 0xD0` into `ori` where the
+  game has `addiu`, and the merge gave the game's saved-register priorities (matra
+  func_801B1558). One function-level temp reused in several cases becomes global and, if
+  it crosses a call in one case, takes a saved register in all of them: separate
+  block-scope temps keep the others in `v`/`a` registers (conf func_801B0F00).
+- Nested call results written as one expression, `D = f(f(f(f(D / 4) / 4) / 4) / 4)`,
+  give the game's in-place signed `/4` on each result (`bgez; nop; addiu v0,v0,3; sra
+  a0,v0,2`), where named temps copy into `a0` (odin1 func_801B5D14). In division blocks,
+  block-scope `x`, `y`, `z` written in place (`x = load; x /= n;`) get the game's
+  registers, and one function-level `n` holding the negated counter, reused for a
+  constant (`n = 0x640` before `* n >> 12`), lands last in `a2` (satan func_801B3AD4).
+- Packet stores through a struct pointer (`pk->tag`, `pk->c1`, ..) keep the loaded packet
+  pointer in its register where `u32 *` word stores reload it; `g = &D_80153ECC;` before
+  a test gives the early `lui a1` and the `move s0,a1` in the then-arm; `D_801F2AC0[0]`
+  as an array gives `la a3` with `a1 = a3 - 0x18` (odin1 func_801B51AC). A counter that
+  is the `pad` of the `MgSVec` next to it (`cam.dst.pad--`) gives the `move a1,v0` copy
+  in the delay slot, and a camera as one struct `{ MgVec dir; SatCam cam[3]; }` makes
+  `&D.dir` an `s0 - 0x10` (satan func_801B3AD4).
+- A saved-register swap between `p` and `m` was fixed by reusing `m` for a later `x`
+  after the join and wrapping the `p`-heavy tail in a dead identical-arm test (`if (q)
+  {tail} else {tail}`, merged back by cross-jumping) (club2 func_801B2040).
 
 ### Control flow
 
@@ -1427,6 +1487,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   blocks match a timeline whose arms `bnez`-skip and `j` to the tail (hades
   func_801BA404); `i = 0; if (i < n)` for a second identical guard avoids jump threading
   (wep4 func_801B164C).
+- `if (!(f() & 1)) { .. } i = 0; do { .. }` gives the game's `bnez` with the join block's
+  `move s0,zero` in its delay slot (lasboss func_801B22EC); `if (t < 0xF || (t -= 0xF) <
+  0xF)` gives the `slti/bnez/addiu/slti/beqz` pair (odin2 func_801B447C); `if (t < N)
+  {..} else { kill; return; }` puts the kill block last (odin1 func_801B51AC).
+- The first jump pass rewrites `if (c) x = load; else x = const;` into `x = const; if
+  (!c) x = load;` with the constant before the branch; no source form put the game's `li`
+  into the delay slot (reazer func_801B058C).
 
 ### Loops
 
@@ -1708,6 +1775,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   hoisted `D - 1` register), `D[idx - 1] >= D[idx]` folds it (knights func_801B5E4C);
   `D_801F1250[i].num = 0; D_801F1250[i].start = 0;` with an `s32 i` gives the game's
   addressing (hades func_801B51F0).
+- Indexing two tables with the loop counter (`D_801F2AF0[i]`, `D_801F2B10[i]`) gave the
+  game's reduced pointer registers where explicit `src++`/`w++` pointers swapped them
+  (odin1 func_801B5D14); a zero-fill loop over `D_x + i * 0x18` stops reloading the
+  global when written `t = D_x + 0x948; for (..; i--, t -= 0x18) *(s16 *)t = 0;` (tifa,
+  spells 79).
 
 ### Stack frame
 
@@ -1792,6 +1864,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   sense: say so in agent prompts, as one agent left both out. The pointer form
   `(&D_80162978[i])->f` adds an 8-byte spill slot, and the permuter's score ignores the
   frame size, so check the frame of a score-0 result (hades func_801BA75C).
+- The frame's local size (`vars=`) shows in the `.frame` line of a `-dg` dump
+  (work/spells19/dump.py): compare it with the game's prologue before looking for a pad.
+  Pads bigger than 8 bytes happen: `u8 pad[0x38]` (lasboss func_801B22EC), `u8 pad[0x30]`
+  (lasboss2 func_801B1024); a second read of the same `s16` member (`c = p->unk14++`)
+  adds 8 bytes; an out-parameter array `s32 flag[2]` gave 0x18 missing bytes (satan
+  func_801B3AD4).
 
 ### How the scheduler and the allocator decide
 
@@ -1839,6 +1917,22 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   compare pseudo: class `ST_REGS`, no hard register and a stale ref count, so it gets a
   stack slot. `-fno-rerun-cse-after-loop` keeps the guard but changes the preheader; an
   identical-arm dead test survives cse1 and cse2 folds it once the arms merge.
+- A load of a scalar global is hoisted above a store through a struct member or array
+  element, where a load of a struct-member global stays below it as in the game: `q[8] =
+  D_801DCCC8.vy + 0x800;` instead of the scalar `D_801DCCCA` (odin2 func_801B447C);
+  `D_801EC310.{x,z,w}` for D_801EC310/314/316 took erave func_801B1AD0 from 37 to 29
+  words; three scalars `D_8009A000/4/8` as one struct fixed a `li 0x28; sh` position, and
+  `D_801EEB68` as a field of the `D_801EEB60` view (with `D_801EEB6A/6C` left scalar)
+  fixed a `p->unk8` load (dia func_801B16DC).
+- `do { } while (0)` around statements weights their references by loop depth in register
+  priority without any loop.c rewrite, which rotates saved registers (sdust
+  func_801B1ADC: `p` from `s3` to `s5`); wrapping a whole goto loop switches loop.c on
+  and breaks it (sdust kept `again: do { .. } while (0); if (..) goto again;`). Around
+  the first `if (p->unk2 == 0)` body it flipped erave func_801B1074's `q`/`k` priority.
+- Local allocation gives an output pseudo the register of an input that dies in the same
+  instruction (`slt s0,s0,s2`, `mflo s2`); a pseudo set in two blocks is global and
+  escapes that tie: merging conf's `n` into a two-block `k` gave the game's `slt
+  v0,s0,s2` (conf func_801B0F00).
 
 ### More forms
 
@@ -2041,6 +2135,7 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B7594 (a `move v1,v0` after `lh; beqz`), knights func_801B3DB0 and
   func_801B9834, jammer2 and daionpa func_801B06E4 (`sll v1,s0,1` where the game has
   `a0`).
+- `0x51EB851F` with `sra 6` is `/200` (`sra 5` is `/100`) (odin1 func_801B5D14).
 
 ## Hand-written assembly
 
@@ -2081,6 +2176,19 @@ delete files (`rm`, `Remove-Item`...): Claude Code asks the user about every del
 even when it may run everything else, so an unattended batch stalls; they overwrite
 files or use new names instead (`work/` is ignored by git).
 After each batch: `tools/build.py --skip-main <target>`, commit, push.
+
+Before committing a batch, check the style of what was put: a permuter result put as it
+came (2-space indent, braces on their own lines, several statements on one line) has
+slipped through more than once, and `put` cannot replace a function already in C, so it
+is tidied by hand and rebuilt. Commit only the batch's own files: a `put` landing while
+another change is being committed goes into the wrong commit. Permuter results can
+change what the code does (batch 81 rejected several): compare one with the draft
+before using it. `tools/permute.py` needs bash, so agents start it from Git Bash, not
+PowerShell. For the order of a few blocks of statements, `work/spells19/hc.py` with
+`A::B` constraints (A before B) found the game's order in under 60 iterations where a
+full permutation would take thousands. From functions of about 500 instructions up, a
+batch matches a third or less of its functions; a batch retrying the misses left 1 or 2
+words off, with the forms found since, is worth running now and then.
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
 of one representative per group of identical functions, largest groups first, then
