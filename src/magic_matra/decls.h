@@ -37,7 +37,6 @@ void func_800D4368(void *, s32, s32);
 MgLineG2 *func_800D4D90(void *, s32, s32, MgLineG2 *);
 extern u8 D_80062D98;
 void func_801B1D54(void);
-typedef struct { s32 id; s16 x; s16 y; s16 z; s16 h; s32 unkC; s32 unk10; } MgMatraTgt;
 s32 func_800BBEAC(void *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
