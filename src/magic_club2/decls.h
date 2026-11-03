@@ -97,5 +97,8 @@ extern u8 D_801D87F8[];
 void func_801B1164(void);
 s32 func_80042DA8();
 extern void *D_801D8768[];
+extern s16 D_801F0824;
+extern s16 D_80158D04;
+extern MgVec D_801D87B8;
 
 #endif /* MAGIC_CLUB2_DECLS_H */
