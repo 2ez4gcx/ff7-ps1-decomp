@@ -46,7 +46,6 @@ extern u16 D_801D4F50;
 void func_801B08D0(void);
 extern s32 D_801D4F18[];
 void func_801B164C(void);
-typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgPart18;
 extern u8 D_801D4F24[];
 extern u16 D_801D4F2C;
 extern u16 D_801ECF88;
