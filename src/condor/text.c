@@ -3099,18 +3099,16 @@ s32 func_800B332C(arg0) {
     return -1;
 }
 
-void func_800B3494(u16 *arg0, s32 arg1)
-{
-  u16 temp_s1;
-  temp_s1 = *arg0;
-  if (temp_s1 & 0x40)
-  {
-    func_800B332C();
-  }
-  if (!(temp_s1 & 0x50))
-  {
- do { func_800B3A48(arg0, arg1); } while (0);
-  }
+void func_800B3494(u16 *arg0, s32 arg1) {
+    u16 temp_s1;
+
+    temp_s1 = *arg0;
+    if (temp_s1 & 0x40) {
+        func_800B332C();
+    }
+    if (!(temp_s1 & 0x50)) {
+        do { func_800B3A48(arg0, arg1); } while (0);
+    }
 }
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B34F8);
@@ -3384,41 +3382,33 @@ do_reset:
     }
 }
 
-void func_800B5E38(CondorActor *p)
-{
-  s32 idx;
-  s32 k;
-  s32 r;
-  s32 v;
-  v = 8;
-  func_800B5BDC(p);
-  idx = p - ((CondorActor *) (&D_800BE8C0));
-  if ((p->w26 | p->w28) != 0)
-  {
-    func_800B46D4(p);
-  }
-  k = p->kind;
-  r = 0;
-  if (k != 0)
-  {
-    if (k < 3)
-    {
-      r = 1;
+void func_800B5E38(CondorActor *p) {
+    s32 idx;
+    s32 k;
+    s32 r;
+    s32 v;
+
+    v = 8;
+    func_800B5BDC(p);
+    idx = p - ((CondorActor *)(&D_800BE8C0));
+    if ((p->w26 | p->w28) != 0) {
+        func_800B46D4(p);
     }
-    else
-      if (k < v)
-    {
-      if (k >= 5)
-      {
-        r = 1;
-      }
+    k = p->kind;
+    r = 0;
+    if (k != 0) {
+        if (k < 3) {
+            r = 1;
+        } else if (k < v) {
+            if (k >= 5) {
+                r = 1;
+            }
+        }
     }
-  }
-  v = r;
-  if (v != 0)
-  {
-    func_800B47C8(p, idx);
-  }
+    v = r;
+    if (v != 0) {
+        func_800B47C8(p, idx);
+    }
 }
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B5EF4);

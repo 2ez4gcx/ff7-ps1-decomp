@@ -383,104 +383,80 @@ INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_80010120);
 INCLUDE_RODATA("../asm/us/main/nonmatchings/text2", D_80010124);
 
 u8 *func_80014E74(u8 *arg0, u8 *arg1_) {
-  u8 *p;
-  u8 c;
-  int new_var;
-  short v;
-  s32 n;
-  u8 *arg1;
-  u32 buf[16];
-  u32 *bp;
-  s32 hi;
-  s32 lo;
-  p = arg0;
-  bp = buf;
-  arg1 = arg1_;
-  loop:
-  {
-    c = *(arg1++);
-    if (((u8) (c + 0x16)) < 8)
+    u8 *p;
+    u8 c;
+    s32 new_var;
+    s16 v;
+    s32 n;
+    u8 *arg1;
+    u32 buf[16];
+    u32 *bp;
+    s32 hi;
+    s32 lo;
+
+    p = arg0;
+    bp = buf;
+    arg1 = arg1_;
+    loop:
     {
-      hi = *(arg1++);
-      lo = *(arg1++);
-      v = lo | (hi << 8);
-      switch (c)
-      {
-        case 0xEA:
-          p = func_80014E0C(v & 0xFFFF, p);
-          break;
-
-        case 0xEB:
-          p = func_80014D58(p, (u8 *) func_80015248(4, new_var = v & 0xFFFF, 8), -1);
-          break;
-
-        case 0xEC:
-          n = 0;
-          do
-        {
-          bp[n] = (u16) (((u16) v) % 10);
-          v = ((u16) v) / 10;
-          n++;
+        c = *(arg1++);
+        if (((u8)(c + 0x16)) < 8) {
+            hi = *(arg1++);
+            lo = *(arg1++);
+            v = lo | (hi << 8);
+            switch (c) {
+            case 0xEA:
+                p = func_80014E0C(v & 0xFFFF, p);
+                break;
+            case 0xEB:
+                p = func_80014D58(p, (u8 *)func_80015248(4, new_var = v & 0xFFFF, 8), -1);
+                break;
+            case 0xEC:
+                n = 0;
+                do {
+                    bp[n] = (u16)(((u16)v) % 10);
+                    v = ((u16)v) / 10;
+                    n++;
+                } while ((hi = ((u16)v) != 0) && (n < 16U));
+                while (n > 0) {
+                    *(p++) = bp[n - 1] + D_800FAFD0;
+                    n--;
+                }
+                break;
+            case 0xED:
+                if (((u16)v) < 3) {
+                    p = func_80014E0C(D_801636B8[(u16)v].a, p);
+                } else if (((u16)v) >= 4) {
+                    p = func_80014D58(p, (u8 *)(&D_800F5F44[D_80163658[((u16)v) - 4].a]), 0x20);
+                }
+                break;
+            case 0xEE:
+                p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(9, v & 0xFFFF, p);
+                break;
+            case 0xEF:
+                if (((u16)v) < 0x1A) {
+                    *(p++) = v + D_800F7ED0;
+                }
+                break;
+            case 0xF0:
+                p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(0x10, v & 0xFFFF, p);
+                break;
+            case 0xF1:
+                p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(((u16)v) >> 8, v & 0xFF, p);
+                break;
+            }
+        } else {
+            *(p++) = c;
+            if (c == 0xF9) {
+                *(p++) = *(arg1++);
+                do { } while (0);
+            }
         }
-        while ((hi = ((u16) v) != 0) && (n < 16U));
-          while (n > 0)
-        {
-          *(p++) = bp[n - 1] + D_800FAFD0;
-          n--;
-        }
-
-          break;
-
-        case 0xED:
-          if (((u16) v) < 3)
-        {
-          p = func_80014E0C(D_801636B8[(u16) v].a, p);
-        }
-        else
-          if (((u16) v) >= 4)
-        {
-          p = func_80014D58(p, (u8 *) (&D_800F5F44[D_80163658[((u16) v) - 4].a]), 0x20);
-        }
-          break;
-
-        case 0xEE:
-          p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(9, v & 0xFFFF, p);
-          break;
-
-        case 0xEF:
-          if (((u16) v) < 0x1A)
-        {
-          *(p++) = v + D_800F7ED0;
-        }
-          break;
-
-        case 0xF0:
-          p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(0x10, v & 0xFFFF, p);
-          break;
-
-        case 0xF1:
-          p = ((u8 *(*)(s32, s32, u8 *)) func_80014DD0)(((u16) v) >> 8, v & 0xFF, p);
-          break;
-
-      }
-
     }
-    else
-    {
-      *(p++) = c;
-      if (c == 0xF9)
-      {
-        *(p++) = *(arg1++);
- do { } while (0);
-      }
+    if (c != 0xFF) {
+        goto loop;
     }
-  }
-
-  if (c != 0xFF)
-  {
-    goto loop;
-  }
-  return arg0;
+    return arg0;
 }
 
 u8 *func_800150E4(u8 *arg0, u8 *arg1) {

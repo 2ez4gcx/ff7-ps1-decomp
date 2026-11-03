@@ -4044,8 +4044,7 @@ void func_800B1060(s32 arg0) {
     func_800A31A0(0xA, 2, 1, arg0);
 }
 
-s32 func_800B108C(arg0)
-{
+s32 func_800B108C(arg0) {
     return func_800A31A0(arg0, 5, 0, 0);
 }
 

@@ -242,24 +242,23 @@ void func_801D0964(s32 arg0, s32 arg1, u8 *arg2, u8 *arg3) {
     func_80026A34(0, 1, 0x1F, 0);
 }
 
-void func_801D0B74(u8 *arg0, s32 arg1)
-{
-  u8 pad[8];
-  u8 *c;
-  u8 (*new_var)[][0x84];
-  new_var = &D_8009C738;
-  c = (*new_var)[D_800491D0[D_8009CBDC[D_801D1E1C]]];
-  func_80026F44((s32) (arg0 + 0x38), arg1, ((s32 (*)(s32)) func_80021280)(c[0x1C] + 0x80), 7);
-  func_80026F44((s32) (arg0 + 0x38), arg1 + 0x20, ((s32 (*)(s32)) func_80021280)(c[0x1D] | 0x100), 7);
-  if (c[0x1E] != 0xFF)
-  {
-    func_80026F44((s32) (arg0 + 0x38), arg1 + 0x40, ((s32 (*)(s32)) func_80021280)(c[0x1E] + 0x120), 7);
-  }
-  func_80026F44((s32) (arg0 + 0x10), arg1, D_801D1D3D, 5);
-  func_80026F44((s32) (arg0 + 0x10), arg1 + 0x20, D_801D1D3D + 0xF, 5);
-  func_80026F44((s32) (arg0 + 0x10), arg1 + 0x40, D_801D1D3D + 0x1E, 5);
-  func_801D0964(arg0 + 0x30, arg1 + 0x10, D_800738BC[c[0x1C]], c + 0x40);
-  func_801D0964(arg0 + 0x30, arg1 + 0x30, D_80071E4D + (c[0x1D] * 0x24), c + 0x60);
+void func_801D0B74(u8 *arg0, s32 arg1) {
+    u8 pad[8];
+    u8 *c;
+
+    u8 (*new_var)[][0x84];
+    new_var = &D_8009C738;
+    c = (*new_var)[D_800491D0[D_8009CBDC[D_801D1E1C]]];
+    func_80026F44((s32)(arg0 + 0x38), arg1, ((s32 (*)(s32)) func_80021280)(c[0x1C] + 0x80), 7);
+    func_80026F44((s32)(arg0 + 0x38), arg1 + 0x20, ((s32 (*)(s32)) func_80021280)(c[0x1D] | 0x100), 7);
+    if (c[0x1E] != 0xFF) {
+        func_80026F44((s32)(arg0 + 0x38), arg1 + 0x40, ((s32 (*)(s32)) func_80021280)(c[0x1E] + 0x120), 7);
+    }
+    func_80026F44((s32)(arg0 + 0x10), arg1, D_801D1D3D, 5);
+    func_80026F44((s32)(arg0 + 0x10), arg1 + 0x20, D_801D1D3D + 0xF, 5);
+    func_80026F44((s32)(arg0 + 0x10), arg1 + 0x40, D_801D1D3D + 0x1E, 5);
+    func_801D0964(arg0 + 0x30, arg1 + 0x10, D_800738BC[c[0x1C]], c + 0x40);
+    func_801D0964(arg0 + 0x30, arg1 + 0x30, D_80071E4D + (c[0x1D] * 0x24), c + 0x60);
 }
 
 void func_801D0D28(s32 arg0, s32 arg1) {

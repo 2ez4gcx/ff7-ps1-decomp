@@ -101,8 +101,7 @@ void func_80029BAC(AkaoChannel *ch, u8 *sequence) {
 
 /* Start the song whose sequence is in D_80083580: set up the channels it
  * uses and the song's own state. */
-void akao_song_start(void)
-{
+void akao_song_start(void) {
     u32 *seq;
     AkaoChannel *ch;
     u32 mask;
@@ -267,8 +266,7 @@ void func_80029F44(void) {
 
 /* Start a sound effect on channels `channel` and `channel` + 1 (32 and up),
  * one for each sequence it has (akao_sfx_lookup); `pan` 0-127. */
-void akao_sfx_start(u16 pan, u16 channel, u8 *first, u8 *second)
-{
+void akao_sfx_start(u16 pan, u16 channel, u8 *first, u8 *second) {
     AkaoChannel *ch;
     u32 voices;
     u32 active;
@@ -333,8 +331,7 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/akao", akao_menu_sfx_start);
 #else
 /* Matches but for four instructions: GCC loads 0x101 before the channel
  * pointer, the game after it. */
-void akao_menu_sfx_start(u8 *first, u8 *second)
-{
+void akao_menu_sfx_start(u8 *first, u8 *second) {
     AkaoChannel *ch;
     u32 voices;
     u32 *playing;
@@ -442,8 +439,7 @@ void func_8002A510(u16 arg0, s32 arg1) {
 }
 
 /* The two sequences of sound effect `id` (NULL where it has none). */
-void akao_sfx_lookup(u8 **first, u8 **second, u16 id)
-{
+void akao_sfx_lookup(u8 **first, u8 **second, u16 id) {
     u16 index = (id & 0x3FF) * 2;
     u16 offset;
     u8 *seq;
@@ -505,51 +501,42 @@ void func_8002A798(void) {
     }
 }
 
-void func_8002A7E8(void)
-{
-  AkaoChannel *q;
-  s32 bit;
-  s32 mask;
-  s32 one;
-  s32 flags;
-  s32 m;
-  mask = (D_8009A108 | D_8009A128) & (~(D_80099FCC | D_80062F00));
-  if (mask != 0)
-  {
-    bit = 1;
-    one = 1;
-    q = D_80096608;
-    D_8009A10C = D_8009A110;
-    do
-    {
-      if (mask & bit)
-      {
-        if (func_80038E70(bit) == one)
-        {
-          flags = q->unk38;
-          if (flags & 0x200)
-          {
-            q->unk38 = flags | 0x400;
-          }
-          goto yes;
-        }
-        if (((q->unk38 & 0x600) == 0x600) && (((~(D_80099FCC | D_80062F00)) & (m = one << *(s32 *) ((u8 *) q + 0x28))) != 0) && (func_80038E70(m) == one))
-        {
-          yes:
-          D_8009A10C |= bit;
-        }
-        else
-        {
-          D_8009A10C &= ~bit;
-          D_8009A110 &= ~bit;
-        }
-        mask ^= bit;
-      }
-      q++;
-      bit *= 2;
+void func_8002A7E8(void) {
+    AkaoChannel *q;
+    s32 bit;
+    s32 mask;
+    s32 one;
+    s32 flags;
+    s32 m;
+
+    mask = (D_8009A108 | D_8009A128) & (~(D_80099FCC | D_80062F00));
+    if (mask != 0) {
+        bit = 1;
+        one = 1;
+        q = D_80096608;
+        D_8009A10C = D_8009A110;
+        do {
+            if (mask & bit) {
+                if (func_80038E70(bit) == one) {
+                    flags = q->unk38;
+                    if (flags & 0x200) {
+                        q->unk38 = flags | 0x400;
+                    }
+                    goto yes;
+                }
+                if (((q->unk38 & 0x600) == 0x600) && (((~(D_80099FCC | D_80062F00)) & (m = one << *(s32 *)((u8 *)q + 0x28))) != 0) && (func_80038E70(m) == one)) {
+                    yes:
+                    D_8009A10C |= bit;
+                } else {
+                    D_8009A10C &= ~bit;
+                    D_8009A110 &= ~bit;
+                }
+                mask ^= bit;
+            }
+            q++;
+            bit *= 2;
+        } while (mask != 0);
     }
-    while (mask != 0);
-  }
 }
 
 void func_8002A958(void) {
@@ -596,8 +583,7 @@ void func_8002A958(void) {
 
 /* Carry on with the song slot `slot` kept (akao_cmd_song_push): its state
  * and channels come back, the channels it does not use are silenced. */
-void akao_song_resume(u16 slot)
-{
+void akao_song_resume(u16 slot) {
     u32 *from;
     u32 *to;
     u16 n;
@@ -759,8 +745,7 @@ void func_8002B1A8(AkaoChannel *from, AkaoChannel *to, AkaoSong *song_from, Akao
 }
 
 /* Command 0x10: load a song and play it, or carry on with it where a slot kept it. */
-void akao_cmd_song_play(AkaoCommand *cmd)
-{
+void akao_cmd_song_play(AkaoCommand *cmd) {
     func_80029B78(cmd->sequence, cmd->size);
     if (D_8009A14E == 0xE) {
         func_8002A7E8();
@@ -778,8 +763,7 @@ void akao_cmd_song_play(AkaoCommand *cmd)
 }
 
 /* Command 0x14: keep the song playing in a slot (1 for song 0xE, else 0), then play a new one. */
-void akao_cmd_song_push(AkaoCommand *cmd)
-{
+void akao_cmd_song_push(AkaoCommand *cmd) {
     AkaoSong *song;
 
     func_80029B78(cmd->sequence, cmd->size);
@@ -798,8 +782,7 @@ void akao_cmd_song_push(AkaoCommand *cmd)
 }
 
 /* Command 0x15: bring back the song a slot kept, keeping the one playing in its place. */
-void akao_cmd_song_pop(AkaoCommand *cmd)
-{
+void akao_cmd_song_pop(AkaoCommand *cmd) {
     AkaoSong *song;
 
     D_80062FF8 &= ~0x100;

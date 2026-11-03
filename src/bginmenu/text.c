@@ -155,54 +155,42 @@ s32 func_801D0408(s32 arg0) {
     return 0;
 }
 
-s32 func_801D0500(s32 arg0)
-{
-  s32 i;
-  s32 j;
-  s32 *a;
-  int flags;
-  s32 *new_var;
-  s32 *w;
-  int new_var2;
-  i = 0;
-  flags = *((u16 *) (D_8009C6E4 + 0x10A6));
-  a = (new_var = (s32 *) (D_8009C6E4 + 0xB4));
-  w = (s32 *) (D_8009C6E4 + 0x94);
-  for (i = 0; i < 9; i++)
-  {
-    if ((flags >> i) & 1)
-    {
-      for (j = 0; j < 8; j++)
-      {
-        if ((*((u8 *) (w + j))) == arg0)
-        {
-          return 1;
+s32 func_801D0500(s32 arg0) {
+    s32 i;
+    s32 j;
+    s32 *a;
+    s32 flags;
+    s32 *new_var;
+    s32 *w;
+    s32 new_var2;
+
+    i = 0;
+    flags = *((u16 *)(D_8009C6E4 + 0x10A6));
+    a = (new_var = (s32 *)(D_8009C6E4 + 0xB4));
+    w = (s32 *)(D_8009C6E4 + 0x94);
+    for (i = 0; i < 9; i++) {
+        if ((flags >> i) & 1) {
+            for (j = 0; j < 8; j++) {
+                if ((*((u8 *)(w + j))) == arg0) {
+                    return 1;
+                }
+            }
+            for (j = 0; j < 8; j++) {
+                if ((*((u8 *)(a + j))) == arg0) {
+                    return 1;
+                }
+            }
         }
-      }
-
-      for (j = 0; j < 8; j++)
-      {
-        if ((*((u8 *) (a + j))) == arg0)
-        {
-          return 1;
+        a += 0x21;
+        new_var2 = 0x21;
+        w += new_var2;
+    }
+    for (j = 0; j < 200; j++) {
+        if ((*((u8 *)(D_8009CE60 + j))) == arg0) {
+            return 1;
         }
-      }
-
     }
-    a += 0x21;
-    new_var2 = 0x21;
-    w += new_var2;
-  }
-
-  for (j = 0; j < 200; j++)
-  {
-    if ((*((u8 *) (D_8009CE60 + j))) == arg0)
-    {
-      return 1;
-    }
-  }
-
-  return 0;
+    return 0;
 }
 
 s32 func_801D05C4(s32 arg0) {

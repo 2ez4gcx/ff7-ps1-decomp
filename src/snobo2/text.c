@@ -1437,36 +1437,30 @@ void func_800A71E0(s32 arg0, s32 arg1) {
     D_8010538C = temp_s0 + 0x10;
 }
 
-void func_800A7258(void)
-{
-  s32 a;
-  s32 b;
-  s32 c;
-  a = 0x1E - ((s16) (((s16) D_801069D4) / 3));
-  if (a < 0)
-  {
-    a = 0;
-  }
-  D_80105390 = a;
-  a = ((u32) D_80106AFC) >> 0x10;
-  b = 0x1E - (((s32) (((((a & 0xF) + (((((u32) D_80106AFC) >> 0x14) & 0xF) * 0xA)) + (((((u32) D_80106AFC) >> 0x18) & 0xF) * 0x3C)) + ((((u32) D_80106AFC) >> 0x1C) * 0xE10)) - D_800B856E[D_80106A28])) >> 1);
-  if (b >= 0x1F)
-  {
-    b = 0x1E;
-  }
-  else
-    if (b < 0)
-  {
-    b = 0;
-  }
-  c = D_801069BC;
-  D_80105392 = b;
-  if (c >= 0x29)
-  {
-    c = 0x28;
-  }
-  D_80105394 = c;
-  D_80105396 = (D_80105390 + b) + c;
+void func_800A7258(void) {
+    s32 a;
+    s32 b;
+    s32 c;
+
+    a = 0x1E - ((s16)(((s16)D_801069D4) / 3));
+    if (a < 0) {
+        a = 0;
+    }
+    D_80105390 = a;
+    a = ((u32)D_80106AFC) >> 0x10;
+    b = 0x1E - (((s32)(((((a & 0xF) + (((((u32)D_80106AFC) >> 0x14) & 0xF) * 0xA)) + (((((u32)D_80106AFC) >> 0x18) & 0xF) * 0x3C)) + ((((u32)D_80106AFC) >> 0x1C) * 0xE10)) - D_800B856E[D_80106A28])) >> 1);
+    if (b >= 0x1F) {
+        b = 0x1E;
+    } else if (b < 0) {
+        b = 0;
+    }
+    c = D_801069BC;
+    D_80105392 = b;
+    if (c >= 0x29) {
+        c = 0x28;
+    }
+    D_80105394 = c;
+    D_80105396 = (D_80105390 + b) + c;
 }
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A738C);
@@ -4074,38 +4068,35 @@ void func_800B0960(void *arg0) {
     }
 }
 
-void func_800B09B8(Sb2FxC *p)
-{
-  s32 v;
-  s32 a;
-  s32 b;
-  u16 t;
-  p->unk30 += p->unk74;
-  v = p->unk70 + 0x1000;
-  p->unk28 += p->unk6C;
-  a = v + p->unk2C;
-  p->unk70 = v;
-  b = (((((p->unk30 >> 0xC) - 0xB042) * 0x5865) / 84531) + 0x10A36) << 0xC;
-  if (b < a)
-  {
-    a = b;
-    p->unk14 = 0;
-    p->unk38 = func_800B43C8;
-  }
-  t = p->unk86;
-  p->unk2C = a;
-  p->unk86 = t + 1;
-  if (((s16) t) < 0x15)
-  {
-    p->unk24 = 0;
-    p->unk1E += 0x60;
-  }
-  if (p->unk1 != 0)
-  {
-    p->unk14 = 0;
-    p->unk1 = 0;
-    func_800A1C4C(3, 0xF0, 0);
-  }
+void func_800B09B8(Sb2FxC *p) {
+    s32 v;
+    s32 a;
+    s32 b;
+    u16 t;
+
+    p->unk30 += p->unk74;
+    v = p->unk70 + 0x1000;
+    p->unk28 += p->unk6C;
+    a = v + p->unk2C;
+    p->unk70 = v;
+    b = (((((p->unk30 >> 0xC) - 0xB042) * 0x5865) / 84531) + 0x10A36) << 0xC;
+    if (b < a) {
+        a = b;
+        p->unk14 = 0;
+        p->unk38 = func_800B43C8;
+    }
+    t = p->unk86;
+    p->unk2C = a;
+    p->unk86 = t + 1;
+    if (((s16)t) < 0x15) {
+        p->unk24 = 0;
+        p->unk1E += 0x60;
+    }
+    if (p->unk1 != 0) {
+        p->unk14 = 0;
+        p->unk1 = 0;
+        func_800A1C4C(3, 0xF0, 0);
+    }
 }
 
 void func_800B0AE4(Sb2FxC *p) {

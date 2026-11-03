@@ -102,59 +102,42 @@ void func_8001146C(void) {
     }
 }
 
-void func_8001155C(void)
-{
-
-  switch (*((volatile s16 *) (&D_80095DD4)))
-  {
+void func_8001155C(void) {
+    switch (*((volatile s16 *)(&D_80095DD4))) {
     case 0:
-      break;
-
+        break;
     case 1:
-      func_8001146C();
-      break;
-
+        func_8001146C();
+        break;
     case 2:
-      func_800D8D78();
-      break;
-
+        func_800D8D78();
+        break;
     case 3:
-      func_800140A4();
-      break;
-
+        func_800140A4();
+        break;
     case 4:
-      func_80022B5C();
-      break;
-
-  }
-
-  if ((D_80062D98 == 0) && (D_80062D99 == 0))
-  {
-    D_8009D26C[0] += 0x444;
-    if ((D_8009D26C[0] >> 16) != 0)
-    {
-      ++D_8009D264;
-      D_8009D26C[0] &= 0xFFFF;
+        func_80022B5C();
+        break;
     }
-
-    D_8009D270 += 0x444;
-    if ((D_8009D270 >> 16) != 0)
-    {
-      if (!(D_8009D2E7 & 2))
-      {
-        if (D_8009D268 != 0)
-        {
-          --D_8009D268;
+    if ((D_80062D98 == 0) && (D_80062D99 == 0)) {
+        D_8009D26C[0] += 0x444;
+        if ((D_8009D26C[0] >> 16) != 0) {
+            ++D_8009D264;
+            D_8009D26C[0] &= 0xFFFF;
         }
-      }
-      else
-      {
-        ++D_8009D268;
-      }
-      D_8009D26C[1] &= 0xFFFF;
+        D_8009D270 += 0x444;
+        if ((D_8009D270 >> 16) != 0) {
+            if (!(D_8009D2E7 & 2)) {
+                if (D_8009D268 != 0) {
+                    --D_8009D268;
+                }
+            } else {
+                ++D_8009D268;
+            }
+            D_8009D26C[1] &= 0xFFFF;
+        }
     }
-  }
-  D_8007E768 = 1;
+    D_8007E768 = 1;
 }
 
 void func_8001171C(void) {
