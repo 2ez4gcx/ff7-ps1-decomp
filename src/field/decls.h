@@ -835,5 +835,6 @@ typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 uv0[2]; 
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; } FdPrF;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; } FdPrG3;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; u8 xy2[4]; u8 rgb3[4]; } FdPrG4;
+s32 func_800C13B0(void);
 
 #endif /* FIELD_DECLS_H */

@@ -1894,7 +1894,85 @@ s32 func_800C1214(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800C13B0);
+s32 func_800C13B0(void) {
+    s16 s1;
+    s16 s2;
+    s16 i;
+    u32 t;
+    s32 a;
+
+    if (D_8009D820 & 3) {
+        func_800BEAD4("srchx", 8);
+    }
+    t = (u8)M2C_FIELD(&D_8009C6DC[D_800831FC[D_800722C4]], u8 *, 1) >> 4;
+    s2 = M2C_FIELD(&D_8009C6DC[D_800831FC[D_800722C4]], u8 *, 4) + func_800BF908(2, 5);
+    s1 = M2C_FIELD(&D_8009C6DC[D_800831FC[D_800722C4]], u8 *, 4) + func_800BF908(3, 7);
+    a = func_800BEE10(4, 9);
+    switch (t) {
+    case 15:
+        s2 += 0x100;
+        s1 += 0x100;
+    case 13:
+        s2 += 0x100;
+        do {
+            s1 += 0x100;
+        } while (0);
+    case 11:
+        s2 += 0x100;
+        s1 += 0x100;
+    case 3:
+        s2 += 0x100;
+        s1 += 0x100;
+    case 1:
+        if (s2 >= 0x500) {
+            s2 = 0x4FF;
+        }
+        i = s2;
+        if (s1 >= 0x500) {
+            s1 = 0x4FF;
+        }
+        if (i <= s1) {
+            do {
+                if (D_8009D288[i] == (a & 0xFF)) {
+                    goto found1;
+                }
+                i++;
+            } while (i <= s1);
+        }
+        func_800C0248(6, 0xA, -1);
+        break;
+found1:
+        func_800C0248(6, 0xA, i);
+        goto done;
+found5:
+        func_800C0248(6, 0xA, i);
+        goto done;
+    case 5:
+        if (s2 >= 0x100) {
+            s2 = 0xFF;
+        }
+        i = s2;
+        if (s1 >= 0x100) {
+            s1 = 0xFF;
+        }
+        if (i <= s1) {
+            do {
+                if (D_80075E24[i] == (a & 0xFF)) {
+                    goto found5;
+                }
+                i++;
+            } while (i <= s1);
+        }
+        func_800C0248(6, 0xA, -1);
+        break;
+    default:
+        func_800C0248(6, 0xA, -1);
+        break;
+    }
+done:
+    D_800831FC[D_800722C4] += 0xB;
+    return 0;
+}
 
 s32 func_800C1674(void) {
     s32 temp_s0;

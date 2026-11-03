@@ -1871,7 +1871,43 @@ void func_800D6814(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D6840);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D6998);
+void func_800D6998(void) {
+    u8 *e;
+    s32 *p;
+    s32 v;
+    s32 t;
+    s32 k;
+    s32 w;
+
+    e = (u8 *)D_801621F0[D_801590D4];
+    D_800F16B0 = func_80039A74(*(s16 *)(e + 2) << 7) + 0x1000;
+    t = *(s16 *)(e + 2) << 10;
+    D_800F16B8 = t;
+    D_800F16A8 = t;
+    v = *(s16 *)(e + 2);
+    if (v < 8) {
+        D_800F16A2 = 0;
+    } else {
+        D_800F16A2 = (v - 8) << 9;
+    }
+    p = &D_800F16BC;
+    do {
+        w = *(s16 *)(e + 4);
+    } while (0);
+    k = D_800F16C8;
+    D_800F16C0 = 0;
+    *p = w;
+    D_800F16C4 = *(s16 *)(e + 8);
+    func_8003A63C(&D_800FA63C, p - 5, k);
+    D_800F1698 = D_800F15AC;
+    func_800D6840(D_800F16C8);
+    if (D_80062D98 == 0) {
+        *(s16 *)(e + 2) += 1;
+        if (*(s16 *)(e + 2) == 0x10) {
+            *(s16 *)e = -1;
+        }
+    }
+}
 
 void func_800D6ACC(void) {
     s16 *p;
