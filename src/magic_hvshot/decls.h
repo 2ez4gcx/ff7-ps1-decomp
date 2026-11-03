@@ -8,7 +8,7 @@ void func_801B103C();
 extern M2C_UNK D_801B10AC;
 void func_801B0F88(s16 arg0, s16 arg1);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
-extern M2C_UNK func_801B07F8;
+void func_801B07F8(void);
 M2C_UNK func_800BBEAC(M2C_UNK *);
 extern MgObj20 D_80162978[];
 void func_801B0FDC(void);
@@ -53,5 +53,18 @@ extern MgMat D_800FA63C;
 extern u8 D_801B5338[];
 extern u8 D_801B5340[];
 extern HvPart D_801B53B8[];
+typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
+s32 func_80042DA8(void);
+void func_800D3994(s32, s32, void *);
+void func_800D41FC(MgMat *, MgMat40 *, MgMat *);
+void func_800D51D4(s32);
+void func_800D55F4(s32, s32, s32);
+s32 func_800D56A8(void *);
+void func_800D5774(s32);
+void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_80151A4C[][0xB9C];
+extern u16 D_80151A46[][0x5CE];
+void func_801B0258(void);
 
 #endif /* MAGIC_HVSHOT_DECLS_H */

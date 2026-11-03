@@ -18,14 +18,14 @@ void func_800D2980(void *, s32, s32, s32);
 void func_800D3994(s32, s32, void *);
 void func_800D52A0(s32, s32);
 void func_800D54EC(s32, void *);
-void func_801B06FC();
+void func_801B06FC(void);
 extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
 extern u8 D_80151918[][0xB9C];
 extern MgObj20 D_8016297C[];
 extern u8 D_801B0F08[];
-extern u8 D_801E4278[];
+extern u16 D_801E4278[];
 extern s16 D_801E4280;
 void func_801B0334(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } MgTask;
@@ -64,5 +64,9 @@ extern s16 D_801590D4;
 extern MgTask D_801621F0[];
 extern s16 D_801CC218[];
 extern s32 *D_801CC21C[];
+s32 func_80042DA8(void);
+s32 func_800BC04C(void (*)());
+void func_800D5774(s32);
+extern u8 D_8015190F[][0xB9C];
 
 #endif /* MAGIC_NORTHERN_DECLS_H */

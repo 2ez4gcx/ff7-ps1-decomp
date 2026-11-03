@@ -14,13 +14,13 @@ extern u8 *D_801E4294;
 extern s16 D_80162080;
 extern u8 D_801B0F28[];
 void func_800D2980(void *, s32, s32, s32);
-void func_801B06FC();
+void func_801B06FC(void);
 extern s16 D_801E42A0;
 s32 func_800BBEAC(void *);
 extern MgObj20 D_8016297C[];
 extern u8 D_80151918[][0xB9C];
 void func_800D3994(s32, s32, void *);
-extern u8 D_801E4298[];
+extern u16 D_801E4298[];
 void func_800D54EC(s32, void *);
 void func_800BBA84(s32, s32, s32);
 extern u8 D_800F5B72;
@@ -64,5 +64,9 @@ extern s16 D_801590D4;
 extern MgTask D_801621F0[];
 extern s16 D_801CC238[];
 extern s32 *D_801CC23C[];
+s32 func_80042DA8(void);
+s32 func_800BC04C(void (*)());
+void func_800D5774(s32);
+extern u8 D_8015190F[][0xB9C];
 
 #endif /* MAGIC_SOUTHERN_DECLS_H */

@@ -59,5 +59,12 @@ extern u8 D_801B0EB8[];
 extern MgVec D_801C93E0;
 extern u8 *D_801C93F0[];
 extern MgSVec D_801C9400;
+s32 func_80039A74(s32);
+s32 func_80039B40(s32);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+s32 func_80042DA8(void);
+void func_800D5774(s32);
+extern u8 D_800FA6D4;
+extern s16 D_801C9408;
 
 #endif /* MAGIC_HARRIER_DECLS_H */

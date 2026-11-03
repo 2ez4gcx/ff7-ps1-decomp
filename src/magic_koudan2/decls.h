@@ -15,7 +15,7 @@ extern s16 D_80162080;
 void func_801B0F30(s32 arg0, s32 arg1);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s16 unk0; s16 unk2; MgSVec unk4; MgSVec unkC; u8 pad14[8]; s16 unk1C; s16 unk1E; } MgObjAwa;
-extern M2C_UNK func_801B07FC;
+void func_801B07FC(void);
 M2C_UNK func_800BBEAC(M2C_UNK *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
@@ -67,5 +67,13 @@ extern u8 D_801CB6FC[];
 extern u8 D_801CB71C[];
 extern u8 D_801CB73C[];
 extern u8 *D_801CBA34[];
+s32 func_80042DA8(void);
+s32 func_80039B40(s32);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+void func_800D52A0(s32, s32);
+void func_800D5774(s32);
+extern u8 D_800F5B70;
+extern u8 D_800F5B71;
+extern u8 D_800F5B72;
 
 #endif /* MAGIC_KOUDAN2_DECLS_H */

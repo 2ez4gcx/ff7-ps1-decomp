@@ -90,5 +90,15 @@ extern MgMat D_801D57C8;
 extern MgHalf D_801D57D0;
 extern MgHalf D_801D57D8;
 extern u8 D_801D57E8[];
+typedef struct { u8 b[8]; } MgB8;
+s32 func_800D56A8(void *);
+void func_800D55F4(s32, s32, s32);
+u16 *func_800D4FA8(s32);
+void func_801B1C14(void);
+extern u8 D_801517F0[];
+extern u8 D_800F5B70[];
+extern u8 D_800F5B71[];
+extern u8 D_800F5B72[];
+extern s16 D_800F5B74[];
 
 #endif /* MAGIC_MRAIN_DECLS_H */
