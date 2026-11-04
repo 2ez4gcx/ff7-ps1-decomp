@@ -45,7 +45,7 @@ void func_800D2980(void *, s32, s32, s32);
 void func_800D3994(s32, s32, void *);
 void func_800D52A0(s32, s32);
 void func_800D54EC(s32, void *);
-void func_801B06E4();
+void func_801B06E4(void);
 extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
@@ -62,5 +62,13 @@ extern s32 D_801D50D0[];
 extern s16 D_801D50E6[];
 extern s16 D_801D5128;
 extern s16 D_801D512C;
+extern u8 D_8015190F[][0xB9C];
+extern u8 D_8016297C[];
+s32 func_80042DA8(void);
+s32 func_80039A74(s16);
+s32 func_80039B40(s16);
+s32 func_8003CC1C(s32, s32);
+void func_8003BADC(MgSVec *, s16 *, s32 *);
+void func_800D5774(s32);
 
 #endif /* MAGIC_JAMMER2_DECLS_H */

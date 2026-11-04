@@ -400,5 +400,10 @@ void func_801B9408(void);
 extern MgSVec D_801ECBE8;
 extern MgSVec D_801ECBF0;
 extern MgSVec *D_801ECBF8;
+s32 func_801B8A00(void);
+extern u8 D_801ECB54[];
+extern u8 D_801ECB68[];
+extern MgSVec D_801ECB4C;
+extern KnRig2 *D_801ECB7C;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

@@ -6,7 +6,54 @@ M2C_UNK *func_801B0000(void) {
     return &D_801B0E3C;
 }
 
-INCLUDE_ASM("../asm/us/magic_iyashi/nonmatchings/text", func_801B0028);
+void func_801B0028(void) {
+    MgMat m;
+    MgVec v1;
+    MgVec v2;
+    s32 flag;
+    MgTask *p;
+    s32 t;
+    s32 x;
+    u8 *b;
+    s32 o;
+
+    o = D_801B8378 * 0xB9C;
+    b = D_80151A58;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D41FC(&D_800FA63C, b + o + 0x270, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003BC6C(&D_801B8334, &v1, &flag);
+    func_800D41FC(&D_800FA63C, b + D_801B8378 * 0xB9C + 0x374, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003BC6C(&D_801B8334, &v2, &flag);
+    p->unk8 = (v1.vx + v2.vx) / 2;
+    p->unkA = (v1.vy + v2.vy) / 2;
+    p->unkC = (v1.vz + v2.vz) / 2;
+    t = p->unk2;
+    if (t < 10) {
+        x = (t << 11) / 10;
+    } else {
+        t -= 10;
+        if (t < 0x1E) {
+            x = 0x800;
+        } else {
+            t -= 0x1E;
+            if (t < 10) {
+                x = -(t << 11) / 10 + 0x800;
+            } else {
+                p->unk0 = -1;
+                return;
+            }
+        }
+    }
+    func_800D4368(&p->unk8, (s16)x, 0);
+    D_801DA778 = func_800D29D4(&D_801B833C, D_801517C0 + 0x70, 0xC, D_801DA778);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 void func_801B028C(void) {
     IyTask *p;

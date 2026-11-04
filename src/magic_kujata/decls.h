@@ -178,5 +178,13 @@ void func_801B575C(void);
 s32 func_801B1AF4(void *, s32, s32, s32, s32, s32, s32, s32, void *, void *);
 s32 func_801B2250(void *, s32, s32, s32, s32, s32, s32, void *, void *);
 extern MgKjState *D_801F020C;
+void func_801B54CC(void);
+typedef struct { MgVec a; MgVec b; MgVec n; } KjTri;
+typedef struct { s16 i0; s16 i1; s16 i2; u8 pad[0xA]; } KjFace;
+void func_8003BA68(void *, void *, void *);
+extern s32 D_801DBAF0;
+extern u8 D_801DBAF4[];
+extern u8 D_801B89E0[];
+extern KjTri *D_801F0208;
 
 #endif /* MAGIC_KUJATA_DECLS_H */

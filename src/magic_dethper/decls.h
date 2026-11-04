@@ -33,7 +33,7 @@ typedef struct { u8 b[8]; } DpB8;
 extern u8 D_80062D98;
 extern s16 D_8015169C;
 extern s16 D_801B70DC[];
-extern M2C_UNK func_801B173C;
+void func_801B173C(void);
 typedef struct { void *unk0; u8 pad[0x28]; s32 unk2C; } DpScratch;
 void func_800D3994(s32, s32, void *);
 void func_801B0854(void *);
@@ -69,5 +69,7 @@ void func_800D51D4(s32);
 void func_800D5774(s32);
 extern MgMat D_800FA63C;
 extern MgVec D_801B70AC;
+extern M2C_UNK D_801B6004;
+extern MgVec D_801B70CC;
 
 #endif /* MAGIC_DETHPER_DECLS_H */

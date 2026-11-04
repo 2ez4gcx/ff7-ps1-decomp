@@ -15,7 +15,7 @@ extern MgTask *D_801DB3B0;
 extern s32 D_801DB3B4;
 extern u8 D_801B0000[];
 extern u8 D_801B0F64[];
-void func_801B0D4C();
+void func_801B0D4C(void);
 void func_801B0B3C(void);
 typedef struct { u8 b[8]; } MgB8;
 s32 func_80042DA8(void);
@@ -50,5 +50,9 @@ void func_8003A08C(MgVec *, MgVec *);
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 extern SdSpark D_801DB3C0[];
 void *func_801B0074(SdCtx *arg0, u8 *arg1, u16 *arg2);
+void func_800D3994(s32, s32, void *);
+void func_801B0330(void *);
+extern u8 D_8015190F[][0xB9C];
+extern s16 D_801518F6[][0x5CE];
 
 #endif /* MAGIC_SEALD_DECLS_H */

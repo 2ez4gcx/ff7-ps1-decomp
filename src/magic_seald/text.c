@@ -183,7 +183,26 @@ void func_801B0B3C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0D4C);
+void func_801B0D4C(void) {
+    MgTask *p;
+    MgTask *b;
+    s32 t;
+
+    b = D_80162978;
+    p = &b[D_8015169C];
+    p->unk0 = -1;
+    p = &b[func_800BBEAC(func_801B0B3C)];
+    func_800D3994(D_801DB3B4, D_8015190F[D_801DB3B4][0], &p->unk4);
+    t = D_801518F6[D_801DB3B4][0] + 0x120;
+    if (t >= 0x76D) {
+        t = 0x76C;
+    }
+    p->unk18 = (t << 12) / 1000;
+    t += 0x240;
+    p->unk1A = (t << 12) / 425;
+    ((MgScratch *)0x1F800000)->unk0 = D_801C1084;
+    func_801B0330((void *)0x1F800000);
+}
 
 INCLUDE_RODATA("../asm/us/magic_seald/nonmatchings/text", D_801B0000);
 

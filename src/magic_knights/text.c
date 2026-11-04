@@ -1578,7 +1578,103 @@ void func_801B8924(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B8A00);
+s32 func_801B8A00(void) {
+    MgTask *p;
+    KnCam *r;
+    s32 t;
+    s32 k;
+    s32 a;
+    s32 s;
+    s32 z;
+    s32 x;
+
+    p = &D_80162978[D_8015169C];
+    r = *(KnCam **)((u8 *)p + 0x14);
+    if (p->unk2 != 0) {
+        func_801B56D4((s32)r);
+    } else {
+        func_801B5670((s32)r, 0x47, (s32)D_801ECB54);
+        func_801B5670((s32)r, 0x47, (s32)D_801ECB68);
+    }
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        if (t == 0x1E) {
+            func_800BBEAC((M2C_UNK *)func_801B8924);
+            t = p->unk2;
+        }
+        if (t < 0xF) {
+            if (t == 0) {
+                r->unkBA8 = 1;
+                r->unk24 = 0;
+                r->unk26 = 0;
+                r->unk28 = 0x3A98;
+            }
+            k = (t << 12) / 15;
+            a = func_801B1E7C(k, -0x1FF);
+            s = (a * 0x600) >> 12;
+            z = 0x1388;
+            r->unkA6C = ((k << 10) >> 12) - 0x400;
+            a = func_801B1E7C(k, -0x1FF);
+            r->unkBA6 = ((a * 0xFF8) >> 12) + 8;
+            r->unkBAA = 0x1000 - a;
+        } else {
+            t -= 0xF;
+            if (t < 0x1F) {
+                if (t == 0) {
+                    r->unkBA6 = 0x1000;
+                    r->unkBAA = 0;
+                    r->unkA6C = 0;
+                }
+                if (t >= 0x10) {
+                    k = ((t - 0xF) << 12) / 16;
+                    r->unkA6A = (u32)k >> 1;
+                    r->unkA68 = (u32)(k * 3) >> 4;
+                }
+                s = 0x600;
+                z = 0x1388;
+            } else {
+                t -= 0x1F;
+                if (t < 0x19) {
+                    /* identical arms: the dead test keeps s and z in the game's saved registers */
+                    if (D_801ECB7C != 0) {
+                        k = (t << 12) / 25;
+                        a = func_801B1E7C(k, 0x2FF);
+                        z = ((a * 0x1388) >> 12) + 0x1388;
+                        a = func_801B1E7C(k, -0x1FF);
+                        r->unkBA6 = (-(a * 0xFF8) >> 12) + 0x1000;
+                        r->unkBAA = a;
+                        s = 0x600;
+                    } else {
+                        k = (t << 12) / 25;
+                        a = func_801B1E7C(k, 0x2FF);
+                        z = ((a * 0x1388) >> 12) + 0x1388;
+                        a = func_801B1E7C(k, -0x1FF);
+                        r->unkBA6 = (-(a * 0xFF8) >> 12) + 0x1000;
+                        r->unkBAA = a;
+                        s = 0x600;
+                    }
+                } else {
+                    p->unk0 = -1;
+                    return;
+                }
+            }
+        }
+        func_8003C21C(&D_801ECB4C, &D_801ECB7C->m);
+        D_801ECB7C->rot.vx = (func_80039B40(s) * z) >> 12;
+        x = func_80039A74(s) * z;
+        D_801ECB7C->scale.vx = D_801ECB7C->scale.vz = 0x1000;
+        D_801ECB7C->rot.vz = 0;
+        D_801ECB7C->scale.vy = 0x800;
+        D_801ECB7C->rot.vy = x >> 12;
+        func_8003B35C(&D_801ECB7C->m, &D_801ECB7C->scale);
+        func_8003B2CC(&D_801ECB7C->m, &D_801ECB7C->rot, &D_801ECB7C->rot);
+        r->unk2C = D_801ECB7C->rot.vx;
+        r->unk2E = D_801ECB7C->rot.vy;
+        r->unk30 = D_801ECB7C->rot.vz + 0x3A98;
+        func_801B5B24(r);
+        p->unk2++;
+    }
+}
 
 void func_801B8D7C(s32 arg0) {
     func_801B6624((s32)&D_801ECB80, &D_801EE9D8[arg0]);

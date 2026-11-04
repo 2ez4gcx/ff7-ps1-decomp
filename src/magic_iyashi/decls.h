@@ -60,5 +60,11 @@ void func_801B0028(void);
 extern s32 D_801B8378;
 extern s32 D_801B8384;
 extern u16 D_801518F6[];
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_800D41FC(void *, void *, MgMat *);
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+extern u8 D_80151A58[];
+extern MgSVec D_801B8334;
+extern M2C_UNK D_801B833C;
 
 #endif /* MAGIC_IYASHI_DECLS_H */

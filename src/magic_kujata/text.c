@@ -534,7 +534,56 @@ void func_801B536C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B54CC);
+void func_801B54CC(void) {
+    MgTask *p;
+    KjFace *f;
+    MgSVec *out;
+    u8 *vtx;
+    MgSVec *v0;
+    MgSVec *v1;
+    MgSVec *v2;
+    s32 i;
+    u16 n;
+    s32 k;
+    u8 pad[8];
+
+    p = &D_80162978[D_8015169C];
+    D_801F04EC = (s32)D_801B89E0;
+    out = (MgSVec *)D_801F04EC;
+    i = 0;
+    vtx = D_801DBAF4;
+    f = (KjFace *)(D_801DBAF0 + vtx);
+    n = *(u16 *)f;
+    f = (KjFace *)((u8 *)f + 4);
+    if ((s16)n > 0) {
+        do {
+            v1 = (MgSVec *)(vtx + f->i1);
+            v0 = (MgSVec *)(vtx + f->i2);
+            v2 = (MgSVec *)(vtx + f->i0);
+            D_801F0208->a.vx = v0->vx - v1->vx;
+            D_801F0208->a.vy = v0->vy - v1->vy;
+            D_801F0208->a.vz = v0->vz - v1->vz;
+            D_801F0208->b.vx = v1->vx - v2->vx;
+            D_801F0208->b.vy = v1->vy - v2->vy;
+            D_801F0208->b.vz = v1->vz - v2->vz;
+            func_8003BA68(D_801F0208, &D_801F0208->b, &D_801F0208->n);
+            while ((u32)(D_801F0208->n.vx + 0x4000) > 0x8000 || (u32)(D_801F0208->n.vy + 0x4000) > 0x8000 || (u32)(D_801F0208->n.vz + 0x4000) > 0x8000) {
+                D_801F0208->n.vx >>= 1;
+                D_801F0208->n.vy >>= 1;
+                D_801F0208->n.vz >>= 1;
+            }
+            func_8003A08C(&D_801F0208->n, &D_801F0208->n);
+            k = 0x7D0;
+            out->vx = D_801F0208->n.vx * k >> 12;
+            out->vy = D_801F0208->n.vy * k >> 12;
+            out->vz = D_801F0208->n.vz * k >> 12;
+            f++;
+            i++;
+            out++;
+        } while (i < (s16)n);
+    }
+    p->unk0 = -1;
+}
 
 void func_801B575C(void) {
     MgTask *p;

@@ -117,5 +117,16 @@ s32 func_800BC04C(void (*)());
 s32 func_800D56A8(void *);
 void func_800D5774(s32);
 void func_801B09E0(void);
+s32 func_80039F5C(s32, s32);
+extern s32 D_801D6A80[];
+extern u8 D_801D6A84;
+extern u8 D_801D6A85;
+extern u8 D_801D6A86;
+extern s16 D_801D6A88[];
+extern s32 *D_801D6A8C[];
+extern MgSVec D_801D6B44;
+extern s16 D_801D6B48;
+extern s32 D_801D6B4C;
+extern u16 D_801EEB68;
 
 #endif /* MAGIC_DIA_DECLS_H */

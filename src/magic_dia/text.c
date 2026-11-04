@@ -170,7 +170,51 @@ void func_801B07F0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_dia/nonmatchings/text", func_801B09E0);
+void func_801B09E0(void) {
+    MgTask *p;
+    s16 dx;
+    s16 dy;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, 0x4000, 0);
+    D_801D6A80[0] = (s32)D_801D6A8C[p->unk16];
+    D_801D6A88[0] = p->unk2 >> 1;
+    D_801D6A84 = D_801D6A85 = D_801D6A86 = p->unk18 * 10;
+    D_801EEB54 = func_800D4D90(D_801D6A80, D_801517C0 + 0x70, 0xC, D_801EEB54);
+    if (D_80062D98 == 0) {
+        p->unkC -= p->unkC / 8;
+        p->unkE -= p->unkE / 8;
+        p->unk10 -= p->unk10 / 8;
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (D_801D6A0C != 0) {
+            if (--p->unk18 == 0) {
+                p->unk0 = -1;
+                return;
+            }
+            dx = (u16)p->unk4 - D_801EEB68;
+            D_801D6B44.vx = dx;
+            dy = (u16)p->unk6 - (u16)D_801EEB6A;
+            D_801D6B48 = 0;
+            D_801D6B44.vy = dy;
+            D_801D6B4C = func_80039F5C(dx * dx + dy * dy, dx * dx);
+            if (D_801D6B4C == 0) {
+                p->unk0 = -1;
+                return;
+            }
+            if (D_801D6B4C < 0x7D0) {
+                D_801D6B4C = (0x7D0 - D_801D6B4C) / 5;
+                func_8003A0B8(&D_801D6B44, &D_801D6B44);
+                p->unk4 += D_801D6B44.vx * D_801D6B4C >> 12;
+                p->unk6 += D_801D6B44.vy * D_801D6B4C >> 12;
+            }
+        }
+        if (++p->unk2 >= D_801D6A8C[p->unk16][1] * 2) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0CC4(void) {
     MgMat m;
