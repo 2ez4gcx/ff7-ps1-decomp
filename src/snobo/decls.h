@@ -1246,5 +1246,6 @@ extern u16 D_801028E8;
 typedef struct { u8 pad0[0x34]; s32 unk34; u8 pad38[4]; s32 unk3C; } Sb2PlDa;
 typedef struct { u8 pad0[0x20]; s32 unk20; u8 pad24[4]; s32 unk28; } Sb2PlDb;
 void func_800A7D90(Sb2PlDa *arg0, s32 arg1, Sb2PlDb *arg2);
+void func_800ABF74(SbFxB *arg0);
 
 #endif /* SNOBO_DECLS_H */

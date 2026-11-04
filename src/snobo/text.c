@@ -2345,7 +2345,72 @@ void func_800ABEC8(void *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800ABF74);
+void func_800ABF74(SbFxB *arg0) {
+    SbFxB *p;
+    SbFxB *s;
+    s32 i;
+    s32 n;
+    SbFxB *q;
+    s32 i2;
+
+    if (arg0->unk1 != 0) {
+        if (arg0->unk1 & 2) {
+            arg0->unk14 = 0;
+            func_800A1300(3, 0xF0, 0);
+            i = D_80100F30;
+            arg0->unk6C = -0x24C0;
+            arg0->unk74 = -0x3480;
+            arg0->unk70 = 0xFFFDC000;
+            arg0->unk14 = 0;
+            arg0->unk38 = func_800AC218;
+            *(u16 *)&arg0->unk4 = *(u16 *)&arg0->unk4 + 1;
+            n = 0x1F;
+            do {
+                p = (SbFxB *)((u8 *)&D_800FFDB0 + i * 0x8C);
+                if (*(u8 *)p == 0) {
+                    D_80100F30 = (i + 1) & 0x1F;
+                    s = p;
+                    goto found1;
+                }
+                i = (i + 1) & 0x1F;
+            } while (--n != -1);
+            s = NULL;
+found1:
+            if (s != NULL) {
+                *s = *arg0;
+                s->unk6C = -arg0->unk74;
+                arg0->unk70 = 0xFFFDB800;
+                s->unk74 = arg0->unk6C;
+                i2 = D_80100F30;
+                s->unk4 = *(u16 *)&arg0->unk4 + 1;
+                n = 0x1F;
+                do {
+                    q = (SbFxB *)((u8 *)&D_800FFDB0 + i2 * 0x8C);
+                    if (*(u8 *)q == 0) {
+                        D_80100F30 = (i2 + 1) & 0x1F;
+                        s = q;
+                        goto found2;
+                    }
+                    i2 = (i2 + 1) & 0x1F;
+                } while (--n != -1);
+                s = NULL;
+found2:
+                if (s != NULL) {
+                    *s = *arg0;
+                    s->unk6C = arg0->unk74;
+                    arg0->unk70 = 0xFFFDC800;
+                    s->unk74 = -arg0->unk6C;
+                    s->unk4 = *(u16 *)&arg0->unk4 + 2;
+                    if ((D_801028D8 & 0xF0000) == 0x70000) {
+                        ((void (*)(s16, s32, SbVec3 *, SbVec3 *))func_800AD2C0)(arg0->unk2, (s16)D_800DB24A + 0x800, (SbVec3 *)&arg0->unk28, (SbVec3 *)&arg0->unk6C);
+                    }
+                }
+            }
+        } else {
+            arg0->unk38 = func_800AC2A8;
+        }
+    }
+}
 
 void func_800AC218(void *arg0) {
     u16 temp_v0;
