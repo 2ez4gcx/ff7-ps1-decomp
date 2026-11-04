@@ -134,7 +134,57 @@ MgMat *func_801B2C78(MgSVec *v, s16 scale, s32 dist) {
     return &D_801EDDEC;
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B2D94);
+void func_801B2D94(void) {
+    MgTask *p;
+    s32 t;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        D_801EE234 = 0;
+        D_801EE230 = 0;
+        if (t >= 0x28) {
+            t -= 0x28;
+            if (t < 0x1E) {
+                D_801EE234 = 0x32;
+                goto shake;
+            }
+            t -= 0x1E;
+            if (t >= 0xA) {
+                p->unk0 = -1;
+                return;
+            }
+            k = (((0x1000 - ((t << 12) / 10)) * 2) * 25) >> 12;
+        } else {
+            k = 0x32;
+        }
+        D_801EE230 = k;
+shake:
+        if ((u16)p->unk2 & 1) {
+            do {
+                D_80158D02[0] += (u16)D_801EE230;
+                D_801031EA[0] += (u16)D_801EE230;
+            } while (0);
+            D_80158D04 += (u16)D_801EE234;
+            D_801031EC += (u16)D_801EE234;
+        } else {
+            do {
+                /* identical arms: the dead test keeps the game's registers */
+                if (D_801031EC) {
+                    D_80158D02[0] -= (u16)D_801EE230;
+                    D_801031EA[0] -= (u16)D_801EE230;
+                } else {
+                    D_80158D02[0] -= (u16)D_801EE230;
+                    D_801031EA[0] -= (u16)D_801EE230;
+                }
+            } while (0);
+            D_80158D04 -= (u16)D_801EE234;
+            D_801031EC -= (u16)D_801EE234;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B2F38(void) {
     MgMat m;
@@ -531,7 +581,67 @@ INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B46E0);
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B4970);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B4CD4);
+void func_801B4CD4(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 j;
+    s32 t;
+    s32 s;
+    s32 k;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        j = 0;
+        D_801EDFF8->a.vx = 0;
+        D_801EDFF8->a.vy = (u16)p->unk8;
+        D_801EDFF8->a.vz = 0;
+        func_8003C21C(&D_801EDFF8->a, &D_801EDFF8->m);
+        do {
+            D_801EDFF8->b.vx = (u32)(((s32 (*)(s32))func_80039B40)(p->unk4) * 0x177) >> 9;
+            D_801EDFF8->b.vy = 0;
+            s = ((s32 (*)(s32))func_80039A74)(p->unk4);
+            k = ((s32 (*)(s32))func_80039A74)(p->unk6);
+            D_801EDFF8->b.vz = (s * 0x3E8 >> 12) + (p->unk18 * k >> 12);
+            func_8003B2CC(&D_801EDFF8->m, &D_801EDFF8->b, &D_801EDFF8->b);
+            D_801EDFF8->b.vz += 0x1388;
+            p->unk4 += p->unkC;
+            p->unk6 += p->unkE;
+            D_801EDFF8->a.vx = (u32)(((s32 (*)(s32))func_80039B40)(p->unk4) * 0x177) >> 9;
+            D_801EDFF8->a.vy = 0;
+            s = ((s32 (*)(s32))func_80039A74)(p->unk4);
+            k = ((s32 (*)(s32))func_80039A74)(p->unk6);
+            D_801EDFF8->a.vz = (s * 0x3E8 >> 12) + (p->unk18 * k >> 12);
+            func_8003B2CC(&D_801EDFF8->m, &D_801EDFF8->a, &D_801EDFF8->a);
+            D_801EDFF8->a.vz += 0x1388;
+            q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B46E0)];
+            t = (u16)p->unk0;
+            q->unk2 = 1 - j;
+            q->unk0 = t;
+            t = p->unk2;
+            if (t < 0xA) {
+                q->unk1C = 0;
+                q->unk1E = 0;
+            } else {
+                t -= 0xA;
+                t *= 2;
+                t += j;
+                q->unk1E = (t << 12) / 10;
+                q->unk1C = ((t + 1) << 12) / 10;
+            }
+            *(MgB8 *)&q->unk4 = *(MgB8 *)&D_801EDFF8->a;
+            *(MgB8 *)&q->unkC = *(MgB8 *)&D_801EDFF8->b;
+            j++;
+            q = (MgTask *)&D_80162978[func_800BBEAC((M2C_UNK *)func_801B4970)];
+            q->unk0 = p->unk2;
+            *(MgB8 *)&q->unk4 = *(MgB8 *)&D_801EDFF8->a;
+            *(MgB8 *)&q->unkC = *(MgB8 *)&D_801EDFF8->b;
+        } while (j < 2);
+        p->unk2++;
+        if (p->unk2 >= 0xF) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B5084(void) {
     MgTask *p;

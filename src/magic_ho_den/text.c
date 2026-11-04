@@ -33,7 +33,31 @@ void func_801B008C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_ho_den/nonmatchings/text", func_801B0148);
+void func_801B0148(void) {
+    MgObj20 *p;
+    s16 k;
+    s16 *h;
+    s16 *frame;
+    s16 t;
+    s32 w;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    k = t >= 0x1C ? 0x24 - t : 8;
+    h = &p->unk2;
+    func_800D4368(&p->unk4, (s16)(*h * 0xC8 + 0x2000), 0);
+    frame = &D_801D6C70;
+    w = *h % 2;
+    D_801D6C6C = D_801D6C6D = D_801D6C6E = k << 4;
+    *frame = w;
+    D_801EED84 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801EED84);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 0x24) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B027C(void) {
     MgMat m;

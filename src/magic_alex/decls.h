@@ -132,5 +132,16 @@ void func_801B359C(void);
 void func_801B402C(void);
 extern u16 D_801031EA[];
 extern u16 D_80158D02[];
+void func_801B2D94(void);
+extern u16 D_801031EC;
+extern u16 D_80158D04;
+extern s32 D_801EE230;
+extern s32 D_801EE234;
+void func_801B4CD4(void);
+typedef struct { u8 b[8]; } MgB8;
+typedef struct { MgSVec a; MgSVec b; MgMat m; } AlxPair;
+extern AlxPair *D_801EDFF8;
+void func_801B46E0(void);
+void func_801B4970(void);
 
 #endif /* MAGIC_ALEX_DECLS_H */

@@ -133,7 +133,52 @@ void func_801B0580(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kakusan/nonmatchings/text", func_801B075C);
+void func_801B075C(void) {
+    u8 pad0[0x10];
+    MgMat m;
+    u8 pad1[0x20];
+    MgMat lw;
+    MgTask *p;
+    s16 n;
+    s16 a;
+    s32 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    n = 8;
+    if (p->unk2 >= 0x20) {
+        n = 0x28 - p->unk2;
+    }
+    func_8003BF8C((MgSVec *)&p->unkC, &m);
+    func_8003A79C(&D_801E98F4, &m, &m);
+    D_801D1830[0] = p->unk18;
+    D_801D1834 = 0x3000;
+    D_801D1830[-1] = 0x3000;
+    func_8003B35C(&m, (MgVec *)&D_801D1830[-1]);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    D_801D1820[0] = p->unk16 == 0 ? D_801D14EC : D_801D1674;
+    c = D_801D187C[p->unk16][p->unk14];
+    D_801D1824[0] = D_801D1824[1] = D_801D1824[2] = n * 0x10;
+    D_801D1828 = c;
+    D_80163C74 = func_800D4D90(D_801D1820, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        a = 0xC;
+        if (p->unk16 == 0) {
+            a = 0x14;
+        }
+        p->unk14++;
+        if (p->unk14 == a) {
+            p->unk14 -= 4;
+        }
+        if (++p->unk2 == 0x28) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0958(void) {
     MgMat lw;

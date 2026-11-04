@@ -410,7 +410,37 @@ void func_801B33C0(void) {
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B34C8);
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B3600);
+void func_801B3600(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 t;
+    s32 n;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        if (t < 0x14) {
+            n = (((t << 12) / 20 << 7) >> 12) + 0x80;
+        } else {
+            t -= 0x14;
+            if (t < 0x19) {
+                n = 0x100;
+            } else {
+                p->unk0 = -1;
+                return;
+            }
+        }
+        n += (n * p->unk2) & 0xFF;
+        while (n >= 0x100) {
+            q = &D_80162978[func_800BBEAC(&func_801B33C0)];
+            q->unk0 = p->unk2;
+            func_801B34C8(&q->unk4);
+            q->unk18 = func_80042DA8() % 0x1000 + 0x3000;
+            n -= 0x100;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B3754(void) {
     MgTask *p;

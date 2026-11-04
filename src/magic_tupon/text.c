@@ -719,7 +719,70 @@ void func_801B32B8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B3464);
+void func_801B3464(void) {
+    TuQuad *p;
+    s32 i;
+    s32 j;
+    s32 b;
+    s32 a;
+    s32 r;
+    s32 k;
+    u8 t0;
+    u8 a3;
+    s32 t3;
+    s32 t4;
+    s16 clut;
+
+    for (i = 0; i < 15; i++) {
+        if (i < 8) {
+            a = i;
+            k = 0;
+            clut = 0x3FB0;
+        } else {
+            a = i - 8;
+            k = 0x40;
+            clut = 0x3F70;
+        }
+        r = (a << 12) / 8;
+        t4 = -4 - ((r * 125) >> 12);
+        do {
+            r = ((a + 1) << 12) / 8;
+            t3 = -4 - ((r * 125) >> 12);
+        } while (0);
+        for (j = 0; j < 16; j++) {
+            a = j % 8;
+            if (a < 4) {
+                t0 = k + (a << 4);
+                a3 = t0 | 0xF;
+            } else {
+                a = 8 - a;
+                t0 = k + ((a << 4) - 1);
+                a3 = t0 - 0xF;
+            }
+            for (b = 0; b < 2; b++) {
+                p = (TuQuad *)(D_801F0504 + i * 0x500 + j * 0x50 + b * 0x28);
+                p->tag = 0x09000000;
+                p->rgbc = 0x2E808080;
+                p->u2 = t0;
+                p->u0 = t0;
+                p->u3 = a3;
+                p->u1 = a3;
+                p->v1 = t3;
+                p->v0 = t3;
+                p->v3 = t4;
+                p->v2 = t4;
+                p->clut = clut;
+                p->tpage = 0xAF;
+            }
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        D_801F03C4[i].unk0 = 0;
+        D_801F03C4[i].unk2 = i * 1000 / 15;
+        D_801F03C4[i].unk4 = 0x1B58;
+        D_801F03C4[i].unk10 = 0x3E8;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B3668);
 

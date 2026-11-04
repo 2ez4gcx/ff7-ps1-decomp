@@ -65,7 +65,7 @@ extern s16 D_801D6C7E;
 s32 func_80042DA8(void);
 s32 func_80039F5C(s32);
 M2C_UNK func_800D5774(s32);
-extern M2C_UNK func_801B0148;
+void func_801B0148(void);
 void func_801B06C4(void);
 void func_8003BADC(MgSVec *, MgSVec *, s32 *);
 extern s16 D_801D6D58;
@@ -87,5 +87,9 @@ typedef struct { s8 v; } MgByte;
 extern MgByte D_801D6D09;
 extern MgByte D_801D6D0A;
 extern s16 D_801D6D0C;
+extern u8 D_801D6C6C;
+extern u8 D_801D6C6D;
+extern u8 D_801D6C6E;
+extern s16 D_801D6C70;
 
 #endif /* MAGIC_HO_DEN_DECLS_H */

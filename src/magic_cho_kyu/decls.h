@@ -57,7 +57,7 @@ s32 func_800BBEAC(void (*)());
 void func_800D2980(void *, s32, s32, s32);
 void func_800D44E8(MgSVec *, MgMat *);
 s32 func_800D52A0(s32, s32);
-void func_801B1B3C();
+void func_801B1B3C(void);
 extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
@@ -120,5 +120,9 @@ typedef struct { s32 v; } ChWord;
 extern ChWord D_801D745C;
 extern ChWord D_801D7460;
 extern s32 *D_801D73CC;
+M2C_UNK func_800BBA84(M2C_UNK, s16, M2C_UNK);
+s32 func_800BC04C(void (*)());
+M2C_UNK func_800D5774(s16);
+extern u16 D_801031EA;
 
 #endif /* MAGIC_CHO_KYU_DECLS_H */

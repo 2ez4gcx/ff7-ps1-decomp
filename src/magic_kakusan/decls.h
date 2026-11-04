@@ -84,6 +84,14 @@ extern MgVec D_801D18BC;
 s32 func_8003CC1C(s32, s32);
 void func_800D4CBC(s16, s32, s32);
 void func_800D5774(s32);
-void func_801B075C();
+void func_801B075C(void);
+extern u8 D_801D14EC[];
+extern u8 D_801D1674[];
+extern u8 *D_801D1820[];
+extern s8 D_801D1824[];
+extern u16 D_801D1828;
+extern s32 D_801D1830[];
+extern s32 D_801D1834;
+extern u16 *D_801D187C[];
 
 #endif /* MAGIC_KAKUSAN_DECLS_H */

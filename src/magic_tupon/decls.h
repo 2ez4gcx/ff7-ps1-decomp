@@ -208,5 +208,9 @@ extern MgByte D_800F5B72;
 extern TuRig *D_801EDADC;
 extern s16 D_801EDAD6;
 extern M2C_UNK D_801EDACC;
+typedef struct { s32 tag; s32 rgbc; s32 xy0; u8 u0; u8 v0; s16 clut; s32 xy1; u8 u1; u8 v1; s16 tpage; s32 xy2; u8 u2; u8 v2; s16 pad1E; s32 xy3; u8 u3; u8 v3; s16 pad26; } TuQuad;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 pad6; s32 pad8; s32 padC; s32 unk10; } TuGrid;
+extern u8 D_801F0504[];
+extern TuGrid D_801F03C4[];
 
 #endif /* MAGIC_TUPON_DECLS_H */
