@@ -17,7 +17,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import psyq  # noqa: E402
 import targets  # noqa: E402
 
-HEAD = re.compile(r'^[A-Za-z_][\w \*]*?\b(\w+)\(.*\)\s*\{$', re.M)
+# A `static inline` helper is code GCC inlined: the game has no function of its own for it.
+HEAD = re.compile(r'^(?!static inline\b)[A-Za-z_][\w \*]*?\b(\w+)\(.*\)\s*\{$', re.M)
 INCLUDE = re.compile(r'^INCLUDE_ASM\("[^"]*", (\w+)\);$', re.M)
 
 
