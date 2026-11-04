@@ -186,7 +186,72 @@ void func_801B0948(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tbreath/nonmatchings/text", func_801B0A2C);
+void func_801B0A2C(void) {
+    s32 *src;
+    MgMat m;
+    s32 val;
+    MgMat lw;
+    MgSVec rot;
+    MgTask *p;
+    MgTask *q;
+    s32 t;
+    s16 *h;
+    s32 v;
+    u8 *col;
+    u8 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    rot.vy = rot.vx = rot.vz = 0;
+    func_8003BF8C(&rot, &m);
+    D_801D72A0[0] = D_801D72A4 = D_801D72A8 = p->unk2 << 10;
+    func_8003B35C(&m, (MgVec *)D_801D72A0);
+    m.t[0] = p->unk4;
+    h = &p->unk2;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &lw);
+    func_8003B48C(&lw);
+    func_8003B51C(&lw);
+    func_8003B69C(0, 0, 0);
+    D_801D71E4[0] = (s32)D_801D1E9C;
+    D_801D71E8 = 0xA8;
+    v = D_801D7238;
+    D_801D71EE = 0x1000 - (v << 7);
+    D_801E72D0 = (u8 *)func_800D29D4(D_801D71E4, D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    src = &D_801D71F4[p->unk2 % 8];
+    val = *src;
+    D_801D71E8 = 0x28;
+    D_801D71E4[0] = val;
+    D_801D71EE = D_801D7238 * 8;
+    D_801E72D0 = (u8 *)func_800D29D4(D_801D71E4, D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    func_800D4368(&p->unk4, 0x2000, 0);
+    c = D_801D7238 * 8;
+    D_801D721A = c;
+    D_801D7219 = c;
+    col = &D_801D7218;
+    *col = c;
+    D_801E72D0 = (u8 *)func_800D4D90(col - 4, D_801517C0 + 0x70, 0xC, (s32)D_801E72D0);
+    if (D_80062D98 == 0) {
+        if (*h < 0xC) {
+            q = &D_801621F0[func_800BC04C(func_801B04C0)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            q->unkC = q->unkE = 0;
+            q->unk10 = D_801D7220[*h] * 0x154 + func_80042DA8() % 200 - 0x64;
+            q->unk16 = func_80042DA8() % 2;
+        }
+        t = D_801031EA[0] + 0x20;
+        t -= *h % 2 * 0x40;
+        D_801031EA[0] = t;
+        if (*h >= 0xF) {
+            D_801D7238--;
+        }
+        if (++p->unk2 == 0x1E) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0DD4(void) {
     MgTask *p;

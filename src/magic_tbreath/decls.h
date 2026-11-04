@@ -80,7 +80,7 @@ extern s32 *D_801D7170[];
 s32 func_800BC04C(void *);
 void func_800D5774(s32);
 void func_801B071C(void);
-void func_801B0A2C();
+void func_801B0A2C(void);
 void func_801B10E4(void);
 s32 func_80039A74(s32);
 s32 func_80039B40(s32);
@@ -103,5 +103,19 @@ extern volatile s32 D_801D728C;
 extern s32 D_801D7290[];
 extern s32 D_801D7294;
 extern s32 D_801D7298;
+extern u16 D_801031EA[];
+extern s32 D_801D1E9C[];
+extern s32 D_801D71E4[];
+extern s32 D_801D71E8;
+extern s16 D_801D71EE;
+extern s32 D_801D71F4[];
+extern u8 D_801D7218;
+extern u8 D_801D7219;
+extern u8 D_801D721A;
+extern s16 D_801D7220[];
+extern s16 D_801D7238;
+extern s32 D_801D72A0[];
+extern s32 D_801D72A4;
+extern s32 D_801D72A8;
 
 #endif /* MAGIC_TBREATH_DECLS_H */
