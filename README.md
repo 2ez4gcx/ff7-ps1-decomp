@@ -30,10 +30,10 @@ executable is split into source files by how its parts were compiled. Progress, 
 | Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 718 of 838 (86%) | 51% |
 | World map (`src/world/`) | 1 | 420 of 459 (92%) | 58% |
 | Menus (`src/*menu/`) | 13 | 225 of 243 (93%) | 47% |
-| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1037 of 1317 (79%) | 44% |
+| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1041 of 1317 (79%) | 45% |
 | Ending, disc change (`src/ending/`, `dschange/`) | 2 | 55 of 64 (86%) | 54% |
 | Spell effects (`src/magic_*/`) | 290 | 3581 of 3998 (90%) | 72% |
-| **All** | **319** | **7235 of 8425 (86%)** | **61%** |
+| **All** | **319** | **7239 of 8425 (86%)** | **61%** |
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code
