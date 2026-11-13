@@ -9,3 +9,4 @@ D_800A04BC = 0x800A04BC; // force_not_migration:True
 D_800A0DB8 = 0x800A0DB8; // force_not_migration:True
 D_800A0D98 = 0x800A0D98; // force_not_migration:True
 D_800A0398 = 0x800A0398; // force_not_migration:True
+D_800A0278 = 0x800A0278; // force_not_migration:True

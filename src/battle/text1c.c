@@ -860,7 +860,11 @@ s32 func_800A5990(void) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5A5C);
+INCLUDE_RODATA("../asm/us/battle/nonmatchings/text1c", D_800A0278);
+
+u8 func_800A5A5C(void) {
+    return D_800A0278[func_80014BA8(7)];
+}
 
 void func_800A5A88(void) {
     func_80014BA8(0x36);

@@ -211,7 +211,10 @@ void func_800B383C(void) {
     func_80043DD8(0);
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B38E0);
+void func_800B38E0(void) {
+    func_80033E74(D_800E8050[D_800F7DF8 * 2], D_800E8050[D_800F7DF8 * 2 + 1], 0x801B0000, (s32)func_800B3A04);
+    func_800B7FB4();
+}
 
 void func_800B3934(void) {
     func_800B5D38(2);

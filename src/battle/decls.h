@@ -1519,7 +1519,7 @@ typedef struct { u16 v; u8 pad[0x72]; } BtlV74;
 extern BtlV74 D_8015122E[];
 void func_800B30E4(void);
 M2C_UNK func_80043D3C(M2C_UNK);
-M2C_UNK func_800B38E0();
+void func_800B38E0(void);
 M2C_UNK func_800B430C();
 s32 func_800B5138(void);
 M2C_UNK func_800B7FDC();
@@ -1695,5 +1695,8 @@ u8 *func_801B0060(s16, u8);
 extern u8 D_801524A5;
 extern u8 D_80153041;
 void func_800A64A0(s32 arg0, u8 arg1);
+extern s32 D_800F7DF8;
+u8 func_800A5A5C(void);
+extern u8 D_800A0278[];
 
 #endif /* BATTLE_DECLS_H */
