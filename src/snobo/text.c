@@ -403,7 +403,52 @@ INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A2934);
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A2FD4);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A318C);
+void func_800A318C(SbMesh *p) {
+    s32 i;
+    s32 k;
+    u32 z0;
+    u32 z1;
+    s32 a;
+    s32 b;
+    u32 ca;
+    u32 cb;
+    SbCol c;
+    u32 n0;
+    u32 n1;
+    u32 n2;
+    u32 n3;
+    SbXY t;
+
+    i = 0;
+    for (k = 0x2A; k < 0x30; k++) {
+        a = *(volatile s32 *)&p->xy[k];
+        b = *(volatile s32 *)&p->xy[k + 1];
+        t.x = ((s16)a + (s16)b) >> 1;
+        t.y = ((a >> 16) + (b >> 16)) >> 1;
+        *(s32 *)&p->xy2[i] = a;
+        p->xy2[i + 1] = t;
+        z0 = p->z[k];
+        z1 = p->z[k + 1];
+        p->z2[i] = z0;
+        p->z2[i + 1] = (z0 + z1) >> 1;
+        ca = *(u32 *)&p->col[k];
+        cb = *(u32 *)&p->col[k + 1];
+        c.r = (ca & 0xFF) + (cb & 0xFF) >> 1;
+        n0 = ca >> 8;
+        n1 = cb >> 8;
+        c.g = ((u8)n0 + (u8)n1) >> 1;
+        n2 = ca >> 16;
+        n3 = cb >> 16;
+        c.b = ((u8)n2 + (u8)n3) >> 1;
+        c.cd = ca >> 24;
+        *(u32 *)&p->col2[i] = ca;
+        p->col2[i + 1] = c;
+        i += 2;
+    }
+    p->xy2[i] = p->xy[k];
+    p->z2[i] = p->z[k];
+    p->col2[i] = p->col[k];
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A32E8);
 
@@ -770,7 +815,23 @@ INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A50B4);
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A5508);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A56C4);
+void func_800A56C4(u8 *p) {
+    s32 k;
+
+    k = (u16)D_80102818;
+    D_800FFAFC.x = (D_800DB1F8.v[0] >> 12) - *(u16 *)&D_8010284C;
+    D_800FFAFC.y = (D_800DB1FC >> 12) - *(u16 *)&D_80102850;
+    D_800FFAFC.z = (D_800DB200 >> 12) - *(u16 *)&D_80102854;
+    (&D_800FFAFC)[-1].x = (u16)D_800BFE90.v[0];
+    (&D_800FFAFC)[-1].y = (D_800BFE92[0] - k) & 0xFFF;
+    (&D_800FFAFC)[-1].z = D_800BFE94[0];
+    func_8003BF8C(&(&D_800FFAFC)[-1], p + 0x40);
+    func_8003B2CC(p + 0x40, &D_800FFAFC, p + 0x10);
+    *(s32 *)(p + 0x54) = D_800BFE98 - *(s16 *)(p + 0x10);
+    *(s32 *)(p + 0x58) = D_800BFE9A - *(s16 *)(p + 0x12);
+    *(s32 *)(p + 0x5C) = D_800BFE9C - *(s16 *)(p + 0x14);
+    D_801027F4 = *(SbBlock32 *)(p + 0x40);
+}
 
 void func_800A5848(SbObjB *p) {
     s32 dx;
@@ -2231,7 +2292,43 @@ void func_800AA66C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AA69C);
+void func_800AA69C(SbObjX *arg0) {
+    SbSlotQ *p;
+    s32 i;
+    s32 v;
+    s32 n;
+    s32 y;
+
+    if (arg0->unk14 >= 0x80) {
+        i = D_800FFD40;
+        n = 8;
+        while (D_800FFC40[i].unk0 != 0 && --n != 0) {
+            i = (i + 1) & 7;
+        }
+        p = &D_800FFC40[i];
+        p->unk0 = 1;
+        v = (*(s32 *)&arg0->unk40 >> 12) + 0x80;
+        D_800FFD40 = (i + 1) & 7;
+        if (v > 0xF0) {
+            v = 0xF0;
+        }
+        p->unk14 = v;
+        p->unk16 = 0x10;
+        p->unk18 = 0x10;
+        y = (arg0->unk14 >> 8) + arg0->unk42;
+        p->unk1A = y;
+        p->unk1C = 0x10;
+        y = (arg0->unk14 >> 7) + arg0->unk42;
+        p->unk1E = y;
+        p->unkC = -(arg0->unk34 >> 14);
+        p->unkE = (-(arg0->unk14 >> 7) * 3) / 2;
+        p->unk10 = -(arg0->unk3C >> 14);
+        p->unk4 = 0;
+        p->unk6 = 0;
+        p->unk8 = 0;
+        p->unkA = 8;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AA7FC);
 

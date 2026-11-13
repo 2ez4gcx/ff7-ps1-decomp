@@ -1035,7 +1035,6 @@ extern s16 D_800E18F8;
 extern u16 D_801069F8;
 extern s32 D_800B8380;
 void func_800A0C44(void);
-void func_800ACB5C(void *);
 void func_800ACCBC(s32 *, s32 *, s32, s32);
 void func_800A738C(s32 arg0, s32 *arg1);
 extern s8 D_800DF787;
@@ -1058,5 +1057,16 @@ extern s16 D_800E18FC;
 extern s16 D_800B83E4;
 typedef struct { u16 unk0; u16 unk2; u8 pad4[0xC]; SbQ *unk10; u16 unk14; s16 unk16; u16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; s16 unk20; s16 unk22; u16 unk24; u8 pad26[0xE]; s16 unk34; u8 pad36[2]; s16 unk38; u8 pad3A[2]; void *unk3C; u16 unk40; u8 pad42[6]; u16 unk48; u8 pad4A[0x1A]; s32 unk64; s32 unk68; s32 unk6C; } SbScrE;
 extern s32 D_80106B5C;
+typedef struct { u32 r : 8; u32 g : 8; u32 b : 8; u32 cd : 8; } SbCol;
+typedef struct { s32 x : 16; s32 y : 16; } SbXY;
+typedef struct { u8 pad0[0xA4]; SbCol col[0x31]; SbCol col2[13]; SbXY xy[0x33]; SbXY xy2[13]; u32 z[0x33]; u32 z2[13]; } SbMesh;
+void func_800A4338(SbMesh *p);
+typedef struct { s32 unk0; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; u8 pad12[2]; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } Sb2Spark;
+typedef struct { s16 lo; s16 unk42; } Sb2Half;
+typedef union { s32 w; Sb2Half h; } Sb2U40;
+typedef struct { u8 pad0[0x14]; s16 unk14; u8 pad16[0x1E]; s32 unk34; u8 pad38[4]; s32 unk3C; Sb2U40 u40; } Sb2FxP;
+void func_800ACB5C(Sb2FxP *arg0);
+typedef struct { u16 v[1]; } Sb2H1;
+extern SbVtx8 D_80103D0C;
 
 #endif /* SNOBO2_DECLS_H */
