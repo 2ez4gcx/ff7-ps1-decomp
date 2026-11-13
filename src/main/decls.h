@@ -1745,5 +1745,13 @@ extern u16 D_80048F3C[];
 s32 func_80016340(MainHuft *tl, MainHuft *td, s32 bl, s32 bd);
 extern struct { s32 a; u8 pad[0x28]; } D_8006E720[];
 extern struct { u8 loc[4]; s32 size; char name[16]; } D_8006E144[];
+typedef struct { u16 x; u16 y; s16 w; u16 h; s16 f8; s16 fA; s16 fC; s16 fE; u8 r; u8 g; u8 b; } MainGauge;
+void func_800206E4(s32 arg0, s32 arg1, s32 arg2);
+extern struct { u16 hp; u16 mp; u8 pad[0x80]; } D_8009C770[];
+extern u8 D_80049344[];
+extern u8 D_80049350[];
+extern u8 D_80049390[];
+extern u8 D_80049398[];
+extern u8 D_800493A0[];
 
 #endif /* MAIN_DECLS_H */

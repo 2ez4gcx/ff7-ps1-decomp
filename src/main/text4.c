@@ -46,6 +46,8 @@ void func_8001D180(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u
 s32 func_80024A3C(s32 arg0);
 M2C_UNK func_8001F710();
 extern s8 D_80062DFD;
+void func_80020B68(s32 arg0, s32 arg1, s32 arg2);
+extern struct { s16 v; u8 pad[0x43E]; } D_8009D862[];
 
 void func_8001BDB0(u8 arg0, u8 *arg1) {
     s32 i;
@@ -957,9 +959,147 @@ void func_8002001C(s32 arg0, u32 arg1) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_80020058);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_800206E4);
+void func_800206E4(s32 arg0, s32 arg1, s32 arg2) {
+    Rect16 rc;
+    MainGauge g;
+    s32 dead;
+    s32 hpc;
+    s32 mpc;
+    u16 hp;
+    s16 sx;
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_80020B68);
+    g.x = arg0 + 0x12;
+    g.y = arg1 + 0x1F;
+    g.w = 0x3C;
+    g.h = 1;
+    g.f8 = D_8009C764[arg2].v;
+    g.fE = D_8009C764[arg2].v;
+    g.fA = D_8009C770[arg2].hp;
+    g.fC = 0;
+    g.r = 0;
+    g.g = 0x80;
+    g.b = 0xFF;
+    func_80027408(&g);
+    g.x = arg0 + 0x12;
+    g.y = arg1 + 0x29;
+    g.w = 0x3C;
+    g.h = 1;
+    g.f8 = D_8009C768[arg2 * 33].v;
+    g.fE = D_8009C768[arg2 * 33].v;
+    g.fA = D_8009C770[arg2].mp;
+    g.fC = 0;
+    g.r = 0;
+    g.g = 0xFF;
+    g.b = 0x80;
+    func_80027408(&g);
+    hp = D_8009C764[arg2].v;
+    dead = hp == 0;
+    if ((D_8009C770[arg2].hp >> 2) < hp) {
+        hpc = 7;
+    } else {
+        hpc = 6;
+    }
+    if ((D_8009C770[arg2].mp >> 2) < (u16)D_8009C768[arg2 * 33].v) {
+        mpc = 7;
+    } else {
+        mpc = 6;
+    }
+    if (D_8009C756[arg2][1] & 0x10) {
+        func_80026F44(arg0 + 0x24, arg1 + 0xB, D_80049350, 3);
+    }
+    if (D_8009C756[arg2][1] & 0x20) {
+        func_80026F44(arg0 + 0x24, arg1 + 0xB, D_80049344, 3);
+    }
+    func_80026F44(arg0, arg1, D_8009C748[arg2], dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0xD, D_800493A0, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0xD, ((u8 *)&D_8009C739)[arg2 * 0x84], 2, dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0x18, D_80049390, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0x17, D_8009C764[arg2].v, 4, dead ? 2 : hpc);
+    func_80028E00(arg0 + 0x32, arg1 + 0x17, D_8009C770[arg2].hp, 4, dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0x22, D_80049398, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0x21, (u16)D_8009C768[arg2 * 33].v, 4, dead ? 2 : mpc);
+    func_80028E00(arg0 + 0x32, arg1 + 0x21, D_8009C770[arg2].mp, 4, dead ? 2 : 7);
+    sx = (s16)(arg0 + 0x2E);
+    func_80028CA0(sx, (s16)(arg1 + 0x21), 0xD8, 0, 4, 8, 1, 0);
+    func_80028CA0(sx, (s16)(arg1 + 0x17), 0xD8, 0, 4, 8, 1, 0);
+    rc.x = 0;
+    rc.y = 0;
+    rc.w = 0x100;
+    rc.h = 0x100;
+    func_80026A34(0, 1, 0x7F, (s32)&rc);
+}
+
+void func_80020B68(s32 arg0, s32 arg1, s32 arg2) {
+    Rect16 rc;
+    MainGauge g;
+    s32 ci;
+    s32 dead;
+    s32 hpc;
+    s32 mpc;
+    s16 hp;
+    s16 sx;
+
+    ci = D_800491D0[D_8009CBDC[arg2]];
+    g.x = arg0 + 0x12;
+    g.y = arg1 + 0x1F;
+    g.w = 0x3C;
+    g.h = 1;
+    g.f8 = (u16)D_8009D85C[arg2].hp;
+    g.fE = (u16)D_8009D85C[arg2].hp;
+    g.fA = (u16)D_8009D85C[arg2].maxhp;
+    g.fC = 0;
+    g.r = 0;
+    g.g = 0x80;
+    g.b = 0xFF;
+    func_80027408(&g);
+    g.x = arg0 + 0x12;
+    g.y = arg1 + 0x29;
+    g.w = 0x3C;
+    g.h = 1;
+    g.f8 = (u16)D_8009D860[arg2].hp;
+    g.fE = (u16)D_8009D860[arg2].hp;
+    g.fA = (u16)D_8009D862[arg2].v;
+    g.fC = 0;
+    g.r = 0;
+    g.g = 0xFF;
+    g.b = 0x80;
+    func_80027408(&g);
+    hp = D_8009D85C[arg2].hp;
+    dead = hp == 0;
+    if (D_8009D85C[arg2].maxhp / 4 < hp) {
+        hpc = 7;
+    } else {
+        hpc = 6;
+    }
+    if (D_8009D862[arg2].v / 4 < D_8009D860[arg2].hp) {
+        mpc = 7;
+    } else {
+        mpc = 6;
+    }
+    if (D_8009C756[ci][1] & 0x10) {
+        func_80026F44(arg0 + 0x24, arg1 + 0xB, D_80049350, 3);
+    }
+    if (D_8009C756[ci][1] & 0x20) {
+        func_80026F44(arg0 + 0x24, arg1 + 0xB, D_80049344, 3);
+    }
+    func_80026F44(arg0, arg1, D_8009C748[ci], dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0xD, D_800493A0, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0xD, ((u8 *)&D_8009C739)[ci * 0x84], 2, dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0x18, D_80049390, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0x17, D_8009D85C[arg2].hp, 4, dead ? 2 : hpc);
+    func_80028E00(arg0 + 0x32, arg1 + 0x17, D_8009D85C[arg2].maxhp, 4, dead ? 2 : 7);
+    ((void (*)())func_80027354)(arg0, arg1 + 0x22, D_80049398, 5);
+    func_80028E00(arg0 + 0x12, arg1 + 0x21, D_8009D860[arg2].hp, 4, dead ? 2 : mpc);
+    func_80028E00(arg0 + 0x32, arg1 + 0x21, D_8009D862[arg2].v, 4, dead ? 2 : 7);
+    sx = (s16)(arg0 + 0x2E);
+    func_80028CA0(sx, (s16)(arg1 + 0x21), 0xD8, 0, 4, 8, 1, 0);
+    func_80028CA0(sx, (s16)(arg1 + 0x17), 0xD8, 0, 4, 8, 1, 0);
+    rc.x = 0;
+    rc.y = 0;
+    rc.w = 0x100;
+    rc.h = 0x100;
+    func_80026A34(0, 1, 0x7F, (s32)&rc);
+}
 
 void func_80021044(Spr *arg0, DispEnv *arg1) {
     Spr *s2;
