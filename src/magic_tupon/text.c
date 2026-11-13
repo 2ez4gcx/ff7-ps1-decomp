@@ -784,7 +784,59 @@ void func_801B3464(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B3668);
+void func_801B3668(s32 arg0, s32 arg1) {
+    s32 col;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 n;
+    s32 a;
+    s32 sc;
+    s32 t;
+    TuQuad *q;
+
+    func_8003B48C(&D_801EDDF8);
+    func_8003B51C(&D_801EDDF8);
+    col = (arg1 | (arg1 << 8) | (arg1 << 16)) | 0x2E000000;
+    k = 0;
+    n = 0;
+    j = arg0;
+    *(MgB8 *)D_801EDB64 = *(MgB8 *)&D_801F03C4[0];
+    sc = D_801F03C4[0].unk10;
+    for (; n < 16; n++) {
+        D_801EDB64->p[k][n].vx = D_801EDB64->base.vx + (sc * func_80039A74(j) >> 12);
+        D_801EDB64->p[k][n].vy = D_801EDB64->base.vy;
+        D_801EDB64->p[k][n].vz = D_801EDB64->base.vz + (sc * func_80039B40(j) >> 12);
+        j += 0x100;
+    }
+    for (i = 1; i < 16; i++) {
+        k ^= 1;
+        arg0 -= 0x40;
+        j = 0;
+        a = arg0;
+        *(MgB8 *)D_801EDB64 = *(MgB8 *)&D_801F03C4[i];
+        sc = D_801F03C4[i].unk10;
+        for (; j < 16; j++) {
+            D_801EDB64->p[k][j].vx = D_801EDB64->base.vx + (sc * func_80039A74(a) >> 12);
+            D_801EDB64->p[k][j].vy = D_801EDB64->base.vy;
+            D_801EDB64->p[k][j].vz = D_801EDB64->base.vz + (sc * func_80039B40(a) >> 12);
+            a += 0x100;
+        }
+        j = 0;
+        do {
+            n = j + 1;
+            q = &D_801F0004[i].q[j][D_801EDB60];
+            D_801EDB64->otz = func_8003BD7C(&D_801EDB64->p[k][j], &D_801EDB64->p[k][n % 16], &D_801EDB64->p[k ^ 1][j], &D_801EDB64->p[k ^ 1][n % 16], &q->xy0, &q->xy1, &q->xy2, &q->xy3, &D_801EDB64->ext, &D_801EDB64->flag);
+            j = n;
+            if (!(D_801EDB64->flag & 0x60000)) {
+                q->rgbc = col;
+                t = ((D_801EDB64->otz >> 2) << 2) + 0x70;
+                func_80046794(t + D_801517C0, q);
+            }
+        } while (j < 16);
+    }
+    D_801EDB60 ^= 1;
+}
 
 INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B3A08);
 

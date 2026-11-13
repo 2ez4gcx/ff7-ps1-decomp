@@ -1081,7 +1081,50 @@ void func_801B606C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6334);
+void func_801B6334(void) {
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 r;
+    s32 k;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        i = 0;
+        do {
+            q = &D_80162978[func_800BBEAC(func_801B606C)];
+            q->unk0 = func_80042DA8() % 3;
+            r = func_80042DA8();
+            q->unk6 = 0;
+            q->unk4 = r % 6000 - 0xBB8;
+            q->unk8 = func_80042DA8() % 6000 - 0xBB8;
+            D_801EF460->vx = D_801EEDF8.vx - q->unk4;
+            D_801EF460->vy = D_801EEDF8.vy - q->unk6;
+            D_801EF460->vz = D_801EEDF8.vz - q->unk8;
+            while ((u32)(D_801EF460->vx + 0x4000) > 0x8000U || (u32)(D_801EF460->vy + 0x4000) > 0x8000U || (u32)(D_801EF460->vz + 0x4000) > 0x8000U) {
+                D_801EF460->vx >>= 1;
+                D_801EF460->vy >>= 1;
+                D_801EF460->vz >>= 1;
+            }
+            func_8003A08C(D_801EF460, D_801EF460);
+            k = func_80042DA8() % 200 + 0x12C;
+            q->unkC = k * D_801EF460->vx >> 12;
+            q->unkE = k * D_801EF460->vy >> 12;
+            q->unk10 = k * D_801EF460->vz >> 12;
+            k = func_80042DA8() % 30 + 0x46;
+            q->unk14 = -D_801EF460->vx * k >> 12;
+            q->unk16 = 0;
+            q->unk18 = -D_801EF460->vz * k >> 12;
+            ((s16 *)D_801EF45C)[8] = func_80042DA8() % 256 + 0x20;
+            *(void **)&q->unk1C = D_801EF45C;
+            i++;
+        } while (i <= 0);
+        p->unk2++;
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B66C8(void) {
     MgTask *p;

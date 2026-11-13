@@ -101,7 +101,7 @@ extern u16 D_801EDDEC;
 extern u16 D_801EDDEE;
 void func_801B3E90(void);
 void func_801B3464(void);
-void func_801B3668(s32, s32);
+void func_801B3668(s32 arg0, s32 arg1);
 void func_801B3A08(s32, s32, s32, s32);
 typedef struct { s16 unk0; s16 unk2; u8 pad4[0x18]; } TuPart;
 extern TuPart D_801EDE44[];
@@ -212,5 +212,12 @@ typedef struct { s32 tag; s32 rgbc; s32 xy0; u8 u0; u8 v0; s16 clut; s32 xy1; u8
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 pad6; s32 pad8; s32 padC; s32 unk10; } TuGrid;
 extern u8 D_801F0504[];
 extern TuGrid D_801F03C4[];
+typedef struct { MgSVec base; u8 pad8[8]; MgSVec p[2][16]; s32 otz; s32 ext; s32 flag; } TuScr;
+extern TuScr *D_801EDB64;
+extern s32 D_801EDB60;
+typedef struct { TuQuad q[16][2]; } TuRow;
+extern TuRow D_801F0004[];
+s32 func_8003BD7C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+void func_80046794(s32, void *);
 
 #endif /* MAGIC_TUPON_DECLS_H */

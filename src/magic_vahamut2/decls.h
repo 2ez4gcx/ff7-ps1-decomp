@@ -214,5 +214,8 @@ extern u8 D_801F4A8C[];
 MgPolyT *func_801B0E54(void *, s32, s32, MgPolyT *, void *);
 void func_801B2AAC(void);
 void func_801B2E54(void *);
+void func_801B6334(void);
+extern void *D_801EF45C;
+extern MgVec *D_801EF460;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */
