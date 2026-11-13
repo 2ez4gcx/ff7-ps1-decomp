@@ -1282,6 +1282,31 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `.sched2` and `.jump2` dumps have `move a0,s0; sll v1,a0,1`, the `.dbr` dump `sll
   v1,s0,1`, where the game keeps `a0` (jammer2 and daionpa func_801B06E4, cho_kyu
   func_801B1B3C; no source form found).
+- A load copied into a second register (`lh` into one register, its copy in another)
+  comes from named struct fields with `+=` and a re-read of the `s16` field (`p->f10 +=
+  step; if (p->f10 > clip)`), where `M2C_FIELD` casts and `t = (s16)f` never gave it:
+  declare a struct for the object a function works on (snobo2 func_800A8AFC,
+  func_800A8804). Two slot-allocation loops in a row want their own counter and pointer
+  each (`q`, `i2`) (snobo func_800ABF74, snobo2 func_800AFEFC).
+- `b = D_80162978; p = &b[D_8015169C]; p->unk0 = -1; p = &b[f()];` keeps the base `la`
+  above the first `jal` in a saved register (sldfang func_801B2D80, seald func_801B0D4C);
+  `D = (s32)sym; out = (MgSVec *)D;` gives `la v0; .. move s1,v0` with later stores from
+  `s1` (kujata func_801B54CC); reading a neighbour as a struct member (`D_801D6B44.vy`)
+  instead of its own scalar (`D_801D6B46`) keeps an `lh` after the `sh` stores and shares
+  the base register (dia func_801B09E0).
+- A sum written in each arm (`D_80158D04 += (u16)D_801EE234;`, cross-jumped later) makes
+  it a block-local pseudo with the game's registers and operand order (alex
+  func_801B2D94); a function-level temp set once and used once (`o = D_801B8378 *
+  0xB9C;`) can flip two saved registers (iyashi func_801B0028); `k = c8 - t;` moved into
+  the arm where the game computes it makes `c8` global, allocated after the block-local
+  pseudos (dethper func_801B173C).
+- work/spells87/prio.py TARGET FILE NAME prints the global allocator's order, refs, live
+  length and hard register of each pseudo (priority `floor_log2(refs) * refs / length`,
+  refs inside a loop weigh 2): use it to see why two saved registers are swapped before
+  trying forms.
+- `i + (u32)M2C_FIELD(g, u8 **, 0x1C)` gives `addu v0,s1,v0` where `ptr + i` gives the
+  other operand order (snobo2 func_800A2EF0); the same 1-word `addu` order stays unsolved
+  in snobo func_800A0F1C and snobo2 func_800A19C4.
 
 ### Control flow
 
@@ -1556,6 +1581,25 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `k = ((a * 3) << 8) >> 12;` written inline in each arm gives the cross-jumped `sll 8;
   sra 12` tail with the game's registers, where a temp (`s16` or `s32`) does not (antlion
   func_801B3910).
+- reorg's fill_slots_from_thread, after a branch on `==` (predicted not taken), scans the
+  fall-through code through a call; when it cannot move `move a0,s0` into the slot it
+  rewrites the next use of `a0` to `s0` (`sll v1,s0,1` where the game keeps `a0`).
+  Writing that loop as `for (i = 0; i < N; i++)` instead of a do-while with its own guard
+  removed it (jammer2 and daionpa func_801B06E4, cho_kyu func_801B1B3C).
+- cse's copy propagation picks as canonical the register whose last textual reference is
+  later, so a copy's first use can be replaced by the original before reorg runs (the
+  `.sched2` dump already shows it): one variable instead of two that hold the same value
+  fixed field func_800C13B0. Hoisting a copy above its guard (`e = n;` before `if (n !=
+  0)`) makes cse test the copy; a dead later `n = 0;` keeps the test on the original
+  (main func_80016340).
+- `if (t < 0x14) { A } else { t -= 0x14; if (t < 0x19) { n = 0x100; } else { kill;
+  return; } }` gives the game's then-arm-first layout with `j join`, where a preset `n =
+  0x100;` and one range test gave the else arm first (vahamut2 func_801B3600); `switch
+  (type) { case 0: .. case 1: .. case 2: break; }` with no `default` gives the compare
+  tree `beq 1`, `x > 1` to the end, `bnez` for case 0 (shopmenu func_801D1868).
+- `while (D[i] != X) { i++; if (i >= 4) break; }` gives the peeled first test, `addiu
+  t0,t0,1` in the `bne` slot and `addiu t0,t0,-1` on the found path (submar
+  func_800AB118).
 
 ### Loops
 
@@ -1860,6 +1904,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   sp+0x10, the dead compare at 0x18) with no pad (seald func_801B0074); loop.c reduces a
   pointer `h` used with offsets 12/8/4 to `h+4` where the game keeps `h` (hades
   func_801B3578, 5 words off).
+- loop.c's combine_movables merges two `li 1` of a loop into one pseudo live across a
+  call where the game keeps `li v0,1` and `li v1,1` (snobo func_800A5E80, 4 words off);
+  `p += 0x24; t++;` at the end of a body flips which giv init is emitted first; a
+  stepping pointer written `c = r + i * 0x34;` at the top of the body gives the game's
+  `move s2,s1` with `+0x68` displacements where `c += 0x34;` gave a biased base (knights
+  func_801B56D4).
 
 ### Stack frame
 
@@ -1953,6 +2003,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Besides the unfolded loop guard, a folded range test also adds 8 bytes of frame (hades
   func_801B7594): when the frame is 8 bytes short, look for an extra pseudo the game's
   source had before reaching for `u8 pad[8]`.
+- When a function is the last of its file, check where the file ends: BATRES.X ends right
+  after the last `jr ra`, its delay-slot `nop` is not stored, so the C (which always
+  emits it) is one word longer than the image (batres func_801B17CC needs a build change
+  first).
 
 ### How the scheduler and the allocator decide
 
@@ -2026,6 +2080,18 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   instructions and float into `mult` or load stalls (death func_801B0858 has `addiu sp`
   after its first `mult`); reazer func_801B1D54 and goblinp func_801B0D14 still differ
   there (the game has `la a0, lh, li, sw s0, la s0`).
+- sched1's `adjust_priority` gives an insn that sets a single-set pseudo LAUNCH_PRIORITY
+  (7f000001) when its consumer is scheduled, so single-set temps land right before their
+  consumer. The boost applies only to a plain pseudo: an `s16`/`u16` user variable is set
+  through a `subreg` and is not boosted, an `s32` one is, and an in-place update (`t +=
+  0x240;`) is not. `s32 w = *h % 2;` moved an `addiu` before the `% 2` chain as in the
+  game (ho_den func_801B0148); `t += 0x240;` put an `addiu` in the `mult` shadow before
+  the constant's `ori` (seald func_801B0D4C).
+- sched1 sinks a free insn that sets a single-set pseudo live across a call into the
+  first stall slot before its use; pinning its statement with `do { } while (0);` and
+  hoisting the call's argument load above it keeps it before the call, where reorg puts
+  it in the `jal` slot as in the game (`t = D_80062FC4; do { D_80062F24 = p + 0x24; }
+  while (0); y2 = arg1 + arg3; func_80046794(t, p);`, main func_800285AC, func_80027B84).
 
 ### More forms
 
@@ -2236,6 +2302,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   two statements keeps a hoisted `addu` (reito func_801B1684); a dead `sp = (MgB8
   *)D_80151A4C[i];` with the copy source written out again fixed an `addu`/`lui` order
   (erave func_801B1AD0).
+- Check multiplication chains first: a draft's `* 0x5DC` was the game's `* 1000` (`sll 5;
+  subu; sll 2; addu; sll 3`) (alex func_801B4CD4). One shared multi-set `r` for two
+  division chains keeps the quotient in `v1` and the product in `v0`, and a remainder
+  into a dead variable (`a = j % 8; .. a = 8 - a;`) gives `a0` (tupon func_801B3464).
+- Colour bytes as elements of an `extern s8 D_x[]` with the table load first into a temp
+  (`c = D[..][..]; D_x[0] = D_x[1] = D_x[2] = n * 0x10; D_y = c;`) sink the `sb` stores
+  below the load (kakusan func_801B075C); two scratchpad word stores written `((s32
+  *)p)[0x10] = ..; ((s32 *)p)[0x12] = ..;` keep the game's order where `*(s32 *)&p->f =
+  ..` does not, and a K&R call with one argument fewer fixed a prologue (snobo2
+  func_800A738C).
+- `u = (vv >> 6 & 3) << 6` keeps `u` derived from `vv` where `vv & 0xC0` folds; `(x <<
+  16) | (u16)sy` gives the `sll` first without hoisting it; `s32 h = p[i]; ((h & 0xFFF)
+  << 2)` keeps `lh; andi` where `(p[i] & 0xFFF)` narrows to `lhu` (snobo func_800A5E80,
+  snobo2 func_800A2EF0); a volatile scratchpad struct pointer reproduces reloads right
+  after stores (snobo func_800A212C).
+- work/mini3/asm_of.py FILE.c prints cc1's assembly of a small C file in under a second
+  (psyq.py with snobo's options): the quickest way to test one form.
 
 ## Hand-written assembly
 
@@ -2255,6 +2338,11 @@ a boundary; split the file there and give the new part its options in `tools/psy
 The PSY-Q libraries were split so: libcd and libgpu have the unfolded form (ASPSX 2.21,
 `lib2.c` and `lib4.c`), the other libraries the folded one; the `$Id:` strings in rodata
 (`bios.c`, `sys.c`, `intr.c`) show where library files begin.
+- Permuter results that matched since spells 85: `src = &D_801D71F4[p->unk2 % 8]; val =
+  *src; D_801D71E8 = 0x28; D_801D71E4[0] = val;` moved a load above a store (tbreath
+  func_801B0A2C); a dead identical-arm test `if (D != 0) { A } else { A }` around one arm
+  fixed two saved registers (knights func_801B8A00, alex func_801B2D94); `do { f(..); ang
+  += step; } while (0);` got tifa func_801B1DB0 to 2 words.
 
 ## Working with agents
 
@@ -2292,7 +2380,10 @@ the forms found since, did better: spells batches 82 to 85 matched 8 of 15 funct
 or 2 words off, 11 of 18 at 3 or 4 words, 14 of 18 at 5 or 6 (nine of them one pattern
 solved in the batch before) and 7 of 18 at 6 to 10. Such a batch starts each function
 from its best draft with one 10-minute permuter run, which found about a third of the
-matches within minutes.
+matches within minutes. Batches 86 and 87 (1 to 28 words off) matched 10 of 18 and 8 of
+18. The model matters: two batches on a smaller model (Haiku 5.5) matched 1 of 27, where
+Sonnet 5.5 then matched 4 of the same 12 minigame functions and 2 of 12 new ones; a
+permuter-only batch (two 9-minute runs per near miss, no hand work) matched 1 of 14.
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
 of one representative per group of identical functions, largest groups first, then
