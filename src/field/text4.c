@@ -5125,7 +5125,33 @@ void func_800CDC14(void *arg0) {
     M2C_FIELD(arg0, s16 *, 6) = 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800CDC28);
+static inline u16 *ptr_add(u8 *base, s32 off) {
+    return (u16 *)(base + off);
+}
+
+s32 func_800CDC28(void) {
+    s16 n;
+    s32 src;
+    s32 dst;
+    s16 i;
+    u16 *s;
+    u16 *d;
+
+    if (D_8009D820 & 3) {
+        func_800BEAD4(D_800A0C68, 4);
+    }
+    n = (D_8009C6DC + D_800831FC[D_800722C4])[4];
+    n = n + 1;
+    src = func_800BEE10(1, 2);
+    dst = func_800BEE10(2, 3);
+    for (i = 0; i < n; i++) {
+        d = ptr_add(D_80095DE0, (u8)dst * 32);
+        s = (u16 *)(D_80095DE0 + (u8)src * 32);
+        d[i] = s[i];
+    }
+    D_800831FC[D_800722C4] += 5;
+    return 0;
+}
 
 s32 func_800CDD40(void) {
     s32 n;
@@ -5343,7 +5369,59 @@ s32 func_800CE480(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800CE6F4);
+s32 func_800CE6F4(void) {
+    s16 i;
+    s16 n;
+    s32 sr;
+    s32 dr;
+    s32 gb;
+    u16 gg;
+    u16 gr;
+    u16 c;
+    s16 raw;
+    u32 r;
+    u32 g;
+    u32 b;
+    u16 *src;
+    u8 *dst;
+
+    if (D_8009D820 & 3) {
+        func_800BEAD4(D_800A0C80, 8);
+    }
+    n = (D_8009C6DC + D_800831FC[D_800722C4])[9];
+    n++;
+    sr = func_800BEE10(1, 4);
+    dr = func_800BEE10(2, 5);
+    gb = func_800BEE10(3, 6) & 0xFF;
+    gg = (u8)func_800BEE10(4, 7);
+    gr = (u8)func_800BEE10(5, 8);
+    for (i = 0; i < n; i++) {
+        src = ptr_add(D_80095DE0, (u8)sr * 32);
+        raw = src[i];
+        c = raw;
+        if (c != 0) {
+            r = (u32)(gr * ((raw << 1) & 0x3E)) >> 7;
+            g = (u32)(gg * ((c >> 4) & 0x3F)) >> 7;
+            b = (u32)(gb * ((c >> 9) & 0x3F)) >> 7;
+            if (b >= 0x20) {
+                b = 0x1F;
+            }
+            if (g >= 0x20) {
+                g = 0x1F;
+            }
+            if (r >= 0x20) {
+                r = 0x1F;
+            }
+            dst = D_80095DE0 + ((dr & 0xFF) << 5);
+            *(u16 *)(dst + i * 2) = r | ((b << 10) | (g << 5)) | (raw & 0x8000);
+            if (*(u16 *)(dst + i * 2) == 0) {
+                *(u16 *)(dst + i * 2) = 0x8000;
+            }
+        }
+    }
+    D_800831FC[D_800722C4] += 0xA;
+    return 0;
+}
 
 s32 func_800CE904(void) {
     u8 dst;

@@ -622,7 +622,7 @@ extern u8 D_8009D5F0[];
 s32 func_800CE214(void);
 extern s8 D_800A0C78;
 s32 func_800CE904(void);
-extern s8 D_800A0C80;
+extern char D_800A0C80[];
 s32 func_800CE480(void);
 s32 func_800C6D64(void);
 void func_800A496C(void);
@@ -836,5 +836,7 @@ typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; } FdPrF;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; } FdPrG3;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; u8 xy2[4]; u8 rgb3[4]; } FdPrG4;
 s32 func_800C13B0(void);
+s32 func_800CDC28(void);
+s32 func_800CE6F4(void);
 
 #endif /* FIELD_DECLS_H */
