@@ -18,7 +18,28 @@ s32 func_801B0B40(s16 **pp) {
     return v;
 }
 
-INCLUDE_ASM("../asm/us/magic_catastro/nonmatchings/text", func_801B0B7C);
+s32 func_801B0B7C(s32 arg0, s32 arg1) {
+    s32 n;
+    s32 i;
+    s32 orig;
+
+    n = arg1 >> 8;
+    orig = arg0;
+    if (n > 0) {
+        for (i = 0; i < n; i++) {
+            arg0 = func_80039A74(arg0 / 4);
+        }
+    } else {
+        arg0 = 0x1000 - arg0;
+        for (i = 0; i < -n; i++) {
+            arg0 = func_80039A74(arg0 / 4);
+        }
+        arg0 = 0x1000 - arg0;
+    }
+    i = orig;
+    n = arg1 & 0xFF;
+    return (arg0 * n + i * (0x100 - n)) >> 8;
+}
 
 void func_801B0C68(void) {
     MgCamTask *p;

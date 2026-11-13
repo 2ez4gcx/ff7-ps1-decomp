@@ -690,7 +690,64 @@ void func_801B2E1C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_ifleet/nonmatchings/text", func_801B301C);
+void func_801B301C(void) {
+    MgObj20 *p;
+    u16 w;
+    s32 a;
+    u16 c;
+    s32 b;
+    s32 t;
+    s16 u;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    w = p->unk2;
+    v = ((w & 1) == 0) << 11;
+    t = (s16)w;
+    if (t < 0xF) {
+        v = ((v - 0x1000) * t) / 15 + 0x1000;
+        if (D_80062D98 == 0) {
+            *(volatile s32 *)&D_801F027C = *(volatile s32 *)&D_801F027C;
+            D_801F0280 -= 0xA;
+            D_801F0284 -= 0x14;
+        }
+    } else {
+        t -= 0xF;
+        if (t >= 3) {
+            p->unk0 = -1;
+            return;
+        }
+        v = 0;
+        if (D_80062D98 == 0) {
+            if (c || D_801517C0) {
+                *(volatile s32 *)&D_801F027C = *(volatile s32 *)&D_801F027C;
+                D_801F0280 += 0x3E8;
+                D_801F0284 += 0x7D0;
+            } else {
+                *(volatile s32 *)&D_801F027C = *(volatile s32 *)&D_801F027C;
+                D_801F0280 += 0x3E8;
+                D_801F0284 += 0x7D0;
+            }
+        }
+    }
+    func_8003C21C(D_801F0250, &D_801F0268);
+    func_8003B35C(&D_801F0268, D_801F0258);
+    func_8003A63C(&D_801F0450, &D_801F0268, D_801F0288);
+    func_8003B48C(D_801F0288);
+    func_8003B51C(D_801F0288);
+    func_8003B69C(0, 0, 0);
+    a = D_801517C0 + 0x70;
+    b = D_80163C74;
+    ((MgHalf *)&D_801F024A)->v = v;
+    D_80163C74 = func_800D29D4((u8 *)&D_801F024A - 0xA, a, 0xC, b);
+    if (D_80062D98 == 0) {
+        u = (u16)p->unk2 + 1;
+        *(s16 *)((u8 *)p + 2) = u;
+        c = D_801F0254 + 0x10;
+        D_801F0254 = c + (u * 0x30) / 18;
+        D_801F0260 = (*(s16 *)((u8 *)p + 2) * 0x700) / 15 + 0x100;
+    }
+}
 
 void func_801B32A0(void) {
     MgTask *p;

@@ -130,7 +130,35 @@ void func_801B0354(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_trainn/nonmatchings/text", func_801B054C);
+void func_801B054C(void) {
+    MgTask *p;
+    MgTask *q;
+    MgTask *base;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    base = D_80162978;
+    p = base + func_800BBEAC(&func_801B0074);
+    func_800D54EC(D_801D913C, &p->unk4);
+    p->unkC = 0;
+    p->unk6 = -0x380;
+    p->unkE = -0x28;
+    p->unk10 = 0;
+    p->unk12 = 8;
+    p->unk14 = 0;
+    p->unk16 = -0x28;
+    p->unk18 = 0;
+    p->unk1A = 0x20C;
+    q = &D_80162978[func_800BBEAC(&func_801B0354)];
+    *(MgSVec *)&q->unk4 = *(MgSVec *)&p->unk4;
+    q->unkC = 0;
+    q->unkE = 0x28;
+    q->unk10 = 0;
+    q->unk14 = 0;
+    q->unk12 = -8;
+    q->unk16 = 0x28;
+    q->unk18 = 0;
+    q->unk1A = 0xDA;
+}
 
 INCLUDE_RODATA("../asm/us/magic_trainn/nonmatchings/text", D_801B0000);
 

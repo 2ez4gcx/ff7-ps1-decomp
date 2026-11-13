@@ -11,7 +11,7 @@ extern s16 D_8015169C;
 extern s16 D_80162080;
 extern u8 D_801B0DA4[];
 extern u8 D_801E1EF4[];
-extern u8 *D_801EDEF4;
+extern s32 D_801EDEF4;
 void func_801B0600(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern u8 D_801E1CEC;
@@ -43,5 +43,17 @@ typedef struct { u8 b[8]; } MgB8;
 void func_800D5774(s32);
 void func_801B03B0(void);
 void func_801B0020(void);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+extern MgB8 *D_801DDD88[];
+extern u8 D_801D0E88[];
+extern MgMat D_801E1CC0;
+extern s32 D_801E1CD8;
+extern s32 D_801E1CDC;
+extern u8 D_801E1CB0[];
+extern MgMat D_800FA63C;
+void func_8003A63C(void *, void *, void *);
+void func_8003B35C(void *, void *);
+s32 func_800D29D4(void *, s32, s32, s32);
 
 #endif /* MAGIC_BIOGA1_DECLS_H */

@@ -715,7 +715,51 @@ draw:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut/nonmatchings/text", func_801B25E4);
+void func_801B25E4(void) {
+    MgTask *p;
+    MgVhPrim *prim;
+    s32 k;
+    s16 w;
+    MgSVec *q;
+    s32 d;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unk6;
+    }
+    func_8003C21C(&p->unkC, &D_801EF1CC->m);
+    *(s32 *)((u8 *)D_801EF1CC + 0x24) = D_801DB950;
+    *(s32 *)((u8 *)D_801EF1CC + 0x28) = D_801DB952;
+    *(s32 *)((u8 *)D_801EF1CC + 0x2C) = D_801DB954;
+    func_8003A63C(&D_801EFC68, &D_801EF1CC->m, &D_801EF1CC->m);
+    func_8003B48C(&D_801EF1CC->m);
+    func_8003B51C(&D_801EF1CC->m);
+    prim = D_80163C74;
+    k = func_801B01C0((p->unk2 << 12) / 10, 0x1FF);
+    q = &D_801EF1CC->v;
+    D_801EF1CC->rot.vx = p->unk4;
+    D_801EF1CC->rot.vy = 0;
+    D_801EF1CC->rot.vz = 0;
+    d = (u16)p->unk4 + (((0x1000 - k) * 500) >> 12);
+    D_801EF1CC->v.vz = 0;
+    D_801EF1CC->v.vy = 0;
+    D_801EF1CC->v.vx = d;
+    D_801EF1CC->otz = func_8003BC0C(D_801EF1CC, q, q, &prim->xy0, &prim->xy1, &prim->xy1, &D_801EF1CC->p, &D_801EF1CC->flag);
+    if (!(D_801EF1CC->flag & 0x60000)) {
+        prim->tag = 0x04000000;
+        prim->w4 = 0x5200FFFF;
+        prim->wC = 0x02008080;
+        func_80046794(D_801517C0 + 0x70 + ((D_801EF1CC->otz >> 2) << 2), (s32)prim);
+        D_80163C74 = prim + 1;
+    }
+    if (*(u8 *)0x80062D98 == 0) {
+        w = p->unk2 + 1;
+        p->unk2 = w;
+        if (w >= 0xA) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B2810(void) {
     MgTask *p;

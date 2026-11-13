@@ -7,7 +7,73 @@ void func_801B0000(void) {
 
 INCLUDE_ASM("../asm/us/magic_bioga1/nonmatchings/text", func_801B0020);
 
-INCLUDE_ASM("../asm/us/magic_bioga1/nonmatchings/text", func_801B03B0);
+void func_801B03B0(void) {
+    MgTask *p;
+    MgVec *q;
+    MgMat *r;
+    MgB8 *s;
+    MgB8 *d;
+    s32 i;
+    s32 t;
+    s32 k;
+    s32 w;
+    s32 g;
+    s32 z;
+    u8 pad[8];
+
+    p = &D_80162978[D_8015169C];
+    q = (MgVec *)0x1F800020;
+    r = (MgMat *)0x1F800000;
+    k = func_80039A74(p->unk2 * 0x111);
+    k = ((k << 8) >> 13) + 0xE80;
+    t = p->unk2;
+    if (t < 10) {
+        w = (t << 12) / 10;
+    } else {
+        t -= 10;
+        if (t < 20) {
+            w = 0x1000;
+        } else {
+            t -= 20;
+            if (t >= 10) {
+                p->unk0 = -1;
+                return;
+            }
+            w = -(t << 12) / 10 + 0x1000;
+        }
+    }
+    g = (k * w >> 12) * p->unk10 >> 12;
+    if (g > 0x7FFF) {
+        g = 0x7FFF;
+    }
+    q->vx = q->vy = q->vz = g;
+    if (D_80062D98 == 0) {
+        i = 0;
+        s = D_801DDD88[p->unk2 & 0xF];
+        d = (MgB8 *)D_801D0E88;
+        do {
+            *d = *s;
+            d++;
+            i++;
+            s++;
+        } while (i < 0x146);
+    }
+    D_801E1CC0.t[0] = p->unk8;
+    D_801E1CC0.t[1] = p->unkA;
+    D_801E1CC0.t[2] = p->unkC;
+    func_8003A63C(&D_800FA63C, &D_801E1CC0, r);
+    func_8003B35C(r, q);
+    func_8003B48C(r);
+    func_8003B51C(r);
+    D_801EDEF4 = func_800D29D4(D_801E1CB0, D_801517C0 + 0x70, 0xC, D_801EDEF4);
+    if (*(u8 *)0x80062D98 == 0) {
+        z = p->unk2;
+        if (z * 4 % 15 == 0) {
+            i = 0;
+        }
+        p->unk2 = z + 1;
+    }
+}
 
 void func_801B0600(void) {
     MgTask *p;

@@ -14,7 +14,7 @@ extern MgTask D_80162978[];
 extern M2C_UNK D_801B06F0;
 extern MgTask *D_801D9138;
 extern s32 D_801D913C;
-extern M2C_UNK func_801B054C;
+void func_801B054C(void);
 extern u8 D_801B0000[];
 void func_801B0354(void);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -37,5 +37,6 @@ void func_801B0074(void);
 void func_800D5774(s32);
 typedef struct { u8 r; u8 g; u8 b; u8 pad; s16 f; } TrainnFog;
 extern TrainnFog D_800F5B70;
+void func_800D54EC(s32, void *);
 
 #endif /* MAGIC_TRAINN_DECLS_H */

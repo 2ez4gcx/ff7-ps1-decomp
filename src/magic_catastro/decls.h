@@ -27,7 +27,7 @@ void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
 void func_8003BC6C(MgSVec *, MgVec *, s32 *);
 void func_800D3994(s32, s32, MgSVec *);
-s32 func_801B0B7C(s32, s32);
+s32 func_801B0B7C(s32 arg0, s32 arg1);
 extern u8 D_80062D98;
 extern MgSVec D_801031E8;
 extern MgActorPos D_80151A4C[];
