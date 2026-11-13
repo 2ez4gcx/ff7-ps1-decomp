@@ -150,7 +150,12 @@ hand, and keep the table out of migration in `config/symbols.us.<target>.txt`
 func_801BCE2C).
 
 C code may name any address as `D_80012345` or `func_80012345`; `build.py` gives each such
-name its address (`build/us/<target>.addresses.ld`), whether or not splat named it.
+name its address (`build/us/<target>.addresses.ld`), whether or not splat named it. Any
+other name ending in `_` and eight hex digits counts too, so one address can have several
+names: GCC merges identical calls to one symbol but not to two, and the game's calls to
+the entry points of different overlays loaded at the same address stay apart only as
+`ovl1_801B0040`, `ovl2_801B0040` ... (battle func_800C679C). A line in
+`config/symbols.us.<target>.txt` does not reach the linker for such names.
 
 ## Writing a function
 
