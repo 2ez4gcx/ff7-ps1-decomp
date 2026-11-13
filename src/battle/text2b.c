@@ -1757,7 +1757,71 @@ p->cur[2] += (p->tgt[2] - p->cur[2]) >> 3;
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D5D28);
+void func_800D5D28(void) {
+    Btl5DObj *p;
+    Btl5DNode *t;
+    MgSVec *s1;
+    MgSVec *s3;
+    MgVec *w;
+    s32 n;
+    s32 sp10;
+    s16 m;
+
+    w = (MgVec *)0x1F800020;
+    s1 = (MgSVec *)0x1F800030;
+    p = (Btl5DObj *)D_801621F0[D_801590D4];
+    if (D_80062D98 == 0) {
+        func_800D41FC(&D_800FA63C, p->b, 0x1F800000);
+        func_8003B48C((MgMat *)0x1F800000);
+        func_8003B51C((MgMat *)0x1F800000);
+        s1[1].vx = 0;
+        s1[1].vy = 0;
+        s1->vx = *(u16 *)0x1F800014;
+        s1->vy = *(u16 *)0x1F800018;
+        s1->vz = *(u16 *)0x1F80001C;
+        ((MgSVec *)0x1F800038)->vz = p->f;
+        func_8003BC6C((MgSVec *)0x1F800038, w, &sp10);
+        s3 = (MgSVec *)0x1F800038;
+        s3->vx = *(u16 *)w;
+        s3->vy = *(u16 *)0x1F800024;
+        s3->vz = *(u16 *)0x1F800028;
+        if (p->a == 0 && (s16)p->n >= 2) {
+            t = (Btl5DNode *)D_801621F0[func_800BC04C(func_800D5B6C)];
+            n = D_800F10E8;
+            t->v0.vx = (s1->vx - D_800F4E6C[n].a.vx) / 4 + (u16)D_800F4E6C[n ^ 1].a.vx;
+            t->v0.vy = (s1->vy - D_800F4E6C[n].a.vy) / 4 + (u16)D_800F4E6C[n ^ 1].a.vy;
+            t->v0.vz = (s1->vz - D_800F4E6C[n].a.vz) / 4 + (u16)D_800F4E6C[n ^ 1].a.vz;
+            t->v1.vx = (s3->vx - D_800F4E6C[n].b.vx) / 4 + (u16)D_800F4E6C[n ^ 1].b.vx;
+            t->v1.vy = (s3->vy - D_800F4E6C[n].b.vy) / 4 + (u16)D_800F4E6C[n ^ 1].b.vy;
+            t->v1.vz = (s3->vz - D_800F4E6C[n].b.vz) / 4 + (u16)D_800F4E6C[n ^ 1].b.vz;
+            t->d = p->d;
+            t->e = p->e;
+            t->next = 0;
+            if (p->c != 0) {
+                p->c->next = t;
+            }
+            p->c = t;
+        }
+        t = (Btl5DNode *)D_801621F0[func_800BC04C(func_800D5B6C)];
+        t->v0 = s1[0];
+        t->v1 = s1[1];
+        D_800F4E6C[D_800F10E8].a = s1[0];
+        D_800F4E6C[D_800F10E8].b = s1[1];
+        t->d = p->d;
+        t->e = p->e;
+        t->next = 0;
+        D_800F10E8 ^= 1;
+        if (p->c != 0) {
+            p->c->next = t;
+        }
+        m = p->n + 1;
+        p->n = m;
+        p->c = t;
+        if (m >= p->g) {
+            p->a = -1;
+        }
+    }
+}
 
 void func_800D61AC(s32 arg0, s32 arg1, u32 arg2, s32 arg3, s32 arg4) {
     BtlE61AC *p;

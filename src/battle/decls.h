@@ -1654,5 +1654,15 @@ extern u8 D_80070864;
 extern u8 D_80070865;
 extern T6 D_800F3A04[];
 extern u8 D_800F9DA0;
+void func_800DEC10(void);
+extern u8 D_8009CA5E;
+extern u16 D_800F1EEC;
+extern u8 D_800F38A4;
+typedef struct { MgSVec a; MgSVec b; } Btl5DPair;
+typedef struct Btl5DNode { s16 a; s16 pad; MgSVec v0; MgSVec v1; s32 d; s32 e; struct Btl5DNode *next; } Btl5DNode;
+typedef struct { s16 a; u16 n; s32 b; Btl5DNode *c; s32 d; s32 e; u16 f; s16 g; } Btl5DObj;
+extern Btl5DPair D_800F4E6C[];
+extern s32 D_800F10E8;
+void func_800D41FC(MgMat *, s32, s32);
 
 #endif /* BATTLE_DECLS_H */
