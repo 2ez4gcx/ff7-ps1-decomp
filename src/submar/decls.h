@@ -134,5 +134,6 @@ extern s32 D_800AEA14;
 extern s32 D_800AEA18;
 typedef struct { s16 a0; s16 a1; s16 a2; s16 pad6; s16 b0; s16 b1; s16 b2; s16 padE; s16 c0; s16 c1; s16 c2; s16 pad16; s32 f18; s32 f1C; s32 f20; s32 f24; s32 f28; s32 f2C; s32 f30; s32 f34; s32 f38; } SubCam;
 extern SubCam D_801BA30C;
+void func_800A10E0(void);
 
 #endif /* SUBMAR_DECLS_H */

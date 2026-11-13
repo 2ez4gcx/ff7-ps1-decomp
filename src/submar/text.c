@@ -3,7 +3,38 @@
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A00BC);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A10E0);
+void func_800A10E0(void) {
+    s32 a;
+    s16 k1;
+    s32 k2;
+
+    k1 = -0x200;
+    D_801BA30C.b0 = k1;
+    a = D_800AE914;
+    D_801BA30C.a0 = a;
+    D_801BA30C.c1 = 0x1000;
+    D_801BA30C.c0 = k1 - a;
+    a = D_800AE916;
+    D_801BA30C.a1 = a;
+    D_801BA30C.b1 = a;
+    D_801BA30C.f34 = 0x10;
+    a = D_800AE918;
+    D_801BA30C.a2 = a;
+    D_801BA30C.b2 = a;
+    D_801BA30C.c2 = 0;
+    k2 = 0x2800;
+    D_801BA30C.f1C = k2;
+    D_801BA30C.f30 = 0;
+    D_801BA30C.f38 = 1;
+    a = D_800AE944;
+    D_801BA30C.f18 = a;
+    D_801BA30C.f20 = k2 - a;
+    k2 = 0x200;
+    D_801BA30C.f28 = k2;
+    a = D_800AD40C;
+    D_801BA30C.f24 = a;
+    D_801BA30C.f2C = k2 - a;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A11C4);
 

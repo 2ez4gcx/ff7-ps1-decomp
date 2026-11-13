@@ -1696,7 +1696,58 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800ABE54);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AC1A8);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AC498);
+s32 func_800AC498(arg0) {
+    u8 *base;
+    u16 v;
+    u16 a;
+    s32 f;
+    u32 r;
+    u32 t;
+    u32 bi;
+    u32 sum;
+    s32 idx;
+
+    t = ((CondorMach *)arg0)->w06;
+    M2C_FIELD(arg0, u8 *, 0x2B) = 0;
+    M2C_FIELD(arg0, u8 *, 0x2C) = 0;
+    M2C_FIELD(arg0, u8 *, 0x2D) = 0;
+    M2C_FIELD(arg0, u8 *, 0x2E) = 0;
+    M2C_FIELD(arg0, u8 *, 0x2F) = 0;
+    sum = D_80180006 + (t << 4);
+    bi = ((CondorMach *)arg0)->b2A * 2;
+    ((CondorMach *)arg0)->w32 = 0;
+    base = (u8 *)0x80180000;
+    a = *(u16 *)(sum + bi + 0x80180000);
+    ((CondorMach *)arg0)->w30 = a;
+    if ((a & 0xFF) == 0xFF) {
+        return 0;
+    }
+    idx = a + ((CondorMach *)arg0)->w32;
+    v = *(u16 *)(base + (idx & 0xFFFF));
+    if (v == 0xFFFF) {
+        ((CondorMach *)arg0)->b2C = 0xFF;
+        func_800ABE54(arg0);
+        r = 0;
+    } else {
+        if (v == 0xFFFE) {
+            ((CondorMach *)arg0)->w32 = 0;
+            v = *(u16 *)(base + ((CondorMach *)arg0)->w30);
+        }
+        f = v & 0x80;
+        r = v & 0xFF;
+        if (f != 0) {
+            r = 0;
+        }
+        ((CondorMach *)arg0)->b2B = r;
+        ((CondorMach *)arg0)->b2C = (u32)v >> 8;
+        if (f == 0) {
+            func_800ABE54(arg0);
+        }
+        r = v;
+        ((CondorMach *)arg0)->w32 += 2;
+    }
+    return r;
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AC5C0);
 
@@ -2141,7 +2192,42 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF08C);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF278);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF470);
+s32 func_800AF470(CondorAct *arg0) {
+    CondorAct *q;
+    s16 i;
+    u8 t;
+    u32 sum;
+    u8 r;
+
+    func_800A2068((CondorEnt *)arg0, 0, 0x14);
+    if (D_8012B85C != 0) {
+        i = 0;
+        if (D_8012B85C > 0) {
+            do {
+                q = (CondorAct *)D_8012B75C[i].p;
+                if (!(q->flags & 0x10)) {
+                    q->flags |= 0x10;
+                    if (q->timer == 0) {
+                        q->timer = 0x28;
+                    }
+                    sum = D_80180018 + 0x80180000;
+                    q->w18 = 0;
+                    t = *(u8 *)(sum + (arg0->b43 * 0x14 + q->b43));
+                    if (t != 0) {
+                        r = arg0->b12 * t / 100;
+                    } else {
+                        r = 0;
+                    }
+                    q->b2E = r;
+                    func_800AF08C(q);
+                    return 1;
+                }
+                i++;
+            } while (i < D_8012B85C);
+        }
+    }
+    return 0;
+}
 
 INCLUDE_RODATA("../asm/us/condor/nonmatchings/text", D_800A01EC);
 
@@ -3113,7 +3199,69 @@ void func_800B3494(u16 *arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B34F8);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B3644);
+s32 func_800B3644(CondorObj *arg0) {
+    u16 t;
+    u16 v;
+    s32 a;
+    s32 idx;
+    s32 w;
+    s32 b;
+    s32 f;
+    u32 r;
+    u8 *base;
+
+    b = M2C_FIELD(arg0, u8 *, 0x2C);
+    t = M2C_FIELD(arg0, u16 *, 0x38) & 0x1FF;
+    if (b != 0xFF) {
+        base = (u8 *)0x80180000;
+        if (b == 0) {
+            idx = M2C_FIELD(arg0, u16 *, 0x30) + M2C_FIELD(arg0, u16 *, 0x32);
+            v = *(u16 *)(base + (idx & 0xFFFF));
+            if (v == 0xFFFF) {
+                M2C_FIELD(arg0, u8 *, 0x2C) = 0xFF;
+                func_800ABE54(arg0, base);
+                r = 0;
+            } else {
+                if (v == 0xFFFE) {
+                    M2C_FIELD(arg0, u16 *, 0x32) = 0;
+                    v = *(u16 *)(base + M2C_FIELD(arg0, u16 *, 0x30));
+                }
+                f = v & 0x80;
+                a = v & 0xFF;
+                if (f != 0) {
+                    a = 0;
+                }
+                M2C_FIELD(arg0, u8 *, 0x2B) = a;
+                M2C_FIELD(arg0, u8 *, 0x2C) = v >> 8;
+                if (f == 0) {
+                    func_800ABE54(arg0);
+                }
+                r = v;
+                M2C_FIELD(arg0, u16 *, 0x32) += 2;
+            }
+            if (r & 0x80) {
+                if (!(M2C_FIELD(arg0, u16 *, 0x38) & 0x200)) {
+                    t += 0x10;
+                    M2C_FIELD(arg0, u16 *, 0x38) = t;
+                    if (t >= 0x1FF) {
+                        M2C_FIELD(arg0, u16 *, 0x38) = 0x3FF;
+                    }
+                } else {
+                    t = t + 0xFFF0;
+                    M2C_FIELD(arg0, u16 *, 0x38) = t | 0x200;
+                    if (t > 0xFEFF) {
+                        M2C_FIELD(arg0, u16 *, 0x38) = 0;
+                    }
+                }
+            }
+        } else {
+            arg0->pad[0x2A]--;
+        }
+    }
+    w = M2C_FIELD(arg0, u16 *, 0x34);
+    M2C_FIELD(arg0, u16 *, 0x36) = w;
+    return w;
+}
 
 void func_800B37B8(CondorActor *arg0) {
     s32 dx;
