@@ -2380,8 +2380,8 @@ the forms found since, did better: spells batches 82 to 85 matched 8 of 15 funct
 or 2 words off, 11 of 18 at 3 or 4 words, 14 of 18 at 5 or 6 (nine of them one pattern
 solved in the batch before) and 7 of 18 at 6 to 10. Such a batch starts each function
 from its best draft with one 10-minute permuter run, which found about a third of the
-matches within minutes. Batches 86 and 87 (1 to 28 words off) matched 10 of 18 and 8 of
-18. The model matters: two batches on a smaller model (Haiku 5.5) matched 1 of 27, where
+matches within minutes. Batches 86 and 87 (1 to 28 words off) matched 9 of 18 (and a
+twin) and 8 of 18. The model matters: two batches on a smaller model (Haiku 5.5) matched 1 of 27, where
 Sonnet 5.5 then matched 4 of the same 12 minigame functions and 2 of 12 new ones; a
 permuter-only batch (two 9-minute runs per near miss, no hand work) matched 1 of 14.
 
