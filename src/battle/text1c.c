@@ -1053,7 +1053,9 @@ void func_800A6278(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A64A0);
+void func_800A64A0(s32 arg0, u8 arg1) {
+    D_800E7A58[arg0] = arg1;
+}
 
 u16 func_800A64B4(s32 arg0) {
     u16 r;

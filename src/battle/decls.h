@@ -1694,5 +1694,6 @@ M2C_UNK func_801B0050(s16, u8);
 u8 *func_801B0060(s16, u8);
 extern u8 D_801524A5;
 extern u8 D_80153041;
+void func_800A64A0(s32 arg0, u8 arg1);
 
 #endif /* BATTLE_DECLS_H */
