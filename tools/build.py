@@ -80,11 +80,15 @@ def main_symbols():
 def named_by_address(elf, c_objects):
     """A linker script giving the address its name holds (D_80012345,
     func_80012345) to each symbol C code uses that nothing defines: splat
-    only names what its asm refers to, and the C may refer to more."""
+    only names what its asm refers to, and the C may refer to more. Any name
+    ending in `_` and eight hex digits counts, so one address can have
+    several names: the entry point of the overlays loaded at 0x801B0040,
+    called as ovl1_801B0040, ovl2_801B0040 ..., keeps calls GCC would
+    otherwise merge apart, as the game's separate symbols did."""
     names = set()
     for obj in c_objects:
         for line in run([PREFIX + 'nm', '-u', str(obj)]).stdout.splitlines():
-            m = re.fullmatch(r'\s*U\s+((?:D|func|jtbl)_([0-9A-F]{8}))', line)
+            m = re.fullmatch(r'\s*U\s+([A-Za-z_]\w*_([0-9A-F]{8}))', line)
             if m:
                 names.add(m.group(1))
     out = elf.with_name(elf.stem + '.addresses.ld')
