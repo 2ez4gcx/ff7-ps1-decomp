@@ -186,5 +186,12 @@ extern s32 D_801DBAF0;
 extern u8 D_801DBAF4[];
 extern u8 D_801B89E0[];
 extern KjTri *D_801F0208;
+s32 func_8003BD7C(void *, void *, void *, void *, s32, s32, s32, s32, void *, void *);
+void func_80046794(s32, s32);
+typedef struct { u16 a; u16 b; u16 c; u16 d; } KjUv;
+typedef struct { MgSVec v[4]; u8 pad20[0x30]; s32 otz; s32 ext; s32 flag; } KjScr;
+typedef struct { u32 tag; u32 c0; s32 xy0; u32 cl0; s32 xy1; u32 cl1; s32 xy2; u16 uv2; u16 pad1E; s32 xy3; u16 uv3; u16 pad26; } KjQuad;
+extern KjUv D_801F00B4[];
+extern KjScr *D_801F01B4;
 
 #endif /* MAGIC_KUJATA_DECLS_H */

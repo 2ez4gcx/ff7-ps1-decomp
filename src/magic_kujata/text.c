@@ -342,7 +342,69 @@ void func_801B3DE4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B3EA8);
+void func_801B3EA8(void) {
+    MgSVec pts[151];
+    KjQuad *w;
+    KjQuad *p;
+    KjPart *e;
+    s32 i;
+    MgTask *t;
+    s32 j;
+    s32 u;
+    MgSVec *q;
+
+    p = (KjQuad *)D_80163C74;
+    func_8003B48C(&D_801F04C8);
+    func_8003B51C(&D_801F04C8);
+    e = D_801F0510;
+    do {
+        i = 0;
+    } while (0);
+    if (D_801F0090 > 0) {
+        do {
+            pts[i].vx = *(u16 *)&e->padC[0] + (func_80039A74(e->f8) * e->f4 >> 12) + (func_80039A74(e->fA) * e->f4 >> 12);
+            pts[i].vy = *(u16 *)&e->padC[2];
+            pts[i].vz = *(u16 *)&e->padC[4] + (func_80039B40(e->f8) * e->f4 >> 12) + (func_80039B40(e->fA) * e->f4 >> 12);
+            if (e->mode != 0) {
+                q = &pts[e->mode];
+                D_801F01B4->v[0].vx = (*q).vx - e->f6 / 2;
+                D_801F01B4->v[1].vx = D_801F01B4->v[0].vx + e->f6;
+                D_801F01B4->v[0].vy = D_801F01B4->v[1].vy = (*q).vy;
+                D_801F01B4->v[0].vz = D_801F01B4->v[1].vz = (*q).vz;
+                D_801F01B4->v[2].vx = pts[i].vx - e->f6 / 2;
+                D_801F01B4->v[3].vx = D_801F01B4->v[2].vx + e->f6;
+                D_801F01B4->v[2].vy = D_801F01B4->v[3].vy = pts[i].vy;
+                D_801F01B4->v[2].vz = D_801F01B4->v[3].vz = pts[i].vz;
+                D_801F01B4->otz = func_8003BD7C(&D_801F01B4->v[0], &D_801F01B4->v[1], &D_801F01B4->v[2], &D_801F01B4->v[3], (s32)p + 8, (s32)p + 0x10, (s32)p + 0x18, (s32)p + 0x20, &D_801F01B4->ext, &D_801F01B4->flag);
+                if (!(D_801F01B4->flag & 0x60000)) {
+                    j = e->life;
+                    p->tag = 0x09000000;
+                    p->c0 = 0x2E808080;
+                    p->cl0 = D_801F00B4[j].a | 0x78080000;
+                    p->cl1 = D_801F00B4[j].b | 0x2C0000;
+                    w = p;
+                    w->uv2 = D_801F00B4[j].c;
+                    w->uv3 = D_801F00B4[j].d;
+                    u = ((D_801F01B4->otz >> 2) << 2) + 0x70;
+                    func_80046794(u + D_801517C0, (s32)p++);
+                }
+            }
+            if (e->pad3 != 0 && D_80062D98 == 0) {
+                if ((u8)((e->pad3 & 0x7F) % 3) == 0) {
+                    t = &D_80162978[func_800BBEAC(func_801B3DE4)];
+                    t->unk4 = (D_801F01B4->v[2].vx + D_801F01B4->v[3].vx) / 2;
+                    t->unk6 = D_801F01B4->v[2].vy;
+                    t->unk8 = D_801F01B4->v[2].vz;
+                    t->unk14 = func_80042DA8() % 0x1000 + 0x6000;
+                }
+                e->pad3 = (e->pad3 + 1) | 0x80;
+            }
+            e++;
+            i++;
+        } while (i < D_801F0090);
+    }
+    D_80163C74 = (s32)p;
+}
 
 void func_801B42B8(void) {
     KjPart *e;
