@@ -1598,7 +1598,23 @@ M2C_UNK *func_8003D8F8(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003D948);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003DACC);
+s32 func_8003DACC(s32 arg0, s32 arg1) {
+    s32 old;
+    volatile s32 *r;
+
+    old = D_80051574[arg0];
+    if (arg1 != old) {
+        if (arg1 != 0) {
+            D_80051574[arg0] = arg1;
+            *D_80051570 = (*D_80051570 & 0xFFFFFF) | 0x800000 | (1 << (arg0 + 0x10));
+        } else {
+            D_80051574[arg0] = 0;
+            r = D_80051570;
+            *r = ((*r & 0xFFFFFF) | 0x800000) & ~(1 << (arg0 + 0x10));
+        }
+    }
+    return old;
+}
 
 void func_8003DB74(s32 *arg0, s32 arg1) {
     s32 i;

@@ -11,7 +11,7 @@ extern u8 D_8007E778[];
 s32 func_80036FFC();
 s32 func_800373AC();
 s32 func_80038FB8();
-s32 func_800297A4();
+void func_800297A4(u32 *arg0, u32 *arg1);
 s32 func_800294BC();
 s32 func_80042BC0();
 s32 func_80042C98();
@@ -681,7 +681,21 @@ void func_800294A4(void) {
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800294BC);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_800297A4);
+void func_800297A4(u32 *arg0, u32 *arg1) {
+    u32 *d;
+    s32 n;
+
+    func_80038F64(*arg0++);
+    n = *(volatile u32 *)arg0;
+    func_80029424((s32)(arg0 + 3), n);
+    d = (u32 *)D_80075F28;
+    n = 0x800;
+    do {
+        n--;
+        *d++ = *arg1++;
+    } while (n != 0);
+    func_800294A4();
+}
 
 void func_80029818(u32 *arg0, u32 *arg1) {
     u32 *d;

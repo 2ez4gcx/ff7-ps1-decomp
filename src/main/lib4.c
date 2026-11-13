@@ -312,7 +312,25 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044E8C);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044F58);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044FA0);
+s32 func_80044FA0(Rect16 *arg0) {
+    u32 tw[4];
+    s32 r;
+    u32 k;
+    u32 s;
+
+    if (arg0 == 0) {
+        r = 0;
+    } else {
+        tw[0] = (u8) arg0->x >> 3;
+        tw[2] = (-arg0->w & 0xFF) >> 3;
+        tw[1] = (u8) arg0->y >> 3;
+        s = tw[1] << 15;
+        tw[3] = (-arg0->h & 0xFF) >> 3;
+        k = (tw[0] << 10) | 0xE2000000;
+        r = s | k | (tw[3] << 5) | tw[2];
+    }
+    return r;
+}
 
 s32 func_80045024(Rect16 *arg0) {
     s32 r;
