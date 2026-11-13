@@ -360,6 +360,25 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   variable, one pointer variable instead of two of the same type, no stray third argument
   to a two-argument callee (an extra `v.vz` forced `sll/sra` and moved the temps), and
   `lhu` once into a `u16` local, then `(s16)uu % 5`.
+- A main symbol an overlay uses cannot be retyped (`put` moves the changed declaration
+  into the file's own block and the overlay no longer builds): a one-field view at the
+  address-only name of the field (`extern struct { s16 v; u8 pad[0x43E]; }
+  D_8009D862[];`) gives `lui at; addiu; addu; lh 0(at)` and puts cleanly (main
+  func_80027408).
+- A `u16` last parameter can change the head's instruction order (akao func_8002ED34
+  matched only with `u16 arg2`, found by the permuter); a `u16` temp for `x = *p +
+  0xFEFF` takes `v1` where an `s32` one takes `a0` (akao func_800308D4). `s16` locals
+  assigned `(s8)*(u8 *)&p->f` give `lbu; sll 24; sra 24` where an `s32` target folds to
+  `lb`; a `u16`-returning callee whose result the game keeps without `andi` is called
+  through an `s32 (*)(void)` cast (battle func_800DEC10).
+- Hardware byte reads repeated in a loop need a local `volatile u8 *q`; `*(volatile s8
+  *)&D_x = v` gives `lui; addiu; sb 0(reg)` where a plain store gives `lui at; sb`; a
+  `volatile u8 sp18[8]` local gives reloads with a redundant `andi 0xFF` (libcd
+  func_8003E454). `extern volatile s32 *volatile D_x` (pointer and pointee volatile)
+  gives a double load of one global with a store before the reload (battle
+  func_800B4794).
+- highway's `HwUv` is 14 bytes: `(n + k) << 4` addressing needs a 16-byte record type
+  (highway func_800A71E8).
 
 ### Order of instructions
 
@@ -863,6 +882,15 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B071C, heist func_801B048C); `a.vy = p->unkC - 0x400 + p->unk10;` gives the
   game's `lhu` order and `addu` operand order (heist); `q->unk4 = 0;` before `q->unk6 =
   0x96;` fixed a `lhu` register (vahamut0 func_801B42F0).
+- Repeated sums used as call arguments stay expressions (`arg1 + 0xD` written each time):
+  naming them (`y0 = arg1 + 0xD`) put the `move a1,reg` after a ternary argument's
+  branch, where CSE of the inline form keeps it before, as in the game (main
+  func_80020B68, func_800206E4).
+- `if (c) v = 7; else v = 6;` gives `beqz; ori v,6; ori v,7` with the else arm in the
+  delay slot, where `v = 6; if (c) v = 7;` hoists the `li` (main func_80027408).
+- Reloads after stores through a request struct: making the globals read after them
+  `volatile` (D_8009A004 ... D_8009A014 in main/decls.h) gave the game's order exactly
+  (akao func_8002DA7C; 39 overlays that use them were rebuilt and still match).
 
 ### Registers
 
@@ -1307,6 +1335,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `i + (u32)M2C_FIELD(g, u8 **, 0x1C)` gives `addu v0,s1,v0` where `ptr + i` gives the
   other operand order (snobo2 func_800A2EF0); the same 1-word `addu` order stays unsolved
   in snobo func_800A0F1C and snobo2 func_800A19C4.
+- Several uses of one scratchpad constant (`(MgSVec *)0x1F800038`) are hoisted into saved
+  registers: writing the first ones as `s1[1].vx` with `s1 = (MgSVec *)0x1F800030` keeps
+  them as `lui at` accesses, and a late `s3 = (MgSVec *)0x1F800038` takes the game's
+  `ori` after the call (battle func_800D5D28); permuting three field stores (48 orders)
+  then found the scheduler's order.
+- A loop counter dead across calls gets a temp register only as its own variable; a `u8`
+  parameter used directly as `D[arg0]` fixed a saved-register order (main func_80015D64).
+  In blocks cloned from a C twin, `s32 arg0` with a separate `s16 idN = arg0;` per block
+  gives the early `move` the game keeps (snobo func_800B8550 and func_800B8F78 from
+  func_800B63E0).
+- GCC keeps `&D_800AE978` in `s0` across a function only when the first read and the
+  first store both go through a pointer; fields reached as `(u8 *)D_800AE8D0 + off`
+  remove extra `lui`s (submar func_800A76C8, still off).
+- `q = (u8 *)cp; cp = (s8 *)q;` after `cp = &D_x;` gives a `lui; addiu` plus a `move`
+  copy of the address (shopmenu func_801D1868, still off).
 
 ### Control flow
 
@@ -1600,6 +1643,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `while (D[i] != X) { i++; if (i >= 4) break; }` gives the peeled first test, `addiu
   t0,t0,1` in the `bne` slot and `addiu t0,t0,-1` on the found path (submar
   func_800AB118).
+- A switch arm that shares another arm's tail needs an explicit `goto` into that arm
+  (`case 10: D_800F38A4 = 1; goto five;` with the label in the case 3/5 body): separate
+  copies are not cross-jumped into it; the game's `j` with `li v0,5` in its delay slot is
+  exactly that (battle func_800DEC10).
+- GCC 2.7 does not cross-jump two calls whose symbols differ, even at one address:
+  calling the second arm's target through the address-only name (`D_801B0000`, declared
+  as a function beside `func_801B0000`) keeps the game's two `jal` arms apart (battle
+  func_800D0C80).
 
 ### Loops
 
@@ -1910,6 +1961,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   stepping pointer written `c = r + i * 0x34;` at the top of the body gives the game's
   `move s2,s1` with `+0x68` displacements where `c += 0x34;` gave a biased base (knights
   func_801B56D4).
+- A pointer the game addresses with one negative offset for every field (`-0xA4(sN)`) is
+  a giv: compute it inside the loop from the first pointer (`p = (u8 *)ch + 0xDC`) and
+  use it only as a call argument (akao func_8002F848).
+- A dead assignment (`w = 0;` right after `p[3] = 1;`) splits the constant pseudo that
+  combine_movables merged across a call, giving the game's separate `li v0,1` for the
+  store and `li v1,1` for the compare (snobo func_800A5E80).
 
 ### Stack frame
 
@@ -2007,6 +2064,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   after the last `jr ra`, its delay-slot `nop` is not stored, so the C (which always
   emits it) is one word longer than the image (batres func_801B17CC needs a build change
   first).
+- Declaration order alone fixed the slots of two large functions: swapping the
+  declarations of `x0` and `ci` swapped their slots 0x40/0x48 (main func_80020B68), and
+  huft_build matched once its locals were declared `c`, `r`, `u`, `v`, `x`, with a
+  separate `s32 m` for the zeroing loop (main func_80015D64).
 
 ### How the scheduler and the allocator decide
 
@@ -2092,6 +2153,9 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   hoisting the call's argument load above it keeps it before the call, where reorg puts
   it in the `jal` slot as in the game (`t = D_80062FC4; do { D_80062F24 = p + 0x24; }
   while (0); y2 = arg1 + arg3; func_80046794(t, p);`, main func_800285AC, func_80027B84).
+- In `-dS` dumps, ties at scheduler priority 1 are decided by "greater potential hazard",
+  then by luid: a store picked before an `li` that way does not move with the source
+  order (snobo2 func_800B1248, battle func_800E368C, both still off).
 
 ### More forms
 
@@ -2319,6 +2383,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   after stores (snobo func_800A212C).
 - work/mini3/asm_of.py FILE.c prints cc1's assembly of a small C file in under a second
   (psyq.py with snobo's options): the quickest way to test one form.
+- `m = 1 << a; if (act & m)` gives `sllv` with 1 in a register where `act & (1 << a)`
+  folds to `srav; andi`; `acc |= 1 << x; acc &= ~bit;` stay two statements (akao
+  func_800308D4).
+- main's text3.c is built with -ffixed-25, and func_8001AEE4 uses `$t9` (without the flag
+  the reload spill register changes from t7 to t9): it cannot match in that file until
+  text3.c is split at it, or the function gets its own options.
 
 ## Hand-written assembly
 
@@ -2384,6 +2454,9 @@ matches within minutes. Batches 86 and 87 (1 to 28 words off) matched 9 of 18 (a
 twin) and 8 of 18. The model matters: two batches on a smaller model (Haiku 5.5) matched 1 of 27, where
 Sonnet 5.5 then matched 4 of the same 12 minigame functions and 2 of 12 new ones; a
 permuter-only batch (two 9-minute runs per near miss, no hand work) matched 1 of 14.
+Back on Sonnet 5.5, batches of 8 or 9 untried functions of 250 to 480 instructions
+(main's own code, the AKAO driver, minigames, battle) matched 2 to 4 each (13 of 41),
+and a second retry of 11 near misses 1 to 10 words off matched 2.
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
 of one representative per group of identical functions, largest groups first, then
