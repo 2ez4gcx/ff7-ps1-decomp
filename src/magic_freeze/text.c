@@ -368,7 +368,23 @@ void func_801B0E44(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_freeze/nonmatchings/text", func_801B0FC4);
+void func_801B0FC4(void) {
+    MgTask *p;
+
+    p = &D_80162978[D_8015169C];
+    func_800D4368(&p->unk4, p->unk14, 0);
+    D_801D5F2C[0] = p->unk2;
+    D_801E5F30 = func_800D4D90(&D_801D5F2C[-4], D_801517C0 + 0x70, 0xC, D_801E5F30);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        if (p->unk2 >= D_801D5114[0]) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B10B0(void) {
     MgTask *p;

@@ -105,5 +105,7 @@ void func_801B026C(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BC6C(MgSVec *, MgVec *, s32 *);
 void func_8003C21C(void *, void *);
+extern u8 D_801D5114[];
+extern s16 D_801D5F2C[];
 
 #endif /* MAGIC_FREEZE_DECLS_H */
