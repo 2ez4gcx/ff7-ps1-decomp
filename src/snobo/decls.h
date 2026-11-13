@@ -1276,5 +1276,10 @@ extern s32 D_800DC918;
 extern s32 D_800DC91C;
 extern s32 D_800DC920;
 extern s32 D_800DC924;
+typedef struct { s16 a; s16 b; s32 c; s32 d; } SbBgTile;
+typedef struct { u32 addr : 24; u32 len : 8; } SbTag;
+extern s16 D_800FFAF4;
+extern u16 D_800FFAF6;
+extern SbBgTile D_800BFFF4[];
 
 #endif /* SNOBO_DECLS_H */

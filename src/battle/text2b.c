@@ -736,7 +736,97 @@ void func_800D0B4C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D0C80);
+void func_800D0C80(u8 arg0) {
+    s32 i;
+
+    D_800F8CF0 = 0;
+    func_800D1530();
+    switch (D_80151906[arg0].a) {
+    case 2:
+        if (D_801031F0 == 0) {
+            if (D_80151906[arg0].pad[0] == 0x19) {
+                D_8015190A[0] = 1;
+                D_801524A6 = 1;
+                D_80153042 = 1;
+            }
+            D_800EFAF0[D_80151906[arg0].pad[0]](D_80151774, D_801590CC);
+        } else {
+            switch (D_80151906[arg0].pad[0]) {
+            case 0x29:
+                func_801B0000(D_80151774, D_801590CC);
+                break;
+            case 0x2C:
+                D_801B0000(D_80151774, D_801590CC);
+                break;
+            case 0x23:
+                func_801B000C(D_80151774, D_801590CC);
+                break;
+            case 0x20:
+                func_801B0054(D_80151774, D_801590CC);
+                break;
+            case 0x1D:
+                func_801B0084(D_80151774, D_801590CC);
+                break;
+            default:
+                D_800EFAF0[D_80151906[arg0].pad[0]](D_80151774, D_801590CC);
+                break;
+            }
+        }
+        break;
+    case 13:
+        D_800EFBC8[D_80151906[arg0].pad[0]](D_80151774, D_801590CC);
+        break;
+    case 20:
+        if (D_80151906[arg0].pad[0] == 2) {
+            if (D_801590CC == D_800FA9E8) {
+                D_80163A98 = 0;
+            } else {
+                D_80163A98 = 1;
+            }
+        }
+        i = arg0;
+        *(s32 *)0x1F800000 = D_800EFEA0[D_80151906[i].pad[0]](D_80151774, D_801590CC);
+        switch (D_80151906[i].pad[0]) {
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+        case 0x30:
+        case 0x38:
+        case 0x39:
+        case 0x3A:
+        case 0x3B:
+        case 0x3C:
+        case 0x3D:
+        case 0x3E:
+        case 0x3F:
+        case 0x40:
+        case 0x41:
+        case 0x42:
+        case 0x43:
+        case 0x44:
+        case 0x45:
+        case 0x46:
+        case 0x47:
+        case 0x48:
+        case 0x49:
+        case 0x4A:
+        case 0x4B:
+        case 0x4C:
+        case 0x4D:
+        case 0x4F:
+            *(s32 *)0x1F800000 = 0;
+            break;
+        }
+        func_800D08B8(arg0, *(s32 **)0x1F800000);
+        break;
+    case 32:
+        D_800EFC28[D_80151906[arg0].pad[0]](D_80151774, D_801590CC);
+        break;
+    case 3:
+        func_800C64AC();
+        break;
+    }
+}
 
 void func_800D1110(s32 arg0) {
     switch (D_80151906[arg0 & 0xFF].a) {

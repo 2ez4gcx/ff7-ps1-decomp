@@ -109,7 +109,7 @@ void func_800B36B4(void);
 s32 func_800B588C(void);
 M2C_UNK func_800B6B98(M2C_UNK, M2C_UNK);
 void func_800B8234(s32 arg0);
-M2C_UNK func_800D0C80(u8);
+void func_800D0C80(u8 arg0);
 extern s8 D_801517BC;
 extern u8 D_801590CC;
 void func_800BB944(void);
@@ -1664,5 +1664,16 @@ typedef struct { s16 a; u16 n; s32 b; Btl5DNode *c; s32 d; s32 e; u16 f; s16 g; 
 extern Btl5DPair D_800F4E6C[];
 extern s32 D_800F10E8;
 void func_800D41FC(MgMat *, s32, s32);
+extern void (*D_800EFAF0[])(s16, u8);
+extern void (*D_800EFBC8[])(s16, u8);
+extern void (*D_800EFC28[])(s16, u8);
+extern s32 (*D_800EFEA0[])(s16, u8);
+extern s8 D_800FA9E8;
+extern u8 D_801524A6;
+extern u8 D_80153042;
+extern u8 D_80163A98;
+M2C_UNK func_801B0000(s16, u8);
+M2C_UNK func_801B000C(s16, u8);
+M2C_UNK D_801B0000(s16, u8);
 
 #endif /* BATTLE_DECLS_H */
