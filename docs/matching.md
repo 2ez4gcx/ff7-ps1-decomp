@@ -379,6 +379,26 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_800B4794).
 - highway's `HwUv` is 14 bytes: `(n + k) << 4` addressing needs a 16-byte record type
   (highway func_800A71E8).
+- A plain `extern u8` the game reaches through a register (`lui; addiu; lbu 0(reg); sb
+  0(reg)`) is written as an array element: `D_80151906[0].pad2[1] |= 2`, or
+  `(&D_80151909)[0x22D4] |= 0x10` for D_80153BDD (battle func_800C679C). A global
+  declared as an array and read as `D_x[0]` keeps its load below a preceding store where
+  a scalar extern is hoisted above it, the array form of the one-field struct view
+  (magic_shinra func_801B0664, magic_freeze func_801B0FC4, snobo func_800A56C4).
+- Per-actor fields as separate `extern u8 D_x[]` indexed by `id * 0x240` gave the game's
+  addressing where a 0x240-byte struct gave `lui; addiu; addu at` (battle func_800DCFD4).
+  A 2-D array of structs (`D_801F0004[i].q[j][buf]`) lets loop.c eliminate an outer
+  counter that a flat `i * 32 + j * 2` index keeps, and an unfused 8-byte copy `*(MgB8
+  *)S = *(MgB8 *)&G[i]` matches directly when G is an array of 0x14-byte structs indexed
+  by the loop counter (magic_tupon func_801B3668).
+- A non-void return type with no `return` keeps `v0` live at the end, which stops reorg
+  filling `bne v0,v1` with `li v0,-1` (magic_scope func_801B06D0). A division by a
+  constant stored to a `u8` has no sign fix (`mult; mfhi; srl 5`), where an `s32` target
+  adds the `sra 31` and a `u32` dividend gives `multu` (condor func_800AF470).
+- Callers passing fewer arguments than decls.h's prototype: a K&R `void f();` in the work
+  file serves them all (magic_whirl func_801B0098), or a cast call `((void (*)())f)(a, b,
+  c)`. Names such as `k0`, `k1`, `f0`, `a` and `Pair16` are already macros or typedefs: a
+  work file's typedef needs another name.
 
 ### Order of instructions
 
@@ -891,6 +911,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Reloads after stores through a request struct: making the globals read after them
   `volatile` (D_8009A004 ... D_8009A014 in main/decls.h) gave the game's order exactly
   (akao func_8002DA7C; 39 overlays that use them were rebuilt and still match).
+- Cast stores through a global pointer (`*(s16 *)((u8 *)D_801EF1CC + off) = ..`) reload
+  the pointer and field stores keep it: the game's first three stores are casts and the
+  rest fields (magic_vahamut func_801B25E4). A one-field struct store `((MgHalf
+  *)&D_x)->v = v` before a call keeps the next loads before it where a volatile store
+  does not (magic_ifleet func_801B301C).
+- A load the game puts above zero stores: read it into a local before them and store the
+  local after (`w = a->unk4[1]; .. rot[2] = 0; v[1] = w;`; magic_whirl and magic_tornado
+  func_801B0098). One local reused across statements keeps loads in source order where
+  separate locals are hoisted (submar func_800A10E0). One shifted term of an OR chain in
+  its own local right after its load (`s = tw[1] << 15;`) puts that `sll` in the game's
+  place (main func_80044FA0).
+- `(u8)n0 + (u8)n1` instead of `(n0 & 0xFF) + (n1 & 0xFF)` moves the field-clear `and`
+  after both `srl`s (snobo func_800A318C); a chained assignment split in two with the
+  second field stored first, found by hc.py over the store order (`p->unkE = -0x28;
+  p->unk16 = ..`, magic_trainn func_801B054C).
 
 ### Registers
 
@@ -1350,6 +1385,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   remove extra `lui`s (submar func_800A76C8, still off).
 - `q = (u8 *)cp; cp = (s8 *)q;` after `cp = &D_x;` gives a `lui; addiu` plus a `move`
   copy of the address (shopmenu func_801D1868, still off).
+- `do { i = 0; } while (0);` around a loop counter's init flipped an entry pointer /
+  counter swap (magic_kujata func_801B3EA8, found by wrap.py). work/spells87/prio.py
+  shows most saved-register swaps are priority ties or near ties: priority is
+  `floor_log2(refs) * refs / length`, a swap flips when a pseudo's refs cross a power of
+  two or its live length changes enough, and a tie goes to the lower pseudo number
+  (magic_vahamut2 func_801B2AAC: the pointer's 15 refs over 204 against the counter's 13
+  over 203).
+- An `s32` temp for a halfword load (`s32 y = p->f;`) gives `lh` where a load that only
+  feeds a narrowing store, or a `volatile s16` read, gives `lhu` (snobo func_800AA69C,
+  battle func_800D3520). `u = (t << 12) / 45;` as its own statement and then `-D * u >>
+  12` gives the game's v0/v1 split and `mult` operand order (magic_vahamut2
+  func_801B3028). A local copy of a volatile pointer global, used in one branch only,
+  fixed a swap (main func_8003DACC).
+- A `static inline` helper `ptr_add(base, off)` for a hoisted `sym + (u8)x * 32` puts the
+  `lui/addiu` before the `sll` (field func_800CDC28, func_800CE6F4); a declared local for
+  a sum used as an index (`bi = b2A * 2;`) fixed the register of the final `addu` (condor
+  func_800AC498).
 
 ### Control flow
 
@@ -1651,6 +1703,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   calling the second arm's target through the address-only name (`D_801B0000`, declared
   as a function beside `func_801B0000`) keeps the game's two `jal` arms apart (battle
   func_800D0C80).
+- Identical case bodies that call the entry point of different overlays loaded at one
+  address stay apart only with one name per case (`ovl1_801B0040`, `ovl2_801B0040` ...:
+  tools/build.py provides any undefined name ending in `_` and eight hex digits), as the
+  game's own symbols did (battle func_800C679C, 13 cases).
+- A store through a struct field lets the scheduler move an unrelated scalar store above
+  it, after which cross-jumping merges two arm tails the game keeps apart; a cast store
+  kept the order (battle func_800A79CC). A block the game places between the arms of an
+  `if` needs its `goto` labels at that place.
+- An `if` whose body is a dead store keeps the dead `mult` of its condition (`if (z * 4 %
+  15 == 0) { i = 0; }`); an empty body drops it (magic_bioga1 func_801B03B0).
 
 ### Loops
 
@@ -1967,6 +2029,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A dead assignment (`w = 0;` right after `p[3] = 1;`) splits the constant pseudo that
   combine_movables merged across a call, giving the game's separate `li v0,1` for the
   store and `li v1,1` for the compare (snobo func_800A5E80).
+- A backward `goto` loop instead of `for` stops loop.c hoisting invariants: the multiply
+  chain and the `lui` pairs stay inside, as the game has (battle func_800B5AAC). `i =
+  p->unk0 - 1;` as its own statement before `n = 1;` stops GCC folding `(x - 1) * 16`
+  into a table offset (magic_odin2 func_801B3F54).
+- A variable set once is a giv candidate: setting it in both loops, or a fresh variable
+  per loop, stops that (magic_vahamut0 func_801B53C0). GCC 2.7.2 reduces an offset giv in
+  a loop with calls where 2.6.3 does not, for the same source (magic_garyu func_801B0480
+  against magic_tupon func_801B3668). A plain copy of a packet pointer used as a call
+  argument becomes a giv at offset 0 and the other stores rebase on it: pass `(s32)p++`
+  or store the last fields through a copy (magic_kujata func_801B3EA8).
 
 ### Stack frame
 
@@ -2068,6 +2140,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   declarations of `x0` and `ci` swapped their slots 0x40/0x48 (main func_80020B68), and
   huft_build matched once its locals were declared `c`, `r`, `u`, `v`, `x`, with a
   separate `s32 m` for the zeroing loop (main func_80015D64).
+- `x[i] = x[i] | c` against `x[i] |= c` changed a frame by 8 bytes with no stack
+  temporaries (magic_odin2 func_801B33DC; work/spells92/frame.py deletes each statement
+  in turn and prints the frame size). A `u8 pad[8]` that moves the argument spill slots
+  instead of adding space after them means the game has one more spilled pseudo (statmenu
+  func_801D14E0). A permuter score of 0 does not check the frame: run `work.py diff` on
+  its result.
 
 ### How the scheduler and the allocator decide
 
@@ -2156,6 +2234,10 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - In `-dS` dumps, ties at scheduler priority 1 are decided by "greater potential hazard",
   then by luid: a store picked before an `li` that way does not move with the source
   order (snobo2 func_800B1248, battle func_800E368C, both still off).
+- `v->vx >> 2` on an `s16` field right after its store gives `lhu; sll 16; sra 18` where
+  the game has `lh; sra 2`: expand emits two shifts and an arithmetic shift, and combine
+  merges the last two before it can form the `lh` (magic_kujata func_801B4D10). A `jal`
+  slot right after a global store (`lui at` + `sw`) stays `nop` (main func_80041D28).
 
 ### More forms
 
@@ -2456,7 +2538,14 @@ Sonnet 5.5 then matched 4 of the same 12 minigame functions and 2 of 12 new ones
 permuter-only batch (two 9-minute runs per near miss, no hand work) matched 1 of 14.
 Back on Sonnet 5.5, batches of 8 or 9 untried functions of 250 to 480 instructions
 (main's own code, the AKAO driver, minigames, battle) matched 2 to 4 each (13 of 41),
-and a second retry of 11 near misses 1 to 10 words off matched 2.
+and a second retry of 11 near misses 1 to 10 words off matched 2. Functions of 450 to 490
+instructions fill an agent's context after two to four functions (two battle batches
+matched 1 of 16). Old near misses that the first batches of a target left with a one-word
+note ("near miss", "registers") did better when retried with today's forms: 5 and 6 of
+16 in the spells (batches 1 to 27), and 2 to 6 of 18 to 22 per batch in battle, the
+minigames, field and main, where near misses that spells batches 50 to 77 had already
+worked matched 1 of 16. Start such a retry from the closest old draft, scored with
+`work.py diff` (permuter variants and `_best.c` files included).
 
 The spells repeat many functions across their files (and snobo2 repeats snobo): a batch
 of one representative per group of identical functions, largest groups first, then
