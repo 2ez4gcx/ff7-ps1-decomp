@@ -122,7 +122,95 @@ void func_801B05B4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_scope/nonmatchings/text", func_801B06D0);
+s32 func_801B06D0(void) {
+    MgMat m;
+    MgMat pad;
+    MgSVec ra;
+    MgSVec rb;
+    MgSVec v;
+    MgVec scale;
+    s32 flag;
+    MgTask *p;
+    MgTask *q;
+    s32 **hdr;
+    s16 *f;
+    s32 *t;
+    s32 w;
+    s32 r;
+    s16 k;
+    s16 c;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    k = ((s16)*(u16 *)&p->unk16 >> 1) * 2 - 1;
+    rb.vx = ra.vx = func_80039A74(p->unk2 << 8) / 40 * k;
+    c = (func_80039A74(p->unk2 << 7) >> 4) * k;
+    rb.vz = ra.vz = 0;
+    ra.vx -= 0x400;
+    rb.vy = ra.vy = c;
+    func_8003C21C(&ra, &m);
+    func_8003A79C(&D_801BD940, &m, &m);
+    scale.vy = p->unk14;
+    w = 0x4000;
+    if (!(p->unk16 & 1)) {
+        w = 0x3000;
+    }
+    scale.vx = scale.vz = w;
+    func_8003B35C(&m, &scale);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    t = D_801BCE38;
+    hdr = &D_801BD920;
+    if (!(p->unk16 & 1)) {
+        t = D_801BD21C;
+    }
+    f = (s16 *)((u8 *)hdr + 0xA);
+    *hdr = t;
+    if (!(p->unk16 & 1)) {
+        r = 0x1000 - (D_801BD91C << 5);
+    } else {
+        r = 0x1000 - D_801BD91C * 0x18;
+    }
+    *f = r;
+    D_801D5964 = func_800D29D4(&D_801BD920, D_801517C0 + 0x70, 0xC, D_801D5964);
+    if (D_80062D98 == 0) {
+        if (!(p->unk16 & 1)) {
+            q = (MgTask *)&D_80162978[func_800BBEAC(func_801B05B4)];
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            v.vx = 0;
+            v.vy = 0;
+            v.vz = p->unk18;
+            func_8003C21C(&rb, &m);
+            func_8003A79C(&D_801BD940, &m, &m);
+            m.t[0] = q->unk4;
+            m.t[1] = q->unk6;
+            m.t[2] = q->unk8;
+            func_8003B48C(&m);
+            func_8003B51C(&m);
+            func_8003BADC(&v, &q->unk4, &flag);
+            q->unkC = 0;
+            q->unkE = p->unkE;
+            q->unk10 = 0;
+            q->unk1A = 0;
+        }
+        if (p->unk2 < 8) {
+            D_801BD91C++;
+        }
+        if (p->unk2 >= 0x19) {
+            D_801BD91C--;
+        }
+        p->unk2++;
+        if (p->unk2 == 0x20) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0A48(void) {
     MgTask *p;

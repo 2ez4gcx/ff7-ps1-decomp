@@ -154,7 +154,62 @@ void func_801B0504(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_shinra/nonmatchings/text", func_801B0664);
+void func_801B0664(void) {
+    MgTask *b;
+    MgTask *p;
+    MgTask *q;
+    u8 pad[56];
+    s16 i;
+    u16 t;
+
+    b = D_80162978;
+    p = &b[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0x28) {
+            func_800D3994(p->unk1E, D_8015190F[p->unk1E][0], &p->unk4);
+            p->unk6 = (u16)p->unk6 - 0xC8;
+            p->unk14 = func_8003CC1C(D_801CC8C8[0] - p->unk4, D_801CC8CC[0] - p->unk8);
+            q = &b[func_800BBEAC(&func_801B01E8)];
+            q->unk14 = p->unk14;
+            q->unkC = (u32)(func_80039A74(p->unk14) * 0xF) >> 9;
+            q->unk10 = (u32)(func_80039B40(p->unk14) * 0xF) >> 9;
+            q->unk4 = p->unk4;
+            q->unk6 = p->unk6;
+            q->unk8 = p->unk8;
+            q->unk4 += q->unkC * 3;
+            q->unk8 += q->unk10 * 3;
+            D_800F5B70[0] = D_800F5B70[1] = D_800F5B70[2] = 0x18;
+            func_800D52A0(0x1000, 0x28);
+            func_800BBA84(0x136, p->unk1E, 0);
+        }
+        t = p->unk2;
+        if ((u32)(t - 0x28) < 0x1E && (s16)t % 10 == 0) {
+            q = &b[func_800BBEAC(&func_801B0088)];
+            q->unk4 = p->unk4;
+            q->unk6 = 0;
+            q->unk8 = p->unk8;
+        }
+        if (p->unk2 == 0x55) {
+            func_800BBEAC(&func_801B0504);
+            func_800BBA84(0x176, p->unk1E, 0);
+        }
+        if (p->unk2 == 0x9B) {
+            i = 0;
+            do {
+                if ((D_801CC8C4 >> i) & 1) {
+                    func_800D5774(i);
+                }
+                i++;
+            } while (i < 10);
+        }
+        p->unk2++;
+        if (p->unk2 == 0xB9) {
+            func_800D52A0(0, 0xA);
+            D_800FAFDC = 0;
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0950(arg0, arg1) {
     func_800BBEAC(func_801B0028);

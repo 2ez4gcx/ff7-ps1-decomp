@@ -20,7 +20,7 @@ void func_800D54EC(s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern M2C_UNK D_801B07DC;
 extern s32 D_801D5AAC;
-extern void func_801B03E0();
+void func_801B03E0(void);
 void func_801B008C(void);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
@@ -45,5 +45,8 @@ extern u8 D_801BDA7C[];
 extern s32 D_801BDA90[];
 extern struct { s16 v; } D_801BDA96;
 extern s32 D_801BDA9C[];
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; u16 unkA; u16 unkC; u16 unkE; u16 unk10; u16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; u16 unk1C; u16 unk1E; } KoObj2;
+void func_800D4CBC(s32, s32, s32);
+void func_800D5774(s32);
 
 #endif /* MAGIC_KONOHA_DECLS_H */

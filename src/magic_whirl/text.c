@@ -19,7 +19,79 @@ MgObj4C *func_801B0020(void) {
     return NULL;
 }
 
-INCLUDE_ASM("../asm/us/magic_whirl/nonmatchings/text", func_801B0098);
+void func_801B0098(WhOrb *a) {
+    s16 *v;
+    s16 *rot;
+    MgMat *m;
+    s32 i;
+    s32 k;
+    s32 n;
+    s16 t;
+    s16 w;
+    s32 x;
+    s32 u;
+    u32 c;
+
+    v = (s16 *)0x1F800000;
+    rot = (s16 *)0x1F800008;
+    m = (MgMat *)0x1F800010;
+    if (D_80062D98 == 0) {
+        i = 0;
+        do {
+            rot = (s16 *)0x1F800008;
+            a->unk4[2] += 0x25000 / a->unk4[0];
+            t = a->unk4[1] - 0x3A98 / (a->unk4[0] - 0x12C);
+            a->unk4[1] = t;
+            u = a->unk4[0];
+            if (t >> 3 >= -0x6D) {
+                x = u + (-0x64 - (t >> 4));
+            } else {
+                x = u + 0xA;
+            }
+            a->unk4[0] = x;
+            if ((s16)x < 0x190) {
+                a->unk4[0] = 0x190;
+            }
+            v[0] = a->unk4[0];
+            w = a->unk4[1];
+            v[2] = 0;
+            rot[0] = 0;
+            rot[2] = 0;
+            v[1] = w;
+            rot[1] = a->unk4[2];
+            func_8003C21C(rot, m);
+            func_8003B2CC(m, v, v);
+            a->pts[a->unkA].vx = v[0] + D_801C2F14.vx;
+            a->pts[a->unkA].vy = v[1];
+            a->pts[a->unkA].vz = v[2] + D_801C2F14.vz;
+            i++;
+            a->unkA = (a->unkA + 1) & 7;
+        } while (i < 3);
+    }
+    n = a->unk2;
+    i = 1;
+    if (n >= 6) {
+        n = 5;
+    }
+    k = (a->unkA - n) & 7;
+    if (i < n) {
+        do {
+            func_800D4368(&a->pts[k], 0x1000, 0);
+            c = (u32)(((i << 7) / 5) * D_801C2F1C) >> 12;
+            D_801C2EE4.r = D_801C2EE4.g = D_801C2EE4.b = c;
+            D_801E6A80 = func_800D6260((u8 *)&D_801C2EE4 - 8, D_801517C0 + 0x70, 0xC, D_801E6A80);
+            i++;
+            k = (k + 1) & 7;
+        } while (i < n);
+    }
+    if (D_80062D98 == 0) {
+        w = (u16)a->unk2 + 1;
+        a->unk2 = w;
+        if (w >= 0x33) {
+            a->unk0 = -1;
+        }
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_whirl/nonmatchings/text", func_801B0398);
 

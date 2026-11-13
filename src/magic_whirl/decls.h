@@ -17,7 +17,6 @@ void func_801B0844(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 extern s16 D_8015169C;
 extern MgObj20 D_80162978[];
-void func_801B0098();
 extern u8 D_801C6A80[];
 extern u8 *D_801E6A80;
 extern s16 D_80162080;
@@ -53,7 +52,7 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B35C(MgMat *, MgVec *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
-void func_8003C21C(MgSVec *, MgMat *, s32);
+void func_8003C21C();
 u8 *func_800D29D4(void *, s32, s32, u8 *);
 extern MgMat D_800FA63C;
 extern s32 D_801517C0;
@@ -62,5 +61,11 @@ extern M2C_UNK D_801C1E84;
 extern void *D_801C2EEC[];
 extern s16 D_801C2EF6;
 extern MgSVec D_801C2EFC;
+typedef struct { s16 unk0; s16 unk2; s16 unk4[3]; s16 unkA; MgSVec pts[8]; } WhOrb;
+extern struct { u8 r; u8 g; u8 b; } D_801C2EE4;
+void func_8003B2CC(MgMat *, void *, void *);
+void func_800D4368(void *, s32, s32);
+u8 *func_800D6260(void *, s32, s32, u8 *);
+void func_801B0098(WhOrb *a);
 
 #endif /* MAGIC_WHIRL_DECLS_H */

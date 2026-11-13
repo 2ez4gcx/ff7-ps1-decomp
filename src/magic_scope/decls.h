@@ -42,7 +42,7 @@ void func_801B04D0(s32 arg0, MgSVec *rot, s16 scale);
 extern MgMat D_801B0000;
 void func_801B0C94(s32 arg0, s32 arg1);
 M2C_UNK func_800BBA84(M2C_UNK, s32, M2C_UNK);
-s32 func_800BBEAC(M2C_UNK *);
+s32 func_800BBEAC(void (*)());
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void func_800D44E8(MgSVec *, MgMat *);
 M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
@@ -58,6 +58,17 @@ s16 func_8003CC1C(s32, s32);
 M2C_UNK func_800D5774(s16);
 extern s16 D_80151774;
 extern MgSVec D_801BD938;
-extern M2C_UNK func_801B06D0;
+s32 func_801B06D0(void);
+s32 func_80039A74(s32);
+MgMat *func_8003A63C(MgMat *, MgMat *, MgMat *);
+MgMat *func_8003A79C(MgMat *, MgMat *, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003B69C(s32, s32, s32);
+void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+u8 *func_800D29D4(void *, s32, s32, u8 *);
+extern s32 D_801BCE38[];
+extern s32 D_801BD21C[];
+extern s16 D_801BD91C;
+extern s32 *D_801BD920;
 
 #endif /* MAGIC_SCOPE_DECLS_H */

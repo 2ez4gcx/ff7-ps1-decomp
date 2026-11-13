@@ -79,7 +79,57 @@ void func_801B008C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_konoha/nonmatchings/text", func_801B03E0);
+void func_801B03E0(void) {
+    MgVec pad0;
+    MgSVec v;
+    MgMat pad1;
+    KoObj2 *p;
+    KoObj2 *q;
+    s16 i;
+
+    p = (KoObj2 *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            v.vx = ((s16)p->unkC - (s16)p->unk4) / 15;
+            v.vz = ((s16)p->unk10 - (s16)p->unk8) / 15;
+            i = 0;
+            do {
+                q = (KoObj2 *)&D_80162978[func_800BBEAC(func_801B008C)];
+                q->unk18 = func_80042DA8() % 0x1000;
+                q->unk14 = func_80042DA8() % 3;
+                q->unk1A = func_80042DA8() % 0x1000;
+                q->unk16 = func_80042DA8() % (0xBB8 - ((func_80039A74(i * 0x19 + 0x1F4) * 0x9C4) >> 12));
+                q->unk4 = p->unk4;
+                q->unk6 = -i * 0x28;
+                q->unk8 = p->unk8;
+                q->unkC = v.vx;
+                q->unkE = v.vy;
+                i++;
+                q->unk10 = v.vz;
+            } while (i < 0x3C);
+        }
+        if (p->unk2 == 0x28) {
+            i = 0;
+            do {
+                if ((D_801D5AAC >> i) & 1) {
+                    func_800D5774(i);
+                    func_800D4CBC(i, 0x27, 0x1800);
+                }
+                i++;
+            } while (i < 10);
+        }
+        if (p->unk2 < 8) {
+            D_801BDA78++;
+        }
+        if (p->unk2 >= 0x2B) {
+            D_801BDA78--;
+        }
+        p->unk2++;
+        if (p->unk2 == 0x32) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 s32 func_801B0704(arg0, arg1) {
     MgObj20 *p;
