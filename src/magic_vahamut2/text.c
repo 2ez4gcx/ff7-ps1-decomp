@@ -389,7 +389,6 @@ void func_801B3028(void) {
     s32 u;
     s32 w;
     s32 *q;
-    s32 r;
 
     p = &D_80162978[D_8015169C];
     t = p->unk2;
