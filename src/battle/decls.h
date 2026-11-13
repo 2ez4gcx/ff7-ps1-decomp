@@ -552,7 +552,7 @@ s32 func_800B1C1C(s32 arg0);
 typedef struct { u8 pad[0x28]; u16 mask[2]; s32 w[1][10]; } B1C1C_T;
 void func_800B88CC(s32 arg0);
 u8 func_800B8A34(s32 arg0, s32 arg1);
-extern s32 func_800CE970;
+void func_800CE970(void);
 s16 func_800BFA98(u8 *arg0, u8 arg1);
 typedef struct { u16 pos; u8 pad[0xC]; } BtlStream14;
 extern BtlStream14 D_8015184C[];
@@ -1698,5 +1698,8 @@ void func_800A64A0(s32 arg0, u8 arg1);
 extern s32 D_800F7DF8;
 u8 func_800A5A5C(void);
 extern u8 D_800A0278[];
+void func_800C5CC0(void);
+typedef struct { s16 id; s16 a; u8 b; u8 c; } BtlQ6;
+extern u8 D_8016297C[];
 
 #endif /* BATTLE_DECLS_H */
