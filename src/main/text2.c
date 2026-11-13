@@ -682,7 +682,161 @@ s32 func_80015D14(u32 arg0) {
     return r;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_80015D64);
+s32 func_80015D64(s32 *arg0, s32 arg1, s32 arg2, M2C_UNK *arg3, M2C_UNK *arg4, void **arg5, s32 *arg6) {
+    u32 c[17];
+    MainHuft r;
+    MainHuft *u[16];
+    u32 v[288];
+    u32 x[17];
+    u32 a;
+    u32 f;
+    s32 g;
+    s32 h;
+    u32 i;
+    u32 j;
+    s32 k;
+    s32 l;
+    u32 *p;
+    MainHuft *q;
+    s32 w;
+    u32 *xp;
+    s32 y;
+    u32 z;
+    u32 n;
+    u32 s;
+    u16 *d;
+    s32 m;
+
+    n = arg1;
+    s = arg2;
+    d = (u16 *)arg3;
+    for (m = 16; m >= 0; m--) {
+        c[m] = 0;
+    }
+    p = (u32 *)arg0;
+    i = n;
+    do {
+        c[*p]++;
+        p++;
+    } while (--i);
+    if (c[0] == n) {
+        *arg5 = NULL;
+        *arg6 = 0;
+        return 0;
+    }
+    l = *arg6;
+    for (j = 1; j <= 16; j++) {
+        if (c[j]) {
+            break;
+        }
+    }
+    k = j;
+    if ((u32)l < j) {
+        l = j;
+    }
+    for (i = 16; i; i--) {
+        if (c[i]) {
+            break;
+        }
+    }
+    g = i;
+    if ((u32)l > i) {
+        l = i;
+    }
+    *arg6 = l;
+    for (y = 1 << j; j < i; j++, y <<= 1) {
+        if ((y -= c[j]) < 0) {
+            return 2;
+        }
+    }
+    if ((y -= c[i]) < 0) {
+        return 2;
+    }
+    c[i] += y;
+    x[1] = j = 0;
+    p = c + 1;
+    xp = x + 2;
+    while (--i) {
+        *xp++ = (j += *p++);
+    }
+    p = (u32 *)arg0;
+    i = 0;
+    do {
+        if ((j = *p++) != 0) {
+            v[x[j]++] = i;
+        }
+    } while (++i < n);
+    x[0] = i = 0;
+    p = v;
+    h = -1;
+    w = -l;
+    u[0] = NULL;
+    q = NULL;
+    z = 0;
+    for (; k <= g; k++) {
+        a = c[k];
+        while (a--) {
+            while (k > w + l) {
+                h++;
+                w += l;
+                z = g - w;
+                z = z > (u32)l ? l : z;
+                if ((f = 1 << (j = k - w)) > a + 1) {
+                    f -= a + 1;
+                    xp = c + k;
+                    while (++j < z) {
+                        if ((f <<= 1) <= *++xp) {
+                            break;
+                        }
+                        f -= *xp;
+                    }
+                }
+                z = 1 << j;
+                if ((q = (MainHuft *)func_80015D14((z + 1) * sizeof(MainHuft))) == NULL) {
+                    if (h) {
+                        func_80016320(u[0]);
+                    }
+                    return 3;
+                }
+                D_80062E50 += z + 1;
+                *arg5 = q + 1;
+                *(arg5 = (void **)&q->v.t) = NULL;
+                u[h] = ++q;
+                if (h) {
+                    x[h] = i;
+                    r.b = l;
+                    r.e = j + 16;
+                    r.v.t = q;
+                    j = i >> (w - l);
+                    u[h - 1][j] = r;
+                }
+            }
+            r.b = k - w;
+            if (p >= v + n) {
+                r.e = 99;
+            } else if (*p < s) {
+                r.e = (*p < 256 ? 16 : 15);
+                r.v.n = *p++;
+            } else {
+                r.e = ((u16 *)arg4)[*p - s];
+                r.v.n = d[*p++ - s];
+            }
+            f = 1 << (k - w);
+            for (j = i >> w; j < z; j += f) {
+                q[j] = r;
+            }
+            for (j = 1 << (k - 1); i & j; j >>= 1) {
+                i ^= j;
+            }
+            i ^= j;
+            while ((i & ((1 << w) - 1)) != x[h]) {
+                h--;
+                w -= l;
+            }
+        }
+    }
+    return y != 0 && g != 1;
+}
 
 s32 func_80016320(void *arg0) {
     void *var_a0;
@@ -886,4 +1040,151 @@ s32 func_80016808(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text2", func_800169B8);
+s32 func_800169B8(void) {
+    s32 i;
+    u32 j;
+    u32 l;
+    u32 m;
+    u32 n;
+    MainHuft *tl;
+    MainHuft *td;
+    s32 bl;
+    s32 bd;
+    u32 nb;
+    u32 nl;
+    u32 nd;
+    u32 ll[316];
+    u32 b;
+    u32 k;
+
+    b = D_80062E48;
+    k = D_80062E4C;
+    while (k < 5) {
+        b |= D_80062E3C[D_80062E38++] << k;
+        k += 8;
+    }
+    nl = 257 + (b & 0x1F);
+    b >>= 5;
+    k -= 5;
+    while (k < 5) {
+        b |= D_80062E3C[D_80062E38++] << k;
+        k += 8;
+    }
+    nd = 1 + (b & 0x1F);
+    b >>= 5;
+    k -= 5;
+    while (k < 4) {
+        b |= D_80062E3C[D_80062E38++] << k;
+        k += 8;
+    }
+    nb = 4 + (b & 0xF);
+    b >>= 4;
+    k -= 4;
+    if (nl > 286 || nd > 30) {
+        return 1;
+    }
+    for (j = 0; j < nb; j++) {
+        while (k < 3) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        ll[D_80048DF8[j]] = b & 7;
+        b >>= 3;
+        k -= 3;
+    }
+    for (; j < 19; j++) {
+        ll[D_80048DF8[j]] = 0;
+    }
+    bl = 7;
+    if ((i = func_80015D64(ll, 19, 19, NULL, NULL, &tl, &bl)) != 0) {
+        if (i == 1) {
+            func_80016320(tl);
+        }
+        return i;
+    }
+    n = nl + nd;
+    m = D_80048F3C[bl];
+    i = l = 0;
+    while ((u32)i < n) {
+        while (k < bl) {
+            b |= D_80062E3C[D_80062E38++] << k;
+            k += 8;
+        }
+        td = tl + (b & m);
+        j = td->b;
+        b >>= j;
+        k -= j;
+        j = td->v.n;
+        if (j < 16) {
+            ll[i++] = l = j;
+        } else if (j == 16) {
+            while (k < 2) {
+                b |= D_80062E3C[D_80062E38++] << k;
+                k += 8;
+            }
+            j = 3 + (b & 3);
+            b >>= 2;
+            k -= 2;
+            if ((u32)i + j > n) {
+                return 1;
+            }
+            while (j--) {
+                ll[i++] = l;
+            }
+        } else if (j == 17) {
+            while (k < 3) {
+                b |= D_80062E3C[D_80062E38++] << k;
+                k += 8;
+            }
+            j = 3 + (b & 7);
+            b >>= 3;
+            k -= 3;
+            if ((u32)i + j > n) {
+                return 1;
+            }
+            while (j--) {
+                ll[i++] = 0;
+            }
+            l = 0;
+        } else {
+            while (k < 7) {
+                b |= D_80062E3C[D_80062E38++] << k;
+                k += 8;
+            }
+            j = 11 + (b & 0x7F);
+            b >>= 7;
+            k -= 7;
+            if ((u32)i + j > n) {
+                return 1;
+            }
+            while (j--) {
+                ll[i++] = 0;
+            }
+            l = 0;
+        }
+    }
+    func_80016320(tl);
+    D_80062E48 = b;
+    D_80062E4C = k;
+    bl = D_80062D58;
+    if ((i = func_80015D64(ll, nl, 0x101, &D_80048E44, &D_80048E84, &tl, &bl)) != 0) {
+        if (i == 1) {
+            return -1;
+        }
+        return i;
+    }
+    bd = D_80062D5C;
+    if ((i = func_80015D64(ll + nl, nd, 0, &D_80048EC4, &D_80048F00, &td, &bd)) != 0) {
+        if (i == 1) {
+            return -1;
+        }
+        func_80016320(tl);
+        return i;
+    }
+    if (func_80016340(tl, td, bl, bd) != 0) {
+        return 1;
+    }
+    func_80016320(tl);
+    func_80016320(td);
+    return 0;
+}

@@ -1237,7 +1237,7 @@ typedef struct { u8 pad[4]; u8 r; u8 g; u8 b; u8 code; s16 x0; s16 y0; s16 x1; s
 extern u8 *D_80062E3C;
 s32 func_800166C0(void);
 s32 func_80016808(void);
-s32 func_800169B8();
+s32 func_800169B8(void);
 void func_8001B944(void);
 extern s32 D_80062E7C;
 s32 func_8002382C(s32 arg0);
@@ -1348,11 +1348,11 @@ s32 func_80023940(s32 arg0);
 extern s32 D_80049484;
 extern s32 D_80049488;
 void func_8001FCDC(s32 arg0, u32 arg1, s32 arg2);
-s32 func_80015D64(s32 *, M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK *, void **, s32 *);
-extern M2C_UNK D_80048E44;
-extern M2C_UNK D_80048E84;
-extern M2C_UNK D_80048EC4;
-extern M2C_UNK D_80048F00;
+s32 func_80015D64(s32 *arg0, s32 arg1, s32 arg2, M2C_UNK *arg3, M2C_UNK *arg4, void **arg5, s32 *arg6);
+extern s32 D_80048E44;
+extern s32 D_80048E84;
+extern s32 D_80048EC4;
+extern s32 D_80048F00;
 void func_800320C4(AkaoChannel *ch, AkaoSong *song, s32 arg2);
 extern AkaoChannel D_80099890[];
 s32 func_80019978(s32 arg0);
@@ -1764,5 +1764,8 @@ void func_8002F848(void);
 extern s16 D_8009A146;
 extern s16 D_8009C56C;
 extern s16 D_8009C56E;
+extern s32 D_80048DF8[];
+extern s32 D_80062D58;
+extern s32 D_80062D5C;
 
 #endif /* MAIN_DECLS_H */
