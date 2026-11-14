@@ -77,7 +77,7 @@ void func_801B24A8(s32);
 void func_801B2640(void);
 extern u8 D_801D4018;
 extern s16 D_801E7D3C[];
-s32 func_801B13A0(void *, s32, s32, s32);
+s32 func_801B13A0(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_801B18D4(void);
 extern s16 D_801E7CB4[];
 extern MgVec D_801E7CB8;
@@ -86,7 +86,7 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B35C(MgMat *, MgVec *);
 MgMat *func_8003C21C(MgSVec *, MgMat *);
 void func_800D461C(MgMat *);
-s32 func_801B1090(void *, s32, s32, s32);
+s32 func_801B1090(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_801B2C3C(void);
 extern s8 D_801E7D80;
 extern s8 D_801E7D81;
@@ -121,5 +121,10 @@ extern MgSVec *D_801E7D14[];
 extern u16 D_801E7D24[];
 s32 func_80039A74(s32);
 s32 func_80039B40(s32);
+typedef struct { u32 addr : 24; u32 len : 8; } LamTag;
+typedef struct { u8 *data; s32 col; u16 n; } LamAnim;
+typedef struct { s16 flags; s16 pad2; u16 x; u16 y; u8 u; u8 pad9; u8 v; u8 padB; u16 tpage; u16 clut; u8 w; u8 pad11; u8 h; u8 pad13; } LamSpr;
+typedef struct { LamTag tag; s32 rgb; s32 xy0; u8 u0; u8 v0; u16 clut; s32 xy1; u8 u1; u8 v1; u16 tpage; s32 xy2; u8 u2; u8 v2; u16 pad1E; s32 xy3; u8 u3; u8 v3; u16 pad26; } LamFt4;
+s32 func_8003BD7C(MgSVec *, MgSVec *, MgSVec *, MgSVec *, s32 *, s32 *, s32 *, s32 *, s32 *, s32 *);
 
 #endif /* MAGIC_LAMU_DECLS_H */

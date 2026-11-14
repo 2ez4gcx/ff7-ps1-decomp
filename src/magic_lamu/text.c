@@ -27,9 +27,137 @@ void func_801B102C(s32 arg0, s32 arg1, s16 arg2) {
     p->unk14 = arg2;
 }
 
-INCLUDE_ASM("../asm/us/magic_lamu/nonmatchings/text", func_801B1090);
+s32 func_801B1090(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    LamFt4 *pk;
+    LamSpr *r;
+    MgSVec *v;
+    s32 sp28;
+    s32 flag;
+    s32 otz;
+    s32 i;
+    s32 cnt;
+    u8 w;
+    s32 ww;
+    s32 hh;
+    u8 h;
 
-INCLUDE_ASM("../asm/us/magic_lamu/nonmatchings/text", func_801B13A0);
+    v = (MgSVec *)0x1F800300;
+    pk = (LamFt4 *)arg3;
+    r = (LamSpr *)(((LamAnim *)arg0)->data + 8);
+    for (i = 0; i < ((LamAnim *)arg0)->n; i++) {
+        r = (LamSpr *)((u8 *)r + (((s16 *)r)[1] * 0x14 + 4));
+    }
+    cnt = ((s16 *)r)[1];
+    r = (LamSpr *)((u8 *)r + 4);
+    for (i = 0; i < cnt; i++) {
+        ww = r->w;
+        hh = r->h;
+        v[0].vx = v[2].vx = r->x << 3;
+        v[1].vx = v[3].vx = (ww + r->x) << 3;
+        v[0].vy = v[1].vy = r->y << 3;
+        v[2].vy = v[3].vy = (hh + r->y) << 3;
+        w = ww;
+        h = hh;
+        v[0].vz = v[1].vz = v[2].vz = v[3].vz = 0;
+        otz = func_8003BD7C(&v[0], &v[1], &v[2], &v[3], &pk->xy0, &pk->xy1, &pk->xy2, &pk->xy3, &sp28, &flag);
+        if ((flag & 0x60000) == 0) {
+            *(u32 *)pk = 0x09000000;
+            pk->rgb = ((LamAnim *)arg0)->col;
+            pk->clut = r->clut;
+            pk->tpage = r->tpage;
+            flag = r->flags;
+            if (flag & 0x200) {
+                w = *(u16 *)&r->w >> 8;
+                h = *(u16 *)&r->h >> 8;
+            }
+            if (flag & 1) {
+                pk->u0 = pk->u2 = w + r->u - 1;
+                pk->u1 = pk->u3 = r->u;
+            } else {
+                pk->u0 = pk->u2 = r->u;
+                pk->u1 = pk->u3 = w + r->u;
+            }
+            if (flag & 2) {
+                pk->v0 = pk->v1 = h + r->v - 1;
+                pk->v2 = pk->v3 = r->v;
+            } else {
+                pk->v0 = pk->v1 = r->v;
+                pk->v2 = pk->v3 = h + r->v;
+            }
+            pk->tag.addr = ((LamTag *)D_801517C0 + (otz >> (0xE - arg2)) + 0x1C)->addr;
+            ((LamTag *)D_801517C0 + (otz >> (0xE - arg2)) + 0x1C)->addr = (u32)pk;
+            pk++;
+        }
+        r++;
+    }
+    return (s32)pk;
+}
+
+s32 func_801B13A0(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    LamFt4 *pk;
+    LamSpr *r;
+    MgSVec *v;
+    s32 sp28;
+    s32 flag;
+    s32 otz;
+    s32 i;
+    s32 cnt;
+    u8 w;
+    s32 ww;
+    s32 hh;
+    u8 h;
+
+    v = (MgSVec *)0x1F800300;
+    pk = (LamFt4 *)arg3;
+    r = (LamSpr *)(((LamAnim *)arg0)->data + 8);
+    for (i = 0; i < ((LamAnim *)arg0)->n; i++) {
+        r = (LamSpr *)((u8 *)r + (((s16 *)r)[1] * 0x14 + 4));
+    }
+    cnt = ((s16 *)r)[1];
+    r = (LamSpr *)((u8 *)r + 4);
+    for (i = 0; i < cnt; i++) {
+        ww = r->w;
+        hh = r->h;
+        v[0].vx = v[2].vx = r->x << 5;
+        v[1].vx = v[3].vx = (ww + r->x) << 5;
+        v[0].vy = v[1].vy = r->y << 5;
+        v[2].vy = v[3].vy = (hh + r->y) << 5;
+        w = ww;
+        h = hh;
+        v[0].vz = v[1].vz = v[2].vz = v[3].vz = 0;
+        otz = func_8003BD7C(&v[0], &v[1], &v[2], &v[3], &pk->xy0, &pk->xy1, &pk->xy2, &pk->xy3, &sp28, &flag);
+        if ((flag & 0x60000) == 0) {
+            *(u32 *)pk = 0x09000000;
+            pk->rgb = ((LamAnim *)arg0)->col;
+            pk->clut = r->clut;
+            pk->tpage = r->tpage;
+            flag = r->flags;
+            if (flag & 0x200) {
+                w = *(u16 *)&r->w >> 8;
+                h = *(u16 *)&r->h >> 8;
+            }
+            if (flag & 1) {
+                pk->u0 = pk->u2 = w + r->u - 1;
+                pk->u1 = pk->u3 = r->u;
+            } else {
+                pk->u0 = pk->u2 = r->u;
+                pk->u1 = pk->u3 = w + r->u;
+            }
+            if (flag & 2) {
+                pk->v0 = pk->v1 = h + r->v - 1;
+                pk->v2 = pk->v3 = r->v;
+            } else {
+                pk->v0 = pk->v1 = r->v;
+                pk->v2 = pk->v3 = h + r->v;
+            }
+            pk->tag.addr = ((LamTag *)D_801517C0 + (otz >> (0xE - arg2)) + 0x1C)->addr;
+            ((LamTag *)D_801517C0 + (otz >> (0xE - arg2)) + 0x1C)->addr = (u32)pk;
+            pk++;
+        }
+        r++;
+    }
+    return (s32)pk;
+}
 
 void func_801B16B0(void) {
     MgTask *p;

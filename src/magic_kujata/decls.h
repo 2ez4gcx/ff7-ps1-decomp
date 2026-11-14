@@ -53,7 +53,7 @@ extern MgCam D_801F0420;
 extern MgCam *D_801F0450;
 s32 func_80039F5C(s32);
 extern s16 D_80162084;
-void func_8003A078(MgVec *, MgSVec *);
+s32 func_8003A078(MgVec *, MgSVec *);
 extern MgSVec D_80158D00;
 void func_8003ACE4(MgSVec *, MgVec *);
 void func_800D3994(s32, s32, MgSVec *);
@@ -193,5 +193,8 @@ typedef struct { MgSVec v[4]; u8 pad20[0x30]; s32 otz; s32 ext; s32 flag; } KjSc
 typedef struct { u32 tag; u32 c0; s32 xy0; u32 cl0; s32 xy1; u32 cl1; s32 xy2; u16 uv2; u16 pad1E; s32 xy3; u16 uv3; u16 pad26; } KjQuad;
 extern KjUv D_801F00B4[];
 extern KjScr *D_801F01B4;
+void func_801B666C(void *);
+extern KjRay *D_801F0284;
+extern u8 D_801F0278[];
 
 #endif /* MAGIC_KUJATA_DECLS_H */

@@ -1035,7 +1035,55 @@ void func_801B66F8(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B68C4);
+void func_801B68C4(void) {
+    MgTask *p;
+    s32 r;
+    s32 t;
+    s32 u;
+    s32 v;
+    s32 k;
+    u8 pad[8];
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        r = (s16)((s16)p->unk2 % 12);
+        if (r == 0) {
+            t = p->unk0;
+            if (t >= 3) {
+                p->unk0 = -1;
+                return;
+            }
+            u = t << 11;
+            D_801F0284->v.vx = -p->unk4;
+            D_801F0284->v.vy = 0;
+            D_801F0284->v.vz = -0x1388 - p->unk8;
+            k = func_80039F5C(func_8003A078(&D_801F0284->v, &D_801F0284->a));
+            k = k * (0x2000 - u);
+            v = 0x1000 - u;
+            p->unkC = (p->unkC * v + D_801F0284->a.vx * u) >> 12;
+            p->unkE = (p->unkE * v + D_801F0284->a.vy * u) >> 12;
+            p->unk10 = (p->unk10 * v + D_801F0284->a.vz * u) >> 12;
+            u = 0x1000 / (3 - p->unk0);
+            p->unk16 = (k >> 12) * u / 10 >> 12;
+            p->unk14 = func_80042DA8() % 1000 + 0x7D0;
+            p->unk0++;
+        }
+        if (r < 10) {
+            u = (r << 12) / 10;
+            p->unk4 += p->unkC * p->unk16 >> 12;
+            p->unk6 = -p->unk14 * func_80039A74(u / 2) >> 12;
+            p->unk8 += p->unk10 * p->unk16 >> 12;
+        } else {
+            p->unk6 = 0;
+        }
+        func_801B666C(&p->unk4);
+    }
+    func_801B0068((MgSVec *)&p->unk4, 0x2800, 0);
+    D_80163C74 = func_800D4D90(D_801F0278, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 void func_801B6C18(void) {
     MgTask *p;
