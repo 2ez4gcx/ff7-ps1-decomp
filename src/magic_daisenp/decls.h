@@ -45,12 +45,16 @@ void func_8003B2CC(MgMat *, MgSVec *, MgSVec *);
 extern u16 D_801B72DC;
 s32 func_80042DA8();
 M2C_UNK func_800D54EC();
-extern M2C_UNK func_801B04AC;
+void func_801B04AC(void);
 extern MgSVec D_801CFCC0;
 extern s32 D_801CFCC8;
 extern s32 D_801CFCCC;
 extern s32 D_801CFCD0;
 extern MgVec D_801CFCD8;
 extern MgVec D_801CFCE8;
+typedef struct { u8 b[8]; } MgB8;
+extern u8 D_800F5B70[];
+extern u16 D_800F5B74;
+void func_800D5774(s32);
 
 #endif /* MAGIC_DAISENP_DECLS_H */

@@ -79,5 +79,9 @@ extern s16 D_801CD4D4[];
 extern s16 D_801CD4EC[];
 extern u16 D_801CD4FC[];
 extern u16 D_801CD50C[];
+s32 func_80042DA8(void);
+void func_8003A28C(MgSVec *, MgSVec *, s32, s32);
+void func_800D5774(s32);
+s32 func_801B1898(void *, s32);
 
 #endif /* MAGIC_QUEIG_DECLS_H */

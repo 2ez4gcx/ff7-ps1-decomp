@@ -57,7 +57,7 @@ extern s32 D_801517C0;
 extern M2C_UNK D_801CACD0;
 extern s32 D_801E9418;
 void func_801B0AB0(void);
-s32 func_800D4D90(u8 *, s32, s32, s32);
+s32 func_800D4D90(void *, s32, s32, s32);
 extern MgVec D_801D1340;
 extern u16 D_801D1384;
 void func_801B0E58(void);
@@ -86,5 +86,10 @@ extern ErVec D_801EC318;
 extern ErVec D_801EC320;
 extern ErVec D_801EC328;
 extern ErVec D_801EC310;
+typedef struct { s16 unk0; union { s16 w; u8 b; } unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } MgPart18;
+s32 func_80042DA8(void);
+void func_800D4368(void *, s32, s32);
+extern u8 D_801D1374[];
+extern MgPart18 D_801E9428[][0x64];
 
 #endif /* MAGIC_ERAVE_DECLS_H */
