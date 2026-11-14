@@ -18,7 +18,7 @@ typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
 s32 func_8003CC1C(s32, s32);
-void func_8003A08C(MgVec *, MgVec *);
+s32 func_8003A08C(MgVec *, MgVec *);
 s32 func_801B0128(MgVec *a, MgVec *b, MgVec *c);
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 s32 func_80039A74(s32);
@@ -66,7 +66,6 @@ extern u16 D_801E0838;
 extern u16 D_801E083C;
 extern u16 D_801E0840;
 extern M2C_UNK D_801BEF4C;
-void func_801B4454(MgSatObj *);
 void func_801B43B0(MgSatLst *r, MgSVec *val);
 void func_8003B2CC(MgMat *, void *, MgSVec *);
 void func_8003B16C(MgMat *, MgMat *);
@@ -170,5 +169,10 @@ extern SatCamSys D_801E1A14;
 extern MgSVec D_80158D00;
 extern MgSVec D_801031E8;
 void func_8003BADC(MgSVec *, MgSVec *, s32 *);
+typedef struct { u32 flags; MgSVec pos; MgSVec prev; MgVec vel; u8 pad24[0x10]; MgSVec tgt; MgVec diff; s32 unk4C; s32 unk50; s32 unk54; s32 unk58; s32 unk5C; s32 unk60; s32 unk64; MgVec unk68; MgMat unk78; } SatObj2;
+s32 func_80039F5C(s32);
+void func_8003AB84(MgMat *, MgVec *, MgVec *);
+void func_8003A79C(MgMat *, MgMat *, MgMat *);
+void func_801B4454(SatObj2 *o);
 
 #endif /* MAGIC_SATAN_DECLS_H */

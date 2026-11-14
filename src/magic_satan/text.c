@@ -674,7 +674,61 @@ void func_801B4424(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B4454);
+void func_801B4454(SatObj2 *o) {
+    MgVec a;
+    MgVec b;
+    MgMat m1;
+    MgMat m2;
+    s32 r;
+    s32 sp;
+
+    o->diff.vx = o->tgt.vx - o->pos.vx;
+    o->diff.vy = o->tgt.vy - o->pos.vy;
+    o->diff.vz = o->tgt.vz - o->pos.vz;
+    sp = func_80039F5C(func_8003A08C(&o->diff, &o->diff));
+    if (o->unk64 >= sp) {
+        if (!(o->flags & 0x40000000)) {
+            o->flags |= 0x80000000;
+        }
+    } else {
+        o->flags &= 0x3FFFFFFF;
+    }
+    if (o->unk4C) {
+        o->unk60 = sp;
+    } else {
+        o->unk60 = sp;
+    }
+    sp = o->unk58;
+    o->unk5C = sp;
+    r = func_801B0128(&o->vel, &o->diff, &a);
+    o->unk54 = r;
+    if (o->flags & 0x4000000) {
+        if (o->unk4C < r) {
+            r = o->unk4C;
+        }
+    }
+    o->unk50 = r;
+    func_801B0204(r, &m1, &a);
+    func_8003AB84(&m1, &o->vel, &o->vel);
+    *(MgB8 *)&o->prev = *(MgB8 *)&o->pos;
+    o->pos.vx += sp * o->vel.vx >> 12;
+    o->pos.vy += sp * o->vel.vy >> 12;
+    o->pos.vz += sp * o->vel.vz >> 12;
+    if (o->flags & 0x10000000) {
+        r = func_801B0128(&o->unk68, &o->vel, &a);
+        func_801B0204(r, &o->unk78, &a);
+    } else {
+        a.vx = o->vel.vx;
+        a.vy = 0;
+        a.vz = o->vel.vz;
+        func_8003A08C(&a, &a);
+        r = func_801B0128(&o->unk68, &a, &b);
+        func_801B0204(r, &m1, &b);
+        r = func_801B0128(&a, &o->vel, &b);
+        func_801B0204(r, &m2, &b);
+        func_8003A79C(&m2, &m1, &o->unk78);
+    }
+}
 
 void func_801B46C0(void) {
     MgTask *p;
