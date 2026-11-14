@@ -65,8 +65,10 @@ s32 func_80042DA8();
 void *func_801B0094(QrCtx *arg0, u8 *arg1, s32 *arg2);
 void *func_801B033C(QrCtx *arg0, u8 *arg1, s32 *arg2);
 typedef struct { u16 a; u16 b; u16 c; u16 d; u16 pad[6]; } QrIdx4;
-extern void func_801B19EC();
+void func_801B19EC(void);
 extern u8 D_801C2EE8[];
 extern u8 D_801C307C[];
+typedef struct { void *unk0; s32 unk4; s32 unk8; s32 unkC; } QrFrame;
+s32 func_801B17F4(void *, s32);
 
 #endif /* MAGIC_QUEIR_DECLS_H */

@@ -624,7 +624,96 @@ void func_801B51F0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B5310);
+void func_801B5310(void) {
+    MgMat m;
+    u8 pad[8];
+    MgTask *p;
+    HdPart *base;
+    HdPart *q;
+    HdPart *r;
+    s32 i;
+    s32 j;
+    s32 ang;
+    s32 s0;
+    s32 k;
+    s32 t;
+
+    i = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    base = (HdPart *)D_801F1240 + p->unk1C * 0x12C;
+    do {
+        q = &base[i];
+        if (q->on != 0) {
+            D_801F103C[0] = q->age | 0x8000;
+            D_801F103C[1] = 0x40;
+            D_801F1040.m[0][0] = D_801F1040.m[1][1] = D_801F1040.m[2][2] = q->sc;
+            D_801F1040.t[0] = q->x;
+            D_801F1040.t[1] = q->y;
+            D_801F1040.t[2] = q->z;
+            func_8003A63C(&D_801F78D8, &D_801F1040, &m);
+            func_8003B48C(&D_801F1040);
+            func_8003B51C(&m);
+            D_80163C74 = func_800D4D90((u8 *)D_801F103C - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+            if (D_80062D98 == 0) {
+                q->x = (u16)q->x + (u16)q->vx;
+                q->z = (u16)q->z + (u16)q->vz;
+                q->vx = (u16)q->vx - (q->vx >> 3);
+                q->vz = (u16)q->vz - (q->vz >> 3);
+                q->sc = (u16)q->sc + 0x10;
+                if (q->age >= 0xF) {
+                    q->on = 0;
+                }
+                q->age++;
+            }
+        }
+        i++;
+    } while (i < 0x12C);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x48) {
+            p->unk0 = -1;
+        }
+        if (p->unk2 < 0x36) {
+            k = 0x1900;
+            if (p->unk18 > 0x18) {
+                p->unk18 = 0x18;
+            }
+            p->unk18 = p->unk18 + 1;
+            i = 0;
+            if (p->unk18 > 0) {
+                do {
+                    for (j = 0; j < 0x12C; j++) {
+                        if (base[j].on == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 0x12C) {
+                        break;
+                    }
+                    r = (HdPart *)(j * 0x18 + (s32)base);
+                    r->on = 1;
+                    r->age = 0;
+                    ang = func_80042DA8() % 0x1000;
+                    i++;
+                    s0 = func_80042DA8() % 240 + D_801F78D0;
+                    r->x = p->unk4 + (func_80039B40(ang) * s0 >> 12);
+                    r->y = p->unk6 - func_80042DA8() % 40;
+                    r->z = p->unk8 - (func_80039A74(ang) * s0 >> 12);
+                    t = func_80042DA8() % 95 + 0xBE;
+                    s0 = p->unkE + t;
+                    r->vx = func_80039B40(ang) * s0 >> 12;
+                    r->vz = -(func_80039A74(ang) * s0 >> 12);
+                    ang = func_80042DA8() % 0xD00 + 0x600;
+                    r->sc = k * ang >> 12;
+                } while (i < p->unk18);
+            }
+            p->unkE = (u16)p->unkE + (u16)p->unk12;
+            if (p->unkE < 0) {
+                p->unkE = 0;
+            }
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B5790);
 
@@ -665,7 +754,96 @@ void func_801B5B00(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B5C1C);
+void func_801B5C1C(void) {
+    MgMat m;
+    u8 pad[8];
+    MgTask *p;
+    HdPart *base;
+    HdPart *q;
+    HdPart *r;
+    s32 i;
+    s32 j;
+    s32 ang;
+    s32 s0;
+    s32 k;
+    s32 t;
+
+    i = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    base = (HdPart *)D_801F1240 + p->unk1C * 0x12C;
+    do {
+        q = &base[i];
+        if (q->on != 0) {
+            D_801F1068[0] = q->age | 0x8000;
+            D_801F1068[1] = 0x40;
+            D_801F106C.m[0][0] = D_801F106C.m[1][1] = D_801F106C.m[2][2] = q->sc;
+            D_801F106C.t[0] = q->x;
+            D_801F106C.t[1] = q->y;
+            D_801F106C.t[2] = q->z;
+            func_8003A63C(&D_801F78D8, &D_801F106C, &m);
+            func_8003B48C(&D_801F106C);
+            func_8003B51C(&m);
+            D_80163C74 = func_800D4D90((u8 *)D_801F1068 - 8, D_801517C0 + 0x70, 0xC, D_80163C74);
+            if (D_80062D98 == 0) {
+                q->x = (u16)q->x + (u16)q->vx;
+                q->z = (u16)q->z + (u16)q->vz;
+                q->vx = (u16)q->vx - (q->vx >> 3);
+                q->vz = (u16)q->vz - (q->vz >> 3);
+                q->sc = (u16)q->sc - 8;
+                if (q->age >= 0xF) {
+                    q->on = 0;
+                }
+                q->age++;
+            }
+        }
+        i++;
+    } while (i < 0x12C);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x24) {
+            p->unk0 = -1;
+        }
+        if (p->unk2 < 0x14) {
+            k = 0x1900;
+            if (p->unk18 > 5) {
+                p->unk18 = 5;
+            }
+            p->unk18 = p->unk18 + 1;
+            i = 0;
+            if (p->unk18 > 0) {
+                do {
+                    for (j = 0; j < 0x12C; j++) {
+                        if (base[j].on == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 0x12C) {
+                        break;
+                    }
+                    r = (HdPart *)(j * 0x18 + (s32)base);
+                    r->on = 1;
+                    r->age = 0;
+                    ang = func_80042DA8() % 0x1000;
+                    i++;
+                    s0 = func_80042DA8() % 90 + 0xB4;
+                    r->x = p->unk4 + (func_80039B40(ang) * s0 >> 12);
+                    r->y = p->unk6 - func_80042DA8() % 30;
+                    r->z = p->unk8 - (func_80039A74(ang) * s0 >> 12);
+                    t = func_80042DA8() % 55 + 0x6E;
+                    s0 = p->unkE + t;
+                    r->vx = func_80039B40(ang) * s0 >> 12;
+                    r->vz = -(func_80039A74(ang) * s0 >> 12);
+                    ang = func_80042DA8() % 0xB80 + 0x580;
+                    r->sc = k * ang >> 12;
+                } while (i < p->unk18);
+            }
+            p->unkE = (u16)p->unkE + (u16)p->unk12;
+            if (p->unkE < 0) {
+                p->unkE = 0;
+            }
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B60A0(void) {
     MgSVec rot;
@@ -1044,7 +1222,73 @@ INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B8888);
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B8D48);
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B9378);
+void func_801B9378(void) {
+    MgTask *p;
+    HdPart *base;
+    HdPart *r;
+    HdSc9 *sc;
+    s32 i;
+    s32 j;
+    s32 n;
+    s32 t;
+    s32 k;
+    u8 pad[8];
+
+    *(MgMat *)0x1F800020 = D_801F7958;
+    base = (HdPart *)D_801F1240;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    sc = (HdSc9 *)0x1F800000;
+    sc->w80 = D_801DAC04;
+    sc->h4E = 0;
+    sc->h4C = 0;
+    sc->h4A = 0;
+    sc->h46 = 0;
+    sc->h44 = 0;
+    sc->h42 = 0;
+    sc->w84 = 0x2E686868;
+    i = 0;
+    do {
+        sc->arr[i] = D_801F0CE8[i];
+        i++;
+    } while (i < 0x14);
+    func_801B8404(base, (void *)0x1F800000);
+    if (p->unk2 >= 0x44) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0x28) {
+            i = 0;
+            k = 0x1810;
+            n = (0x50 - p->unk2) / 6 + func_80042DA8() % 6;
+            if (n > 0) {
+                do {
+                    for (j = 0; j < 0x1AE; j++) {
+                        if (base[j].on == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 0x1AE) {
+                        break;
+                    }
+                    (r = (HdPart *)(j * 0x18 + (s32)base))->on = func_80042DA8() % 8;
+                    r->age = (s16)(r->on + 0x10) + func_80042DA8() % 14;
+                    r->x = func_80042DA8() % 8000 - 4000;
+                    r->y = func_80042DA8() % 2100 - 0x3AC;
+                    r->z = -(func_80042DA8() % 1500 + 0x190);
+                    t = func_80042DA8() % 6 + 6;
+                    r->vy = 0;
+                    r->pad12 = 0;
+                    r->vx = 0x80;
+                    r->vz = 0x80 / t;
+                    r->pad14 = func_80042DA8() % 40 + 0x16;
+                    r->sc = k * (func_80042DA8() % 0xE00 + 0x800) >> 12;
+                    i++;
+                } while (i < n);
+            }
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B9820(void) {
     MgObj20 *p;

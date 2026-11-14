@@ -159,7 +159,7 @@ extern s32 func_801B4E78;
 void func_801B4B04(s32 arg0);
 s32 func_80042DA8();
 extern MgTask *D_801FA748[];
-extern s32 func_801B4694;
+void func_801B4694(void);
 void func_801B4B70(MgMat *arg0, MgMat *arg1, MgMat *arg2);
 M2C_UNK func_8003AB84(MgMat *, s32 *, s32 *);
 M2C_UNK func_8003B16C(MgMat *, MgMat *);
@@ -405,5 +405,11 @@ extern u8 D_801ECB54[];
 extern u8 D_801ECB68[];
 extern MgSVec D_801ECB4C;
 extern KnRig2 *D_801ECB7C;
+extern KnRig2 *D_801EC8D4;
+extern u8 D_801EC8C4[];
+extern s16 D_801EE9D4;
+extern u8 D_801FA73C[];
+s32 func_80039F5C(s32);
+void func_800D3A6C(u8 *, KnRig2 *);
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */
