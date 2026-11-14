@@ -2251,7 +2251,80 @@ void func_800AF02C(void) {
     func_800A2D68();
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF08C);
+void func_800AF08C(CondorAct *arg0) {
+    s16 a;
+    s32 o;
+    s32 i;
+    u32 m;
+    CondorEnt *e;
+    s32 off;
+    s32 one;
+    s16 t;
+    u16 g;
+    s16 idx;
+
+    e = (CondorEnt *)arg0;
+    g = e->pad14[0x1A];
+    e->pad14[0x16] = 3;
+    func_800AC498();
+    i = 0;
+    o = 0;
+    while (1) {
+        if (*(s16 *)(D_8012C5FC + o) == 0) {
+            idx = i;
+            break;
+        }
+        i++;
+        o += 8;
+        if (i >= 0x10) {
+            idx = 0xFF;
+            break;
+        }
+    }
+    if (idx != 0xFF) {
+        off = idx * 8;
+        *(s16 *)(D_8012C5FC + off) = 1;
+        *(u16 *)(D_8012C5FC + 2 + off) = g;
+        *(u16 *)(D_8012C600 + off) = e->w48;
+        *(u16 *)(D_8012C600 + 2 + off) = e->w4A;
+        func_800A2798(idx, g);
+    }
+    a = e->b10;
+    t = a - g;
+    a = t;
+    if (t < 0) {
+        a = 0;
+    }
+    e->b10 = a;
+    one = 1;
+    if (D_8012C41C != -one) {
+        func_800A427C();
+    }
+    if (a == 0) {
+        if (e->b05 == 0) {
+            e->b05 = 0xFF;
+            if (e->w06 < 0x10) {
+                D_8012C508 -= 1;
+            } else {
+                D_8012C50C -= 1;
+            }
+            func_800A2D68();
+        }
+    } else {
+        do {
+            D_8009A000 = 0x2A;
+            D_8009A004 = 0x40;
+            D_8009A008 = 0;
+            m = e->w48;
+            m = m & 0x1FF;
+            func_8002DA7C();
+            D_8009A000 = 0x2A;
+            D_8009A008 = 0xE1;
+        } while (0);
+        D_8009A004 = m >> 2;
+        func_8002DA7C();
+    }
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF278);
 

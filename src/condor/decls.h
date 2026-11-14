@@ -367,7 +367,7 @@ extern struct { u8 *p; s32 pad[2]; } D_8012C020[];
 extern struct { s16 n; s16 pad[5]; } D_8012C024[];
 extern s32 D_8012C364;
 typedef struct { u16 flags; u8 pad02[0x10]; u8 b12; u8 pad13[5]; u16 w18; u8 pad1A[2]; u16 timer; u8 pad1E[0x10]; u8 b2E; u8 pad2F[0x14]; u8 b43; u8 pad44[0x34]; } CondorAct;
-M2C_UNK func_800AF08C(CondorAct *);
+void func_800AF08C(CondorAct *arg0);
 extern u16 D_80180018;
 s32 func_800AF470(CondorAct *arg0);
 M2C_UNK func_800ABE54();
