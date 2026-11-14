@@ -42,7 +42,7 @@ void func_8003A63C(void *, void *, MgMat *);
 extern M2C_UNK D_801EF154;
 void func_801B0C44(MgMat *arg0, u16 *arg1);
 void func_801B6EAC(s16 arg0);
-extern M2C_UNK func_801B6C18;
+void func_801B6C18(void);
 typedef struct { s16 mode; s16 frames; s32 unk4; s32 unk8; s16 actor; s16 part; MgSVec pos; MgSVec unk18; MgSVec vel; s16 unk28; s16 pad2A; } MgCam;
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s16 *script; MgMat *mat; s16 actor; u8 pad16[0xA]; } MgCamTask;
 typedef struct { s16 vx; s16 vy; s16 vz; u8 pad[0xB96]; } MgActorPos;
@@ -217,5 +217,8 @@ void func_801B2E54(void *);
 void func_801B6334(void);
 extern void *D_801EF45C;
 extern MgVec *D_801EF460;
+typedef struct { u8 pad[0x168]; u16 x; u16 y; u16 z; } Vh2Act2;
+extern u8 D_801518E4[];
+extern MgSVec *D_801EF490;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

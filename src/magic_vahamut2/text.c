@@ -1225,7 +1225,79 @@ void func_801B6A2C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B6C18);
+void func_801B6C18(void) {
+    MgTask *p;
+    Vh2Act2 *a;
+    MgSVec *s;
+    s32 t;
+    s32 u;
+    s32 v;
+
+    p = &D_80162978[D_8015169C];
+    a = (Vh2Act2 *)(D_801518E4 + p->unk0 * 0xB9C);
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            p->unk4 = a->x;
+            p->unk6 = a->y;
+            p->unk8 = a->z;
+        }
+        t = p->unk2;
+        if (t < 0x2D) {
+            u = (t << 12) / 45;
+            v = u * 5000;
+            goto sety;
+        }
+        t -= 0x2D;
+        if (t < 0x64) {
+            u = (t << 12) / 100;
+            v = u * 20000;
+sety:
+            a->y = -v >> 12;
+            goto next;
+        }
+        t -= 0x64;
+        if (t < 0x140) {
+            if (t != 0) {
+                goto next;
+            }
+zero:
+            a->y = 0;
+            goto next;
+        }
+        do {
+            t -= 0x140;
+            if (t < 0x1E) {
+                goto next;
+            }
+            t -= 0x1E;
+            if (t < 0x28) {
+                if (t == 0) {
+                    p->unkE = 0;
+                    a->y += -0x4E20;
+                }
+                if ((s16)a->y >= 0) {
+                    goto zero;
+                }
+                a->y = (s16)a->y + (u16)p->unkE;
+                p->unkE = (p->unkE * 0x3F >> 6) + 0x3C;
+                u = func_801B6828((s16)a->y);
+                s = D_801EF490;
+                s->vx = u;
+                s->vy = 0;
+                s->vz = 0;
+                func_8003B2CC((MgMat *)&D_801EEDD8, s, s);
+                a->x = (u16)p->unk4 + (u16)D_801EF490->vx;
+                a->z = (u16)p->unk8 + (u16)D_801EF490->vz;
+                goto next;
+            }
+        } while (0);
+        *(MgB8 *)&a->x = *(MgB8 *)&p->unk4;
+        p->unk0 = -1;
+        return;
+next:
+        p->unk2++;
+    }
+}
 
 void func_801B6EAC(s16 arg0) {
     D_80162978[func_800BBEAC(&func_801B6C18)].unk0 = arg0;
