@@ -838,7 +838,65 @@ void func_801B3668(s32 arg0, s32 arg1) {
     D_801EDB60 ^= 1;
 }
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B3A08);
+void func_801B3A08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 v;
+    s32 r;
+    s32 x;
+    s32 y;
+    s32 k;
+
+    for (i = 15, k = 14; i >= 0; k--, i--) {
+        t = (i << 12) / 15;
+        if (i > 0) {
+            r = func_80042DA8();
+            x = (u16)D_801F03B8[i].x - 0x10;
+            D_801F03CC[i].x = x + r % 0x20;
+            r = func_80042DA8();
+            x = (u16)D_801F03CC[k].y - 0x10;
+            D_801F03CC[i].y = x + r % 0x20;
+            r = func_80042DA8();
+            x = (u16)D_801F03CC[k].z - 0x10;
+            D_801F03CC[i].z = x + r % 0x20;
+        } else {
+            D_801F03CC[i].x = D_801EDB68[0];
+            D_801F03CC[i].y = D_801EDB68[1];
+            D_801F03CC[i].z = D_801EDB68[2];
+            r = func_80042DA8();
+            x = (u16)D_801EDB70[0] - 0x80;
+            D_801EDB70[0] = x + r % 0x100;
+            r = func_80042DA8();
+            x = (u16)D_801EDB70[1] - 0x80;
+            D_801EDB70[1] = x + r % 0x100;
+            r = func_80042DA8();
+            do {
+                y = (u16)D_801EDB70[2] - 0x80;
+                D_801EDB70[2] = y + r % 0x100;
+                D_801EDB68[0] += func_80039A74(D_801EDB70[0]) << 9 >> 12;
+                D_801EDB68[1] += func_80039A74(D_801EDB72) << 9 >> 12;
+                D_801EDB68[2] += func_80039A74(D_801EDB74) << 9 >> 12;
+            } while (0);
+        }
+        D_801EDB80->vx = (u32)func_80039A74(D_801F03CC[i].x) >> 3;
+        D_801EDB80->vy = (u32)func_80039A74(D_801F03CC[i].y) >> 3;
+        D_801EDB80->vz = (u32)func_80039A74(D_801F03CC[i].z) >> 3;
+        func_8003C21C(D_801EDB80, (MgMat *)((u8 *)D_801EDB80 + 0x18));
+        D_801EDB80->vy = 0;
+        D_801EDB80->vz = 0;
+        D_801EDB80->vx = arg2 * ((t * 0xE00 >> 12) + 0x200) >> 12;
+        func_8003B2CC((MgSVec *)((u8 *)D_801EDB80 + 0x18), D_801EDB80, D_801EDB80);
+        D_801F03C4[i].unk0 = D_801EDB80->vx;
+        D_801F03C4[i].unk2 = -(arg0 * t >> 12) + ((s16)D_801EDB80->vy >> 4);
+        D_801F03C4[i].unk4 = D_801EDB80->vz + 0x1B58;
+        v = func_80039A74((t << 11 >> 12) + arg3);
+        for (j = 0; j < 1; j++) {
+            v = func_80039A74(v / 4);
+        }
+        D_801F03C4[i].unk10 = arg1 * (0x1000 - (v << 11 >> 12)) >> 12;
+    }
+}
 
 void func_801B3E90(void) {
     MgTask *p;
