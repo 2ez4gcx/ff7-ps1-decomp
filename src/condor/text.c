@@ -837,7 +837,215 @@ void func_800A6808(CondorEnt *arg0) {
     } while (0);
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A698C);
+s32 func_800A698C(s32 arg0, s32 arg1) {
+    CondorBt *p;
+    CondorBt *o;
+    CondorBt *q;
+    CondorBt *n;
+    s16 r;
+    s16 idx;
+    s32 i;
+    s32 pos;
+    s16 a;
+    s16 t;
+    u8 d;
+    u16 e;
+    s32 v;
+    s32 w;
+    s16 x;
+    s32 y;
+    u32 sum;
+    u32 sum2;
+
+    p = (CondorBt *)&D_800BE8C0[arg0];
+    o = (CondorBt *)&D_800BE8C0[arg1];
+    a = p->b2D;
+    switch (a) {
+    case 1:
+        p->b2A = 2;
+        p->b04 |= 2;
+        func_800AC498(p);
+        p->b2D = 2;
+        func_800A6808((CondorEnt *)p);
+        p->w44 = 0xFF;
+        r = func_800B17A0(p, p->w06);
+        if (r != -1) {
+            q = (CondorBt *)&D_800BE8C0[r];
+            p->w44 = r;
+            q->b2A = 7;
+            ((s16 *)q)[0xD] = 1;
+            ((s16 *)q)[0xC] = 1;
+            q->b43 = arg0;
+            if ((s16)func_800AC498(q) == 0) {
+                q->flags = 0;
+            }
+            return 0;
+        }
+        break;
+    case 2:
+        if (p->b2C == 0xFF) {
+            p->b2A = 0;
+            func_800AC498(p);
+            p->b2D = 3;
+            if (o->flags == 0 || o->b05 != 0) {
+                p->b2D = 5;
+            }
+            if (D_8012C3EC == 5) {
+                v = p->w44;
+                if (v != 0xFF) {
+                    D_800BE8C0[v].flags = 0;
+                    return 0;
+                }
+                break;
+            }
+            return 0;
+        }
+        if (D_8012C3EC == 5) {
+            v = p->w44;
+            if (v != 0xFF) {
+                n = (CondorBt *)&D_800BE8C0[v];
+                if (n->flags != 0) {
+                    func_800B3644((CondorObj *)n);
+                }
+                return 0;
+            }
+        }
+        break;
+    case 3:
+        i = 0;
+        pos = 0;
+        while (1) {
+            if (*(s16 *)(D_8012C5FC + pos) == 0) {
+                idx = i;
+                break;
+            }
+            i++;
+            pos += 8;
+            if (i >= 0x10) {
+                idx = 0xFF;
+                break;
+            }
+        }
+        if (idx != 0xFF) {
+            *(s16 *)(D_8012C5FC + idx * 8) = 1;
+            sum = D_80180018 + 0x80180000;
+            t = *(u8 *)(sum + (p->b43 * 0x14 + o->b43));
+            if (t != 0) {
+                d = p->b12 * t / 100;
+            } else {
+                d = 0;
+            }
+            e = d;
+            D_8012C5FE[idx].g = e;
+            D_8012C5FE[idx].x = o->w48;
+            D_8012C5FE[idx].y = o->w4A;
+            func_800A2798(idx, (s16)D_8012C5FE[idx].g);
+        }
+        o->b04 |= 2;
+        if ((u32)(o->b2A - 2) < 2) {
+            p->b2D = 5;
+        } else {
+            o->b2A = 3;
+            func_800AC498(o);
+            p->b2D = 4;
+        }
+        break;
+    case 4:
+        if (o->b2C == 0xFF || o->b2A != 3) {
+            if ((u32)(o->b2A - 2) >= 2) {
+                o->b2A = 0;
+                func_800AC498(o);
+            }
+            p->b2D = 5;
+            break;
+        }
+        return 0;
+    case 5:
+        p->b2D = 0;
+        p->b2E = 0x78;
+        p->b2A = 0;
+        func_800AC498(p);
+        sum2 = D_80180018 + 0x80180000;
+        t = *(u8 *)(sum2 + (p->b43 * 0x14 + o->b43));
+        a = o->b10;
+        if (t != 0) {
+            d = p->b12 * t / 100;
+        } else {
+            d = 0;
+        }
+        t = a - d;
+        a = t;
+        if (t < 0) {
+            a = 0;
+        }
+        o->b10 = a;
+        if (D_8012C41C != -1) {
+            func_800A427C();
+        }
+        if (o->flags == 0) {
+            return 2;
+        }
+        if (o->b05 != 0) {
+            return 2;
+        }
+        if (a == 0) {
+            if ((u16)o->w06 >= 0x10) {
+                if (D_8012C41C == -1) {
+                    D_8012C41C = (CondorBt *)p - (CondorBt *)D_800BE8C0;
+                    func_800A427C();
+                    D_8012C41C = -1;
+                }
+                w = (CondorBt *)p - (CondorBt *)D_800BE8C0;
+                x = w;
+                y = *(s16 *)(D_800BE8C6 + x * 0x78);
+                D_8012C5CC = 0xB;
+                D_8012C5D0 = 0;
+                D_8012C4E0 = w;
+                D_8012AF58 = 0xA;
+                func_800A2FD4(y, x);
+                D_8012C4E4 = 0;
+                D_8012C4F8 = -8;
+                D_8012C4F0 = -8;
+                D_8012C4FC = 1;
+                D_8012C4F4 = 1;
+                func_800A5210(2, 1);
+                func_800A5210(0, 2);
+                func_800A5210(0, 3);
+                func_800A5210(0, 4);
+                D_8012C42C = 1;
+                D_8012C5D0 = 0;
+                D_8012C4B8 = -0x20;
+                func_800A4B2C();
+                D_8012C3EC = 0x11;
+            }
+            if (o == (CondorBt *)&D_800BE8C0[p->b41]) {
+                p->b41 = 0xFF;
+                p->w28 = 0;
+                p->w26 = 0;
+                p->w5A = 0;
+                p->w58 = 0;
+                p->b04 &= 0xFC;
+            }
+            if (o->b05 == 0) {
+                o->b05 = 0xFF;
+                if ((u16)o->w06 < 0x10) {
+                    D_8012C508 -= 1;
+                } else {
+                    D_8012C50C -= 1;
+                }
+                func_800A2D68();
+            }
+            return 2;
+        }
+        if ((u32)(o->b2A - 2) < 2) {
+            return 1;
+        }
+        o->b2A = 0;
+        func_800AC498(o);
+        return 1;
+    }
+    return 0;
+}
 
 void func_800A709C(s32 arg0, s32 arg1) {
     s16 t;
