@@ -61,7 +61,8 @@ Each executable is split into C files by how each part was compiled
 | `src/main/text.c` | 0x800110B8–0x800137FF, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/text1b.c` | 0x80013800–0x80013C9B, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/text2.c` | 0x80013C9C–0x80016F8F, game code (kernel strings...) | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.34, `--nop-at-expansion` |
-| `src/main/text3.c` | 0x80016F90–0x8001BDAF, game code | GCC 2.6.3 | `-O2 -G8 -ffixed-25` | `-G8`, ASPSX 2.21 |
+| `src/main/text3.c` | 0x80016F90–0x8001AEE3, game code | GCC 2.6.3 | `-O2 -G8 -ffixed-25` | `-G8`, ASPSX 2.21 |
+| `src/main/text3b.c` | 0x8001AEE4–0x8001BDAF, game code | GCC 2.6.3 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/text4.c` | 0x8001BDB0–0x800269FF, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/text5.c` | 0x80026A00–0x80029A4F, game code | GCC 2.7.2 | `-O2 -G8` | `-G8`, ASPSX 2.21 |
 | `src/main/akao.c` | 0x80029A50–0x80036297, AKAO sound driver, CD/movie code | GCC 2.6.3 | `-O2 -G0` | `-G0`, ASPSX 2.21 |

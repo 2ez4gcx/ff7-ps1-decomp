@@ -54,8 +54,11 @@ FILE_OPTIONS = {
     'main/text1b.c': {'aspsx': '2.21'},
     'main/text2.c': {'nop_at_expansion': True, 'gcc': '2.7.2'},
     # text3.c's loops hoist constants as if one register fewer were free
-    # (found by matching: -ffixed-25 gives it, and changes nothing else there).
+    # (found by matching: -ffixed-25 gives it, and changes nothing else there;
+    # only func_80018834 needs it). func_8001AEE4 uses $t9, so text3b.c, from
+    # it on, is built without the flag.
     'main/text3.c': {'aspsx': '2.21', 'cflags': ['-O2', '-G8', '-ffixed-25']},
+    'main/text3b.c': {'aspsx': '2.21', 'cflags': ['-O2', '-G8']},
     'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},

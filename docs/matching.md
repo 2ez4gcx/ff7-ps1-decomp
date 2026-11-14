@@ -2468,9 +2468,11 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - `m = 1 << a; if (act & m)` gives `sllv` with 1 in a register where `act & (1 << a)`
   folds to `srav; andi`; `acc |= 1 << x; acc &= ~bit;` stay two statements (akao
   func_800308D4).
-- main's text3.c is built with -ffixed-25, and func_8001AEE4 uses `$t9` (without the flag
-  the reload spill register changes from t7 to t9): it cannot match in that file until
-  text3.c is split at it, or the function gets its own options.
+- main's text3.c is built with -ffixed-25 (only func_80018834 needs it: its loop keeps a
+  constant the full register set would hoist), and func_8001AEE4 uses `$t9`: text3.c is
+  split there, and text3b.c, built without the flag, holds func_8001AEE4 and the rest. To
+  find which functions need a file option, compile the file without it (patch
+  psyq.FILE_OPTIONS in memory, work/split3/nofixed.py) and list those that stop matching.
 
 ## Hand-written assembly
 

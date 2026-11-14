@@ -1771,5 +1771,8 @@ extern volatile s32 *D_8005049C;
 extern volatile s32 *D_800504A0;
 extern s32 D_800504A4;
 extern s32 D_800504A8;
+void func_8001AEE4(void);
+extern u8 D_800694FA;
+extern s16 D_80069536[];
 
 #endif /* MAIN_DECLS_H */
