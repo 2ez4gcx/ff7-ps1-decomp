@@ -1294,5 +1294,22 @@ extern s16 D_800BFE98;
 extern s16 D_800BFE9A;
 extern s16 D_800BFE9C;
 extern SbVtx8 D_800FFAFC;
+void func_800B4CDC(s32 arg0, s32 arg1);
+extern s32 D_800DC5A4;
+extern s32 D_800DC5A8;
+extern s32 D_800DC5AC;
+extern s32 D_800DC5B0;
+extern s32 D_800DC5B4;
+extern s32 D_800DC5B8;
+extern s32 D_800DC5BC;
+extern s32 D_800DC5C0;
+extern s32 D_800DC5C4;
+extern s32 D_800DC5C8;
+extern s32 D_800DC5CC;
+extern s32 D_800DC5D0;
+extern s32 D_800DC5D4;
+extern s32 D_800DC5D8;
+extern s32 D_800DC5DC;
+extern s32 D_800DC5E0;
 
 #endif /* SNOBO_DECLS_H */
