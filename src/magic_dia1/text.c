@@ -424,7 +424,105 @@ void func_801B11D4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_dia1/nonmatchings/text", func_801B1500);
+void func_801B1500(void) {
+    MgVec v;
+    MgTask *p;
+    MgTask *q;
+    s32 i;
+    s32 k;
+    s32 o;
+    s32 a;
+    s32 b;
+    s32 n;
+    s32 m;
+    s32 w;
+
+    if (D_80062D98 == 0) {
+        p = &D_80162978[D_8015169C];
+        if ((u32)((u16)p->unk2 - 4) < 7) {
+            i = 0;
+            do {
+                q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B11D4)];
+                *(MgB8 *)&q->unk4 = *(MgB8 *)&p->unk4;
+                v.vx = func_80042DA8() % 0x1000 - 0x800;
+                v.vy = 0;
+                v.vz = func_80042DA8() % 0x1000 - 0x800;
+                ((s32 (*)(MgVec *, MgVec *))func_8003A08C)(&v, &v);
+                a = func_80042DA8() % 80 + 0x3C;
+                q->unkC = (a * v.vx) >> 12;
+                q->unkE = -(func_80042DA8() % 60 + 0xA5);
+                q->unk10 = (a * v.vz) >> 12;
+                q->unk12 = func_80042DA8() % 22 + 0x1A;
+                k = func_80042DA8() % 6 - 3;
+                do {
+                    if (k == 0) {
+                        k = 3;
+                    }
+                } while (0);
+                i++;
+                w = (func_80042DA8() % 72 + 0x54) * k;
+                q->unk16 = w;
+                q->unk14 = w << 1;
+                q->unk18 = q->unk1A = (func_80042DA8() % 67 + 0x2E) * k;
+                q->unk1C = 0x492;
+            } while (i < 6);
+        }
+        if ((u32)((u16)p->unk2 - 1) < 0xD) {
+            k = D_801DEFA8;
+            D_80162978[func_800BBEAC((M2C_UNK *)func_801B10B8)].unk1C = k;
+            a = 0x100;
+            b = 0x200;
+            m = 0x1400;
+            i = 0;
+            o = k << 3;
+            do {
+                *(s16 *)((u8 *)&D_801DEFAC + o) = p->unk4 + (func_80042DA8() % b - a);
+                *(s16 *)((u8 *)&D_801DEFAC + o + 2) = p->unk6 + (func_80042DA8() % b - a);
+                *(s16 *)((u8 *)&D_801DEFAC + o + 4) = p->unk8 + (func_80042DA8() % b - a);
+                *(s16 *)((u8 *)&D_801DEFB2 + o) = (m * (func_80042DA8() % 0x1000 + 0xA00)) >> 12;
+                k++;
+                o += 8;
+                if (k >= 0xC8) {
+                    o = 0;
+                    k = 0;
+                }
+                i++;
+            } while (i < 2);
+            D_801DEFA8 = k;
+        }
+        if ((u32)((u16)p->unk2 - 8) < 0xC) {
+            k = D_801DEFA8;
+            m = 0x1400;
+            D_80162978[func_800BBEAC((M2C_UNK *)func_801B0F9C)].unk1C = k;
+            i = 0;
+            o = k << 3;
+            a = p->unk1C;
+            b = a << 1;
+            n = -p->unk6;
+            do {
+                k++;
+                *(s16 *)((u8 *)&D_801DEFAC + o) = p->unk4 + (func_80042DA8() % b - a);
+                *(s16 *)((u8 *)&D_801DEFAC + o + 2) = p->unk6 + func_80042DA8() % n;
+                *(s16 *)((u8 *)&D_801DEFAC + o + 4) = p->unk8 + (func_80042DA8() % b - a);
+                *(s16 *)((u8 *)&D_801DEFB2 + o) = (m * (func_80042DA8() % 0xE00 + 0x800)) >> 12;
+                o += 8;
+                if (k >= 0xC8) {
+                    o = 0;
+                    k = 0;
+                }
+                i++;
+            } while (i < 4);
+            D_801DEFA8 = k;
+        }
+        if (p->unk2 == 0x23) {
+            func_800D5774(D_801DEFA0);
+        }
+        if (p->unk2 >= 0x28) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B1BCC(s32 arg0) {
     MgTask *p;

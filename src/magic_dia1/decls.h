@@ -85,5 +85,7 @@ extern u16 D_801C6F90;
 void func_801B11D4(void);
 s32 func_80042DA8(void);
 extern M2C_UNK D_801C6D18;
+typedef struct { u8 b[8]; } MgB8;
+void func_800D5774(s32);
 
 #endif /* MAGIC_DIA1_DECLS_H */
