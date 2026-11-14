@@ -197,7 +197,7 @@ extern u8 D_8009D33B;
 extern s32 D_8012C408;
 extern s16 D_8012C418;
 extern s16 D_8012C448;
-extern u8 D_8012C50C;
+extern s32 D_8012C50C;
 extern u8 D_8012C510;
 extern u32 D_8012C538;
 extern u8 D_8012C67C[];
@@ -271,7 +271,7 @@ void func_800AEDE0(void);
 extern u16 D_8012C460;
 extern u16 D_8012C468;
 extern u16 D_8012C5DC;
-extern u16 D_8012C70E;
+extern s16 D_8012C70E;
 typedef struct { u16 flags; u8 pad02[0x12]; u8 b14; u8 pad15[0x1F]; u16 w34; u16 w36; u8 pad38[0x40]; } CondorObjC;
 void func_800A6048(void);
 extern s16 D_8010BC44;
@@ -373,5 +373,7 @@ s32 func_800AF470(CondorAct *arg0);
 M2C_UNK func_800ABE54();
 typedef struct { u8 pad0[6]; u16 w06; u8 pad08[0x22]; u8 b2A; u8 b2B; u8 b2C; u8 b2D; u8 b2E; u8 b2F; u16 w30; u16 w32; } CondorMach;
 extern u16 D_80180006;
+void func_800AEB90(void);
+typedef struct { u16 flags; u8 pad02[4]; u16 w06; u8 pad08[0x2C]; u16 w34; u16 w36; u8 pad38[0x40]; } CondorObjD;
 
 #endif /* CONDOR_DECLS_H */

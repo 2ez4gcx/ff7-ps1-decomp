@@ -2117,7 +2117,70 @@ s32 func_800AE0D0(u8 arg0) {
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AE384);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AEB90);
+void func_800AEB90(void) {
+    CondorObjD *p;
+    s32 v;
+    u16 w;
+    s32 t;
+    s32 n;
+    s32 i;
+    s32 z;
+
+    p = (CondorObjD *)&D_800BE8C0[D_8012C41C];
+    if (D_8012C390 & 0x8000) {
+        v = D_8012C468 - 0x20;
+        D_8012C468 = v;
+        if ((s16)v < 0) {
+            D_8012C468 = 0;
+        }
+    }
+    if (D_8012C390 & 0x2000) {
+        v = D_8012C468 + 0x20;
+        D_8012C468 = v;
+        if ((s16)v > 0x400) {
+            D_8012C468 = 0x400;
+        }
+    }
+    w = D_8012C468 - 0x200;
+    p->w34 = w;
+    p->w36 = w;
+    D_8012C70E = w;
+    if (D_8012C39C & 0x20) {
+        D_8009A000 = 0x2B;
+        D_8009A004 = 0x40;
+        D_8009A008 = 1;
+        func_8002DA7C();
+        D_8012C47C = 1;
+        D_8012C484 = 1;
+        D_8012C480 = 1;
+        D_8012C3EC = 0;
+        D_8012C42C = 0;
+    }
+    if (D_8012C39C & 0x40) {
+        D_8009A000 = 0x2B;
+        D_8009A004 = 0x40;
+        D_8009A008 = 4;
+        func_8002DA7C();
+        D_8012C47C = 1;
+        D_8012C484 = 1;
+        D_8012C480 = 1;
+        D_8012C538 += D_8012C534;
+        D_8012C3EC = 0;
+        D_8012C42C = 0;
+        D_800BE8C0[D_8012C41C].flags = 0;
+        i = p->w06;
+        D_8012C508 -= 1;
+        n = D_8012BA68[i];
+        t = n - 1;
+        z = t == 0;
+        n = t;
+        if (z) {
+            n = 0x63;
+        }
+        D_8012BA68[i] = n;
+        func_800A2D68(n);
+    }
+}
 
 void func_800AEDE0(void) {
     CondorObjC *p;
@@ -3875,7 +3938,7 @@ void func_800B6B58(void) {
     } while (f != 0);
     func_80043DD8(0);
     func_80043D3C(0);
-    p = &D_8012C50C;
+    p = (u8 *)&D_8012C50C;
     q[0xC4E] = *(u8 *)&D_8012C508;
     q[0xC53] = *p;
     q[0xC4F] = D_8012C510 - *p;
@@ -4152,7 +4215,7 @@ s32 func_800B7AEC(void) {
     }
     if (D_8012C3EC == 0) {
         if ((D_8012C5CC == 0) && (D_8012C404 != 1)) {
-            if ((*(s32 *)&D_8012C50C == 0) && (D_8012C414 == 0)) {
+            if ((D_8012C50C == 0) && (D_8012C414 == 0)) {
                 D_8012C414 = 1;
             }
             if ((D_8012C508 == 0) && (D_8012C414 == 0) && ((u32) D_8012C538 < 0x190U)) {
