@@ -1213,7 +1213,87 @@ void func_801B4F20(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lasboss3/nonmatchings/text", func_801B5270);
+void func_801B5270(void) {
+    MgTask *p;
+    MgMat m;
+    u8 pad[8];
+    MgVec v;
+    s16 n;
+    s16 k;
+    s16 w;
+    s16 i;
+    s32 pa;
+    s32 pb;
+    s32 po;
+    MgSVec *a;
+    MgSVec *b;
+    MgSVec *r;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    func_8003C21C(&D_801BBA14, &m);
+    v.vx = v.vy = v.vz = 0x4000;
+    func_8003C21C(&D_801BBA14, &m);
+    func_8003B35C(&m, &v);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    D_801BB9E0.f4 = 0;
+    D_801BB9E0.v = D_801BBE44;
+    D_801BB9EA = ((func_80039A74(p->unk2 * 0x2E) << 7) >> 12) + 0x7F;
+    D_80163C74 = func_800D29D4(&D_801BB9E0, D_801517C0 + 0x70, 0xC, D_80163C74);
+    func_8003C21C(&D_801BBA1C, &m);
+    v.vx = v.vy = v.vz = 0x3C00;
+    func_8003B35C(&m, &v);
+    m.t[0] = p->unk4;
+    m.t[1] = p->unk6;
+    m.t[2] = p->unk8;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    D_801BB9E0.f4 = 0x88;
+    D_801BB9EA = 0;
+    D_801BB9E0.v = D_801BBE48;
+    D_80163C74 = func_800D29D4(&D_801BB9E0, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        n = p->unk2 + 1;
+        p->unk2 = n;
+        if (n == 0x14) {
+            p->unk0 = -1;
+            return;
+        }
+        k = n / 3;
+        pa = (s32)*D_801BB9F4[k];
+        po = D_801BBE44 + 4;
+        i = 0;
+        if (n == 0x15) {
+            do {
+                a = (MgSVec *)(pa + i * 8);
+                r = (MgSVec *)(po + i * 8);
+                r->vx = a->vx;
+                r->vy = a->vy;
+                r->vz = a->vz;
+                i++;
+            } while (i < 0x270);
+            return;
+        }
+        w = n % 3;
+        D_801BB9F0 = w;
+        pb = (s32)*D_801BB9F4[(s16)(p->unk2 / 3) + 1];
+        do {
+            a = (MgSVec *)(pa + i * 8);
+            b = (MgSVec *)(pb + i * 8);
+            r = (MgSVec *)(po + i * 8);
+            r->vx = a->vx + (b->vx - a->vx) * w / 3;
+            r->vy = a->vy + (b->vy - a->vy) * w / 3;
+            r->vz = a->vz + (b->vz - a->vz) * w / 3;
+            i++;
+        } while (i < 0x270);
+    }
+}
 
 void func_801B567C(void) {
     MgTask *p;

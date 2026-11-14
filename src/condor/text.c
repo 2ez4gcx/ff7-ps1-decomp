@@ -2898,7 +2898,88 @@ void func_800B1FD0(CondorTri *arg0) {
     arg0->w4A = 0;
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B21A8);
+void func_800B21A8(s32 arg0, u8 *arg1) {
+    u16 sx;
+    s32 yy0;
+    s32 yy1;
+    s32 yy2;
+    s32 a;
+    s32 b;
+    CondorW7 *p3;
+    s16 i;
+    CondorTri2 *d;
+    CondorPrimH *q;
+    CondorSrcE *e;
+    u32 t1;
+    u8 *src;
+
+    src = (u8 *)arg0;
+    d = (CondorTri2 *)arg1;
+    q = (CondorPrimH *)(arg1 + 0x9800);
+    p3 = (CondorW7 *)(arg1 + 0xD000);
+    D_8012C434 = 0x60;
+    i = 0;
+    D_8012C438 = 0x198;
+    D_8012C518 = src[0] + (src[1] << 8);
+    e = (CondorSrcE *)(src + 0x10);
+    if (D_8012C518 != 0) {
+        do {
+            func_80046A2C(q);
+            func_80046870(q, 1);
+            d->w00 = e->h[0];
+            d->w02 = e->h[1];
+            d->w04 = e->h[2];
+            d->w08 = e->h[3];
+            d->w0A = e->h[4];
+            d->w0C = e->h[5];
+            d->w10 = e->h[6];
+            d->w12 = e->h[7];
+            d->w14 = e->h[8];
+            d->w18 = e->h[9];
+            d->w1A = e->h[10];
+            d->w1C = e->h[11];
+            d->w02 = e->h[2];
+            d->w0A = e->h[5];
+            d->w12 = e->h[8];
+            d->w1A = e->h[11];
+            d->w04 = -e->h[1];
+            d->w0C = -e->h[4];
+            d->w14 = -e->h[7];
+            d->w1C = -e->h[10];
+            func_8003BBDC((u8 *)d + 8, &sx, &a, &b);
+            d->x0 = sx - *(u16 *)&D_8012C6EC - 0xA0;
+            yy0 = ((s16 *)&sx)[1];
+            d->y0 = yy0 - ((u16 *)&D_8012C6EC)[2] - 0x78;
+            func_8003BBDC((u8 *)d + 0x10, &sx, &a, &b);
+            d->x1 = sx - *(u16 *)&D_8012C6EC - 0xA0;
+            yy1 = ((s16 *)&sx)[1];
+            d->y1 = yy1 - ((u16 *)&D_8012C6EC)[2] - 0x78;
+            func_8003BBDC((u8 *)d + 0x18, &sx, &a, &b);
+            d->x2 = sx - *(u16 *)&D_8012C6EC - 0xA0;
+            yy2 = ((s16 *)&sx)[1];
+            d->y2 = yy2 - ((u16 *)&D_8012C6EC)[2] - 0x78;
+            d->w20 = e->h[12];
+            d->w22 = e->h[13];
+            t1 = d->w20;
+            d->w24 = e->h[14];
+            d->w20 = (t1 >> 8) | (t1 << 8);
+            t1 = d->w22;
+            d->w22 = (t1 >> 8) | (t1 << 8);
+            t1 = d->w24;
+            d->w24 = (t1 >> 8) | (t1 << 8);
+            func_800B1FD0((CondorTri *)d);
+            q->r = 0x80;
+            q->g = 0;
+            q->b = 0;
+            *p3 = *(CondorW7 *)q;
+            d++;
+            e++;
+            p3++;
+            i++;
+            q++;
+        } while (i < D_8012C518);
+    }
+}
 
 s32 func_800B2520(s32 arg0, s32 arg1, s32 arg2) {
     s32 a;

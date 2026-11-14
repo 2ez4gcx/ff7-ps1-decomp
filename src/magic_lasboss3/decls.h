@@ -325,5 +325,14 @@ extern s32 D_801BBD64;
 extern s32 D_801BBD68;
 extern s16 D_801BBD78;
 extern u8 D_800FAFDC;
+void func_801B5270(void);
+extern struct { s32 v; s32 f4; } D_801BB9E0;
+extern s16 D_801BB9EA;
+extern s16 D_801BB9F0;
+extern s32 **D_801BB9F4[];
+extern MgSVec D_801BBA14;
+extern MgSVec D_801BBA1C;
+extern s32 D_801BBE44;
+extern s32 D_801BBE48;
 
 #endif /* MAGIC_LASBOSS3_DECLS_H */

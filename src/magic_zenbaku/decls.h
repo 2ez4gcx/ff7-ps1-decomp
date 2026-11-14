@@ -17,7 +17,7 @@ extern s32 D_801D9118;
 extern s32 D_801D911C;
 M2C_UNK func_800D54EC(s32, s16 *);
 extern s16 D_8015169C;
-extern s32 func_801B02A4;
+void func_801B02A4(void);
 void func_801B0074(void);
 M2C_UNK func_800D4368(void *, s32, s32);
 s32 func_800D4D90(M2C_UNK *, s32, M2C_UNK, s32);
@@ -31,5 +31,11 @@ extern u8 D_801D9126[];
 void func_801B018C(void);
 extern M2C_UNK D_801C1104;
 extern struct { u16 v; } D_801C110C;
+s32 func_80042DA8(void);
+M2C_UNK func_800D55F4(M2C_UNK, s32, M2C_UNK);
+s32 func_800D56A8(s16 *);
+M2C_UNK func_800D5774(s32);
+extern MgTask D_80162990[];
+extern u8 D_801D9124[];
 
 #endif /* MAGIC_ZENBAKU_DECLS_H */
