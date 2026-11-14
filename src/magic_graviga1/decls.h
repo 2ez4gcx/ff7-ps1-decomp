@@ -26,7 +26,8 @@ void func_801B1464(s32 arg0, M2C_UNK arg1);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, void (*)(s32, s32));
 extern M2C_UNK D_801B14F4;
-extern u8 D_801D17B4[];
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; s16 unk20; s16 unk22; } GvSpark;
+extern GvSpark D_801D17B4[];
 s32 func_801B0A34(void);
 void func_801B07D8(MgTask *p);
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
@@ -67,5 +68,8 @@ extern u8 D_800F5B70;
 extern u8 D_800F5B71;
 extern u8 D_800F5B72;
 void func_801B0AC8(void);
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+void func_8003A078(MgVec *, MgSVec *);
+s32 func_80042DA8(void);
 
 #endif /* MAGIC_GRAVIGA1_DECLS_H */
