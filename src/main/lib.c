@@ -16,6 +16,7 @@ M2C_UNK func_80042DC8();
 s32 func_80039B40(s32 arg0);
 void func_80039BE0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_8003CC1C(s32 arg0, s32 arg1);
+s32 func_8003CEDC(s32 arg0);
 
 void func_80036298(void) {
     func_800362B8(0);
@@ -1343,7 +1344,44 @@ void func_8003CEBC(void) {
     func_80042A80();
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003CEDC);
+s32 func_8003CEDC(s32 arg0) {
+    s32 t;
+    s32 s;
+    s32 a;
+    s32 b;
+    s32 u;
+
+    s = *D_8005049C;
+    t = (*D_800504A0 - D_800504A4) & 0xFFFF;
+    if (arg0 < 0) {
+        return D_80051568;
+    }
+    if (arg0 == 1) {
+        return t;
+    }
+    if (arg0 > 0) {
+        u = D_800504A8 - 1;
+        a = u + arg0;
+    } else {
+        a = D_800504A8;
+    }
+    b = 0;
+    if (arg0 > 0) {
+        b = arg0 - 1;
+    }
+    func_8003D024(a, b);
+    s = *D_8005049C;
+    func_8003D024(D_80051568 + 1, 1);
+    if (s & 0x80000) {
+        if ((s ^ *D_8005049C) >= 0) {
+            do {
+            } while (!((s ^ *D_8005049C) & 0x80000000));
+        }
+    }
+    D_800504A8 = D_80051568;
+    D_800504A4 = *D_800504A0;
+    return t;
+}
 
 void func_8003D024(s32 arg0, s32 arg1) {
     volatile s32 timeout;

@@ -13,6 +13,7 @@ s32 func_80036FFC(s32 arg0, MainWords *arg1);
 M2C_UNK func_80042DC8();
 extern char *strcpy();
 s32 func_8003FB8C(MainCdlFile *arg0, char *arg1);
+s32 func_8003E100(u8 arg0, s32 *arg1, s32 arg2);
 
 char *func_8003DDBC(s32 arg0) {
     u32 i;
@@ -62,7 +63,37 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003DE9C);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003DFD4);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003E100);
+s32 func_8003E100(u8 arg0, s32 *arg1, s32 arg2) {
+    s32 n;
+    s32 c;
+    s32 cb;
+    s32 r;
+
+    c = arg0;
+    cb = D_80051628;
+    n = 3;
+    do {
+        D_80051628 = 0;
+        if (c != 1 && (D_80051638 & 0x10)) {
+            func_8003EF30(1, 0, 0, 0);
+        }
+        if (arg1 == 0 || D_800515A8[c] == 0 || func_8003EF30(2, arg1, arg2, 0) == 0) {
+            D_80051628 = cb;
+            if (func_8003EF30(arg0, arg1, arg2, 0) == 0) {
+                r = 0;
+                goto ok;
+            }
+        }
+        n -= 1;
+    } while (n != -1);
+    D_80051628 = cb;
+    r = -1;
+ok:
+    if (r != 0) {
+        return 0;
+    }
+    return func_8003E9DC(0, arg2) == 2;
+}
 
 s32 func_8003E244(void) {
     func_8003F398();
