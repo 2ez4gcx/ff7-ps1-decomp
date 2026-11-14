@@ -3238,7 +3238,38 @@ void func_800C5864(void) {
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C59B8);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800C5ADC);
+u8 *func_800C5ADC(s32 arg0) {
+    s32 sp10;
+    s32 sp14;
+    u8 *p;
+    s32 n;
+    u32 **q;
+
+    p = D_80163C74;
+    func_800469D8(p);
+    func_8003BBDC(D_800EA284, p + 8, &sp10, &sp14);
+    n = func_8003BBDC(D_800EA284 + 8, p + 0x10, &sp10, &sp14);
+    p[0xC] = 0x80;
+    do {
+        p[0xD] = 0x80;
+        p[0xE] = 0x80;
+    } while (0);
+    p[4] = 1;
+    p[5] = 1;
+    p[6] = 1;
+    n = n >> 2;
+    if (n >= 2) {
+        if (n >= 0x1001) {
+            n = 0x1000;
+        }
+    } else {
+        n = 2;
+    }
+    q = (u32 **)(n * 4 + arg0);
+    *(u32 *)p = (*(u32 *)p & 0xFF000000) | (**q & 0xFFFFFF);
+    **q = (**q & 0xFF000000) | ((u32)p & 0xFFFFFF);
+    return p + 0x14;
+}
 
 void func_800C5BEC(void) {
     s32 i;
