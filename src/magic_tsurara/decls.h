@@ -14,10 +14,10 @@ extern u8 *D_801E9B4C;
 extern s16 D_80162080;
 M2C_UNK func_800D52A0(M2C_UNK, M2C_UNK);
 void func_801B0B78(s32 arg0, s32 arg1);
-M2C_UNK func_800BBEAC(void (*)());
+s32 func_800BBEAC(M2C_UNK *);
 void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
-extern M2C_UNK func_801B06D0;
+void func_801B06D0(void);
 M2C_UNK func_800BBA84(M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 M2C_UNK func_800D5444(s32, M2C_UNK, M2C_UNK, M2C_UNK *);
@@ -65,5 +65,10 @@ extern MgTask D_801621F0[];
 extern s32 D_80163C74;
 extern MgColTag D_801D1A88;
 extern s32 D_801D1A94[];
+s32 func_80039A74(s16);
+s32 func_80039B40(s16);
+s32 func_80042DA8();
+s32 func_800BC04C(M2C_UNK *);
+void func_800D5774(s32);
 
 #endif /* MAGIC_TSURARA_DECLS_H */

@@ -163,7 +163,87 @@ void func_801B058C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tsurara/nonmatchings/text", func_801B06D0);
+void func_801B06D0(void) {
+    MgTask *p;
+    MgTask *q;
+    s16 i;
+    s16 r0;
+    s16 m;
+    s16 r;
+    s16 a;
+    s16 n;
+    s16 k;
+    u8 pad[0x40];
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            r = func_80042DA8() % 0x1000;
+            i = 0;
+        loop1:
+            q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B03F0)];
+            q->unk4 = p->unkC + ((func_80039B40(r0 = r) * 0x1F4) >> 12);
+            q->unk8 = p->unk10 + ((func_80039A74(r) * 0x1F4) >> 12);
+            q->unk6 = (-0xBB8) - (func_80042DA8() % 2000);
+            q->unkE = 0x64;
+            q->unk16 = r0;
+            q->unk18 = 0;
+            q->unk14 = func_80042DA8() % 3;
+            k = r + 0x2D0;
+            r = k + (func_80042DA8() % 200);
+            if ((++i) < 5) {
+                goto loop1;
+            }
+        }
+        if (p->unk2 == 0xA) {
+            q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B058C)];
+            q->unk4 = p->unkC;
+            q->unk8 = p->unk10;
+            q->unk6 = 0;
+        }
+        if ((((u16)p->unk2) - 0xA) < 4U) {
+            i = 0;
+        loop2:
+            a = func_80042DA8() % 0x1000;
+            q = &D_80162978[func_800BBEAC((M2C_UNK *)func_801B0304)];
+            q->unkC = ((u32)(func_80039B40(a) * 0x19)) >> 10;
+            q->unk10 = ((u32)(func_80039A74(a) * 0x19)) >> 10;
+            q->unkE = (-func_80042DA8()) % 100;
+            i++;
+            q->unk4 = p->unkC + (q->unkC * 4);
+            n = p->unk10 + (q->unk10 * 4);
+            q->unk6 = 0;
+            q->unk8 = n;
+            if (i < 2) {
+                goto loop2;
+            }
+            i = 0;
+        loop3:
+            a = func_80042DA8() % 0x1000;
+            q = &D_801621F0[func_800BC04C((M2C_UNK *)func_801B01A8)];
+            q->unkC = ((u32)(func_80039B40(a) * 0x19)) >> 10;
+            q->unk10 = ((u32)(func_80039A74(a) * 0x19)) >> 10;
+            q->unkE = (-0x12C) - (func_80042DA8() % 200);
+            q->unk4 = p->unkC + (q->unkC * 4);
+            m = p->unk10 + (q->unk10 * 4);
+            q->unk14 = i;
+            i++;
+            q->unk6 = 0;
+            q->unk8 = m;
+            if (i < 2) {
+                goto loop3;
+            }
+        }
+        if (p->unk2 == 0x1E) {
+            func_800D5774(p->unk1A);
+        }
+        r = ((u16)p->unk2) + 1;
+        p->unk2 = r;
+        if (r == 0x2D) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0B78(s32 arg0, s32 arg1) {
     MgTask *p;
