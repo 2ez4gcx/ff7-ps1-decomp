@@ -399,6 +399,28 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   file serves them all (magic_whirl func_801B0098), or a cast call `((void (*)())f)(a, b,
   c)`. Names such as `k0`, `k1`, `f0`, `a` and `Pair16` are already macros or typedefs: a
   work file's typedef needs another name.
+- A field the game reads with two near-identical loads comes from two names for one global
+  (`D_8012C442[1]` and `D_8012C444`, no volatile: volatile adds an `andi 0xffff`) (condor
+  func_800A46E4); magic_tupon func_801B3A08 reads one halfword pair as `D_801EDB70[0]` and
+  `D_801EDB72`.
+- A `u32` table indexed `c + j * 0x20` is written `*(u32 *)((u8 *)0x80198880 + c * 4 + j *
+  0x80)` for the game's pre-multiplied pointer (condor func_800A427C). A one-field struct
+  array (`D_8009C766[a].a`) gives `lui at; addiu at; addu at` addressing where `(&D)[off]`
+  gives `addu v1,v0,v1` (battle func_800E60F8).
+- A `u8` parameter gets an `andi` on each arithmetic use: when the game's has none, the
+  callee takes `s32` (condor func_800A698C). An `s32` temp where the game keeps a full
+  word removes `andi` and `sll/sra` pairs and turns `y = x` into a `move` (magic_bushin2
+  func_801B1580).
+- A halfword global as `extern u16 X[]` with `X[0] = ..; call((u8 *)X - 0xC)` keeps the
+  address in a register for the store and lets the next `lw` move above it; a packet tag
+  as `u32 tag` with `pk->tag = 0x07000000` gives `lui; sw` where a bitfield `tag.len = 7`
+  gives `sb` (magic_kujata func_801B3878).
+- `put` refuses a function that matches alone when its declarations disagree with decls.h
+  or with other users: condor func_800AF08C needed `extern s32 D_8012C50C` (its C user now
+  takes `(u8 *)&D_8012C50C`), and the work file's own `void func_800A2D68(void);`
+  conflicted with decls.h's `M2C_UNK func_800A2D68();` (tools/auto_decomp.py now prints
+  the last real error line, not the warning before it); a caller's `return f()` needs `f`
+  to return `s32` (condor func_800A427C).
 
 ### Order of instructions
 
@@ -926,6 +948,42 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   after both `srl`s (snobo func_800A318C); a chained assignment split in two with the
   second field stored first, found by hc.py over the store order (`p->unkE = -0x28;
   p->unk16 = ..`, magic_trainn func_801B054C).
+- A struct view of an address-only global, `((BtlQ6 *)D_800F9DA8)->id`, moves its `lh`
+  above a store to the plain global next to it, where `*(s16 *)D_800F9DA8` stays below
+  (battle func_800C5CC0). A one-field struct or `[0]` array view of a volatile global
+  keeps later loads below its store but shares one hoisted `lui/addiu` base, where a plain
+  `volatile s32` extern gives a `lui/lw` per access (snobo func_800B0ACC, battle
+  func_800ACE88). A global read through a cast of a volatile neighbour (`((s32
+  *)&D_80062D04)[2]` for D_80062D0C) stays below stores where an array element or a
+  volatile global is hoisted (main func_80045A24). Fields read through a struct pointer
+  are hoisted above stores to scalar globals where `*(u16 *)(p + 2)` reads are not
+  (highway func_800A5D6C).
+- `D_8012C3CC++; D_8012C5BC++;` (not `+= 1`) with a local `d = D_8012C400;` read just
+  before gave the game's three loads first (condor func_800B7874). An `s32 arg0` copied
+  into `s16` locals, the second copy moved just before `i = D_80100F30;`, placed the `lh`
+  and `li t0,0x1f` (snobo func_800B4CDC). Reads through `(volatile u8 *)` fix the order of
+  printf argument loads (main func_8003F830).
+- One `u32` temp reused for three byte swaps gives `srl` before `sll` (separate `u16`
+  temps the reverse); `d++` after the `q->r/g/b` stores fixes a `li`/`addiu` order; `*(u16
+  *)&D_8012C6EC` and `((u16 *)&D_8012C6EC)[2]` inline instead of a pointer variable move
+  the `lui` below the set-up of the call's address arguments (condor func_800B21A8).
+- The OT address read into a temp before the tag store (`z = D_801517C0 + 0x406C;` then
+  `func_80046794(z, pk)`) moves its `lui a0; lw a0` before the store (magic_alex
+  func_801B4970); mask constants assigned just before their statement inside a loop give
+  the game's operand and load order (magic_hmoon func_801B05E8). `tk = (r >> 2) * 4; tk +=
+  0x70; tk += D;` keeps `(x * 4 + 0x70) + D` with D loaded after the stores, where one
+  expression reassociates to `D + x * 4 + 0x70` (magic_whirl func_801B0398).
+- `u8 ci = i;` set before an inner loop and used as `ci + j * 0x10` gives the game's `move
+  v0,a3` then `andi` in the `beq` slot; `(u8)i` in the index gives `andi a0,a3,0xff` at
+  once (condor func_800A427C). A call and the load that uses its result as separate
+  statements (`r = f(); x = (u16)D[..] - 0x80; D[..] = x + r % 0x100;`) keep the load
+  after the call (magic_tupon func_801B3A08).
+- Still open: an add on a callee-saved register right before a call (`addiu s1,s2,240`)
+  sinks below the `jal` in our build where the game keeps it in the `jal` slot (battle
+  func_800C2704, main func_80028930); a cast store `*(u16 *)rc = 0` changes the scheduling
+  of a neighbouring `sh` (condor func_800A5B64). A `nop` right after an `lhu` can be the
+  assembler's nop before a `sh sym(reg)` macro storing the loaded value, not an unfilled
+  slot (battle func_800B54B8).
 
 ### Registers
 
@@ -1402,6 +1460,52 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `lui/addiu` before the `sll` (field func_800CDC28, func_800CE6F4); a declared local for
   a sum used as an index (`bi = b2A * 2;`) fixed the register of the final `addu` (condor
   func_800AC498).
+- Registers follow assignment order rather than declaration order: the pointer assigned
+  before the counter gave the game's v1/v0 in a descending clear loop (condor
+  func_800A2D68). A counter and a parameter tied in the allocator (same references, same
+  live length) go to the lower pseudo number: `n = 3` moved after a load shortened n's
+  range and gave it s0 (main func_8003E100; prio.py shows the tie).
+- One variable per recomputation of `D_8015169C << 5` (`o`, `o1`, `o2`, `o3`) moved the
+  reloads to their own register, and `raw = *(s16 *)p; t = raw;` gave an extra `move
+  a0,v0` in a `bnez` slot (battle func_800CE970). A shared `o = i * 8;` temp deleted and
+  `i * 8` written inline gave a fresh t0 where r had reused o's register (magic_lasboss3
+  func_801B5270).
+- GCC copy-propagates `n = t; if (t == 0)` into a compare on n and merges t and n; the
+  compare stored first (`z = t == 0; n = t; if (z) n = 0x63;`) keeps them apart (condor
+  func_800AEB90). `a = e->b10; t = a - g; a = t; if (t < 0) a = 0;` moved a to s0, and
+  `one = 1; if (D != -one)` keeps -1 out of a register (condor func_800AF08C). A decrement
+  through two locals (`v = t - 1`) takes two registers; the in-place `addiu v0,v0,-1` is
+  `t = t - 1;`.
+- `i0 *= 8; i0 += tab;` gives the in-place `sll a3,a3,3; addu a3,a3,t6` where `i0 = i0 * 8
+  + tab` shifts into a temp (magic_riva func_801B142C). A call result reused in place (`k
+  = f(); k = k * (0x2000 - u);`) gives the game's a3/t0 order where a separate local swaps
+  them (magic_kujata func_801B68C4). A field the game loads into a temp for several sums
+  and copies later into a long-lived register is two locals, `ww = r->w;` used in the sums
+  and `w = ww;` just before the call (magic_lamu func_801B1090).
+- A counter shared by several loops can outrank a loop variable; keeping that variable
+  live to the end (reused for a final `p->unk2 + 1`) flipped s3/s4 to the game's
+  (magic_tsurara func_801B06D0). A local `nz = -0xC81;` before a loop gives the game's
+  early `li s6,-3201` (magic_kujata func_801B3878). A call result kept in an `s32` and
+  truncated for the call goes straight to a0/a1 where a `u16` temp adds a `move`
+  (magic_s_beam func_801B03A0).
+- Code GCC inlined from a helper with parameters is allocated differently from the same
+  code on locals: a `static inline u8 dig0(u32 n, u32 d)` for the first digit of a number
+  fixed an n/d swap (locals gave n in a1, d in a0) and matched condor func_800A427C from
+  72 words off.
+- `do { } while (0)` around one statement or range changes register priorities and copy
+  registers far from the wrap: work/wrapall/wrapall.py TARGET NAME FILE [JOBS] tries every
+  range of sibling statements in every block, one wrap at a time, scores each with
+  `work.py diff` and writes matching variants to work/wrapall/out/. It matched magic_dia1
+  func_801B1500 from 59 words off (`do { if (k == 0) { k = 3; } } while (0);`, then a few
+  store orders by hand), magic_vahamut2 func_801B6C18 from 37 words off (p and a swapped;
+  the wrap goes around the last if/goto chain of its frame-count ladder), and magic_queig
+  func_801B1CDC, func_801B2274 and magic_erave func_801B0494. The best-scoring wrap may
+  match only after a new local is added inside it (magic_tupon func_801B3A08: `y` for the
+  first wrapped statement; `-(a * t >> 12) + (s >> 4)` instead of the subtraction the
+  other way round fixed its temporaries).
+- Still open: when a quotient and its copy appear (`u = c / 3; c = u`), cse2 flips the
+  copy direction for every quotient but the first, leaving one merged (magic_brizag2
+  func_801B0F78, one `move` short).
 
 ### Control flow
 
@@ -1713,6 +1817,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `if` needs its `goto` labels at that place.
 - An `if` whose body is a dead store keeps the dead `mult` of its condition (`if (z * 4 %
   15 == 0) { i = 0; }`); an empty body drops it (magic_bioga1 func_801B03B0).
+- A three-case switch (-1, 1, 7) is balanced into a tree; a linear `beq` chain with the
+  bodies after it and a shared join comes from `if (a == K) goto L;` chains (battle
+  func_800C5E94). `b == 4 || b == 8 || b == 9 || b == 0xB || b == 0xC` gives the chain
+  `beq 4; (b-8) < 2u; (b-0xB) < 2u` where a switch on those cases becomes a jump table
+  (field func_800AAB24).
+- A `u8` compared as `k < 6 && k >= 4` becomes `addiu -4; sltiu 2`; two signed `slti` come
+  from an `s16` local in nested ifs (condor func_800AF278) or from two locals read
+  separately (`k = o->b2B; j = o->b2B; if (k < 4 && j >= 2)`, condor func_800B0604).
+- A fall-through `return t` and a branch `return t` share one `move v0,s1`; an early `if
+  (arg0 == 1) return t;` and one final `return t` gave the game's duplicated move and its
+  delay-slot fill (main func_8003CEDC). In a `do { .. if (r != 0) break; .. } while` loop,
+  the return value assigned in each break arm keeps one epilogue with returns in delay
+  slots (main func_8003F830). A chain of call results each compared with the one before
+  matched as flat early returns with `s32` results and a final `ret = c; if (c == b) ret =
+  0;` (condor func_800B3B84, 309 of 311).
+- An `if (o->unk4C) { o->unk60 = sp; } else { o->unk60 = sp; }` with identical arms (no
+  branch emitted) around one store put a load after two `addiu`s as the game has it, where
+  `do { } while (0)` only half did (magic_satan func_801B4454, permuter).
 
 ### Loops
 
@@ -2039,6 +2161,19 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   against magic_tupon func_801B3668). A plain copy of a packet pointer used as a call
   argument becomes a giv at offset 0 and the other stores rebase on it: pass `(s32)p++`
   or store the last fields through a copy (magic_kujata func_801B3EA8).
+- GCC 2.6.3 reverses a loop to count down only when its body is bivs, givs, stores and the
+  compare: an address built as `base_reg + giv` in its own statement (`tab = D_..; off =
+  (i << 7) + j * 8; *(s16 *)(tab + off + 2) = v;`) stops the reversal (magic_antlion
+  func_801B22D4, magic_hades func_801B62E0).
+- Reads of the previous element through a second counter kept as its own (`for (i = 15, k
+  = 14; i >= 0; k--, i--)`) keep a separate stepping register, where `i - 1` merges into
+  i's (magic_tupon func_801B3A08). Indexing a hoisted array base (`D_800F4938[s1]`) gives
+  the game's loop-invariant hoists where a pointer loop gives none (battle func_800AABBC).
+  `x = i * 0xF00 + 0x1100` written from the outer counter gives spilled givs where a
+  stepped variable does not (magic_knights func_801B33E0).
+- A copy loop `for (i = 7; i != -1; i--)` in a `static inline` helper keeps its `li a3,-1`
+  in each loop's own preheader, where the same loop written inline in an outer `while (1)`
+  hoists the -1 into a saved register (main func_8003EC60).
 
 ### Stack frame
 
@@ -2146,6 +2281,15 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   instead of adding space after them means the game has one more spilled pseudo (statmenu
   func_801D14E0). A permuter score of 0 does not check the frame: run `work.py diff` on
   its result.
+- A `u8` destination for `x * y / 100` gives an unsigned `mult; mfhi; srl`, and each such
+  site adds 8 bytes to the frame (`vars=` in cc1's `.frame` line); three or more uses of
+  one inline `(s16)idx * 8` in a block added 8 more; a second address name inside a table
+  with a one-struct view (`D_8012C5FE[idx].g`) instead of casts of the `u8` array removed
+  8 bytes and matched condor func_800A698C. work/big1/dump.py WORKFILE NAME TARGET OUTDIR
+  keeps the `.frame` and allocation dumps.
+- Stores to separate locals whose address is never taken (m2c's `sp22`, `sp24`, `sp26`
+  beside `sp20`) are deleted as dead: they are one array or struct (`u16 rc[4]`, passed as
+  `rc`). `u8 pad[16]` gives a frame its unused space (magic_zenbaku func_801B02A4).
 
 ### How the scheduler and the allocator decide
 
@@ -2497,6 +2641,8 @@ The PSY-Q libraries were split so: libcd and libgpu have the unfolded form (ASPS
   func_801B0A2C); a dead identical-arm test `if (D != 0) { A } else { A }` around one arm
   fixed two saved registers (knights func_801B8A00, alex func_801B2D94); `do { f(..); ang
   += step; } while (0);` got tifa func_801B1DB0 to 2 words.
+- Of the 348 functions splat marks handwritten that no batch had tried, 343 use GTE
+  instructions; the other five are BIOS-call stubs and library assembly: all stay asm.
 
 ## Working with agents
 
@@ -2559,3 +2705,18 @@ When a target's small functions all fail the same way, check its options before
 grinding: counting the folded `%lo(x)($at)` forms against the unfolded `addiu $at, %lo`
 ones per file found ASPSX 2.30+ in batini, batres, brom, chocobo, snobo, snobo2 and five
 spells, which tools/psyq.py had as 2.21.
+
+Batches 88 to 98 and old1 to old14 (spells and every other target) matched 0 to 6
+functions each, most of them 1 or 2. Near misses that a batch already took to 1 to 6 words
+with about 20 tries rarely fall to a second batch soon after (nearmiss3: 0 of 22); large
+untried functions (450 to 510 instructions) fill an agent's context (big1 to big3: 1 of
+11); never-attempted functions and `do { } while (0)` wraps gave the recent matches.
+work/wrapall/candidates.py SKIP OUT scores the best old draft of every near miss with
+`work.py diff`, and work/wrapall/sweep.py CANDS MAXDIFF JOBS runs wrapall.py, unattended,
+on the drafts that have the game's instruction count, smallest first: over 101 drafts
+within 60 differing lines it matched magic_vahamut2 func_801B6C18. Before retrying an old
+near miss, run a plain `work.py diff` on its old drafts: one in work/batres1/brom/ already
+matched (brom func_800A01A0). Work-file names that differ only in case (`_a.c`, `_A.c`)
+are one file on Windows. work/split3/optcheck.py TARGET FILE KEY=VALUE... compiles a file
+with other options and lists the C functions that stop matching (under ASPSX 2.34 every C
+function of main text4.c breaks, so func_8001C0EC is not a 2.34 function).
