@@ -55,5 +55,8 @@ void func_800D4284(void *, s32, MgMat *);
 s32 func_80042DA8(void);
 void func_801B0074(s16 arg0, s16 *arg1, s16 *arg2);
 extern s16 D_801518F4[][0x5CE];
+void func_801B1CE0(void);
+extern u8 D_801D4F30;
+extern u16 D_801D4F38;
 
 #endif /* MAGIC_WEP4_DECLS_H */

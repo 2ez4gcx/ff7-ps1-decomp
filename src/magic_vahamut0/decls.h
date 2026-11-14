@@ -88,7 +88,7 @@ extern MgMat D_801FC8C0;
 extern M2C_UNK D_801FC904;
 extern s32 D_801FD13C;
 void func_801B6AE0(void);
-extern M2C_UNK func_801B7320;
+void func_801B7320(void);
 void func_801B52A0(void);
 extern MgMat D_801FCF68;
 extern M2C_UNK D_801FCF58;
@@ -219,5 +219,15 @@ extern Vh0Rec *D_801FCF98;
 extern s32 D_801FCF90;
 s32 func_8003BD7C(s32, s32, s32, s32, void *, void *, void *, void *, void *, void *);
 void func_801B53C0(void);
+extern u8 D_80153BB8[];
+extern s16 D_80153BBE;
+extern s16 D_80153BCC;
+extern u8 D_80153BE0;
+extern u8 D_80153BE1;
+extern u8 D_80153BE2;
+extern s16 D_80153D18;
+extern s16 D_80153D1A;
+extern MgSVec D_801FD088;
+extern Vh0Rot *D_801FD090;
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */

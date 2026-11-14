@@ -88,7 +88,7 @@ extern s16 D_801590D4;
 extern u8 D_801C58C8[];
 extern u8 D_801E0844[];
 extern u8 func_801B4B98[];
-extern u8 func_801B4F68[];
+void func_801B4F68(void);
 extern MgSat5 D_801621F0[];
 void func_801B4424(void);
 extern s32 D_801E11EC;
@@ -127,7 +127,6 @@ extern MgActorPos D_80151A4C[];
 extern u16 D_801E07CA[];
 extern u8 D_801E0818[];
 extern s32 D_801E07C4;
-M2C_UNK func_801B23E0();
 void func_801B58DC(SatCtx *ctx, s32 amp);
 typedef struct { s16 unk0; s16 unk2; MgSVec pos; u8 padC[8]; s16 unk14; s16 unk16; u8 pad18[8]; } SatSpawn;
 M2C_UNK func_800D54EC();
@@ -174,5 +173,8 @@ s32 func_80039F5C(s32);
 void func_8003AB84(MgMat *, MgVec *, MgVec *);
 void func_8003A79C(MgMat *, MgMat *, MgMat *);
 void func_801B4454(SatObj2 *o);
+extern u8 D_801BE990[];
+typedef struct { u8 *unk0; u8 pad4[0xC]; s32 unk10; u8 pad14[0x5C]; MgSVec v[4]; u8 pad90[8]; MgSVec unk98; MgSVec unkA0; MgVec unkA8; MgVec unkB8; MgVec unkC8; s32 unkD8; s32 unkDC; } SatCtxG;
+void func_801B23E0(SatCtxG *ctx, MgSVec *pos);
 
 #endif /* MAGIC_SATAN_DECLS_H */

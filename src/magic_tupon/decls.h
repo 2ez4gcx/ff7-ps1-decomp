@@ -152,7 +152,7 @@ extern u16 D_801EDE1C[];
 extern s16 D_801EDE30;
 extern u16 D_801ED8D8;
 extern s16 D_801517B4;
-extern s32 func_801B5EE8;
+void func_801B5EE8(void);
 extern M2C_UNK D_801ED928;
 void func_801B32B8(void);
 typedef struct { u8 b[8]; } MgB8;
@@ -229,5 +229,12 @@ extern s16 D_801EDB74;
 extern MgSVec *D_801EDB80;
 void func_8003B2CC(MgSVec *, MgSVec *, MgSVec *);
 s32 func_80042DA8();
+typedef struct { u8 pad[0x1C]; u16 a1C; u16 pad1E; u16 pad20; u16 a22; } TuCam;
+MgTask *func_800D4FA8(s32);
+extern MgMat D_800FA63C;
+extern s16 D_800F5B74;
+extern MgB8 D_801EDCBC;
+extern MgB8 D_801EDCC4;
+void func_801B46B4(void);
 
 #endif /* MAGIC_TUPON_DECLS_H */

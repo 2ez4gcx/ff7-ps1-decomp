@@ -271,7 +271,129 @@ loop:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B1CE0);
+void func_801B1CE0(void) {
+    MgSVec a;
+    MgSVec b;
+    MgTask *p;
+    s32 base;
+    s32 e;
+    s32 d;
+    s32 i;
+    s32 j;
+    s32 n;
+    s32 k;
+    s32 r;
+    s32 h;
+    s32 t;
+    u16 u;
+    u8 pad[8];
+
+    p = &D_80162978[D_8015169C];
+    base = (s32)D_801ECF8C + p->unk1C * 0x960;
+    func_800D3994(D_801ECF78, 0x15, &a);
+    func_800D3994(D_801ECF78, 0x17, &b);
+    e = base;
+loop:
+    {
+        if (*(s16 *)e != 0) {
+            D_801D4F38 = *(s16 *)(e + 2);
+            t = *(s16 *)(e + 16);
+            if (t & 1) {
+                *(s16 *)(e + 8) = D_801ECF88 + t;
+            } else {
+                *(s16 *)(e + 8) = D_801ECF88 - t;
+            }
+            u = *(u16 *)(e + 22);
+            func_800D4368((s16 *)(e + 4), (s16)u, -((s16)u >> 3));
+            D_801ECF6C = func_800D4D90(&D_801D4F30, D_801517C0 + 0x70, 0xC, D_801ECF6C);
+            if (D_80062D98 == 0) {
+                *(s16 *)(e + 4) += *(s16 *)(e + 12);
+                *(s16 *)(e + 6) += *(s16 *)(e + 14);
+                *(s16 *)(e + 12) -= *(s16 *)(e + 12) >> 3;
+                *(s16 *)(e + 14) -= *(s16 *)(e + 14) >> 3;
+                if (*(s16 *)(e + 2) >= 7) {
+                    *(s16 *)e = 0;
+                }
+                *(s16 *)(e + 2) += 1;
+            }
+        }
+        e += 0x18;
+    }
+    if (e < base + 0x960) {
+        goto loop;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x76) {
+            p->unk0 = -1;
+        }
+        t = (u16)p->unk2;
+        if ((u32)(t - 0x20) < 0x50) {
+            n = (s16)t >> 4;
+            k = 0x1900;
+            if (n == 0) {
+                n = 1;
+            }
+            if (n >= 2) {
+                n = 2;
+            }
+            i = 0;
+            if (n > 0) {
+                do {
+                    for (j = 0, d = base; j < 100; j++, d += 0x18) {
+                        if (*(s16 *)d == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 100) {
+                        break;
+                    }
+                    e = j << 1;
+                    e += j;
+                    e <<= 3;
+                    e += base;
+                    *(s16 *)e = 1;
+                    *(s16 *)(e + 2) = 0;
+                    h = 0x2BC;
+                    *(s16 *)(e + 4) = (s16)*(u16 *)&a.vx - h + func_80042DA8() % 1100;
+                    h = 0x384;
+                    *(s16 *)(e + 6) = (s16)*(u16 *)&a.vy - h + func_80042DA8() % 1400;
+                    *(s16 *)(e + 8) = func_80042DA8() % 1000 + 0x2BC;
+                    *(s16 *)(e + 12) = func_80042DA8() % 55 + 0x1E;
+                    *(s16 *)(e + 14) = func_80042DA8() % 40 + 0x1C;
+                    i++;
+                    *(s16 *)(e + 22) = (k * (func_80042DA8() % 2816 + 0xB00)) >> 12;
+                } while (i < n);
+            }
+            i = 0;
+            if (i < n) {
+                do {
+                    for (j = 0, d = base; j < 100; j++, d += 0x18) {
+                        if (*(s16 *)d == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 100) {
+                        break;
+                    }
+                    e = j * 0x18 + base;
+                    *(s16 *)e = 1;
+                    *(s16 *)(e + 2) = 0;
+                    h = 0x7D0;
+                    *(s16 *)(e + 4) = (u16)b.vx + func_80042DA8() % 2100 - h;
+                    h = 0x258;
+                    *(s16 *)(e + 6) = (s16)*(u16 *)&b.vy - h + func_80042DA8() % 1200;
+                    *(s16 *)(e + 8) = func_80042DA8() % 900 + 0x2BC;
+                    *(s16 *)(e + 12) = func_80042DA8() % 105 + 0x3C;
+                    *(s16 *)(e + 14) = func_80042DA8() % 40 + 0x1C;
+                    r = func_80042DA8();
+                    *(s16 *)(e + 22) = (k * (r % 0x800 + 0xA00)) >> 12;
+                    i++;
+                } while (i < n);
+            }
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B2320);
 
