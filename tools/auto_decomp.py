@@ -186,6 +186,15 @@ def defined():
     return out
 
 
+def last_error(e):
+    """The last line a failed compile printed that is an error: cc1 also prints
+    warnings and `In function` context lines, and the last line alone is often
+    one of them."""
+    lines = str(e).strip().splitlines()
+    errors = [l for l in lines if 'warning:' not in l and not l.rstrip().endswith("':")]
+    return (errors or lines or [''])[-1][:160]
+
+
 def file_matches(src):
     """None when every function in C in one source file still matches (its
     rodata too: a function may not bring data that lands elsewhere when the
@@ -194,7 +203,7 @@ def file_matches(src):
     try:
         result = match.check(src, TARGET, only=names)
     except psyq.Failed as e:
-        return f'{src.name} does not compile: ' + str(e).strip().splitlines()[-1][:120]
+        return f'{src.name} does not compile: ' + last_error(e)
     bad = sorted(n for n, why in result.items() if why is not None)
     if bad:
         return f'{", ".join(bad[:4])} in {src.name} no longer match ({result[bad[0]]})'
@@ -210,7 +219,7 @@ def all_match():
         try:
             result = match.check(src, TARGET, only=names)
         except psyq.Failed as e:
-            return f'{src.name} does not compile: ' + str(e).strip().splitlines()[-1][:120]
+            return f'{src.name} does not compile: ' + last_error(e)
         bad = sorted(n for n, why in result.items() if why is not None)
         if bad:
             return f'{", ".join(bad[:4])} in {src.name} no longer match'
@@ -283,7 +292,7 @@ def attempt(name, src, path, ctx, known):
         try:
             why = match.check(test, TARGET, only={name}, like=src).get(name, 'not compiled')
         except psyq.Failed as e:
-            why = 'does not compile: ' + str(e).strip().splitlines()[-1][:120]
+            why = 'does not compile: ' + last_error(e)
         test.unlink(missing_ok=True)
         if why is None:
             return (form, new, proto), None
