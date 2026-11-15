@@ -194,5 +194,7 @@ extern u8 D_801F3D74[];
 extern u8 D_801F4434[];
 void func_801B4F70(void);
 void func_801B2094(MgRing *, MgSVec *, MgSVec *, MgSVec *, s32);
+void func_801B36F4(void);
+void func_801B9D18(void);
 
 #endif /* MAGIC_TIFA_DECLS_H */
