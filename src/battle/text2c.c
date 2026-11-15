@@ -39,7 +39,53 @@ INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800D9FA4);
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DA380);
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DB818);
+s32 func_800DB818(arg0, arg1, arg2) {
+    BtlSprt *p;
+    BtlTile60 *t;
+    u8 *q;
+    u8 *w;
+    s32 o;
+    s32 n;
+    u8 pad[32];
+
+    D_800F5234[D_800F1994].len = 4;
+    D_800F5234[D_800F1994].code = 0x64;
+    func_80046870(&D_800F5234[D_800F1994], 1);
+    o = D_800F1994 * 0x14;
+    *((u8 *)D_800F5234 + 0xC + o) = 2;
+    n = D_800F1994;
+    *(s16 *)((u8 *)D_800F5234 + 8 + o) = 0;
+    *(s16 *)((u8 *)D_800F5234 + 0xA + o) = 0;
+    D_800F5234[n].v = (D_800F8368 != 0) ? 0x96 : 0xA6;
+    D_800F5234[D_800F1994].w = 0x18;
+    D_800F5234[D_800F1994].h = 0x10;
+    p = &D_800F5234[D_800F1994];
+    ((BtlTag *)p)->addr = ((BtlTag *)arg0)->addr;
+    ((BtlTag *)arg0)->addr = (u32)p;
+    D_800F52AC[D_800F1994].len = 3;
+    D_800F52AC[D_800F1994].code = 0x60;
+    t = &D_800F52AC[D_800F1994];
+    t->r = 0;
+    t->x = 0;
+    t->y = 0;
+    t->w = 0x18;
+    t->h = 0x10;
+    t = &D_800F52AC[D_800F1994];
+    t->g = 0;
+    t = &D_800F52AC[D_800F1994];
+    t->b = 0;
+    func_80046794((s32 *)arg0, &D_800F52AC[D_800F1994]);
+    w = (u8 *)D_800F551C;
+    ((M2C_UNK (*)(Spr *, s16, s32, s16, s32))func_80043814)((Spr *)(w + D_800F1994 * 0x5C), (s16)arg1, (s16)arg2 + ((D_800F8368 == 0) ? 0xF0 : 0), 0x18, 0x10);
+    D_800F551C[D_800F1994].f18 = 0;
+    D_800F551C[D_800F1994].f17 = 1;
+    D_800F551C[D_800F1994].f14 = func_8004656C(2, 0, 0, (D_800F8368 != 0) << 8);
+    func_80044AC0((s32)D_800F549C[D_800F1994], (Spr *)(w + D_800F1994 * 0x5C));
+    q = D_800F549C[D_800F1994];
+    ((BtlTag *)q)->addr = ((BtlTag *)arg0)->addr;
+    ((BtlTag *)arg0)->addr = (u32)q;
+    return *(s32 *)arg0;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2c", func_800DBC18);
 

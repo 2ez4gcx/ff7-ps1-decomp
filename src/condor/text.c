@@ -3929,7 +3929,138 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B47C8);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B4EFC);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B5678);
+s32 func_800B5678(CondorActor *arg0) {
+    s16 ret;
+    s16 v;
+    s16 w;
+    s32 idx;
+    s32 j;
+    s32 off;
+    s32 k;
+    s32 r;
+    s32 m;
+    u16 t;
+    u16 u;
+
+    if (M2C_FIELD(arg0, u16 *, 6) != 0x13 || func_800B64EC(arg0) != 1) {
+        ret = 0;
+        switch (arg0->pad02[0]) {
+        case 0:
+            arg0->pad02[0] = 1;
+            arg0->pad02[2] = 1;
+            if (arg0->b2A != 0) {
+                ret++;
+                arg0->b2A = 0;
+                arg0->pad02[2] = 0;
+            }
+            break;
+        case 1:
+            v = -1;
+            if (M2C_FIELD(arg0, u16 *, 0x1E) == 0) {
+                v = func_800B4EFC(arg0);
+            } else {
+                M2C_FIELD(arg0, u16 *, 0x1E) = M2C_FIELD(arg0, u16 *, 0x1E) - 1;
+            }
+            if (v == -1) {
+                if (arg0->b2A != 1) {
+                    ret++;
+                    arg0->b2A = 1;
+                    arg0->pad02[2] |= 1;
+                }
+            } else {
+                arg0->pad3C[4] = v;
+                arg0->pad02[0] = 3;
+                arg0->pad02[2] |= 2;
+                D_8012C3AC = D_800BE908[v].a;
+                D_8012C3AE = *(u16 *)((u8 *)D_800BE908 + v * 0x78 + 2);
+                func_800AD32C(arg0);
+            }
+            break;
+        case 2:
+            arg0->pad02[2] = 2;
+            break;
+        case 3:
+            if (arg0->flags & 0x20) {
+                if (arg0->pad3C[4] != 0xFF) {
+                    arg0->pad3C[4] = 0xFF;
+                    arg0->pad02[0] = 1;
+                    M2C_FIELD(arg0, u16 *, 0x1E) = M2C_FIELD(arg0, u16 *, 0x1A);
+                    t = M2C_FIELD(arg0, u16 *, 0x24);
+                    if (t & 0xFF) {
+                        M2C_FIELD(arg0, u16 *, 0x24) = t - 1;
+                    }
+                    func_800AC1A8(arg0);
+                    if (arg0->w28 >= (s16)arg0->y) {
+                        func_800AC1A8(arg0);
+                    }
+                }
+            } else {
+                j = arg0->pad3C[4];
+                if (j != -1) {
+                    off = j * 0x78;
+                    if (*(u16 *)((u8 *)D_800BE8C0 + off) != 0) {
+                        D_8012C3AC = *(u16 *)((u8 *)D_800BE908 + off);
+                        D_8012C3AE = *(u16 *)((u8 *)D_800BE908 + off + 2);
+                        func_800AD32C(arg0);
+                        w = j;
+                    } else {
+                        arg0->flags = 1;
+                        w = -2;
+                        arg0->pad02[0] = 0;
+                        arg0->pad02[2] = 0;
+                        arg0->w26 = 0;
+                        arg0->w28 = 0;
+                        arg0->pad2B[2] = 0;
+                        arg0->pad2B[3] = 0;
+                        M2C_FIELD(arg0, s16 *, 0x3E) = 0;
+                        arg0->pad3C[5] = 0xFF;
+                        arg0->pad3C[4] = 0xFF;
+                    }
+                } else {
+                    w = -1;
+                }
+                if (w == -2) {
+                    u = M2C_FIELD(arg0, u16 *, 0x24);
+                    if (u & 0xFF) {
+                        M2C_FIELD(arg0, u16 *, 0x24) = u - 1;
+                    }
+                    func_800AC1A8(arg0);
+                    if (arg0->w28 >= (s16)arg0->y) {
+                        func_800AC1A8(arg0);
+                    }
+                }
+            }
+            break;
+        }
+        if (ret != 0) {
+            func_800AC498(arg0);
+        }
+        idx = arg0 - (CondorActor *)D_800BE8C0;
+        if ((arg0->w26 | arg0->w28) != 0) {
+            func_800B46D4(arg0);
+        }
+        m = 8;
+        k = arg0->kind;
+        r = 0;
+        if (k != 0) {
+            if (k < 3) {
+                r = 1;
+            } else if (k < m) {
+                if (k >= 5) {
+                    r = 1;
+                }
+            }
+        }
+        m = r;
+        if (m != 0) {
+            func_800B47C8(arg0, idx);
+        }
+        if ((u16)(arg0->w0A - 0xCC) < 4 && D_8012C414 == 0) {
+            D_8012C414 = 2;
+        }
+    }
+    return 0;
+}
 
 void func_800B5A50(CondorObj *arg0) {
     u16 ret;
