@@ -100,7 +100,7 @@ M2C_UNK func_800A80D4(M2C_UNK);
 void func_800A8ADC(s32 arg0);
 extern s32 D_800B4F8C;
 extern s32 D_800B510C;
-M2C_UNK func_800A8C0C(M2C_UNK);
+void func_800A8C0C(s32 arg0);
 void func_800A971C(s32 arg0);
 M2C_UNK func_800A9B60(M2C_UNK);
 void func_800AB674(void);
