@@ -1711,5 +1711,12 @@ extern BtlWinR D_800F551C[];
 extern u8 D_800F549C[][0x40];
 s32 func_8004656C(s32, s32, s32, s32);
 M2C_UNK func_80046794(s32 *, void *);
+void func_800E0E34(void);
+M2C_UNK func_800E7170();
+extern void (*D_800F300C[])(void);
+extern s16 D_800F310E;
+extern u8 D_800F5161;
+extern u8 D_800F5166;
+extern u8 D_800F5167;
 
 #endif /* BATTLE_DECLS_H */
