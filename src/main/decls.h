@@ -1790,10 +1790,10 @@ extern s32 D_8009C6D0;
 extern volatile s32 D_80051A20;
 extern volatile s32 D_80051A24;
 extern s32 D_80051A2C;
-extern s32 D_80051A30;
+extern volatile s32 D_80051A30;
 extern volatile s32 D_80051A28;
 extern s32 D_80051A38;
-extern s32 D_80051A40;
-extern M2C_UNK func_800418D8;
+extern volatile s32 D_80051A40;
+void func_800418D8(u8 arg0, s32 arg1);
 
 #endif /* MAIN_DECLS_H */

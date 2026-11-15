@@ -55,7 +55,49 @@ void func_80041810(s16 *arg0, s16 *arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3a", func_800418D8);
+void func_800418D8(u8 arg0, s32 arg1) {
+    s32 sp10[4];
+    volatile s32 *p;
+    volatile s32 *q;
+    s32 t;
+
+    if (arg0 == 1) {
+        p = &D_80051A34;
+        if (*p > 0) {
+            if (D_80051A30 == 0x200) {
+                ((s32 (*)(s32 *, s32)) func_8003E268)(sp10, 3);
+                if (func_8003E3D4(sp10) != D_80051A40) {
+                    func_80042D48("CdRead: sector error\n");
+                    *p = -1;
+                }
+            }
+            q = &D_80051A28;
+            t = *q;
+            ((s32 (*)(s32, s32)) func_8003E268)(t, D_80051A30);
+            *q += D_80051A30 * 4;
+            --D_80051A34;
+            ++D_80051A40;
+        }
+    } else {
+        *(volatile s32 *) &D_80051A34 = -1;
+    }
+    *(volatile s32 *) &D_80051A38 = func_8003CEDC(-1);
+    if (D_80051A34 < 0) {
+        func_80041AFC(1);
+    }
+    if (func_8003CEDC(-1) > D_80051A3C[0] + 0x4B0) {
+        D_80051A34 = -1;
+    }
+    /* (&D_80051A38)[1] is D_80051A3C again, through another name, read anew */
+    if (D_80051A34 == 0 || func_8003CEDC(-1) > (&D_80051A38)[1] + 0x4B0) {
+        func_8003DE6C(D_80051A44);
+        func_8003DE84(D_80051A48);
+        func_8003DE9C(9, 0, 0);
+        if (D_80051A1C != 0) {
+            ((void (*)(s32, s32)) D_80051A1C)(D_80051A34 == 0 ? 2 : 5, arg1);
+        }
+    }
+}
 
 s32 func_80041AFC(s32 arg0) {
     s8 sp10;
