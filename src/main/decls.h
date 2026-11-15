@@ -245,7 +245,7 @@ s32 func_8003F420(void);
 M2C_UNK func_8003E9DC();
 M2C_UNK func_8003EC60();
 M2C_UNK func_8003F830();
-M2C_UNK func_80040CA8();
+void func_80040CA8(void);
 extern s32 D_8007E76C;
 extern s32 D_8009C6C8;
 extern s32 D_8009C6CC;
@@ -1775,5 +1775,18 @@ void func_8001AEE4(void);
 extern u8 D_800694FA;
 extern s16 D_80069536[];
 s32 func_800424C4(u32 arg0);
+typedef struct { u16 s0; volatile u16 s2; volatile u16 s4; volatile u16 s6; volatile u16 s8; u8 padA[0x12]; MainBytes4 unk1C; } MainCdr;
+typedef struct { s32 v; } MainV;
+extern volatile u8 *D_800519BC;
+extern volatile u8 *D_800519C4;
+extern volatile u8 *D_800519C8;
+extern volatile u32 *D_800519CC;
+extern volatile u32 *D_800519D0;
+extern volatile u32 *D_800519DC;
+extern volatile u32 *D_800519EC;
+extern s32 D_80051A04;
+extern s32 D_80099FC8;
+extern struct { MainCdr *cd; } D_8007054C;
+extern s32 D_8009C6D0;
 
 #endif /* MAIN_DECLS_H */

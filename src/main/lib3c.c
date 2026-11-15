@@ -62,6 +62,8 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib3c", func_80042D98);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3c", func_80042DC8);
 
+INCLUDE_ASM("../asm/us/main/nonmatchings/lib3c", func_80042DD8);
+
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3c", func_80043634);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3c", func_80043644);
