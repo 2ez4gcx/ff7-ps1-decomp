@@ -421,6 +421,32 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   conflicted with decls.h's `M2C_UNK func_800A2D68();` (tools/auto_decomp.py now prints
   the last real error line, not the warning before it); a caller's `return f()` needs `f`
   to return `s32` (condor func_800A427C).
+- An `addu` with its operands the other way round comes from how the address is written:
+  `q = (u32 **)(n * 4 + arg0);` with an `s32 arg0` gave the game's `addu a0,a0,s3` where
+  `arg0 + n`, `&arg0[n]` and `(s32)arg0 + n * 4` gave `addu a0,s3,a0` (battle
+  func_800C5ADC); `(T *)(j * 0x18 + (s32)base)` puts the offset first (magic_hades
+  func_801B5310). Still open: snobo func_800A0F1C wants the base first and every form
+  gives the index first.
+- Globals that look separate (a byte triple and a halfword) can be one struct `{ u8 a, b,
+  c, pad; u16 d; }`: a store to a struct member invalidates a cached `p->field` load where
+  a store to a plain scalar does not (magic_hades func_801B64FC). A hand-stepped byte
+  offset `j += 0x68` over three tables never scheduled its zero where the game has it; the
+  tables as arrays of a 0x68-byte struct (`typedef struct { s32 w[26]; } NtFx;`) indexed
+  by the loop counter let GCC make the giv itself (magic_night func_801B1B54).
+- A bare K&R parameter `f(arg0)` with `(s16)arg0` at each use gives the game's
+  saved-register copy and a re-extension per use, where a prototyped `s16 arg0` does not
+  (battle func_800D9BF4); a bare K&R definition also keeps a decls.h prototype other
+  callers need (battle func_800DB818). `((s32 (*)())f)(..)` drops the `sll/sra` after a
+  call to an `s16` function, and `((s32 (*)(void))f)()` the `andi 0xff` after a `u8` one,
+  without changing decls.h; a cast prototype with an `s32` parameter where decls.h has
+  `s16` cancels an argument extension.
+- An `s16` local GCC 2.6.3 loads from an `s32` slot comes out `lhu` plus a sign extension;
+  a plain `s32` local gives `lh` (highway func_800A8C0C). A u16 field written `f - 0xA`
+  becomes `li 0xfff6; addu`; through an `s32` temp it is `addiu -10` (big5). A narrow `s16
+  k = 0x34` used as an index got the game's saved register where `s32` did not (condor
+  func_800AE384). Printf strings sit in rodata in the order the function names them: two
+  initialised locals `char *dma = ".."; char *fifo = "..";` at the top put them before a
+  format passed inline (main func_800424C4).
 
 ### Order of instructions
 
@@ -984,6 +1010,36 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   of a neighbouring `sh` (condor func_800A5B64). A `nop` right after an `lhu` can be the
   assembler's nop before a `sh sym(reg)` macro storing the loaded value, not an unfilled
   slot (battle func_800B54B8).
+- Volatile globals: stores to `volatile` globals (`lui at; sw`) stay out of `jal` delay
+  slots and move the next call's argument set-up to where the game has it; making the
+  CdRead state globals volatile matched main func_80041D28, func_80041AFC and
+  func_800418D8 (whose `blez` slot then stays empty). A struct field store right before a
+  call fills the jal slot only when non-volatile: with a `volatile T *volatile` global,
+  cast the last store (`((BtlSprt *)D_80062F24)->v = 8`).
+- A one-field struct view (`((MainV *)&D_8009C6C0)->v`, `((HwW *)&D_x)->v`, `extern struct
+  { MainCdr *cd; } D_8007054C`) keeps a load below a preceding store where plain
+  `volatile` breaks a CSE reuse; a volatile field store `*(volatile u16 *)&p->s0 = 0`
+  stays ahead of a following load; a volatile read as an expression statement reproduces a
+  stray `lhu` (main func_80040CA8). `if (a < (p[n] += K))` compares the register holding
+  the new value where `p[n] += K; if (a < p[n])` reloads it; `a > b` against `b < a`
+  changes which load comes first (big11).
+- Constants hoisted out of a loop come out in the order of their first appearance in the
+  source (magic_ifleet: `tag = ..` before `rgbc = ..`). With six or more uses GCC 2.6.3
+  hoists a constant (0x30 in sprintf) into a saved register for the whole function. In a
+  ring-walk loop the index increment matched only at the end of the body, after the calls
+  (magic_hades func_801B40FC and its family, magic_tifa func_801B4F70). A pointer local
+  for a cached scratchpad constant at the start of a block gives the game's order of
+  constant loads; the first offset-0 store to a scratchpad constant goes through the
+  cached pointer unless written through another base that nothing else uses (magic_tifa
+  func_801B416C).
+- `x + 0xBE + rem` (and `q->a + (k*2 - 0x180)`) is reassociated; a temp (`t = rem + 0xBE;
+  x + t`) or `q->a - 0x180 + k*2` pins the order; a separate `s16 a = t;` copy stops CSE
+  folding `t - 2 - 12` into `a - 14`; a sum stored to an `s16` field and used again needs
+  its own local or the field is reloaded (magic_hades). GCC folds a shift-add-shift of
+  single-use values inside one basic block, not across a branch (magic_ifleet
+  func_801B24C4). GCC 2.7.2 treats a `div` with its zero check as one insn and hoists it
+  and its loads; a `do { } while (0)` around the block before it keeps the order (submar
+  func_800A6778).
 
 ### Registers
 
@@ -1506,6 +1562,27 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Still open: when a quotient and its copy appear (`u = c / 3; c = u`), cse2 flips the
   copy direction for every quotient but the first, leaving one merged (magic_brizag2
   func_801B0F78, one `move` short).
+- Which blocks share one pointer local changes its register: blocks 1-2 sharing one local
+  and 3-4 another matched (magic_tupon func_801B5EE8); one local `s16 *q_n = &D_8009A000;`
+  per block that stores to it (seven) gave the saved register per block (highway
+  func_800ADD6C). A second loop with a counter of its own and the first counter reused in
+  a third loop fixed an i/pointer swap, and `ang << 1` instead of `ang * 2` took the value
+  from the right register (highway func_800A8C0C). One scratch local for several unrelated
+  constants can give the game's register (magic_hades func_801B8D48); one local per switch
+  case gives the cases their own registers (big5).
+- Spilled locals get their stack slots in declaration order (the first declared at the
+  lowest slot): declare a spilled local first for slot 0x28, or replace a named local with
+  its expression to move its slot late (magic_escape func_801B009C, magic_knights). An
+  unused spilled pseudo of two separate `T[D*0x240]` and `T[D*0x240 + 1]` expressions
+  added 8 bytes of frame; one named index local removed it (work/spells19/dump.py `.greg`
+  shows it).
+- Register swaps of two variables follow work/spells87/prio.py's priorities
+  (floor_log2(refs) * refs / length, ties to the lower pseudo number): eqipmenu
+  func_801D1D5C's card mask (6 references, 0.094) outranks the icon (5, 0.081), and battle
+  func_800E1C40's `p` needs 15 references or fewer instead of 17; a 45-minute permuter run
+  then got eqipmenu to the game's length with the spill right. A running offset `c +=
+  0x690` that is really `i * 0x690`, written as a giv, lets loop.c put its increment in
+  the branch delay slot with the other givs (magic_ifleet).
 
 ### Control flow
 
@@ -1835,6 +1912,23 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - An `if (o->unk4C) { o->unk60 = sp; } else { o->unk60 = sp; }` with identical arms (no
   branch emitted) around one store put a load after two `addiu`s as the game has it, where
   `do { } while (0)` only half did (magic_satan func_801B4454, permuter).
+- Cross-jumping merges two stores only when their RTL is identical: a store written
+  through another name (`D_80051A3C[-2] = -1;` for D_80051A34) stays apart, as the game
+  has it (main func_80041AFC); a second read through another name (`(&D_80051A38)[1]` for
+  D_80051A3C) keeps GCC from sharing an address register (main func_800418D8). When the
+  game has one shared tail after several branches with the tail's loads in each
+  predecessor, write the tail in full in each branch: GCC schedules the loads up into each
+  branch and cross-jumping merges the identical suffix, where a goto to one shared label
+  leaves the loads in the tail (battle func_800E0E34).
+- Spell timeline scripts are nested `t -= K; if (t < N) { if (t == X) .. } else { ..`
+  chains with the tail after the whole chain, not inside the last else; `if (t <= 0) {..}
+  else {..}` gives a `bgtz` out of line (magic_vahamut2 func_801B7610 and the spells99
+  batch). A switch-shaped dispatch needs a real `switch` for the compare tree; `case 0:
+  case 4: break;` makes GCC 2.7.2 emit a jump table instead of a compare chain. `t = A; if
+  (B) t = 1;` gives the game's A-then-B shape where `t = A || B` does not. `ret = 0;`
+  moved inside an if body fixed a prologue save order (condor func_800B5678). A selected
+  call argument written as two calls (`if (c) f(j, 0); else f(j, 4);`) stops GCC making it
+  a shift (condor func_800A2640).
 
 ### Loops
 
@@ -2174,6 +2268,12 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A copy loop `for (i = 7; i != -1; i--)` in a `static inline` helper keeps its `li a3,-1`
   in each loop's own preheader, where the same loop written inline in an outer `while (1)`
   hoists the -1 into a saved register (main func_8003EC60).
+- `D[z].v[x]` in nested loops matched where a row-pointer local strength-reduced the inner
+  index (magic_satan func_801B23E0); `func(.., q); q++;` instead of `func(.., q++)` gives
+  the loop address q + 0x14 (magic_knights); `t = i + 1; i = t; .. while (t < D)` gives
+  the game's `addiu; move; sll; sra; slt` only with `s16` i and t (big6); a sum `(T + K) +
+  co + ro` with loop variables is hoisted and spilled when ro comes last after a symbol
+  and a constant (magic_escape func_801B009C).
 
 ### Stack frame
 
@@ -2290,6 +2390,9 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - Stores to separate locals whose address is never taken (m2c's `sp22`, `sp24`, `sp26`
   beside `sp20`) are deleted as dead: they are one array or struct (`u16 rc[4]`, passed as
   `rc`). `u8 pad[16]` gives a frame its unused space (magic_zenbaku func_801B02A4).
+- A 4-word BIOS-call stub can sit right before a C function inside one splat function
+  (main func_80042DC8, printf, followed by sprintf at 0x80042DD8): a `type:func` symbol in
+  config/symbols.us.<target>.txt and `tools/build.py <target> --split` separate them.
 
 ### How the scheduler and the allocator decide
 
@@ -2720,3 +2823,19 @@ matched (brom func_800A01A0). Work-file names that differ only in case (`_a.c`, 
 are one file on Windows. work/split3/optcheck.py TARGET FILE KEY=VALUE... compiles a file
 with other options and lists the C functions that stop matching (under ASPSX 2.34 every C
 function of main text4.c breaks, so func_8001C0EC is not a 2.34 function).
+
+Batches 99 to 103 and old15 to old16, big4 to big12, lib1 to lib2 and focus1 to focus3
+(2026-11-14 to 16): never-attempted spell functions of 244 to 400 instructions matched 9,
+5 and 8 of 10 (spells99-101); never-drafted functions of 478 to 677 instructions matched 1
+of 3 or 4 per batch at best (big4, big11) and none in five batches; small near misses one
+register swap off resisted every retry (main14 0 of 18). What paid off: focus batches of 2
+or 3 drafts already at the game's length or frame (1 of 3 each), 45 to 60-minute permuter
+runs started by hand from an agent's best draft (night 180 to 120, then matched; eqipmenu
+to the game's length), and option checks: work/optsweep/optsweep.py CANDS OUT compiles
+each draft under every GCC build and ASPSX version, and work/optsweep/filecheck.py TARGET
+FILE compiles each C function of a file on its own under each option value (optcheck.py's
+whole-file check fails for every function of a file whose layout depends on the option):
+they found that lib3.c holds a 2.21 part (func_80040CA8) and a 2.34 part (the CdRead
+functions, now lib3a.c). Agents still type `python -`, leave permuter workers running
+after reporting none, and arm wait loops that match their own command line: forbid wait
+loops in the prompt and check the process list after every batch.
