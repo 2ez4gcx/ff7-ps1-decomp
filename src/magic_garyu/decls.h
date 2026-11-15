@@ -81,6 +81,16 @@ extern MgSVec D_801D9DD0;
 extern s16 D_80163C78;
 void func_801B02B0(void);
 void func_801B0480(s32, s32);
-void func_801B0808(s32, s32, s32, s32);
+void func_801B0808(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+typedef struct { s16 x; s16 y; s16 z; u8 pad[0xE]; } GrVel;
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 pad6; s32 pad8; s32 padC; s32 unk10; } GrGrid;
+extern GrVel D_801D9F88[];
+extern GrVel D_801D9F9C[];
+extern GrGrid D_801D9F94[];
+extern s16 D_801D627C[];
+extern s16 D_801D6284[];
+extern s16 D_801D6286;
+extern s16 D_801D6288;
+extern MgSVec *D_801D628C;
 
 #endif /* MAGIC_GARYU_DECLS_H */

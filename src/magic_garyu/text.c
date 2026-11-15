@@ -61,7 +61,65 @@ INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B02B0);
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B0480);
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B0808);
+void func_801B0808(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 v;
+    s32 r;
+    s32 x;
+    s32 y;
+    s32 k;
+
+    for (i = 15, k = 14; i >= 0; k--, i--) {
+        t = (i << 12) / 15;
+        if (i > 0) {
+            r = func_80042DA8();
+            x = (u16)D_801D9F88[i].x - 0x10;
+            D_801D9F9C[i].x = x + r % 0x20;
+            r = func_80042DA8();
+            x = (u16)D_801D9F9C[k].y - 0x10;
+            D_801D9F9C[i].y = x + r % 0x20;
+            r = func_80042DA8();
+            x = (u16)D_801D9F9C[k].z - 0x10;
+            D_801D9F9C[i].z = x + r % 0x20;
+        } else {
+            D_801D9F9C[i].x = D_801D627C[0];
+            D_801D9F9C[i].y = D_801D627C[1];
+            D_801D9F9C[i].z = D_801D627C[2];
+            r = func_80042DA8();
+            x = (u16)D_801D6284[0] - 0x80;
+            D_801D6284[0] = x + r % 0x100;
+            r = func_80042DA8();
+            x = (u16)D_801D6284[1] - 0x80;
+            D_801D6284[1] = x + r % 0x100;
+            r = func_80042DA8();
+            do {
+                y = (u16)D_801D6284[2] - 0x80;
+                D_801D6284[2] = y + r % 0x100;
+                D_801D627C[0] += func_80039A74(D_801D6284[0]) << 9 >> 12;
+                D_801D627C[1] += func_80039A74(D_801D6286) << 9 >> 12;
+                D_801D627C[2] += func_80039A74(D_801D6288) << 9 >> 12;
+            } while (0);
+        }
+        D_801D628C->vx = (u32)func_80039A74(D_801D9F9C[i].x) >> 3;
+        D_801D628C->vy = (u32)func_80039A74(D_801D9F9C[i].y) >> 3;
+        D_801D628C->vz = (u32)func_80039A74(D_801D9F9C[i].z) >> 3;
+        func_8003C21C((u16 *)D_801D628C, (u16 *)((u8 *)D_801D628C + 0x18));
+        D_801D628C->vy = 0;
+        D_801D628C->vz = 0;
+        D_801D628C->vx = arg2 * ((t * 0xE00 >> 12) + 0x200) >> 12;
+        func_8003B2CC((MgMat *)((u8 *)D_801D628C + 0x18), (u16 *)D_801D628C, (u16 *)D_801D628C);
+        D_801D9F94[i].unk0 = D_801D628C->vx;
+        D_801D9F94[i].unk2 = -(arg0 * t >> 12) + ((s16)D_801D628C->vy >> 4);
+        D_801D9F94[i].unk4 = D_801D628C->vz;
+        v = func_80039A74(t << 11 >> 12);
+        for (j = 0; j < 1; j++) {
+            v = func_80039A74(v / 4);
+        }
+        D_801D9F94[i].unk10 = arg1 * (0x1000 - ((0x1000 - arg3) * v >> 12)) >> 12;
+    }
+}
 
 void func_801B0C9C(void) {
     MgMat m;

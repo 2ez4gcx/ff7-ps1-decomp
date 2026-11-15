@@ -512,9 +512,194 @@ void func_801B38DC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3BD4);
+void func_801B3BD4(void) {
+    MgTask *p;
+    HdBlk *h;
+    HdBlk *h2;
+    HdTrail *tr;
+    HdSc3 *sc;
+    s32 s0;
+    s32 n;
+    s32 i;
+    s32 last;
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B40FC);
+    sc = (HdSc3 *)0x1F800000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    h = &D_801F1250[p->unk1C];
+    h2 = &D_801F1250[p->unk1C + 1];
+    tr = &D_801F34D0[p->unk1C];
+    sc->vC8.vx = 0;
+    sc->vC8.vy = p->unkE;
+    sc->vC8.vz = 0;
+    func_8003BF8C(&sc->vC8, &sc->mD0);
+    if (D_80062D98 == 0) {
+        sc->v28.vx = 0;
+        sc->v28.vy = 0;
+        sc->v28.vz = -p->unk14;
+        func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vx = (u16)p->unk4 + (u16)sc->v28.vx;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vy = (u16)p->unk6 + (u16)sc->v28.vy;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vz = (u16)p->unk8 + (u16)sc->v28.vz;
+        func_801B35F0(h, &tr->v[h->cur]);
+        sc->v28.vx = 0;
+        sc->v28.vy = 0;
+        sc->v28.vz = -p->unk14 - 100;
+        func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vx = (u16)p->unk4 + (u16)sc->v28.vx;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vy = (u16)p->unk6 + (u16)sc->v28.vy;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vz = (u16)p->unk8 + (u16)sc->v28.vz;
+        func_801B35F0(h2, &tr->v[h2->cur]);
+    }
+    if (p->unk2 == 0) {
+        p->unk2 = p->unk2 + 1;
+        return;
+    }
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    sc->wA8 = 0x301818;
+    sc->wAC = sc->wB0 = 0x100202;
+    sc->wB8 = 0x787878;
+    sc->wBC = sc->wC0 = 0x480202;
+    s0 = h->start;
+    last = h->num - 1;
+    sc->v38 = *h->pos[s0];
+    sc->v48.vx = sc->v38.vx;
+    sc->v48.vy = sc->v38.vy - 0xB4;
+    sc->v48.vz = sc->v38.vz;
+    sc->v50.vx = sc->v38.vx;
+    sc->v50.vy = sc->v38.vy + 0xB4;
+    sc->v50.vz = sc->v38.vz;
+    sc->v58 = *h2->pos[s0];
+    func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v58);
+    i = 1;
+    if (last > 0) {
+        do {
+            if (s0 >= h->wrap) {
+                s0 = 0;
+            }
+            n = s0 + 1;
+            if (n >= h->wrap) {
+                n = 0;
+            }
+            sc->w88 = sc->w68;
+            sc->w8C = sc->w6C;
+            sc->w90 = sc->w70;
+            sc->w20 = sc->w1C;
+            sc->wB4 = sc->wB0;
+            sc->wC4 = sc->wC0;
+            sc->v38 = *h->pos[n];
+            sc->v48.vx = sc->v38.vx;
+            sc->v48.vy = sc->v38.vy - 0xB4;
+            sc->v48.vz = sc->v38.vz;
+            sc->v50.vx = sc->v38.vx;
+            sc->v50.vy = sc->v38.vy + 0xB4;
+            sc->v50.vz = sc->v38.vz;
+            sc->v58 = *h2->pos[n];
+            func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v58);
+            func_801B2ED4((HdObj3 *)sc, i, last);
+            i++;
+            s0++;
+        } while (i <= last);
+    }
+    if (p->unk2 >= 0x28) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unkE += p->unk12;
+        p->unk2++;
+    }
+}
+
+void func_801B40FC(void) {
+    MgTask *p;
+    HdBlk *h;
+    HdTrail *tr;
+    HdSc4 *sc;
+    s32 s0;
+    s32 n;
+    s32 i;
+    s32 last;
+
+    sc = (HdSc4 *)0x1F800000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    h = &D_801F1250[p->unk1C];
+    tr = &D_801F34D0[p->unk1C];
+    sc->vC8.vx = 0;
+    sc->vC8.vy = p->unkE;
+    sc->vC8.vz = 0;
+    func_8003BF8C(&sc->vC8, &sc->mD0);
+    if (D_80062D98 == 0) {
+        sc->v28.vx = 0;
+        sc->v28.vy = 0;
+        sc->v28.vz = -p->unk14;
+        func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vx = (u16)p->unk4 + (u16)sc->v28.vx;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vy = (u16)p->unk6 + (u16)sc->v28.vy;
+        ((MgSVec *)(h->cur * 8 + (s32)tr))->vz = (u16)p->unk8 + (u16)sc->v28.vz;
+        func_801B35F0(h, &tr->v[h->cur]);
+    }
+    if (p->unk2 == 0) {
+        p->unk2 = p->unk2 + 1;
+        return;
+    }
+    sc->v28.vx = -0x12C;
+    sc->v28.vy = 0;
+    sc->v28.vz = 0;
+    sc->v30.vx = 0x12C;
+    sc->v30.vy = 0;
+    sc->v30.vz = 0;
+    func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+    func_8003B2CC(&sc->mD0, &sc->v30, &sc->v30);
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    sc->wA8 = 0x400202;
+    sc->wB0 = 0x787878;
+    sc->wAC = 0x787878;
+    s0 = h->start;
+    last = h->num - 1;
+    sc->v38 = *h->pos[s0];
+    sc->v48.vx = (u16)sc->v38.vx + (u16)sc->v28.vx;
+    sc->v48.vy = (u16)sc->v38.vy + (u16)sc->v28.vy;
+    sc->v48.vz = (u16)sc->v38.vz + (u16)sc->v28.vz;
+    sc->v50.vx = (u16)sc->v38.vx + (u16)sc->v30.vx;
+    sc->v50.vy = (u16)sc->v38.vy + (u16)sc->v30.vy;
+    sc->v50.vz = (u16)sc->v38.vz + (u16)sc->v30.vz;
+    func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v48);
+    i = 1;
+    if (last > 0) {
+        do {
+            if (s0 >= h->wrap) {
+                s0 = 0;
+            }
+            n = s0 + 1;
+            if (n >= h->wrap) {
+                n = 0;
+            }
+            sc->w88 = sc->w68;
+            sc->w8C = sc->w6C;
+            sc->w20 = sc->w1C;
+            sc->wB4 = sc->wB0;
+            sc->v38 = *h->pos[n];
+            sc->v48.vx = (u16)sc->v38.vx + (u16)sc->v28.vx;
+            sc->v48.vy = (u16)sc->v38.vy + (u16)sc->v28.vy;
+            sc->v48.vz = (u16)sc->v38.vz + (u16)sc->v28.vz;
+            sc->v50.vx = (u16)sc->v38.vx + (u16)sc->v30.vx;
+            sc->v50.vy = (u16)sc->v38.vy + (u16)sc->v30.vy;
+            sc->v50.vz = (u16)sc->v38.vz + (u16)sc->v30.vz;
+            func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v48);
+            func_801B30D0((HdObj *)sc, i, last);
+            i++;
+            s0++;
+        } while (i <= last);
+    }
+    if (p->unk2 >= 0x28) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk6 += p->unk18;
+        p->unk2++;
+    }
+}
 
 void func_801B45B4(void) {
     MgObj20 *temp_v0;
@@ -563,7 +748,108 @@ void func_801B46B0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B4798);
+void func_801B4798(void) {
+    MgSVec rot;
+    MgSVec sv;
+    MgMat m1;
+    MgMat m2;
+    MgVec sc;
+    MgVec w;
+    MgTask *p;
+    s32 idx;
+    s32 t;
+    s32 x;
+    s32 k;
+    HdSt *q;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    idx = p->unk1C;
+    rot.vx = 0;
+    rot.vy = D_801F0FB8[idx].v;
+    rot.vz = 0;
+    func_8003BF8C(&rot, &m1);
+    sv.vy = -0xC8;
+    sv.vx = 0;
+    sv.vz = -0xA28;
+    func_8003B27C(&m1, &sv, (MgVec *)&m1.t[0]);
+    func_8003A63C(&D_801F78D8, (M2C_UNK *)&D_801F0C80, &m2);
+    func_8003A63C(&m2, (M2C_UNK *)&m1, &m1);
+    D_801F0FDC.d = (p->unk2 + p->unk18) % 8;
+    if (p->unk2 < 8) {
+        t = p->unk2 * 10;
+    } else if (p->unk2 < D_801F0FC8[idx] - 8) {
+        t = 0x50;
+    } else {
+        t = 0x50 - (p->unk2 - (D_801F0FC8[idx] - 8)) * 10;
+    }
+    q = &D_801F0FDC;
+    D_801F0FDC.c = t;
+    D_801F0FDC.b = t;
+    q->a = t;
+    k = 0x1C20;
+    sc.vx = sc.vy = sc.vz = k;
+    rot.vx = 0;
+    rot.vy = p->unk14 * 0x800;
+    rot.vz = 0;
+    func_8003C21C(&rot, &m1);
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    func_8003A08C((MgVec *)&m1.t[0], &w);
+    k = -0x384;
+    m2.t[0] = (w.vx * k >> 12) + m1.t[0];
+    m2.t[1] = (w.vy * k >> 12) + m1.t[1];
+    m2.t[2] = (w.vz * k >> 12) + m1.t[2];
+    func_8003B51C(&m2);
+    D_80163C74 = func_800D4D90((u8 *)&D_801F0FDC - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    D_801F0FDC.d = (D_801F0FDC.d + 4) % 8;
+    rot.vy = p->unk16 * 0x800;
+    func_8003C21C(&rot, &m1);
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    D_80163C74 = func_800D4D90((u8 *)&D_801F0FDC - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    ((MgScratch *)0x1F800000)->unk0 = D_801DC250;
+    ((MgScratch *)0x1F800000)->unk4 = 0x88;
+    x = 0x1000 - ((t & 0xFF) << 5);
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = x;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    k = func_80039A74(p->unk1A);
+    if (k < 0) {
+        k = -k;
+    }
+    k += 0x300;
+    if (k > 0x1000) {
+        k = 0x1000;
+    }
+    ((MgScratch *)0x1F800000)->unkA = 0x1000 - (k * (0x1000 - ((MgScratch *)0x1F800000)->unkA) >> 12);
+    if (((MgScratch *)0x1F800000)->unkA < 0) {
+        ((MgScratch *)0x1F800000)->unkA = 0;
+    }
+    if (((MgScratch *)0x1F800000)->unkA > 0x1000) {
+        ((MgScratch *)0x1F800000)->unkA = 0x1000;
+    }
+    D_801F0FE4.m[0][0] = D_801F0FE4.m[1][1] = D_801F0FE4.m[2][2] = 0x2000;
+    func_8003B48C(&D_801F0FE4);
+    m2.t[0] += 0; /* the game stores t[0] back unchanged */
+    m2.t[1] -= 0x32;
+    func_8003B51C(&m2);
+    func_8003B69C(0, 0, 0);
+    D_80163C74 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_801F78D4 < 0) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (D_801F0FDC.d == 0) {
+            p->unk16 = func_80042DA8() % 2;
+        }
+        if (D_801F0FDC.d == 4) {
+            p->unk14 = func_80042DA8() % 2;
+        }
+        p->unk1A = (u16)p->unk1A + D_801F0FA8[idx].v;
+        p->unk2++;
+    }
+}
 
 void func_801B4CAC(void) {
     MgObj20 *p;
@@ -897,7 +1183,103 @@ void func_801B60A0(void) {
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B62E0);
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B64FC);
+void func_801B64FC(void) {
+    MgSVec rot;
+    MgSVec sv;
+    MgMat m1;
+    MgMat m2;
+    MgVec sc;
+    MgVec w;
+    MgTask *p;
+    s32 idx;
+    s32 t;
+    s32 x;
+    s32 k;
+    HdSt *q;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    idx = p->unk1C;
+    sv.vx = D_801F110C[idx].v;
+    sv.vy = 10;
+    sv.vz = D_801F111C[idx].v;
+    func_8003B27C(&D_801F7918, &sv, (MgVec *)&m1.t[0]);
+    m1.t[0] += D_801F7918.t[0];
+    m1.t[1] += D_801F7918.t[1];
+    m1.t[2] += D_801F7918.t[2];
+    D_801F1140.d = (p->unk2 + p->unk18) % 8;
+    if (p->unk2 < 8) {
+        t = p->unk2 * 10;
+    } else {
+        t = 0x50;
+    }
+    q = &D_801F1140;
+    D_801F1140.c = t;
+    D_801F1140.b = t;
+    q->a = t;
+    k = 0x1900;
+    sc.vx = sc.vy = sc.vz = k;
+    rot.vx = 0;
+    rot.vy = p->unk14 * 0x800;
+    rot.vz = 0;
+    func_8003C21C(&rot, &m1);
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    func_8003A08C((MgVec *)&m1.t[0], &w);
+    k = -0x320;
+    m2.t[0] = (w.vx * k >> 12) + m1.t[0];
+    m2.t[1] = (w.vy * k >> 12) + m1.t[1];
+    m2.t[2] = (w.vz * k >> 12) + m1.t[2];
+    func_8003B51C(&m2);
+    D_80163C74 = func_800D4D90((u8 *)&D_801F1140 - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    D_801F1140.d = (D_801F1140.d + 4) % 8;
+    rot.vy = p->unk16 * 0x800;
+    func_8003C21C(&rot, &m1);
+    func_8003B35C(&m1, &sc);
+    func_8003B48C(&m1);
+    D_80163C74 = func_800D4D90((u8 *)&D_801F1140 - 4, D_801517C0 + 0x70, 0xC, D_80163C74);
+    ((MgScratch *)0x1F800000)->unk0 = D_801DC250;
+    ((MgScratch *)0x1F800000)->unk4 = 0x88;
+    x = 0x1000 - ((t & 0xFF) << 6);
+    ((MgScratch *)0x1F800000)->unk8 = 0;
+    ((MgScratch *)0x1F800000)->unkA = x;
+    ((MgScratch *)0x1F800000)->unkC = 0;
+    ((MgScratch *)0x1F800000)->unkE = 0;
+    if (x < 0) {
+        ((MgScratch *)0x1F800000)->unkA = 0;
+    }
+    k = func_80039A74(p->unk1A);
+    if (k < 0) {
+        k = -k;
+    }
+    k += 0x300;
+    if (k > 0x1000) {
+        k = 0x1000;
+    }
+    ((MgScratch *)0x1F800000)->unkA = 0x1000 - (k * (0x1000 - ((MgScratch *)0x1F800000)->unkA) >> 12);
+    if (((MgScratch *)0x1F800000)->unkA < 0) {
+        ((MgScratch *)0x1F800000)->unkA = 0;
+    }
+    D_801F1148.m[0][0] = D_801F1148.m[1][1] = D_801F1148.m[2][2] = 0x1CCC;
+    func_8003B48C(&D_801F1148);
+    m2.t[0] += 0; /* the game stores t[0] back unchanged */
+    m2.t[1] -= 0x32;
+    func_8003B51C(&m2);
+    func_8003B69C(0, 0, 0);
+    D_80163C74 = func_800D29D4((MgScratch *)0x1F800000, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_801F78D4 < 0) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (D_801F1140.d == 0) {
+            p->unk16 = func_80042DA8() % 2;
+        }
+        if (D_801F1140.d == 4) {
+            p->unk14 = func_80042DA8() % 2;
+        }
+        p->unk1A = (u16)p->unk1A + D_801F112C[idx].v;
+        p->unk2++;
+    }
+}
 
 void func_801B69C4(void) {
     MgSVec rot;
@@ -983,7 +1365,102 @@ void func_801B6C34(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B6D74);
+void func_801B6D74(void) {
+    MgTask *p;
+    HdBlk *h;
+    HdTrail *tr;
+    HdSc4 *sc;
+    s32 s0;
+    s32 n;
+    s32 i;
+    s32 last;
+
+    sc = (HdSc4 *)0x1F800000;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    h = &D_801F1250[p->unk1C];
+    tr = &D_801F34D0[p->unk1C];
+    sc->vC8.vx = 0;
+    sc->vC8.vy = p->unkE;
+    sc->vC8.vz = 0;
+    func_8003BF8C(&sc->vC8, &sc->mD0);
+    if (p->unk2 == 0) {
+        sc->v28.vx = 0;
+        sc->v28.vy = 0;
+        sc->v28.vz = -p->unk18;
+        func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+        sc->v28.vx = (u16)sc->v28.vx + (u16)p->unk4;
+        sc->v28.vy = (u16)sc->v28.vy + (u16)p->unk6;
+        sc->v28.vz = (u16)sc->v28.vz + (u16)p->unk8;
+        for (s0 = 0; s0 < h->wrap - 1; s0++) {
+            ((MgSVec *)(h->cur * 8 + (s32)tr))->vx = sc->v28.vx;
+            ((MgSVec *)(h->cur * 8 + (s32)tr))->vy = sc->v28.vy;
+            ((MgSVec *)(h->cur * 8 + (s32)tr))->vz = sc->v28.vz;
+            func_801B35F0(h, &tr->v[h->cur]);
+            sc->v28.vy = (u16)sc->v28.vy + (u16)p->unk1A;
+        }
+    }
+    sc->v28.vx = -(p->unk14 >> 1);
+    sc->v28.vy = 0;
+    sc->v28.vz = 0;
+    sc->v30.vx = p->unk14 >> 1;
+    sc->v30.vy = 0;
+    sc->v30.vz = 0;
+    func_8003B2CC(&sc->mD0, &sc->v28, &sc->v28);
+    func_8003B2CC(&sc->mD0, &sc->v30, &sc->v30);
+    func_8003B48C(&D_801F78D8);
+    func_8003B51C(&D_801F78F8);
+    sc->wA8 = D_801F116C;
+    sc->wAC = sc->wB0 = D_801F1168;
+    s0 = h->start;
+    last = h->num - 1;
+    sc->v38 = *h->pos[s0];
+    sc->v48.vx = (u16)sc->v38.vx + (u16)sc->v28.vx;
+    sc->v48.vy = (u16)sc->v38.vy + (u16)sc->v28.vy;
+    sc->v48.vz = (u16)sc->v38.vz + (u16)sc->v28.vz;
+    sc->v50.vx = (u16)sc->v38.vx + (u16)sc->v30.vx;
+    sc->v50.vy = (u16)sc->v38.vy + (u16)sc->v30.vy;
+    sc->v50.vz = (u16)sc->v38.vz + (u16)sc->v30.vz;
+    func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v48);
+    i = 1;
+    if (last > 0) {
+        do {
+            if (s0 >= h->wrap) {
+                s0 = 0;
+            }
+            n = s0 + 1;
+            if (n >= h->wrap) {
+                n = 0;
+            }
+            sc->w88 = sc->w68;
+            sc->w8C = sc->w6C;
+            sc->w20 = sc->w1C;
+            sc->wB4 = sc->wB0;
+            sc->v38 = *h->pos[n];
+            sc->v48.vx = (u16)sc->v38.vx + (u16)sc->v28.vx;
+            sc->v48.vy = (u16)sc->v38.vy + (u16)sc->v28.vy;
+            sc->v48.vz = (u16)sc->v38.vz + (u16)sc->v28.vz;
+            sc->v50.vx = (u16)sc->v38.vx + (u16)sc->v30.vx;
+            sc->v50.vy = (u16)sc->v38.vy + (u16)sc->v30.vy;
+            sc->v50.vz = (u16)sc->v38.vz + (u16)sc->v30.vz;
+            func_801B32FC(sc, &sc->v48, &sc->v50, &sc->v48);
+            func_801B30D0((HdObj *)sc, i, last);
+            i++;
+            s0++;
+        } while (i <= last);
+    }
+    if (p->unk2 >= p->unk1E - 1) {
+        p->unk0 = -1;
+        D_801F124C--;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < p->unk1E / 2) {
+            p->unk14 = (u16)p->unk14 + (u16)p->unk16;
+        } else {
+            p->unk14 = (u16)p->unk14 - (u16)p->unk16;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B7270);
 
@@ -1218,9 +1695,189 @@ void func_801B8314(void) {
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B8404);
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B8888);
+void func_801B8888(void) {
+    MgTask *p;
+    HdPart *base;
+    HdPart *r;
+    HdSc9 *sc;
+    s32 i;
+    s32 j;
+    s32 n;
+    s32 t;
+    s32 k;
+    s32 ang;
+    u8 pad[8];
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B8D48);
+    *(MgMat *)0x1F800020 = D_801F7958;
+    base = (HdPart *)D_801F1240;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    sc = (HdSc9 *)0x1F800000;
+    sc->w80 = D_801DAC04;
+    sc->h4E = 0;
+    sc->h4C = 0;
+    sc->h4A = 0;
+    sc->h46 = 0;
+    sc->h44 = 0;
+    sc->h42 = 0;
+    sc->w84 = 0x2E686868;
+    i = 0;
+    do {
+        sc->arr[i] = D_801F0CE8[i];
+        i++;
+    } while (i < 0x14);
+    func_801B8404(base, (void *)0x1F800000);
+    if (p->unk2 >= 0x44) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 < 0x28) {
+            k = 0x1810;
+            n = (0x3C - p->unk2) / 8 + func_80042DA8() % 6;
+            i = 0;
+            if (n > 0) {
+                do {
+                    for (j = 0; j < 0x1AE; j++) {
+                        if (base[j].on == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 0x1AE) {
+                        break;
+                    }
+                    (r = (HdPart *)(j * 0x18 + (s32)base))->on = func_80042DA8() % 8;
+                    r->age = (u16)r->on + 0x18 + func_80042DA8() % 24;
+                    ang = func_80042DA8() % 0x1000;
+                    i++;
+                    t = func_80042DA8() % 460 + 0x3C;
+                    r->x = func_80039B40(ang) * t >> 12;
+                    r->y = -(func_80042DA8() % 550 + 0x1E);
+                    r->z = -(func_80039A74(ang) * t >> 12);
+                    t = func_80042DA8() % 6 + 6;
+                    r->vy = 0;
+                    r->pad12 = 0;
+                    r->vx = 0x80;
+                    r->vz = 0x80 / t;
+                    r->pad14 = func_80042DA8() % 40 + 0x16;
+                    ang = func_80042DA8() % 0xE00 + 0x800;
+                    r->sc = k * ang >> 12;
+                } while (i < n);
+            }
+        }
+        p->unk2++;
+    }
+}
+
+void func_801B8D48(void) {
+    MgMat m;
+    u8 pad[8];
+    MgTask *p;
+    HdPart32 *base;
+    HdPart32 *q;
+    HdPart32 *r;
+    s32 i;
+    s32 j;
+    s32 n;
+    s32 ang;
+    s32 t;
+    s32 k;
+
+    i = 0;
+    p = (MgTask *)&D_80162978[D_8015169C];
+    base = (HdPart32 *)D_801F1240 + 0x4FB;
+    do {
+        q = &base[i];
+        if (q->on != 0) {
+            D_801F11B4.age = q->age & 0xF;
+            D_801F11B4.w4 = *(s32 *)&q->a14 | 0x2E000000;
+            D_801F11C0.m[0][0] = D_801F11C0.m[1][1] = D_801F11C0.m[2][2] = q->sc;
+            D_801F11C0.t[0] = q->x;
+            D_801F11C0.t[1] = q->y;
+            D_801F11C0.t[2] = q->z;
+            func_8003A63C(&D_801F7958, (M2C_UNK *)&D_801F11C0, &m);
+            func_8003B48C(&D_801F11C0);
+            func_8003B51C(&m);
+            D_80163C74 = func_800D4D90(&D_801F11B4, D_801517C0 + 0x70, 0xC, D_80163C74);
+            if (D_80062D98 == 0) {
+                q->x = (u16)q->x + (u16)q->vx;
+                q->y = (u16)q->y + (u16)q->vy;
+                q->z = (u16)q->z + (u16)q->vz;
+                q->vx = (u16)q->vx - (q->vx >> 6);
+                q->vz = (u16)q->vz - (q->vz >> 6);
+                q->sc = (u16)q->sc + (u16)q->padA;
+                q->vy = (u16)q->vy + (u16)q->pad12;
+                q->pad12 = (u16)q->pad12 - (q->pad12 >> 4);
+                if (q->f1A != 0) {
+                    q->a14 = (u16)q->a14 - (u16)q->c18;
+                    q->b16 = (u16)q->b16 + (u16)q->c18;
+                    if (q->a14 < 0) {
+                        q->a14 = 0;
+                        q->f1A = q->f1A ^ 1;
+                    }
+                } else {
+                    q->a14 = (u16)q->a14 + (u16)q->c18;
+                    q->b16 = (u16)q->b16 - (u16)q->c18;
+                    if (q->b16 < 0) {
+                        q->b16 = 0;
+                        q->f1A = q->f1A ^ 1;
+                    }
+                }
+                if (q->age >= 0x17) {
+                    q->on = 0;
+                }
+                q->age++;
+            }
+        }
+        i++;
+    } while (i < 0x12C);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x1D) {
+            p->unk0 = -1;
+        }
+        if (p->unk2 < 0x1D) {
+            k = 0x1810;
+            n = (0x3B - p->unk2) / 6 + func_80042DA8() % 6;
+            if (n < 10) {
+                n = 10;
+            }
+            i = 0;
+            if (n > 0) {
+                do {
+                    for (j = 0; j < 0x12C; j++) {
+                        if (base[j].on == 0) {
+                            break;
+                        }
+                    }
+                    if (j >= 0x12C) {
+                        break;
+                    }
+                    r = (HdPart32 *)(j * 0x20 + (s32)base);
+                    r->on = 1;
+                    r->age = 0;
+                    ang = func_80042DA8() % 0x1000;
+                    t = func_80042DA8() % 400 + 0x3C;
+                    r->x = func_80039B40(ang) * t >> 12;
+                    r->y = -(func_80042DA8() % 110 + 0x23);
+                    r->z = -(func_80039A74(ang) * t >> 12);
+                    r->padA = func_80042DA8() % 16 + 0x20;
+                    i++;
+                    t = func_80042DA8() % 80 + 0x73;
+                    r->vx = func_80039B40(ang) * t >> 12;
+                    r->vy = -(func_80042DA8() % 150 + 0x190);
+                    r->vz = -(func_80039A74(ang) * t >> 12);
+                    r->pad12 = func_80042DA8() % 14 + 0x1C;
+                    t = func_80042DA8() % 6 + 6;
+                    r->b16 = 0;
+                    r->f1A = 0;
+                    r->a14 = 0x80;
+                    r->c18 = 0x80 / t;
+                    ang = func_80042DA8() % 0xB00 + 0x800;
+                    r->sc = k * ang >> 12;
+                } while (i < n);
+            }
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B9378(void) {
     MgTask *p;
