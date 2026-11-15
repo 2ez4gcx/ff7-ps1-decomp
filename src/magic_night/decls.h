@@ -46,7 +46,7 @@ void func_801B0948(void *);
 extern s16 D_801518F6[][0x5CE];
 extern u8 D_8015190F[][0xB9C];
 extern M2C_UNK D_801C3350;
-extern M2C_UNK func_801B1B54;
+void func_801B1B54(void);
 void func_801B1940(void);
 typedef struct { void *unk0; s32 unk4; s16 unk8; s16 unkA; s16 unkC; s16 unkE; } MgScratch;
 void func_8003BF8C(MgSVec *, MgMat *);
@@ -63,5 +63,19 @@ typedef struct { void *unk0; s32 unk4; s32 unk8; s32 unkC; u8 pad10[0xCC]; u8 un
 void func_8003B16C(MgMat *, MgMat *);
 s32 func_801B0E58(NtScr *, s32);
 extern M2C_UNK D_801C3964;
+typedef struct { u8 b[8]; } MgB8;
+typedef struct { s32 w[26]; } NtFx;
+extern NtFx D_801DBEF4[];
+extern NtFx D_801DBF00[];
+extern NtFx D_801DBF04[];
+extern u8 D_800F5B70[];
+extern u8 D_800F5B71[];
+extern u8 D_800F5B72[];
+extern s16 D_800F5B74[];
+s32 func_80042DA8(void);
+void func_800D5138(s32);
+void func_800D51D4(s32);
+void func_800D5774(s32);
+void func_801B0F4C(void);
 
 #endif /* MAGIC_NIGHT_DECLS_H */
