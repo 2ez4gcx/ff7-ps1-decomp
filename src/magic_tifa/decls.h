@@ -186,5 +186,13 @@ extern s16 D_800FA666;
 void func_801BADB8(void);
 extern s32 D_80163C74;
 extern s32 D_801F3C04[];
+void func_801B416C(void);
+void func_801B1180(void *, s32, s32, s32);
+void func_801B1DB0(MgRing *, MgSVec *, MgSVec *, MgSVec *, s32);
+extern u8 D_80151A58[];
+extern u8 D_801F3D74[];
+extern u8 D_801F4434[];
+void func_801B4F70(void);
+void func_801B2094(MgRing *, MgSVec *, MgSVec *, MgSVec *, s32);
 
 #endif /* MAGIC_TIFA_DECLS_H */
