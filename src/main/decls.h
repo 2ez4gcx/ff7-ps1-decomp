@@ -1774,5 +1774,6 @@ extern s32 D_800504A8;
 void func_8001AEE4(void);
 extern u8 D_800694FA;
 extern s16 D_80069536[];
+s32 func_800424C4(u32 arg0);
 
 #endif /* MAIN_DECLS_H */

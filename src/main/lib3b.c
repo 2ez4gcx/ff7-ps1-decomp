@@ -13,7 +13,7 @@ s32 func_80036FFC(s32 arg0, MainWords *arg1);
 s32 func_80042BC0(s32 arg0, s16 arg1, s32 arg2);
 s32 func_80041E30(s32 arg0, s32 arg1);
 s32 func_800436C0(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-M2C_UNK func_80042DC8(M2C_UNK *, s32);
+M2C_UNK func_80042DC8();
 void func_80042168(s32 arg0);
 M2C_UNK func_80042D38();
 extern s32 D_80051A4C;
@@ -87,7 +87,22 @@ s32 func_8004242C(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib3b", func_800424C4);
+s32 func_800424C4(u32 arg0) {
+    char *dma = "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n";
+    char *fifo = "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n";
+    s32 temp_s0;
+
+    func_80042DC8("%s timeout:\n", arg0);
+    temp_s0 = *D_80051B88;
+    func_80042DC8(dma, ((u32) *D_80051B5C >> 0x18) & 1, ((u32) *D_80051B68 >> 0x18) & 1, *D_80051B54, *D_80051B60);
+    func_80042DC8(fifo, (u32) ~temp_s0 >> 0x1F, ((u32) temp_s0 >> 0x1E) & 1, ((u32) temp_s0 >> 0x1D) & 1, ((u32) temp_s0 >> 0x1C) & 1, ((u32) temp_s0 >> 0x1B) & 1, ((u32) temp_s0 >> 0x19) & 1, ((u32) temp_s0 >> 0x17) & 1);
+    *D_80051B88 = 0x80000000;
+    *D_80051B5C = 0;
+    *D_80051B68 = 0;
+    *D_80051B68;
+    *D_80051B88 = 0x60000000;
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib3b", D_800425F8);
 

@@ -253,7 +253,48 @@ INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A2414);
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A254C);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A2640);
+void func_800A2640(void) {
+    s32 i;
+    s32 j;
+    s32 o;
+    s32 p;
+    s16 v;
+    u16 w;
+
+    i = 0;
+    o = 0;
+    p = 0x674;
+    j = 0x3B;
+    do {
+        if (((CondorFx *)(D_8012C5FC + o))->t != 0) {
+            ((CondorFx *)(D_8012C5FC + o))->t++;
+            w = *(u16 *)(D_8012C5FC + o);
+            if ((v = w & 0x7FFF) == 2) {
+                if (!(w & 0x8000)) {
+                    func_800A2CB4(j, 0);
+                } else {
+                    func_800A2CB4(j, 4);
+                }
+            }
+            if (v >= 0x24) {
+                ((CondorFx *)(D_8012C5FC + o))->t = 0;
+                o += 8;
+            } else {
+                do {
+                    *(u16 *)(D_8010BB9A + p) = *(u16 *)(D_8012C600 + o);
+                    *(u16 *)(D_8010BB9C + p) = *(u16 *)(D_8012C600 + 2 + o) - ((s16)v >> 1);
+                    func_800A2B40(j, 0xFFFF, 0);
+                } while (0);
+                o += 8;
+            }
+        } else {
+            o += 8;
+        }
+        p += 0x1C;
+        i++;
+        j++;
+    } while (i < 0x10);
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A2798);
 

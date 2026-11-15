@@ -397,5 +397,10 @@ extern u8 D_800BE8C6[];
 extern struct { u16 g; u16 x; u16 y; u16 pad; } D_8012C5FE[];
 typedef struct { u16 flags; u8 pad02[2]; u8 b04; u8 b05; s16 w06; u8 pad08[8]; u8 b10; u8 pad11; u8 b12; u8 pad13[0x13]; u16 w26; u16 w28; u8 b2A; u8 pad2B; u8 b2C; u8 b2D; u8 b2E; u8 pad2F[0x11]; u8 b40; u8 b41; u8 pad42; u8 b43; s32 w44; u16 w48; u16 w4A; u8 pad4C[0xC]; u16 w58; u16 w5A; u8 pad5C[0x1C]; } CondorBt;
 extern u32 D_80129F3C[];
+void func_800A2640(void);
+typedef struct { s16 t; s16 pad; u16 x; u16 y; } CondorFx;
+M2C_UNK func_800A2B40(u16, s32, s32);
+extern u8 D_8010BB9A[];
+extern u8 D_8010BB9C[];
 
 #endif /* CONDOR_DECLS_H */
