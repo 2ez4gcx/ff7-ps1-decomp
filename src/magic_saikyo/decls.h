@@ -66,7 +66,7 @@ s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 s32 func_80042DA8();
 void func_8003B69C(s32, s32, s32);
-void func_8003C21C(MgSVec *, MgMat *);
+MgMat *func_8003C21C(MgSVec *, MgMat *);
 extern M2C_UNK D_801D12EC;
 extern M2C_UNK D_801D14E0;
 extern s16 D_801D60B6[];
@@ -76,5 +76,13 @@ extern s16 D_801D60C0;
 extern s32 D_801D60E4;
 extern s32 D_801D60E8;
 extern s32 D_801D60EC;
+void func_801B008C(void);
+typedef struct { s32 tag; u8 r; u8 g; u8 b; u8 code; } MgColTag;
+extern s16 D_801590D4;
+extern MgTask D_801621F0[];
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+MgMat *func_8003B05C(MgMat *, MgMat *);
+extern MgColTag D_801D6008;
+extern s32 D_801D6014[];
 
 #endif /* MAGIC_SAIKYO_DECLS_H */

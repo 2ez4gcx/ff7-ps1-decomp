@@ -40,7 +40,78 @@ void func_801B002C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_thundg1/nonmatchings/text", func_801B0174);
+void func_801B0174(void) {
+    MgMat m;
+    MgVec sc;
+    MgSVec rot;
+    ThBolt *b;
+    s32 *q;
+    u16 *r;
+    s32 t;
+    u8 *u;
+
+    b = (ThBolt *)&D_80162978[D_8015169C];
+    if (b->unk0 <= 0) {
+        D_801D3C08 = 0x80;
+        D_801D3C0E = 0;
+    } else {
+        D_801D3C08 = 0x88;
+        t = *(s16 *)((u8 *)b + 2);
+        D_801D3C0E = t << 9;
+    }
+    rot.vx = b->unk14[0] * 0x10;
+    rot.vy = b->unk14[1] * 0x10;
+    rot.vz = b->unk14[2] * 0x10;
+    func_8003C21C(&rot, &m);
+    m.t[0] = b->unk4;
+    m.t[1] = b->unk6;
+    m.t[2] = b->unk8;
+    sc.vx = sc.vy = sc.vz = b->unk1C;
+    func_8003B35C(&m, &sc);
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    func_8003B69C(0, 0, 0);
+    u = func_800D29D4(&D_801D3C04, D_801517C0 + 0x70, 0xC, D_801D3BE0);
+    q = &D_801D3C38;
+    D_801D3C3C = 0;
+    D_801D3BE0 = u;
+    ((MgWord *)q)->v = b->unk4;
+    D_801D3C40 = b->unk8;
+    func_8003A63C(&D_800FA63C, (MgMat *)(q - 5), &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    r = &D_801D3C1E;
+    *r = D_801D3C0E;
+    D_801D3BE0 = func_800D29D4((u8 *)r - 0xA, D_801517C0 + 0x4078, 1, D_801D3BE0);
+    if (D_80062D98 == 0) {
+        if (b->unk0 > 0) {
+            t = (u16)b->unk2 + 1;
+            b->unk2 = t;
+            if ((s16)t >= 8) {
+                b->unk0 = -1;
+                return;
+            }
+        }
+        b->unk4 += b->unkC;
+        b->unk6 += b->unkE;
+        b->unk8 += b->unk10;
+        b->unkE += 0x1E;
+        if (b->unk6 > 0) {
+            b->unk6 = -b->unk6;
+            b->unkE = -b->unkE / 4;
+            b->unkC = b->unkC >> 1;
+            b->unk10 = b->unk10 >> 1;
+            b->unk0++;
+            b->unk18[0] >>= 1;
+            b->unk18[1] >>= 1;
+            b->unk18[2] >>= 1;
+        }
+        b->unk14[0] += b->unk18[0];
+        b->unk14[1] += b->unk18[1];
+        b->unk14[2] += b->unk18[2];
+    }
+}
 
 void func_801B0490(void) {
     MgTask *p;

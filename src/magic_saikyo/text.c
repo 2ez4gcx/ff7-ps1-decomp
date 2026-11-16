@@ -16,7 +16,54 @@ void func_801B0020(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_saikyo/nonmatchings/text", func_801B008C);
+void func_801B008C(void) {
+    MgMat m;
+    MgMat r;
+    MgSVec rot;
+    s32 flag;
+    MgTask *p;
+    s16 i;
+    s16 n;
+    s16 t;
+    s16 c;
+    MgColTag *q;
+
+    rot.vy = 0;
+    rot.vx = 0;
+    p = &D_801621F0[D_801590D4];
+    rot.vz = p->unk2 << 8;
+    for (i = 0; i < 3; i++) {
+        m.m[i][0] = m.m[i][1] = m.m[i][2] = 0;
+    }
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    func_8003BC6C((MgSVec *)&p->unk4, (MgVec *)m.t, &flag);
+    m.m[0][0] = m.m[1][1] = m.m[2][2] = 0x1400;
+    func_8003C21C(&rot, &r);
+    func_8003B05C(&m, &r);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    t = p->unk2;
+    if (t >= 4) {
+        n = 12 - t;
+    } else {
+        n = 8;
+    }
+    q = &D_801D6008;
+    q->tag = D_801D6014[p->unk16];
+    q->r = q->g = q->b = n << 4;
+    D_80163C74 = func_800D4D90(q, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        c = p->unk2 + 1;
+        p->unk2 = c;
+        if (c == 12) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0274(void) {
     MgTask *p;
