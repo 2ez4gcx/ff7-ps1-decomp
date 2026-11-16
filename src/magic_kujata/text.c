@@ -1798,4 +1798,26 @@ void func_801B8280(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_kujata/nonmatchings/text", func_801B88A4);
+s32 func_801B88A4(arg0, arg1) {
+    MgSVec v;
+    u16 *p;
+
+    func_800D2980((M2C_UNK *)D_801B89E0, 0, 0, 0);
+    D_801F04E8 = arg0;
+    func_800D54EC(arg0, &v);
+    if (v.vz < D_80151A4C[arg1].vz) {
+        D_801EFCAA = 0x800;
+    }
+    p = &D_801EFC88;
+    func_8003C21C(D_801EFCA8, p);
+    D_801F04EC = (s32)D_801B89E0;
+    D_801F04F0 = (s32)D_801B89E0 + 0x8C0;
+    D_801EFCA4 = v.vz;
+    if (func_80042DA8() & 0x100) {
+        ((void (*)(s32, s32, s32))func_801B12E4)((s32)D_801EFD84, (s32)p, arg1);
+    } else {
+        ((void (*)(s32, s32, s32))func_801B12E4)((s32)D_801EFF08, (s32)p, arg1);
+    }
+    func_800BBEAC((M2C_UNK *)func_801B8280);
+    D_800F8380 |= 8;
+}

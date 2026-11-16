@@ -1269,7 +1269,21 @@ void func_800D415C(s32 arg0, V8 *arg1, s32 arg2, s32 arg3, u16 arg4) {
     p->e = arg4;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D41FC);
+void func_800D41FC(MgMat *arg0, s32 arg1, s32 arg2) {
+    MgMat *a;
+    MgMat *b;
+    s32 *t;
+
+    a = (MgMat *)arg1;
+    b = (MgMat *)arg2;
+    b->t[0] = a->t[0] - arg0->t[0];
+    b->t[1] = a->t[1] - arg0->t[1];
+    b->t[2] = a->t[2] - arg0->t[2];
+    ((void (*)(MgMat *, MgMat *))func_8003BF3C)(arg0, b);
+    t = b->t;
+    func_8003AB84(b, t, t);
+    func_8003B05C(b, a);
+}
 
 MgMat *func_800D4284(MgSVec *arg0, s32 arg1, MgMat *arg2) {
     MgVec v;

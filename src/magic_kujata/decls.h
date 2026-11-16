@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0040(void);
-M2C_UNK func_801B88A4();
+s32 func_801B88A4();
 extern M2C_UNK D_801DDD1C;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -234,5 +234,10 @@ extern s32 D_801F04E8;
 extern s16 D_80153BBE;
 extern u8 D_800F8380;
 void func_801B79C0(void);
+extern u8 D_801EFCA8[];
+extern u8 D_801EFF08[];
+extern u8 D_801EFD84[];
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+M2C_UNK func_800D54EC(s32, MgSVec *);
 
 #endif /* MAGIC_KUJATA_DECLS_H */

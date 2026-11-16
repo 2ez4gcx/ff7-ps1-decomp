@@ -7862,7 +7862,98 @@ void func_800B8D20(s16 arg0, s16 arg1) {
     D_8008327C[arg0].b = arg1;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800B8D4C);
+s32 func_800B8D4C(u8 arg0, u8 arg1) {
+    s16 t;
+    s32 w;
+    s32 y;
+    s32 x;
+
+    switch (s48_800832A0[arg0].v) {
+    case 0:
+        if (func_800B962C(arg0, arg1) != 0) {
+            return 1;
+        }
+        break;
+    case 1:
+        func_800B98F0(arg0);
+        return 0;
+    case 2:
+        func_800B9B2C(arg0);
+        return 0;
+    case 8:
+        func_800BA938(arg0);
+        return 0;
+    case 12:
+        func_800BAA00(arg0);
+        return 0;
+    case 13:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            s48_800832A0[arg0].v = 2;
+            return 0;
+        }
+        break;
+    case 3:
+        t = D_801163D0[arg0];
+        if (t == 0) {
+            s48_800832A0[arg0].v = 2;
+            return 0;
+        }
+        D_801163D0[arg0] = t - 1;
+        break;
+    case 4:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            w = s48_8008328A[arg0].v;
+            y = (ent_8008327C[arg0].b - 9) / 16;
+            x = D_801162A4[arg0] - 1;
+            if (w == y + x) {
+                s48_800832A0[arg0].v = 8;
+                u48_80083284[arg0].v = u48_80083284[arg0].v - 2;
+                D_801162A4[arg0] = D_801162A4[arg0] + 1;
+                break;
+            }
+            return 0;
+        }
+        break;
+    case 6:
+        if (*(u16 *)((u8 *)s48_800832A0 + 2 + arg0 * 0x30) & 1) {
+            return 0;
+        }
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            s48_800832A0[arg0].v = 7;
+            func_800BAC70(arg0);
+            return 0;
+        }
+        break;
+    case 14:
+        if (!(M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20)) {
+            break;
+        }
+        goto l9;
+    case 11:
+        if (M2C_FIELD(D_8009C6E0, s32 *, 0x80) & 0x20) {
+            s48_800832A0[arg0].v = 0xC;
+            D_801162A8[arg0] = s48_8008328A[arg0].v * 0x10 + 0x11;
+            do {
+                u48_80083284[arg0].v = u48_80083284[arg0].v - 2;
+                do {
+                } while (0);
+            } while (0);
+            return 0;
+        }
+        break;
+    case 9:
+l9:
+        func_800BAB60(arg0);
+        return 0;
+    case 5:
+    case 7:
+        if (func_800BAC70(arg0) != 0) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 s32 func_800B90C0(u8 arg0, u8 arg1, u8 arg2, u8 arg3, s16 *arg4) {
     s16 v;

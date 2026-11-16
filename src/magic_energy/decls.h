@@ -104,5 +104,9 @@ extern s32 D_801D6C4C[];
 extern s32 D_801D7190[];
 extern u16 D_801D7188;
 extern s16 D_801D7196;
+extern s16 D_801D71B0;
+extern u8 D_801D71AE;
+extern u8 D_801D71AD;
+extern u8 D_801D71AC;
 
 #endif /* MAGIC_ENERGY_DECLS_H */

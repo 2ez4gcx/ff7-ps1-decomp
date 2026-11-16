@@ -1364,7 +1364,7 @@ extern struct { u16 a; u16 b; } D_80062D8C;
 extern struct { u16 a; u16 b; } D_80062D90;
 extern struct { u16 a; u16 b; } D_80062D94;
 void func_80013624(void);
-void func_800131B8(s16, s16, s16);
+void func_800131B8(s16 arg0, s16 arg1, s16 arg2);
 extern u16 D_8009AC46;
 extern u16 D_8009AC48;
 extern u16 D_8009AC4A;

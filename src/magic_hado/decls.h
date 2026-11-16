@@ -104,5 +104,9 @@ extern s16 D_801D71FC;
 s32 func_80039F5C(s32);
 void func_800D5774(s32);
 void func_801B0DC0(void);
+extern s16 D_801D71B0;
+extern u8 D_801D71AE;
+extern u8 D_801D71AD;
+extern u8 D_801D71AC;
 
 #endif /* MAGIC_HADO_DECLS_H */

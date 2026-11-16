@@ -1663,7 +1663,7 @@ typedef struct Btl5DNode { s16 a; s16 pad; MgSVec v0; MgSVec v1; s32 d; s32 e; s
 typedef struct { s16 a; u16 n; s32 b; Btl5DNode *c; s32 d; s32 e; u16 f; s16 g; } Btl5DObj;
 extern Btl5DPair D_800F4E6C[];
 extern s32 D_800F10E8;
-void func_800D41FC(MgMat *, s32, s32);
+void func_800D41FC(MgMat *arg0, s32 arg1, s32 arg2);
 extern void (*D_800EFAF0[])(s16, u8);
 extern void (*D_800EFBC8[])(s16, u8);
 extern void (*D_800EFC28[])(s16, u8);
@@ -1718,5 +1718,7 @@ extern s16 D_800F310E;
 extern u8 D_800F5161;
 extern u8 D_800F5166;
 extern u8 D_800F5167;
+M2C_UNK func_8003AB84(MgMat *, s32 *, s32 *);
+M2C_UNK func_8003B05C(MgMat *, MgMat *);
 
 #endif /* BATTLE_DECLS_H */

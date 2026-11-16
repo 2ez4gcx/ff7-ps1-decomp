@@ -270,7 +270,31 @@ void func_801B0D04(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hado/nonmatchings/text", func_801B0DC0);
+void func_801B0DC0(void) {
+    MgObj20 *p;
+    s16 k;
+    s16 *h;
+    s16 *frame;
+    s16 t;
+    s32 w;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    k = t >= 6 ? 10 - t : 4;
+    h = &p->unk2;
+    func_800D4368(&p->unk4, (s16)(0x3000 - *h * 600), 0);
+    frame = &D_801D71B0;
+    w = *h % 2;
+    D_801D71AC = D_801D71AD = D_801D71AE = k << 5;
+    *frame = w;
+    D_801EF234 = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801EF234);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 == 10) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0EF8(void) {
     MgMat m;
