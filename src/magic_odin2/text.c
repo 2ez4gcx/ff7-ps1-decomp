@@ -661,7 +661,63 @@ draw:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_odin2/nonmatchings/text", func_801B3F54);
+void func_801B3F54(void) {
+    MgObjP *p;
+    MgObjP *q;
+    s32 i;
+    s32 k;
+    s32 n;
+    ClB8 *src;
+
+    p = (MgObjP *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        func_800D41FC(&D_801F6238, D_801540D4, &D_801F1D48->m);
+        func_8003B48C(&D_801F1D48->m);
+        func_8003B51C(&D_801F1D48->m);
+        func_8003BC6C(&D_801F1D38[0], &D_801F1D48->a, &D_801F1D48->flag);
+        func_8003BC6C(&D_801F1D38[1], &D_801F1D48->b, &D_801F1D48->flag);
+        if (p->unk0 != 0) {
+            n = p->unk0 - 1;
+            src = (ClB8 *)&D_801F5FC4[n].a;
+            *(ClB8 *)&D_801F1D48->p0 = *src;
+            n = p->unk0 - 1;
+            *(ClB8 *)&D_801F1D48->p1 = *(ClB8 *)&D_801F5FC4[n].b;
+            for (i = 1; i < 5; i++) {
+                k = (i << 12) / 4;
+                D_801F1D48->q0.vx = (k * D_801F1D48->a.vx + D_801F1D48->p0.vx * (0x1000 - k)) >> 12;
+                D_801F1D48->q0.vy = (k * D_801F1D48->a.vy + D_801F1D48->p0.vy * (0x1000 - k)) >> 12;
+                D_801F1D48->q0.vz = (k * D_801F1D48->a.vz + D_801F1D48->p0.vz * (0x1000 - k)) >> 12;
+                D_801F1D48->q1.vx = (k * D_801F1D48->b.vx + D_801F1D48->p1.vx * (0x1000 - k)) >> 12;
+                D_801F1D48->q1.vy = (k * D_801F1D48->b.vy + D_801F1D48->p1.vy * (0x1000 - k)) >> 12;
+                D_801F1D48->q1.vz = (k * D_801F1D48->b.vz + D_801F1D48->p1.vz * (0x1000 - k)) >> 12;
+                func_801B3C14(&D_801F1D48->q0, &D_801F1D48->q1, 0x578, &D_801F1D48->out);
+                D_801F5FC4[p->unk0].a.vx = D_801F1D48->q0.vx + D_801F1D48->out.vx;
+                D_801F5FC4[p->unk0].a.vy = D_801F1D48->q0.vy + D_801F1D48->out.vy;
+                D_801F5FC4[p->unk0].a.vz = D_801F1D48->q0.vz + D_801F1D48->out.vz;
+                D_801F5FC4[p->unk0].b.vx = D_801F1D48->q1.vx + D_801F1D48->out.vx * 2;
+                D_801F5FC4[p->unk0].b.vy = D_801F1D48->q1.vy + D_801F1D48->out.vy * 2;
+                D_801F5FC4[p->unk0].b.vz = D_801F1D48->q1.vz + D_801F1D48->out.vz * 2;
+                q = (MgObjP *)&D_80162978[func_800BBEAC(func_801B3D10)];
+                q->unk0 = p->unk2 * 4 + i - 1;
+                q->unk2 = 4 - i;
+                q->unk18 = &D_801F5FC4[p->unk0].a;
+                p->unk0++;
+            }
+        } else {
+            D_801F5FC4[p->unk0].a.vx = D_801F1D48->a.vx;
+            D_801F5FC4[p->unk0].a.vy = D_801F1D48->a.vy;
+            D_801F5FC4[p->unk0].a.vz = D_801F1D48->a.vz;
+            D_801F5FC4[p->unk0].b.vx = D_801F1D48->b.vx;
+            D_801F5FC4[p->unk0].b.vy = D_801F1D48->b.vy;
+            D_801F5FC4[p->unk0].b.vz = D_801F1D48->b.vz;
+            p->unk0++;
+        }
+        p->unk2++;
+        if (p->unk2 >= 9) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B4434(void) {
     s32 i;

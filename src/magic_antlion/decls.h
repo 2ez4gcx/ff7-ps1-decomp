@@ -12,9 +12,8 @@ extern s16 D_801E4166[];
 void func_801B1EAC(s32 arg0, s32 arg1, s16 arg2);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14; u8 pad16[0xA]; } MgObjC;
-extern M2C_UNK func_801B0F48;
+void func_801B0F48(void);
 M2C_UNK func_800BBEAC(M2C_UNK *);
-extern MgObj20 D_80162978[];
 void func_801B1F10(void);
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 extern u16 D_801E3F0C;
@@ -119,5 +118,17 @@ s32 func_80042DA8();
 extern s32 D_801E4060;
 void func_801B1FA0();
 void func_801B22D4(s32, s32, s32);
+typedef struct { s16 mode; s16 frames; s32 unk4; s32 unk8; s16 actor; s16 part; MgSVec pos; MgSVec unk18; MgSVec vel; s16 unk28; s16 pad2A; } MgCam;
+typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s16 *script; MgMat *mat; s16 actor; u8 pad16[0xA]; } MgCamTask;
+extern MgCam D_801E40E0;
+extern MgCam *D_801E4138;
+extern MgCam D_801E410C;
+extern MgCam *D_801E413C;
+extern s16 D_80162084;
+void func_8003A078(MgVec *, MgSVec *);
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+extern MgSVec D_80158D00;
+extern MgSVec D_801031E8;
+extern MgTask D_80162978[];
 
 #endif /* MAGIC_ANTLION_DECLS_H */

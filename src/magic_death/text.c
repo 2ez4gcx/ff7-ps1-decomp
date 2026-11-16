@@ -129,7 +129,31 @@ void func_801B07A8(DeathQuad *q, s32 arg1, s32 arg2) {
     D_801D6658 = (MgLineG2 *)p;
 }
 
-INCLUDE_ASM("../asm/us/magic_death/nonmatchings/text", func_801B0858);
+void func_801B0858(SfQuad *q, s32 arg1, s32 arg2) {
+    MgTag *p;
+    s32 k;
+    s32 c1;
+    s32 c2;
+
+    func_8003B710(&q->unkD4, (0x1000 / arg2) * arg1, &q->unkD8);
+    p = (MgTag *)D_801D6658;
+    c1 = q->unkD8;
+    k = (q->unkD0 + q->unk8) >> 3;
+    c2 = q->unkDC;
+    *(s32 *)((u8 *)p + 8) = q->unk30;
+    *(s32 *)((u8 *)p + 0x10) = q->unk34;
+    *(s32 *)((u8 *)p + 0x18) = q->unk80;
+    *(s32 *)((u8 *)p + 0x20) = q->unk84;
+    *(s32 *)((u8 *)p + 0xC) = *(s32 *)((u8 *)p + 4) = c1;
+    *(s32 *)((u8 *)p + 0x14) = c2;
+    p->len = 8;
+    *(s32 *)((u8 *)p + 0x1C) = c2;
+    ((u8 *)p)[7] = 0x3A;
+    p->addr = ((MgTag *)D_801517C0 + k + 0x1C)->addr;
+    ((MgTag *)D_801517C0 + k + 0x1C)->addr = (u32)p;
+    p = (MgTag *)((u8 *)p + 0x24);
+    D_801D6658 = (MgLineG2 *)p;
+}
 
 void func_801B0978(void *arg0, M2C_UNK arg1, M2C_UNK arg2) {
     s32 temp_s1;

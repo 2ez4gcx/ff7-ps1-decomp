@@ -66,5 +66,8 @@ extern u8 D_801D668A[];
 void func_801B1AF4(void);
 void func_801B0C20();
 extern s16 D_801517B4;
+typedef struct { u8 pad0[8]; s32 unk8; u8 padC[0x24]; s32 unk30; s32 unk34; u8 pad38[0x48]; s32 unk80; s32 unk84; u8 pad88[0x48]; s32 unkD0; s32 unkD4; s32 unkD8; s32 unkDC; } SfQuad;
+void func_8003B710(void *, s32, void *);
+void func_801B0858(SfQuad *q, s32 arg1, s32 arg2);
 
 #endif /* MAGIC_DEATH_DECLS_H */

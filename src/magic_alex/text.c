@@ -237,7 +237,44 @@ void func_801B10C0(s32 arg0, s32 arg1, s16 arg2) {
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1124);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B1BE4);
+void func_801B1BE4(MgMat *arg0, u16 *arg1) {
+    s32 sp10;
+    s32 sp14;
+    MgHalf *p;
+    MgHalf *q;
+    MgWord *w;
+    u8 *s;
+    MgHalf *r;
+
+    func_80044AC0(D_801EE1D4, D_800FAFF4[D_800F8368 ^ 1]);
+    func_80046794(D_801517C0 + 0x4084, D_801EE1D4);
+    p = (MgHalf *)&D_801EDB88;
+    p->v = D_801EDB98.v = arg1[2];
+    D_801EDB92 = D_801EDB9A = arg1[3];
+    func_80046794(D_801517C0 + 0x4084, (u8 *)p - 0x10);
+    func_8003B64C(&sp10, &sp14);
+    func_8003B6BC((s16)arg1[2] / 2, (s16)arg1[3] / 2);
+    func_8003B48C(arg0);
+    func_8003B51C(arg0);
+    w = (MgWord *)&D_801EDB58;
+    w->v = D_8016209C;
+    func_8003B69C(D_800F5B70, D_800F5B71, D_800F5B72);
+    D_801EDB62 = D_800F5B74;
+    D_80163C74 = func_801B1124((s32 *)w, D_801517C0 + 0x4084, 0, D_80163C74);
+    func_8003B6BC(sp10, sp14);
+    q = (MgHalf *)&D_801EDB74;
+    q->v = arg1[2];
+    D_801EDB76 = arg1[3];
+    func_80046794(D_801517C0 + 0x4084, (u8 *)q - 0xC);
+    func_80044978(D_801EE214, arg1);
+    func_80046794(D_801517C0 + 0x4084, D_801EE214);
+    s = D_801EE220;
+    r = (MgHalf *)&D_801EE22C;
+    r->v = arg1[0];
+    D_801EE22E = arg1[1];
+    func_800449FC(s, r);
+    func_80046794(D_801517C0 + 0x4084, s);
+}
 
 void func_801B1E24(MgSVecList *a, MgSVec *b, MgSVec *out) {
     s32 i;

@@ -176,5 +176,12 @@ extern s16 D_801F1D92[];
 extern s32 D_801F1D98;
 extern s32 D_801F1D9C;
 extern OdObj *D_801F1DA0;
+typedef struct { s16 unk0; s16 unk2; u8 pad4[0x14]; MgSVec *unk18; u8 pad1C[4]; } MgObjP;
+typedef struct { MgSVec p0; MgSVec p1; MgSVec q0; MgSVec q1; MgSVec out; MgVec a; MgVec b; MgMat m; s32 flag; } ClScratch2;
+typedef struct { u8 b[8]; } ClB8;
+typedef struct { MgSVec a; MgSVec b; } ClTrail;
+extern ClScratch2 *D_801F1D48;
+extern MgSVec D_801F1D38[];
+extern ClTrail D_801F5FC4[];
 
 #endif /* MAGIC_ODIN2_DECLS_H */

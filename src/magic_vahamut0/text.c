@@ -79,7 +79,218 @@ void func_801B02D8(s32 arg0, s32 arg1, MgTask *arg2, MgSVec *arg3) {
     func_8003B2CC(&m, arg3, arg3);
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut0/nonmatchings/text", func_801B03D4);
+void func_801B03D4(void) {
+    MgCamTask *p;
+    MgSVec *sv;
+    MgSVec *sv2;
+    MgVec *vec;
+    s32 i;
+    u16 op;
+    s32 k;
+    MgCam *cam;
+    u8 pad[0x100];
+    s32 flag;
+
+    sv2 = (MgSVec *)0x1F800008;
+    vec = (MgVec *)0x1F800010;
+    p = (MgCamTask *)&D_80162978[D_8015169C];
+    sv = (MgSVec *)0x1F800000;
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            D_801FD094.actor = -1;
+            D_801FD0C0.actor = -1;
+            D_801FD094.frames = 0;
+            D_801FD0C0.frames = 0;
+            p->unk2 = 1;
+        }
+        while (D_801FD094.frames == 0 || D_801FD0C0.frames == 0) {
+            op = *p->script++;
+            if (op & 0x40) {
+                D_801FD0EC = &D_801FD094;
+                D_801FD0F0 = &D_801FD0C0;
+            } else {
+                D_801FD0EC = &D_801FD0C0;
+                D_801FD0F0 = &D_801FD094;
+            }
+            D_801FD0EC->mode = op & 0xFF3F;
+            switch (D_801FD0EC->mode) {
+            case 1:
+                D_801FD0EC->pos.vx = *p->script++;
+                D_801FD0EC->pos.vy = *p->script++;
+                D_801FD0EC->pos.vz = *p->script++;
+                break;
+            case 2:
+                D_801FD0EC->frames = func_801B01A4(&p->script);
+                D_801FD0EC->vel.vx = (*p->script++ - D_801FD0EC->pos.vx) / D_801FD0EC->frames;
+                D_801FD0EC->vel.vy = (*p->script++ - D_801FD0EC->pos.vy) / D_801FD0EC->frames;
+                D_801FD0EC->vel.vz = (*p->script++ - D_801FD0EC->pos.vz) / D_801FD0EC->frames;
+                break;
+            case 3:
+                sv->vx = D_801FD0F0->pos.vx - D_801FD0EC->pos.vx;
+                sv->vy = D_801FD0F0->pos.vy - D_801FD0EC->pos.vy;
+                sv->vz = D_801FD0F0->pos.vz - D_801FD0EC->pos.vz;
+                D_801FD0EC->unk4 = func_80039F5C(sv->vx * sv->vx + sv->vy * sv->vy + sv->vz * sv->vz);
+                D_801FD0EC->unk18 = D_801FD0EC->pos;
+                D_801FD0EC->frames = func_801B01A4(&p->script);
+                sv->vx = *p->script++;
+                sv->vy = *p->script++;
+                sv->vz = *p->script++;
+                D_801FD0EC->vel.vx = (sv->vx - D_801FD0EC->pos.vx) / D_801FD0EC->frames;
+                D_801FD0EC->vel.vy = (sv->vy - D_801FD0EC->pos.vy) / D_801FD0EC->frames;
+                D_801FD0EC->vel.vz = (sv->vz - D_801FD0EC->pos.vz) / D_801FD0EC->frames;
+                if (D_801FD0F0->mode == 2) {
+                    sv2->vx = D_801FD0F0->pos.vx + D_801FD0F0->vel.vx * D_801FD0EC->frames;
+                    sv2->vy = D_801FD0F0->pos.vy + D_801FD0F0->vel.vy * D_801FD0EC->frames;
+                    sv2->vz = D_801FD0F0->pos.vz + D_801FD0F0->vel.vz * D_801FD0EC->frames;
+                } else {
+                    sv2->vx = D_801FD0F0->pos.vx;
+                    sv2->vy = D_801FD0F0->pos.vy;
+                    sv2->vz = D_801FD0F0->pos.vz;
+                }
+                sv->vx -= sv2->vx;
+                sv->vy -= sv2->vy;
+                sv->vz -= sv2->vz;
+                D_801FD0EC->unk8 = (func_80039F5C(sv->vx * sv->vx + sv->vy * sv->vy + sv->vz * sv->vz) - D_801FD0EC->unk4) / D_801FD0EC->frames;
+                break;
+            case 4:
+                D_801FD0EC->frames = func_801B01A4(&p->script);
+                sv->vx = *p->script++ - D_801FD0EC->pos.vx;
+                sv->vy = *p->script++ - D_801FD0EC->pos.vy;
+                sv->vz = *p->script++ - D_801FD0EC->pos.vz;
+                D_801FD0EC->unk18.vx = ((sv->vx - D_801FD0EC->vel.vx * D_801FD0EC->frames) * 2) / (D_801FD0EC->frames * D_801FD0EC->frames);
+                D_801FD0EC->unk18.vy = ((sv->vy - D_801FD0EC->vel.vy * D_801FD0EC->frames) * 2) / (D_801FD0EC->frames * D_801FD0EC->frames);
+                D_801FD0EC->unk18.vz = ((sv->vz - D_801FD0EC->vel.vz * D_801FD0EC->frames) * 2) / (D_801FD0EC->frames * D_801FD0EC->frames);
+                break;
+            case 5:
+                D_801FD0EC->frames = func_801B01A4(&p->script);
+                D_801FD0EC->unk28 = *p->script++;
+                D_801FD0EC->unk4 = 0;
+                D_801FD0EC->unk8 = 0x1000 / D_801FD0EC->frames;
+                D_801FD0EC->unk18.vx = D_801FD0EC->pos.vx;
+                D_801FD0EC->unk18.vy = D_801FD0EC->pos.vy;
+                D_801FD0EC->unk18.vz = D_801FD0EC->pos.vz;
+                D_801FD0EC->vel.vx = *p->script++ - D_801FD0EC->pos.vx;
+                D_801FD0EC->vel.vy = *p->script++ - D_801FD0EC->pos.vy;
+                D_801FD0EC->vel.vz = *p->script++ - D_801FD0EC->pos.vz;
+                break;
+            case 6:
+                if ((D_801FD0EC->actor = *p->script++) == 0) {
+                    D_801FD0EC->actor = p->actor;
+                }
+                op = D_801FD0EC->part = *p->script++;
+                func_801B02D8(D_801FD0EC->actor, (s16)op, (MgTask *)p->mat, sv);
+                D_801FD0EC->pos.vx -= sv->vx;
+                D_801FD0EC->pos.vy -= sv->vy;
+                D_801FD0EC->pos.vz -= sv->vz;
+                break;
+            case 7:
+                D_801FD0EC->actor = -1;
+                break;
+            case 0:
+            case 9:
+                D_801FD0EC->frames = func_801B01A4(&p->script);
+                break;
+            case 8:
+                D_80162084 = *p->script++;
+                break;
+            default:
+                p->unk0 = -1;
+                return;
+            }
+        }
+        D_801FD0EC = &D_801FD094;
+        D_801FD0F0 = &D_801FD0C0;
+        for (i = 0; i < 2; i++) {
+            switch (D_801FD0EC->mode) {
+            case 0:
+            case 1:
+                break;
+            case 4:
+                D_801FD0EC->vel.vx += D_801FD0EC->unk18.vx;
+                D_801FD0EC->vel.vy += D_801FD0EC->unk18.vy;
+                D_801FD0EC->vel.vz += D_801FD0EC->unk18.vz;
+            case 2:
+                D_801FD0EC->pos.vx += D_801FD0EC->vel.vx;
+                D_801FD0EC->pos.vy += D_801FD0EC->vel.vy;
+                D_801FD0EC->pos.vz += D_801FD0EC->vel.vz;
+                break;
+            case 3:
+                D_801FD0EC->unk18.vx += D_801FD0EC->vel.vx;
+                D_801FD0EC->unk18.vy += D_801FD0EC->vel.vy;
+                D_801FD0EC->unk18.vz += D_801FD0EC->vel.vz;
+                D_801FD0EC->unk4 += D_801FD0EC->unk8;
+                vec->vx = D_801FD0F0->pos.vx - D_801FD0EC->unk18.vx;
+                vec->vy = D_801FD0F0->pos.vy - D_801FD0EC->unk18.vy;
+                vec->vz = D_801FD0F0->pos.vz - D_801FD0EC->unk18.vz;
+                func_8003A078(vec, sv);
+                D_801FD0EC->pos.vx = D_801FD0F0->pos.vx - ((sv->vx * D_801FD0EC->unk4) >> 12);
+                D_801FD0EC->pos.vy = D_801FD0F0->pos.vy - ((sv->vy * D_801FD0EC->unk4) >> 12);
+                D_801FD0EC->pos.vz = D_801FD0F0->pos.vz - ((sv->vz * D_801FD0EC->unk4) >> 12);
+                break;
+            case 5:
+                D_801FD0EC->unk4 += D_801FD0EC->unk8;
+                k = func_801B01E0(D_801FD0EC->unk4, D_801FD0EC->unk28);
+                D_801FD0EC->pos.vx = D_801FD0EC->unk18.vx + ((D_801FD0EC->vel.vx * k) >> 12);
+                D_801FD0EC->pos.vy = D_801FD0EC->unk18.vy + ((D_801FD0EC->vel.vy * k) >> 12);
+                D_801FD0EC->pos.vz = D_801FD0EC->unk18.vz + ((D_801FD0EC->vel.vz * k) >> 12);
+                break;
+            }
+            cam = D_801FD0EC;
+            D_801FD0EC = &D_801FD0C0;
+            D_801FD0F0 = &D_801FD094;
+            cam->frames--;
+        }
+    }
+    if (p->mat != NULL) {
+        if (D_801FD094.mode != 9) {
+            func_8003B48C(p->mat);
+            func_8003B51C(p->mat);
+            if (D_801FD094.actor == -1) {
+                func_8003BC6C(&D_801FD094.pos, vec, &flag);
+                D_80158D00.vx = vec->vx;
+                D_80158D00.vy = vec->vy;
+                D_80158D00.vz = vec->vz;
+            } else {
+                func_8003ACE4(&D_801FD094.pos, vec);
+                if (D_801FD094.part != -1) {
+                    func_800D3994(D_801FD094.actor, D_801FD094.part, sv);
+                } else {
+                    sv->vx = D_80151A4C[D_801FD094.actor][0];
+                    sv->vy = D_80151A4C[D_801FD094.actor][1];
+                    sv->vz = D_80151A50[D_801FD094.actor][0];
+                }
+                D_80158D00.vx = vec->vx + sv->vx;
+                D_80158D00.vy = vec->vy + sv->vy;
+                D_80158D00.vz = vec->vz + sv->vz;
+                func_8003B48C(p->mat);
+                func_8003B51C(p->mat);
+            }
+        }
+        if (D_801FD0C0.mode != 9) {
+            if (D_801FD0C0.actor == -1) {
+                func_8003BC6C(&D_801FD0C0.pos, vec, &flag);
+            } else {
+                func_801B02D8(D_801FD0C0.actor, D_801FD0C0.part, (MgTask *)p->mat, sv);
+                sv->vx += D_801FD0C0.pos.vx;
+                sv->vy += D_801FD0C0.pos.vy;
+                sv->vz += D_801FD0C0.pos.vz;
+                func_8003B48C(p->mat);
+                func_8003B51C(p->mat);
+                func_8003BC6C(sv, vec, &flag);
+            }
+            D_801031E8.vx = vec->vx;
+            D_801031E8.vy = vec->vy;
+            D_801031E8.vz = vec->vz;
+        }
+    } else {
+        if (D_801FD094.mode != 9) {
+            D_80158D00 = D_801FD094.pos;
+        }
+        if (D_801FD0C0.mode != 9) {
+            D_801031E8 = D_801FD0C0.pos;
+        }
+    }
+}
 
 void func_801B13AC(s32 arg0, s32 arg1, s16 arg2) {
     MgObjC *p;
