@@ -48,6 +48,7 @@ M2C_UNK func_8001F710();
 extern s8 D_80062DFD;
 void func_80020B68(s32 arg0, s32 arg1, s32 arg2);
 extern struct { s16 v; u8 pad[0x43E]; } D_8009D862[];
+void func_800264A8(MnCursor *arg0);
 
 void func_8001BDB0(u8 arg0, u8 *arg1) {
     s32 i;
@@ -2152,7 +2153,157 @@ void func_80026448(void *arg0, s8 arg1, s8 arg2, s8 arg3, s32 arg4, s32 arg5, s3
     M2C_FIELD(arg0, u16 *, 8) = arg13;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text4", func_800264A8);
+void func_800264A8(MnCursor *arg0) {
+    MnCursor *p;
+
+    p = arg0;
+    if (p->state == 0) {
+        if (D_80062D7E & 0x1000) {
+            p->row--;
+            switch (p->vwrap) {
+            case 0:
+                if (p->row < 0) {
+                    p->row = 0;
+                    if (p->top > 0) {
+                        p->top--;
+                        p->anim = -3;
+                        p->state = 1;
+                        func_80026408(1);
+                    }
+                } else {
+                    func_80026408(1);
+                }
+                break;
+            case 1:
+            case 2:
+                if (p->row < 0) {
+                    p->row = p->nrows - 1;
+                }
+                func_80026408(1);
+                break;
+            }
+        } else if (D_80062D7E & 0x4000) {
+            p->row++;
+            switch (p->vwrap) {
+            case 0:
+                if (p->row >= p->nrows) {
+                    p->row = p->nrows - 1;
+                    if (p->top < p->count - p->nrows) {
+                        p->anim = -1;
+                        p->state = 2;
+                        func_80026408(1);
+                    }
+                } else {
+                    func_80026408(1);
+                }
+                break;
+            case 1:
+            case 2:
+                if (p->row >= p->nrows) {
+                    p->row = 0;
+                }
+                func_80026408(1);
+                break;
+            }
+        } else if (D_80062D7E & 0x8000) {
+            switch (p->hwrap) {
+            case 0:
+                if (--p->col < 0) {
+                    p->col = 0;
+                } else {
+                    func_80026408(1);
+                }
+                break;
+            case 1:
+                if (--p->col < 0) {
+                    p->col = p->ncols - 1;
+                }
+                func_80026408(1);
+                break;
+            case 2:
+                if (p->col != 0 || p->row != 0 || p->top != 0) {
+                    if (--p->col < 0) {
+                        p->col = p->ncols - 1;
+                        if (--p->row < 0) {
+                            p->row = 0;
+                            if (p->top > 0) {
+                                p->top--;
+                                p->anim = -3;
+                                p->state = 1;
+                            }
+                        }
+                    }
+                    func_80026408(1);
+                }
+                break;
+            }
+        } else if (D_80062D7E & 0x2000) {
+            switch (p->hwrap) {
+            case 0:
+                if (++p->col >= p->ncols) {
+                    p->col = p->ncols - 1;
+                } else {
+                    func_80026408(1);
+                }
+                break;
+            case 1:
+                if (++p->col >= p->ncols) {
+                    p->col = 0;
+                }
+                func_80026408(1);
+                break;
+            case 2:
+                if (p->col != p->ncols - 1 || p->row != p->nrows - 1 || p->top != p->count - p->nrows) {
+                    if (++p->col >= p->ncols) {
+                        p->col = 0;
+                        if (p->row >= p->ncols) {
+                            p->col = 0;
+                        }
+                        if (++p->row >= p->nrows) {
+                            p->row = p->nrows - 1;
+                            if (p->top < p->count - p->nrows) {
+                                p->anim = -1;
+                                p->state = 2;
+                            }
+                        }
+                    }
+                    func_80026408(1);
+                }
+                break;
+            }
+        } else if (D_80062D7E & 8) {
+            p->top += p->nrows;
+            if (p->count - p->nrows < p->top) {
+                p->top = p->count - p->nrows;
+            } else {
+                func_80026408(1);
+            }
+        } else if (D_80062D7E & 4) {
+            p->top -= p->nrows;
+            if (p->top < 0) {
+                p->top = 0;
+            } else {
+                func_80026408(1);
+            }
+        }
+    } else {
+        switch (p->state) {
+        case 1:
+            if (++p->anim == 0) {
+                p->state = 0;
+                p->anim = 0;
+            }
+            break;
+        case 2:
+            if (--p->anim == -4) {
+                p->state = 0;
+                p->anim = 0;
+                p->top++;
+            }
+            break;
+        }
+    }
+}
 
 void func_800269C0(s32 arg0) {
     D_80062F24 = arg0;
