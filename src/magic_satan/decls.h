@@ -33,7 +33,7 @@ s32 func_801B28D4(s32 a, s32 b);
 void func_801B3A14(s32 arg0, s32 arg1, s16 arg2);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; u8 pad[0x18]; } MgObj20;
 typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s32 unkC; s32 unk10; s16 unk14; u8 pad16[0xA]; } MgObjC;
-extern M2C_UNK func_801B29CC;
+void func_801B29CC(void);
 M2C_UNK func_800BC04C(M2C_UNK *);
 void func_801B5884(void *arg0);
 s32 func_801B0B5C();
@@ -176,5 +176,16 @@ void func_801B4454(SatObj2 *o);
 extern u8 D_801BE990[];
 typedef struct { u8 *unk0; u8 pad4[0xC]; s32 unk10; u8 pad14[0x5C]; MgSVec v[4]; u8 pad90[8]; MgSVec unk98; MgSVec unkA0; MgVec unkA8; MgVec unkB8; MgVec unkC8; s32 unkD8; s32 unkDC; } SatCtxG;
 void func_801B23E0(SatCtxG *ctx, MgSVec *pos);
+typedef struct { s16 mode; s16 frames; s32 unk4; s32 unk8; s16 actor; s16 part; MgSVec pos; MgSVec unk18; MgSVec vel; s16 unk28; s16 pad2A; } MgCam;
+typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s16 *script; MgMat *mat; s16 actor; u8 pad16[0xA]; } MgCamTask;
+extern MgCam D_801C86F0;
+extern MgCam *D_801C8748;
+extern MgCam D_801C871C;
+extern MgCam *D_801C874C;
+extern s16 D_80162084;
+void func_8003A078(MgVec *, MgSVec *);
+void func_8003BC6C(MgSVec *, MgVec *, s32 *);
+void func_8003ACE4(MgSVec *, MgVec *);
+void func_800D3994(s32, s32, MgSVec *);
 
 #endif /* MAGIC_SATAN_DECLS_H */
