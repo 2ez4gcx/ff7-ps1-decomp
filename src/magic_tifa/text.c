@@ -2012,7 +2012,60 @@ void func_801BB568(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BB734);
+void func_801BB734(void) {
+    MgVec d;
+    MgSVec e;
+    s32 sxy;
+    s32 flag;
+    MgTask *p;
+    MgLineG2 *q;
+    MgTag *ot;
+    s32 otz;
+    s32 ang;
+    s32 col;
+    u16 old;
+
+    p = &D_80162978[D_8015169C];
+    do {
+        d.vx = *(s16 *)&D_801F5360[0] - p->unk4;
+        d.vy = *(s16 *)&D_801F5360[2] - p->unk6;
+        d.vz = *(s16 *)&D_801F5360[4] - p->unk8;
+        ang = func_80039F5C(func_8003A08C(&d, &d));
+        e.vx = p->unk4 + (-p->unkC * d.vx >> 12);
+        e.vy = p->unk6 + (-p->unkC * d.vy >> 12);
+        e.vz = p->unk8 + (-p->unkC * d.vz >> 12);
+        col = ((p->unk12 + 0x38) << 8) | 0x200020;
+        func_8003B48C(&D_800FA63C);
+        func_8003B51C(&D_800FA63C);
+        q = D_801F3D50;
+        otz = func_8003BBDC(&p->unk4, &q->x0, &sxy, &flag);
+        func_8003BBDC(&e, &q->x1, &sxy, &flag);
+        q->tag.len = 4;
+        *(s32 *)&q->r1 = col;
+        *(s32 *)&q->r0 = col;
+        q->code = 0x52;
+        ot = (MgTag *)D_801517C0 + (otz >> 2) + 0x1C;
+        q->tag.addr = ot->addr;
+        ot->addr = (u32)q;
+    } while (0);
+    old = p->unk1A;
+    q++;
+    D_801F3D50 = q;
+    *(volatile s16 *)&p->unk1A = ang;
+    *(volatile s16 *)&p->unk18 = old;
+    if (ang < 0x3C || p->unk18 < (s16)ang || p->unkC < 0) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unk10 * d.vx >> 12;
+        p->unk6 += p->unk10 * d.vy >> 12;
+        p->unk8 += p->unk10 * d.vz >> 12;
+        p->unkC -= p->unkE;
+        p->unk12++;
+        p->unk2++;
+        p->unkE += p->unkE >> 3;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801BBA30);
 

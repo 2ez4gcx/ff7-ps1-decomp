@@ -824,7 +824,82 @@ s32 func_801B4614(s32 arg0) {
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B46E0);
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B4970);
+void func_801B4970(void) {
+    MgTask *p;
+    MgMat *mat;
+    s32 t;
+    s32 k;
+    s32 r;
+    s32 z;
+    s32 c;
+    u8 *pk;
+    u8 *pk0;
+    s32 tag;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    D_801F060C = (u8 *)D_80163C74;
+    mat = &D_801F0610;
+    func_8003B48C(mat);
+    func_8003B51C(mat);
+    t = p->unk2 + p->unk0;
+    z = 0x64;
+    if (t < 0xF) {
+        c = 0x808080;
+    } else {
+        t -= 0xF;
+        if (t < 0xF) {
+            k = (t << 12) / 15;
+            z = (k * 0x384 >> 12) + 0x64;
+            r = (-(k << 7) >> 12) + 0x80;
+            c = 0x80 | r << 8 | r << 16;
+        } else {
+            z = 0x3E8;
+            c = 0x80;
+        }
+    }
+    pk0 = D_801F060C;
+    D_801EDFF4->v[0].vx = D_801EDFF4->v[2].vx = p->unk4;
+    *(s16 *)((u8 *)D_801EDFF4 + 4) = p->unk8 - z;
+    D_801EDFF4->v[2].vz = p->unk8;
+    D_801EDFF4->v[0].vy = D_801EDFF4->v[2].vy = 0;
+    t = p->unkC;
+    D_801EDFF4->v[1].vx = D_801EDFF4->v[3].vx = t;
+    D_801EDFF4->v[1].vz = p->unk10 - z;
+    D_801EDFF4->v[3].vz = p->unk10;
+    D_801EDFF4->v[1].vy = D_801EDFF4->v[3].vy = 0;
+    func_8003BC9C(&D_801EDFF4->v[0], &D_801EDFF4->v[1], &D_801EDFF4->v[2], &D_801EDFF4->v[3], pk0 + 8, pk0 + 0x10, pk0 + 0x18, pk0 + 0x20, &D_801EDFF4->ext, &D_801EDFF4->flag);
+    if (!(D_801EDFF4->flag & 0x60000)) {
+        pk = D_801F060C;
+        *(s32 *)(pk + 4) = *(s32 *)(pk + 0xC) = 0x3A000000;
+        *(s32 *)(pk + 0x14) = *(s32 *)(pk + 0x1C) = c;
+        t = D_801517C0 + 0x406C;
+        *(s32 *)pk = 0x08000000;
+        func_80046794(t, pk);
+        D_801F060C += 0x24;
+    }
+    D_801EDFF4->v[0].vz += z;
+    D_801EDFF4->v[2].vz += z;
+    D_801EDFF4->v[1].vz += z;
+    D_801EDFF4->v[3].vz += z;
+    func_8003BC9C(&D_801EDFF4->v[0], &D_801EDFF4->v[1], &D_801EDFF4->v[2], &D_801EDFF4->v[3], D_801F060C + 8, D_801F060C + 0x10, D_801F060C + 0x18, D_801F060C + 0x20, &D_801EDFF4->ext, &D_801EDFF4->flag);
+    if (!(D_801EDFF4->flag & 0x60000)) {
+        pk = D_801F060C;
+        tag = c | 0x3A000000;
+        *(s32 *)(pk + 4) = *(s32 *)(pk + 0xC) = tag;
+        *(s32 *)(pk + 0x14) = *(s32 *)(pk + 0x1C) = 0x3A000000;
+        z = D_801517C0 + 0x406C;
+        *(s32 *)pk = 0x08000000;
+        func_80046794(z, pk);
+        D_801F060C += 0x24;
+    }
+    D_80163C74 = (s32)D_801F060C;
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (p->unk2 + p->unk0 >= 0x23) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B4CD4(void) {
     MgTask *p;

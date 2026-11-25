@@ -183,5 +183,9 @@ void func_801B5770(void);
 extern s32 D_801EE0E8[];
 extern s32 D_801EE118[];
 extern MgMat D_801EE124;
+typedef struct { MgSVec v[4]; s32 ext; s32 flag; } AlxQuad;
+M2C_UNK func_8003BC9C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern AlxQuad *D_801EDFF4;
+extern u8 *D_801F060C;
 
 #endif /* MAGIC_ALEX_DECLS_H */
