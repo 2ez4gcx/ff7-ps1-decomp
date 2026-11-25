@@ -53,7 +53,77 @@ void *func_801B0074(SdCtx *arg0, u8 *arg1, u16 *arg2) {
 
 INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0330);
 
-INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0388);
+SdPolyEnt *func_801B0388(SdPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    SdPolyEnt *e;
+    SdPolyFT3 *p;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 sh;
+    s32 col;
+    s32 a;
+    s32 b;
+    s32 c;
+
+    k = arg0->idx;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if (arg3 < 8) {
+        col = arg3 * 986895;
+        col |= 0x26000000;
+    } else {
+        col = 0x26808080;
+    }
+    e = (SdPolyEnt *)(arg2 + 2);
+    p = arg0->prim;
+    i = 0;
+    if (i < n) {
+        do {
+            *(MgB8 *)&arg0->v0 = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v1 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v2 = *(MgB8 *)(arg1 + e->idx[2]);
+            a = D_801DB3C0[k].ax;
+            b = D_801DB3C0[k].ay;
+            c = D_801DB3C0[k].az;
+            if (D_80062D98 == 0) {
+                D_801DB3C0[k].ax -= (u16)D_801DB3C0[k].bx;
+                D_801DB3C0[k].ay = (u16)D_801DB3C0[k].ay - (u16)D_801DB3C0[k].by;
+                D_801DB3C0[k].az = (u16)D_801DB3C0[k].az - (u16)D_801DB3C0[k].bz;
+            }
+            arg0->v0.vx = (u16)arg0->v0.vx + a;
+            arg0->v0.vy = (u16)arg0->v0.vy + b;
+            arg0->v0.vz = (u16)arg0->v0.vz + c;
+            arg0->v1.vx = (u16)arg0->v1.vx + a;
+            arg0->v1.vy = (u16)arg0->v1.vy + b;
+            arg0->v1.vz = (u16)arg0->v1.vz + c;
+            arg0->v2.vx = (u16)arg0->v2.vx + a;
+            arg0->v2.vy = (u16)arg0->v2.vy + b;
+            arg0->v2.vz = (u16)arg0->v2.vz + c;
+            gte_ldv3(&arg0->v0, &arg0->v1, &arg0->v2);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->code = 0x24;
+            *(s32 *)&p->r0 = col;
+            p->w1 = e->uv1 | arg0->tpage;
+            p->w0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            gte_stopz(&arg0->area);
+            gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+            gte_avsz3();
+            gte_stotz(&arg0->otz);
+            p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+            (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+            p++;
+            i++;
+            k++;
+            e++;
+        } while (i < n);
+    }
+    arg0->idx = k;
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_seald/nonmatchings/text", func_801B0728);
 

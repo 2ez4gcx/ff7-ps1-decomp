@@ -394,4 +394,19 @@
                      "lwc2 $5,4($14)"); \
     }
 
+/* gte_ldv3_m with t7 ($15) listed as clobbered by the load (the game's loop leaves t7 unused) */
+#define gte_ldv3_mk(a, b, c) \
+    { \
+        asm volatile("move $12,%0" : : "r"(a) : "$12"); \
+        asm volatile("move $13,%0" : : "r"(b) : "$13"); \
+        asm volatile("move $14,%0" : : "r"(c) : "$14"); \
+        asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t" \
+                     "lwc2 $5,4($14)" : : : "$15"); \
+    }
+
+/* the colour code into the RGB register (data register 6) / the colour result (data register 22, RGB2) to a word,
+ * each through a pointer copied to t4 first (gte_ldrgb and gte_strgb with the move) */
+#define gte_ldrgb_m(p) asm volatile("move $12,%0\n\tlwc2 $6,0($12)" : : "r"(p) : "$12")
+#define gte_strgb_m(p) asm volatile("move $12,%0\n\tswc2 $22,0($12)" : : "r"(p) : "$12", "memory")
+
 #endif /* GTE_H */

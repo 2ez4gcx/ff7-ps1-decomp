@@ -80,9 +80,167 @@ INCLUDE_ASM("../asm/us/magic_dethper/nonmatchings/text", func_801B0670);
 
 INCLUDE_ASM("../asm/us/magic_dethper/nonmatchings/text", func_801B0854);
 
-INCLUDE_ASM("../asm/us/magic_dethper/nonmatchings/text", func_801B08D0);
+DtPolyEnt *func_801B08D0(DtPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    DtPolyEnt *e;
+    DtPolyFT3 *p;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 m;
+    s32 sh;
+    s32 col;
+    s32 a;
+    s32 b;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_dethper/nonmatchings/text", func_801B0CD4);
+    k = arg0->idx;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    m = arg0->idx2;
+    if (arg3 >= 4) {
+        col = (arg3 - 4) * 657930;
+        if (col > 0x808080) {
+            col = 0x808080;
+        }
+        col = (0x808080 - col) | 0x26000000;
+    } else {
+        col = 0x26808080;
+    }
+    e = (DtPolyEnt *)(arg2 + 2);
+    p = arg0->prim;
+    i = 0;
+    if (i < n) {
+        do {
+            *(DpB8 *)&arg0->v0 = *(DpB8 *)(arg1 + e->idx[0]);
+            *(DpB8 *)&arg0->v1 = *(DpB8 *)(arg1 + e->idx[1]);
+            *(DpB8 *)&arg0->v2 = *(DpB8 *)(arg1 + e->idx[2]);
+            a = D_801CF0F8[m][k].ax;
+            b = D_801CF0F8[m][k].ay;
+            c = D_801CF0F8[m][k].az;
+            if (D_80062D98 == 0) {
+                D_801CF0F8[m][k].ax += D_801CF0F8[m][k].bx;
+                D_801CF0F8[m][k].ay += D_801CF0F8[m][k].by;
+                D_801CF0F8[m][k].az += D_801CF0F8[m][k].bz;
+            }
+            arg0->v0.vx = (u16)arg0->v0.vx + a;
+            arg0->v0.vy = (u16)arg0->v0.vy + b;
+            arg0->v0.vz = (u16)arg0->v0.vz + c;
+            arg0->v1.vx = (u16)arg0->v1.vx + a;
+            arg0->v1.vy = (u16)arg0->v1.vy + b;
+            arg0->v1.vz = (u16)arg0->v1.vz + c;
+            arg0->v2.vx = (u16)arg0->v2.vx + a;
+            arg0->v2.vy = (u16)arg0->v2.vy + b;
+            arg0->v2.vz = (u16)arg0->v2.vz + c;
+            gte_ldv3(&arg0->v0, &arg0->v1, &arg0->v2);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->code = 0x24;
+            *(s32 *)&p->r0 = col;
+            p->w1 = e->uv1 | arg0->tpage;
+            p->w0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            gte_stopz(&arg0->area);
+            gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+            gte_avsz3();
+            gte_stotz(&arg0->otz);
+            p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+            (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+            p++;
+            i++;
+            k++;
+            e++;
+        } while (i < n);
+    }
+    arg0->idx = k;
+    arg0->prim = p;
+    return e;
+}
+
+DtQuadEnt *func_801B0CD4(DtQuadCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    DtQuadEnt *e;
+    DtPolyFT4 *p;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 m;
+    s32 sh;
+    s32 col;
+    s32 a;
+    s32 b;
+    s32 c;
+
+    k = arg0->idx;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    m = arg0->idx2;
+    if (arg3 >= 4) {
+        col = (arg3 - 4) * 657930;
+        if (col > 0x808080) {
+            col = 0x808080;
+        }
+        col = (0x808080 - col) | 0x2E000000;
+    } else {
+        col = 0x2E808080;
+    }
+    e = (DtQuadEnt *)(arg2 + 2);
+    p = arg0->prim;
+    i = 0;
+    if (i < n) {
+        do {
+            *(DpB8 *)&arg0->v0 = *(DpB8 *)(arg1 + e->idx[0]);
+            *(DpB8 *)&arg0->v1 = *(DpB8 *)(arg1 + e->idx[1]);
+            *(DpB8 *)&arg0->v2 = *(DpB8 *)(arg1 + e->idx[2]);
+            *(DpB8 *)&arg0->v3 = *(DpB8 *)(arg1 + e->idx[3]);
+            a = D_801CF0F8[m][k].ax;
+            b = D_801CF0F8[m][k].ay;
+            c = D_801CF0F8[m][k].az;
+            if (D_80062D98 == 0) {
+                D_801CF0F8[m][k].ax += D_801CF0F8[m][k].bx;
+                D_801CF0F8[m][k].ay += D_801CF0F8[m][k].by;
+                D_801CF0F8[m][k].az += D_801CF0F8[m][k].bz;
+            }
+            arg0->v0.vx = (u16)arg0->v0.vx + a;
+            arg0->v0.vy = (u16)arg0->v0.vy + b;
+            arg0->v0.vz = (u16)arg0->v0.vz + c;
+            arg0->v1.vx = (u16)arg0->v1.vx + a;
+            arg0->v1.vy = (u16)arg0->v1.vy + b;
+            arg0->v1.vz = (u16)arg0->v1.vz + c;
+            arg0->v2.vx = (u16)arg0->v2.vx + a;
+            arg0->v2.vy = (u16)arg0->v2.vy + b;
+            arg0->v2.vz = (u16)arg0->v2.vz + c;
+            arg0->v3.vx = (u16)arg0->v3.vx + a;
+            arg0->v3.vy = (u16)arg0->v3.vy + b;
+            arg0->v3.vz = (u16)arg0->v3.vz + c;
+            gte_ldv3(&arg0->v0, &arg0->v1, &arg0->v2);
+            gte_rtpt();
+            p->tag.len = 9;
+            p->code = 0x2C;
+            *(s32 *)&p->r0 = col;
+            p->w1 = e->uv1 | arg0->tpage;
+            p->w0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            p->uv3 = e->uv3;
+            gte_stopz(&arg0->area);
+            gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+            gte_ldv0c(&arg0->v3);
+            gte_rtps();
+            gte_stsxy(&p->xy3);
+            gte_avsz4();
+            gte_stotz(&arg0->otz);
+            p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+            (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+            p++;
+            i++;
+            k++;
+            e++;
+        } while (i < n);
+    }
+    arg0->idx = k;
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_dethper/nonmatchings/text", func_801B115C);
 

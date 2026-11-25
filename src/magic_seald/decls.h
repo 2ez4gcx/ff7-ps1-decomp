@@ -54,5 +54,10 @@ void func_800D3994(s32, s32, void *);
 void func_801B0330(void *);
 extern u8 D_8015190F[][0xB9C];
 extern s16 D_801518F6[][0x5CE];
+typedef struct { u32 addr : 24; u32 len : 8; } SdTag;
+typedef struct { SdTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; s32 w1; s32 xy2; u16 uv2; u16 pad; } SdPolyFT3;
+typedef struct { u8 pad0[4]; SdTag *ot; s32 shift; SdPolyFT3 *prim; s32 tpage; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 idx; u8 pad28[0x90]; MgSVec v0; MgSVec v1; MgSVec v2; } SdPolyCtx;
+typedef struct { u16 idx[3]; u16 pad6; s32 w8; u16 uv1; u16 uv2; } SdPolyEnt;
+SdPolyEnt *func_801B0388(SdPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_SEALD_DECLS_H */

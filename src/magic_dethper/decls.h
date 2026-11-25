@@ -71,5 +71,16 @@ extern MgMat D_800FA63C;
 extern MgVec D_801B70AC;
 extern M2C_UNK D_801B6004;
 extern MgVec D_801B70CC;
+typedef struct { u32 addr : 24; u32 len : 8; } DtTag;
+typedef struct { DtTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; s32 w1; s32 xy2; u16 uv2; u16 pad; } DtPolyFT3;
+typedef struct { u8 pad0[4]; DtTag *ot; s32 shift; DtPolyFT3 *prim; s32 tpage; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 idx; u8 pad28[4]; s32 idx2; u8 pad30[0x88]; MgSVec v0; MgSVec v1; MgSVec v2; } DtPolyCtx;
+typedef struct { u16 idx[3]; u16 pad6; s32 w8; u16 uv1; u16 uv2; } DtPolyEnt;
+typedef struct { s16 ax; s16 ay; s16 az; s16 pad6; u16 bx; u16 by; u16 bz; u8 padE[10]; } DtSpark;
+extern DtSpark D_801CF0F8[][24];
+DtPolyEnt *func_801B08D0(DtPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { DtTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; s32 w1; s32 xy2; u16 uv2; u16 pad2; s32 xy3; u16 uv3; u16 pad3; } DtPolyFT4;
+typedef struct { u8 pad0[4]; DtTag *ot; s32 shift; DtPolyFT4 *prim; s32 tpage; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 idx; u8 pad28[4]; s32 idx2; u8 pad30[0x88]; MgSVec v0; MgSVec v1; MgSVec v2; MgSVec v3; } DtQuadCtx;
+typedef struct { u16 idx[4]; s32 w8; u16 uv1; u16 uv2; u16 uv3; u16 pad12; } DtQuadEnt;
+DtQuadEnt *func_801B0CD4(DtQuadCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_DETHPER_DECLS_H */

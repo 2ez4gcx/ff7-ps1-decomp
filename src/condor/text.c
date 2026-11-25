@@ -370,10 +370,6 @@ u8 func_800A3260(u32 arg0) {
     return q;
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A3304);
-
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A3A98);
-
 static inline u8 dig(u32 arg0) {
     u32 q;
 
@@ -394,6 +390,132 @@ static inline u8 dig(u32 arg0) {
     D_8012C53C -= q * arg0;
     return q;
 }
+
+static inline u8 dig1(u32 n, u32 d) {
+    u32 q;
+
+    if (n == 0 || (q = n / d) == 0) {
+        return 0xFF;
+    }
+    D_8012C430 = 1;
+    D_8012C53C = n - q * d;
+    return q;
+}
+
+void func_800A3304(CondorNum *arg0) {
+    u8 sp[9];
+    u8 *p;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 g;
+    s32 pos;
+    s32 step;
+    s32 ff;
+    s32 *tab;
+    u32 cbase;
+    s32 j2;
+    s32 k2;
+    s32 g2;
+    s32 pos2;
+    s32 step2;
+    s32 ff2;
+    s32 *tab2;
+    u32 cbase2;
+    u8 *p2;
+
+    for (i = 0x1FF; i >= 0; i--) {
+        D_8012A73C[i] = 0;
+    }
+    D_8012C430 = 0;
+    D_8012C53C = D_8012C538;
+    sp[0] = dig1(D_8012C538, 0xF4240);
+    sp[1] = dig(100000);
+    sp[2] = dig(10000);
+    sp[3] = dig(1000);
+    sp[4] = dig(100);
+    sp[5] = dig(10);
+    sp[6] = dig(1);
+    sp[7] = 0x8B;
+    sp[8] = 0x8C;
+    i = 0;
+    ff = 0xFF;
+    step = 0xA;
+    tab = D_8012A73C;
+    cbase = 0x80198880;
+    p = sp;
+    do {
+        pos = i + 0xA;
+        if (*p != ff) {
+            g = *p;
+            j = 0;
+            if (g >= 0x80) {
+                g = (g & 0x7F) + 0x100;
+            }
+            k = g * 4;
+            do {
+                pos &= 0xFF;
+            } while (0);
+            lp0xA:
+            tab[pos] = *(s32 *)(k + cbase);
+            k += 0x80;
+            pos += step;
+            j++;
+            if (j < 8) {
+                goto lp0xA;
+            }
+        }
+        i++;
+        p++;
+    } while (i < 9);
+    D_8012C534 = arg0->v;
+    D_8012C53C = arg0->v;
+    D_8012C430 = 0;
+    sp[0] = dig1(D_8012C53C, 0x3E8);
+    sp[1] = dig(100);
+    sp[2] = dig(10);
+    sp[3] = dig(1);
+    sp[4] = 0x8B;
+    sp[5] = 0x8C;
+    i = 0;
+    ff2 = 0xFF;
+    step2 = 0xA;
+    tab2 = D_8012A73C;
+    cbase2 = 0x80198880;
+    p2 = sp;
+    do {
+        pos2 = i + 0x7B;
+        if (*p2 != ff2) {
+            g2 = *p2;
+            j2 = 0;
+            if (g2 >= 0x80) {
+                g2 = (g2 & 0x7F) + 0x100;
+            }
+            k2 = g2 * 4;
+            do {
+                pos2 &= 0xFF;
+            } while (0);
+            lp0x7B:
+            tab2[pos2] = *(s32 *)(k2 + cbase2);
+            k2 += 0x80;
+            pos2 += step2;
+            j2++;
+            if (j2 < 8) {
+                goto lp0x7B;
+            }
+        }
+        i++;
+        p2++;
+    } while (i < 6);
+    D_8012AF3C.x = 0x3E0;
+    D_8012AF3E = 0xC0;
+    D_8012AF40 = 0x14;
+    D_8012AF42 = 0x20;
+    func_80044000(&D_8012AF3C, D_8012A73C);
+    func_80043DD8(0);
+}
+
+INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A3A98);
 
 static inline u8 dig0(u32 n, u32 d) {
     u32 q;
@@ -2677,7 +2799,63 @@ void func_800AF08C(CondorAct *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800AF278);
+s32 func_800AF278(CondorAct *arg0) {
+    CondorAct *q;
+    s16 i;
+    s16 k;
+    u8 t;
+    u32 sum;
+    u32 sum2;
+    u8 r;
+
+    func_800A2068((CondorEnt *)arg0, 0x14, 0x28);
+    if (D_8012B85C != 0) {
+        i = 0;
+        if (D_8012B85C > 0) {
+            do {
+                q = (CondorAct *)D_8012B75C[i].p;
+                k = *((u8 *)arg0 + 0x2B);
+                if (k < 6) {
+                    if (k >= 4) {
+                        q->flags |= 0x10;
+                        if (q->timer == 0) {
+                            q->timer = 0x28;
+                        }
+                        q->w18 = 0;
+                        sum = D_80180018 + 0x80180000;
+                        t = *(u8 *)(sum + (arg0->b43 * 0x14 + q->b43));
+                        if (t != 0) {
+                            r = arg0->b12 * t / 100;
+                        } else {
+                            r = 0;
+                        }
+                        q->b2E = r;
+                        func_800AF08C(q);
+                        return 1;
+                    }
+                }
+                if (!(q->flags & 0x10)) {
+                    if (q->timer == 0) {
+                        q->flags |= 0x10;
+                        q->timer = 0x28;
+                        q->w18 = 0;
+                        sum2 = D_80180018 + 0x80180000;
+                        t = *(u8 *)(sum2 + (arg0->b43 * 0x14 + q->b43));
+                        if (t != 0) {
+                            r = arg0->b12 * t / 100;
+                        } else {
+                            r = 0;
+                        }
+                        q->b2E = r;
+                        func_800AF08C(q);
+                    }
+                }
+                i++;
+            } while (i < D_8012B85C);
+        }
+    }
+    return 0;
+}
 
 s32 func_800AF470(CondorAct *arg0) {
     CondorAct *q;

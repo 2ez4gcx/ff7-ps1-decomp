@@ -287,7 +287,70 @@ void func_801B1300(s32 arg0, s32 arg1, s16 arg2) {
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B1364);
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B1760);
+s32 func_801B1760(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
+    u8 *hdr;
+    s16 *list;
+    MgSVec *a;
+    MgSVec *b;
+    MgSVec *c;
+    SvPolyFT3 *p;
+    s32 i;
+    s32 n;
+    s32 flag;
+    s32 otz;
+
+    hdr = (u8 *)arg0->v + 4;
+    list = (s16 *)(hdr + *(s32 *)arg0->v);
+    n = list[0];
+    list += 2;
+    a = (MgSVec *)(hdr + list[0]);
+    b = (MgSVec *)(hdr + list[1]);
+    c = (MgSVec *)(hdr + list[2]);
+    p = (SvPolyFT3 *)arg3;
+    for (i = 0; i < n; i++, list += 10) {
+        D_801F0208->cx = (a->vx + b->vx + c->vx) / 3;
+        D_801F0208->cy = (a->vy + b->vy + c->vy) / 3;
+        D_801F0208->cz = (a->vz + b->vz + c->vz) / 3;
+        D_801F0208->v0.vx = (u16)a->vx - (u16)D_801F0208->cx;
+        D_801F0208->v0.vy = (u16)a->vy - (u16)D_801F0208->cy;
+        D_801F0208->v0.vz = (u16)a->vz - (u16)D_801F0208->cz;
+        D_801F0208->v1.vx = (u16)b->vx - (u16)D_801F0208->cx;
+        D_801F0208->v1.vy = (u16)b->vy - (u16)D_801F0208->cy;
+        D_801F0208->v1.vz = (u16)b->vz - (u16)D_801F0208->cz;
+        D_801F0208->v2.vx = (u16)c->vx - (u16)D_801F0208->cx;
+        D_801F0208->v2.vy = (u16)c->vy - (u16)D_801F0208->cy;
+        D_801F0208->v2.vz = (u16)c->vz - (u16)D_801F0208->cz;
+        gte_SetRotMatrix(arg4);
+        gte_SetTransMatrix_m(arg4);
+        arg4 = (MgMat *)arg4 + 1;
+        gte_ldv3_mm(&D_801F0208->v0, &D_801F0208->v1, &D_801F0208->v2);
+        gte_rtpt();
+        a = (MgSVec *)(hdr + list[10]);
+        b = (MgSVec *)(hdr + list[11]);
+        c = (MgSVec *)(hdr + list[12]);
+        gte_stflg_m(&flag);
+        if ((flag & 0x60000) == 0) {
+            gte_avsz3();
+            *(s32 *)p = 0x07000000;
+            gte_stotz_m(&otz);
+            p->tag.addr = (*(SvTag **)(((otz >> (14 - arg2)) << 2) + arg1))->addr;
+            (*(SvTag **)(((otz >> (14 - arg2)) << 2) + arg1))->addr = (u32)p;
+            gte_stsxy3_m(&p->xy0, &p->xy1, &p->xy2);
+            p->tpage = *(u16 *)(list + 3) | 0x20;
+            gte_ldrgb_m((u8 *)list + 8);
+            gte_mv12(*(u16 *)((u8 *)arg0 + 0xA));
+            gte_mtir0_t();
+            gte_dpcs();
+            gte_strgb_m(&p->r0);
+            p->code = 0x26;
+            p->w0 = *(s32 *)(list + 6);
+            p->uv1 = *(u16 *)(list + 8);
+            p->uv2 = *(u16 *)(list + 9);
+            p++;
+        }
+    }
+    return (s32)p;
+}
 
 INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B1B5C);
 
