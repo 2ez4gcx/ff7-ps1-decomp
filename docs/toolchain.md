@@ -198,7 +198,14 @@ the entry points of different overlays loaded at the same address stay apart onl
   padding `nop` a symbol of its own in `config/symbols.us.TARGET.txt` (`func_ADDRESS =
   ADDRESS; // type:func`), write the function in C and put `INCLUDE_ASM(.., func_ADDRESS);`
   right after it, and run `tools/build.py TARGET --split` (battle func_800D3520 and
-  func_800D3544).
+  func_800D3544). A split does not remove the old asm file of the function whose size
+  changed: overwrite `asm/us/TARGET/nonmatchings/FILE/func_X.s` with the one splat wrote
+  in `asm/us/TARGET/matchings/FILE/`, or `put` and `match.py` keep expecting the old
+  length for the whole file.
+- `tools/work.py put NAME --in-file` skips the check of the function alone and lets the
+  whole-file check decide: GCC's `last_spill_reg` carries over between the functions of one
+  cc1 run, so the names of a function's reload registers can depend on the functions before
+  it in its file (it did not place magic_brizag2 func_801B2548).
 - When done: `tools/build.py` must still match.
 
 What GCC 2.6.3 needs to produce the game's code (learned from functions that match):
