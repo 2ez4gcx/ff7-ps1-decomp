@@ -1125,6 +1125,22 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   load written as `D_8015190F[g][0]` is independent of the store and the index chain
   floats above it; the same load as `D_80151909[g][6]` (base symbol plus offset) keeps the
   store group first (magic_beast, garyu, spark).
+- In sched1 a load into a multi-set variable stays where the source puts it, but a load
+  into a single-set temp is dragged toward its use. Reusing the stored variable as the
+  destination of a later load (`p->unk34 = v; v = p->unk72;`) adds an anti-dependence, so
+  the load cannot rise above the store; with the other operand loaded into a multi-set
+  variable before the store it gave the game's lh/sw/lh/lw order (snobo func_800A88A8). A
+  fresh single-set local per statement fixes ties where a shared multi-set variable gets
+  no boost: `m2 = i` for a call argument put `li a0,0x115` first, and three more
+  single-set locals matched battle func_800B9568 (755 instructions); a variable shared
+  across unrelated places is one global pseudo that takes a conflict from every segment
+  and is pushed out of v1 (per-use locals fixed func_800ABB0C's second region).
+- The position of the source statement that stores a spilled value decides where sched2
+  puts its reload: `q->col = rgb;` moved earlier moved the `lw` to the top and removed a
+  `nop` (hmoon, smog2). A `do { } while (0);` wrap raises a variable's reference count and
+  is also a scheduling barrier, and it can change control flow when it wraps an `if/else`
+  as a whole (the branch layout flipped): search by allocation first
+  (work/spells87/prio.py), then by score, because the two can disagree.
 
 ### Registers
 
@@ -1712,6 +1728,33 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   passes no arguments (put refuses the prototyped form), and a function returning the sum
   (`s32`) puts it in v0 where the same body as `void` puts it in a1 (battle
   func_800D3520).
+- A temp used for two different values is one pseudo and so one register: in magic_alex
+  func_801B5C14 the section-1 temp `x` and the section-3 `x = p->unk2` share v1 as in the
+  game, while the same temp shared with section 2 went to a0. `a = q; a = 0x1000 - a;` as
+  two statements puts the quotient straight in a0 and the constant in its own register; as
+  `a = 0x1000 - q / 30` the constant takes the other register. A work file can reuse a
+  parameter as the working variable (`void f(s32 i, ...)`), which keeps the game's
+  prologue copy order a0, a1, a2 (battle func_800AEC10); typing a parameter as the struct
+  (`FdObjQ *p`) instead of `p = arg0;` flips the order of `move s3,a0` and `move s1,zero`.
+- A temp that is a single-set local in a straight chain gets the chain's tied register
+  from local-alloc where the same value in a multi-block variable gets a global-alloc
+  register. A priority flip is often one weighted reference away: read `refs *
+  floor_log2(refs) / len` from prio.py, then try one or two `do { } while (0)` wraps (a
+  wrap on `i = 0` flipped `i` and the saved-register layout in magic_geki2 func_801B10BC;
+  `do { x0 = r0 - 0x40; } while (0);` lengthens x0's life and fixes local-alloc order). A
+  pseudo with a hard-register copy preference (a call's first argument, a0) makes the
+  other global pseudos skip that register: in condor func_800BADD8 that is why `i` avoids
+  a0 and `ot` takes it where the game keeps `ot` in t2.
+- Reload's `last_spill_reg` carries over between the functions of one cc1 run: compiled
+  alone, magic_hades func_801B14A0 gets t0 as its first reload register where the game,
+  with func_801B0C24 before it, gets t1. The t-register names of reloads depend on the
+  functions before it in the file, which `work.py diff` and the alone check of `put` do
+  not see. `tools/work.py put --in-file` skips the alone check and lets the whole-file
+  check decide; a function put in C changes the reload registers of the ones after it
+  (magic_brizag2 func_801B2548 matched only after func_801B1B68 and func_801B200C were C);
+  and when a hand-written function that stays asm ends a source file, split the file there
+  (tools/split_file.py magic_hades text text2 801B14A0, moving the `.rodata` subsegment by
+  hand when the jump tables belong to the later functions).
 
 ### Control flow
 
@@ -2085,6 +2128,15 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   instruction written above it (snobo func_800AAFE8: `q = arg0->z;` before the `if`);
   writing the first iteration of a loop out by hand (`v += 6; n -= 3;` before `while (n >
   0)`) stopped GCC merging two loop tails into a `j`.
+- A `for (i = 0; i < n; i++)` loop keeps its first guard branch pointing at the second
+  guard; `if (n > 0) { i = 0; do ... while (i < n); }` lets jump threading send it to the
+  function end, which makes `s1` look live there so reorg fills the slot with `move
+  v1,zero` instead of `move s1,zero` and 16 bytes of frame pad appear (magic_wep4
+  func_801B2320). With `i = 0` written before the `lhu` of the count combine drops the "n
+  is non-negative" knowledge and the guard becomes `blez`; `s32 n` with `for (i = 0; i <
+  n; ...)` (the init inside the `for`) gives the game's `beqz` guard and signed `slt` end
+  test (magic_brizag2 func_801B1B68, func_801B200C). `i = 1;` written before `if (lim >
+  0)` lets reorg fill the `blez` delay slot.
 
 ### Loops
 
@@ -2473,6 +2525,19 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   = 0x3D6;` keeps compare constants in the loop: battle func_800B46B4); a loop written
   with `goto` keeps constants in the loop where a `for` with a call hoists them into
   s4/s5, and `for (i = 6; i != -1; i--)` gives `li t,-1; bne` (snobo func_800AAE98).
+- loop.c hoists a user-variable constant such as `k = 0x7FFF;` set once in a loop body out
+  of the loop; a dead `k = 0;` earlier in the body gives it two sets so the `li` stays in
+  the loop (magic_siva func_801B1B5C). A constant held in a user variable set before the
+  loop (`cw = 0x78080000;` next to `cc`) fixes `cw + t` operand order, and its `lui` can
+  still stay in the loop (hmoon). Declaring `extern struct { u8 f; u8 pad[0xB9B]; }
+  bt_8015190F[];` as an alias of a 2-D `u8 [][0xB9C]` stops loop.c hoisting the symbol's
+  address (it removed a saved register in magic_geki2 func_801B10BC and gave `lui at;
+  addiu at; addu at; lbu 0(at)`). `for (...; i++, p++, it++)` against `i++, it++, p++`
+  decides which strength-reduced giv is initialised first. A scalar that decls.h declares
+  and the game reads and writes through an address register (`lui; addiu; lhu 0(v1); ...;
+  sh 0(v1)`) is `r = &D_x; *r += k;`: redeclaring it as an array in the work file makes
+  `put` refuse (an earlier function stops matching) and `(&D_x)[0]` gives direct `lui at`
+  accesses.
 
 ### Stack frame
 
@@ -2595,6 +2660,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A frame 8 bytes too big came from `(D_80162978 + D_8015169C)->unk0 = -1;`:
   `D_80162978[D_8015169C].unk0 = -1;` gives the right frame (cc1 -dg showed a dead pseudo
   for the address that got a stack slot; magic_joker1 func_801B10B4).
+- A loop guard of the form `if (i < n)` adds a dead-compare 8-byte slot in the frame that
+  lands after the spills, where `u8 pad[8]` puts those slots in the wrong place (field
+  func_800B2DD4, magic_lgirl func_801B0270). Spill slot order is pseudo number order:
+  declare the spilled locals in the game's slot order (`n, i, sh, e`). A macro with a
+  "memory" clobber (`gte_rtpsm`) makes GCC reload a global pointer after the second rtps
+  where the game does. A work file that redeclares globals with other types than decls.h
+  (`u8` for `D_801E8ECC`, an array for `D_801E8ED4`) makes put refuse: use casts and
+  decls.h's own declarations.
 
 ### How the scheduler and the allocator decide
 
@@ -2922,6 +2995,16 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   split there, and text3b.c, built without the flag, holds func_8001AEE4 and the rest. To
   find which functions need a file option, compile the file without it (patch
   psyq.FILE_OPTIONS in memory, work/split3/nofixed.py) and list those that stop matching.
+- `k = 0xC;` as a variable keeps GCC from folding `cy - ((h >> 1) - 0xC)` into `(cy + 12)
+  - (h >> 1)`; `off = lo | ((hi & 0xF0) << 4);` and `t = arg1 - base + 0xFEE;` as their
+  own statements keep a constant from being folded (main func_80034BB0); a call through an
+  `s32 (*)(void)` cast drops an extra `andi 0xffff`. `e->f8 = (yy = D_801ECF86.y - 0x96) +
+  func_80042DA8() % 300;` gives the right registers and the `addiu` (preexpand_calls
+  evaluates the call first, so the lhu comes after it); `e = (T *)(j * 24 + (s32)base);`
+  gives `addu s0,v0,s3` where `*(s16 *)(off + base)` gives `addu v0,s3,a0`. Chained stores
+  `p->u0 = p->u2 = c; p->u1 = p->u3 = c2;` gave the game's store order and made `c' = c +
+  shifted` land in the shifted value's register (magic_odin1 func_801B0E60,
+  func_801B11C8).
 
 ## Hand-written assembly
 
