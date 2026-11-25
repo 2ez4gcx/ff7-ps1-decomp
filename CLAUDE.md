@@ -30,6 +30,12 @@ a subagent with docs/matching.md, one at a time (the maintainer's limit). Known
 near misses that resisted, and handwritten functions, are listed in
 [docs/near-misses.md](docs/near-misses.md): skip them in batches.
 
+Before a batch of small or mid-size functions, run `py tools/twins.py scan` (and
+`scan --ops`): a function that has a near twin already in C is a port, not a new
+function, and `tools/twins.py diff` / `port` start it from the twin's C (33 functions
+matched this way in a week, the largest ~1040 instructions). A matched function is a
+new twin: rescan after each batch.
+
 When a target's file holds several of the game's files (a switch function cannot be
 put because its jump table's alignment is off), split it where the jump tables change
 alignment: see "Rodata" in docs/toolchain.md and `tools/split_file.py`.

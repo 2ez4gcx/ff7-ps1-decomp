@@ -447,6 +447,21 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_800AE384). Printf strings sit in rodata in the order the function names them: two
   initialised locals `char *dma = ".."; char *fifo = "..";` at the top put them before a
   format passed inline (main func_800424C4).
+- A global that decls.h declares as a scalar can be indexed as `(&D_x)[i]` without
+  redeclaring it as an array (put refuses a redeclaration that conflicts with decls.h: jet
+  func_800A1F18). A work file's extern that retypes a global decls.h declares makes put
+  fail elsewhere in the file; an alias name for the same address with the other type
+  (`s48_800832A0`: any name ending in `_` and eight hex digits names that address) avoids
+  it (world func_800B8D4C); the same alias gives a second read of a global its own type,
+  `extern volatile u8 vol_80062D98;` (see Control flow). A call through a cast with fewer
+  parameters, `((void (*)(MgMat *, MgMat *))func_8003BF3C)(a, b)`, matches where decls.h
+  declares more and the game sets fewer argument registers (battle func_800D41FC). A type
+  a port adds to main/decls.h must not reuse a name an overlay's decls.h defines
+  (savemenu's SvCursor became MnCursor in main).
+- A multi-line typedef in a work file counts as a clash with decls.h: keep typedefs on one
+  line. In a port, an extra switch case `D_x->part = op = *script++;` followed by a call
+  matched only with `op` a `u16` local and the call passing `(s16)op` (magic_vahamut0
+  func_801B03D4).
 
 ### Order of instructions
 
@@ -1040,6 +1055,50 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   func_801B24C4). GCC 2.7.2 treats a `div` with its zero check as one insn and hoists it
   and its loads; a `do { } while (0)` around the block before it keeps the order (submar
   func_800A6778).
+- GCC 2.6.3's first scheduler is a backward list scheduler: `work/spells19/dump.py TARGET
+  WORK.c NAME -dS` writes its dump ("ready list at T-n"). Ties go by the insn's original
+  order (the later insn is picked first and so ends up later), then by the number of insns
+  that depend on it: the order of two independent statements decides which of two equal
+  stores comes first, and one more use of a base register moves its `lui` (magic_dethfo
+  func_801B09A0: the base pointer has two dependents in joker1's form and one in a plain
+  form). Independent low-priority insns fill load stalls, which sank the adds below the
+  call in main func_80028930.
+- `do { } while (0);` around a statement is a scheduling barrier: it emits
+  NOTE_INSN_LOOP_* notes, the first real insn after them cannot move and nothing crosses
+  them (main func_80028930: one around the pointer advance and one around the call pin the
+  y-adds to the call's delay slots). Port a twin's literal locals and wraps, not only its
+  operations.
+- Extra stack stores before a call that has fewer arguments than the game stores are a
+  dead local array, not a many-argument call: `s32 v[3]; v[0] = p->unk18; v[2] = 0x4000;
+  v[1] = 0x4000;` before a 3-argument call gave the game's stores to 0x18, 0x14, 0x10 and
+  left a3 unloaded (magic_dokufuki func_801B01E8, magic_dokueki func_801B01A8); the order
+  of the assignments is the scheduler's tie-break.
+- A store through a volatile cast, `*(volatile s8 *)&D[i] = f();`, stops GCC reusing the
+  stored value for a later `D[i]` read: the game's `sb` then `lb` (a volatile load or a
+  struct view did not; battle func_800ABB0C). sched.c keeps a load below an earlier store
+  to another constant address only when both are volatile or an address is not constant
+  (highway func_800AB738: struct views, array views and a volatile store alone failed).
+  reorg stops its delay-slot search at a volatile insn, so a constant set after a volatile
+  load cannot fill the slot before it (main func_8001E040); reading the global through
+  `*(const s32 *)&D_80062FC4` lets an earlier store move after the load.
+- A `move v1,s3` the game has in a call's delay slot comes from an assignment after the
+  call (`r = call(); v1 = arg0; if (r == 0)`), not from an else branch (battle
+  func_800ABB0C). `y = 0;` before `if (h != 0)` is moved into the preceding branch's delay
+  slot and costs a word; inside the if it is not (condor func_800B8954). A beq whose slot
+  the game fills from the branch target, a copy of the loop increment, needs the loop as
+  `for (; i < 3; i++)`: reorg predicts the jump to the loop's test as taken, and a `do { }
+  while` filled from the fall-through (battle func_800E2098).
+- A mask the game reloads at each branch target (`lui a0,0x7fff` copied into delay slots
+  by the filler) comes from the constant written in the expression with no local: `X =
+  (void *)((D[1] & 0x7FFFFFFF) + ((s32)D - 4));` (battle func_800B9568). Reading a value
+  into a variable and subtracting in place (`t = s->w0; b = s->s40; t -= b; s->m.t[0] =
+  t;`) gives `subu v1,v1,a1`, where storing `a - c` and then `a -= c` makes CSE share the
+  value and gives the game's load order (magic_vahamut2 func_801B6EF4). When a store's
+  left side is complex (`D->p[k][j].vx = f(..)`) GCC expands the right side's call first
+  and then the address: the array lvalue gives the game's base-first `addu` and `j*8 +
+  k*128` order, the cast form `((MgSVec *)((u8 *)D->p + off))->vx` gave the offset first
+  (magic_garyu func_801B0480). `*p & m` then `p = p - 8; .. m + (s32)p` gave an in-place
+  `addiu v1,v1,-8` (battle func_800B9568).
 
 ### Registers
 
@@ -1583,6 +1642,32 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   then got eqipmenu to the game's length with the spill right. A running offset `c +=
   0x690` that is really `i * 0x690`, written as a giv, lets loop.c put its increment in
   the branch delay slot with the other givs (magic_ifleet).
+- A temp that lives in one basic block (`t0 = D_8010FD78 + 0x400;` used in that block
+  only) is a local-alloc pseudo and gets v1; the same value in a variable shared with
+  another block is global-alloc and gets another register (highway func_800AB738). A
+  pseudo that crosses a call anywhere gets a saved register for its whole life. One
+  pointer local per switch case, per statement group or per use (`w = &D_X;` for one loop,
+  `w2 = &D_X;` for the next) gave the game's saved registers and its repeated `lui/addiu`;
+  one pointer shared by the whole function changed the registers of every case (battle
+  func_800B9568, condor func_800B8954). One `u32 c` set in two blocks (`c =
+  (u32)D_8009AC32; .. s3 = (u8 *)(c - 0x3D)` and later `c = s6[0]`) gave a live s0 base
+  the way the game has it, because loop.c does not move a variable set in two blocks (main
+  func_80011C1C).
+- A local compared equal to another and read after a call is replaced by the other by CSE
+  and its register vanishes: give the later blocks a variable of their own (battle
+  func_800E2098). `s16` for a flag local gives `move v0,s5; beqz v0` where `u8` gives
+  `andi` and `s32` `beqz s5`; `y = k << 4` keeps y's register where `y = k * 0x10` leaves
+  a copy CSE prefers; a `u16` local holding `s16 + 3` gives `lhu` where the game has `lh`:
+  keep such locals `s32` (main func_8001E040). A throwaway `u16 v` temp for one statement
+  changed the allocator's priorities enough to flip two saved registers (magic_garyu
+  func_801B0480); reusing the incoming parameter as the index local gave the game's s0 for
+  the index (battle func_800ABB0C); a loop-invariant `x = bits` written inside the if
+  rather than before it gave the preheader `andi` of the game (condor func_800AE384).
+- A local `u8 (*E)[0x440] = D_8009D84C;` assigned at the top reproduces a base the game
+  hoists at entry (battle func_800E2098). In a loop where the counter has 20 references
+  over 68 insns and `u = i << 6` 6 over 11, prio.py explains why the counter takes the
+  first saved register: a separate counter for the last loops did not change the s1/s2
+  order (formmenu func_801D0E94 before it matched).
 
 ### Control flow
 
@@ -1929,6 +2014,26 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   moved inside an if body fixed a prologue save order (condor func_800B5678). A selected
   call argument written as two calls (`if (c) f(j, 0); else f(j, 4);`) stops GCC making it
   a shift (condor func_800A2640).
+- A second test of a global the function tested before (`if (D_80062D98 != 0) return;`
+  after a block guarded by `D_80062D98 == 0`) gave the game's jump, to the test itself
+  rather than threaded to the end, only when read as volatile: through a file-scope alias
+  `extern volatile u8 vol_80062D98;`. A block-scope `extern volatile` redeclaration
+  matches alone, but GCC keeps the volatile type for the rest of the file and put refused
+  it. The camera-script interpreter of the summon spells (about 1040 instructions, in many
+  overlays) differs between overlays in exactly such places: an early exit `if (flag &
+  0x80) { p->unk0 = -1; return; }` whose store cross-jumps with the switch's default, one
+  case more or less (the jump table's equal `.word` targets are case labels of one block:
+  `case 0: case 8:`), other constants, a field at another offset, and where the `p->mat`
+  block sits relative to the pause test (inside it in lamu, so CSE reuses `&D_801E7DC0`
+  from the loop end in s1).
+- `for (c = &r->c[0]; c < &r->c[5]; c++)` keeps the game's loop guard (`sltu` against the
+  end pointer) that `do { } while` drops (world func_800A71E8); `k = 1;` before an
+  unrelated copy and `for (; k < 6; k++)` gave `li s2,1` in the game's place (highway
+  func_800AB738); two vertex loops that the game leaves unreduced and unhoisted are
+  written `l1: ..; n++; if (n < 16) goto l1;` (magic_garyu func_801B0480). Three loops
+  sharing one variable keep a shared sb/jal tail merged, one variable each splits it
+  (battle func_800E7170); a call written in full in each branch of an if gives the
+  cross-jumped tail and stops early constants being hoisted (battle func_800E2098).
 
 ### Loops
 
@@ -2274,6 +2379,33 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   the game's `addiu; move; sll; sra; slt` only with `s16` i and t (big6); a sum `(T + K) +
   co + ro` with loop variables is hoisted and spilled when ro comes last after a symbol
   and a constant (magic_escape func_801B009C).
+- loop.c moves a loop invariant (a symbol's `lui/addiu`) out of the loop only when
+  threshold * savings * lifetime >= the loop's insns (threshold 1 + the non-fixed
+  registers, halved when the loop has a call), and a user variable's set only when it runs
+  every iteration; `work/spells19/dump.py TARGET WORK.c NAME -dL` prints each decision
+  ("moved to" or "not desirable", with life N). An address set right before its single use
+  stays in the loop: `o = idx * 0x84; jj = j; q8 = D_8009C748[0] + o; a3 = q8[jj];` kept
+  `lui v1; addiu v1` in the loop where `D_8009C748[idx][j]` was hoisted into a saved
+  register (battle func_800E2098).
+- Reading a global scalar as an array element, `extern s16 D_x[];` and `D_x[0]` twice or
+  more, makes loop.c hoist the symbol's address as its own invariant, ordered among the
+  loop's other hoisted constants by its first use in the loop (the game's `li s4,0xff` for
+  `k != 0xFF`, then the address, then `li s3,0x30`: formmenu func_801D0E94, 736
+  instructions, which matched after many batches); with reads across calls the address
+  lands in a saved register (highway func_800AB738: one read into a local, or other
+  address expressions per use, stop it). A pointer variable `pc = &D_x;` set before the
+  loop puts the address ahead of every other hoisted constant instead, and set inside the
+  if it is not moved at all. Try the array form when the game holds a global's address in
+  a register and ours uses `lui at` (the notes of battle func_800E60F8, func_800B46B4 and
+  condor func_800B7EC0 describe that difference).
+- Fields of a global window written through a struct view (`D_8010BC3C.x`, `.y`, `.h`)
+  instead of separate `u16` externs at the same addresses stop GCC treating the stores and
+  the later global loads as aliasing, so it hoists the loads out of the loop as the game
+  does (condor func_800B8954 went to the game's length). Two base pointers set up front
+  (`base = (u8 *)D_80151A4C; base2 = base - 8;`) gave `addiu a1,a1,-8` plus an offset add
+  where the global written inline gave lui/addu forms; one `o = k * 0xB9C` shared by the
+  copies of a loop removed 16 words (magic_tifa func_801B5C74); a byte-stepped offset used
+  for one array only stopped GCC hoisting that array's base (highway func_800AB738).
 
 ### Stack frame
 
@@ -2393,6 +2525,9 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 - A 4-word BIOS-call stub can sit right before a C function inside one splat function
   (main func_80042DC8, printf, followed by sprintf at 0x80042DD8): a `type:func` symbol in
   config/symbols.us.<target>.txt and `tools/build.py <target> --split` separate them.
+- A frame 8 bytes too big came from `(D_80162978 + D_8015169C)->unk0 = -1;`:
+  `D_80162978[D_8015169C].unk0 = -1;` gives the right frame (cc1 -dg showed a dead pseudo
+  for the address that got a stack slot; magic_joker1 func_801B10B4).
 
 ### How the scheduler and the allocator decide
 
@@ -2839,3 +2974,23 @@ they found that lib3.c holds a 2.21 part (func_80040CA8) and a 2.34 part (the Cd
 functions, now lib3a.c). Agents still type `python -`, leave permuter workers running
 after reporting none, and arm wait loops that match their own command line: forbid wait
 loops in the prompt and check the process list after every batch.
+
+Batches big14 to big17 and focus8 and focus9 (2026-11-16) matched none of the large or
+near-miss functions they were given: each ended 1 to 20 instructions or registers off,
+with the same kind of register or delay-slot detail. What worked (2026-11-16 to 25, 33
+functions): porting from twins. `tools/twins.py scan` ranks every function still in asm by
+its most similar functions in C (instruction streams with symbols masked; `--ops` masks
+registers and immediates as well: 0.92 and above means the same operations, other
+registers or constants); `twins.py diff SRC DST` prints where two functions differ and how
+their symbols pair (propagate.py's normalized form); `twins.py port SRC DST OUT.c` writes
+a work file from the twin's C with its symbols renamed (`--skip-dst`/`--skip-src` drop
+unpaired symbols so the rest pair up). Twins at 0.87 to 1.00 matched after edits to
+constants, a case more or less, an early exit, a field offset, one operand, a nested call;
+the camera-script interpreter alone gave twelve functions (hades, satan, siva, odin1,
+alex, debucho, vahamut0, antlion, sting, deadsef, lamu, choco0). A matched function is a
+new twin: rescan after every batch. tools/permute.py needs `--stack-diffs` for a function
+whose only difference is a stack offset (the permuter ignores them and scores 0 at once),
+and a permuter hit has to be rewritten in the repository's style (tools/tidy_style.py does
+the whitespace and braces) and checked with work.py diff before put. A whole-project build
+(`tools/build.py`) after a batch that changed main/decls.h catches clashes with overlay
+declarations.
