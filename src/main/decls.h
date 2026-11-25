@@ -1846,5 +1846,15 @@ extern s32 D_80048D74;
 extern s32 D_80048D78;
 extern s32 D_80048D54;
 extern s32 D_80048D58;
+extern s32 D_80099E08;
+extern s16 D_80099E0E;
+extern s16 D_80099E18;
+extern s16 D_80099E1A;
+extern u32 *D_80099EC0;
+extern s32 D_80099F10;
+extern s16 D_80099F14;
+extern s16 D_80099F16;
+extern s16 D_80099F20;
+extern s16 D_80099F22;
 
 #endif /* MAIN_DECLS_H */

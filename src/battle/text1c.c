@@ -3436,7 +3436,83 @@ void func_800AEBF0(void) {
     func_800AE954();
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800AEC10);
+void func_800AEC10(s32 i, s32 arg1, s32 arg2) {
+    s32 s0;
+    u16 sp20;
+    u16 sp22;
+    s32 a3;
+    s32 t1;
+    s32 id;
+    s32 n;
+    u16 t0;
+    s32 v1;
+    s32 q;
+    u8 *p;
+
+    if (i >= 3) {
+        D_800F83E4[i][0] &= ~0x18;
+    } else {
+        D_800F5E5C[i].a = 0;
+        v1 = D_800F5BE1[i].a;
+        if (v1 & 8) {
+            D_800F5BE1[i].a = v1 & 0xF7;
+            D_800F83E4[i][0] &= ~0x10;
+            func_800B10F0(i, 3, 0, 0, 0, 0, 0);
+        }
+        D_800F8410[i][0] = (u16)D_800F5E72[i][0];
+        func_800A7254(2, i, 0x18, 0);
+    }
+    id = D_800F5E66[i][0];
+    if (id >= 4) {
+        D_800F83E0[id].a &= 0xFFBFFFFF;
+    }
+    D_800F840C[i].a = 0;
+    ((void (*)(s32, s32, s32))func_800AEBF0)(i, arg1, arg2);
+    s0 = i << 4;
+    s0 += i;
+    s0 <<= 2;
+    *(u16 *)((u8 *)D_800F5BBE + s0) = 0;
+    D_800F6B34.e[i].a = 0xFF;
+    ((void (*)(s32))func_800A56B0)(i);
+    n = 0xF;
+    s0 += (s32)&D_800F5BD7;
+    do {
+        *(u8 *)s0 = 0;
+        n--;
+        s0--;
+    } while (n >= 0);
+    n = 7;
+    p = (u8 *)&D_800F5BDF + i * 0x44;
+    do {
+        *p = 0;
+        n--;
+        p--;
+    } while (n >= 0);
+    if (!((D_800F7DCC >> i) & 1)) {
+        s0 = i * 0x68;
+        t0 = *(u16 *)(D_800F8430 + s0);
+        t1 = t0;
+        if (t1 != 0) {
+            *(u16 *)(D_800F8430 + s0) = 0;
+            sp20 = t0;
+            D_8009D260[0] += t1;
+            func_800B0FFC(0xA, 0x54, 1, &sp20);
+        }
+        t0 = *(u16 *)(D_800F8430 + s0 + 2);
+        a3 = t0;
+        if (a3 != 0xFFFF) {
+            v1 = D_80063014;
+            *(u16 *)(D_800F8430 + s0 + 2) = -1;
+            q = *(s32 *)v1;
+            sp22 = t0;
+            func_800A7254(0, q, 3, a3);
+            func_800B0FFC(0xA, 0x52, 1, &sp22);
+        }
+    }
+    func_800A7254(0, i, 2, 0);
+    func_800B108C(i);
+    func_800B1304(i, 1);
+}
 
 void func_800AEF68(s32 arg0) {
     u16 *p;

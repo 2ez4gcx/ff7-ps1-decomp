@@ -643,7 +643,46 @@ void func_801B2050(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lamu/nonmatchings/text", func_801B24A8);
+void func_801B24A8(s32 arg0) {
+    MgSVec *s;
+    s32 *a;
+    s32 *b;
+    LamPkt *p;
+    s32 i;
+    s32 ang;
+    s32 otz;
+    s32 flag;
+
+    s = (MgSVec *)0x1F800000;
+    a = (s32 *)0x1F800008;
+    b = (s32 *)0x1F80000C;
+    s->vx = 0;
+    ang = 0;
+    s->vy = 0;
+    s->vz = 0;
+    func_8003BBDC(s, a, &otz, &flag);
+    s->vy = 0x640;
+    func_8003BBDC(s, b, &otz, &flag);
+    p = (LamPkt *)D_80163C74;
+    i = 0;
+    do {
+        ang += 0x100;
+        p->tag = 0x06000000;
+        p->c = arg0;
+        p->u1 = 0;
+        p->u0 = 0;
+        p->xy0 = *a;
+        p->xy1 = *b;
+        s->vx = ((u32)(func_80039A74(ang) * 0x19)) >> 6;
+        s->vy = (func_80039B40(ang) * 0x640) >> 12;
+        func_8003BBDC(s, b, &otz, &flag);
+        p->xy2 = *b;
+        func_80046794(((LamW *)&D_801517C0)->v + 0x4084, p);
+        p++;
+        i++;
+    } while (i < 0x10);
+    D_80163C74 = (s32)p;
+}
 
 void func_801B2640(void) {
     MgTask *p;

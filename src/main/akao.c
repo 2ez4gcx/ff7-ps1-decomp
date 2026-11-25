@@ -332,7 +332,50 @@ void akao_sfx_start(u16 pan, u16 channel, u8 *first, u8 *second) {
 
 /* A menu sound: channels 54 and 55. */
 #ifndef NON_MATCHING
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", akao_menu_sfx_start);
+void akao_menu_sfx_start(u8 *first, u8 *second) {
+    s32 mask;
+    AkaoChannel *ch;
+    u32 *p;
+
+    mask = 0;
+    ch = &D_80099DB8;
+    D_80099E0E = 0x101;
+    D_80099F16 = 0x101;
+    ch->addr = (u8 *)D_80049C40;
+    D_80099EC0 = D_80049C40;
+    D_80099E0C = 2;
+    D_80099F14 = 2;
+    D_80099E08 = -1;
+    D_80099F10 = -1;
+    if (first != 0) {
+        mask = 1;
+        func_80029BAC(ch, first);
+        D_80099E18 = 0x4000;
+        D_80099E1A = 0;
+    }
+    if (second != 0) {
+        mask |= 2;
+        ch = ch + 1;
+        func_80029BAC(ch, second);
+        D_80099F20 = 0x4000;
+        D_80099F22 = 0;
+    }
+    mask = mask << 0x16;
+    p = &D_80099FCC;
+    *p |= mask;
+    mask = 0xC00000;
+    D_80099FD8 |= mask;
+    mask = 0xFF3FFFFF;
+    D_80099FD0 &= mask;
+    D_80099FD4 &= mask;
+    D_80099FEC &= mask;
+    D_80099FF0 &= mask;
+    D_80099FF4 &= mask;
+    func_8002FF4C();
+    func_80030038();
+    func_80030148();
+    D_80099FDC &= mask;
+}
 #else
 /* Matches but for four instructions: GCC loads 0x101 before the channel
  * pointer, the game after it. */

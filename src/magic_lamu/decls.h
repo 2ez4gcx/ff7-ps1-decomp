@@ -73,7 +73,7 @@ extern MgWord D_801E7DA8;
 extern MgWord D_801E7DAC;
 extern MgWord D_801E7DB0;
 void func_801B275C(void);
-void func_801B24A8(s32);
+void func_801B24A8(s32 arg0);
 void func_801B2640(void);
 extern u8 D_801D4018;
 extern s16 D_801E7D3C[];
@@ -119,7 +119,7 @@ extern MgSVec D_801D4530[];
 extern MgSVec D_801E7E18[];
 extern MgSVec *D_801E7D14[];
 extern u16 D_801E7D24[];
-s32 func_80039A74(s16);
+s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 typedef struct { u32 addr : 24; u32 len : 8; } LamTag;
 typedef struct { u8 *data; s32 col; u16 n; } LamAnim;
@@ -136,5 +136,9 @@ s32 func_80039F5C(s32);
 void func_8003A078(MgVec *, MgSVec *);
 void func_8003ACE4(MgSVec *, MgVec *);
 void func_800D3994(s32, s32, MgSVec *);
+typedef struct { s32 v; } LamW;
+typedef struct { s32 tag; s32 c; s32 xy0; s32 u0; s32 xy1; s32 u1; s32 xy2; } LamPkt;
+s32 func_8003BBDC(void *, void *, s32 *, s32 *);
+void func_80046794(s32, void *);
 
 #endif /* MAGIC_LAMU_DECLS_H */

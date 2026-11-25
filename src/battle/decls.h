@@ -1725,5 +1725,11 @@ extern u16 D_800F5E78[][0x1A];
 extern BtlE8f D_800F6B86[];
 extern s32 D_801517B8;
 void func_800D87EC(s32 arg0, s32 arg1, s32 arg2, void *arg3);
+void func_800AEC10(s32 i, s32 arg1, s32 arg2);
+extern u8 D_800F8430[];
+extern u8 D_800F5BD7;
+extern u8 D_800F5BDF;
+typedef struct { u8 pad0[0xC]; s16 a; u8 pad2[0x26]; } BtlAeS;
+extern BtlAeS D_800F5E5C[];
 
 #endif /* BATTLE_DECLS_H */
