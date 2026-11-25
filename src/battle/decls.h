@@ -1720,5 +1720,6 @@ extern u8 D_800F5166;
 extern u8 D_800F5167;
 M2C_UNK func_8003AB84(MgMat *, s32 *, s32 *);
 M2C_UNK func_8003B05C(MgMat *, MgMat *);
+void func_800D84F8(MgMat *arg0, s32 arg1, MgMat *arg2);
 
 #endif /* BATTLE_DECLS_H */

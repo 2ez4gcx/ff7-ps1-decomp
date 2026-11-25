@@ -29,5 +29,6 @@ typedef unsigned long long u64;
 #endif
 
 #include "include_asm.h"
+#include "gte.h"
 
 #endif /* COMMON_H */

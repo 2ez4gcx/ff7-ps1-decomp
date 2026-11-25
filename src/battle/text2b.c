@@ -2489,7 +2489,16 @@ void func_800D8468(void *arg0, void *arg1) {
     M2C_FIELD(arg0, s32 *, 0x1C) = (s32) M2C_FIELD(arg1, s32 *, 0x1C);
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D84F8);
+void func_800D84F8(MgMat *arg0, s32 arg1, MgMat *arg2) {
+    func_8003BF8C(arg2, arg0);
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(arg0->t);
+    arg0->t[0] = -arg0->t[0];
+    arg0->t[1] = -arg0->t[1];
+    arg0->t[2] = -arg0->t[2];
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D85B0);
 
