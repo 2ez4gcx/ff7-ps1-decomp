@@ -203,5 +203,17 @@ extern MgSVec D_801DB554;
 extern MgSVec D_801F3C38;
 extern M2C_UNK D_801F26A0;
 extern M2C_UNK D_801F2554;
+typedef struct { u32 addr : 24; u32 len : 8; } OdTag;
+typedef struct { u16 sx; u16 sy; s32 otz; s32 dp; s32 flag; s32 w10; } OdG;
+typedef struct { u8 *list; s32 w4; u16 cnt; } OdArg;
+typedef struct { s16 w0; s16 w2; s16 h1; s16 h2; u8 c0; u8 pad9; u8 d0; u8 padB; u16 w12; u16 w14; u16 b1; u16 b2; } OdItem;
+typedef struct { s16 w0; s16 cnt; OdItem it[1]; } OdEnt;
+typedef struct { OdTag tag; s32 rgbc; s16 x0; s16 y0; u8 u0; u8 v0; u16 clut; s16 x1; s16 y1; u8 u1; u8 v1; u16 tpage; s16 x2; s16 y2; u8 u2; u8 v2; u16 pad1E; s16 x3; s16 y3; u8 u3; u8 v3; u16 pad26; } OdPoly;
+extern OdG *D_801F254C;
+s32 func_8003B66C();
+OdPoly *func_801B0E60(MgSVec *arg0, s32 arg1, OdArg *arg2, OdTag *arg3, s32 arg4, OdPoly *arg5);
+OdPoly *func_801B11C8(MgSVec *arg0, MgSVec *arg1, s32 arg2, OdArg *arg3, OdTag *arg4, s32 arg5, OdPoly *arg6);
+typedef struct { u16 sx0; u16 sy0; u16 sx1; u16 sy1; s32 otz; s32 dp; s32 flag; s32 w14; } OdG2;
+extern OdG2 *D_801F2550;
 
 #endif /* MAGIC_ODIN1_DECLS_H */

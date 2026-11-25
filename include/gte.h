@@ -447,4 +447,8 @@
 #define gte_ldsz3d(a, b, c) \
     asm volatile("lwc2 $17,4(%0)\n\tlwc2 $18,4(%1)\n\tlwc2 $19,4(%2)" : : "r"(a), "r"(b), "r"(c))
 
+/* gte_rtps with a "memory" clobber (gte_cmdm): the second projection of a function whose code reloads a global pointer
+ * after it */
+#define gte_rtpsm() gte_cmdm(0x0180001)
+
 #endif /* GTE_H */

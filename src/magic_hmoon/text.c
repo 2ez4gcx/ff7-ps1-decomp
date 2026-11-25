@@ -109,7 +109,95 @@ void func_801B0494(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hmoon/nonmatchings/text", func_801B05E8);
+void func_801B05E8(void *arg0) {
+    HmStrip *s;
+    HmPoly *q;
+    s32 x0;
+    s32 rgb;
+    s32 x1;
+    s32 phase;
+    s32 n;
+    s32 a1;
+    s32 t;
+    s32 ot;
+    s32 cc;
+    u32 m1;
+    u32 m2;
+    s32 col;
+    s32 u;
+    s32 w;
+    s32 cw;
+
+    s = arg0;
+    q = D_801E373C;
+    phase = s->phase;
+    col = s->color;
+    s->a.vx = -0x400;
+    s->a.vy = -0x400;
+    s->b.vy = -0x400;
+    s->c.vx = -0x400;
+    s->a.vz = 0;
+    s->b.vx = 0x400;
+    s->b.vz = 0;
+    s->c.vy = -0x3F8;
+    s->c.vz = 0;
+    s->d.vx = 0x400;
+    s->d.vy = -0x3F8;
+    s->d.vz = 0;
+    rgb = ((col << 16) | (col << 8)) | col;
+    x0 = s->a.vx;
+    x1 = s->b.vx;
+    a1 = 0;
+    if (s->amp != 0) {
+        a1 = (func_80039A74(phase) * s->amp) >> 12;
+        phase += s->step;
+    }
+    cc = 0x2C00FF;
+    cw = 0x78080000;
+    n = 0;
+    s->a.vx += a1;
+    s->b.vx += a1;
+    do {
+        a1 = 0;
+        if (s->amp != 0) {
+            t = func_80039A74(phase);
+            a1 = (t * s->amp) >> 12;
+            phase += s->step;
+        }
+        s->c.vx = x0 + a1;
+        s->d.vx = x1 + a1;
+        s->unk8 = func_8003BD7C(&s->a, &s->b, &s->c, &s->d, &q->xy0, &q->xy1, &q->xy2, &q->xy3, &s->unk4, &s->unkC);
+        s->a.vx = s->c.vx;
+        s->b.vx = s->d.vx;
+        s->a.vy = s->c.vy;
+        s->b.vy = s->d.vy;
+        s->c.vy += 8;
+        s->d.vy += 8;
+        t = n << 8;
+        w = cw + t;
+        u = cc + t;
+        t = 0;
+        q->uv0 = w;
+        q->uv1 = u;
+        q->uv2 = w + 0x100;
+        q->uv3 = u + 0x100;
+        q->col = rgb;
+        ((u8 *)q)[3] = 9;
+        if (s->mode != 0) {
+            ((u8 *)q)[7] = 0x2E;
+        } else {
+            ((u8 *)q)[7] = 0x2C;
+        }
+        n++;
+        m1 = 0xFFFFFF;
+        m2 = 0xFF000000;
+        q->tag = (q->tag & m2) | ((*((u32 *)((((s->unk8 >> 2) << 2) + D_801517C0) + 0x70))) & m1);
+        ot = ((s->unk8 >> 2) << 2) + D_801517C0;
+        *((u32 *)(ot + 0x70)) = ((*((u32 *)(ot + 0x70))) & m2) | (((u32)q) & m1);
+        q++;
+    } while (n < 0xFF);
+    D_801E373C = q;
+}
 
 void func_801B08B4(void) {
     MgSVec rot;

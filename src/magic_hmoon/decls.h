@@ -43,7 +43,7 @@ void func_8003B35C(MgMat *, MgVec *);
 void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
-void func_801B05E8(void *);
+void func_801B05E8(void *arg0);
 extern u8 D_80062D98;
 extern MgMat D_800FA63C;
 extern s32 D_801E374C;
@@ -71,7 +71,10 @@ extern s8 D_801CB71A;
 extern s8 D_801CB719;
 void func_800D4368(void *, s32, s32);
 extern s32 D_801517C0;
-extern s32 D_801E373C;
 s32 func_800D4D90(void *, s32, s32, s32);
+typedef struct { s32 unk0; s32 unk4; s32 unk8; s32 unkC; MgSVec a; MgSVec b; MgSVec c; MgSVec d; s32 amp; s32 step; s32 phase; s32 color; s32 mode; } HmStrip;
+typedef struct { u32 tag; s32 col; s32 xy0; s32 uv0; s32 xy1; s32 uv1; s32 xy2; s32 uv2; s32 xy3; s32 uv3; } HmPoly;
+s32 func_8003BD7C(MgSVec *, MgSVec *, MgSVec *, MgSVec *, s32 *, s32 *, s32 *, s32 *, s32 *, s32 *);
+extern HmPoly *D_801E373C;
 
 #endif /* MAGIC_HMOON_DECLS_H */

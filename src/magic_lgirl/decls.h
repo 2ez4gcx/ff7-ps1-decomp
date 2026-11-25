@@ -46,6 +46,18 @@ extern s32 D_801E8ED8;
 extern s32 D_801E8EDC;
 extern s32 D_801E8EE0;
 extern s32 D_801E8EE4;
-extern M2C_UNK func_801B0270;
+void func_801B0270(void);
+typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
+typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
+typedef struct { s32 head; s32 tail; s32 count; s32 size; s32 last; s32 prev; s32 buf[8]; } MgRing8;
+extern MgSVec D_801E8F44[][8];
+extern u8 D_801D0EA4[];
+MgMat *func_8003BF8C(MgSVec *, MgMat *);
+void func_800D4284(void *, s32, MgMat *);
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
+s32 func_80039B40(s32);
 
 #endif /* MAGIC_LGIRL_DECLS_H */

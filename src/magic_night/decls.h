@@ -77,5 +77,11 @@ void func_800D5138(s32);
 void func_800D51D4(s32);
 void func_800D5774(s32);
 void func_801B0F4C(void);
+typedef struct { u32 addr : 24; u32 len : 8; } MgTag;
+typedef struct { MgTag tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; s32 c3; s32 xy3; } NtPolyG4;
+typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; NtPolyG4 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[0x44]; MgSVec v64; MgSVec v6C; MgSVec v74; MgSVec v7C; u8 pad84[0x50]; s32 wD4; u8 padD8[4]; s32 wDC; u8 bE0; u8 bE1; u8 bE2; } NtColCtx;
+typedef struct { u16 idx[4]; u8 k0; u8 pad9[3]; u8 k1; u8 padD[3]; u8 k2; u8 pad11[3]; u8 k3; u8 pad15[3]; } NtG4Ent;
+void func_8003B69C(u8, u8, u8);
+NtG4Ent *func_801B09B8(NtColCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
 
 #endif /* MAGIC_NIGHT_DECLS_H */

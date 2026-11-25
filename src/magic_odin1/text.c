@@ -43,9 +43,163 @@ void func_801B00F8(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t) {
 
 INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B01C0);
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B0E60);
+OdPoly *func_801B0E60(MgSVec *arg0, s32 arg1, OdArg *arg2, OdTag *arg3, s32 arg4, OdPoly *arg5) {
+    OdPoly *p;
+    OdItem *it;
+    s32 i;
+    s32 n;
+    s32 m;
+    u8 pad[16];
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B11C8);
+    gte_ldv0(arg0);
+    gte_rtps();
+    gte_stsxy_mk(D_801F254C);
+    gte_stdp_m(&D_801F254C->dp);
+    gte_stflg_m(&D_801F254C->flag);
+    gte_stszotz_m(&D_801F254C->otz);
+    if ((D_801F254C->flag & 0x60000) != 0) {
+        return arg5;
+    }
+    D_801F254C->w10 = (func_8003B66C() << 10) / D_801F254C->otz;
+    p = arg5;
+    i = 0;
+    n = arg2->cnt;
+    it = (OdItem *)(arg2->list + 8);
+    for (; i < n; i++) {
+        it = (OdItem *)((u8 *)it + (((OdEnt *)it)->cnt * 20 + 4));
+    }
+    m = ((OdEnt *)it)->cnt;
+    it = (OdItem *)((u8 *)it + 4);
+    for (i = 0; i < m; i++, p++, it++) {
+        OdG *g;
+        s32 x;
+        s16 t;
+        s32 y;
+        s32 c;
+        s32 c2;
+        s32 d;
+        s32 d2;
+        u16 b1;
+        u16 b2;
+
+        *(s32 *)p = 0x09000000;
+        *(s32 *)((u8 *)p + 4) = arg2->w4;
+        p->clut = it->w14;
+        p->tpage = it->w12;
+        g = D_801F254C;
+        x = g->sx + ((((it->h1 * g->w10) >> 9) * arg1) >> 12);
+        b1 = it->b1;
+        b2 = it->b2;
+        t = x;
+        p->x2 = t;
+        p->x0 = t;
+        x += ((((b1 & 0xFF) * g->w10) >> 9) * arg1) >> 12;
+        p->x3 = x;
+        p->x1 = x;
+        y = g->sy + ((((it->h2 * g->w10) >> 9) * arg1) >> 12);
+        t = y;
+        p->y1 = t;
+        p->y0 = t;
+        y += ((((b2 & 0xFF) * g->w10) >> 9) * arg1) >> 12;
+        p->y3 = y;
+        p->y2 = y;
+        c = it->c0;
+        c2 = c + ((s16)b1 >> 8);
+        p->u0 = p->u2 = c;
+        p->u1 = p->u3 = c2;
+        d = it->d0;
+        d2 = d + ((s16)b2 >> 8);
+        p->v0 = p->v1 = d;
+        p->v2 = p->v3 = d2;
+        p->tag.addr = (arg3 + (D_801F254C->otz >> (14 - arg4)))->addr;
+        (arg3 + (D_801F254C->otz >> (14 - arg4)))->addr = (u32)p;
+    }
+    return p;
+}
+
+OdPoly *func_801B11C8(MgSVec *arg0, MgSVec *arg1, s32 arg2, OdArg *arg3, OdTag *arg4, s32 arg5, OdPoly *arg6) {
+    OdPoly *p;
+    OdItem *it;
+    s32 i;
+    s32 n;
+    s32 m;
+    u8 pad[16];
+
+    gte_ldv0(arg0);
+    gte_rtps();
+    gte_stsxy_mk(D_801F2550);
+    gte_stdp_m(&D_801F2550->dp);
+    gte_stflg_m(&D_801F2550->flag);
+    gte_stszotz_m(&D_801F2550->otz);
+    if ((D_801F2550->flag & 0x60000) != 0) {
+        return arg6;
+    }
+    gte_ldv0(arg1);
+    gte_rtpsm();
+    gte_stsxy_m(&D_801F2550->sx1);
+    gte_stdp_m(&D_801F2550->dp);
+    gte_stflg_m(&D_801F2550->flag);
+    gte_stszotz_m(&D_801F2550->otz);
+    if ((D_801F2550->flag & 0x60000) != 0) {
+        return arg6;
+    }
+    D_801F2550->w14 = (func_8003B66C() << 10) / D_801F2550->otz;
+    p = arg6;
+    i = 0;
+    n = arg3->cnt;
+    it = (OdItem *)(arg3->list + 8);
+    for (; i < n; i++) {
+        it = (OdItem *)((u8 *)it + (((OdEnt *)it)->cnt * 20 + 4));
+    }
+    m = ((OdEnt *)it)->cnt;
+    it = (OdItem *)((u8 *)it + 4);
+    for (i = 0; i < m; i++, p++, it++) {
+        OdG2 *g;
+        s32 x;
+        s16 t;
+        s32 y;
+        s32 c;
+        s32 c2;
+        s32 d;
+        s32 d2;
+        u16 b1;
+        u16 b2;
+
+        *(s32 *)p = 0x09000000;
+        *(s32 *)((u8 *)p + 4) = arg3->w4;
+        p->clut = it->w14;
+        p->tpage = it->w12;
+        g = D_801F2550;
+        x = g->sx0 + ((((it->h1 * g->w14) >> 9) * arg2) >> 12);
+        b1 = it->b1;
+        b2 = it->b2;
+        t = x;
+        p->x2 = t;
+        p->x0 = t;
+        x = g->sx1 + (((((it->h1 + (b1 & 0xFF)) * g->w14) >> 9) * arg2) >> 12);
+        p->x3 = x;
+        p->x1 = x;
+        y = g->sy0 + ((((it->h2 * g->w14) >> 9) * arg2) >> 12);
+        p->y0 = y;
+        y += ((((b2 & 0xFF) * g->w14) >> 9) * arg2) >> 12;
+        p->y2 = y;
+        y = g->sy1 + ((((it->h2 * g->w14) >> 9) * arg2) >> 12);
+        p->y1 = y;
+        y += ((((b2 & 0xFF) * g->w14) >> 9) * arg2) >> 12;
+        p->y3 = y;
+        c = it->c0;
+        c2 = c + ((s16)b1 >> 8);
+        p->u0 = p->u2 = c;
+        p->u1 = p->u3 = c2;
+        d = it->d0;
+        d2 = d + ((s16)b2 >> 8);
+        p->v0 = p->v1 = d;
+        p->v2 = p->v3 = d2;
+        p->tag.addr = (arg4 + (D_801F2550->otz >> (14 - arg5)))->addr;
+        (arg4 + (D_801F2550->otz >> (14 - arg5)))->addr = (u32)p;
+    }
+    return p;
+}
 
 s32 func_801B1630(s16 **pp) {
     s32 v;

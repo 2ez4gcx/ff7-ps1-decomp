@@ -279,7 +279,105 @@ HdQuadEnt *func_801B1144(HdQuadCtx *arg0, u8 *arg1, s32 *arg2) {
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B140C);
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B14A0);
+HdG4Ent *func_801B14A0(HdColCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    s32 n;
+    s32 i;
+    s32 sh;
+    HdG4Ent *e;
+    HdPolyG4 *p;
+    s32 t;
+
+    e = (HdG4Ent *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    for (; i < n; i++, e++) {
+        *(MgB8 *)&arg0->v28 = *(MgB8 *)(arg1 + e->idx[0]);
+        *(MgB8 *)&arg0->v30 = *(MgB8 *)(arg1 + e->idx[1]);
+        *(MgB8 *)&arg0->v38 = *(MgB8 *)(arg1 + e->idx[2]);
+        *(MgB8 *)&arg0->v40 = *(MgB8 *)(arg1 + e->idx[3]);
+        gte_ldv3(&arg0->v28, &arg0->v30, &arg0->v38);
+        gte_rtpt();
+        gte_nclip();
+        gte_stopz(&arg0->area);
+        if (arg0->area != 0) {
+            gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+            gte_ldv0c(&arg0->v40);
+            gte_rtps();
+            gte_stsxy(&p->xy3);
+            gte_avsz4();
+            gte_stotz(&arg0->otz);
+            if (e->k0 != 0) {
+                t = 0x1000 - (e->k0 << 5);
+                func_8003B69C(0, 0, 0);
+                gte_ldrgb(&arg0->w138);
+                gte_mtc2(8, t);
+                gte_dpcs();
+                gte_strgb(&arg0->wB0);
+                func_8003B69C(arg0->b13C, arg0->b13D, arg0->b13E);
+                gte_ldrgb(&arg0->wB0);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c0);
+            } else {
+                p->c0 = 0;
+            }
+            if (e->k1 != 0) {
+                t = 0x1000 - (e->k1 << 5);
+                func_8003B69C(0, 0, 0);
+                gte_ldrgb(&arg0->w138);
+                gte_mtc2(8, t);
+                gte_dpcs();
+                gte_strgb(&arg0->wB0);
+                func_8003B69C(arg0->b13C, arg0->b13D, arg0->b13E);
+                gte_ldrgb(&arg0->wB0);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c1);
+            } else {
+                p->c1 = 0;
+            }
+            if (e->k2 != 0) {
+                t = 0x1000 - (e->k2 << 5);
+                func_8003B69C(0, 0, 0);
+                gte_ldrgb(&arg0->w138);
+                gte_mtc2(8, t);
+                gte_dpcs();
+                gte_strgb(&arg0->wB0);
+                func_8003B69C(arg0->b13C, arg0->b13D, arg0->b13E);
+                gte_ldrgb(&arg0->wB0);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c2);
+            } else {
+                p->c2 = 0;
+            }
+            if (e->k3 != 0) {
+                t = 0x1000 - (e->k3 << 5);
+                func_8003B69C(0, 0, 0);
+                gte_ldrgb(&arg0->w138);
+                gte_mtc2(8, t);
+                gte_dpcs();
+                gte_strgb(&arg0->wB0);
+                func_8003B69C(arg0->b13C, arg0->b13D, arg0->b13E);
+                gte_ldrgb(&arg0->wB0);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c3);
+            } else {
+                p->c3 = 0;
+            }
+            p->tag.len = 8;
+            ((u8 *)p)[7] = 0x3A;
+            p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+            (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+            p++;
+        }
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B1940);
 
