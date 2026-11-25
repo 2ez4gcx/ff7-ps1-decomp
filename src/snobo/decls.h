@@ -774,7 +774,7 @@ void func_8003B6DC(s32);
 s32 func_80042B10(s32);
 void func_80043F6C(void *, s32, s32, s32);
 void func_800A1CC0(s32, s32, s32);
-u8 *func_800AAE98(s32, u8 *, u8 *);
+u8 *func_800AAE98(s32 arg0, u8 *arg1, u8 *arg2);
 extern u8 D_800BFEB8[];
 extern s16 D_80102818;
 extern s32 D_8010285C;
@@ -1328,8 +1328,7 @@ typedef struct { u8 pad0[0x36]; s16 f36; u8 pad38[0xC]; SbBlock32 m44; u8 pad64[
 typedef struct { SbBlock32 m; s16 h20; s16 h22; s32 w24; s32 w28; } SbFxRec;
 typedef struct { s32 *unk0; u8 pad4[0x1C]; } SbTbl20;
 typedef struct { u8 pad0[8]; u16 v[1][4]; } SbVtxTab;
-extern SbFxRec D_80101194[];
-extern u16 D_80102954;
+extern s16 D_80102954;
 extern SbTbl20 D_800D37E8[];
 extern s16 D_800BFF1C[];
 void func_800A32E8(SbFxSrc *arg0);
@@ -1339,5 +1338,10 @@ typedef struct { s32 w0; u16 uv0; u16 h6; s32 w8; s32 wC; s32 w10; u16 i0; u16 i
 void func_800AB5A0(SbPolyBuf *arg0, SbPolyIn2 *arg1, s32 arg2);
 typedef struct { s32 w0; s32 w4; s32 w8; s32 wC; u16 i0; u16 i1; u16 i2; u16 pad; } SbPolyIn;
 void func_800AB350(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+void func_800AB154(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+void func_800AB7E4(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+typedef struct { s32 tag; s32 mode; } SbDrMode;
+typedef struct { s32 m[8]; s16 type; s16 f22; s32 f24; s32 f28; } SbEnt;
+extern SbEnt D_80101194[];
 
 #endif /* SNOBO_DECLS_H */

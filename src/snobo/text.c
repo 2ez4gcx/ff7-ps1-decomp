@@ -2608,7 +2608,49 @@ void func_800AAE1C(SbRelocHdr *h) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AAE98);
+u8 *func_800AAE98(s32 arg0, u8 *arg1, u8 *arg2) {
+    SbScr *p;
+    SbEnt *e;
+    s16 *t;
+    s32 i;
+    s32 c;
+
+    p = (SbScr *)0x1F800000;
+    c = 0xFF;
+    gte_SetBackColorN(c);
+    e = D_80101194;
+    i = D_80102954;
+    p->f0 = (u8 *)arg0;
+    *(u8 **)0x1F800008 = arg1;
+    *(u8 **)0x1F8002CC = arg2;
+    i--;
+    if (i == -1) {
+        goto done;
+    }
+    do {
+        t = &e->type;
+    } while (0);
+loop:
+    p->f4 = t[1];
+    p->fC = *(s32 *)(t + 2);
+    p->f10 = *(s32 *)(t + 4);
+    switch (*t) {
+    case 0:
+        gte_SetRotMatrix(e);
+    case 1:
+        gte_SetTransMatrix_m(e);
+    }
+    func_800AAFE8(p);
+    t = (s16 *)((u8 *)t + 0x2C);
+    i--;
+    e++;
+    if (i != -1) {
+        goto loop;
+    }
+done:
+    D_80102954 = 0;
+    return (u8 *)p->f2CC;
+}
 
 void func_800AAFE8(SbScr *arg0) {
     SbRec *rec;
@@ -2644,7 +2686,71 @@ void func_800AAFE8(SbScr *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AB154);
+void func_800AB154(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2) {
+    SbPoly7 *p;
+    s32 *xy;
+    s32 *zz;
+    s32 *cr;
+    s32 *p0;
+    s32 *p1;
+    s32 *p2;
+    s32 i0;
+    s32 i1;
+    s32 i2;
+    s32 o0;
+    s32 o1;
+    s32 o2;
+    s32 n;
+
+    xy = arg0->xy;
+    p = arg0->prim;
+    zz = arg0->z;
+    for (n = arg2 - 1; n != -1;) {
+        cr = &arg0->cross;
+        i0 = arg1->i0;
+        i1 = arg1->i1;
+        i2 = arg1->i2;
+        o0 = i0 * 4;
+        p0 = (s32 *)(o0 + (s32)xy);
+        gte_mv12(*p0);
+        o1 = i1 * 4;
+        p1 = (s32 *)(o1 + (s32)xy);
+        gte_mv13(*p1);
+        o2 = i2 * 4;
+        p2 = (s32 *)(o2 + (s32)xy);
+        gte_mv14(*p2);
+        gte_ldsxy3_k();
+        gte_nclip();
+        gte_stopz_m(cr);
+        do {
+            do {
+                n--;
+            } while (0);
+        } while (0);
+        if (arg0->cross > 0) {
+            gte_mv12(*(s32 *)(o0 + (s32)zz));
+            gte_mv13(*(s32 *)(o1 + (s32)zz));
+            gte_mv14(*(s32 *)(o2 + (s32)zz));
+            gte_ldsz3_t();
+            gte_avsz3();
+            gte_stotz_m(cr);
+            if ((u32)(arg0->cross - 1) < 0xFFF) {
+                p->tag = 0x06000000;
+                p->xy0 = *p0;
+                p->xy1 = *p1;
+                p->xy2 = *p2;
+                p->c0 = arg1->w4;
+                p->c1 = arg1->w8;
+                p->c2 = arg1->wC;
+                ((SbTag *)p)->addr = arg0->ot[arg0->cross].addr;
+                arg0->ot[arg0->cross].addr = (u32)p;
+                p++;
+            }
+        }
+        arg1++;
+    }
+    arg0->prim = p;
+}
 
 void func_800AB350(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2) {
     SbPoly7 *p;
@@ -2790,7 +2896,76 @@ void func_800AB5A0(SbPolyBuf *arg0, SbPolyIn2 *arg1, s32 arg2) {
     arg0->prim = p;
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800AB7E4);
+void func_800AB7E4(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2) {
+    SbPoly7 *p;
+    s32 *xy;
+    s32 *zz;
+    s32 *cr;
+    s32 *p0;
+    s32 *p1;
+    s32 *p2;
+    s32 i0;
+    s32 i1;
+    s32 i2;
+    s32 o0;
+    s32 o1;
+    s32 o2;
+    s32 mode;
+
+    xy = arg0->xy;
+    zz = arg0->z;
+    p = arg0->prim;
+    mode = ((arg0->f10 & 3) << 5) | 0xE1000200;
+    arg2--;
+    while (arg2 != -1) {
+        cr = &arg0->cross;
+        i0 = arg1->i0;
+        i1 = arg1->i1;
+        i2 = arg1->i2;
+        o0 = i0 * 4;
+        p0 = (s32 *)(o0 + (s32)xy);
+        gte_mv12(*p0);
+        o1 = i1 * 4;
+        p1 = (s32 *)(o1 + (s32)xy);
+        gte_mv13(*p1);
+        o2 = i2 * 4;
+        p2 = (s32 *)(o2 + (s32)xy);
+        gte_mv14(*p2);
+        gte_ldsxy3_k();
+        gte_nclip();
+        gte_stopz_m(cr);
+        if (arg0->cross > 0) {
+            gte_mv12(*(s32 *)(o0 + (s32)zz));
+            gte_mv13(*(s32 *)(o1 + (s32)zz));
+            gte_mv14(*(s32 *)(o2 + (s32)zz));
+            gte_ldsz3_t();
+            gte_avsz3();
+            gte_stotz_m(cr);
+            if ((u32)(arg0->cross - 1) < 0xFFF) {
+                p->tag = 0x06000000;
+                p->xy0 = *p0;
+                p->xy1 = *p1;
+                p->xy2 = *p2;
+                p->c0 = arg1->w4 | 0x02000000;
+                p->c1 = arg1->w8;
+                p->c2 = arg1->wC;
+                ((SbTag *)p)->addr = arg0->ot[arg0->cross].addr;
+                arg0->ot[arg0->cross].addr = (u32)p;
+                p++;
+                do {
+                    ((SbDrMode *)p)->tag = 0x01000000;
+                    ((SbDrMode *)p)->mode = mode;
+                    ((SbTag *)p)->addr = arg0->ot[arg0->cross].addr;
+                    arg0->ot[arg0->cross].addr = (u32)p;
+                    p = (SbPoly7 *)((u8 *)p + 8);
+                } while (0);
+            }
+        }
+        arg2--;
+        arg1++;
+    }
+    arg0->prim = p;
+}
 
 void func_800ABA64(void *arg0) {
     void (*var_v0)(void *);

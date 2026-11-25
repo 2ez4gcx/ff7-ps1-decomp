@@ -965,7 +965,7 @@ M2C_UNK func_8003B6DC(M2C_UNK);
 M2C_UNK func_80043D3C(M2C_UNK);
 M2C_UNK func_80043DD8(M2C_UNK);
 M2C_UNK func_80043F6C(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-u8 *func_800AD00C(M2C_UNK, u8 *, u8 *);
+u8 *func_800AD00C(s32 arg0, u8 *arg1, u8 *arg2);
 extern u8 D_8009D507;
 extern M2C_UNK D_800B83E8;
 extern s16 D_80103984;
@@ -1097,5 +1097,9 @@ typedef struct { s32 w0; u16 uv0; u16 h6; s32 w8; s32 wC; s32 w10; u16 i0; u16 i
 void func_800AD714(SbPolyBuf *arg0, SbPolyIn2 *arg1, s32 arg2);
 typedef struct { s32 w0; s32 w4; s32 w8; s32 wC; u16 i0; u16 i1; u16 i2; u16 pad; } SbPolyIn;
 void func_800AD4C4(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+void func_800AD2C8(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+void func_800AD958(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
+typedef struct { s32 tag; s32 mode; } SbDrMode;
+typedef struct { s32 m[8]; s16 type; s16 f22; s32 f24; s32 f28; } SbEnt;
 
 #endif /* SNOBO2_DECLS_H */

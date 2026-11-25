@@ -404,5 +404,7 @@ extern u8 D_8010BB9A[];
 extern u8 D_8010BB9C[];
 s32 func_800B5678(CondorActor *arg0);
 s16 func_800B4EFC(CondorActor *);
+void func_800A1A80(void);
+extern s16 D_8012C498;
 
 #endif /* CONDOR_DECLS_H */
