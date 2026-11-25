@@ -29,7 +29,7 @@ s32 func_8001CB48();
 s32 func_80021044(void *, void *);
 s32 func_8004418C(void *, s32);
 void func_801D0C1C(s32 arg0);
-void func_801D0E94(s32);
+void func_801D0E94(s32 arg0);
 extern u8 D_80077F64[];
 extern u8 *D_801D2100;
 extern u8 D_801D2104[];
@@ -57,5 +57,16 @@ extern s32 D_801DEA60;
 extern s32 D_801DEA6C;
 extern s32 D_801DEA70;
 
-s32 func_801D1A6C(s32 arg0);
+s32 func_801D1A6C(s32 arg0);extern u16 D_80062D7C;
+extern u8 D_801D1CFC[];
+extern u8 D_801D1D94[];
+extern u8 D_801D2074[];
+extern u8 D_801D2084[];
+extern s16 D_801D208E[];
+extern s16 D_801D2094;
+extern s16 D_801D2096;
+extern s16 D_801D209C;
+extern s16 D_801D209E;
+extern s8 D_801D2116[];
+
 #endif /* FORMMENU_DECLS_H */
