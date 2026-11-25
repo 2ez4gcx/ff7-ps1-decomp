@@ -1966,7 +1966,86 @@ void func_801B7610(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lasboss3/nonmatchings/text", func_801B7798);
+void func_801B7798(void) {
+    MgTask *p;
+    LbFT4 *q;
+    MgSVec rot;
+    u8 pad[0x28];
+    MgMat m;
+    s32 dp;
+    s32 flag;
+    s32 otz;
+    s32 clut;
+    s32 tp;
+    s32 x;
+    s32 y;
+    s32 u;
+    s16 i;
+    s16 k;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    tp = func_8004656C(0, 1, 0x2C0, 0x100);
+    clut = func_80046634(0x80, 0x1E1);
+    for (i = 0; i < 4; i++) {
+        rot.vx = 0;
+        rot.vy = (i << 16) >> 6;
+        rot.vz = 0;
+        func_8003BF8C(&rot, &m);
+        func_8003A79C(&D_800FA63C, &m, &m);
+        m.t[2] = 0;
+        m.t[1] = 0;
+        m.t[0] = 0;
+        func_8003B48C(&m);
+        func_8003B51C(&m);
+        for (k = 0; k < 200; k++) {
+            q = (LbFT4 *)D_80163C74;
+            gte_mv12(&D_801BBEE8[k]);
+            gte_ldv0_t();
+            gte_nop();
+            gte_nop();
+            gte_cmd0(0x0180001);
+            gte_mv12(&q->x0);
+            gte_stsxy_t();
+            gte_mv12(&dp);
+            gte_stdp_t();
+            gte_mv12(&flag);
+            gte_cfc2_t5(31);
+            gte_nop();
+            gte_sw_t5();
+            gte_mv12(&otz);
+            gte_mfc2_t5(19);
+            gte_nop();
+            gte_sra2_t5();
+            gte_sw_t5();
+            if (otz > 0 && (flag & 0x60000) == 0) {
+                q->rgbc = 0x2E808080;
+                q->tag = 0x09000000;
+                y = (u16)q->y0;
+                q->clut = clut + (((u16)D_801BC528[k] & 0xF0) << 2);
+                x = (u16)q->x0;
+                q->tpage = tp;
+                u = ((u16)D_801BC528[k] & 0xF) << 4;
+                q->v0 = q->v1 = 0;
+                q->v2 = q->v3 = 0x10;
+                q->u0 = q->u2 = u;
+                q->u1 = q->u3 = u + 0x10;
+                q->x0 = q->x2 = x - 8;
+                q->x1 = q->x3 = x + 8;
+                q->y0 = q->y1 = y - 8;
+                q->y2 = q->y3 = y + 8;
+                ((LbTag *)q)->addr = ((LbTag *)D_801517C0 + (otz >> 13) + 0x101C)->addr;
+                ((LbTag *)D_801517C0 + (otz >> 13) + 0x101C)->addr = (u32)q;
+                D_80163C74 = (s32)(q + 1);
+            }
+        }
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (D_801BBD74 == 0) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B7A94(void) {
     MgTask *p;

@@ -251,7 +251,34 @@ void func_8003FA9C(s32 arg0) {
     D_800518D0 = arg0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib2", func_8003FAAC);
+void func_8003FAAC(void) {
+    u8 mode;
+    s32 ev;
+    volatile u8 *p;
+    volatile u8 *w;
+
+    mode = *D_800518EC & 3;
+    p = &D_80051905;
+    w = &D_80051904;
+    while (1) {
+        ev = func_8003E454();
+        if (ev == 0) {
+            break;
+        }
+        if (ev & 4) {
+            if (D_8005162C != 0) {
+                ((M2C_UNK (*)(u8, M2C_UNK *)) D_8005162C)(*p, &D_8006E128);
+            }
+        }
+        if (ev & 2) {
+            if (D_80051628 != 0) {
+                w = &D_80051904;
+                ((M2C_UNK (*)(u8, M2C_UNK *)) D_80051628)(*w, &D_8006E120);
+            }
+        }
+    }
+    *D_800518EC = mode;
+}
 
 s32 func_8003FB8C(MainCdlFile *arg0, char *arg1) {
     char buf[0x20];

@@ -365,4 +365,33 @@
         asm volatile("swc2 $12,0($12)\n\tswc2 $13,0($13)\n\tswc2 $14,0($14)" : : : "memory"); \
     }
 
+/* the sequences of a loop whose pointer is copied to t4 by gte_mv12, one asm statement per group of instructions the
+ * way the game's own macros expand (the loop optimizer counts each statement as an insn: a loop of 97 insns hoists
+ * every constant it can, one of 105 or more only those with enough uses): the vector 0 load; a nop; the screen XY
+ * (data register 14), IR0 (data register 8) to a word through t4; cfc2 / mfc2 into t5 ($13) with their clobber, the
+ * sra by 2 of t5 and its store through t4 */
+#define gte_nop() asm volatile("nop")
+#define gte_ldv0_t() asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)")
+#define gte_stsxy_t() asm volatile("swc2 $14,0($12)" : : : "memory")
+#define gte_stdp_t() asm volatile("swc2 $8,0($12)" : : : "memory")
+#define gte_cfc2_t5(n) asm volatile("cfc2 $13,$" #n : : : "$13")
+#define gte_mfc2_t5(n) asm volatile("mfc2 $13,$" #n : : : "$13")
+#define gte_sra2_t5() asm volatile("sra $13,$13,2" : : : "$13")
+#define gte_sw_t5() asm volatile("sw $13,0($12)" : : : "memory")
+
+/* OTZ (data register 7) to a word through t4, with the pointer copied to t4 by gte_mv12 first (gte_stotz_m in two
+ * statements: the pointer's last use comes one insn earlier, which the register allocator's priorities see) */
+#define gte_stotz_t() asm volatile("swc2 $7,0($12)" : : : "memory")
+
+/* gte_ldv3_m with a "memory" clobber on each pointer move (a pointer expression that reads a global is loaded again
+ * for each of the three moves, like gte_stsxy3_mm) */
+#define gte_ldv3_mm(a, b, c) \
+    { \
+        asm volatile("move $12,%0" : : "r"(a) : "$12", "memory"); \
+        asm volatile("move $13,%0" : : "r"(b) : "$13", "memory"); \
+        asm volatile("move $14,%0" : : "r"(c) : "$14", "memory"); \
+        asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t" \
+                     "lwc2 $5,4($14)"); \
+    }
+
 #endif /* GTE_H */

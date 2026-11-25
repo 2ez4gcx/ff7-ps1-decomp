@@ -78,7 +78,55 @@ INCLUDE_RODATA("../asm/us/main/nonmatchings/lib", D_800104B4);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_8003642C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_800366C0);
+s32 func_800366C0(u16 *p0, u32 arg1) {
+    u16 *arg0;
+    u32 n;
+    u32 i;
+    s32 j;
+    u16 saved;
+    u16 t;
+    u16 r;
+
+    t = D_8004AB0C;
+    saved = D_8004AAF4[0xD7] & 0x7FF;
+    D_8004AAF4[0xD3] = t;
+    func_80036F78();
+    arg0 = p0;
+    while (arg1 != 0) {
+        n = arg1;
+        if (arg1 > 0x40) {
+            n = 0x40;
+        }
+        for (j = 0; j < (s32) n; j += 2) {
+            D_8004AAF4[0xD4] = *arg0++;
+        }
+        r = D_8004AAF4[0xD5];
+        r = (r & 0xFFCF) | 0x10;
+        D_8004AAF4[0xD5] = r;
+        func_80036F78();
+        i = 0;
+        while (D_8004AAF4[0xD7] & 0x400) {
+            i++;
+            if (i > 0xF00) {
+                func_80042DC8(D_800104B4, "wait (wrdy H -> L)");
+                break;
+            }
+        }
+        func_80036F78();
+        arg1 -= n;
+        func_80036F78();
+    }
+    r = D_8004AAF4[0xD5];
+    r &= 0xFFCF;
+    D_8004AAF4[0xD5] = r;
+    i = 0;
+    while ((D_8004AAF4[0xD7] & 0x7FF) != saved) {
+        i++;
+        if (i > 0xF00) {
+            return func_80042DC8(D_800104B4, "wait (dmaf clear/W)");
+        }
+    }
+}
 
 void func_8003688C(void) {
     u32 i;
@@ -375,7 +423,32 @@ s32 func_80037BE0(s32 arg0, s32 arg1) {
     return var_s0;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_80037C40);
+s32 func_80037C40(s32 arg0) {
+    u16 t;
+
+    switch (arg0) {
+    case 0:
+        D_8004A694 = 0;
+        t = D_8004AAF4[0xD5];
+        t &= 0xFF7F;
+        D_8004AAF4[0xD5] = t;
+        break;
+    case 1:
+        if (D_8004A698 != arg0 && func_80037D90(D_8004A69C) != 0) {
+            D_8004A694 = 0;
+            t = D_8004AAF4[0xD5];
+            t &= 0xFF7F;
+            D_8004AAF4[0xD5] = t;
+        } else {
+            D_8004A694 = arg0;
+            t = D_8004AAF4[0xD5];
+            t |= 0x80;
+            D_8004AAF4[0xD5] = t;
+        }
+        break;
+    }
+    return D_8004A694;
+}
 
 s32 func_80037D10(u32 arg0) {
     MainWords *p;
@@ -1060,7 +1133,60 @@ void func_80039BE0(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib", func_80039CEC);
+s32 func_80039CEC(s32 arg0) {
+    s32 x[8];
+    s32 y[8];
+    s32 i;
+    s32 a;
+    s32 b;
+    s32 c;
+    s32 t;
+
+    x[1] = arg0 + 0x5D50AD;
+    y[1] = arg0 - 0x5D50AD;
+    for (i = 1; i < 7; i++) {
+        if (i != 4) {
+            b = y[i];
+            if (b >= 0) {
+                x[i + 1] = x[i] - (y[i] >> i);
+                y[i + 1] = y[i] - (x[i] >> i);
+            } else {
+                x[i + 1] = (y[i] >> i) + x[i];
+                y[i + 1] = (x[i] >> i) + y[i];
+            }
+        } else {
+            b = y[4];
+            if (b >= 0) {
+                a = x[4] - (b >> 4);
+                t = x[4] >> 4;
+                c = b - t;
+                x[4] = a;
+                y[4] = c;
+                if (c >= 0) {
+                    x[5] = a - (c >> 4);
+                    y[5] = c - (a >> 4);
+                } else {
+                    x[5] = (c >> 4) + a;
+                    y[5] = (a >> 4) + c;
+                }
+            } else {
+                a = (b >> 4) + x[4];
+                t = x[4] >> 4;
+                c = t + b;
+                x[4] = a;
+                y[4] = c;
+                if (c >= 0) {
+                    x[5] = a - (c >> 4);
+                    y[5] = c - (a >> 4);
+                } else {
+                    x[5] = (c >> 4) + a;
+                    y[5] = (a >> 4) + c;
+                }
+            }
+        }
+    }
+    return x[7];
+}
 
 s32 func_80039E40(s32 arg0) {
     s32 t;

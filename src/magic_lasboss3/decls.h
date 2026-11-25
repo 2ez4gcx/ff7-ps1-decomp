@@ -340,5 +340,6 @@ typedef struct { u32 tag; s32 rgbc; s16 x0; s16 y0; u8 u0; u8 v0; u16 clut; s16 
 extern u8 D_801BBC90[];
 extern u8 D_801BBC94[];
 extern MgSVec D_801BBC88;
+void func_801B7798(void);
 
 #endif /* MAGIC_LASBOSS3_DECLS_H */
