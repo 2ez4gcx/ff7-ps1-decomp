@@ -8,7 +8,7 @@ void func_801B1340();
 extern M2C_UNK D_801B2F10;
 void func_801B1198(void);
 M2C_UNK func_800BBEAC(M2C_UNK *);
-extern M2C_UNK func_801B10B4;
+void func_801B10B4(void);
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);

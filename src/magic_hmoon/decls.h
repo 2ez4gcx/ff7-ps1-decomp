@@ -65,5 +65,13 @@ extern MgByte D_800F5B70;
 extern MgByte D_800F5B71;
 extern MgByte D_800F5B72;
 extern MgHalf D_800F5B74;
+extern u16 D_801CB71C[];
+extern s8 D_801CB718;
+extern s8 D_801CB71A;
+extern s8 D_801CB719;
+void func_800D4368(void *, s32, s32);
+extern s32 D_801517C0;
+extern s32 D_801E373C;
+s32 func_800D4D90(void *, s32, s32, s32);
 
 #endif /* MAGIC_HMOON_DECLS_H */

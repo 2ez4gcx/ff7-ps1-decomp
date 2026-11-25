@@ -341,7 +341,26 @@ void func_801B0FA4(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_joker1/nonmatchings/text", func_801B10B4);
+void func_801B10B4(void) {
+    s16 *dst;
+    MgTask *p;
+    MgTask *base;
+    s32 id;
+    s32 n;
+    u8 (*tbl)[][0xB9C];
+
+    base = D_80162978;
+    D_80162978[D_8015169C].unk0 = -1;
+    n = func_800BBEAC((M2C_UNK *)func_801B0FA4);
+    p = base + n;
+    tbl = &D_80151A46;
+    id = D_80151919[D_801CF9A8][0];
+    dst = &p->unk4;
+    do {
+        func_800D3994(D_801CF9A8, id, dst);
+    } while (0);
+    p->unkC = *((u16 *)(*tbl)[D_801CF9A8]);
+}
 
 void func_801B1198(void) {
     func_800BBEAC(&func_801B10B4);

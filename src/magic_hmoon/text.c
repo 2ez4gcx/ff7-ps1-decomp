@@ -75,7 +75,39 @@ s16 func_801B03B0(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_hmoon/nonmatchings/text", func_801B0494);
+void func_801B0494(void) {
+    MgTask *p;
+    s32 t;
+    u8 c;
+    s16 v;
+    s16 *q;
+    s8 *frame;
+
+    p = &D_80162978[D_8015169C];
+    D_801CB71C[0] = p->unk2;
+    t = p->unk2;
+    if (t >= 9) {
+        c = 0x60 - ((t - 9) * 0x10);
+    } else {
+        c = 0x60;
+    }
+    frame = &D_801CB718;
+    q = &p->unk14;
+    *frame = (D_801CB719 = (D_801CB71A = c));
+    v = (u16)(*q);
+    func_800D4368(&p->unk4, v, -(v >> 3));
+    D_801E373C = func_800D4D90(frame - 4, D_801517C0 + 0x70, 0xC, D_801E373C);
+    if (p->unk2 >= 0xF) {
+        p->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk8 += p->unk10;
+        p->unk2++;
+        p->unkC -= ((s16)p->unkC) >> 3;
+        p->unk10 -= ((s16)p->unk10) >> 3;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_hmoon/nonmatchings/text", func_801B05E8);
 
