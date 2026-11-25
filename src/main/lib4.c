@@ -565,6 +565,51 @@ void func_80045A00(s32 arg0, s32 arg1, s32 arg2) {
     func_80045A24(arg0, arg1, 0, arg2);
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80045A24);
+s32 func_80045A24(s32 (*arg0)(), s32 *arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    s32 *src;
+    s32 t;
+    u8 *base;
+
+    func_800462B0();
+    while (((D_80062D04 + 1) & 0x3F) == D_80062D08) {
+        if (func_800462E4() != 0) {
+            return -1;
+        }
+        func_80045D18();
+    }
+    t = ((s32 (*)(s32)) func_8003D23C)(0);
+    *(volatile s32 *) &D_80062C08 = 1;
+    D_80062D0C = t;
+    if (D_80062C01 == 0 || (D_80062D04 == D_80062D08 && !(*D_80062CE0 & 0x01000000) && D_80062C0C == 0)) {
+        do {
+        } while (!(*D_80062CD4 & 0x04000000));
+        arg0(arg1, arg3);
+        *(volatile s32 *) &D_80062CF4 = (s32) arg0;
+        D_80062CF8 = (s32) arg1;
+        D_80062CFC = arg3;
+        ((s32 (*)(s32)) func_8003D23C)(D_80062D0C);
+        return 0;
+    }
+    func_8003D120(2, (s32) func_80045D18);
+    if (arg2 != 0) {
+        i = 0;
+        base = (u8 *) D_8009AD4C;
+        src = arg1;
+        while (i < arg2 / 4) {
+            *(volatile s32 *) (base + D_80062D04 * 0x60 + i * 4) = *src++;
+            i++;
+        }
+        D_8009AD44[D_80062D04 * 0x18] = (s32) ((u8 *) D_8009AD4C + D_80062D04 * 0x60);
+    } else {
+        D_8009AD44[D_80062D04 * 0x18] = (s32) arg1;
+    }
+    D_8009AD48[D_80062D00.idx * 0x18] = arg3;
+    D_8009AD40[D_80062D00.idx * 0x18] = (s32) arg0;
+    D_80062D04 = (D_80062D04 + 1) & 0x3F;
+    ((s32 (*)(s32)) func_8003D23C)(((s32 *)&D_80062D04)[2]);
+    func_80045D18();
+    return (D_80062D04 - D_80062D08) & 0x3F;
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80045D18);
