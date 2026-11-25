@@ -192,7 +192,13 @@ the entry points of different overlays loaded at the same address stay apart onl
   them one after the other.
 - `tools/split_file.py TARGET FILE NEW ADDRESS [RODATA]` splits a C file where the game's
   source files change (a different compiler, or a variable declared otherwise), and
-  `tools/find_units.py` lists the rare functions followed by a file's padding `nop`.
+  `tools/find_units.py` lists the rare functions followed by a file's padding `nop`. Such a
+  function cannot be put as splat cut it (10 instructions where C gives 9, and the
+  linker does not add the padding): split the file where the next one starts, give the
+  padding `nop` a symbol of its own in `config/symbols.us.TARGET.txt` (`func_ADDRESS =
+  ADDRESS; // type:func`), write the function in C and put `INCLUDE_ASM(.., func_ADDRESS);`
+  right after it, and run `tools/build.py TARGET --split` (battle func_800D3520 and
+  func_800D3544).
 - When done: `tools/build.py` must still match.
 
 What GCC 2.6.3 needs to produce the game's code (learned from functions that match):

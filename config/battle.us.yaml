@@ -67,6 +67,7 @@ segments:
       - [0x3828, c, text1c]
       - [0x130E4, c, text2]
       - [0x27C4C, c, text2b]
+      - [0x33548, c, text2b2]
       - [0x393E4, c, text2c]
       - [0x44C08, c, text2d]
       - [0x45F30, c, text3]

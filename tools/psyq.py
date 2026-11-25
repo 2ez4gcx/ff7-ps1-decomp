@@ -108,6 +108,7 @@ FILE_OPTIONS = {
     # text2c.c begins one of the game's files, built by GCC 2.7.2: func_800DEB18
     # ends `lw ra; sh zero, 8(v1); jr ra; addiu sp` (and all its other
     # functions in C match either way).
+    'battle/text2b2.c': {'unit_start': True},
     'battle/text2c.c': {'unit_start': True, 'gcc': '2.7.2'},
     'battle/text3.c': {'gcc': '2.7.2'},
     # FIELD.BIN's files, found where its jump tables change from 8-byte to

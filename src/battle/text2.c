@@ -18,6 +18,7 @@ extern u16 D_800F9F46[];
 extern u16 D_800F9F48[];
 void func_800B54B8(u8 arg0);
 extern u16 D_800F7DE8[];
+void func_800D3520(s32, s16);
 
 void func_800B30E4(void) {
     s32 i;

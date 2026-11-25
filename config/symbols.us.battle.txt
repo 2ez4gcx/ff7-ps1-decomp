@@ -10,3 +10,5 @@ D_800A0DB8 = 0x800A0DB8; // force_not_migration:True
 D_800A0D98 = 0x800A0D98; // force_not_migration:True
 D_800A0398 = 0x800A0398; // force_not_migration:True
 D_800A0278 = 0x800A0278; // force_not_migration:True
+// The nop that pads the end of this source file to 8 bytes (PSY-Q's linker starts each object on 8 bytes)
+func_800D3544 = 0x800D3544; // type:func

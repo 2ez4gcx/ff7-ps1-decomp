@@ -830,7 +830,6 @@ void func_800AE764(s32 arg0, s32 arg1, s32 arg2);
 extern s16 D_800F83B2;
 extern u8 D_800F83EB[][0x68];
 void func_800BB430(s16 arg0, s32 arg1);
-void func_800D3520(s32, s16);
 extern struct { s16 n; u8 pad[0x2D]; u8 b[0x39]; s32 p[(0xB9C - 0x68) / 4]; } D_801518F4[];
 void func_800BC754(void);
 extern volatile struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } D_80163628[];
