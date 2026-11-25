@@ -643,7 +643,109 @@ loop:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B2320);
+void func_801B2320(void) {
+    MgTask *p;
+    Wep4Part *base;
+    Wep4Part *e;
+    u16 *frame;
+    u16 u;
+    s32 i;
+    s32 j;
+    s32 n;
+    s32 k;
+    s32 r;
+    s32 t;
+    s32 mm;
+    s32 yy;
+
+    i = 0;
+    p = &D_80162978[D_8015169C];
+    frame = &D_801D4F44;
+    base = D_801ECF8C[p->unk1C];
+    do {
+        e = &base[i];
+        if (e->f0 != 0) {
+            *frame = e->f2;
+            u = e->f16;
+            func_800D4368(&e->f4, (s16)u, -((s16)u >> 3));
+            D_801ECF6C = func_800D4D90((u8 *)frame - 8, D_801517C0 + 0x70, 0xC, D_801ECF6C);
+            if (D_80062D98 == 0) {
+                e->f4 += e->fC;
+                e->f6 += e->fE;
+                e->f8 += e->f10;
+                e->fC -= e->fC >> 4;
+                e->fE -= e->fE >> 4;
+                e->f10 -= e->f10 >> 4;
+                if (e->f2 >= 0xF) {
+                    e->f0 = 0;
+                }
+                e->f2++;
+            }
+        }
+        i++;
+    } while (i < 0x64);
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= 0x5B) {
+            p->unk0 = -1;
+        }
+        t = (u16)p->unk2;
+        if ((u32)(t - 1) < 0x4C) {
+            n = (s16)t >> 3;
+            mm = 0x1900;
+            if (n == 0) {
+                n = 1;
+            }
+            if (n >= 3) {
+                n = 3;
+            }
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < 0x64; j++) {
+                    if (base[j].f0 == 0) {
+                        break;
+                    }
+                }
+                if (j >= 0x64) {
+                    break;
+                }
+                e = (Wep4Part *)(j * 24 + (s32)base);
+                e->f0 = 1;
+                e->f2 = 0;
+                e->f4 = func_80042DA8() % 2600 + 0x190;
+                e->f6 = D_801ECF86.x - 0x190;
+                e->f8 = (yy = D_801ECF86.y - 0x96) + func_80042DA8() % 300;
+                e->fC = func_80042DA8() % 55 + 0x1E;
+                e->fE = func_80042DA8() % 80 + 0xA0;
+                e->f10 = -(func_80042DA8() % 60 + 0x14);
+                r = func_80042DA8();
+                k = r - r / 0x800 * 0x800;
+                e->f16 = (mm * (k + 0xB00)) >> 12;
+            }
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < 0x64; j++) {
+                    if (base[j].f0 == 0) {
+                        break;
+                    }
+                }
+                if (j >= 0x64) {
+                    break;
+                }
+                e = (Wep4Part *)(j * 24 + (s32)base);
+                e->f0 = 1;
+                e->f2 = 0;
+                e->f4 = -(func_80042DA8() % 2600 + 0x190);
+                e->f6 = D_801ECF86.x - 0x190;
+                e->f8 = D_801ECF86.y + 0x96 - func_80042DA8() % 300;
+                e->fC = -(func_80042DA8() % 55 + 0x1E);
+                e->fE = func_80042DA8() % 80 + 0xA0;
+                e->f10 = func_80042DA8() % 60 + 0x14;
+                r = func_80042DA8();
+                k = r - r / 0x800 * 0x800;
+                e->f16 = (mm * (k + 0xB00)) >> 12;
+            }
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B2918(void) {
     MgTask *p;

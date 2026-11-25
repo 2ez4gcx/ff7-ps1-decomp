@@ -49,7 +49,6 @@ void func_801B164C(void);
 extern u8 D_801D4F24[];
 extern u16 D_801D4F2C;
 extern u16 D_801ECF88;
-extern u8 D_801ECF8C[];
 void func_800D3994(s32, s32, void *);
 void func_800D4284(void *, s32, MgMat *);
 s32 func_80042DA8(void);
@@ -64,5 +63,11 @@ typedef struct { WpTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 x
 typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } WpTask;
 void func_801B1044(void);
 void func_801B1348(void);
+void func_801B2320(void);
+typedef struct { s16 f0; s16 f2; s16 f4; s16 f6; s16 f8; s16 fA; s16 fC; s16 fE; s16 f10; s16 f12; s16 f14; s16 f16; } Wep4Part;
+typedef struct { u16 x; u16 y; } Wep4Pos;
+extern u16 D_801D4F44;
+extern Wep4Pos D_801ECF86;
+extern Wep4Part D_801ECF8C[][100];
 
 #endif /* MAGIC_WEP4_DECLS_H */

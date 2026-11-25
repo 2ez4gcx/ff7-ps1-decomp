@@ -421,4 +421,18 @@
         asm volatile("cfc2 $13,$31\n\tnop\n\tsw $13,0($12)" : : : "$13", "$14", "$15", "memory"); \
     }
 
+/* gte_ldv3_mm with t7 ($15) listed as clobbered by the load (a loop that leaves t7 unused) */
+#define gte_ldv3_mmk(a, b, c) \
+    { \
+        asm volatile("move $12,%0" : : "r"(a) : "$12", "memory"); \
+        asm volatile("move $13,%0" : : "r"(b) : "$13", "memory"); \
+        asm volatile("move $14,%0" : : "r"(c) : "$14", "memory"); \
+        asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t" \
+                     "lwc2 $5,4($14)" : : : "$15"); \
+    }
+
+/* gte_stsxy_m with t5 to t7 ($13 to $15) listed as clobbered too (code that leaves them to the macros) */
+#define gte_stsxy_mk(p) \
+    asm volatile("move $12,%0\n\tswc2 $14,0($12)" : : "r"(p) : "$12", "$13", "$14", "$15", "memory")
+
 #endif /* GTE_H */

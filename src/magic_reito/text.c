@@ -7,7 +7,202 @@ void func_801B0000(void) {
 
 INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0020);
 
-INCLUDE_ASM("../asm/us/magic_reito/nonmatchings/text", func_801B0A48);
+u8 *func_801B0A48(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3) {
+    u8 *pk;
+    s32 flg;
+    s32 opz;
+    s32 otz;
+    u8 *base;
+    s16 *p;
+    u8 *va;
+    u8 *vb;
+    u8 *vc;
+    u32 *ot;
+    u16 tpage;
+    s32 n;
+    s32 i;
+
+    base = arg0->data + 4;
+    p = (s16 *)(base + *(u32 *)arg0->data);
+    n = *p;
+    p++;
+    tpage = arg0->fC | (*(u16 *)p & 0x19F);
+    p++;
+    va = base + p[0];
+    vb = base + p[1];
+    vc = base + p[2];
+    pk = arg3;
+    for (i = 0; i < n; p += 8, i++) {
+        FrgFt3 *r;
+
+        r = (FrgFt3 *)p;
+        gte_ldv3(va, vb, vc);
+        gte_rtpt();
+        va = base + p[8];
+        vb = base + p[9];
+        vc = base + p[10];
+        gte_stflg(&flg);
+        gte_nclip();
+        if ((flg & 0x60000) == 0) {
+            gte_stopz(&opz);
+            if (opz > 0) {
+                gte_avsz3();
+                *(u32 *)pk = 0x07000000;
+                gte_stotz(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+                ((FrgTag *)ot)->addr = (u32)pk;
+                gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+                *(u32 *)(pk + 0xC) = r->uv0;
+                *(u16 *)(pk + 0x14) = r->uv1;
+                *(u16 *)(pk + 0x1C) = r->uv2;
+                *(u16 *)(pk + 0x16) = tpage;
+                if (arg0->f4 & 0x80) {
+                    u32 w = r->col << 16;
+                    u32 x = (r->col << 8) | 0x24000000;
+                    *(u32 *)(pk + 4) = w | x | r->col;
+                } else {
+                    *(u32 *)(pk + 4) = 0x24808080;
+                }
+                pk += 0x20;
+            }
+        }
+    }
+    n = *p;
+    p += 2;
+    va = base + p[0];
+    vb = base + p[1];
+    vc = base + p[2];
+    for (i = 0; i < n; p += 10, i++) {
+        FrgFt4 *r;
+
+        r = (FrgFt4 *)p;
+        gte_ldv3(va, vb, vc);
+        gte_rtpt();
+        va = base + p[10];
+        vb = base + p[11];
+        vc = base + p[12];
+        gte_stflg(&flg);
+        gte_nclip();
+        if ((flg & 0x60000) == 0) {
+            gte_stopz(&opz);
+            if (opz >= 0) {
+                u32 tg;
+
+                tg = 0x09000000;
+                gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+                gte_ldv0c(base + r->vi[3]);
+                gte_rtps();
+                gte_stsxy(pk + 0x20);
+                gte_avsz4();
+                gte_stotz(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                *(u32 *)pk = tg;
+                ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+                ((FrgTag *)ot)->addr = (u32)pk;
+                *(u32 *)(pk + 0xC) = r->uv0;
+                *(u16 *)(pk + 0x14) = r->uv1;
+                *(u16 *)(pk + 0x1C) = r->uv2;
+                *(u16 *)(pk + 0x24) = r->uv3;
+                *(u16 *)(pk + 0x16) = tpage;
+                if (arg0->f4 & 0x80) {
+                    u32 w = r->col << 16;
+                    u32 x = (r->col << 8) | 0x2C000000;
+                    *(u32 *)(pk + 4) = w | x | r->col;
+                } else {
+                    *(u32 *)(pk + 4) = 0x2C808080;
+                }
+                pk += 0x28;
+            }
+        }
+    }
+    n = *p;
+    p += 2;
+    va = base + p[0];
+    vb = base + p[1];
+    vc = base + p[2];
+    for (i = 0; i < n; p += 10, i++) {
+        FrgG3 *r;
+
+        r = (FrgG3 *)p;
+        gte_ldv3(va, vb, vc);
+        gte_rtpt();
+        va = base + p[10];
+        vb = base + p[11];
+        vc = base + p[12];
+        gte_stflg(&flg);
+        gte_nclip();
+        if ((flg & 0x60000) == 0) {
+            gte_stopz(&opz);
+            if (opz >= 0) {
+                gte_avsz3();
+                *(u32 *)pk = 0x06000000;
+                gte_stotz(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+                ((FrgTag *)ot)->addr = (u32)pk;
+                gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+                *(u32 *)(pk + 4) = r->c0;
+                *(u32 *)(pk + 0xC) = r->c1;
+                *(u32 *)(pk + 0x14) = r->c2;
+                pk += 0x1C;
+            }
+        }
+    }
+    n = *p;
+    p += 2;
+    va = base + p[0];
+    vb = base + p[1];
+    vc = base + p[2];
+    for (i = 0; i < n; p += 12, i++) {
+        FrgG4 *r;
+
+        r = (FrgG4 *)p;
+        gte_ldv3(va, vb, vc);
+        gte_rtpt();
+        va = base + p[12];
+        vb = base + p[13];
+        vc = base + p[14];
+        gte_stflg(&flg);
+        gte_nclip();
+        if ((flg & 0x60000) == 0) {
+            gte_stopz(&opz);
+            if (opz >= 0) {
+                u32 tg;
+
+                tg = 0x08000000;
+                gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+                gte_ldv0c(base + r->vi[3]);
+                gte_rtps();
+                gte_stsxy(pk + 0x20);
+                gte_avsz4();
+                gte_stotz(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                *(u32 *)pk = tg;
+                ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+                ((FrgTag *)ot)->addr = (u32)pk;
+                *(u32 *)(pk + 4) = r->c0;
+                *(u32 *)(pk + 0xC) = r->c1;
+                *(u32 *)(pk + 0x14) = r->c2;
+                *(u32 *)(pk + 0x1C) = r->c3;
+                pk += 0x24;
+            }
+        }
+    }
+    return pk;
+}
 
 static inline s16 depth_of(s32 arg0, s32 arg1, s16 arg2) {
     return *(s16 *)(arg0 + *(s16 *)(arg1 + arg2 * 16) + 2);
