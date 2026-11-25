@@ -28,7 +28,8 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
 ## Rules
 
 - No data of the function's own: no `static` or `const` tables, no global definitions,
-  no `asm(...)`. GCC moves such data to the end of the file. The game's tables stay asm
+  no `asm(...)` for data (the GTE macros are the exception: see Hand-written assembly).
+  GCC moves such data to the end of the file. The game's tables stay asm
   and the C declares them `extern`; `put` keeps a table the C reads by name in an asm
   file of its own (an `INCLUDE_RODATA` before the function).
 - String literals are written as `"..."` (the asm shows them as `.asciz`). A string
@@ -2862,10 +2863,20 @@ Some functions were assembly in the original and stay `INCLUDE_ASM`: the GTE (co
 BIOS-call functions of the libraries (`lib.c` … `lib5.c`; also stack swaps through
 `addu v0, sp, zero`, busy loops on `t6`-`t9`, explicit `$at` use, and leaf copies
 interleaved through `t0`-`t3` the way no compiler schedules), and helpers that take arguments in `t0`-`t2` or return
-through `jr $at` (battle's func_800D32B4, func_800D8304, func_800D29D4). C with inline
-GTE instructions (`ctc2`, `lwc2`, `mvmva`, `swc2` between ordinary code, battle's
-func_800D84F8) stays asm too: it cannot be written without `asm()`. splat marks most of
+through `jr $at` (battle's func_800D32B4, func_800D8304, func_800D29D4). splat marks most of
 these "Handwritten function", not all (highway's func_800B4114 is pure GTE unmarked).
+
+The game's own GTE code is not hand-written: it is C with PSY-Q's inline GTE macros
+(`gte_ldv0`, `gte_rtps`, ...), each an `asm volatile` whose text is the instructions, with
+the operand in a register GCC picks. It can be written the same way: `include/gte.h`
+(included by `common.h`) holds one macro per sequence of the game, with the instructions
+word for word (one per line, `\n\t` between them: maspsx cannot read `;`), `%0` for the
+operand, the scratch registers ($12 to $15) as clobbers and `"memory"` for stores; a GTE
+command is `gte_cmd(imm)` (the two `nop`s and `cop2 imm`, imm = the instruction word &
+0x1FFFFFF). The macros are written in the order the game executes them and the C around
+is fixed as for any function (battle func_800D84F8 matched at the first try; the order of
+three negations decided the loads' order). Only the PSY-Q library's own assembly
+(`lib.c` and its neighbours) and BIOS stubs stay asm.
 
 A file's assembler can change partway: NAMEMENU's code folds `%lo` into a load with a
 register index (ASPSX 2.30 and later) from func_801D14E8 on, and not before. Counting
@@ -2880,7 +2891,8 @@ The PSY-Q libraries were split so: libcd and libgpu have the unfolded form (ASPS
   fixed two saved registers (knights func_801B8A00, alex func_801B2D94); `do { f(..); ang
   += step; } while (0);` got tifa func_801B1DB0 to 2 words.
 - Of the 348 functions splat marks handwritten that no batch had tried, 343 use GTE
-  instructions; the other five are BIOS-call stubs and library assembly: all stay asm.
+  instructions (written with include/gte.h macros since 2026-11-25, except the PSY-Q library's
+  own assembly); the other five are BIOS-call stubs and library assembly: they stay asm.
 
 ## Working with agents
 
