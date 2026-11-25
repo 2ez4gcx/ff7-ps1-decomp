@@ -58,5 +58,11 @@ extern s16 D_801518F4[][0x5CE];
 void func_801B1CE0(void);
 extern u8 D_801D4F30;
 extern u16 D_801D4F38;
+void func_801B0D1C(void);
+typedef struct { u32 addr : 24; u32 len : 8; } WpTag;
+typedef struct { WpTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; s32 c3; s32 xy3; } WpPolyG4;
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; s16 unk18; s16 unk1A; s16 unk1C; s16 unk1E; } WpTask;
+void func_801B1044(void);
+void func_801B1348(void);
 
 #endif /* MAGIC_WEP4_DECLS_H */

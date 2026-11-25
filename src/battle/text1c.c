@@ -1,6 +1,9 @@
 #include "common.h"
 #include "battle/decls.h"
 
+/* Declared here otherwise than in the other files (tools/work.py). */
+extern u16 D_800F7DE8;
+
 s32 func_800A3828(void) {
     s32 r;
 
@@ -1859,7 +1862,86 @@ void func_800A866C(void) {
     } while (i < 10);
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A8A6C);
+void func_800A8A6C(void) {
+    s16 rect[4];
+    u32 ch;
+    s32 id;
+    s32 cnt;
+    s32 res1;
+    s32 res2;
+    s32 i;
+    s32 k;
+    s32 b;
+    s32 a;
+    s32 c;
+    s32 d;
+    s32 r;
+    u16 *p;
+    u16 *q;
+    u8 *base;
+
+    cnt = 0;
+    res1 = -1;
+    res2 = 3;
+    base = (u8 *)D_800F5E78;
+    q = (u16 *)(base + 0x1F62);
+    id = M2C_FIELD(D_80063014, s32 *, 0);
+    i = 0;
+    p = (u16 *)(base + id * 0x34);
+    rect[0] = id;
+    ch = D_801636B8[id].a;
+    do {
+        *p = 0xFFFF;
+        if (D_800F6B86[i].a != -1) {
+            c = D_800F6B86[i].c;
+            d = D_800F6B86[i].d;
+            b = D_800F6B86[i].b & 0x3F;
+            if (b != 0xC) {
+                k = 0;
+                if (b == 0x14) {
+                    do {
+                        r = func_80015AFC(ch, k);
+                        if (r == c) {
+                            break;
+                        }
+                        k++;
+                    } while (k < 0xC);
+                    r = 0xC;
+                    if (k == r) {
+                        res1 = 0x57;
+                        res2 = 0x35;
+                        M2C_FIELD(D_80063014, s32 *, 0x98) = c;
+                        rect[1] = c + 0x80;
+                        goto next;
+                    }
+                }
+                a = D_800F7DBA;
+                if (a != 1) {
+                    a = 4;
+                }
+                D_801517B8 += 1;
+                func_800A3E98(id, a, b | 0x40, c, d);
+                cnt++;
+                *p = *q;
+            }
+        }
+next:
+        p++;
+        i++;
+        q++;
+    } while (i < 2);
+    if (cnt == 0) {
+        if (res1 == -1) {
+            res1 = 0x58;
+        }
+        func_800A2CC4(res2);
+        func_800B0FFC(id, res1, 1, (u16 *)rect);
+        if (res2 == 3) {
+            func_800A2CC4(0x3B);
+            func_800A2CC4(4);
+        }
+    }
+}
 
 void func_800A8C94(void) {
     M2C_FIELD(D_80063014, s32 *, 0x8C) = 0xFF;

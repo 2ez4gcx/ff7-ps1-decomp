@@ -166,7 +166,61 @@ void func_801B0488(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hakou/nonmatchings/text", func_801B0820);
+void func_801B0820(HkSpark *arg0, u8 *arg1) {
+    s16 *sc;
+    HkLine *p;
+    s32 i;
+    s32 n;
+    s32 dp;
+    s32 flag;
+    s32 otz;
+    s32 k;
+
+    sc = (s16 *)0x1F800000;
+    sc[0] = arg0->unk4;
+    sc[1] = arg0->unk6;
+    sc[2] = arg0->unk8;
+    p = (HkLine *)D_801D6778;
+    n = arg0->unk2;
+    if (n >= 4) {
+        n = 3;
+    }
+    for (i = 0; i < n; i++) {
+        sc[0] -= arg0->unkC;
+        sc[1] -= arg0->unkE;
+        sc[2] -= arg0->unk10;
+    }
+    gte_ldv3_m(&arg0->unk4, sc, sc);
+    gte_rtpt();
+    gte_stsxy3_m(&p->x0, &p->x1, &p->x1);
+    gte_stdp_m(&dp);
+    gte_stflg_m(&flag);
+    gte_avsz3();
+    gte_stotz_m(&otz);
+    if ((flag & 0x60000) == 0) {
+        func_800469D8(p);
+        p->code |= 2;
+        p->r0 = arg1[0];
+        p->g0 = arg1[1];
+        p->b0 = arg1[2];
+        p->r1 = 0;
+        p->g1 = 0;
+        p->b1 = 0;
+        k = ((otz >> 2) << 2) + 0x70;
+        func_80046794(k + D_801517C0, p);
+        D_801D6778 = (s32)(p + 1);
+    }
+    if (D_80062D98 == 0) {
+        arg0->unk2++;
+        if (arg0->unk2 >= 10) {
+            arg0->unk0 = -1;
+        } else {
+            arg0->unk4 += arg0->unkC;
+            arg0->unk6 += arg0->unkE;
+            arg0->unk8 += arg0->unk10;
+        }
+    }
+}
 
 void func_801B0A70(void) {
     MgTask *p;

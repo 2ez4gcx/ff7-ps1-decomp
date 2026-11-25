@@ -226,5 +226,13 @@ extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
 void func_801B3578(void);
+typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; u16 uv0; u16 clut; s32 xy1; u16 uv1; u16 tpage; s32 xy2; u16 uv2; u16 pad; s32 xy3; u16 uv3; u16 pad2; } HdPolyFT4;
+typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyFT4 *prim; u16 tpage; u8 pad12[2]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 flag; MgSVec v28; MgSVec v30; MgSVec v38; MgSVec v40; } HdQuadCtx;
+typedef struct { u16 idx[4]; u16 uv0; u16 clut; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } HdQuadEnt;
+HdQuadEnt *func_801B1144(HdQuadCtx *arg0, u8 *arg1, s32 *arg2);
+typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; u16 uv0; u16 clut; s32 xy1; u16 uv1; u16 tpage; s32 xy2; u16 uv2; u16 pad; } HdPolyFT3;
+typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyFT3 *prim; u16 tpage; u8 pad12[2]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 flag; MgSVec v28; MgSVec v30; MgSVec v38; } HdPolyCtx;
+typedef struct { u16 idx[3]; u8 col; u8 pad7; u16 uv0; u16 clut; u16 uv1; u16 uv2; } HdPolyEnt;
+HdPolyEnt *func_801B0480(HdPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_HADES_DECLS_H */

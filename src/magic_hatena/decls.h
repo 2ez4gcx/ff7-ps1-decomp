@@ -44,5 +44,23 @@ extern M2C_UNK D_801BA544;
 extern s32 D_1F800000[];
 void func_8003A08C(MgVec *, MgVec *);
 s32 func_80042DA8();
+typedef struct { u32 addr : 24; u32 len : 8; } HaTag;
+typedef struct { u8 b[8]; } HaB8;
+typedef struct { HaTag tag; s32 rgbc; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; } HaPolyFT3;
+typedef struct { u8 pad0[4]; HaTag *ot; s32 shift; HaPolyFT3 *prim; s32 w10; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 cnt; MgSVec v28; MgSVec v30; MgSVec v38; } HaPolyCtx;
+typedef struct { u16 idx[3]; u16 pad6; s32 w8; u16 uv1; u16 uv2; } HaPolyEnt;
+HaPolyEnt *func_801B0074(HaPolyCtx *arg0, u8 *arg1, u16 *arg2);
+typedef struct { HaTag tag; s32 rgbc; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; s32 xy3; u16 uv3; u16 pad2; } HaPolyFT4;
+typedef struct { u8 pad0[4]; HaTag *ot; s32 shift; HaPolyFT4 *prim; s32 w10; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 cnt; MgSVec v28; MgSVec v30; MgSVec v38; MgSVec v40; } HaQuadCtx;
+typedef struct { u16 idx[4]; s32 w8; u16 uv1; u16 uv2; u16 uv3; u16 pad12; } HaQuadEnt;
+HaQuadEnt *func_801B02AC(HaQuadCtx *arg0, u8 *arg1, u16 *arg2);
+typedef struct { HaTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } HaPolyG3;
+typedef struct { u8 pad0[4]; HaTag *ot; s32 shift; HaPolyG3 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 cnt; MgSVec v28; MgSVec v30; MgSVec v38; } HaG3Ctx;
+typedef struct { u16 idx[3]; u16 pad6; s32 c0; s32 c1; s32 c2; } HaG3Ent;
+HaG3Ent *func_801B0544(HaG3Ctx *arg0, u8 *arg1, s32 *arg2);
+typedef struct { HaTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; s32 c3; s32 xy3; } HaPolyG4;
+typedef struct { u8 pad0[4]; HaTag *ot; s32 shift; HaPolyG4 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 cnt; MgSVec v28; MgSVec v30; MgSVec v38; MgSVec v40; } HaG4Ctx;
+typedef struct { u16 idx[4]; s32 c0; s32 c1; s32 c2; s32 c3; } HaG4Ent;
+HaG4Ent *func_801B0764(HaG4Ctx *arg0, u8 *arg1, u16 *arg2);
 
 #endif /* MAGIC_HATENA_DECLS_H */

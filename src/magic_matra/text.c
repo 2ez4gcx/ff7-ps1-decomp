@@ -97,7 +97,49 @@ INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0574);
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0EE0);
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B107C);
+void func_801B107C(MtBeam *arg0, s32 arg1, s32 arg2) {
+    s32 k;
+
+    if (arg2 != 0) {
+        k = func_80039F5C(arg0->lenDC) >> 2;
+        arg0->m80.t[0] += (k * arg0->dC0.vx) >> 12;
+        arg0->m80.t[1] += (k * arg0->dC0.vy) >> 12;
+        arg0->m80.t[2] += (k * arg0->dC0.vz) >> 12;
+    } else {
+        arg0->dC0.vx = arg0->x38 - arg0->x30;
+        arg0->dC0.vy = arg0->y38 - arg0->y30;
+        arg0->dC0.vz = arg0->z38 - arg0->z30;
+        k = ((s32 (*)(MgVec *, MgVec *))func_8003A08C)(&arg0->dC0, &arg0->dC0);
+        arg0->lenDC = k;
+        func_801B016C(func_801B0090(&D_801B8854, &arg0->dC0, &arg0->vE0), &arg0->m80, &arg0->vE0);
+        arg0->m80.t[0] = arg0->x38;
+        arg0->m80.t[1] = arg0->y38;
+        arg0->m80.t[2] = arg0->z38;
+    }
+    arg0->v10.vx = 0;
+    arg0->v10.vy = -arg1;
+    arg0->v10.vz = 0;
+    arg0->v18.vx = arg1;
+    arg0->v18.vy = 0;
+    arg0->v18.vz = 0;
+    arg0->v20.vx = 0;
+    arg0->v20.vy = arg1;
+    arg0->v20.vz = 0;
+    arg0->v28.vx = -arg1;
+    arg0->v28.vy = 0;
+    arg0->v28.vz = 0;
+    func_8003A63C(&D_800FA63C, &arg0->m80, &arg0->mA0);
+    gte_SetRotMatrix_d(&arg0->mA0);
+    gte_SetTransMatrix(&arg0->mA0);
+    gte_ldv3(&arg0->v10, &arg0->v18, &arg0->v20);
+    gte_rtpt();
+    gte_stsxy3(&arg0->sxy40, &arg0->sxy44, &arg0->sxy48);
+    gte_ldv0c(&arg0->v28);
+    gte_rtps();
+    gte_stsxy(&arg0->sxy4C);
+    gte_avsz4();
+    gte_stotz(&arg0->otz);
+}
 
 void func_801B12B8(MgObjM *arg0) {
     MgVec sc;

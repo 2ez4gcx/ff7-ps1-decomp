@@ -242,4 +242,75 @@
                  "mtc2 $14,$11" : : "r"(p), "i"((c) * 2), "i"((c) * 2 + 6), "i"((c) * 2 + 12) \
                  : "$12", "$13", "$14", "memory")
 
+/* gte_ldv0 with t4 to t7 all listed as clobbers (a loop whose constants must stay out of t6 and t7) */
+#define gte_ldv0_k(v) \
+    asm volatile("move $12,%0\n\tlwc2 $0,0($12)\n\tlwc2 $1,4($12)" : : "r"(v) : "$12", "$13", "$14", "$15")
+
+/* a value (loaded by the C around it) copied to t4, t5 or t6 ($12 to $14), one statement each; the three screen XY
+ * values / the three Z values from t4 to t6 into data registers 12 to 14 (in the order 12, 14, 13) / 17 to 19;
+ * the outer product (MAC0, data register 24) / the average Z (OTZ, data register 7) to a word through t4 */
+#define gte_mv12(x) asm volatile("move $12,%0" : : "r"(x) : "$12")
+#define gte_mv13(x) asm volatile("move $13,%0" : : "r"(x) : "$13")
+#define gte_mv14(x) asm volatile("move $14,%0" : : "r"(x) : "$14")
+#define gte_ldsxy3_t() asm volatile("mtc2 $12,$12\n\tmtc2 $14,$14\n\tmtc2 $13,$13")
+#define gte_ldsz3_t() asm volatile("mtc2 $12,$17\n\tmtc2 $13,$18\n\tmtc2 $14,$19")
+#define gte_stopz_m(p) asm volatile("move $12,%0\n\tswc2 $24,0($12)" : : "r"(p) : "$12", "memory")
+#define gte_stotz_m(p) asm volatile("move $12,%0\n\tswc2 $7,0($12)" : : "r"(p) : "$12", "memory")
+
+/* gte_ldsxy3_t / gte_ldsz3_t with t4 to t7 all listed as clobbers (the game's loop leaves t7 unused) */
+#define gte_ldsxy3_k() asm volatile("mtc2 $12,$12\n\tmtc2 $14,$14\n\tmtc2 $13,$13" : : : "$12", "$13", "$14", "$15")
+#define gte_ldsz3_k() asm volatile("mtc2 $12,$17\n\tmtc2 $13,$18\n\tmtc2 $14,$19" : : : "$12", "$13", "$14", "$15")
+
+/* three colours into the colour FIFO (data registers 20 to 22, and the RGB register 6 again from the third) through
+ * t4 to t6, which the C has set with gte_mv12 to gte_mv14; the colour FIFO back to three words through t4 to t6; IR0
+ * (data register 8) from t4; DPCT (depth cue colour of the three FIFO colours) with the two nops */
+#define gte_ldrgb3_t() \
+    asm volatile("lwc2 $20,0($12)\n\tlwc2 $21,0($13)\n\tlwc2 $22,0($14)\n\tlwc2 $6,0($14)")
+#define gte_strgb3_t() asm volatile("swc2 $20,0($12)\n\tswc2 $21,0($13)\n\tswc2 $22,0($14)" : : : "memory")
+#define gte_mtir0_t() asm volatile("mtc2 $12,$8")
+#define gte_dpct() gte_cmd(0x0F8002A)
+
+/* the same colour FIFO loads / stores through three pointer registers the C computes (gte_ldrgb3_t and gte_strgb3_t
+ * have them in t4 to t6) */
+#define gte_ldrgb3(a, b, c) \
+    asm volatile("lwc2 $20,0(%0)\n\tlwc2 $21,0(%1)\n\tlwc2 $22,0(%2)\n\tlwc2 $6,0(%2)" : : "r"(a), "r"(b), "r"(c))
+#define gte_strgb3(a, b, c) \
+    asm volatile("swc2 $20,0(%0)\n\tswc2 $21,0(%1)\n\tswc2 $22,0(%2)" : : "r"(a), "r"(b), "r"(c) : "memory")
+
+/* the matrix helpers of the snobo code with the pointer copied to t4 ($12) first: a column (halfwords at 0, 6 and 12)
+ * into IR1 to IR3 through t5 to t7; IR1 to IR3 back to a column; vector 0 from a vector of words 0 (xy halfwords at 0
+ * and 4) and 8; IR1 to IR3 to three words */
+#define gte_ldmcol_m(p) \
+    asm volatile("move $12,%0\n\tlhu $13,0($12)\n\tlhu $14,6($12)\n\tlhu $15,12($12)\n\tmtc2 $13,$9\n\tmtc2 $14,$10\n\t" \
+                 "mtc2 $15,$11" : : "r"(p) : "$12", "$13", "$14", "$15", "memory")
+#define gte_stir3h_m(p) \
+    asm volatile("move $12,%0\n\tmfc2 $13,$9\n\tmfc2 $14,$10\n\tmfc2 $15,$11\n\tsh $13,0($12)\n\tsh $14,6($12)\n\t" \
+                 "sh $15,12($12)" : : "r"(p) : "$12", "$13", "$14", "$15", "memory")
+#define gte_ldv0w_m(p) \
+    asm volatile("move $12,%0\n\tlhu $14,4($12)\n\tlhu $13,0($12)\n\tsll $14,$14,16\n\tor $13,$13,$14\n\tmtc2 $13,$0\n\t" \
+                 "lwc2 $1,8($12)" : : "r"(p) : "$12", "$13", "$14", "memory")
+#define gte_stir3_m(p) \
+    asm volatile("move $12,%0\n\tswc2 $9,0($12)\n\tswc2 $10,4($12)\n\tswc2 $11,8($12)" : : "r"(p) : "$12", "memory")
+
+/* the far colour (control registers 21 to 23) from one value times 16, the shifts reading the operand directly */
+#define gte_SetFarColorN(v) \
+    asm volatile("sll $12,%0,4\n\tsll $13,%0,4\n\tsll $14,%0,4\n\tctc2 $12,$21\n\tctc2 $13,$22\n\tctc2 $14,$23" \
+                 : : "r"(v) : "$12", "$13", "$14")
+
+/* three packed screen XY words from three registers (copied to t4 to t6, then into data registers 12, 14, 13) */
+#define gte_ldsxy3_r(a, b, c) \
+    asm volatile("move $12,%0\n\tmove $13,%1\n\tmove $14,%2\n\tmtc2 $12,$12\n\tmtc2 $14,$14\n\tmtc2 $13,$13" \
+                 : : "r"(a), "r"(b), "r"(c) : "$12", "$13", "$14")
+
+/* gte_ldsxy3_r with t4 to t7 all listed as clobbers */
+#define gte_ldsxy3_rk(a, b, c) \
+    asm volatile("move $12,%0\n\tmove $13,%1\n\tmove $14,%2\n\tmtc2 $12,$12\n\tmtc2 $14,$14\n\tmtc2 $13,$13" \
+                 : : "r"(a), "r"(b), "r"(c) : "$12", "$13", "$14", "$15")
+
+/* IR0 (data register 8) to a word through t4; the flag register (control register 31) to a word through t4 with the
+ * flags read through t5 and the nop the game puts after the cfc2 (the pointer copied to t4 first, like gte_stotz_m) */
+#define gte_stdp_m(p) asm volatile("move $12,%0\n\tswc2 $8,0($12)" : : "r"(p) : "$12", "memory")
+#define gte_stflg_m(p) \
+    asm volatile("move $12,%0\n\tcfc2 $13,$31\n\tnop\n\tsw $13,0($12)" : : "r"(p) : "$12", "$13", "memory")
+
 #endif /* GTE_H */

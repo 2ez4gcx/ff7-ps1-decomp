@@ -5,13 +5,209 @@ void func_801B0084(void) {
     func_801B1770();
 }
 
-INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B00A4);
+FgPolyEnt *func_801B00A4(FgPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    FgPolyEnt *e;
+    FgPolyFT3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B0308);
+    e = (FgPolyEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->v2C = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v34 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v3C = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->v2C, &arg0->v34, &arg0->v3C);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->uvtp1 = e->uv1 | arg0->w10;
+            p->uvclut0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_avsz3();
+                gte_stotz(&arg0->otz);
+                c = e->col;
+                arg0->w24 = (c << 16) | (c << 8) | c;
+                gte_ldrgb(&arg0->w24);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->r0);
+                p->code = 0x26;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
-INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B05CC);
+FgQuadEnt *func_801B0308(FgQuadCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    FgQuadEnt *e;
+    FgPolyFT4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B082C);
+    e = (FgQuadEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->v2C = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v34 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v3C = *(MgB8 *)(arg1 + e->idx[2]);
+            *(MgB8 *)&arg0->v44 = *(MgB8 *)(arg1 + e->idx[3]);
+            gte_ldv3(&arg0->v2C, &arg0->v34, &arg0->v3C);
+            gte_rtpt();
+            p->tag.len = 9;
+            p->uvtp1 = e->uv1 | arg0->w10;
+            p->uvclut0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            p->uv3 = e->uv3;
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_ldv0c(&arg0->v44);
+                gte_rtps();
+                gte_stsxy(&p->xy3);
+                gte_avsz4();
+                gte_stotz(&arg0->otz);
+                c = e->col;
+                arg0->w24 = (c << 16) | (c << 8) | c;
+                gte_ldrgb(&arg0->w24);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->r0);
+                p->code = 0x2E;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+FgG3Ent *func_801B05CC(FgG3Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    FgG3Ent *e;
+    FgPolyG3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+
+    e = (FgG3Ent *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if (i < n) {
+        do {
+            *(MgB8 *)&arg0->v2C = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v34 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v3C = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->v2C, &arg0->v34, &arg0->v3C);
+            gte_rtpt();
+            *(s32 *)&p->r0 = e->c0;
+            p->c1 = e->c1;
+            p->c2 = e->c2;
+            gte_nclip();
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_avsz3();
+                gte_stotz(&arg0->otz);
+                gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+                gte_mtc2(8, arg3);
+                gte_dpct();
+                gte_strgb3(&p->r0, &p->c1, &p->c2);
+                p->tag.len = 6;
+                p->code = 0x32;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+FgG4Ent *func_801B082C(FgG4Ctx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    FgG4Ent *e;
+    FgPolyG4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+
+    e = (FgG4Ent *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->v2C = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v34 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v3C = *(MgB8 *)(arg1 + e->idx[2]);
+            *(MgB8 *)&arg0->v44 = *(MgB8 *)(arg1 + e->idx[3]);
+            gte_ldv3(&arg0->v2C, &arg0->v34, &arg0->v3C);
+            gte_rtpt();
+            *(s32 *)&p->r0 = e->c0;
+            p->c1 = e->c1;
+            p->c2 = e->c2;
+            p->c3 = e->c3;
+            gte_nclip();
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_ldv0c(&arg0->v44);
+                gte_rtps();
+                gte_stsxy(&p->xy3);
+                gte_avsz4();
+                gte_stotz(&arg0->otz);
+                gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+                gte_mtc2(8, arg3);
+                gte_dpct();
+                gte_strgb3(&p->r0, &p->c1, &p->c2);
+                gte_ldrgb(&e->c3);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c3);
+                p->tag.len = 8;
+                p->code = 0x3A;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_faiga2/nonmatchings/text", func_801B0B08);
 

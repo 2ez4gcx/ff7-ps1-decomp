@@ -75,5 +75,8 @@ void func_8003B35C(MgMat *, MgVec *);
 void func_8003A63C(MgMat *, MgMat *, MgMat *);
 MgLineG2 *func_800D29D4(void *, s32, s32, MgLineG2 *);
 void func_801B12B8(MgObjM *arg0);
+typedef struct { u8 pad0[8]; s32 otz; u8 padC[4]; MgSVec v10; MgSVec v18; MgSVec v20; MgSVec v28; s16 x30; s16 y30; s16 z30; s16 pad36; s16 x38; s16 y38; s16 z38; s16 pad3E; s32 sxy40; s32 sxy44; s32 sxy48; s32 sxy4C; u8 pad50[0x30]; MgMat m80; MgMat mA0; MgVec dC0; u8 padD0[0xC]; s32 lenDC; MgVec vE0; } MtBeam;
+extern MgVec D_801B8854;
+void func_801B107C(MtBeam *arg0, s32 arg1, s32 arg2);
 
 #endif /* MAGIC_MATRA_DECLS_H */

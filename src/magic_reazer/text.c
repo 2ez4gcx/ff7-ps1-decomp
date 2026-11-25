@@ -137,7 +137,49 @@ void func_801B102C(RzObj *sc, s32 arg1, s32 arg2, s32 arg3) {
     D_801D2680 = (MgLineG2 *)p;
 }
 
-INCLUDE_ASM("../asm/us/magic_reazer/nonmatchings/text", func_801B11C0);
+void func_801B11C0(RzObj *arg0, s32 arg1, s32 arg2) {
+    s32 k;
+
+    if (arg2 != 0) {
+        k = func_80039F5C(arg0->unkCC) >> 2;
+        arg0->m.t[0] += (k * arg0->d1.vx) >> 12;
+        arg0->m.t[1] += (k * arg0->d1.vy) >> 12;
+        arg0->m.t[2] += (k * arg0->d1.vz) >> 12;
+    } else {
+        arg0->d1.vx = arg0->p1.vx - arg0->p0.vx;
+        arg0->d1.vy = arg0->p1.vy - arg0->p0.vy;
+        arg0->d1.vz = arg0->p1.vz - arg0->p0.vz;
+        k = ((s32 (*)(MgVec *, MgVec *))func_8003A08C)(&arg0->d1, &arg0->d1);
+        arg0->unkCC = k;
+        func_801B0184(func_801B00A8(&D_801BA664, &arg0->d1, &arg0->d2), &arg0->m, &arg0->d2);
+        arg0->m.t[0] = arg0->p1.vx;
+        arg0->m.t[1] = arg0->p1.vy;
+        arg0->m.t[2] = arg0->p1.vz;
+    }
+    arg0->v[0].vx = 0;
+    arg0->v[0].vy = -arg1;
+    arg0->v[0].vz = 0;
+    arg0->v[1].vx = arg1;
+    arg0->v[1].vy = 0;
+    arg0->v[1].vz = 0;
+    arg0->v[2].vx = 0;
+    arg0->v[2].vy = arg1;
+    arg0->v[2].vz = 0;
+    arg0->v[3].vx = -arg1;
+    arg0->v[3].vy = 0;
+    arg0->v[3].vz = 0;
+    func_8003A63C(&D_800FA63C, &arg0->m, &arg0->m2);
+    func_8003B48C(&arg0->m2);
+    func_8003B51C(&arg0->m2);
+    gte_ldv3(&arg0->v[0], &arg0->v[1], &arg0->v[2]);
+    gte_rtpt();
+    gte_stsxy3(&arg0->a[0], &arg0->a[1], &arg0->a[2]);
+    gte_ldv0c(&arg0->v[3]);
+    gte_rtps();
+    gte_stsxy(&arg0->a[3]);
+    gte_avsz4();
+    gte_stotz(&arg0->otz);
+}
 
 void func_801B13CC(RzObj *o, s32 arg1) {
     RzPolyG4 *p;

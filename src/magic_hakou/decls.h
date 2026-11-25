@@ -47,7 +47,6 @@ typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; } HkPart;
 void func_8003B48C(MgMat *);
 void func_8003B51C(MgMat *);
-void func_801B0820(HkPart *, u8 *);
 extern MgMat D_800FA63C;
 extern HkPart D_801B5FA8[];
 void func_801B0E4C(void);
@@ -99,5 +98,10 @@ extern s16 D_801B5E4E[];
 void func_801B1090(void);
 s32 func_80039A74(s32);
 s32 func_80039B40(s32);
+typedef struct { u32 addr : 24; u32 len : 8; } HkTag;
+typedef struct { HkTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 r1; u8 g1; u8 b1; u8 pad; s16 x1; s16 y1; } HkLine;
+typedef struct { s16 unk0; s16 unk2; u16 unk4; u16 unk6; u16 unk8; u16 unkA; u16 unkC; u16 unkE; u16 unk10; } HkSpark;
+void func_80046794(s32, void *);
+void func_801B0820(HkSpark *arg0, u8 *arg1);
 
 #endif /* MAGIC_HAKOU_DECLS_H */

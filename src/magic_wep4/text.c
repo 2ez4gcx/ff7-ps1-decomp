@@ -132,11 +132,259 @@ void func_801B0B0C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B0D1C);
+void func_801B0D1C(void) {
+    MgSVec v[6];
+    s32 otz;
+    WpTask *t;
+    WpPolyG4 *p;
+    WpPolyG4 *q;
+    s32 idx;
+    s32 x;
+    s32 y;
+    s32 z;
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B1044);
+    t = (WpTask *)D_80162978 + D_8015169C;
+    x = t->unk4 - ((s16)t->unk14 >> 1);
+    v[4].vx = x;
+    v[2].vx = x;
+    v[0].vx = x;
+    x = t->unk4 + ((s16)t->unk14 >> 1);
+    v[5].vx = x;
+    v[3].vx = x;
+    v[1].vx = x;
+    y = t->unk6;
+    v[3].vy = 0;
+    v[2].vy = 0;
+    v[1].vy = y;
+    v[0].vy = y;
+    y = t->unk6 - 0x1F4;
+    v[5].vy = y;
+    v[4].vy = y;
+    z = t->unk8;
+    v[5].vz = z;
+    v[4].vz = z;
+    v[3].vz = z;
+    v[2].vz = z;
+    v[1].vz = z;
+    v[0].vz = z;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    p = (WpPolyG4 *)D_801ECF6C;
+    q = p + 1;
+    gte_ldv3(&v[0], &v[1], &v[2]);
+    gte_rtpt();
+    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+    gte_stszotz(&otz);
+    idx = otz >> 2;
+    if (idx > 0) {
+        gte_ldv3(&v[3], &v[4], &v[5]);
+        gte_rtpt();
+        gte_stsxy3(&p->xy3, &q->xy0, &q->xy1);
+        *(s32 *)&p->r0 = 0x70A060;
+        p->c1 = 0x70A060;
+        *(s32 *)((u8 *)p + 0x38) = 0x70A060;
+        *(s32 *)((u8 *)p + 0x40) = 0x70A060;
+        *(s32 *)((u8 *)p + 0x3C) = p->xy0;
+        p->c2 = 0x305020;
+        p->c3 = 0x305020;
+        *(s32 *)((u8 *)p + 0x44) = p->xy1;
+        p->tag.len = 8;
+        *(s32 *)((u8 *)p + 0x28) = 0;
+        *(s32 *)((u8 *)p + 0x30) = 0;
+        p->code = 0x3A;
+        p->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)p;
+        q->tag.len = 8;
+        q->code = 0x3A;
+        q->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)q;
+        q = p + 2;
+    }
+    D_801ECF6C = (s32)q;
+    if (t->unk2 >= 0x1A) {
+        t->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (t->unk2 >= t->unk18) {
+            t->unk14 = t->unk14 - t->unk1A;
+            t->unk1A = t->unk1A + (t->unk1A >> 5);
+            if (t->unk14 < 2) {
+                t->unk14 = 2;
+            }
+            t->unk4 = t->unk4 + t->unk16;
+            t->unk16 = t->unk16 + (t->unk16 >> 5);
+        }
+        t->unk2++;
+    }
+}
 
-INCLUDE_ASM("../asm/us/magic_wep4/nonmatchings/text", func_801B1348);
+void func_801B1044(void) {
+    MgSVec v[6];
+    s32 otz;
+    WpTask *t;
+    WpPolyG4 *p;
+    WpPolyG4 *q;
+    s32 idx;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    t = (WpTask *)D_80162978 + D_8015169C;
+    x = t->unk4 - ((s16)t->unk14 >> 1);
+    v[4].vx = x;
+    v[2].vx = x;
+    v[0].vx = x;
+    x = t->unk4 + ((s16)t->unk14 >> 1);
+    v[5].vx = x;
+    v[3].vx = x;
+    v[1].vx = x;
+    y = t->unk6;
+    v[3].vy = 0;
+    v[2].vy = 0;
+    v[1].vy = y;
+    v[0].vy = y;
+    y = t->unk6 - 0x1F4;
+    v[5].vy = y;
+    v[4].vy = y;
+    z = t->unk8;
+    v[5].vz = z;
+    v[4].vz = z;
+    v[3].vz = z;
+    v[2].vz = z;
+    v[1].vz = z;
+    v[0].vz = z;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    p = (WpPolyG4 *)D_801ECF6C;
+    q = p + 1;
+    gte_ldv3(&v[0], &v[1], &v[2]);
+    gte_rtpt();
+    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+    gte_stszotz(&otz);
+    idx = otz >> 2;
+    if (idx > 0) {
+        gte_ldv3(&v[3], &v[4], &v[5]);
+        gte_rtpt();
+        gte_stsxy3(&p->xy3, &q->xy0, &q->xy1);
+        *(s32 *)&p->r0 = 0xB07070;
+        p->c1 = 0xB07070;
+        *(s32 *)((u8 *)p + 0x38) = 0xB07070;
+        *(s32 *)((u8 *)p + 0x40) = 0xB07070;
+        *(s32 *)((u8 *)p + 0x3C) = p->xy0;
+        p->c2 = 0x603030;
+        p->c3 = 0x603030;
+        *(s32 *)((u8 *)p + 0x44) = p->xy1;
+        p->tag.len = 8;
+        *(s32 *)((u8 *)p + 0x28) = 0;
+        *(s32 *)((u8 *)p + 0x30) = 0;
+        p->code = 0x3A;
+        p->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)p;
+        q->tag.len = 8;
+        q->code = 0x3A;
+        q->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)q;
+        q = p + 2;
+    }
+    D_801ECF6C = (s32)q;
+    if (t->unk2 >= 0x1A) {
+        t->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (t->unk2 >= t->unk18) {
+            t->unk14 = t->unk14 - t->unk1A;
+            t->unk1A = t->unk1A + (t->unk1A >> 5);
+            if (t->unk14 < 2) {
+                t->unk14 = 2;
+            }
+        }
+        t->unk2++;
+    }
+}
+
+void func_801B1348(void) {
+    MgSVec v[6];
+    s32 otz;
+    WpTask *t;
+    WpPolyG4 *p;
+    WpPolyG4 *q;
+    s32 idx;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    t = (WpTask *)D_80162978 + D_8015169C;
+    x = t->unk4 - ((s16)t->unk14 >> 1);
+    v[4].vx = x;
+    v[2].vx = x;
+    v[0].vx = x;
+    x = t->unk4 + ((s16)t->unk14 >> 1);
+    v[5].vx = x;
+    v[3].vx = x;
+    v[1].vx = x;
+    y = t->unk6;
+    v[3].vy = 0;
+    v[2].vy = 0;
+    v[1].vy = y;
+    v[0].vy = y;
+    y = t->unk6 - 0x190;
+    v[5].vy = y;
+    v[4].vy = y;
+    z = t->unk8;
+    v[5].vz = z;
+    v[4].vz = z;
+    v[3].vz = z;
+    v[2].vz = z;
+    v[1].vz = z;
+    v[0].vz = z;
+    func_8003B48C(&D_800FA63C);
+    func_8003B51C(&D_800FA63C);
+    p = (WpPolyG4 *)D_801ECF6C;
+    q = p + 1;
+    gte_ldv3(&v[0], &v[1], &v[2]);
+    gte_rtpt();
+    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+    gte_stszotz(&otz);
+    idx = otz >> 2;
+    if (idx > 0) {
+        gte_ldv3(&v[3], &v[4], &v[5]);
+        gte_rtpt();
+        gte_stsxy3(&p->xy3, &q->xy0, &q->xy1);
+        *(s32 *)&p->r0 = 0xB0B0B0;
+        p->c1 = 0xB0B0B0;
+        *(s32 *)((u8 *)p + 0x38) = 0xB0B0B0;
+        *(s32 *)((u8 *)p + 0x40) = 0xB0B0B0;
+        *(s32 *)((u8 *)p + 0x3C) = p->xy0;
+        p->c2 = 0x707070;
+        p->c3 = 0x707070;
+        *(s32 *)((u8 *)p + 0x44) = p->xy1;
+        p->tag.len = 8;
+        *(s32 *)((u8 *)p + 0x28) = 0;
+        *(s32 *)((u8 *)p + 0x30) = 0;
+        p->code = 0x3A;
+        p->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)p;
+        q->tag.len = 8;
+        q->code = 0x3A;
+        q->tag.addr = ((WpTag *)D_801517C0 + idx + 0x1C)->addr;
+        ((WpTag *)D_801517C0 + idx + 0x1C)->addr = (u32)q;
+        q = p + 2;
+    }
+    D_801ECF6C = (s32)q;
+    if (t->unk2 >= 0x1E) {
+        t->unk0 = -1;
+    }
+    if (D_80062D98 == 0) {
+        if (t->unk2 >= t->unk18) {
+            t->unk14 = t->unk14 - t->unk1A;
+            t->unk1A = t->unk1A + (t->unk1A >> 4);
+            if (t->unk14 < 2) {
+                t->unk14 = 2;
+            }
+        }
+        t->unk2++;
+    }
+}
 
 void func_801B164C(void) {
     MgSVec a;

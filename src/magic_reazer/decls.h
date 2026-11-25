@@ -76,5 +76,6 @@ void func_8003AB84(MgMat *, MgVec *, MgVec *);
 extern M2C_UNK func_801B058C;
 void func_801B102C(RzObj *sc, s32 arg1, s32 arg2, s32 arg3);
 void func_8003B710(void *, s32, void *);
+void func_801B11C0(RzObj *arg0, s32 arg1, s32 arg2);
 
 #endif /* MAGIC_REAZER_DECLS_H */

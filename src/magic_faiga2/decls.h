@@ -54,5 +54,22 @@ extern struct { s16 v; } D_800F5B74;
 void func_801B13C4(void);
 s32 func_80042DA8();
 void func_800D54EC(s32, void *);
+typedef struct { u32 addr : 24; u32 len : 8; } FgTag;
+typedef struct { FgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; } FgPolyFT3;
+typedef struct { u8 pad0[4]; FgTag *ot; s32 shift; FgPolyFT3 *prim; s32 w10; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 w24; u8 pad28[4]; MgSVec v2C; MgSVec v34; MgSVec v3C; } FgPolyCtx;
+typedef struct { u16 idx[3]; u8 col; u8 pad7; s32 w8; u16 uv1; u16 uv2; } FgPolyEnt;
+FgPolyEnt *func_801B00A4(FgPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { FgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; s32 xy3; u16 uv3; u16 pad2; } FgPolyFT4;
+typedef struct { u8 pad0[4]; FgTag *ot; s32 shift; FgPolyFT4 *prim; s32 w10; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 w24; u8 pad28[4]; MgSVec v2C; MgSVec v34; MgSVec v3C; MgSVec v44; } FgQuadCtx;
+typedef struct { u16 idx[4]; s32 w8; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } FgQuadEnt;
+FgQuadEnt *func_801B0308(FgQuadCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { FgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } FgPolyG3;
+typedef struct { u8 pad0[4]; FgTag *ot; s32 shift; FgPolyG3 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[0xC]; MgSVec v2C; MgSVec v34; MgSVec v3C; } FgG3Ctx;
+typedef struct { u16 idx[3]; u16 pad6; s32 c0; s32 c1; s32 c2; } FgG3Ent;
+FgG3Ent *func_801B05CC(FgG3Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
+typedef struct { FgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; s32 c3; s32 xy3; } FgPolyG4;
+typedef struct { u8 pad0[4]; FgTag *ot; s32 shift; FgPolyG4 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[0xC]; MgSVec v2C; MgSVec v34; MgSVec v3C; MgSVec v44; } FgG4Ctx;
+typedef struct { u16 idx[4]; s32 c0; s32 c1; s32 c2; s32 c3; } FgG4Ent;
+FgG4Ent *func_801B082C(FgG4Ctx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_FAIGA2_DECLS_H */

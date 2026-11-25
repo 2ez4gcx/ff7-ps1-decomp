@@ -103,13 +103,166 @@ s16 func_801B04C4(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B05A8);
+TfG3Ent *func_801B05A8(TfG3Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    TfG3Ent *e;
+    TfPolyG3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+
+    e = (TfG3Ent *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if (i < n) {
+        do {
+            gte_ldv3(arg1 + e->idx[0], arg1 + e->idx[1], arg1 + e->idx[2]);
+            gte_rtpt();
+            gte_nclip();
+            gte_stopz(&arg0->area);
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_avsz3();
+                gte_stotz(&arg0->otz);
+                gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+                gte_mtc2(8, arg3);
+                gte_dpct();
+                gte_strgb3(&p->r0, &p->c1, &p->c2);
+                p->tag.len = 6;
+                if (arg3 != 0) {
+                    p->code = 0x32;
+                } else {
+                    p->code = 0x30;
+                }
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B0750);
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B07C8);
+TfFT3Ent *func_801B07C8(TfFT3Ctx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    TfFT3Ent *e;
+    TfPolyFT3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 mode;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B09FC);
+    e = (TfFT3Ent *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    mode = arg0->mode;
+    if ((u32)i < (u32)n) {
+        do {
+            gte_ldv3(arg1 + e->idx[0], arg1 + e->idx[1], arg1 + e->idx[2]);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->uvtp1 = e->uv1 | arg0->w18;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if ((arg0->flag & 0x60000) == 0) {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                gte_stopz(&arg0->area);
+                if (arg0->area > 0 || (mode & 1) != 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_avsz3();
+                    gte_stotz(&arg0->otz);
+                    c = e->col;
+                    if ((mode & 2) != 0) {
+                        gte_SetFarColorN(c);
+                    } else {
+                        arg0->w30 = (c << 16) | (c << 8) | c;
+                    }
+                    gte_ldrgb(&arg0->w30);
+                    gte_mtc2(8, arg3);
+                    gte_dpcs();
+                    gte_strgb(&p->r0);
+                    p->code = 0x24;
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+TfFT4Ent *func_801B09FC(TfFT4Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    TfFT4Ent *e;
+    TfPolyFT4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 mode;
+    s32 c;
+
+    e = (TfFT4Ent *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    mode = arg0->mode;
+    if (i < n) {
+        do {
+            gte_ldv3(arg1 + e->idx[0], arg1 + e->idx[1], arg1 + e->idx[2]);
+            gte_rtpt();
+            *(MgB8 *)&arg0->v4C = *(MgB8 *)(arg1 + e->idx[3]);
+            p->tag.len = 9;
+            p->uvtp1 = e->uv1 | arg0->w18;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if ((arg0->flag & 0x60000) == 0) {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                p->uv3 = e->uv3;
+                gte_stopz(&arg0->area);
+                if (arg0->area > 0 || (mode & 1) != 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_ldv0c(&arg0->v4C);
+                    gte_rtps();
+                    gte_stsxy(&p->xy3);
+                    gte_avsz4();
+                    gte_stotz(&arg0->otz);
+                    c = e->col;
+                    if ((mode & 2) != 0) {
+                        gte_SetFarColorN(c);
+                    } else {
+                        arg0->w30 = (c << 16) | (c << 8) | c;
+                    }
+                    gte_ldrgb(&arg0->w30);
+                    gte_mtc2(8, arg3);
+                    gte_dpcs();
+                    gte_strgb(&p->r0);
+                    p->code = 0x2C;
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B0CA4);
 

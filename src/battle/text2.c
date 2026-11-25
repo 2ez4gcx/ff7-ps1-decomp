@@ -16,6 +16,8 @@ extern u16 D_800F9F3E[];
 extern u16 D_800F9F40[];
 extern u16 D_800F9F46[];
 extern u16 D_800F9F48[];
+void func_800B54B8(u8 arg0);
+extern u16 D_800F7DE8[];
 
 void func_800B30E4(void) {
     s32 i;
@@ -573,7 +575,98 @@ s32 func_800B5138(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2", func_800B54B8);
+void func_800B54B8(u8 arg0) {
+    s32 *pp;
+    u8 *q;
+    s32 k;
+    u16 *d;
+    u16 *e;
+    u16 *f;
+    u8 *v;
+    volatile u8 *w;
+    u8 *r;
+    s32 i;
+    s32 t;
+    s32 o;
+    s32 o2;
+    u8 *b;
+    u8 *b2;
+    s32 s;
+    s32 o4;
+    s32 o3;
+    s32 *tb;
+    BtlE18 *c;
+    if (D_80151232[arg0][0] == 6) {
+        s = 6;
+    } else {
+        s = D_800F7E08[arg0 - 4][0];
+    }
+    tb = D_800F8384;
+    pp = &tb[s];
+    func_800BB538(arg0, (void *) ((*((s32 *) ((*pp) + 4))) + (*pp)), 1);
+    q = *((u8 **) ((*pp) + 8));
+    o = arg0 * 0xB9C;
+    D_8015190A[1 + o] = q[2];
+    D_801518F6[arg0][0] = *((u16 *) (q + 4));
+    D_801518EC[arg0][0] = *((u16 *) (q + 6));
+    D_801518EC[arg0][1] = *((u16 *) (q + 8));
+    D_801518F0[arg0][0] = *((u16 *) (q + 0xA));
+    c = &D_801518E4[arg0];
+    c->pad2[0x10] = 0;
+    c->pad2[0xF] = 0;
+    *(((u8 *) D_8015190C) + o) = 0;
+    D_801518E4[arg0].v = D_800F7DE8[(s * 2) + 2];
+    k = 0;
+    if ((*((s16 *) q)) != 0) {
+        D_8015190A[1 + o] = D_8015190A[1 + o] | 0x40;
+    }
+    do {
+        o3 = arg0 * 0x74;
+    } while (0);
+    *(u16 *)((u8 *)D_80151226 + o3) = *((u16 *) (q + 0xC));
+    D_80151228[arg0][0] = *((u16 *) (q + 0xE));
+    D_80151228[arg0][1] = (*((u16 *) (q + 0xC))) - 0x384;
+    d = &D_80151204[arg0][0];
+    D_8015122E[arg0].v = 0;
+    v = q;
+    D_80151230[arg0][0] = *((u16 *) (q + 0x64));
+    do {
+        *d = *((u16 *) (v + 0x44));
+        v += 2;
+        k++;
+        d++;
+    } while (k < 4);
+    k = 0;
+    o2 = arg0 * 0x74;
+    b = (u8 *) D_8015120E;
+    b2 = b + 0xC;
+    e = (u16 *) (b2 + o2);
+    f = (u16 *) (b + o2);
+    w = q;
+    do {
+        k++;
+        *f = *((volatile u16 *) (w + 0x4C));
+        f++;
+        *e = *((volatile u16 *) (w + 0x58));
+        w += 2;
+        e++;
+    } while (k < 6);
+    i = arg0;
+    o4 = i * 0xB9C;
+    D_801636BC[i].a = D_8015190A[1 + o4] & 0x3F;
+    if (D_8015190A[1 + o4] & 0x80) {
+        t = i << 6;
+        func_800BB67C((s32) (&D_80151A24[i]), &D_800FA6E0[t]);
+        func_800C7924(&D_800FA6E0[0x34 + t], (u8 *) ((*((s32 *) ((D_800F8384[s] + ((*((s32 *) D_800F8384[s])) << 2)) - 4))) + D_800F8384[s]), i);
+    }
+    s = 0;
+    r = D_8015190F[i];
+    do {
+        *r = *((q + s) + 0x12);
+        s++;
+        r++;
+    } while (s < 0x10);
+}
 
 s32 func_800B588C(void) {
     s32 i;

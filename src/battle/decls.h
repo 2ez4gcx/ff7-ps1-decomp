@@ -1574,7 +1574,6 @@ extern u8 D_800E7D08[];
 extern u16 D_80151A48[][0x5CE];
 extern u16 D_80151A50[][0x5CE];
 extern s32 D_80151A54[][0x2E7];
-void func_800B54B8(s32 arg0);
 extern u8 D_80163788[];
 typedef struct { s16 v; s16 w; u8 pad[0x14]; s16 f18; u8 pad2[0x148]; s16 f162; s16 f164; u8 pad3[0xA36]; } BtlE18;
 extern BtlE18 D_801518E4[];
@@ -1626,7 +1625,6 @@ extern u16 D_800F7DB0;
 extern u16 D_800F7DB2[];
 extern u16 D_800F7DB4;
 extern u16 D_800F7DB6;
-extern u16 D_800F7DE8;
 extern u16 D_80163768;
 extern u16 D_8009D864[][0x220];
 extern s32 D_800F9F28[];
@@ -1722,5 +1720,10 @@ M2C_UNK func_8003B05C(MgMat *, MgMat *);
 void func_800D84F8(MgMat *arg0, s32 arg1, MgMat *arg2);
 typedef struct { u8 a; u8 b; u16 c; } BtlEvt4;
 extern BtlEvt4 D_800F4308[][0x80];
+void func_800A8A6C(void);
+typedef struct { s8 a; u8 b; s16 c; u16 d; u8 pad[2]; } BtlE8f;
+extern u16 D_800F5E78[][0x1A];
+extern BtlE8f D_800F6B86[];
+extern s32 D_801517B8;
 
 #endif /* BATTLE_DECLS_H */
