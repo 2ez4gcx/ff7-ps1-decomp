@@ -55,7 +55,7 @@ extern s32 D_801CFD3C;
 void func_801B128C(s32 arg0, s32 arg1);
 extern u8 D_801B001C[];
 void func_801B0DF0(void *sc, u8 *r, s32 col);
-void func_801B0FE4(void *, u8 *, s32);
+void func_801B0FE4(void *arg0, u8 *arg1, s32 arg2);
 typedef struct { MgTag tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } JbPolyG3;
 typedef struct { s32 unk0; s32 sxy; s32 otz; s32 flag; MgSVec p0; MgSVec p1; u8 pad[0xA0]; MgVec d0; MgVec d1; } JbScratch;
 s32 func_8003BC0C(void *, void *, void *, void *, void *, void *, void *, void *);
@@ -71,5 +71,7 @@ extern s16 D_801CFD38;
 extern MgVec D_801B7D00;
 s32 func_80039F5C(s32);
 void func_800D3994(s32, s32, void *);
+typedef struct { u8 pad0[8]; s32 otz; u8 padC[4]; MgSVec v[4]; u8 pad30[0x10]; s32 sxy[4]; u8 pad50[0x30]; MgMat m80; MgMat mA0; } JbObj;
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
 
 #endif /* MAGIC_LV4JIBAK_DECLS_H */

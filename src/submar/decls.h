@@ -135,5 +135,22 @@ extern s32 D_800AEA18;
 typedef struct { s16 a0; s16 a1; s16 a2; s16 pad6; s16 b0; s16 b1; s16 b2; s16 padE; s16 c0; s16 c1; s16 c2; s16 pad16; s32 f18; s32 f1C; s32 f20; s32 f24; s32 f28; s32 f2C; s32 f30; s32 f34; s32 f38; } SubCam;
 extern SubCam D_801BA30C;
 void func_800A10E0(void);
+s32 func_800A35F4(s32 *arg0);
+extern u16 D_800AD58C[];
+extern u16 u16_800AD40C[];
+s32 func_800A99D4(s32 *arg0);
+void func_800A44A4(void);
+extern s16 D_800AD3B8;
+extern u8 D_8013660C[];
+extern s16 D_800AEA90[];
+extern s16 D_800AEA98[];
+extern s32 D_800F5F4C[];
+s32 func_800ABD4C();
+extern s32 D_800AE8D4;
+extern s32 D_800AE8D8;
+extern u8 D_800AE8EC[];
+extern u8 D_800AE8FC[];
+typedef struct { s32 x; s32 y; s32 z; u8 pad0C[0x44]; s16 nx; s16 ny; s16 nz; s16 pad56; s32 len; s32 f5C; s32 f60; } SubDirIn;
+void func_800A9FD0(SubDirIn *arg0);
 
 #endif /* SUBMAR_DECLS_H */

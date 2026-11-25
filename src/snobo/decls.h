@@ -1311,5 +1311,13 @@ extern s32 D_800DC5D4;
 extern s32 D_800DC5D8;
 extern s32 D_800DC5DC;
 extern s32 D_800DC5E0;
+s32 func_800A27FC(SbMesh *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
+void func_800A2FD4(SbMesh *arg0);
+typedef struct { u8 pad0[0x24]; s16 f24; u8 pad26[0x12]; SbQ *f38; u8 *f3C; } SbMeshH;
+extern u8 D_800C0244[];
+typedef struct { u8 *f0; s32 f4; s32 f8; s32 fC; s32 f10; s32 xy[0x54]; s32 z[0x54]; u8 pad2B4[0x18]; s32 f2CC; } SbScr;
+typedef struct { s32 *v; s32 n; u8 pad8[8]; s32 f10; s32 f14; } SbRec;
+extern void (*D_800DBA88[])();
+void func_800AAFE8(SbScr *arg0);
 
 #endif /* SNOBO_DECLS_H */

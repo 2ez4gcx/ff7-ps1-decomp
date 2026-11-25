@@ -152,5 +152,13 @@ extern u8 D_800F5B72;
 extern M2C_UNK D_800FA63C;
 void func_801B2F00(void);
 extern s32 D_801E097C;
+typedef struct { s32 tag; u32 c0; s16 x0; s16 y0; u32 c1; s16 x1; s16 y1; u32 c2; s16 x2; s16 y2; u32 c3; s16 x3; s16 y3; } GosG4;
+typedef struct { s32 tag; u32 c; s16 x0; s16 y0; s16 x1; s16 y1; s16 x2; s16 y2; s16 x3; s16 y3; } GosF4;
+typedef struct { MgSVec in[32]; MgSVec out[32]; s32 sc[4]; MgMat m; s32 otz; s32 ext; s32 flag; } GosRing;
+extern GosRing *D_801E0800;
+extern MgMat D_801E07E0;
+void func_800D4484(s32, s32);
+M2C_UNK func_800D461C(MgMat *);
+s32 func_8003BD7C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
 #endif /* MAGIC_GOSPEL_DECLS_H */

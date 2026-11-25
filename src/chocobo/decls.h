@@ -5,7 +5,7 @@
 #include "main/decls.h"
 typedef struct { u8 pad0[2]; u8 a; u8 cnt; u8 pad4[0x12]; s16 f16; u16 off; s32 base; s32 f20; } WmHdr3;
 s32 func_800AD9D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800AF9E4(WmHdr3 *, s16, s32);
+void func_800AF9E4(WmHdr3 *arg0, s16 arg1, s32 arg2);
 s32 func_800AD91C(WmHdr3 *arg0, s32 arg1, s32 arg2);
 s32 func_800B00DC(WmHdr3 *arg0, u8 *arg1);
 void func_800B01B0(s32, s16, s16, s16);
@@ -220,5 +220,12 @@ typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; } FdPrF;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; } FdPrG3;
 typedef struct { u8 pad0[3]; u8 len; u8 rgb0[3]; u8 code; u8 xy0[4]; u8 rgb1[4]; u8 xy1[4]; u8 rgb2[4]; u8 xy2[4]; u8 rgb3[4]; } FdPrG4;
 u8 func_80043CC0(void);
+typedef struct { s16 x; s16 p0; s16 y; s16 p1; s16 z; s16 p2; } ChoV12;
+typedef struct { s16 x; s16 p0; } ChoV4;
+void func_800AFC64(void *arg0, s16 arg1, s32 arg2);
+typedef struct { u8 pad0[2]; u8 n; u8 pad3[0x15]; u32 *p18; } ChoMesh;
+typedef struct { u16 n; u8 pad2; u8 c3; u8 c4; u8 pad5; u16 off6; u16 off8; u8 padA[2]; u32 *base; } ChoSub;
+typedef struct { s16 x; s16 y; s16 z; } ChoV6;
+void func_800AFDBC(ChoSub *arg0, s16 arg1, s32 arg2);
 
 #endif /* CHOCOBO_DECLS_H */

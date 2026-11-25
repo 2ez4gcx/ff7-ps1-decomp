@@ -153,5 +153,15 @@ extern s16 D_801DB952;
 extern s16 D_801DB954;
 s32 func_8003BC0C(void *, void *, void *, void *, void *, void *, void *, void *);
 extern MgVhPrim *D_80163C74;
+typedef struct { MgSVec rot; MgMat a; MgMat b; } VhCam;
+extern s32 D_801EF260;
+extern volatile s16 D_801EF26A;
+extern s32 D_801EF270;
+extern volatile s16 D_801EF27A;
+extern MgMat D_801EF280;
+extern s32 D_801EF2BC;
+extern s32 D_801EF2C0;
+extern s32 D_801EF2D8;
+extern VhCam *D_801EF2E0;
 
 #endif /* MAGIC_VAHAMUT_DECLS_H */

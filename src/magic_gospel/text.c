@@ -434,7 +434,172 @@ void func_801B1A48(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_gospel/nonmatchings/text", func_801B1C6C);
+void func_801B1C6C(s32 a, s32 b) {
+    s32 i;
+    s32 k;
+    s32 j;
+    s32 r;
+    s32 t;
+    GosG4 *q;
+    GosF4 *f;
+    GosF4 *g;
+    s32 ot;
+    s32 c1;
+    s32 c2;
+
+    func_8003A63C(&D_801E0988, &D_801E07E0, &D_801E0800->m);
+    func_800D461C(&D_801E0800->m);
+    D_801E0800->sc[2] = b;
+    D_801E0800->sc[1] = b;
+    D_801E0800->sc[0] = b;
+    ((void (*)(MgMat *, s32 *))func_8003B35C)(&D_801E0800->m, D_801E0800->sc);
+    func_8003B48C(&D_801E0800->m);
+    func_8003B51C(&D_801E0800->m);
+    i = 0;
+    do {
+        k = i << 7;
+        D_801E0800->in[i].vx = (u32)(func_80039B40(k) * 0x19) >> 7;
+        D_801E0800->in[i].vy = 0;
+        D_801E0800->in[i].vz = (u32)(func_80039A74(k) * 0x19) >> 7;
+        D_801E0800->out[i].vx = (u32)(func_80039B40(k) * 0x7D) >> 9;
+        D_801E0800->out[i].vy = 0;
+        D_801E0800->out[i].vz = (u32)(func_80039A74(k) * 0x7D) >> 9;
+        i++;
+    } while (i < 0x20);
+    ot = D_801517C0 + 0x74;
+    func_800D4484(ot, 0x20);
+    i = 0;
+    q = (GosG4 *)D_801E09A8;
+    c1 = a | 0x3A000000;
+    c2 = a | 0x2A000000;
+    do {
+        r = func_8003BD7C(&D_801E0800->out[i], &D_801E0800->out[i + 1], &D_801E0800->in[i], &D_801E0800->in[i + 1], &q->x0, &q->x1, &q->x2, &q->x3, &D_801E0800->ext, &D_801E0800->flag);
+        D_801E0800->otz = r;
+        if (!(D_801E0800->flag & 0x60000)) {
+            t = ((r >> 2) << 2) + (D_801517C0 + 0x70);
+            func_800D4484(t, 0x20);
+            q->tag = 0x08000000;
+            q->c1 = c1;
+            q->c0 = c1;
+            q->c3 = 0;
+            q->c2 = 0;
+            func_80046794(t, (u8 *)q);
+            f = (GosF4 *)(q + 1);
+            f->tag = 0x05000000;
+            f->c = c2;
+            f->y0 = f->y1 = 0;
+            f->x0 = f->x2 = q->x0;
+            f->x1 = f->x3 = q->x1;
+            f->y2 = q->y0;
+            f->y3 = q->y1;
+            func_80046794(t, (u8 *)f);
+            func_800D4484(t, 0x40);
+            if (i == 0) {
+                f++;
+                f->tag = 0x05000000;
+                f->c = c2;
+                f->x1 = f->x3 = 0x140;
+                f->y0 = f->y1 = 0;
+                f->x0 = f->x2 = q->x0;
+                f->y2 = f->y3 = q->y0;
+                func_80046794(ot, (u8 *)f);
+                f++;
+                f->tag = 0x05000000;
+                f->c = c2;
+                f->x1 = f->x3 = 0x140;
+                f->x0 = q->x0;
+                f->x2 = q->x2;
+                f->y0 = f->y1 = q->y0;
+                f->y2 = f->y3 = q->y2;
+                func_80046794(ot, (u8 *)f);
+            } else if (i == 0xF) {
+                f++;
+                f->tag = 0x05000000;
+                f->c = c2;
+                f->x0 = f->x2 = 0;
+                f->y0 = f->y1 = 0;
+                f->x1 = f->x3 = q->x1;
+                f->y2 = f->y3 = q->y1;
+                func_80046794(ot, (u8 *)f);
+                f++;
+                f->tag = 0x05000000;
+                f->c = c2;
+                f->x0 = f->x2 = 0;
+                f->x1 = q->x1;
+                f->x3 = q->x3;
+                f->y0 = f->y1 = q->y1;
+                f->y2 = f->y3 = q->y3;
+                func_80046794(ot, (u8 *)f);
+            }
+            q = (GosG4 *)(f + 1);
+        }
+        i++;
+    } while (i < 0x10);
+    i = 0x10;
+    do {
+        j = i + 1;
+        r = func_8003BD7C(&D_801E0800->in[i], &D_801E0800->in[j % 32], &D_801E0800->out[i], &D_801E0800->out[j % 32], &q->x0, &q->x1, &q->x2, &q->x3, &D_801E0800->ext, &D_801E0800->flag);
+        D_801E0800->otz = r;
+        if (!(D_801E0800->flag & 0x60000)) {
+            q->tag = 0x08000000;
+            q->c1 = 0x3A000000;
+            q->c0 = 0x3A000000;
+            q->c3 = a;
+            q->c2 = a;
+            func_80046794(ot, (u8 *)q);
+            f = (GosF4 *)(q + 1);
+            f->tag = 0x05000000;
+            f->c = a | 0x2A000000;
+            f->y2 = f->y3 = 0xA6;
+            f->x0 = f->x2 = q->x2;
+            f->x1 = f->x3 = q->x3;
+            f->y0 = q->y2;
+            f->y1 = q->y3;
+            func_80046794(ot, (u8 *)f);
+            if (i == 0x10) {
+                f++;
+                f->tag = 0x05000000;
+                f->c = a | 0x2A000000;
+                f->x0 = f->x2 = 0;
+                f->x1 = q->x0;
+                f->x3 = q->x2;
+                f->y0 = f->y1 = q->y0;
+                f->y2 = f->y3 = q->y2;
+                func_80046794(ot, (u8 *)f);
+                f++;
+                f->tag = 0x05000000;
+                f->c = a | 0x2A000000;
+                f->x0 = f->x2 = 0;
+                f->y2 = f->y3 = 0xA6;
+                f->x1 = f->x3 = q->x2;
+                f->y0 = f->y1 = q->y2;
+                func_80046794(ot, (u8 *)f);
+            } else if (i == 0x1F) {
+                f++;
+                f->tag = 0x05000000;
+                f->c = a | 0x2A000000;
+                f->x1 = f->x3 = 0x140;
+                f->x0 = q->x1;
+                f->x2 = q->x3;
+                f->y0 = f->y1 = q->y1;
+                f->y2 = f->y3 = q->y3;
+                func_80046794(ot, (u8 *)f);
+                f++;
+                f->tag = 0x05000000;
+                f->c = a | 0x2A000000;
+                f->x1 = f->x3 = 0x140;
+                f->y2 = f->y3 = 0xA6;
+                f->x0 = f->x2 = q->x3;
+                f->y0 = f->y1 = q->y3;
+                func_80046794(ot, (u8 *)f);
+            }
+            q = (GosG4 *)(f + 1);
+        }
+        i++;
+    } while (i < 0x20);
+    func_800D4484(ot, 0x40);
+    D_801E09A8 = (u8 *)q;
+}
 
 void func_801B22E8(void) {
     MgTask *p;

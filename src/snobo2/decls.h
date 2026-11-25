@@ -1068,5 +1068,9 @@ typedef struct { u8 pad0[0x14]; s16 unk14; u8 pad16[0x1E]; s32 unk34; u8 pad38[4
 void func_800ACB5C(Sb2FxP *arg0);
 typedef struct { u16 v[1]; } Sb2H1;
 extern SbVtx8 D_80103D0C;
+s32 func_800A39AC(SbMesh *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
+void func_800A4180(SbMesh *arg0);
+typedef struct { u8 pad0[0x24]; s16 f24; u8 pad26[0x12]; SbQ *f38; u8 *f3C; } SbMeshH;
+extern u8 D_800B8810[];
 
 #endif /* SNOBO2_DECLS_H */

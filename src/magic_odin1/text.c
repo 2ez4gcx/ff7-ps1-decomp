@@ -1489,4 +1489,49 @@ void func_801B5D14(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B65A0);
+s32 func_801B65A0(arg0, arg1) {
+    MgSVec v;
+    MgTask *q;
+    s32 i;
+    s32 t;
+    s32 a;
+    s32 *tp;
+    MgMat *m;
+
+    func_800D2980(&D_801B67C8, 0, 0, 0);
+    i = 0;
+    do {
+        if ((arg0 >> i) & 1) {
+            goto found;
+        }
+        i++;
+    } while (i < 10);
+after:
+    func_800D3994(D_801F3574, D_8015190F[D_801F3574][0], &v);
+    if (v.vz > D_80151A50[arg1][0]) {
+        D_801DD63C = v.vz - 0xD48;
+        goto join;
+found:
+        D_801F3574 = i;
+        goto after;
+    }
+    t = 0x800;
+    D_801DD618.vy = t;
+    D_801DD63C = v.vz + 0xD48;
+join:
+    tp = &D_801DD634;
+    *tp = v.vx;
+    m = (MgMat *)(tp - 5);
+    func_8003C21C(&D_801DD618, m);
+    func_801B0068(&D_801D6BC8, &D_801DAE94, &D_801F3578);
+    func_801B0068(&D_801D819C, &D_801DB554, &D_801F3C38);
+    q = &D_80162978[func_800BBEAC(&func_801B5D14)];
+    *(MgB8 *)&q->unk4 = *(MgB8 *)&v;
+    t = func_80042DA8() & 0x100;
+    a = (s32)&D_801F26A0;
+    if (t) {
+        a = (s32)&D_801F2554;
+    }
+    ((void (*)(s32, s32, s32))func_801B2778)(a, (s32)m, arg1);
+    D_800F8380 |= 8;
+}

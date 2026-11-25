@@ -46,7 +46,7 @@ void func_801B1E24(MgSVecList *a, MgSVec *b, MgSVec *out);
 void func_801B1EB4(MgSVecList *a, MgSVec *b, MgSVec *d, s32 t);
 void func_801B2AE4(void);
 extern s32 D_801F1C24;
-s32 func_800D4D90(s16 *, s32, M2C_UNK, s32);
+s32 func_800D4D90(s32 *, s32, M2C_UNK, s32);
 extern s32 D_801517C0;
 extern s32 D_80163C74;
 extern s16 D_801EDF9C[];
@@ -179,5 +179,9 @@ extern u8 D_801EE220[];
 extern u16 D_801EE22C;
 extern u16 D_801EE22E;
 s32 func_801B1124(s32 *, s32, s32, s32);
+void func_801B5770(void);
+extern s32 D_801EE0E8[];
+extern s32 D_801EE118[];
+extern MgMat D_801EE124;
 
 #endif /* MAGIC_ALEX_DECLS_H */

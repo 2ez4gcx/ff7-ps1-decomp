@@ -878,7 +878,98 @@ draw:
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut/nonmatchings/text", func_801B2DA8);
+void func_801B2DA8(void) {
+    MgTask *b;
+    MgTask *p;
+    MgTask *q;
+    MgMat *f;
+    s32 *g;
+    s32 *h;
+    s32 t;
+    s32 u;
+    s32 k;
+    s32 k2;
+    s32 n;
+    s16 w;
+    s32 c;
+    u8 *s;
+
+    b = D_80162978;
+    p = &b[D_8015169C];
+    func_8003A63C(&D_801EFC68, &D_801EF280, &D_801EF2E0->a);
+    if (p->unk2 == 0) {
+        D_801EF2E0->rot.vx = 0x630;
+        D_801EF2E0->rot.vy = 0;
+        D_801EF2E0->rot.vz = 0;
+        func_8003C21C(&D_801EF2E0->rot, &D_801EF280);
+    }
+    t = (s16)(u16)p->unk2;
+    if (t < 0x1E) {
+        D_801EF27A = 0;
+        D_801EF26A = 0;
+        u = (t << 12) / 30;
+        k = u * 0x3A98 >> 12;
+        k2 = k;
+        if (D_80062D98 == 0 && t == t / 5 * 5) {
+            q = &b[func_800BBEAC((M2C_UNK *)func_801B2BEC)];
+            *(MgMat **)((u8 *)q + 0x18) = &D_801EF280;
+            q->unk8 = k;
+        }
+    } else {
+        t -= 0x1E;
+        if (t >= 5) {
+            p->unk0 = -1;
+            return;
+        }
+        u = (t << 12) / 5;
+        k = (-(u * 0x3A98) >> 12) + 0x3A98;
+        k2 = 0x3A98;
+        w = u;
+        D_801EF27A = w;
+        D_801EF26A = w;
+        if (D_80062D98 == 0 && t == 0) {
+            q = &b[func_800BBEAC((M2C_UNK *)func_801B1C48)];
+            D_801EF2E0->rot.vx = 0;
+            D_801EF2E0->rot.vy = 0;
+            D_801EF2E0->rot.vz = -0x3A98;
+            func_8003B2CC(&D_801EF2E0->a, (M2C_UNK *)D_801EF2E0, D_801EF2E0);
+            s = (u8 *)D_801EF2E0;
+            *(s16 *)((u8 *)q + 4) = *(u16 *)s + *(u16 *)(s + 0x1C);
+            *(s16 *)((u8 *)q + 6) = *(u16 *)(s + 2) + *(u16 *)(s + 0x20);
+            *(s16 *)((u8 *)q + 8) = *(u16 *)(s + 4) + *(u16 *)(s + 0x24);
+            *(s16 *)((u8 *)q + 0x14) = 0x2000;
+        }
+    }
+    g = &D_801EF2BC;
+    f = (MgMat *)((u8 *)g - 0x1C);
+    n = -k2;
+    *g = n + 0x3E8;
+    func_8003A63C(&D_801EF2E0->a, f, &D_801EF2E0->b);
+    func_8003B35C(&D_801EF2E0->b, &D_801EF2C0);
+    func_8003B48C(f);
+    func_8003B51C(&D_801EF2E0->b);
+    func_8003B69C(0, 0, 0);
+    D_80163C74 = func_800D29D4(&D_801EF260, D_801517C0 + 0x70, 0xC, D_80163C74);
+    func_8003C21C((MgSVec *)&p->unkC, &D_801EF2E0->b);
+    D_801EF2E0->b.t[0] = 0;
+    D_801EF2E0->b.t[1] = 0;
+    D_801EF2E0->b.t[2] = n;
+    func_8003A63C(&D_801EF2E0->a, &D_801EF2E0->b, &D_801EF2E0->b);
+    h = &D_801EF2D8;
+    c = (k << 12) / 1800;
+    if (c > 0x7FFF) {
+        c = 0x7FFF;
+    }
+    *h = c;
+    func_8003B35C(&D_801EF2E0->b, h - 2);
+    func_8003B48C(&D_801EF2E0->b);
+    func_8003B51C(&D_801EF2E0->b);
+    D_80163C74 = func_800D29D4(&D_801EF270, D_801517C0 + 0x70, 0xC, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unk10 += 0x80;
+    }
+}
 
 void func_801B31D8(void) {
     MgTask *b;

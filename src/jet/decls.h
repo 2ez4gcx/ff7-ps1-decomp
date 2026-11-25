@@ -183,7 +183,7 @@ extern s32 D_800D1CC4;
 extern s32 D_800D1CC8;
 extern s32 D_800D1CFC[];
 void func_800A1B64(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4);
-M2C_UNK func_800A1198(s32, s32 *, M2C_UNK, M2C_UNK, s32);
+s32 func_800A1198(s32 arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4);
 M2C_UNK func_800A1CD8(s16, M2C_UNK, M2C_UNK, M2C_UNK, s32);
 extern s16 D_800A89CC;
 extern s32 *D_800A8A74;
@@ -314,5 +314,8 @@ typedef struct { u8 pad0[0x409C]; JetTag ot; u8 pad40A0[0x437C - 0x40A0]; u8 *pr
 typedef struct { JetTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 u0; u8 v0; u16 clut; s16 x1; s16 y1; u8 u1; u8 v1; u16 tpage; s16 x2; s16 y2; u8 u2; u8 v2; u16 pad2; s16 x3; s16 y3; u8 u3; u8 v3; u16 pad3; } JetPolyFT4;
 void func_800A84A4(s32 *arg0, s32 *arg1);
 void func_800A83F0(s32 *arg0, s32 *arg1);
+typedef struct { s16 m[9]; s32 t[3]; } JetMat;
+typedef struct { s32 f0; JetMat mat; } JetMdl;
+s32 func_800A8604();
 
 #endif /* JET_DECLS_H */

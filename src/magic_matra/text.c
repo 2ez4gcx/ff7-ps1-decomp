@@ -99,7 +99,27 @@ INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B0EE0);
 
 INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B107C);
 
-INCLUDE_ASM("../asm/us/magic_matra/nonmatchings/text", func_801B12B8);
+void func_801B12B8(MgObjM *arg0) {
+    MgVec sc;
+    s32 s;
+
+    s = func_80039F5C(arg0->fDC) >> 2;
+    arg0->m80.t[0] += (s * arg0->fC0) >> 12;
+    arg0->m80.t[1] += (s * arg0->fC4) >> 12;
+    arg0->m80.t[2] += (s * arg0->fC8) >> 12;
+    sc.vx = sc.vy = sc.vz = D_801DC8B0;
+    func_8003B35C(&arg0->m80, &sc);
+    func_8003A63C(&D_800FA63C, &arg0->m80, &arg0->mA0);
+    gte_SetRotMatrix_d(&arg0->mA0);
+    gte_SetTransMatrix(&arg0->mA0);
+    *(u8 **)0x1F800000 = D_801B84D0;
+    *(s32 *)0x1F800004 = 0x80;
+    *(s16 *)0x1F800008 = 0;
+    *(s16 *)0x1F80000A = 0;
+    *(s16 *)0x1F80000C = 0;
+    *(s16 *)0x1F80000E = 0;
+    D_801DC890 = func_800D29D4((void *)0x1F800000, D_801517C0 + 0x70, 0xC, D_801DC890);
+}
 
 void func_801B1428(MgRtp *r, MgSVec *v0, MgSVec *v1, s32 color) {
     MgLineG2 *p;

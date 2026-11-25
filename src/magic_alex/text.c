@@ -1028,7 +1028,24 @@ void func_801B5584(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B5770);
+void func_801B5770(void) {
+    MgTask *p;
+    s32 t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t >= 0xC) {
+        p->unk0 = -1;
+        return;
+    }
+    func_8003B48C(&D_801EE124);
+    func_8003B51C(&D_801EE124);
+    D_801EE118[0] = D_801EE0E8[t];
+    D_80163C74 = func_800D4D90(D_801EE118, D_801517C0 + 0x4084, 0, D_80163C74);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+    }
+}
 
 void func_801B5850(void) {
     AlxObj *p;

@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0040(void);
-M2C_UNK func_801B65A0();
+s32 func_801B65A0();
 extern M2C_UNK D_801DD640;
 void func_801B27DC(void);
 extern s32 D_801F7EE0[];
@@ -162,7 +162,7 @@ extern u8 D_801F2A68[];
 extern u8 D_801F2A78[];
 void func_801B5D14(void);
 void func_800C610C(void);
-void func_800D2980();
+M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void func_800D52A0(s32, s32);
 void func_800D5774(s32);
 void func_800D55F4();
@@ -187,9 +187,21 @@ extern MgCam *D_801F2B78;
 s32 func_80039F5C(s32);
 void func_8003A078(MgVec *, MgSVec *);
 extern MgSVec D_80158D00;
-void func_800D3994(s32, s32, MgSVec *);
+M2C_UNK func_800D3994(s32, s32, MgSVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern volatile u8 vol_80062D98;
+extern u8 D_8015190F[][0xB9C];
+extern s16 D_80151A50[][0x5CE];
+extern s32 D_801DD634;
+extern s32 D_801DD63C;
+extern MgSVecList D_801D6BC8;
+extern MgSVec D_801DAE94;
+extern MgSVec D_801F3578;
+extern MgSVecList D_801D819C;
+extern MgSVec D_801DB554;
+extern MgSVec D_801F3C38;
+extern M2C_UNK D_801F26A0;
+extern M2C_UNK D_801F2554;
 
 #endif /* MAGIC_ODIN1_DECLS_H */

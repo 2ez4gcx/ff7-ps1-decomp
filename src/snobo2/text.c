@@ -976,11 +976,97 @@ void func_800A3674(void *arg0) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A370C);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A39AC);
+s32 func_800A39AC(SbMesh *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    s32 *p;
+    s32 *q;
+    s32 *r;
+    s32 *v;
+    s32 *s;
+    s32 i;
+
+    p = (s32 *)arg0->xy;
+    q = (s32 *)arg0->z;
+    r = (s32 *)arg0->col;
+    for (i = 6; i != -1; i--) {
+        *p++ = *arg1++;
+        *q++ = *arg2++;
+        *r++ = *arg3++;
+    }
+    v = (s32 *)((u8 *)*(s32 *)((u8 *)arg0 + 0x3C) + 0x40);
+    for (i = 0x2A; i > 0;) {
+        gte_ldv3_m(v, v + 2, v + 4);
+        gte_rtpt();
+        gte_stsxy3_m(p, p + 1, p + 2);
+        gte_stsz3_m(q);
+        i -= 3;
+        v += 6;
+        p += 3;
+        q += 3;
+    }
+    s = (s32 *)((u8 *)*(s32 *)((u8 *)arg0 + 0x3C) + 0x1AC);
+    for (i = 0x29; i != -1; i--) {
+        *r++ = *s++;
+    }
+    if (*(s16 *)*(s32 *)((u8 *)arg0 + 0x3C) == 3) {
+        func_800A4338(arg0);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A3AE4);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A4180);
+void func_800A4180(SbMesh *arg0) {
+    s32 *p;
+    s32 *q;
+    s32 *r;
+    s32 *v;
+    s32 *s;
+    SbQ *h;
+    s32 i;
+    s32 k;
+    s32 n;
+    u8 idx;
+
+    p = (s32 *)arg0->xy;
+    q = (s32 *)arg0->z;
+    v = (s32 *)(((SbMeshH *)arg0)->f3C + 8);
+    n = 0x31;
+    do {
+        gte_ldv3_m(v, v + 2, v + 4);
+        gte_rtpt();
+        gte_stsxy3_m(p, p + 1, p + 2);
+        gte_stsz3_m(q);
+        n -= 3;
+        v += 6;
+        p += 3;
+        q += 3;
+    } while (n > 0);
+    i = ((SbMeshH *)arg0)->f24 - 1;
+    if (i < 0) {
+        idx = ((u8 *)((SbMeshH *)arg0)->f38)[3];
+        if (idx == 0xFF) {
+            s = (s32 *)(((SbMeshH *)arg0)->f3C + 0x190);
+        } else {
+            h = &D_800C824C[idx];
+            idx = h->unk8[*(s16 *)h - 1];
+            s = (s32 *)(D_800B8810 + idx * 0x374);
+        }
+    } else {
+        idx = ((SbMeshH *)arg0)->f38->unk8[i];
+        s = (s32 *)(D_800B8810 + idx * 0x374);
+    }
+    r = (s32 *)arg0->col;
+    for (k = 6; k != -1; k--) {
+        *r++ = *s++;
+    }
+    s = (s32 *)(((SbMeshH *)arg0)->f3C + 0x1AC);
+    for (k = 0x29; k != -1; k--) {
+        *r++ = *s++;
+    }
+    if (*(s16 *)((SbMeshH *)arg0)->f3C == 3) {
+        func_800A4338(arg0);
+    }
+}
 
 void func_800A4338(SbMesh *p) {
     s32 i;

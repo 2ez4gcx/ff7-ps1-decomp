@@ -90,7 +90,40 @@ INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A0874);
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A0D78);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1198);
+s32 func_800A1198(s32 arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    JetMat *d;
+    JetMat *s;
+    s32 l[4];
+    s32 r;
+    s32 k;
+    volatile s32 *g;
+
+    g = &D_800D1BD0;
+    d = (JetMat *)*g;
+    s = &((JetMdl *)arg1)->mat;
+    d->m[0] = s->m[0];
+    d->m[1] = s->m[1];
+    d->m[2] = s->m[2];
+    d->m[3] = s->m[3];
+    d->m[4] = s->m[4];
+    d->m[5] = s->m[5];
+    d->m[6] = s->m[6];
+    d->m[7] = s->m[7];
+    d->m[8] = s->m[8];
+    d->t[0] = s->t[0];
+    d->t[1] = s->t[1];
+    d->t[2] = s->t[2];
+    gte_SetRotMatrix((void *)*g);
+    gte_SetTransMatrix_m((void *)*g);
+    k = (s16)arg2 * 4 + 0x4098;
+    l[0] = *(s32 *)(arg1[0] + 0xC);
+    l[1] = *(s32 *)(arg0 + 0x4370);
+    l[2] = arg0 + k;
+    l[3] = arg1[0];
+    r = func_800A8604(l);
+    *(s32 *)(arg0 + 0x4370) = r;
+    return r;
+}
 
 void func_800A12EC(void) {
     s32 acc;

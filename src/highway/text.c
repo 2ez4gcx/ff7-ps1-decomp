@@ -98,9 +98,51 @@ INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A057C);
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A2ADC);
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A2F4C);
+void func_800A2F4C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 *t;
+    s32 r;
+    u8 *p;
+    s32 i;
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A30A0);
+    t = (s32 *)D_8010EA34;
+    t[5] = 0;
+    t[6] = (s16)arg2;
+    t[7] = 0;
+    if ((D_8010EAE0 & 0xFF) == 0) {
+        gte_SetRotMatrix((u8 *)D_801163E8 + 0x80);
+    } else {
+        gte_SetRotMatrix(D_801163E8);
+    }
+    gte_SetTransMatrix_m((s32 *)D_8010EA34);
+    r = *(s32 *)(arg0 + 0x5098);
+    p = (*(HwMdl **)arg1)->p10;
+    for (i = 0; i < (*(HwMdl **)arg1)->n; i++) {
+        r = func_800B3EC0(p, r, arg0 + 0x5038);
+        p += 0x28;
+    }
+    *(s32 *)(arg0 + 0x5098) = r;
+}
+
+void func_800A30A0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 l[4];
+    s32 *t;
+
+    t = (s32 *)D_8010EA34;
+    t[5] = 0;
+    t[6] = (s16)arg2;
+    t[7] = 0;
+    if ((D_8010EAE0 & 0xFF) == 0) {
+        gte_SetRotMatrix((u8 *)D_801163E8 + 0x80);
+    } else {
+        gte_SetRotMatrix(D_801163E8);
+    }
+    gte_SetTransMatrix_m((s32 *)D_8010EA34);
+    l[0] = *(s32 *)(*(s32 *)arg1 + 0xC);
+    l[1] = *(s32 *)(arg0 + 0x5090);
+    l[2] = arg0 + 0x5038;
+    l[3] = *(s32 *)arg1;
+    *(s32 *)(arg0 + 0x5090) = func_800B3D28(l);
+}
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A31C8);
 
@@ -3422,11 +3464,189 @@ INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B1550);
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B1E98);
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B2760);
+void func_800B2760(WmHdr3 *arg0, s16 arg1, s32 arg2) {
+    ChoMat *sc;
+    ChoV12 *b;
+    ChoV4 *c4;
+    s16 *w;
+    s16 *r;
+    u8 *p;
+    u32 i;
+    u32 n;
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B29E0);
+    w = (s16 *)0x1F800020;
+    r = (s16 *)0x1F800028;
+    sc = (ChoMat *)0x1F800000;
+    n = arg0->cnt;
+    p = (u8 *)(arg0->off + arg0->base);
+    for (i = 0; i < n; i++) {
+        func_800B29E0(p + i * 0x20, arg1, arg2);
+    }
+    sc->m[0][0] = arg1;
+    sc->m[1][1] = arg1;
+    sc->m[2][2] = arg1;
+    sc->t[2] = 0;
+    sc->t[1] = 0;
+    sc->t[0] = 0;
+    sc->m[2][1] = 0;
+    sc->m[2][0] = 0;
+    sc->m[1][2] = 0;
+    sc->m[1][0] = 0;
+    sc->m[0][2] = 0;
+    sc->m[0][1] = 0;
+    gte_SetRotMatrix_d(sc);
+    gte_SetTransMatrix(sc);
+    n = (u8)(arg0->a / 3);
+    b = (ChoV12 *)arg0->base;
+    for (i = 0; i < n; i++) {
+        w[0] = b[i].x;
+        w[1] = b[i].y;
+        w[2] = b[i].z;
+        gte_ldv0c(w);
+        gte_mvmva(1, 0, 0, 0, 0);
+        gte_stlvnl_c(r);
+        b[i].x = r[0];
+        b[i].y = r[2];
+        b[i].z = r[4];
+    }
+    c4 = (ChoV4 *)b;
+    for (i = n * 3; i < arg0->a; i++) {
+        w[0] = c4[i].x;
+        gte_ldv0c(w);
+        gte_mvmva(1, 0, 0, 0, 0);
+        gte_stlvnl_c(r);
+        c4[i].x = r[0];
+    }
+    n = ((u8 *)arg0)[4];
+    p = (u8 *)(*(u16 *)((u8 *)arg0 + 0x1A) + arg0->base);
+    for (i = 0; i < n; i++) {
+        func_800B2B38(p + i * 0x10, arg1, arg2);
+    }
+}
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B2B38);
+void func_800B29E0(HwMesh *arg0, s16 arg1, s32 arg2) {
+    HwSVec *p;
+    s32 *t;
+    u32 i;
+    u32 n;
+    s16 *m;
+    u8 pad[8];
+
+    t = (s32 *)0x1F800020;
+    m = (s16 *)0x1F800000;
+    if (!(*arg0->p18 & 1) || arg2 != 0) {
+        *m = arg1;
+        *(s16 *)0x1F800008 = arg1;
+        *(s16 *)0x1F800010 = arg1;
+        *(s32 *)0x1F80001C = 0;
+        *(s32 *)0x1F800018 = 0;
+        *(s32 *)0x1F800014 = 0;
+        *(s16 *)0x1F80000E = 0;
+        *(s16 *)0x1F80000C = 0;
+        *(s16 *)0x1F80000A = 0;
+        *(s16 *)0x1F800006 = 0;
+        *(s16 *)0x1F800004 = 0;
+        *(s16 *)0x1F800002 = 0;
+        gte_SetRotMatrix_d(m);
+        gte_SetTransMatrix(m);
+        i = 0;
+        n = arg0->n;
+        p = (HwSVec *)(arg0->p18 + 1);
+        if (n != 0) {
+            do {
+                gte_ldv0c(&p[i]);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stlvnl_c(t);
+                p[i].x = *(u16 *)&t[0];
+                p[i].y = *(u16 *)&t[1];
+                p[i].z = *(u16 *)&t[2];
+                i++;
+            } while (i < n);
+        }
+        *arg0->p18 |= 1;
+    }
+}
+
+void func_800B2B38(ChoSub *arg0, s16 arg1, s32 arg2) {
+    ChoMat *sc;
+    ChoV6 *b;
+    s16 *w;
+    s16 *r;
+    ChoV6 *d;
+    s16 *e;
+    u32 n;
+    u32 nv;
+    u32 cnt;
+    u32 i;
+    u32 j;
+
+    sc = (ChoMat *)0x1F800000;
+    w = (s16 *)0x1F800000;
+    r = (s16 *)0x1F800008;
+    if (*arg0->base == 0 || arg2 != 0) {
+        sc->m[0][0] = arg1;
+        sc->m[1][1] = arg1;
+        sc->m[2][2] = arg1;
+        sc->t[2] = 0;
+        sc->t[1] = 0;
+        sc->t[0] = 0;
+        sc->m[2][1] = 0;
+        sc->m[2][0] = 0;
+        sc->m[1][2] = 0;
+        sc->m[1][0] = 0;
+        sc->m[0][2] = 0;
+        sc->m[0][1] = 0;
+        gte_SetRotMatrix_d(sc);
+        gte_SetTransMatrix(sc);
+        cnt = arg0->c3;
+        n = arg0->n;
+        for (j = 0; j < cnt; j++) {
+            nv = n / 3;
+            b = (ChoV6 *)((s16 *)(arg0->off6 + (u32)arg0->base) + j * n);
+            for (i = 0; i < nv; i++) {
+                w[0] = b[i].x;
+                w[1] = b[i].y;
+                w[2] = b[i].z;
+                gte_ldv0c(w);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stlvnl_c(r);
+                b[i].x = r[0];
+                b[i].y = r[2];
+                b[i].z = r[4];
+            }
+            for (i = nv * 3; i < n; i++) {
+                w[0] = ((s16 *)b)[i];
+                gte_ldv0c(w);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stlvnl_c(r);
+                ((s16 *)b)[i] = r[0];
+            }
+        }
+        cnt = arg0->c4;
+        nv = cnt / 3;
+        for (j = 0; j < nv; j++) {
+            d = (ChoV6 *)(arg0->off8 + (u32)arg0->base) + j;
+            w[0] = d->x;
+            w[1] = d->y;
+            w[2] = d->z;
+            gte_ldv0c(w);
+            gte_mvmva(1, 0, 0, 0, 0);
+            gte_stlvnl_c(r);
+            d->x = r[0];
+            d->y = r[2];
+            d->z = r[4];
+        }
+        for (j = nv * 3; j < cnt; j++) {
+            e = (s16 *)(arg0->off8 + (u32)arg0->base) + j;
+            w[0] = e[0];
+            gte_ldv0c(w);
+            gte_mvmva(1, 0, 0, 0, 0);
+            gte_stlvnl_c(r);
+            e[0] = r[0];
+        }
+        *arg0->base = 1;
+    }
+}
 
 s32 func_800B2E58(u8 *arg0, u8 *arg1) {
     s16 x;

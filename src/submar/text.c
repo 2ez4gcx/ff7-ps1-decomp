@@ -409,13 +409,90 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A32C8);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A3534);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A35F4);
+s32 func_800A35F4(s32 *arg0) {
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 n1;
+    s32 n2;
+    s32 n3;
+    s32 m2;
+    s32 m3;
+    s32 sum;
+    s32 lz;
+    s32 t;
+    s32 sh;
+
+    x = arg0[0];
+    y = arg0[1];
+    z = arg0[2];
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_sqr0();
+    gte_mfc2(25, sum);
+    gte_mfc2(26, m2);
+    gte_mfc2(27, m3);
+    sum += m2;
+    sum += m3;
+    gte_mtc2(30, sum);
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_mfc2n(31, lz);
+    lz = (lz >> 1) << 1;
+    sh = (31 - lz) / 2;
+    if (lz == 0x20) {
+        sum = 0;
+    }
+    if (lz < 0x18) {
+        sum >>= 0x18 - lz;
+    } else {
+        sum <<= lz - 0x18;
+    }
+    t = D_800AD58C[sum];
+    gte_mtc2(8, t);
+    sum = u16_800AD40C[sum];
+    gte_gpf0();
+    sum = (sum << sh) >> 12;
+    gte_mfc2(25, n1);
+    gte_mfc2(26, n2);
+    gte_mfc2(27, n3);
+    arg0[0] = n1 >> sh;
+    arg0[1] = n2 >> sh;
+    arg0[2] = n3 >> sh;
+    return sum;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A36F4);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A435C);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A44A4);
+void func_800A44A4(void) {
+    SubSel *e;
+    s32 a0;
+    u8 *b;
+    s32 *m;
+
+    e = D_800B08EC;
+    b = D_8013660C;
+    a0 = (s32)(b + D_800AD3B8 * 0x10680);
+    do {
+        if ((e->flags & 0x20) || ((e->flags & 3) && (e->flags & 0x10) && (e->state & 0xF00))) {
+            D_800AEA90[0] = e->x >> 12;
+            D_800AEA90[1] = e->y >> 12;
+            D_800AEA90[2] = e->z >> 12;
+            D_800AEA98[0] = e->f1C;
+            D_800AEA98[1] = e->f1E;
+            D_800AEA98[2] = e->f20;
+            a0 = func_800ABD4C(a0, e->p54);
+        }
+        e++;
+    } while (e < &D_800B08EC[12]);
+    m = D_800F5F4C;
+    gte_SetRotMatrix_d(m);
+    gte_SetTransMatrix(m);
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A4624);
 
@@ -986,13 +1063,138 @@ INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A96C8);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9914);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A99D4);
+s32 func_800A99D4(s32 *arg0) {
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 n1;
+    s32 n2;
+    s32 n3;
+    s32 m2;
+    s32 m3;
+    s32 sum;
+    s32 lz;
+    s32 t;
+    s32 sh;
+
+    x = arg0[0];
+    y = arg0[1];
+    z = arg0[2];
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_sqr0();
+    gte_mfc2(25, sum);
+    gte_mfc2(26, m2);
+    gte_mfc2(27, m3);
+    sum += m2;
+    sum += m3;
+    gte_mtc2(30, sum);
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_mfc2n(31, lz);
+    lz = (lz >> 1) << 1;
+    sh = (31 - lz) / 2;
+    if (lz == 0x20) {
+        sum = 0;
+    }
+    if (lz < 0x18) {
+        sum >>= 0x18 - lz;
+    } else {
+        sum <<= lz - 0x18;
+    }
+    t = D_800AD58C[sum];
+    gte_mtc2(8, t);
+    sum = u16_800AD40C[sum];
+    gte_gpf0();
+    sum = (sum << sh) >> 12;
+    gte_mfc2(25, n1);
+    gte_mfc2(26, n2);
+    gte_mfc2(27, n3);
+    arg0[0] = n1 >> sh;
+    arg0[1] = n2 >> sh;
+    arg0[2] = n3 >> sh;
+    return sum;
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9AD4);
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9CB0);
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A9FD0);
+void func_800A9FD0(SubDirIn *arg0) {
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 n1;
+    s32 n2;
+    s32 n3;
+    s32 m2;
+    s32 m3;
+    s32 sum;
+    s32 lz;
+    s32 t;
+    s32 sh;
+    s32 r;
+    s32 w;
+
+    x = (arg0->x - D_800AE8D0[0]) >> 12;
+    y = (arg0->y - D_800AE8D4) >> 12;
+    z = (arg0->z - D_800AE8D8) >> 12;
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_sqr0();
+    arg0->nx = x;
+    arg0->ny = y;
+    arg0->nz = z;
+    gte_mfc2(25, sum);
+    gte_mfc2(26, m2);
+    gte_mfc2(27, m3);
+    sum += m2;
+    sum += m3;
+    gte_mtc2(30, sum);
+    gte_mtc2(9, x);
+    gte_mtc2(10, y);
+    gte_mtc2(11, z);
+    gte_mfc2n(31, lz);
+    lz = (lz >> 1) << 1;
+    sh = (31 - lz) / 2;
+    if (lz == 0x20) {
+        sum = 0;
+    }
+    if (lz < 0x18) {
+        sum >>= 0x18 - lz;
+    } else {
+        sum <<= lz - 0x18;
+    }
+    t = D_800AD58C[sum];
+    gte_mtc2(8, t);
+    sum = u16_800AD40C[sum];
+    gte_gpf0();
+    sum = (sum << sh) >> 12;
+    arg0->len = sum;
+    gte_mfc2(25, n1);
+    gte_mfc2(26, n2);
+    gte_mfc2(27, n3);
+    n1 >>= sh;
+    n2 >>= sh;
+    n3 >>= sh;
+    w = (n1 & 0xFFFF) | (n2 << 16);
+    gte_ctc2(8, w);
+    w = (n3 & 0xFFFF) | (-n1 << 16);
+    gte_ctc2(9, w);
+    w = (-n2 & 0xFFFF) | (-n3 << 16);
+    gte_ctc2(10, w);
+    gte_ldv0c(D_800AE8FC);
+    gte_mvmva(1, 1, 0, 3, 0);
+    gte_ldv1c(D_800AE8EC);
+    gte_mfc2(25, r);
+    gte_mvmva0(1, 1, 1, 3, 0);
+    arg0->f60 = r;
+    gte_mfc2n(25, r);
+    arg0->f5C = r;
+}
 
 void func_800AA180(SubTrail *a) {
     s16 *n;

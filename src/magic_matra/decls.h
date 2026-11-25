@@ -68,5 +68,12 @@ extern s32 D_801DE0EC;
 void func_801B0574(void);
 typedef struct { s32 id; s16 x; s16 y; s16 z; u16 h; s32 unkC; s32 unk10; } MgTgt;
 extern MgTgt D_801DE05C[];
+typedef struct { u8 pad0[0x80]; MgMat m80; MgMat mA0; s32 fC0; s32 fC4; s32 fC8; u8 padCC[0x10]; s32 fDC; } MgObjM;
+extern u8 D_801B84D0[];
+s32 func_80039F5C();
+void func_8003B35C(MgMat *, MgVec *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+MgLineG2 *func_800D29D4(void *, s32, s32, MgLineG2 *);
+void func_801B12B8(MgObjM *arg0);
 
 #endif /* MAGIC_MATRA_DECLS_H */

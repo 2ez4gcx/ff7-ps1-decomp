@@ -292,7 +292,40 @@ void func_801B0DF0(void *sc, u8 *r, s32 col) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lv4jibak/nonmatchings/text", func_801B0FE4);
+void func_801B0FE4(void *arg0, u8 *arg1, s32 arg2) {
+    JbObj *p;
+    JbEnt *e;
+
+    p = arg0;
+    e = (JbEnt *)arg1;
+    func_801B016C(e->ang, &p->m80, &e->n);
+    p->m80.t[0] = e->p.vx;
+    p->m80.t[1] = e->p.vy;
+    p->m80.t[2] = e->p.vz;
+    p->v[0].vx = 0;
+    p->v[0].vy = -arg2;
+    p->v[0].vz = 0;
+    p->v[1].vx = arg2;
+    p->v[1].vy = 0;
+    p->v[1].vz = 0;
+    p->v[2].vx = 0;
+    p->v[2].vy = arg2;
+    p->v[2].vz = 0;
+    p->v[3].vx = -arg2;
+    p->v[3].vy = 0;
+    p->v[3].vz = 0;
+    func_8003A63C(&D_800FA63C, &p->m80, &p->mA0);
+    gte_SetRotMatrix_d(&p->mA0);
+    gte_SetTransMatrix(&p->mA0);
+    gte_ldv3(&p->v[0], &p->v[1], &p->v[2]);
+    gte_rtpt();
+    gte_stsxy3(&p->sxy[0], &p->sxy[1], &p->sxy[2]);
+    gte_ldv0c(&p->v[3]);
+    gte_rtps();
+    gte_stsxy(&p->sxy[3]);
+    gte_avsz4();
+    gte_stotz(&p->otz);
+}
 
 void func_801B115C(MgRtp *r, MgSVec *v0, MgSVec *v1, s32 color) {
     MgLineG2 *p;
