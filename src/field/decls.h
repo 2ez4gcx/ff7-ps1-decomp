@@ -855,5 +855,7 @@ typedef struct { s16 x; s16 y; s16 z; } ChoV6;
 typedef struct { u8 pad0[3]; u8 n; u8 pad4[0x14]; u16 f18; u16 pad1A; s32 f1C; s32 f20; } FdObjQ;
 s32 func_800B2F40();
 s32 func_800B2DD4(FdObjQ *p, void *arg1);
+s32 func_800B1E40(WmHdr3 *arg0, u8 *arg1);
+typedef struct { u8 flag; u8 idx; u8 pad2[0x1E]; } FdLitEnt;
 
 #endif /* FIELD_DECLS_H */

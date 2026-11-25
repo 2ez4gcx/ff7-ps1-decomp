@@ -88,5 +88,10 @@ extern u16 D_801C15E4[];
 extern u16 D_801C15F0[];
 void func_800D5138(s32);
 void func_800D51D4(s32);
+typedef struct { u32 addr : 24; u32 len : 8; } BzTag;
+typedef struct { BzTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } BzPolyG3;
+typedef struct { u8 pad0[4]; BzTag *ot; s32 shift; BzPolyG3 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 idx; u8 pad28[0x8C]; MgSVec vB4; MgSVec vBC; MgSVec vC4; } BzDCtx;
+typedef struct { u16 idx[3]; u16 pad6; s32 c0; s32 c1; s32 c2; } BzG3Ent;
+BzG3Ent *func_801B116C(BzDCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
 
 #endif /* MAGIC_BRIZAG_DECLS_H */

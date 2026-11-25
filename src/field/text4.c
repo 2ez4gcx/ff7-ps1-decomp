@@ -418,7 +418,105 @@ s32 func_800B1C7C(u8 *e, u8 *a) {
     return 1;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800B1E40);
+s32 func_800B1E40(WmHdr3 *arg0, u8 *arg1) {
+    ChoMat lm;
+    u8 pad[56];
+    FdLitEnt *ent;
+    u8 *mats;
+    u8 *d;
+    u8 *sc2;
+    s16 *sc;
+    s32 q;
+    s32 b;
+    u32 i;
+
+    q = arg0->off + arg0->base;
+    mats = (u8 *)arg0->f20;
+    gte_SetBackColor_k((s32)arg1[0], (s32)arg1[1], (s32)arg1[2]);
+    sc = (s16 *)0x1F800200;
+    sc[0] = arg1[3] << 4;
+    *(s16 *)0x1F800206 = arg1[4] << 4;
+    *(s16 *)0x1F80020C = arg1[5] << 4;
+    *(s16 *)0x1F800202 = arg1[6] << 4;
+    *(s16 *)0x1F800208 = arg1[7] << 4;
+    *(s16 *)0x1F80020E = arg1[8] << 4;
+    *(s16 *)0x1F800204 = arg1[9] << 4;
+    *(s16 *)0x1F80020A = arg1[10] << 4;
+    *(s16 *)0x1F800210 = arg1[11] << 4;
+    *(s32 *)0x1F80021C = 0;
+    *(s32 *)0x1F800218 = 0;
+    *(s32 *)0x1F800214 = 0;
+    gte_SetColorMatrix_d(sc);
+    lm.m[0][0] = (arg1[13] << 8) | arg1[12];
+    lm.m[0][1] = (arg1[15] << 8) | arg1[14];
+    lm.m[0][2] = (arg1[17] << 8) | arg1[16];
+    lm.m[1][0] = (arg1[19] << 8) | arg1[18];
+    lm.m[1][1] = (arg1[21] << 8) | arg1[20];
+    lm.m[1][2] = (arg1[23] << 8) | arg1[22];
+    lm.m[2][0] = (arg1[25] << 8) | arg1[24];
+    lm.m[2][1] = (arg1[27] << 8) | arg1[26];
+    lm.m[2][2] = (arg1[29] << 8) | arg1[28];
+    lm.t[2] = 0;
+    lm.t[1] = 0;
+    lm.t[0] = 0;
+    ent = (FdLitEnt *)q;
+    b = arg1[30];
+    for (i = 0; i < arg0->cnt; i++) {
+        sc2 = (u8 *)0x1F800240;
+        if (ent[i].flag != 0) {
+            d = (u8 *)0x1F800220;
+            if (((s8 *)arg0)[1] != -1) {
+                gte_SetRotMatrix_d(mats);
+                gte_ldmcol4(mats + (ent[i].idx << 5), 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h(d);
+                gte_ldmcol4(mats + (ent[i].idx << 5) + 2, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800222);
+                gte_ldmcol4(mats + (ent[i].idx << 5) + 4, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800224);
+                gte_SetTransMatrix(mats);
+                gte_ldv0w(mats + (ent[i].idx << 5) + 0x14);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stir3((u8 *)0x1F800234, 0);
+                gte_SetRotMatrix_d(&lm);
+                gte_ldmcol4(d, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h(sc2);
+                gte_ldmcol4((u8 *)0x1F800222, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800242);
+                gte_ldmcol4((u8 *)0x1F800224, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800244);
+                gte_SetTransMatrix(&lm);
+                gte_ldv0w((u8 *)0x1F800234);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stir3((u8 *)0x1F800254, 0);
+                gte_SetLightMatrix_d(sc2);
+            } else {
+                gte_SetRotMatrix_d(&lm);
+                gte_ldmcol4(mats + (ent[i].idx << 5), 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h(d);
+                gte_ldmcol4(mats + (ent[i].idx << 5) + 2, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800222);
+                gte_ldmcol4(mats + (ent[i].idx << 5) + 4, 0);
+                gte_mvmva(1, 0, 3, 3, 0);
+                gte_stir3h((u8 *)0x1F800224);
+                gte_SetTransMatrix(&lm);
+                gte_ldv0w(mats + (ent[i].idx << 5) + 0x14);
+                gte_mvmva(1, 0, 0, 0, 0);
+                gte_stir3((u8 *)0x1F800234, 0);
+                gte_SetLightMatrix_d(d);
+            }
+        }
+        func_800B2598((FdLitHdr2 *)&ent[i], b);
+    }
+    return 1;
+}
 
 void func_800B2598(FdLitHdr2 *arg0, s32 arg1) {
     u8 *tbl;

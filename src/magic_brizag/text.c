@@ -202,7 +202,78 @@ u16 *func_801B0E48(BzCtx *arg0, u8 *arg1, s32 *arg2) {
 
 INCLUDE_ASM("../asm/us/magic_brizag/nonmatchings/text", func_801B1114);
 
-INCLUDE_ASM("../asm/us/magic_brizag/nonmatchings/text", func_801B116C);
+BzG3Ent *func_801B116C(BzDCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    BzG3Ent *e;
+    BzPolyG3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 m;
+    s32 ir;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    sh = 14 - arg0->shift;
+    m = arg0->idx;
+    n = arg2[0];
+    if (arg3 < 7) {
+        ir = 0;
+    } else {
+        ir = (arg3 - 6) << 9;
+    }
+    e = (BzG3Ent *)(arg2 + 1);
+    p = arg0->prim;
+    for (i = 0; i < n;) {
+        *(BzB8 *)&arg0->vB4 = *(BzB8 *)(arg1 + e->idx[0]);
+        *(BzB8 *)&arg0->vBC = *(BzB8 *)(arg1 + e->idx[1]);
+        *(BzB8 *)&arg0->vC4 = *(BzB8 *)(arg1 + e->idx[2]);
+        x = D_801D9610[m].a[0];
+        y = D_801D9610[m].a[1];
+        z = D_801D9610[m].a[2];
+        if (D_80062D98 == 0) {
+            D_801D9610[m].a[0] += D_801D9610[m].b[0];
+            D_801D9610[m].a[1] += D_801D9610[m].b[1];
+            D_801D9610[m].a[2] += D_801D9610[m].b[2];
+            D_801D9610[m].b[0] -= D_801D9610[m].c[0];
+            D_801D9610[m].b[1] -= D_801D9610[m].c[1];
+            D_801D9610[m].b[2] -= D_801D9610[m].c[2];
+        }
+        arg0->vB4.vx += x;
+        arg0->vB4.vy += y;
+        arg0->vB4.vz += z;
+        arg0->vBC.vx += x;
+        arg0->vBC.vy += y;
+        arg0->vBC.vz += z;
+        arg0->vC4.vx += x;
+        arg0->vC4.vy += y;
+        arg0->vC4.vz += z;
+        gte_ldv3(&arg0->vB4, &arg0->vBC, &arg0->vC4);
+        gte_rtpt();
+        gte_nclip();
+        gte_stopz(&arg0->area);
+        i++;
+        if (arg0->area > 0) {
+            gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+            gte_avsz3();
+            gte_stotz(&arg0->otz);
+            gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+            gte_mtc2(8, ir);
+            gte_dpct();
+            gte_strgb3(&p->r0, &p->c1, &p->c2);
+            p->tag.len = 6;
+            p->code = 0x32;
+            p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+            (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+            p++;
+        }
+        m++;
+        e++;
+    }
+    arg0->idx = m;
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag/nonmatchings/text", func_801B15A8);
 

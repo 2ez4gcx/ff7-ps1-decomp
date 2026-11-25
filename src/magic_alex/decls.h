@@ -178,7 +178,6 @@ extern u8 D_801EE214[];
 extern u8 D_801EE220[];
 extern u16 D_801EE22C;
 extern u16 D_801EE22E;
-s32 func_801B1124(s32 *, s32, s32, s32);
 void func_801B5770(void);
 extern s32 D_801EE0E8[];
 extern s32 D_801EE118[];
@@ -197,5 +196,13 @@ void func_801B5C14(void);
 extern s16 D_80153BBE;
 extern s16 D_80153BCC;
 extern u16 D_80153D24;
+typedef struct { u32 tag; u8 pad4[4]; s32 xy0; u8 pad0c[4]; s32 xy1; u8 pad14[4]; s32 xy2; } MgPolyT;
+typedef struct { s16 vi[3]; u8 col; u8 pad7; u32 uv0; u16 uv1; u16 uv2; } VhFt3;
+typedef struct { s16 vi[4]; u32 uv0; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } VhFt4;
+typedef struct { s16 vi[3]; s16 pad6; u32 c0; u32 c1; u32 c2; } VhG3;
+typedef struct { s16 vi[4]; u32 c0; u32 c1; u32 c2; u32 c3; } VhG4;
+typedef struct { u32 addr : 24; u32 len : 8; } VhTag;
+typedef struct { u8 *data; u32 f4; u8 pad8[2]; s16 fA; u16 fC; } VhModel;
+MgPolyT *func_801B1124(s32 *arg0, s32 arg1, s32 arg2, MgPolyT *arg3);
 
 #endif /* MAGIC_ALEX_DECLS_H */

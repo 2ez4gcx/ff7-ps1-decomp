@@ -239,7 +239,308 @@ void func_801B10E8(s32 arg0, s32 arg1, s16 arg2) {
     p->unk14 = arg2;
 }
 
-INCLUDE_ASM("../asm/us/magic_tupon/nonmatchings/text", func_801B114C);
+MgPolyT *func_801B114C(s32 *arg0, s32 arg1, s32 arg2, MgPolyT *arg3) {
+    u8 *pk;
+    s32 flag;
+    s32 opz;
+    s32 otz;
+    u32 w;
+    u32 k2;
+    u8 *base;
+    s16 *list;
+    u8 *va;
+    u8 *vb;
+    u8 *vc;
+    u32 *ot;
+    u16 tpage;
+    s32 n;
+    s32 i;
+
+    base = ((VhModel *)arg0)->data + 4;
+    list = (s16 *)(base + *(u32 *)((VhModel *)arg0)->data);
+    n = *list;
+    list++;
+    tpage = ((VhModel *)arg0)->fC | (*(u16 *)list & 0x19F);
+    list++;
+    va = base + list[0];
+    vb = base + list[1];
+    vc = base + list[2];
+    pk = (u8 *)arg3;
+    for (i = 0; i < n; list += 8, i++) {
+        VhFt3 *r;
+
+        r = (VhFt3 *)list;
+        gte_ldv3_mk(va, vb, vc);
+        gte_rtpt();
+        va = base + list[8];
+        vb = base + list[9];
+        vc = base + list[10];
+        gte_stflg_mk(&flag);
+        if ((flag & 0x60000) == 0) {
+            if (((VhModel *)arg0)->f4 & 0x20) {
+                opz = 1;
+            } else {
+                gte_nclip();
+                gte_stopz_m(&opz);
+            }
+            if (opz > 0) {
+                gte_avsz3();
+                *(u32 *)pk = 0x07000000;
+                gte_stotz_m(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((VhTag *)pk)->addr = ((VhTag *)ot)->addr;
+                ((VhTag *)ot)->addr = (u32)pk;
+                gte_stsxy3_m(pk + 8, pk + 0x10, pk + 0x18);
+                *(u32 *)(pk + 0xC) = r->uv0;
+                *(u16 *)(pk + 0x14) = r->uv1;
+                *(u16 *)(pk + 0x1C) = r->uv2;
+                *(u16 *)(pk + 0x16) = tpage;
+                if (((VhModel *)arg0)->f4 & 0x80) {
+                    u32 c;
+                    u32 a;
+                    u32 x;
+
+                    c = r->col;
+                    a = c << 16;
+                    x = (c << 8) | 0x24000000;
+                    w = c | (a | x);
+                    if (((VhModel *)arg0)->fA != 0) {
+                        gte_ldrgb_m(&w);
+                        gte_mv12(*(u16 *)&((VhModel *)arg0)->fA);
+                        gte_mtir0_t();
+                        gte_dpcs();
+                        gte_strgb_m(pk + 4);
+                        pk[7] = 0x24;
+                    } else {
+                        *(u32 *)(pk + 4) = w;
+                    }
+                } else {
+                    u32 c;
+                    u32 a;
+                    u32 x;
+
+                    c = w;
+                    a = c << 16;
+                    x = (c << 8) | 0x24000000;
+                    *(u32 *)(pk + 4) = a | x | c;
+                }
+                if (((VhModel *)arg0)->f4 & 8) {
+                    pk[7] |= 2;
+                }
+                pk += 0x20;
+            }
+        }
+    }
+    n = *list;
+    list += 2;
+    i = 0;
+    k2 = 0x2C000000;
+    va = base + list[0];
+    vb = base + list[1];
+    vc = base + list[2];
+    for (i = 0; i < n; list += 10, i++) {
+        VhFt4 *r;
+        u32 tg;
+
+        r = (VhFt4 *)list;
+        gte_ldv3_mk(va, vb, vc);
+        gte_rtpt();
+        va = base + list[10];
+        vb = base + list[11];
+        vc = base + list[12];
+        gte_stflg_mk(&flag);
+        if ((flag & 0x60000) == 0) {
+            if (((VhModel *)arg0)->f4 & 0x20) {
+                opz = 1;
+            } else {
+                gte_nclip();
+                gte_stopz_m(&opz);
+            }
+            if (opz >= 0) {
+                tg = 0x09000000;
+                gte_stsxy3_m(pk + 8, pk + 0x10, pk + 0x18);
+                gte_ldv0(base + r->vi[3]);
+                gte_rtps();
+                gte_stsxy_m(pk + 0x20);
+                gte_avsz4();
+                gte_stotz_m(&otz);
+                ot = (u32 *)otz;
+                *(u32 *)pk = tg;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((VhTag *)pk)->addr = ((VhTag *)ot)->addr;
+                ((VhTag *)ot)->addr = (u32)pk;
+                *(u32 *)(pk + 0xC) = r->uv0;
+                *(u16 *)(pk + 0x14) = r->uv1;
+                *(u16 *)(pk + 0x1C) = r->uv2;
+                *(u16 *)(pk + 0x24) = r->uv3;
+                *(u16 *)(pk + 0x16) = tpage;
+                if (((VhModel *)arg0)->f4 & 0x80) {
+                    u32 c;
+                    u32 a;
+                    u32 x;
+
+                    c = r->col;
+                    a = c << 16;
+                    x = (c << 8) | 0x2C000000;
+                    w = a | x | c;
+                    if (((VhModel *)arg0)->fA != 0) {
+                        gte_ldrgb_m(&w);
+                        gte_mv12(*(u16 *)&((VhModel *)arg0)->fA);
+                        gte_mtir0_t();
+                        gte_dpcs();
+                        gte_strgb_m(pk + 4);
+                        pk[7] = 0x2C;
+                    } else {
+                        *(u32 *)(pk + 4) = w;
+                    }
+                } else {
+                    u32 c;
+                    u32 a;
+                    u32 x;
+
+                    c = *(u8 *)&((VhModel *)arg0)->fA;
+                    w = c;
+                    a = c << 16;
+                    x = (c << 8) | (k2 = 0x2C000000);
+                    *(u32 *)(pk + 4) = a | x | c;
+                }
+                if (((VhModel *)arg0)->f4 & 8) {
+                    pk[7] |= 2;
+                }
+                pk += 0x28;
+            }
+        }
+    }
+    n = *list;
+    list += 2;
+    i = 0;
+    va = base + list[0];
+    vb = base + list[1];
+    vc = base + list[2];
+    for (i = 0; i < n; list += 10, i++) {
+
+        gte_ldv3_mk(va, vb, vc);
+        gte_rtpt();
+        va = base + list[10];
+        vb = base + list[11];
+        vc = base + list[12];
+        gte_stflg_mk(&flag);
+        if ((flag & 0x60000) == 0) {
+            if (((VhModel *)arg0)->f4 & 0x20) {
+                opz = 1;
+            } else {
+                gte_nclip();
+                gte_stopz_m(&opz);
+            }
+            if (opz >= 0) {
+                gte_avsz3();
+                *(u32 *)pk = 0x06000000;
+                gte_stotz_m(&otz);
+                ot = (u32 *)otz;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((VhTag *)pk)->addr = ((VhTag *)ot)->addr;
+                ((VhTag *)ot)->addr = (u32)pk;
+                gte_stsxy3_m(pk + 8, pk + 0x10, pk + 0x18);
+                if (((VhModel *)arg0)->fA != 0) {
+                    gte_mv12(&((VhG3 *)list)->c0);
+                    gte_mv13(&((VhG3 *)list)->c1);
+                    gte_mv14(&((VhG3 *)list)->c2);
+                    gte_ldrgb3_t();
+                    gte_mv12(*(u16 *)&((VhModel *)arg0)->fA);
+                    gte_mtir0_t();
+                    gte_dpct();
+                    gte_mv12(pk + 4);
+                    gte_mv13(pk + 0xC);
+                    gte_mv14(pk + 0x14);
+                    gte_strgb3_t();
+                } else {
+                    *(u32 *)(pk + 4) = ((VhG3 *)list)->c0;
+                    *(u32 *)(pk + 0xC) = ((VhG3 *)list)->c1;
+                    *(u32 *)(pk + 0x14) = ((VhG3 *)list)->c2;
+                }
+                if (((VhModel *)arg0)->f4 & 8) {
+                    pk[7] |= 2;
+                }
+                pk += 0x1C;
+            }
+        }
+    }
+    n = *list;
+    list += 2;
+    i = 0;
+    va = base + list[0];
+    vb = base + list[1];
+    vc = base + list[2];
+    for (i = 0; i < n; list += 12, i++) {
+        u32 tg;
+
+        gte_ldv3_mk(va, vb, vc);
+        gte_rtpt();
+        va = base + list[12];
+        vb = base + list[13];
+        vc = base + list[14];
+        gte_stflg_mk(&flag);
+        if ((flag & 0x60000) == 0) {
+            if (((VhModel *)arg0)->f4 & 0x20) {
+                opz = 1;
+            } else {
+                gte_nclip();
+                gte_stopz_m(&opz);
+            }
+            if (opz >= 0) {
+                tg = 0x08000000;
+                gte_stsxy3_m(pk + 8, pk + 0x10, pk + 0x18);
+                gte_ldv0(base + ((VhG4 *)list)->vi[3]);
+                gte_rtps();
+                gte_stsxy_m(pk + 0x20);
+                gte_avsz4();
+                gte_stotz_m(&otz);
+                ot = (u32 *)otz;
+                *(u32 *)pk = tg;
+                ot = (u32 *)((s32)ot >> (14 - arg2));
+                ot = (u32 *)((s32)ot << 2);
+                ot = (u32 *)((u32)ot + (u32)arg1);
+                ((VhTag *)pk)->addr = ((VhTag *)ot)->addr;
+                ((VhTag *)ot)->addr = (u32)pk;
+                if (((VhModel *)arg0)->fA != 0) {
+                    gte_mv12(&((VhG4 *)list)->c0);
+                    gte_mv13(&((VhG4 *)list)->c1);
+                    gte_mv14(&((VhG4 *)list)->c2);
+                    gte_ldrgb3_t();
+                    gte_mv12(*(u16 *)&((VhModel *)arg0)->fA);
+                    gte_mtir0_t();
+                    gte_dpct();
+                    gte_mv12(pk + 4);
+                    gte_mv13(pk + 0xC);
+                    gte_mv14(pk + 0x14);
+                    gte_strgb3_t();
+                    gte_ldrgb_m(&((VhG4 *)list)->c3);
+                    gte_mv12(*(u16 *)&((VhModel *)arg0)->fA);
+                    gte_mtir0_t();
+                    gte_dpcs();
+                    gte_strgb_m(pk + 0x1C);
+                } else {
+                    *(u32 *)(pk + 4) = ((VhG4 *)list)->c0;
+                    *(u32 *)(pk + 0xC) = ((VhG4 *)list)->c1;
+                    *(u32 *)(pk + 0x14) = ((VhG4 *)list)->c2;
+                    *(u32 *)(pk + 0x1C) = ((VhG4 *)list)->c3;
+                }
+                if (((VhModel *)arg0)->f4 & 8) {
+                    pk[7] |= 2;
+                }
+                pk += 0x24;
+            }
+        }
+    }
+    return (MgPolyT *)pk;
+}
 
 void func_801B1C0C(MgMat *arg0, u16 *arg1) {
     s32 sp10;

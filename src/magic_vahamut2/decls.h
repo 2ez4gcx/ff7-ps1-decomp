@@ -71,7 +71,7 @@ typedef struct { s32 v; } MgWord;
 void func_8003B64C(s32 *, s32 *);
 void func_8003B6BC(s32, s32);
 M2C_UNK func_80046794(s32, s32);
-MgPolyT *func_801B0184(s32 *, s32, s32, MgPolyT *);
+MgPolyT *func_801B0184(s32 *arg0, s32 arg1, s32 arg2, MgPolyT *arg3);
 extern s32 D_800F8368;
 extern u8 D_800FAFF4[][0x40F4];
 extern s32 D_801517C0;
@@ -245,5 +245,11 @@ s32 func_8003B66C(s32, s32, s32);
 s32 func_8003BBDC(s16 *, void *, void *, void *);
 extern Vh2Cam *D_801EF494;
 extern Vh2Cam *D_801EF3FC;
+typedef struct { s16 vi[3]; u8 col; u8 pad7; u32 uv0; u16 uv1; u16 uv2; } VhFt3;
+typedef struct { s16 vi[4]; u32 uv0; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } VhFt4;
+typedef struct { s16 vi[3]; s16 pad6; u32 c0; u32 c1; u32 c2; } VhG3;
+typedef struct { s16 vi[4]; u32 c0; u32 c1; u32 c2; u32 c3; } VhG4;
+typedef struct { u32 addr : 24; u32 len : 8; } VhTag;
+typedef struct { u8 *data; u32 f4; u8 pad8[2]; s16 fA; u16 fC; } VhModel;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

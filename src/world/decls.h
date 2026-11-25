@@ -848,7 +848,7 @@ extern u8 D_800C6678[][8];
 typedef struct { u8 pad0[0x2C]; WmScrRet stack[4]; u8 pad3C[0xA]; s16 f46; u8 pad48[8]; u8 f50; u8 pad51; u8 f52; u8 pad53; u8 f54; u8 pad55; u8 f56; u8 f57; } WmScrB;
 s32 func_800ABB24(void);
 void func_800C1490(u32 arg0, W4Mat *arg1, s32 arg2, s32 arg3);
-void func_800C31F0(u32 arg0, u8 *arg1);
+s32 func_800C31F0(WmHdr3 *arg0, u8 *arg1);
 void func_800A6168(W4Pos *pos, s16 angle, s32 (*out)[5]);
 void func_8003BA10(W4Vec *, W4Vec *, W4Vec *);
 extern W4SVec D_800A01D8;
@@ -1025,5 +1025,6 @@ void func_800B3418(s32 arg0, s32 arg1);
 typedef struct { u16 x; u16 y; u16 z; u16 pad; } WmScr8;
 typedef struct { s16 x; s16 z; u16 ang; s16 rad; u8 list[12]; } WmCtr;
 extern W4SVec D_800A0768;
+typedef struct { u8 flag; u8 idx; u8 pad2[0x1E]; } FdLitEnt;
 
 #endif /* WORLD_DECLS_H */

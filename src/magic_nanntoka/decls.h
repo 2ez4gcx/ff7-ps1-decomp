@@ -56,5 +56,13 @@ typedef struct { MgTag tag; s32 w[9]; } NnPoly;
 extern s32 D_801C3E94[];
 extern s32 D_801C3E98[];
 extern NnPoly *D_801DBEF0;
+typedef struct { s16 x; s16 y; s16 z; s16 st; s16 vx; s16 vy; s16 vz; s16 sc; s32 col; } NnPart;
+typedef struct { u8 pad0[0xC]; s32 flag; MgSVec v[4]; MgMat tm; u8 pad50[0x1F0]; s32 d[3]; } NnCtx2;
+typedef struct { MgTag tag; s32 rgbc; u16 x0; u16 y0; s32 c1; s32 xy1; } NnLine;
+typedef struct { u8 b[8]; } NnB8;
+extern NnPart D_801E0EA8[300];
+extern u16 D_800D3544;
+extern u16 D_800D3546;
+void func_801B192C(NnCtx2 *arg0, s32 arg1);
 
 #endif /* MAGIC_NANNTOKA_DECLS_H */
