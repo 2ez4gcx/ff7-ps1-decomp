@@ -1411,7 +1411,29 @@ void func_800A7254(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A72C8);
+void func_800A72C8(s32 arg0) {
+    s32 i;
+    s32 o;
+    BtlEvt4 *e;
+    u8 *tbl;
+    u8 *p;
+    s32 b;
+
+    o = arg0 << 2;
+    i = *(s32 *)((u8 *)D_800F4908 + o);
+    e = &D_800F4308[arg0][i];
+    while (e->a != 0xFF) {
+        tbl = (u8 *)D_800E7B1C;
+        b = e->b;
+        p = tbl + o;
+        p = *(u8 **)p;
+        (*(void (**)(s32, s32))(p + b * 4))(e->a, e->c);
+        e->a = 0xFF;
+        i = func_800A71E8(i);
+        e = &D_800F4308[arg0][i];
+        *(s32 *)((u8 *)D_800F4908 + o) = i;
+    }
+}
 
 void func_800A73C0(void) {
     M2C_FIELD(D_80063014, s32 *, 0x2C) = (s32) M2C_FIELD(D_80063014, s32 *, 0x10);

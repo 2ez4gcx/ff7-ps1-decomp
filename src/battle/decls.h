@@ -3,7 +3,7 @@
 #define BATTLE_DECLS_H
 
 #include "main/decls.h"
-void func_800A6590(void);
+extern void (**D_800E7B1C[])(s32, s32);
 void func_800A4D88();
 void func_800A7988(void);
 s32 func_800AF9C8(void);
@@ -428,7 +428,6 @@ typedef struct { s16 a; s16 b; u8 pad[0x30]; } T34;
 extern T34 D_800F5E68[];
 void func_800A71F4(void);
 typedef struct { u8 a; u8 pad[3]; } T4;
-extern T4 D_800F4308[][0x80];
 extern s32 D_800F4908[];
 extern s32 D_800F4914[];
 void func_800AA688(void);
@@ -1721,5 +1720,7 @@ extern u8 D_800F5167;
 M2C_UNK func_8003AB84(MgMat *, s32 *, s32 *);
 M2C_UNK func_8003B05C(MgMat *, MgMat *);
 void func_800D84F8(MgMat *arg0, s32 arg1, MgMat *arg2);
+typedef struct { u8 a; u8 b; u16 c; } BtlEvt4;
+extern BtlEvt4 D_800F4308[][0x80];
 
 #endif /* BATTLE_DECLS_H */
