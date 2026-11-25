@@ -6,3 +6,4 @@ D_800A01E8 = 0x800A01E8; // force_not_migration:True
 // One function: splat would cut it at 0x800C02F4 (code after a jr ra it branches back from).
 func_800BFCAC = 0x800BFCAC; // type:func size:0xB5C
 D_800A0260 = 0x800A0260; // force_not_migration:True
+D_800A0768 = 0x800A0768; // force_not_migration:True

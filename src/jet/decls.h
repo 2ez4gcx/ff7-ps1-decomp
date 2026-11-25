@@ -284,7 +284,7 @@ extern u8 D_800D1720;
 u16 func_800A0450(void);
 M2C_UNK func_80039BE0(s32, s32, M2C_UNK);
 M2C_UNK func_80043F6C(s32, M2C_UNK, M2C_UNK, M2C_UNK);
-M2C_UNK func_800A1450();
+void func_800A1450(void);
 void func_800A1F18(s16 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8 arg9);
 void func_800A2214(void);
 M2C_UNK func_800A46E8(s32);

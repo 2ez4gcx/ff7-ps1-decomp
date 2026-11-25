@@ -534,7 +534,7 @@ void func_800347B4(void);
 s32 func_80038C04(s32 arg0);
 extern s32 D_8004AB30;
 void func_800449FC(void *arg0, void *arg1);
-s32 func_80044F58(s16, s16);
+s32 func_80044F58(s16 arg0, s16 arg1);
 void func_800145BC(M2C_UNK (*arg0)());
 void func_80014934(void);
 s32 func_80014578(s32 arg0, s32 arg1, s32 arg2);
@@ -1281,7 +1281,7 @@ extern s32 D_800965E4;
 extern s32 D_8009A060;
 void func_8002CA84(void);
 void func_8002CDD0(void);
-extern u32 D_80097EC8;
+extern AkaoChannel D_80097EC8;
 void func_800344C0(void);
 s32 func_80034150(void);
 void func_800347F8(void);
@@ -1803,5 +1803,8 @@ extern s32 D_80062D0C;
 extern s32 D_8009AD44[];
 extern s32 D_8009AD48[];
 extern s32 D_8009AD4C[];
+extern s32 D_8009A190;
+extern s32 D_8009A198;
+extern s32 D_8009A194;
 
 #endif /* MAIN_DECLS_H */

@@ -158,7 +158,54 @@ void func_800A16BC(s32 arg0) {
     D_800B1E84 = (s32) (D_800B1E7C << 0xC) / (s32) D_800B1E80;
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1814);
+void func_800A1814(void) {
+    Rect16 rect;
+    s32 h;
+    s32 v;
+    u16 *tp0;
+    u16 *tp1;
+    u8 *p;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0x140;
+    rect.h = 0x1E0;
+    func_80043F6C(&rect, 0, 0, 0);
+    h = 0xF0;
+    func_800438D4(D_800B5F14, 0, 0, 0x140, h);
+    func_80043814((Spr *)D_800B5E5C, 0, 0xF0, 0x140, h);
+    func_800438D4(&D_800B5F14[1], 0, 0xF0, 0x140, h);
+    func_80043814((Spr *)&D_800B5E5C[1], 0, 0, 0x140, h);
+    D_800B5EC0 = D_800B5E64 = 0xA0;
+    D_800B5E66 = 0x186;
+    D_800B5EC2 = 0x96;
+    tp1 = &D_800B5E5C[1].tpage;
+    tp0 = &D_800B5E5C[0].tpage;
+    if (((s32 (*)(void))func_80043CC0)() == 1 || ((s32 (*)(void))func_80043CC0)() == 2) {
+        v = 0x88;
+    } else {
+        v = 0x28;
+    }
+    *tp0 = v;
+    *tp1 = v;
+    D_800B5ECA = D_800B5E6E = D_800B5EC8 = D_800B5E6C = 0xFF;
+    D_800B5EC6 = D_800B5E6A = D_800B5EC4 = D_800B5E68 = 0;
+    D_800B5ECE = D_800B5E72 = 0;
+    D_800B5ED0 = D_800B5E74 = 1;
+    D_800B5ED1 = D_800B5E75 = 0;
+    D_800B5ED2 = D_800B5E76 = 0;
+    D_800B5ED3 = D_800B5E77 = 0;
+    func_80042DB8(func_80042DA8());
+    D_800B5F3C = D_800AD420;
+    p = D_800AD3EC;
+    D_800B5F40 = D_800AD424;
+    D_800B5F44 = D_800AD428;
+    gte_SetRotTrans_d4(p);
+    gte_SetLightMatrix_d(p);
+    gte_SetBackColorR(0, 0, 0);
+    gte_SetColorMatrix_d(p);
+    gte_SetFarColorR(0, 0, 0);
+}
 
 void func_800A1AD8(void) {
     u32 pad;

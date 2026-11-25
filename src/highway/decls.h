@@ -429,7 +429,7 @@ extern HwV4 D_800A0040;
 M2C_UNK func_8003BA68(HwV4 *, HwV4 *, s32 *);
 extern struct { u8 pad[0x1C]; s16 unk1C; } *D_800BDA20;
 M2C_UNK func_800A2ADC(s32, s32, s32, s32);
-M2C_UNK func_800A31C8(s32, s32, HwEntX *);
+s32 func_800A31C8(s32 arg0, s32 arg1, HwEntX *arg2);
 s32 func_800ACCDC(void *, s16);
 void func_800AA438(s16 arg0, s16 arg1, s32 arg2);
 s32 func_80039A74(s32);
@@ -500,5 +500,8 @@ typedef struct { u16 n; u8 pad2; u8 c3; u8 c4; u8 pad5; u16 off6; u16 off8; u8 p
 void func_800B2B38(ChoSub *arg0, s16 arg1, s32 arg2);
 void func_800B2760(WmHdr3 *arg0, s16 arg1, s32 arg2);
 typedef struct { s16 x; s16 y; s16 z; } ChoV6;
+typedef struct { u8 pad0[4]; u16 m[9]; u8 pad16[2]; s32 t[3]; u8 *f24; } HwSrc;
+extern struct { s32 x; s32 y; s32 z; } D_800B41C8;
+void func_8003A63C(u8 *, HwEntX *);
 
 #endif /* HIGHWAY_DECLS_H */

@@ -56,8 +56,12 @@ typedef struct { u16 x; u16 y; u16 z; u8 pad[10]; } BtPt;
 extern BtPt D_801C2C2C[];
 typedef struct { s16 vx; s16 vy; s16 vz; u8 pad[10]; } BtVel;
 typedef struct { s32 unk0; s32 unk4; s32 pkt; u8 pad[0x30]; s16 vx; s16 vy; s16 vz; s16 pad42; u8 pad44[0x20]; s32 near; s32 far; s32 j1; s32 j2; } BtScr2;
-void func_801B03FC(void *, void *, void *);
+void func_801B03FC(void *arg0, void *arg1, void *arg2);
 extern BtVel D_801C2C34[];
 s32 func_801B0620(BtScr2 *s);
+typedef struct { u32 addr : 24; u32 len : 8; } BtTag;
+typedef struct { BtTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 xy1; s32 xy2; s32 xy3; } BtPolyF4;
+typedef struct { BtTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; u8 r1; u8 g1; u8 b1; u8 pad; s32 xy1; u8 r2; u8 g2; u8 b2; u8 pad2; s32 xy2; } BtPolyG3;
+typedef struct { BtTag *ot; s32 shift; BtPolyF4 *prim; u8 padC[8]; s32 otz; s32 flag; u8 pad1C[0x40]; s32 sxy5C; s32 sxy60; } BtCtx;
 
 #endif /* MAGIC_BEATA_DECLS_H */

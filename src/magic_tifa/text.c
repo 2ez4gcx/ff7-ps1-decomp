@@ -509,9 +509,95 @@ void func_801B17C0(s16 arg0, s16 *arg1, s16 *arg2) {
     *arg2 = hi;
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B18C4);
+void func_801B18C4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    TfObjV *p;
+    u8 *q;
+    MgSVec *v;
+    s32 i;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B1A38);
+    p = arg0;
+    p->vx = p->vy = p->vz = 0;
+    gte_ldv0c(&p->vx);
+    gte_rtps();
+    gte_stsxy(&p->sxy0);
+    gte_stszotz(&p->otz);
+    q = (u8 *)D_801F3D50;
+    gte_ldv0c(D_801F5034);
+    gte_rtps();
+    gte_stsxy(&p->sxy1);
+    for (i = 1; i <= arg1; i++) {
+        p->sxy2 = p->sxy1;
+        v = D_801F5034;
+        if (i != arg1) {
+            v = &D_801F5034[i];
+        }
+        gte_ldv0c(v);
+        gte_rtps();
+        gte_stsxy(&p->sxy1);
+        *(s32 *)(q + 8) = p->sxy0;
+        *(s32 *)(q + 0x10) = p->sxy1;
+        t = p->sxy2;
+        *(u8 *)(q + 3) = 6;
+        *(s32 *)(q + 4) = arg2;
+        *(s32 *)(q + 0x14) = arg3;
+        *(s32 *)(q + 0xC) = arg3;
+        *(s32 *)(q + 0x18) = t;
+        *(u8 *)(q + 7) = 0x32;
+        ((MgTag *)q)->addr = ((MgTag *)D_801517C0 + (p->otz >> 2) + 0x1C)->addr;
+        ((MgTag *)D_801517C0 + (p->otz >> 2) + 0x1C)->addr = (u32)q;
+        q += 0x1C;
+    }
+    D_801F3D50 = (MgLineG2 *)q;
+}
+
+void func_801B1A38(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    u8 *p;
+    MgSVec *a;
+    MgSVec *b;
+    s32 v;
+
+    p = (u8 *)D_801F3D50;
+    gte_ldv0c(D_801F5134);
+    gte_rtps();
+    gte_stsxy(&((TfRingCtx *)arg0)->xyB8);
+    gte_ldv0c(D_801F5234);
+    gte_rtps();
+    gte_stsxy(&((TfRingCtx *)arg0)->xyC8);
+    gte_stszotz(&((TfRingCtx *)arg0)->otz);
+    for (i = 1; i <= arg1; i++) {
+        ((TfRingCtx *)arg0)->xyBC = ((TfRingCtx *)arg0)->xyB8;
+        ((TfRingCtx *)arg0)->xyCC = ((TfRingCtx *)arg0)->xyC8;
+        a = D_801F5134;
+        if (i != arg1) {
+            a += i;
+        }
+        gte_ldv0c(a);
+        gte_rtps();
+        gte_stsxy(&((TfRingCtx *)arg0)->xyB8);
+        b = D_801F5234;
+        if (i != arg1) {
+            b += i;
+        }
+        gte_ldv0c(b);
+        gte_rtps();
+        gte_stsxy(&((TfRingCtx *)arg0)->xyC8);
+        *(s32 *)(p + 8) = ((TfRingCtx *)arg0)->xyBC;
+        *(s32 *)(p + 0x10) = ((TfRingCtx *)arg0)->xyB8;
+        *(s32 *)(p + 0x18) = ((TfRingCtx *)arg0)->xyCC;
+        v = ((TfRingCtx *)arg0)->xyC8;
+        *(u8 *)(p + 3) = 8;
+        *(s32 *)(p + 4) = *(s32 *)(p + 0xC) = arg2;
+        *(s32 *)(p + 0x14) = *(s32 *)(p + 0x1C) = arg3;
+        *(s32 *)(p + 0x20) = v;
+        *(u8 *)(p + 7) = 0x3A;
+        ((MgTag *)p)->addr = ((MgTag *)D_801517C0 + (((TfRingCtx *)arg0)->otz >> 2) + 0x1C)->addr;
+        ((MgTag *)D_801517C0 + (((TfRingCtx *)arg0)->otz >> 2) + 0x1C)->addr = (u32)p;
+        p += 0x24;
+    }
+    D_801F3D50 = (MgLineG2 *)p;
+}
 
 void func_801B1BEC(s32 n, s32 r) {
     s32 i;

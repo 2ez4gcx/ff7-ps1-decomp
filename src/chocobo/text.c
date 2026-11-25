@@ -46,7 +46,54 @@ void func_800A1260(void) {
     func_8003AED8();
 }
 
-INCLUDE_ASM("../asm/us/chocobo/nonmatchings/text", func_800A1354);
+void func_800A1354(s32 arg0, s32 arg1) {
+    s32 flag;
+    s32 i;
+    ChoEnt16 *ent;
+    ChoPrimB *prim;
+    ChoGfx **g;
+    u16 *lim;
+    s32 idx;
+    s32 k;
+
+    for (i = arg0; i < arg1; i++) {
+        g = &D_800B1254;
+        if (D_800B7500[i].padE[3] != 0) {
+            ent = (ChoEnt16 *)D_800F5084->f40 + (D_800B7500[i].padE[3] - 1);
+            idx = ent->idx;
+            gte_ldv0c(ent);
+            gte_rtps();
+            k = idx * 0x24;
+            prim = (ChoPrimB *)((u8 *)((ChoPrimB *)(*g)->prims) + k);
+            lim = (u16 *)(prim->f1C + prim->f1A);
+            gte_stflg(&flag);
+            if (flag >= 0) {
+                prim->f8 = ent->x;
+                prim->fC = ent->y;
+                prim->f10 = ent->z;
+                prim->r = ent->r;
+                prim->g = ent->g;
+                prim->b = ent->b;
+                func_8003AE38();
+                *(s32 *)0x1F800000 = 3;
+                func_800AF11C((ChoPrimB *)((u8 *)((ChoPrimB *)(*g)->prims) + k), &D_800B7544, 0, ent->fA);
+                D_800F50A0[D_800F5078[0]++] = (ChoPrimB *)((u8 *)((ChoPrimB *)(*g)->prims) + k);
+                func_8003AED8();
+                ent->fA = ent->fA + ent->f8;
+                if (ent->fA >= *lim) {
+                    if (ent->f6 & 2) {
+                        ent->fA = 0;
+                    } else {
+                        ent->fA = *lim - 1;
+                    }
+                }
+                if (ent->fA < 0) {
+                    ent->fA = 0;
+                }
+            }
+        }
+    }
+}
 
 void func_800A157C(void) {
     s32 i;

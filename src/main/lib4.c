@@ -310,7 +310,26 @@ INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044DC0);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044E8C);
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/lib4", func_80044F58);
+s32 func_80044F58(s16 arg0, s16 arg1) {
+    u32 r;
+    u32 b;
+    u32 k;
+
+    b = arg1 & 0xFFF;
+    if ((u8)(*(volatile u8 *)&D_80062C00 - 1) >= 2) {
+        b = arg1 & 0x7FF;
+        b <<= 11;
+        do {
+            r = arg0 & 0x7FF;
+        } while (0);
+        k = 0xE5000000;
+    } else {
+        b <<= 12;
+        r = arg0 & 0xFFF;
+        k = 0xE5000000;
+    }
+    return b | (r | k);
+}
 
 s32 func_80044FA0(Rect16 *arg0) {
     u32 tw[4];

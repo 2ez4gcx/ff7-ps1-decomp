@@ -167,7 +167,36 @@ loop:
     *(s32 *)(D_800D1964 + 0x437C) = acc;
 }
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1450);
+void func_800A1450(void) {
+    volatile s32 *h;
+    volatile s32 *g;
+    JetMat *t;
+    u8 *m;
+
+    h = &D_800D1728;
+    t = (JetMat *)*h;
+    t->t[0] = -((JetV3 *)&D_800A83A8)->x;
+    t->t[1] = -((JetV3 *)&D_800A83A8)->y;
+    t->t[2] = -((JetV3 *)&D_800A83A8)->z;
+    m = &D_800EE404;
+    gte_SetRotMatrix(m);
+    gte_ldmcol_m((void *)*h);
+    gte_mvmva_m(1, 0, 3, 3, 0);
+    g = &D_800D1BD0;
+    gte_stir3h_m((void *)*g);
+    gte_ldmcol_m((u16 *)*h + 1);
+    gte_mvmva_m(1, 0, 3, 3, 0);
+    gte_stir3h_m((u16 *)*g + 1);
+    gte_ldmcol_m((u16 *)*h + 2);
+    gte_mvmva_m(1, 0, 3, 3, 0);
+    gte_stir3h_m((u16 *)*g + 2);
+    gte_SetTransMatrix_m(m);
+    gte_ldv0w_m(&((JetMat *)*h)->t[0]);
+    gte_mvmva_m(1, 0, 0, 0, 0);
+    gte_stir3_m(&((JetMat *)*g)->t[0]);
+    gte_SetRotMatrix((void *)*g);
+    gte_SetTransMatrix_m((void *)*g);
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A16A4);
 

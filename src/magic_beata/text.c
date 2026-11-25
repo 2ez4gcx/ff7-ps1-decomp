@@ -91,7 +91,61 @@ void func_801B0238(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_beata/nonmatchings/text", func_801B03FC);
+void func_801B03FC(void *arg0, void *arg1, void *arg2) {
+    BtCtx *c;
+    BtPolyF4 *p;
+    BtPolyG3 *q;
+    BtPolyG3 *n;
+    s32 v;
+    s32 w;
+
+    c = arg0;
+    gte_ldv0c(arg1);
+    gte_rtps();
+    gte_stflg(&c->flag);
+    if ((c->flag & 0x60000) == 0) {
+        gte_stsxy(&c->sxy5C);
+        gte_stszotz(&c->otz);
+        p = c->prim;
+        q = (BtPolyG3 *)(p + 1);
+        n = q + 1;
+        gte_ldv0c(arg2);
+        gte_rtps();
+        p->tag.len = 5;
+        p->code = 0x28;
+        q->tag.len = 6;
+        p->r0 = 0x42;
+        p->b0 = 0x22;
+        q->g0 = 0x14;
+        p->g0 = 0x32;
+        p->code |= 2;
+        q->code = 0x30;
+        q->b0 = 0x10;
+        q->g1 = 0x16;
+        q->b1 = 0x12;
+        q->r2 = 4;
+        q->g2 = 4;
+        q->b2 = 4;
+        q->code |= 2;
+        q->r1 = 0x32;
+        q->r0 = 0x30;
+        gte_stsxy(&c->sxy60);
+        v = c->sxy5C;
+        w = c->sxy60;
+        p->xy1 = v + 0x10001;
+        p->xy2 = v + 0xFFFF;
+        p->xy0 = v;
+        p->xy3 = v + 0x20000;
+        q->xy0 = v;
+        q->xy1 = v + 0x20000;
+        q->xy2 = w;
+        p->tag.addr = (c->ot + (c->otz >> c->shift))->addr;
+        (c->ot + (c->otz >> c->shift))->addr = (u32)p;
+        q->tag.addr = (c->ot + (c->otz >> c->shift))->addr;
+        (c->ot + (c->otz >> c->shift))->addr = (u32)q;
+        c->prim = (BtPolyF4 *)n;
+    }
+}
 
 s32 func_801B0620(BtScr2 *s) {
     s32 i;

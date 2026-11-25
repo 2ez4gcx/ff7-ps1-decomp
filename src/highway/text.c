@@ -144,7 +144,54 @@ void func_800A30A0(s32 arg0, s32 arg1, s32 arg2) {
     *(s32 *)(arg0 + 0x5090) = func_800B3D28(l);
 }
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800A31C8);
+s32 func_800A31C8(s32 arg0, s32 arg1, HwEntX *arg2) {
+    HwSrc *s;
+    u16 *p;
+    s32 r;
+
+    s = (HwSrc *)arg1;
+    ((u16 *)arg2)[0] = s->m[0];
+    ((u16 *)arg2)[1] = s->m[1];
+    ((u16 *)arg2)[2] = s->m[2];
+    ((u16 *)arg2)[3] = s->m[3];
+    ((u16 *)arg2)[4] = s->m[4];
+    ((u16 *)arg2)[5] = s->m[5];
+    ((u16 *)arg2)[6] = s->m[6];
+    ((u16 *)arg2)[7] = s->m[7];
+    ((u16 *)arg2)[8] = s->m[8];
+    arg2->unk14 = s->t[0];
+    arg2->unk18 = s->t[1];
+    arg2->unk1C = s->t[2];
+    if (s->f24 != (u8 *)&D_8010EB90) {
+        func_8003A63C(s->f24 + 4, arg2);
+    }
+    arg2->unk14 = arg2->unk14 - D_800B41C8.x;
+    arg2->unk18 = arg2->unk18 - D_800B41C8.y;
+    arg2->unk1C = arg2->unk1C - D_800B41C8.z;
+    gte_SetRotMatrix(D_801163E8);
+    gte_ldmcol_m(arg2);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(arg2);
+    p = (u16 *)arg2 + 1;
+    gte_ldmcol_m(p);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(p);
+    p = (u16 *)arg2 + 2;
+    gte_ldmcol_m(p);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(p);
+    gte_SetTransMatrix_m(D_801163E8);
+    gte_ldv0w_m(&arg2->unk14);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stir3_m(&arg2->unk14);
+    gte_SetRotMatrix(arg2);
+    gte_SetTransMatrix_m(arg2);
+    r = func_800AC9C0(&arg2->unk14);
+    if (r != 0) {
+        return (s32)arg2;
+    }
+    return 0;
+}
 
 void func_800A34A4(HwDrawCtx *arg0) {
     func_800AF640(arg0, D_80110B90, 0x55, 0x18, 1);

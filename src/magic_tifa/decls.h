@@ -62,7 +62,7 @@ extern MgByte D_801F3BBE;
 void func_801BB568(void);
 void func_8003B69C(s32, s32, s32);
 void func_8003B710(s32 *, s32, s32 *);
-void func_801B18C4(void *, s32, s32, s32);
+void func_801B18C4(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 extern u8 D_801F5360[];
 void func_801B0110(s32 arg0, s32 arg1);
 void func_801B0130(s32 arg0, s32 arg1);
@@ -104,7 +104,7 @@ typedef struct { u8 pad0[0x24]; s32 unk24; s32 unk28; u8 pad2C[0x48]; s32 unk74;
 typedef struct { MgTag tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; s32 c3; s32 xy3; } TfPolyG4;
 void func_801B0F3C(TfObj *o, s32 arg1, s32 arg2);
 void func_801B2980(void);
-void func_801B1A38(void *, s32, s32, s32);
+void func_801B1A38(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_801B2B10(void);
 void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B35C(MgMat *, MgVec *);
@@ -208,5 +208,7 @@ typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; 
 typedef struct { u8 pad0[8]; MgTag *ot; s32 shift; TfPolyFT4 *prim; s32 mode; s32 w18; s32 area; u8 pad20[4]; s32 otz; u8 pad28[4]; s32 flag; s32 w30; u8 pad34[0x18]; MgSVec v4C; } TfFT4Ctx;
 typedef struct { u16 idx[4]; s32 w8; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } TfFT4Ent;
 TfFT4Ent *func_801B09FC(TfFT4Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
+typedef struct { u8 pad0[0x24]; s32 otz; u8 pad28[0xC]; s16 vx; s16 vy; s16 vz; u8 pad3A[0x7A]; s32 sxy0; s32 sxy1; s32 sxy2; } TfObjV;
+typedef struct { u8 pad0[0x24]; s32 otz; u8 pad28[0x90]; s32 xyB8; s32 xyBC; u8 padC0[8]; s32 xyC8; s32 xyCC; } TfRingCtx;
 
 #endif /* MAGIC_TIFA_DECLS_H */

@@ -57,7 +57,7 @@ extern s32 D_800F507C;
 void func_800A1260(void);
 void func_8003AE38(void);
 void func_8003AED8(void);
-void func_800A1354(s32, s32);
+void func_800A1354(s32 arg0, s32 arg1);
 typedef struct { s16 m[3][3]; s32 t[3]; } ChoMat;
 void func_8003BA10(ChoVec *, ChoVec *, ChoVec *);
 void func_8003B27C(ChoMat *, ChoSVec *, ChoVec *);
@@ -227,5 +227,10 @@ typedef struct { u8 pad0[2]; u8 n; u8 pad3[0x15]; u32 *p18; } ChoMesh;
 typedef struct { u16 n; u8 pad2; u8 c3; u8 c4; u8 pad5; u16 off6; u16 off8; u8 padA[2]; u32 *base; } ChoSub;
 typedef struct { s16 x; s16 y; s16 z; } ChoV6;
 void func_800AFDBC(ChoSub *arg0, s16 arg1, s32 arg2);
+typedef struct { s16 x; s16 y; s16 z; u16 f6; u16 f8; s16 fA; u8 r; u8 g; u8 b; u8 idx; } ChoEnt16;
+typedef struct { u8 pad0[5]; u8 r; u8 g; u8 b; s32 f8; s32 fC; s32 f10; u8 pad14[6]; u16 f1A; u8 *f1C; u8 pad20[4]; } ChoPrimB;
+extern s32 D_800F5078[];
+extern ChoPrimB *D_800F50A0[];
+void func_800AF11C(ChoPrimB *, ChoMat *, s32, s32);
 
 #endif /* CHOCOBO_DECLS_H */

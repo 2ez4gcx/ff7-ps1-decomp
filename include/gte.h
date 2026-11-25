@@ -334,4 +334,25 @@
     }
 #define gte_stsz_m(p) asm volatile("move $12,%0\n\tswc2 $19,0($12)" : : "r"(p) : "$12", "memory")
 
+/* gte_SetRotTrans_d with the scratch registers t4 to t6 ($12 to $14): rotation (control registers 0 to 4) and
+ * translation (5 to 7) of a matrix from a pointer register, the loads and ctc2 interleaved the way the game has them */
+#define gte_SetRotTrans_d4(m) \
+    asm volatile("lw $12,0(%0)\n\tlw $13,4(%0)\n\tctc2 $12,$0\n\tctc2 $13,$1\n\tlw $12,8(%0)\n\tlw $13,12(%0)\n\t" \
+                 "lw $14,16(%0)\n\tctc2 $12,$2\n\tctc2 $13,$3\n\tctc2 $14,$4\n\tlw $12,20(%0)\n\tlw $13,24(%0)\n\t" \
+                 "ctc2 $12,$5\n\tlw $14,28(%0)\n\tctc2 $13,$6\n\tctc2 $14,$7" \
+                 : : "r"(m) : "$12", "$13", "$14", "memory")
+
+/* the back colour (control registers 13 to 15) and the far colour (21 to 23) from three registers, with no shift */
+#define gte_SetBackColorR(r, g, b) \
+    asm volatile("ctc2 %0,$13\n\tctc2 %1,$14\n\tctc2 %2,$15" : : "r"(r), "r"(g), "r"(b))
+#define gte_SetFarColorR(r, g, b) \
+    asm volatile("ctc2 %0,$21\n\tctc2 %1,$22\n\tctc2 %2,$23" : : "r"(r), "r"(g), "r"(b))
+
+/* gte_cmd and gte_mvmva with a "memory" clobber: GCC's CSE forgets every register value at a volatile asm without
+ * clobbers (gte_cmd), and keeps them across one with a clobber list; the game's code keeps an address in a register
+ * across its GTE commands */
+#define gte_cmdm(imm) asm volatile("nop\n\tnop\n\tcop2 %0" : : "i"(imm) : "memory")
+#define gte_mvmva_m(sf, mx, v, cv, lm) \
+    gte_cmdm(0x0400012 | ((sf) << 19) | ((mx) << 17) | ((v) << 15) | ((cv) << 13) | ((lm) << 10))
+
 #endif /* GTE_H */

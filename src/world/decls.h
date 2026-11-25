@@ -548,7 +548,7 @@ typedef struct { WQuad32 q; s16 f10; s16 f12; s16 f14; s16 f16; s16 f18; s16 f1A
 typedef struct { u8 f0; u8 f1; u8 f2; u8 f3; u8 pad4[8]; } W4Ent0Cb;
 extern u8 D_800C6940;
 extern W4Ent0Cb D_800C6A10[];
-void func_800B39B4(s32, s32, s32, s32);
+void func_800B39B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 typedef struct { u16 w; u16 h; u16 x; u16 y; s32 off; } W4Img;
 typedef struct { u8 pad0[4]; u8 count; u8 pad5[3]; W4Img img[1]; } W4ImgHdr;
 void func_800C0808(W4ImgHdr *arg0);
@@ -1017,5 +1017,13 @@ void func_8003CA7C(s32, W4Mat *);
 void func_8003C8DC(s32, W4Mat *);
 void func_800AE638(s32 arg0);
 typedef union { s32 w; u16 h[2]; } WmSxy;
+typedef struct { u8 pad0[4]; u8 f4; u8 f5; u8 f6; u8 pad7[0x21]; } WmFx28;
+typedef struct WmFx74 { struct WmFx74 *next; W4Vec pos; s16 f14; s16 f16; s16 f18; s16 f1A; u8 f1C; u8 f1D; u8 f1E; u8 f1F; s16 f20; s16 pad22; WmFx28 sub[2]; } WmFx74;
+typedef struct { u8 f0; u8 f1; u8 pad2[2]; } WmTbl4;
+extern WmTbl4 D_800C6924[];
+void func_800B3418(s32 arg0, s32 arg1);
+typedef struct { u16 x; u16 y; u16 z; u16 pad; } WmScr8;
+typedef struct { s16 x; s16 z; u16 ang; s16 rad; u8 list[12]; } WmCtr;
+extern W4SVec D_800A0768;
 
 #endif /* WORLD_DECLS_H */
