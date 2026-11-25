@@ -252,9 +252,9 @@ extern s32 D_8009C6CC;
 void func_80042304();
 s32 func_80042394(void);
 s32 func_8004242C(void);
-extern s8 D_80062DDC;
+extern u8 D_80062DDC;
 extern s32 D_80062DE0;
-extern s8 D_80062DE5;
+extern u8 D_80062DE5;
 extern s32 D_80062EB8;
 extern volatile u16 D_80062E08;
 M2C_UNK func_8003D120(M2C_UNK, s32);
@@ -916,7 +916,7 @@ extern u8 D_80063690[];
 extern u16 D_80069490[];
 extern u8 D_80062E10[];
 extern u8 D_80083084[];
-extern s8 D_80062DE4;
+extern u8 D_80062DE4;
 extern s16 D_80062DE6;
 extern s16 D_80062DE8;
 void func_80014C44(s32 arg0);
@@ -1810,5 +1810,6 @@ s32 func_8003E454();
 extern M2C_UNK D_8006E120;
 extern M2C_UNK D_8006E128;
 extern char D_800104B4[];
+extern u8 D_80049384[];
 
 #endif /* MAIN_DECLS_H */

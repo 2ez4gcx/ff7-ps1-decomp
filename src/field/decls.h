@@ -713,7 +713,6 @@ extern u8 D_800DFE39;
 M2C_UNK func_800B0618(void *, void *, void *);
 s32 func_800B4EAC(void *arg0, u8 *arg1);
 typedef struct { s16 p[4]; s16 t[4]; s16 s[4]; u8 b18; u8 b19; u8 pad1A[0x22]; } FdSlotB;
-M2C_UNK func_800B2DD4(void *, void *);
 extern FdSlotB D_800DFE3C[];
 s32 func_800C8B98(void);
 s32 func_800C91D8(void);
@@ -853,5 +852,8 @@ typedef struct { u16 n; u8 pad2; u8 c3; u8 c4; u8 pad5; u16 off6; u16 off8; u8 p
 void func_800AFAC4(ChoSub *arg0, s16 arg1, s32 arg2);
 void func_800AF6EC(WmHdr3 *arg0, s16 arg1, s32 arg2);
 typedef struct { s16 x; s16 y; s16 z; } ChoV6;
+typedef struct { u8 pad0[3]; u8 n; u8 pad4[0x14]; u16 f18; u16 pad1A; s32 f1C; s32 f20; } FdObjQ;
+s32 func_800B2F40();
+s32 func_800B2DD4(FdObjQ *p, void *arg1);
 
 #endif /* FIELD_DECLS_H */

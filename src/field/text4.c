@@ -696,7 +696,46 @@ s32 func_800B2A00(u8 *arg0, u8 *arg1) {
     return 1;
 }
 
-INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800B2DD4);
+s32 func_800B2DD4(FdObjQ *p, void *arg1) {
+    u8 *a;
+    u8 *q;
+    s32 *m;
+    u32 i;
+    u32 n;
+    s32 x0;
+    s32 x1;
+    s32 x2;
+    s32 x3;
+    s32 x4;
+    s32 t;
+    s32 off;
+    u8 pad[0x18];
+
+    a = arg1;
+    n = p->n;
+    i = 0;
+    off = p->f18;
+    x0 = a[0] | (a[1] << 8);
+    x1 = a[2] | (a[3] << 8);
+    x2 = a[4] | (a[5] << 8);
+    x3 = a[6] | (a[7] << 8);
+    t = off + p->f1C;
+    x4 = (s16)(a[8] | (a[9] << 8));
+    if (i < n) {
+        q = (u8 *)t;
+        do {
+            *(s16 *)0x1F800204 = x3;
+            *(s32 *)0x1F800200 = x4;
+            m = (s32 *)(q[1] * 0x20 + p->f20);
+            gte_SetRotMatrix_d(m);
+            gte_SetTransMatrix(m);
+            func_800B2F40(q, (s16)x0, (s16)x1, (s16)x2);
+            i++;
+            q += 0x20;
+        } while (i < n);
+    }
+    return 1;
+}
 
 INCLUDE_ASM("../asm/us/field/nonmatchings/text4", func_800B2F40);
 

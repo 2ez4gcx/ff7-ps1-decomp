@@ -26,6 +26,7 @@ s32 func_8002DA7C(void);
 extern volatile s32 D_8009A00C;
 extern volatile s32 D_8009A010;
 extern volatile s32 D_8009A014;
+void func_80034BB0(s32 *arg0, u8 *arg1);
 
 void func_80029A50(void) {
     func_80038FEC(0);
@@ -4336,7 +4337,60 @@ s32 func_80034B44(void) {
     return *p;
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034BB0);
+void func_80034BB0(s32 *arg0, u8 *arg1) {
+    u8 *sp;
+    s32 flags;
+    s32 bits;
+    u8 *base;
+    u8 *end;
+    u8 *ref;
+    u8 *stop;
+    u8 lo;
+    u8 hi;
+    s32 off;
+    s32 t;
+
+    sp = (u8 *)arg0;
+    bits = 0;
+    flags = 0;
+    end = sp + *(s32 *)sp + 4;
+    base = arg1;
+    sp += 4;
+    while (1) {
+        if (bits == 0) {
+            bits = 8;
+            if (sp >= end) {
+                return;
+            }
+            flags = *sp++;
+        }
+        if (flags & 1) {
+            if (sp >= end) {
+                return;
+            }
+            *arg1++ = *sp++;
+        } else {
+            if (sp >= end) {
+                return;
+            }
+            lo = *sp++;
+            hi = *sp++;
+            off = lo | ((hi & 0xF0) << 4);
+            t = arg1 - base + 0xFEE;
+            ref = arg1 - ((t - off) & 0xFFF);
+            stop = arg1 + (hi & 0xF) + 3;
+            while (ref < base) {
+                *arg1++ = 0;
+                ref++;
+            }
+            while (arg1 < stop) {
+                *arg1++ = *ref++;
+            }
+        }
+        flags >>= 1;
+        bits--;
+    }
+}
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034CAC);
 
