@@ -1893,7 +1893,59 @@ void func_801B71EC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_lasboss3/nonmatchings/text", func_801B7340);
+void func_801B7340(void) {
+    MgTask *p;
+    LbFT4 *q;
+    u8 pad[0x20];
+    MgMat m;
+    s32 dp;
+    s32 flag;
+    s32 otz;
+    s32 clut;
+    s32 tp;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    tp = func_8004656C(0, 1, 0x2C0, 0x100);
+    clut = func_80046634(0x80, 0x1FE);
+    func_8003BF8C(&D_801BBC88, &m);
+    func_8003A79C(&D_800FA63C, &m, &m);
+    m.t[2] = 0;
+    m.t[1] = 0;
+    m.t[0] = 0;
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    q = (LbFT4 *)D_80163C74;
+    gte_ldv0(&p->unk4);
+    gte_rtps();
+    gte_stsxy_m(&q->x0);
+    gte_stdp_m(&dp);
+    gte_stflg_m(&flag);
+    gte_stszotz_m(&otz);
+    if (otz > 0 && (flag & 0x60000) == 0) {
+        q->rgbc = 0x2E808080;
+        q->tag = 0x09000000;
+        q->clut = clut + (p->unk16 << 6);
+        q->tpage = tp;
+        q->u2 = 0;
+        q->u0 = 0;
+        q->u1 = q->u3 = D_801BBC94[p->unk16 * 2];
+        q->v0 = q->v1 = D_801BBC90[p->unk16 * 2];
+        q->v2 = q->v3 = D_801BBC90[p->unk16 * 2] + D_801BBC94[p->unk16 * 2];
+        q->x2 = q->x0;
+        q->x1 = q->x3 = q->x0 + *(u16 *)&D_801BBC94[p->unk16 * 2];
+        q->y1 = q->y0;
+        q->y2 = q->y3 = q->y0 + *(u16 *)&D_801BBC94[p->unk16 * 2];
+        ((LbTag *)q)->addr = ((LbTag *)D_801517C0 + (otz >> 13) + 0x101C)->addr;
+        ((LbTag *)D_801517C0 + (otz >> 13) + 0x101C)->addr = (u32)q;
+        D_80163C74 = (s32)(q + 1);
+    }
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        if (D_801BBD74 == 0) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B7610(void) {
     MgMat m;

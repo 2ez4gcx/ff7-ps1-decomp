@@ -80,9 +80,128 @@ s16 func_801B045C(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B0540);
+SaPolyEnt *func_801B0540(SaPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    SaPolyEnt *e;
+    SaPolyFT3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
+    s32 fl;
 
-INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B0818);
+    e = (SaPolyEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    fl = arg0->flags;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->v70 = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v78 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v80 = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->v70, &arg0->v78, &arg0->v80);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if ((arg0->flag & 0x60000) == 0) {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                gte_stopz(&arg0->area);
+                if (arg0->area > 0 || (fl & 1)) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_avsz3();
+                    gte_stotz(&arg0->otz);
+                    c = e->col;
+                    if (fl & 2) {
+                        gte_SetFarColorN(c);
+                    } else {
+                        arg0->w28 = (c << 16) | (c << 8) | c;
+                    }
+                    gte_ldrgb(&arg0->w28);
+                    gte_mtc2(8, arg3);
+                    gte_dpcs();
+                    gte_strgb(&p->r0);
+                    p->code = 0x24;
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+SaQuadEnt *func_801B0818(SaQuadCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    SaQuadEnt *e;
+    SaPolyFT4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
+    s32 fl;
+
+    e = (SaQuadEnt *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    fl = arg0->flags;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if (i < n) {
+        do {
+            *(MgB8 *)&arg0->v70 = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v78 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v80 = *(MgB8 *)(arg1 + e->idx[2]);
+            *(MgB8 *)&arg0->v88 = *(MgB8 *)(arg1 + e->idx[3]);
+            gte_ldv3(&arg0->v70, &arg0->v78, &arg0->v80);
+            gte_rtpt();
+            p->tag.len = 9;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if ((arg0->flag & 0x60000) == 0) {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                p->uv3 = e->uv3;
+                gte_stopz(&arg0->area);
+                if (arg0->area > 0 || (fl & 1)) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_ldv0c(&arg0->v88);
+                    gte_rtps();
+                    gte_stsxy(&p->xy3);
+                    gte_avsz4();
+                    gte_stotz(&arg0->otz);
+                    if (arg0->otz > 0) {
+                        c = e->col;
+                        if (fl & 2) {
+                            gte_SetFarColorN(c);
+                        } else {
+                            arg0->w28 = (c << 16) | (c << 8) | c;
+                        }
+                        gte_ldrgb(&arg0->w28);
+                        gte_mtc2(8, arg3);
+                        gte_dpcs();
+                        gte_strgb(&p->r0);
+                        p->code = 0x2C;
+                        p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                        (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                        p++;
+                    }
+                }
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_satan/nonmatchings/text", func_801B0B5C);
 

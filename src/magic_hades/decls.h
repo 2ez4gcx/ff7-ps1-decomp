@@ -234,5 +234,7 @@ typedef struct { MgTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; u16 uv0; u16 
 typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyFT3 *prim; u16 tpage; u8 pad12[2]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 flag; MgSVec v28; MgSVec v30; MgSVec v38; } HdPolyCtx;
 typedef struct { u16 idx[3]; u8 col; u8 pad7; u16 uv0; u16 clut; u16 uv1; u16 uv2; } HdPolyEnt;
 HdPolyEnt *func_801B0480(HdPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyFT4 *prim; u16 tpage; u8 pad12[2]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 flag; MgSVec v28; MgSVec v30; MgSVec v38; MgSVec v40; u8 pad48[0xE8]; u8 u0; u8 v0; u8 u1; u8 v1; u8 u2; u8 v2; u8 u3; u8 v3; } HdClipCtx;
+HdQuadEnt *func_801B0708(HdClipCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
 
 #endif /* MAGIC_HADES_DECLS_H */

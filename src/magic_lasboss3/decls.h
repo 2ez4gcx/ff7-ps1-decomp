@@ -334,5 +334,11 @@ extern MgSVec D_801BBA14;
 extern MgSVec D_801BBA1C;
 extern s32 D_801BBE44;
 extern s32 D_801BBE48;
+void func_801B7340(void);
+typedef struct { u32 addr : 24; u32 len : 8; } LbTag;
+typedef struct { u32 tag; s32 rgbc; s16 x0; s16 y0; u8 u0; u8 v0; u16 clut; s16 x1; s16 y1; u8 u1; u8 v1; u16 tpage; s16 x2; s16 y2; u8 u2; u8 v2; u16 pad1E; s16 x3; s16 y3; u8 u3; u8 v3; u16 pad26; } LbFT4;
+extern u8 D_801BBC90[];
+extern u8 D_801BBC94[];
+extern MgSVec D_801BBC88;
 
 #endif /* MAGIC_LASBOSS3_DECLS_H */

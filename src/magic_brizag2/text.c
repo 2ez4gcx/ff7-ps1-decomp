@@ -74,13 +74,202 @@ s16 func_801B03A8(MgSVec *p, MgSVec *q, MgVec *n) {
     return (b - a) / ((n->vx * up.vx + n->vy * up.vy + n->vz * up.vz) >> 12);
 }
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B048C);
+BzPolyEnt *func_801B048C(BzPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    BzPolyEnt *e;
+    BzPolyFT3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B06F8);
+    e = (BzPolyEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            p->tag.len = 7;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_avsz3();
+                gte_stotz(&arg0->otz);
+                c = e->col;
+                arg0->w28 = (c << 16) | (c << 8) | c;
+                gte_ldrgb(&arg0->w28);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->r0);
+                p->code = (*(u16 *)&e->col >> 8) | 0x24;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B09C4);
+BzQuadEnt *func_801B06F8(BzQuadCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    BzQuadEnt *e;
+    BzPolyFT4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+    s32 c;
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B0C04);
+    e = (BzQuadEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            *(MgB8 *)&arg0->vD4 = *(MgB8 *)(arg1 + e->idx[3]);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            p->tag.len = 9;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_nclip();
+            p->uv2 = e->uv2;
+            p->uv3 = e->uv3;
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_ldv0c(&arg0->vD4);
+                gte_rtps();
+                gte_stsxy(&p->xy3);
+                gte_avsz4();
+                gte_stotz(&arg0->otz);
+                c = e->col;
+                arg0->w28 = (c << 16) | (c << 8) | c;
+                gte_ldrgb(&arg0->w28);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->r0);
+                p->code = (*(u16 *)&e->col >> 8) | 0x2C;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+BzG3Ent *func_801B09C4(BzG3Ctx *arg0, u8 *arg1, s32 *arg2, s32 arg3) {
+    BzG3Ent *e;
+    BzPolyG3 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+
+    e = (BzG3Ent *)(arg2 + 1);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if (i < n) {
+        do {
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            gte_nclip();
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_avsz3();
+                gte_stotz(&arg0->otz);
+                gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+                gte_mtc2(8, arg3);
+                gte_dpct();
+                gte_strgb3(&p->r0, &p->c1, &p->c2);
+                p->tag.len = 6;
+                p->code = ((u32)e->c0 >> 24) | 0x30;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
+
+BzG4Ent *func_801B0C04(BzG4Ctx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    BzG4Ent *e;
+    BzPolyG4 *p;
+    s32 i;
+    s32 sh;
+    s32 n;
+
+    e = (BzG4Ent *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            *(MgB8 *)&arg0->vD4 = *(MgB8 *)(arg1 + e->idx[3]);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            gte_nclip();
+            gte_stopz(&arg0->area);
+            i++;
+            if (arg0->area > 0) {
+                gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                gte_ldv0c(&arg0->vD4);
+                gte_rtps();
+                gte_stsxy(&p->xy3);
+                gte_avsz4();
+                gte_stotz(&arg0->otz);
+                gte_ldrgb3(&e->c0, &e->c1, &e->c2);
+                gte_mtc2(8, arg3);
+                gte_dpct();
+                gte_strgb3(&p->r0, &p->c1, &p->c2);
+                gte_ldrgb(&e->c3);
+                gte_mtc2(8, arg3);
+                gte_dpcs();
+                gte_strgb(&p->c3);
+                p->tag.len = 8;
+                p->code = ((u32)e->c0 >> 24) | 0x38;
+                p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                p++;
+            }
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B0EB4);
 

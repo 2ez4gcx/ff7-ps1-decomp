@@ -355,4 +355,14 @@
 #define gte_mvmva_m(sf, mx, v, cv, lm) \
     gte_cmdm(0x0400012 | ((sf) << 19) | ((mx) << 17) | ((v) << 15) | ((cv) << 13) | ((lm) << 10))
 
+/* gte_stsxy3_m with a "memory" clobber on each pointer move: a pointer expression that reads a global
+ * (&D_x->field) is loaded again for each of the three moves, as the game's code does */
+#define gte_stsxy3_mm(a, b, c) \
+    { \
+        asm volatile("move $12,%0" : : "r"(a) : "$12", "memory"); \
+        asm volatile("move $13,%0" : : "r"(b) : "$13", "memory"); \
+        asm volatile("move $14,%0" : : "r"(c) : "$14", "memory"); \
+        asm volatile("swc2 $12,0($12)\n\tswc2 $13,0($13)\n\tswc2 $14,0($14)" : : : "memory"); \
+    }
+
 #endif /* GTE_H */

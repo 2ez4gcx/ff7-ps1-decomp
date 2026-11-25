@@ -187,5 +187,14 @@ void func_8003A078(MgVec *, MgSVec *);
 void func_8003BC6C(MgSVec *, MgVec *, s32 *);
 void func_8003ACE4(MgSVec *, MgVec *);
 void func_800D3994(s32, s32, MgSVec *);
+typedef struct { u32 addr : 24; u32 len : 8; } SaTag;
+typedef struct { SaTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; } SaPolyFT3;
+typedef struct { u8 pad0[4]; SaTag *ot; s32 shift; SaPolyFT3 *prim; s32 flags; s32 w14; s32 area; u8 pad1C[4]; s32 otz; s32 flag; s32 w28; u8 pad2C[0x44]; MgSVec v70; MgSVec v78; MgSVec v80; } SaPolyCtx;
+typedef struct { u16 idx[3]; u8 col; u8 pad7; s32 w8; u16 uv1; u16 uv2; } SaPolyEnt;
+SaPolyEnt *func_801B0540(SaPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { SaTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; s32 xy3; u16 uv3; u16 pad2; } SaPolyFT4;
+typedef struct { u8 pad0[4]; SaTag *ot; s32 shift; SaPolyFT4 *prim; s32 flags; s32 w14; s32 area; u8 pad1C[4]; s32 otz; s32 flag; s32 w28; u8 pad2C[0x44]; MgSVec v70; MgSVec v78; MgSVec v80; MgSVec v88; } SaQuadCtx;
+typedef struct { u16 idx[4]; s32 w8; u16 uv1; u16 uv2; u16 uv3; u8 col; u8 pad13; } SaQuadEnt;
+SaQuadEnt *func_801B0818(SaQuadCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
 
 #endif /* MAGIC_SATAN_DECLS_H */

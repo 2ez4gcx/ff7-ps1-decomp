@@ -208,7 +208,7 @@ extern s32 D_801C1680[];
 extern void func_801B2C9C(void);
 void func_801B38D0(void);
 void func_801B42F0(void);
-extern void func_801B4470(void);
+void func_801B4470(void);
 extern void func_801B4D20(void);
 extern void func_801B5094(void);
 void func_801B5884(void);
@@ -241,5 +241,14 @@ extern MgSVec D_80158D00;
 void func_8003ACE4(MgSVec *, MgVec *);
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
+typedef struct { MgSVec v; MgVec s; MgMat m1; MgMat m2; s32 flag; } Vh0Gx;
+extern s16 D_801FCE1A;
+extern s16 D_801FCE2A;
+extern s16 D_801FCE30;
+extern s32 D_801FCE5C;
+extern MgSVec D_801FCE60;
+extern u16 D_801FCE62[];
+extern MgSVec D_801FCE68;
+extern Vh0Gx *D_801FCE70;
 
 #endif /* MAGIC_VAHAMUT0_DECLS_H */
