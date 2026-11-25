@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Let decomp-permuter look for a form of a function that matches.
 
-    python tools/permute.py WORK.c NAME [--target main] [--minutes 10] [--jobs 8]
+    python tools/permute.py WORK.c NAME [--target main] [--minutes 10] [--jobs 8] [--stack-diffs]
 
 WORK.c is a work file of tools/work.py (its own declarations, then the
 function) that compiles but does not match yet. This sets up
@@ -91,6 +91,9 @@ def main():
     ap.add_argument('--target', default='main')
     ap.add_argument('--minutes', type=float, default=10)
     ap.add_argument('--jobs', type=int, default=os.cpu_count() or 4)
+    ap.add_argument('--stack-diffs', action='store_true',
+                    help="count differences in stack offsets (the permuter ignores them by default, so a function "
+                         "whose only difference is a stack slot or the order of stack stores scores 0 at once)")
     args = ap.parse_args()
     ad.use(args.target)
     found = work.where(args.name)
@@ -131,7 +134,8 @@ def main():
     run_env = dict(os.environ, TMPDIR=tempfile.gettempdir(),
                    PATH=str(psyq.CPP.parent) + os.pathsep + os.environ.get('PATH', ''))
     run = subprocess.Popen([sys.executable, str(PERMUTER / 'permuter.py'), str(out), '-j', str(args.jobs),
-                            '--stop-on-zero'], cwd=PERMUTER, env=run_env, start_new_session=os.name != 'nt')
+                            '--stop-on-zero'] + (['--stack-diffs'] if args.stack_diffs else []),
+                           cwd=PERMUTER, env=run_env, start_new_session=os.name != 'nt')
     try:
         run.wait(timeout=args.minutes * 60)
     except subprocess.TimeoutExpired:
