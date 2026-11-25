@@ -24,7 +24,7 @@ extern M2C_UNK D_801B228C;
 extern MgTask D_80162978[];
 extern MgTask *D_801E39B8;
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-extern M2C_UNK func_801B2014;
+void func_801B2014(void);
 extern s32 D_801E39BC;
 extern s32 D_801E39C0;
 void func_801B0FAC(void);
@@ -64,5 +64,12 @@ void func_800D3994(s32, s32, void *);
 extern u8 D_8015190F[][0xB9C];
 extern u16 D_801518F6[][0x5CE];
 extern s16 D_801E39CA;
+typedef struct { s16 a; s16 pad[2]; s16 b; } SpRec;
+void func_801B1508();
+void func_800D54EC(s32, s16 *);
+extern u8 D_80151909[][0xB9C];
+extern u8 D_80151A4C[];
+extern SpB8 D_801E39CC[];
+extern SpRec D_801E3A1C[];
 
 #endif /* MAGIC_SPARK_DECLS_H */

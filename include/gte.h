@@ -211,4 +211,35 @@
 #define gte_stotz(p) asm volatile("swc2 $7,0(%0)" : : "r"(p) : "memory")
 #define gte_stflg(p) asm volatile("cfc2 $12,$31\n\tnop\n\tsw $12,0(%0)" : : "r"(p) : "$12", "memory")
 
+/* back colour (control registers 13 to 15) from three values, each times 16 (the shifts read the operands directly) */
+#define gte_SetBackColor_k(r, g, b) \
+    asm volatile("sll $12,%0,4\n\tsll $13,%1,4\n\tsll $14,%2,4\n\tctc2 $12,$13\n\tctc2 $13,$14\n\tctc2 $14,$15" \
+                 : : "r"(r), "r"(g), "r"(b) : "$12", "$13", "$14")
+
+/* the colour matrix (control registers 16 to 20) and the light matrix (8 to 12) from a pointer register through t4
+ * to t6, like gte_SetRotMatrix_d */
+#define gte_SetColorMatrix_d(m) \
+    asm volatile("lw $12,0(%0)\n\tlw $13,4(%0)\n\tctc2 $12,$16\n\tctc2 $13,$17\n\tlw $12,8(%0)\n\tlw $13,12(%0)\n\t" \
+                 "lw $14,16(%0)\n\tctc2 $12,$18\n\tctc2 $13,$19\n\tctc2 $14,$20" : : "r"(m) : "$12", "$13", "$14")
+#define gte_SetLightMatrix_d(m) \
+    asm volatile("lw $12,0(%0)\n\tlw $13,4(%0)\n\tctc2 $12,$8\n\tctc2 $13,$9\n\tlw $12,8(%0)\n\tlw $13,12(%0)\n\t" \
+                 "lw $14,16(%0)\n\tctc2 $12,$10\n\tctc2 $13,$11\n\tctc2 $14,$12" : : "r"(m) : "$12", "$13", "$14")
+
+/* IR1 to IR3 (data registers 9 to 11) to three halfwords at offsets 0, 6 and 12 of a pointer register (a matrix
+ * column) through t4 to t6 */
+#define gte_stir3h(p) \
+    asm volatile("mfc2 $12,$9\n\tmfc2 $13,$10\n\tmfc2 $14,$11\n\tsh $12,0(%0)\n\tsh $13,6(%0)\n\tsh $14,12(%0)" \
+                 : : "r"(p) : "$12", "$13", "$14", "memory")
+
+/* vector 0 from a pointer register: the halfwords at 0 and 4 packed into data register 0, the word at 8 into 1 */
+#define gte_ldv0w(p) \
+    asm volatile("lhu $13,4(%0)\n\tlhu $12,0(%0)\n\tsll $13,$13,16\n\tor $12,$12,$13\n\tmtc2 $12,$0\n\t" \
+                 "lwc2 $1,8(%0)" : : "r"(p) : "$12", "$13", "memory")
+
+/* column c (0 to 2) of a 3x3 s16 matrix into IR1 to IR3 like gte_ldmcol, through t4 to t6 ($12 to $14) */
+#define gte_ldmcol4(p, c) \
+    asm volatile("lhu $12,%1(%0)\n\tlhu $13,%2(%0)\n\tlhu $14,%3(%0)\n\tmtc2 $12,$9\n\tmtc2 $13,$10\n\t" \
+                 "mtc2 $14,$11" : : "r"(p), "i"((c) * 2), "i"((c) * 2 + 6), "i"((c) * 2 + 12) \
+                 : "$12", "$13", "$14", "memory")
+
 #endif /* GTE_H */

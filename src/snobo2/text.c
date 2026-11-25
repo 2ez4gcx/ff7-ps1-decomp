@@ -3395,7 +3395,39 @@ void func_800ACF90(SbRelocHdr *h) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800AD00C);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800AD15C);
+void func_800AD15C(SbScr *arg0) {
+    SbRec *rec;
+    s32 *v;
+    s32 *p;
+    s32 *q;
+    s32 n;
+
+    p = arg0->xy;
+    q = arg0->z;
+    rec = (SbRec *)(arg0->f0 + arg0->f4 * 0x1C + 0xC);
+    n = rec->n;
+    v = rec->v;
+    if (n < 0x55) {
+        gte_ldv3_m(v, v + 2, v + 4);
+        gte_rtpt();
+        gte_stsxy3_m(p, &arg0->xy[1], &arg0->xy[2]);
+        p = &arg0->xy[3];
+        gte_stsz3_m(q);
+        v += 6;
+        n -= 3;
+        while (n > 0) {
+            q += 3;
+            gte_ldv3_m(v, v + 2, v + 4);
+            gte_rtpt();
+            gte_stsxy3_m(p, p + 1, p + 2);
+            p += 3;
+            gte_stsz3_m(q);
+            n -= 3;
+            v += 6;
+        }
+        D_800DFA40[*(u16 *)&arg0->fC](arg0, rec->f10, rec->f14);
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800AD2C8);
 

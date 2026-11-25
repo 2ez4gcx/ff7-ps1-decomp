@@ -615,7 +615,21 @@ void func_801B2AF4(void) {
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B2D34);
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B3434);
+void func_801B3434(void) {
+    s32 i;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    func_800D3994(D_801D62F8, D_80151909[D_801D62F8][6], D_801D62FC);
+    D_801D6302 = D_801518F6[D_801D62F8][0];
+    func_800D54EC(D_801D62F4, &D_801621F0[func_800BC04C((void *)func_801B2D34)].unk4);
+    for (i = 0; i < 10; i++) {
+        D_801D6304[i] = *(GyB8 *)&D_80151A4C[i];
+        D_801D6354[i] = *(GyB8 *)((u8 *)&D_80151A4C[i] - 8);
+        D_801D9DD8[i].flag = -1;
+        D_801D63A4[i] = D_80151909[i][0];
+        D_801D9DD8[i].val = 0;
+    }
+}
 
 void func_801B35F0(void) {
     MgTask *p;

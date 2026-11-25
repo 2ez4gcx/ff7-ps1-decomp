@@ -225,5 +225,6 @@ void func_8003ACE4(MgSVec *, MgVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
+void func_801B3578(void);
 
 #endif /* MAGIC_HADES_DECLS_H */

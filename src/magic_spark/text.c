@@ -282,7 +282,38 @@ void func_801B1098(arg0, arg1) {
 
 INCLUDE_ASM("../asm/us/magic_spark/nonmatchings/text", func_801B1508);
 
-INCLUDE_ASM("../asm/us/magic_spark/nonmatchings/text", func_801B2014);
+void func_801B2014(void) {
+    MgTask *q;
+    MgTask *b;
+    s32 r;
+    s32 i;
+    s32 one;
+    s32 off;
+    s32 j;
+
+    i = 0;
+    one = 1;
+    D_80162978[D_8015169C].unk0 = -1;
+    func_800D3994(D_801E39C0, D_80151909[D_801E39C0][6], &D_801E39C4);
+    D_801E39CA = D_801518F6[D_801E39C0][0];
+    r = func_800BBEAC(func_801B1508);
+    b = D_80162978;
+    q = &b[r];
+    func_800D54EC(D_801E39BC, &q->unk4);
+    q->unk6 = -0x360;
+    q->unk18 = 0xD80;
+    q->unk1A = 0x5A0;
+    q->unk1C = 0;
+    for (; i < 10; i++) {
+        j = i * 8;
+        off = i * 0xB9C;
+        if ((one << i) & D_801E39BC) {
+            *(SpB8 *)&D_801E39CC[i] = *(SpB8 *)(D_80151A4C + off);
+            *(s16 *)((u8 *)D_801E3A1C + j) = func_80042DA8();
+            *(s16 *)((u8 *)D_801E3A1C + j + 6) = 0;
+        }
+    }
+}
 
 INCLUDE_RODATA("../asm/us/magic_spark/nonmatchings/text", D_801B0000);
 

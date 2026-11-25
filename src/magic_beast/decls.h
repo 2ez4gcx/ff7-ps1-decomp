@@ -61,5 +61,7 @@ s32 func_80039A74(s32);
 s32 func_801B0398(void *);
 extern MgMat D_800FA63C;
 extern u8 D_801C15A8[];
+void func_800D54EC(s32, void *);
+extern u8 D_80151909[][0xB9C];
 
 #endif /* MAGIC_BEAST_DECLS_H */

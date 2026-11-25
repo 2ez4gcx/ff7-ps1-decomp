@@ -152,5 +152,16 @@ extern u8 D_800AE8EC[];
 extern u8 D_800AE8FC[];
 typedef struct { s32 x; s32 y; s32 z; u8 pad0C[0x44]; s16 nx; s16 ny; s16 nz; s16 pad56; s32 len; s32 f5C; s32 f60; } SubDirIn;
 void func_800A9FD0(SubDirIn *arg0);
+void func_800A1BE8(void);
+extern u16 D_800AE90C;
+extern u16 D_800AE90E;
+extern u16 D_800AE910;
+extern u16 D_800AE91E;
+extern u16 D_800AE920;
+extern s32 D_800AE968;
+extern s32 D_800F5F60;
+extern s32 D_800F5F64;
+extern s32 D_800F5F68;
+void func_800A1DA0();
 
 #endif /* SUBMAR_DECLS_H */

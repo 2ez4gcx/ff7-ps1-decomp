@@ -205,7 +205,43 @@ void func_800A1AD8(void) {
     D_800AD464 = press;
 }
 
-INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1BE8);
+void func_800A1BE8(void) {
+    s32 t;
+    s32 *a;
+    s32 *b;
+    s32 *c;
+    s32 *m;
+    s32 t2;
+    s32 f;
+    s16 *h;
+
+    h = (s16 *)0x1F800000;
+    t = -(u16)D_800AE914 - D_800AE90C;
+    f = D_800AE968;
+    *h = t;
+    if (f == 0) {
+        *h = t - (u16)D_800AE91C;
+    }
+    m = D_800F5F4C;
+    *(s16 *)0x1F800002 = -D_800AE91E - (u16)D_800AE916 - D_800AE90E;
+    *(s16 *)0x1F800004 = -D_800AE920 - (u16)D_800AE918 - D_800AE910;
+    func_800A1DA0((s16 *)0x1F800000, m);
+    a = (s32 *)0x1F800008;
+    b = (s32 *)0x1F80000C;
+    c = (s32 *)0x1F800010;
+    *a = D_800AE8D0[0] >> 12;
+    *b = D_800AE8D4 >> 12;
+    *c = D_800AE8D8 >> 12;
+    gte_SetRotMatrix_d(m);
+    gte_ldlvl((s32 *)0x1F800008);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stlvnl_c((s32 *)0x1F800008);
+    D_800F5F60 = -*a;
+    t2 = D_800AE944 - *c;
+    D_800F5F64 = -*b;
+    D_800F5F68 = t2;
+    gte_SetTransMatrix(m);
+}
 
 INCLUDE_ASM("../asm/us/submar/nonmatchings/text", func_800A1DA0);
 

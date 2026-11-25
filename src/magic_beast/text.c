@@ -273,7 +273,19 @@ void func_801B0D5C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_beast/nonmatchings/text", func_801B1320);
+void func_801B1320(void) {
+    MgTask *p;
+    MgTask *b;
+
+    D_80162978[D_8015169C].unk0 = -1;
+    func_800D3994(D_801DB4BC, D_80151909[D_801DB4BC][6], &D_801DB4C0);
+    b = D_80162978;
+    p = &b[func_800BBEAC((M2C_UNK *)func_801B0D5C)];
+    func_800D54EC(D_801DB4B8, &p->unk4);
+    p->unk6 = -0x380;
+    p->unk18 = 0x700;
+    p->unk1A = 0x1C0;
+}
 
 INCLUDE_RODATA("../asm/us/magic_beast/nonmatchings/text", D_801B0000);
 

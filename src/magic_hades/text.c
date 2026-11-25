@@ -565,7 +565,33 @@ void func_801B3434(HdRot *s, MgSVec *p, s32 n, s32 a3) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3578);
+void func_801B3578(void) {
+    s32 j;
+    HdBlk *b;
+    HdBlk *h;
+    s32 i;
+    MgSVec **q;
+    s32 m;
+
+    m = -1;
+    b = D_801F1250;
+    q = b->pos;
+    i = 0;
+    h = b;
+    do {
+        *(volatile s32 *)&h->wrap = 0;
+        *(volatile s32 *)&h->num = 0;
+        *(volatile s32 *)&h->start = 0;
+        *(s32 *)((u8 *)D_801F1250 + i) = 0;
+        *(s32 *)((u8 *)D_801F1250 + 0x10 + i) = m;
+        for (j = 0x3F; j >= 0; j--) {
+            q[j] = NULL;
+        }
+        q += 0x45;
+        h++;
+        i += 0x114;
+    } while (i < 0x2280);
+}
 
 void func_801B35F0(HdBlk *h, MgSVec *p) {
     s32 start;
