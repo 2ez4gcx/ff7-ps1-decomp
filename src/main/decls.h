@@ -1796,5 +1796,6 @@ extern s32 D_80051A38;
 extern volatile s32 D_80051A40;
 void func_800418D8(u8 arg0, s32 arg1);
 typedef struct { s16 x; s16 top; s16 w; s16 count; s16 state; s8 col; s8 row; s8 ncols; s8 nrows; u8 pad; s8 anim; s8 hwrap; s8 vwrap; } MnCursor;
+void func_80028930(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 #endif /* MAIN_DECLS_H */

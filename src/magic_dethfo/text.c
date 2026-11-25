@@ -161,7 +161,29 @@ void func_801B0570(s32 amp, s32 step, s32 phase, s32 bright) {
 
 INCLUDE_ASM("../asm/us/magic_dethfo/nonmatchings/text", func_801B073C);
 
-INCLUDE_ASM("../asm/us/magic_dethfo/nonmatchings/text", func_801B09A0);
+void func_801B09A0(void) {
+    MgTask *p;
+    MgTask *base;
+    s32 n;
+    s32 id;
+    void *dst;
+    s32 t;
+
+    base = D_80162978;
+    D_80162978[D_8015169C].unk0 = -1;
+    n = func_800BBEAC(&func_801B073C);
+    p = base + n;
+    id = D_8015190F[D_801D0820][0];
+    dst = &p->unk4;
+    do {
+        func_800D3994(D_801D0820, id, dst);
+    } while (0);
+    t = D_801518F6[D_801D0820][0] + 0x180;
+    if (t >= 0x76D) {
+        t = 0x76C;
+    }
+    p->unk18 = t;
+}
 
 INCLUDE_RODATA("../asm/us/magic_dethfo/nonmatchings/text", D_801B0000);
 

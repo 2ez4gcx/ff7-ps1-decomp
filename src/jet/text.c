@@ -222,7 +222,46 @@ void func_800A1B64(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1CD8);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A1F18);
+void func_800A1F18(s16 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8 arg9) {
+    s32 *gp = &D_800D1964;
+    JetPolyFT4 *p;
+    s16 x;
+    s16 y;
+    s16 u;
+    s16 v;
+
+    x = arg1;
+    y = arg2;
+    p = (JetPolyFT4 *)((JetDrawCtx3 *)*gp)->prim;
+    p->x0 = x;
+    p->y0 = y;
+    p->x1 = arg1 + arg3;
+    p->y1 = y;
+    p->x2 = x;
+    p->y2 = arg2 + arg4;
+    p->x3 = arg1 + arg3;
+    p->y3 = arg2 + arg4;
+    p->r0 = 0x80;
+    p->g0 = 0x80;
+    p->b0 = 0x80;
+    u = arg5;
+    v = arg6;
+    p->u0 = u;
+    p->v0 = v;
+    p->u1 = arg5 + arg7;
+    p->v1 = v;
+    p->u2 = u;
+    p->v2 = arg6 + arg8;
+    p->u3 = arg5 + arg7;
+    p->v3 = arg6 + arg8;
+    p->tpage = (&D_800A8990)[arg0];
+    p->clut = (&D_800EE198)[arg0];
+    func_80046848(p, arg9);
+    p->tag.addr = ((JetDrawCtx3 *)*gp)->ot.addr;
+    ((JetDrawCtx3 *)*gp)->ot.addr = (u32)p;
+    p++;
+    ((JetDrawCtx3 *)*gp)->prim = (u8 *)p;
+}
 
 void func_800A2058(void) {
     s32 *gp = &D_800D1964;

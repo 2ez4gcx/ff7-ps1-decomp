@@ -38,7 +38,29 @@ void func_801B008C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_dokueki/nonmatchings/text", func_801B01A8);
+void func_801B01A8(void) {
+    MgTask *p;
+    s16 t;
+    s32 v[3];
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    v[0] = p->unk18;
+    v[2] = 0x4000;
+    v[1] = 0x4000;
+    func_800D4368(&p->unk4, 0x1800, 0);
+    D_801C0D30[0] = p->unk1A;
+    D_801D8D34 = func_800D4D90(&D_801C0D30[-4], D_801517C0 + 0x70, 0xC, D_801D8D34);
+    if (D_80062D98 == 0) {
+        p->unk4 += p->unkC;
+        p->unk6 += p->unkE;
+        p->unk8 += p->unk10;
+        t = (u16)p->unk2 + 1;
+        p->unk2 = t;
+        if (t >> 1 == D_801C0940) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B02A4(void) {
     MgSVec rot;

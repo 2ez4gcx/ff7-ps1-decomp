@@ -38,5 +38,12 @@ s16 func_8003CC1C(s32, s32);
 s32 func_80042DA8(void);
 M2C_UNK func_800D5774(s32);
 void func_801B006C(void);
+extern u16 D_801C8E98;
+extern s32 D_801517C0;
+void func_800D4484(s32, s32);
+extern s32 D_801E0E9C;
+s32 func_800D4D90(void *, s32, s32, s32);
+extern s32 D_801C8AA4;
+MgMat *func_800D4368(MgSVec *, s32, s32);
 
 #endif /* MAGIC_DOKUFUKI_DECLS_H */

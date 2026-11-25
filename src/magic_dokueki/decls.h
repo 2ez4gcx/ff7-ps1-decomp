@@ -49,5 +49,7 @@ s32 func_80039F5C(s32);
 s32 func_8003CC1C(s32, s32);
 s32 func_80042DA8(void);
 M2C_UNK func_800D5774(s32);
+extern s32 D_801C0940;
+extern u16 D_801C0D30[];
 
 #endif /* MAGIC_DOKUEKI_DECLS_H */

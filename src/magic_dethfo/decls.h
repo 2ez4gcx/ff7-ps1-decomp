@@ -25,7 +25,7 @@ M2C_UNK func_800BBEAC(M2C_UNK *);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 s32 func_800D55F4(M2C_UNK, s32, M2C_UNK);
 s32 func_800D574C(s32);
-void func_801B09A0();
+void func_801B09A0(void);
 void func_801B0144(void);
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
@@ -45,5 +45,9 @@ s32 func_80042DA8(void);
 void func_801B0570(s32 amp, s32 step, s32 phase, s32 bright);
 typedef struct { u32 addr : 24; u32 len : 8; } DfTag;
 typedef struct { DfTag tag; u8 pad[0x10]; } DfSpr;
+void func_801B073C(void);
+extern u8 D_8015190F[][0xB9C];
+void func_800D3994(s32, s32, void *);
+extern s16 D_801518F6[][0x5CE];
 
 #endif /* MAGIC_DETHFO_DECLS_H */
