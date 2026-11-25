@@ -411,7 +411,10 @@ def overlays_match(known, mine):
     return None
 
 
-def put(work, name):
+def put(work, name, in_file=False):
+    """in_file: skip the check of the function alone and rely on the whole-file check: a function whose reload
+    registers depend on the functions before it in its file (GCC's last_spill_reg carries over between the functions
+    of one cc1 run) matches only there."""
     with ad.Turn():
         found = where(name)
         if found is None:
@@ -425,6 +428,9 @@ def put(work, name):
                               rodata=rest if tables else None).get(name, 'not compiled')
         except psyq.Failed as e:
             why = 'does not compile: ' + compile_error(e)
+        if why is not None and in_file and not why.startswith('does not compile') and 'unknown symbol' not in why:
+            print(f'{name}: differs alone ({why}); checking it in its file', flush=True)
+            why = None
         if why is not None:
             raise SystemExit(f'{name}: {why}')
         known = ad.DECLS.read_text(encoding='utf-8')
@@ -501,6 +507,9 @@ def main():
     ap.add_argument('command', choices=['show', 'diff', 'put'])
     ap.add_argument('args', nargs='+')
     ap.add_argument('--target', default='main')
+    ap.add_argument('--in-file', action='store_true',
+                    help='put: skip the check of the function alone; the whole-file check decides (for a function whose '
+                         'reload registers depend on the functions before it in its file)')
     args = ap.parse_args()
     ad.use(args.target)
     if args.command == 'show':
@@ -508,7 +517,7 @@ def main():
         return
     work, name = Path(args.args[0]), args.args[1]
     if args.command == 'put':
-        put(work, name)
+        put(work, name, in_file=args.in_file)
         return
     found = where(name)
     like = found[0] if found else diff_func.file_of(name, args.target)
