@@ -724,7 +724,7 @@ void func_800BB75C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8003B16C(s32, s32);
 void func_8003B32C(s32, s32);
 void func_8003C21C(s32, s32);
-void func_800D85B0(s32, s32, s32, void *);
+void func_800D85B0(s32 arg0, s32 arg1, s32 arg2, void *arg3);
 extern u8 D_800E7D10[];
 extern u8 D_800E7D20[];
 void func_800C5C18(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -1725,5 +1725,6 @@ typedef struct { s8 a; u8 b; s16 c; u16 d; u8 pad[2]; } BtlE8f;
 extern u16 D_800F5E78[][0x1A];
 extern BtlE8f D_800F6B86[];
 extern s32 D_801517B8;
+void func_800D87EC(s32 arg0, s32 arg1, s32 arg2, void *arg3);
 
 #endif /* BATTLE_DECLS_H */

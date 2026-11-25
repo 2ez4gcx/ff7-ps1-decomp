@@ -713,7 +713,42 @@ s32 func_800A369C(void) {
     return D_800E5658;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800A36AC);
+void func_800A36AC(arg0, arg1, arg2, arg3) {
+    W4Mat sp10;
+    W4Vec sp30;
+    W4SVec sp40;
+
+    sp10.m[0][0] = sp10.m[1][1] = sp10.m[2][2] = 0x1000;
+    sp10.m[0][1] = sp10.m[0][2] = sp10.m[1][0] = sp10.m[1][2] = sp10.m[2][0] = sp10.m[2][1] = 0;
+    func_8003C73C(((s16 *)arg1)[0], &sp10);
+    func_8003CA7C(((s16 *)arg1)[2], &sp10);
+    func_8003C8DC(((s16 *)arg1)[1], &sp10);
+    func_8003A79C(&D_800E5698, &sp10, arg2);
+    func_8003B48C(&D_800E5698);
+    if (D_800E5670 > 0 && arg3 != 0) {
+        sp30.vx = D_800E56CC / 8;
+        sp30.vy = D_800E56D0 / 8;
+        sp30.vz = D_800E56D4 / 8;
+        D_800E5670--;
+        if (D_800E5670 == 0) {
+            func_800B63F0(D_80116510);
+        }
+    } else {
+        sp30.vx = D_800E56CC / 4;
+        sp30.vy = D_800E56D0 / 4;
+        sp30.vz = D_800E56D4 / 4;
+    }
+    func_8003B32C((W4Mat *)arg2, &sp30);
+    func_8003B51C((M2C_UNK *)arg2);
+    sp40.vx = ((WmObj36 *)arg0)->f8;
+    sp40.vy = ((WmObj36 *)arg0)->fC;
+    sp40.vz = ((WmObj36 *)arg0)->f10;
+    gte_ldv0(&sp40);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stlvnl(&sp30);
+    ((WmObj36 *)arg0)->f8 = ((WmObj36 *)arg0)->fC = ((WmObj36 *)arg0)->f10 = 0;
+    func_8003B32C((W4Mat *)arg2, &sp30);
+}
 
 void func_800A38C8(void) {
     if (D_80071E34 == 1) {
@@ -4811,7 +4846,65 @@ s32 func_800AE628(void) {
     return D_8010B080;
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800AE638);
+void func_800AE638(s32 arg0) {
+    W4SVec sp10;
+    W4SVec sp18;
+    W4Vec sp20;
+    W4Mat sp30;
+    WmSxy sp50;
+    s16 *q;
+
+    q = (s16 *)&D_800C6770[func_800A0BD4()];
+    sp10.vx = 0;
+    sp10.vz = -0x4000;
+    sp10.vy = -D_80116508;
+    func_800AE0BC(&sp10, -arg0);
+    func_800A1FAC((s32)&sp10);
+    sp10.vx = sp10.vy = sp10.vz = 0;
+    gte_ldv0(&sp10);
+    gte_rtps();
+    gte_stsxy_m(&sp50);
+    sp18.vx = sp18.vy = 0;
+    sp50.w = sp50.h[1] + 0x1A;
+    D_8010B080 = sp50.w;
+    sp18.vz = func_800A1DC0();
+    func_8003BF8C(&sp18, &sp30);
+    func_8003B48C(&sp30);
+    sp20.vx = 0xA0;
+    sp20.vz = 0;
+    sp20.vy = sp50.w;
+    func_8003B32C(&sp30, &sp20);
+    func_8003B51C((M2C_UNK *)&sp30);
+    sp10.vz = 0;
+    sp10.vx = -0xB4;
+    sp10.vy = -sp50.h[0] - 0x18;
+    gte_ldv0(&sp10);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stlvnl(&sp20);
+    q[4] = sp20.vx;
+    q[5] = sp20.vy;
+    sp10.vx = 0xB4;
+    sp10.vy = -sp50.h[0] - 0x18;
+    gte_ldv0(&sp10);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stlvnl(&sp20);
+    q[8] = sp20.vx;
+    q[9] = sp20.vy;
+    sp10.vx = -0xB4;
+    sp10.vy = 0;
+    gte_ldv0(&sp10);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stlvnl(&sp20);
+    q[12] = sp20.vx;
+    q[13] = sp20.vy;
+    sp10.vx = 0xB4;
+    sp10.vy = 0;
+    gte_ldv0(&sp10);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stlvnl(&sp20);
+    q[16] = sp20.vx;
+    q[17] = sp20.vy;
+}
 
 void func_800AE8AC(void) {
     s32 i;
@@ -6549,7 +6642,70 @@ void func_800B58F8(WmFt4 *arg0, WmRect *arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/world/nonmatchings/text", func_800B59F4);
+void func_800B59F4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, WmSpr28 *arg4, s32 arg5) {
+    W4SVec sp10;
+    W4SVec sp18;
+    W4SVec sp20;
+    W4SVec sp28;
+    W4SVec sp30;
+    W4SVec sp38;
+    W4Mat sp40;
+    W4Mat sp60;
+    s32 sz[3];
+    WmQuad28 *p;
+    s32 t;
+    s32 u;
+    s32 x;
+    s32 w;
+
+    p = (WmQuad28 *)arg4;
+    sp38.vx = arg4->x;
+    sp38.vy = -D_80116508;
+    sp38.vz = arg4->z;
+    func_800A1FAC((s32)&sp38);
+    sp18.vx = sp28.vx = arg0;
+    sp20.vz = sp28.vz = arg1;
+    sp10.vx = sp20.vx = -arg0;
+    sp10.vz = sp18.vz = -arg1;
+    sp10.vy = sp18.vy = sp20.vy = sp28.vy = arg2;
+    sp30.vx = sp30.vz = 0;
+    sp30.vy = arg3;
+    func_8003BF8C(&sp30, &sp40);
+    func_8003A8A8(&sp40, &sp60);
+    func_8003B48C(&sp60);
+    gte_ldv3_m(&sp10, &sp18, &sp20);
+    gte_rtpt();
+    gte_stsxy3_m(&p->x0, &p->x1, &p->x2);
+    gte_stsz3_m3(&sz[0], &sz[1], &sz[2]);
+    t = sz[0];
+    u = sz[1];
+    if (u < t) {
+        t = u;
+    }
+    x = sz[2];
+    if (x < t) {
+        t = x;
+    }
+    sz[0] = t;
+    gte_ldv0(&sp28);
+    gte_rtps();
+    gte_stsxy_m(&p->x3);
+    p->y0 = arg5 + p->y0;
+    p->y1 = arg5 + p->y1;
+    p->y2 = arg5 + p->y2;
+    p->y3 = arg5 + p->y3;
+    gte_stsz_m(&sz[1]);
+    w = sz[0];
+    if (sz[1] < w) {
+        w = sz[1];
+    }
+    w >>= 4;
+    sz[0] = w;
+    if ((u32)w < 0x1000) {
+        p->tag.addr = ((WmTag *)D_800BD130)[w].addr;
+        ((WmTag *)D_800BD130)[w].addr = (u32)p;
+    }
+}
 
 void func_800B5C7C(WmObj90 *arg0) {
     s32 c;

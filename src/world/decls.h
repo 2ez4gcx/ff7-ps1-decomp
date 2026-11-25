@@ -784,7 +784,7 @@ extern s8 D_8009D683;
 extern s8 D_8009D687;
 void func_800B0BF4(void);
 typedef struct { u8 pad0[0x1E]; u16 x; u8 pad20[6]; u16 z; } WmSpr28;
-void func_800B59F4(s16, s16, s16, s16, WmSpr28 *, s32);
+void func_800B59F4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, WmSpr28 *arg4, s32 arg5);
 extern WmSpr28 D_8010C430[][12];
 extern s32 D_8010C854;
 void func_800A9334(s32 arg0);
@@ -1006,5 +1006,16 @@ extern u8 D_800C7938[];
 void func_800C3948(FdLitHdr2 *arg0, s32 arg1);
 typedef struct { u8 pad0[4]; u32 f4; u32 f8; u8 padC[2]; u16 fE; u8 pad10[6]; u16 f16; u32 f18; u32 f1C; } FdLitHdr;
 void func_800C6104(FdLitHdr *arg0);
+typedef struct { WmTag tag; u8 pad4[4]; s16 x0; s16 y0; u8 padC[4]; s16 x1; s16 y1; u8 pad14[4]; s16 x2; s16 y2; u8 pad1C[2]; u16 x; s16 x3; s16 y3; u8 pad24[2]; u16 z; } WmQuad28;
+void func_8003A8A8(W4Mat *, W4Mat *);
+typedef struct { u8 pad0[8]; s32 f8; s32 fC; s32 f10; } WmObj36;
+extern s32 D_800E56CC;
+extern s32 D_800E56D0;
+extern s32 D_800E56D4;
+void func_8003C73C(s32, W4Mat *);
+void func_8003CA7C(s32, W4Mat *);
+void func_8003C8DC(s32, W4Mat *);
+void func_800AE638(s32 arg0);
+typedef union { s32 w; u16 h[2]; } WmSxy;
 
 #endif /* WORLD_DECLS_H */

@@ -784,7 +784,7 @@ void func_800A6D28(void *arg0, void *arg1, s32 arg2, s32 arg3);
 void func_8003C21C(void *, void *);
 void func_8003A79C(void *, void *, void *);
 void func_800A8E20(void *, void *);
-void func_800A6F2C(void *);
+void func_800A6F2C(void *arg0);
 extern u8 D_800D71BC[];
 extern s32 D_800DB1D4;
 extern u16 D_800DB1E2;
@@ -1343,5 +1343,8 @@ void func_800AB7E4(SbPolyBuf *arg0, SbPolyIn *arg1, s32 arg2);
 typedef struct { s32 tag; s32 mode; } SbDrMode;
 typedef struct { s32 m[8]; s16 type; s16 f22; s32 f24; s32 f28; } SbEnt;
 extern SbEnt D_80101194[];
+typedef struct { s32 f; } SbWord;
+extern u8 D_800DB1D0;
+extern s16 D_800DB364[];
 
 #endif /* SNOBO_DECLS_H */

@@ -2312,7 +2312,70 @@ loop:
     return r;
 }
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A832C);
+s32 func_800A832C(s32 arg0) {
+    SbObjQ *o;
+    s16 *m;
+    SbTbl *t;
+    SbFxRec *r;
+    s32 d;
+    s32 v;
+    s32 a;
+    s32 b;
+    s16 i;
+
+    o = (SbObjQ *)arg0;
+    d = (D_800DDE7C - D_800DDE8C) >> 12;
+    if (D_800D1DB6 != 0) {
+        if ((s16)d <= 0) {
+            D_800D1DB6 = 0;
+        }
+    } else {
+        v = D_800DDFF4[(u8)D_800DDE70];
+        if (v != 0 && v < (s16)d) {
+            D_800D1DB6 = 1;
+        }
+    }
+    if (D_800D1DB6 != 0) {
+        m = o->m40;
+        func_8003C21C(&D_800DDEC0, m);
+        t = &D_8004BC98[D_800DDEDA & 0xFFF];
+        a = t->a;
+        b = t->b;
+        m[0] = b;
+        m[1] = 0;
+        m[2] = a;
+        m[3] = 0;
+        m[4] = 0x1000;
+        m[5] = 0;
+        m[6] = -a;
+        m[7] = 0;
+        m[8] = b;
+        o->v54 = D_800DDF10.x;
+        o->v58 = (((SbWord *)&D_800DDE7C)->f >> 12) - ((SbWord *)&D_80106A64)->f;
+        o->v5C = D_800DDF10.z;
+        gte_SetRotMatrix(&D_801069FC);
+        gte_ldmcol_m(m);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h_m(m);
+        gte_ldmcol_m(&o->m40[1]);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h_m(&o->m40[1]);
+        gte_ldmcol_m(&o->m40[2]);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h_m(&o->m40[2]);
+        gte_SetTransMatrix_m(&D_801069FC);
+        gte_ldv0w_m(&o->v54);
+        gte_mvmva(1, 0, 0, 0, 0);
+        gte_stir3_m(&o->v54);
+        i = D_80105384++;
+        r = &D_801053B8[i];
+        r->m = *(SbBlock32 *)o->m40;
+        r->h22 = 0xAD;
+        r->w24 = 3;
+        r->h20 = 0;
+        r->w28 = 2;
+    }
+}
 
 void func_800A8684(s16 arg0, s32 arg1) {
     if (arg1 != 0) {

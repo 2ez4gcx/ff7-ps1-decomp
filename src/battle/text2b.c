@@ -2500,9 +2500,104 @@ void func_800D84F8(MgMat *arg0, s32 arg1, MgMat *arg2) {
     arg0->t[2] = -arg0->t[2];
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D85B0);
+void func_800D85B0(s32 arg0, s32 arg1, s32 arg2, void *arg3) {
+    MgVec sp10;
+    MgVec sp20;
+    MgVec sp30;
+    MgVec sp40;
+    s32 t;
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text2b", func_800D87EC);
+    sp10.vx = ((MgSVec *)arg2)->vx - ((MgSVec *)arg1)->vx;
+    sp10.vy = ((MgSVec *)arg2)->vy - ((MgSVec *)arg1)->vy;
+    sp10.vz = ((MgSVec *)arg2)->vz - ((MgSVec *)arg1)->vz;
+    func_8003A08C(&sp10, &sp40);
+    if (sp40.vz == ((MgVec *)arg3)->vz) {
+        sp40.vz++;
+    }
+    gte_SetRotDiag(&sp40);
+    gte_ldlvl3_m(arg3);
+    gte_op1();
+    gte_stlvnl(&sp10);
+    func_8003A08C(&sp10, &sp20);
+    gte_SetRotDiag(&sp40);
+    gte_ldlvl3_m(&sp20);
+    gte_op1();
+    gte_stlvnl(&sp10);
+    func_8003A08C(&sp10, &sp30);
+    t = sp20.vx;
+    ((MgMat *)arg0)->m[0][0] = t;
+    t = sp20.vy;
+    ((MgMat *)arg0)->m[0][1] = t;
+    t = sp20.vz;
+    ((MgMat *)arg0)->m[0][2] = t;
+    t = sp30.vx;
+    ((MgMat *)arg0)->m[1][0] = t;
+    t = sp30.vy;
+    ((MgMat *)arg0)->m[1][1] = t;
+    t = sp30.vz;
+    ((MgMat *)arg0)->m[1][2] = t;
+    t = sp40.vx;
+    ((MgMat *)arg0)->m[2][0] = t;
+    t = sp40.vy;
+    ((MgMat *)arg0)->m[2][1] = t;
+    t = sp40.vz;
+    ((MgMat *)arg0)->m[2][2] = t;
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(((MgMat *)arg0)->t);
+    ((MgMat *)arg0)->t[0] = -((MgMat *)arg0)->t[0];
+    ((MgMat *)arg0)->t[1] = -((MgMat *)arg0)->t[1];
+    ((MgMat *)arg0)->t[2] = -((MgMat *)arg0)->t[2];
+}
+
+void func_800D87EC(s32 arg0, s32 arg1, s32 arg2, void *arg3) {
+    MgVec sp10;
+    MgVec sp20;
+    MgVec sp30;
+    MgVec sp40;
+    s32 t;
+
+    sp10.vx = ((MgSVec *)arg2)->vx - ((MgSVec *)arg1)->vx;
+    sp10.vy = ((MgSVec *)arg2)->vy - ((MgSVec *)arg1)->vy;
+    sp10.vz = ((MgSVec *)arg2)->vz - ((MgSVec *)arg1)->vz;
+    func_8003A08C(&sp10, &sp40);
+    if (sp40.vz == ((MgVec *)arg3)->vz) {
+        sp40.vz++;
+    }
+    gte_SetRotDiag(&sp40);
+    gte_ldlvl3_m(arg3);
+    gte_op1();
+    gte_stlvnl(&sp10);
+    func_8003A08C(&sp10, &sp20);
+    gte_SetRotDiag(&sp40);
+    gte_ldlvl3_m(&sp20);
+    gte_op1();
+    gte_stlvnl(&sp10);
+    func_8003A08C(&sp10, &sp30);
+    t = sp20.vx;
+    ((MgMat *)arg0)->m[0][0] = t;
+    t = sp20.vy;
+    ((MgMat *)arg0)->m[0][1] = t;
+    t = sp20.vz;
+    ((MgMat *)arg0)->m[0][2] = t;
+    t = sp30.vx;
+    ((MgMat *)arg0)->m[1][0] = t;
+    t = sp30.vy;
+    ((MgMat *)arg0)->m[1][1] = t;
+    t = sp30.vz;
+    ((MgMat *)arg0)->m[1][2] = t;
+    t = sp40.vx;
+    ((MgMat *)arg0)->m[2][0] = t;
+    t = sp40.vy;
+    ((MgMat *)arg0)->m[2][1] = t;
+    t = sp40.vz;
+    ((MgMat *)arg0)->m[2][2] = t;
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(((MgMat *)arg0)->t);
+}
 
 void func_800D8A04(void) {
 }

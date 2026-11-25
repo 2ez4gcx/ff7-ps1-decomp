@@ -818,9 +818,84 @@ void func_800A2974(MgMat *arg0, s32 arg1, MgMat *arg2) {
     arg0->t[2] = -arg0->t[2];
 }
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2A2C);
+void func_800A2A2C(MgMat *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
+    s32 sp10[4];
+    s32 sp20[4];
+    s32 sp30[4];
+    s32 sp40[4];
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2C68);
+    sp10[0] = arg2[0] - arg1[0];
+    sp10[1] = arg2[1] - arg1[1];
+    sp10[2] = arg2[2] - arg1[2];
+    func_8003A08C(sp10, sp40);
+    if (sp40[2] == arg3[2]) {
+        sp40[2]++;
+    }
+    gte_SetRotDiag(sp40);
+    gte_ldlvl3_m(arg3);
+    gte_op1();
+    gte_stlvnl(sp10);
+    func_8003A08C(sp10, sp20);
+    gte_SetRotDiag(sp40);
+    gte_ldlvl3_m(sp20);
+    gte_op1();
+    gte_stlvnl(sp10);
+    func_8003A08C(sp10, sp30);
+    arg0->m[0][0] = sp20[0];
+    arg0->m[0][1] = sp20[1];
+    arg0->m[0][2] = sp20[2];
+    arg0->m[1][0] = sp30[0];
+    arg0->m[1][1] = sp30[1];
+    arg0->m[1][2] = sp30[2];
+    arg0->m[2][0] = sp40[0];
+    arg0->m[2][1] = sp40[1];
+    arg0->m[2][2] = sp40[2];
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(arg0->t);
+    arg0->t[0] = -arg0->t[0];
+    arg0->t[1] = -arg0->t[1];
+    arg0->t[2] = -arg0->t[2];
+}
+
+void func_800A2C68(MgMat *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
+    s32 sp10[4];
+    s32 sp20[4];
+    s32 sp30[4];
+    s32 sp40[4];
+
+    sp10[0] = arg2[0] - arg1[0];
+    sp10[1] = arg2[1] - arg1[1];
+    sp10[2] = arg2[2] - arg1[2];
+    func_8003A08C(sp10, sp40);
+    if (sp40[2] == arg3[2]) {
+        sp40[2]++;
+    }
+    gte_SetRotDiag(sp40);
+    gte_ldlvl3_m(arg3);
+    gte_op1();
+    gte_stlvnl(sp10);
+    func_8003A08C(sp10, sp20);
+    gte_SetRotDiag(sp40);
+    gte_ldlvl3_m(sp20);
+    gte_op1();
+    gte_stlvnl(sp10);
+    func_8003A08C(sp10, sp30);
+    arg0->m[0][0] = sp20[0];
+    arg0->m[0][1] = sp20[1];
+    arg0->m[0][2] = sp20[2];
+    arg0->m[1][0] = sp30[0];
+    arg0->m[1][1] = sp30[1];
+    arg0->m[1][2] = sp30[2];
+    arg0->m[2][0] = sp40[0];
+    arg0->m[2][1] = sp40[1];
+    arg0->m[2][2] = sp40[2];
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(arg0->t);
+}
 
 s32 func_800A2E80(EndModel *p) {
     s32 sp10;

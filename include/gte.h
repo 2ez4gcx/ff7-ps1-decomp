@@ -313,4 +313,25 @@
 #define gte_stflg_m(p) \
     asm volatile("move $12,%0\n\tcfc2 $13,$31\n\tnop\n\tsw $13,0($12)" : : "r"(p) : "$12", "$13", "memory")
 
+/* the diagonal of the rotation matrix (control registers 0, 2 and 4) from three words (libgte's SetRotDiag-style
+ * helper of the look-at code, the pointer copied to t4 first); the long vector into IR1 to IR3 in the order 3, 1, 2
+ * through t4; OP 1 (outer product of the diagonal and IR1 to IR3, shifted) with the two nops */
+#define gte_SetRotDiag(m) \
+    asm volatile("move $12,%0\n\tlw $13,0($12)\n\tlw $14,4($12)\n\tctc2 $13,$0\n\tlw $15,8($12)\n\tctc2 $14,$2\n\t" \
+                 "ctc2 $15,$4" : : "r"(m) : "$12", "$13", "$14", "$15")
+#define gte_ldlvl3_m(p) \
+    asm volatile("move $12,%0\n\tlwc2 $11,8($12)\n\tlwc2 $9,0($12)\n\tlwc2 $10,4($12)" : : "r"(p) : "$12")
+#define gte_op1() gte_cmd(0x178000C)
+
+/* the three screen Z results (data registers 17 to 19) to three pointers, each pointer copied to t4 to t6 by a
+ * statement of its own (like gte_stsxy3_m); the last screen Z (SZ3, data register 19) to a word through t4 */
+#define gte_stsz3_m3(a, b, c) \
+    { \
+        asm volatile("move $12,%0" : : "r"(a) : "$12"); \
+        asm volatile("move $13,%0" : : "r"(b) : "$13"); \
+        asm volatile("move $14,%0" : : "r"(c) : "$14"); \
+        asm volatile("swc2 $17,0($12)\n\tswc2 $18,0($13)\n\tswc2 $19,0($14)" : : : "memory"); \
+    }
+#define gte_stsz_m(p) asm volatile("move $12,%0\n\tswc2 $19,0($12)" : : "r"(p) : "$12", "memory")
+
 #endif /* GTE_H */

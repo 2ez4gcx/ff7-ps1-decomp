@@ -136,5 +136,7 @@ extern EndMode D_800A647C[];
 extern u32 D_800AF400[];
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 void func_800A2974(MgMat *arg0, s32 arg1, MgMat *arg2);
+void func_800A2A2C(MgMat *arg0, s16 *arg1, s16 *arg2, s32 *arg3);
+void func_800A2C68(MgMat *arg0, s16 *arg1, s16 *arg2, s32 *arg3);
 
 #endif /* ENDING_DECLS_H */
