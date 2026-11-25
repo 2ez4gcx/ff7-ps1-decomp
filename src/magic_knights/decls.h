@@ -356,7 +356,7 @@ extern KnRig2 *D_801ECC90;
 void func_801BD2D0(void);
 void func_80044244(s32, s32);
 void func_800D4484(s32, s32);
-u8 *func_801B1244(void *, s32, M2C_UNK, u8 *, MgMat *, s32 *);
+u8 *func_801B1244(void *arg0, s32 arg1, M2C_UNK arg2, u8 *arg3, MgMat *arg4, s32 *arg5);
 void func_801BCB04(void);
 void func_801BCF1C(MgMat *, s32);
 extern u8 D_80151909[];
@@ -420,5 +420,8 @@ extern MgCam *D_801ED1E0;
 extern s16 D_80162084;
 extern MgSVec D_80158D00;
 extern MgSVec D_801031E8;
+typedef struct { MgTag tag; s32 rgb; s32 xy0; s32 xy1; s32 xy2; } KnPolyF3;
+typedef struct { MgSVec v0; MgSVec v1; MgSVec v2; u8 pad18[8]; s16 cx; s16 cy; s16 cz; } KnTri;
+extern KnTri *D_801EC498;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

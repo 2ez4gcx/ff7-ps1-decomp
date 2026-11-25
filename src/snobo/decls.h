@@ -1346,5 +1346,8 @@ extern SbEnt D_80101194[];
 typedef struct { s32 f; } SbWord;
 extern u8 D_800DB1D0;
 extern s16 D_800DB364[];
+s32 func_800A45AC(SbObjD *p);
+extern SbBlock16 D_800DB208;
+extern s32 D_800DB210;
 
 #endif /* SNOBO_DECLS_H */

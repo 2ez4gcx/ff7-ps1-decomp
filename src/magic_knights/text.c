@@ -48,7 +48,68 @@ INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B02E8);
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B0DA8);
 
-INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B1244);
+u8 *func_801B1244(void *arg0, s32 arg1, M2C_UNK arg2, u8 *arg3, MgMat *arg4, s32 *arg5) {
+    u8 *hdr;
+    s16 *list;
+    MgSVec *a;
+    MgSVec *b;
+    MgSVec *c;
+    KnPolyF3 *p;
+    MgTag *e;
+    s32 i;
+    s32 n;
+    s32 flag;
+    s32 area;
+    s32 otz;
+
+    hdr = *(u8 **)arg0 + 4;
+    list = (s16 *)(hdr + *(s32 *)*(u8 **)arg0);
+    n = list[0];
+    list += 2;
+    a = (MgSVec *)(hdr + list[0]);
+    b = (MgSVec *)(hdr + list[1]);
+    c = (MgSVec *)(hdr + list[2]);
+    p = (KnPolyF3 *)arg3;
+    for (i = 0; i < n; list += 8, i++, arg5++) {
+        D_801EC498->cx = (a->vx + b->vx + c->vx) / 3;
+        D_801EC498->cy = (a->vy + b->vy + c->vy) / 3;
+        D_801EC498->cz = (a->vz + b->vz + c->vz) / 3;
+        D_801EC498->v0.vx = (u16)a->vx - (u16)D_801EC498->cx;
+        D_801EC498->v0.vy = (u16)a->vy - (u16)D_801EC498->cy;
+        D_801EC498->v0.vz = (u16)a->vz - (u16)D_801EC498->cz;
+        D_801EC498->v1.vx = (u16)b->vx - (u16)D_801EC498->cx;
+        D_801EC498->v1.vy = (u16)b->vy - (u16)D_801EC498->cy;
+        D_801EC498->v1.vz = (u16)b->vz - (u16)D_801EC498->cz;
+        D_801EC498->v2.vx = (u16)c->vx - (u16)D_801EC498->cx;
+        D_801EC498->v2.vy = (u16)c->vy - (u16)D_801EC498->cy;
+        D_801EC498->v2.vz = (u16)c->vz - (u16)D_801EC498->cz;
+        gte_SetRotMatrix(arg4);
+        gte_SetTransMatrix_m(arg4);
+        arg4++;
+        gte_ldv3_mm(&D_801EC498->v0, &D_801EC498->v1, &D_801EC498->v2);
+        gte_rtpt();
+        a = (MgSVec *)(hdr + list[8]);
+        b = (MgSVec *)(hdr + list[9]);
+        c = (MgSVec *)(hdr + list[10]);
+        gte_stflg_m(&flag);
+        if ((flag & 0x60000) == 0) {
+            gte_nclip();
+            gte_stopz_m(&area);
+            if (area > 0) {
+                gte_avsz3();
+                *(s32 *)p = 0x04000000;
+                gte_stotz_m(&otz);
+                e = (MgTag *)(((otz >> (14 - arg2)) << 2) + arg1);
+                p->tag.addr = e->addr;
+                e->addr = (u32)p;
+                gte_stsxy3_m(&p->xy0, &p->xy1, &p->xy2);
+                p->rgb = *arg5;
+                p++;
+            }
+        }
+    }
+    return (u8 *)p;
+}
 
 INCLUDE_ASM("../asm/us/magic_knights/nonmatchings/text", func_801B15E8);
 

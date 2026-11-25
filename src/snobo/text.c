@@ -920,7 +920,42 @@ s32 func_800A4480(void) {
 
 INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A4488);
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A45AC);
+s32 func_800A45AC(SbObjD *p) {
+    SbTbl *e;
+    s32 r;
+    s32 a;
+    s32 b;
+    s32 c;
+    s16 q;
+    s16 *t;
+    s32 x;
+    s32 u;
+
+    p->unk10 = (SbQ *)D_801028D4;
+    p->unk2 = *(u16 *)&D_801027C4;
+    p->unk3C = (SbRecC *)(D_800C000C + p->unk10->unk8[(s16)p->unk2] * 0x374);
+    c = func_8003CC1C(D_800DB208.v[0], D_800DB208.v[2]) & 0xFFF;
+    q = (s16)*(u16 *)&D_801027C8 / 6;
+    t = p->unk10->unk18;
+    x = *(s16 *)(q * 8 + (s32)p->unk3C + 0x4E);
+    u = (s16)p->unk2;
+    r = (x + t[u] + 0x800) & 0x7FF;
+    r = ((0x800 - (c - r)) * 2) & 0xFFF;
+    e = &D_8004BC98[r];
+    a = e->a;
+    b = e->b;
+    p->unk16 = 0;
+    p->unk1A = 0;
+    p->unk1C = 0x1000;
+    p->unk1E = 0;
+    p->unk22 = 0;
+    p->unk18 = a;
+    p->unk14 = b;
+    p->unk24 = b;
+    p->unk20 = -a;
+    func_8003AB84(&p->unk14, &D_800DB208, &D_800DB208);
+    return r;
+}
 
 s32 func_800A4728(SbPt3 *p, SbPt3 *a, SbPt3 *b, SbPt3 *c) {
     s16 y1;
