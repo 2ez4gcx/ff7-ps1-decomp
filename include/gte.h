@@ -435,4 +435,16 @@
 #define gte_stsxy_mk(p) \
     asm volatile("move $12,%0\n\tswc2 $14,0($12)" : : "r"(p) : "$12", "$13", "$14", "$15", "memory")
 
+/* three screen XY words from three registers straight into data registers 12, 14, 13 (no copies); the three screen XY
+ * (data registers 12 to 14) and Z (17 to 19) results to a cache of eight-byte entries; one screen XY and the last Z; the
+ * three Z words (at offset 4 of three pointers) into the Z FIFO (data registers 17 to 19) */
+#define gte_ldsxy3_d(a, b, c) \
+    asm volatile("mtc2 %0,$12\n\tmtc2 %2,$14\n\tmtc2 %1,$13" : : "r"(a), "r"(b), "r"(c))
+#define gte_stsxysz3(p) \
+    asm volatile("swc2 $12,0(%0)\n\tswc2 $13,8(%0)\n\tswc2 $14,16(%0)\n\tswc2 $17,4(%0)\n\tswc2 $18,12(%0)\n\t" \
+                 "swc2 $19,20(%0)" : : "r"(p) : "memory")
+#define gte_stsxysz(p) asm volatile("swc2 $14,0(%0)\n\tswc2 $19,4(%0)" : : "r"(p) : "memory")
+#define gte_ldsz3d(a, b, c) \
+    asm volatile("lwc2 $17,4(%0)\n\tlwc2 $18,4(%1)\n\tlwc2 $19,4(%2)" : : "r"(a), "r"(b), "r"(c))
+
 #endif /* GTE_H */

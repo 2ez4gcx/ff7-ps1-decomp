@@ -66,7 +66,6 @@ s32 func_800D29D4(void *, s32, s32, s32);
 extern s16 D_801C5BBE;
 extern MgSVec D_801C5BC4;
 void func_801B1AA8(void);
-s32 func_801B0020(void *, s32, s32, s32, void *, MgMat *, MgMat *);
 extern s16 D_801C5BD6;
 extern MgVec D_801C5BDC;
 extern MgSVec D_801C5BEC;
@@ -86,5 +85,6 @@ typedef struct { s16 vi[4]; u32 c0; u32 c1; u32 c2; u32 c3; } FrgG4;
 typedef struct { u32 addr : 24; u32 len : 8; } FrgTag;
 typedef struct { u8 *data; u32 f4; u8 pad8[4]; u16 fC; } FrgModel;
 u8 *func_801B0A48(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3);
+u8 *func_801B0020(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3, s16 *arg4, MgMat *arg5, MgMat *arg6);
 
 #endif /* MAGIC_NONOSHI_DECLS_H */

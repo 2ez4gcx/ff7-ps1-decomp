@@ -5,7 +5,182 @@ void func_801B0000(void) {
     func_801B1A58();
 }
 
-INCLUDE_ASM("../asm/us/magic_to_seki/nonmatchings/text", func_801B0020);
+u8 *func_801B0020(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3, s16 *arg4, MgMat *arg5, MgMat *arg6) {
+    u8 *pk;
+    s32 flg;
+    s32 otz;
+    u8 *base;
+    s16 *p;
+    s16 *va;
+    s16 *vb;
+    s16 *vc;
+    u32 *ot;
+    u16 tpage;
+    s32 n;
+    s32 i;
+    s16 *sc;
+    MgMat *sm;
+
+    sc = (s16 *)0x1F800300;
+    sm = (MgMat *)0x1F800328;
+    base = arg0->data + 4;
+    p = (s16 *)(base + *(u32 *)arg0->data);
+    n = *p;
+    p++;
+    tpage = arg0->fC | (*(u16 *)p & 0x19F);
+    p++;
+    va = (s16 *)(base + p[0]);
+    vb = (s16 *)(base + p[1]);
+    vc = (s16 *)(base + p[2]);
+    pk = arg3;
+    for (i = 0; i < n; p += 8, i++) {
+        FrgFt3 *r;
+        u8 c;
+        s32 sh;
+
+        r = (FrgFt3 *)p;
+        sc[0x10] = (va[0] + vb[0] + vc[0]) / 3;
+        sc[0x11] = (va[1] + vb[1] + vc[1]) / 3;
+        sc[0x12] = (va[2] + vb[2] + vc[2]) / 3;
+        sc[0] = va[0] - sc[0x10];
+        sc[1] = va[1] - sc[0x11];
+        sc[2] = va[2] - sc[0x12];
+        sc[4] = vb[0] - sc[0x10];
+        sc[5] = vb[1] - sc[0x11];
+        sc[6] = vb[2] - sc[0x12];
+        sc[8] = vc[0] - sc[0x10];
+        sc[9] = vc[1] - sc[0x11];
+        sc[10] = vc[2] - sc[0x12];
+        arg6->t[0] = sc[0x10] + arg4[0];
+        arg6->t[1] = sc[0x11] + arg4[1];
+        arg6->t[2] = sc[0x12] + arg4[2];
+        arg4 += 4;
+        gte_SetRotMatrix_d(arg5);
+        gte_ldmcol4(arg6, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h(sm);
+        gte_ldmcol4((s16 *)arg6 + 1, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h((s16 *)sm + 1);
+        gte_ldmcol4((s16 *)arg6 + 2, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h((s16 *)sm + 2);
+        gte_SetTransMatrix(arg5);
+        gte_ldv0w(&arg6->t);
+        gte_mvmva(1, 0, 0, 0, 0);
+        gte_stir3(&sm->t, 0);
+        gte_SetRotMatrix_d(sm);
+        gte_SetTransMatrix(sm);
+        gte_ldv3(sc, sc + 4, sc + 8);
+        gte_rtpt();
+        sh = 14 - arg2;
+        va = (s16 *)(base + p[8]);
+        vb = (s16 *)(base + p[9]);
+        vc = (s16 *)(base + p[10]);
+        gte_stflg(&flg);
+        if ((flg & 0x60000) == 0) {
+            gte_avsz3();
+            *(u32 *)pk = 0x07000000;
+            gte_stotz(&otz);
+            ot = (u32 *)otz;
+            ot = (u32 *)((s32)ot >> sh);
+            ot = (u32 *)((s32)ot << 2);
+            ot = (u32 *)((u32)ot + (u32)arg1);
+            ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+            ((FrgTag *)ot)->addr = (u32)pk;
+            gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+            *(u32 *)(pk + 0xC) = r->uv0;
+            *(u16 *)(pk + 0x14) = r->uv1;
+            *(u16 *)(pk + 0x1C) = r->uv2;
+            *(u16 *)(pk + 0x16) = tpage;
+            if (arg0->f4 & 0x80) {
+                u32 w = r->col << 16;
+                u32 x = (r->col << 8) | 0x24000000;
+                *(u32 *)(pk + 4) = w | x | r->col;
+            } else {
+                u32 w = *(s16 *)((u8 *)arg0 + 0xA) << 16;
+                u32 x = (*(s16 *)((u8 *)arg0 + 0xA) << 8) | 0x24000000;
+                *(u32 *)(pk + 4) = w | x | *(s16 *)((u8 *)arg0 + 0xA);
+            }
+            c = pk[7];
+            if (arg0->f4 & 8) {
+                c |= 2;
+            }
+            pk[7] = c;
+            pk += 0x20;
+        }
+    }
+    p += 2;
+    n = *p;
+    p += 2;
+    va = (s16 *)(base + p[0]);
+    vb = (s16 *)(base + p[1]);
+    vc = (s16 *)(base + p[2]);
+    for (i = 0; i < n; p += 10, i++) {
+        FrgG3 *r;
+        s32 sh;
+
+        r = (FrgG3 *)p;
+        sc[0x10] = (va[0] + vb[0] + vc[0]) / 3;
+        sc[0x11] = (va[1] + vb[1] + vc[1]) / 3;
+        sc[0x12] = (va[2] + vb[2] + vc[2]) / 3;
+        sc[0] = va[0] - sc[0x10];
+        sc[1] = va[1] - sc[0x11];
+        sc[2] = va[2] - sc[0x12];
+        sc[4] = vb[0] - sc[0x10];
+        sc[5] = vb[1] - sc[0x11];
+        sc[6] = vb[2] - sc[0x12];
+        sc[8] = vc[0] - sc[0x10];
+        sc[9] = vc[1] - sc[0x11];
+        sc[10] = vc[2] - sc[0x12];
+        arg6->t[0] = sc[0x10] + arg4[0];
+        arg6->t[1] = sc[0x11] + arg4[1];
+        arg6->t[2] = sc[0x12] + arg4[2];
+        arg4 += 4;
+        gte_SetRotMatrix_d(arg5);
+        gte_ldmcol4(arg6, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h(sm);
+        gte_ldmcol4((s16 *)arg6 + 1, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h((s16 *)sm + 1);
+        gte_ldmcol4((s16 *)arg6 + 2, 0);
+        gte_mvmva(1, 0, 3, 3, 0);
+        gte_stir3h((s16 *)sm + 2);
+        gte_SetTransMatrix(arg5);
+        gte_ldv0w(&arg6->t);
+        gte_mvmva(1, 0, 0, 0, 0);
+        gte_stir3(&sm->t, 0);
+        gte_SetRotMatrix_d(sm);
+        gte_SetTransMatrix(sm);
+        gte_ldv3(sc, sc + 4, sc + 8);
+        gte_rtpt();
+        sh = 14 - arg2;
+        va = (s16 *)(base + p[10]);
+        vb = (s16 *)(base + p[11]);
+        vc = (s16 *)(base + p[12]);
+        gte_stflg(&flg);
+        if ((flg & 0x60000) == 0) {
+            gte_avsz3();
+            *(u32 *)pk = 0x06000000;
+            gte_stotz(&otz);
+            ot = (u32 *)otz;
+            ot = (u32 *)((s32)ot >> sh);
+            ot = (u32 *)((s32)ot << 2);
+            ot = (u32 *)((u32)ot + (u32)arg1);
+            ((FrgTag *)pk)->addr = ((FrgTag *)ot)->addr;
+            ((FrgTag *)ot)->addr = (u32)pk;
+            gte_stsxy3(pk + 8, pk + 0x10, pk + 0x18);
+            gte_ldrgb3(&r->c0, &r->c1, &r->c2);
+            gte_mtc2(8, *(u16 *)((u8 *)arg0 + 0xA));
+            gte_dpct();
+            gte_strgb3(pk + 4, pk + 0xC, pk + 0x14);
+            pk[7] = (arg0->f4 & 8) ? 0x32 : 0x30;
+            pk += 0x1C;
+        }
+    }
+    return pk;
+}
 
 u8 *func_801B0A48(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3) {
     u8 *pk;
