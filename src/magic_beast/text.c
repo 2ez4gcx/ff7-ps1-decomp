@@ -6,7 +6,66 @@ s32 func_801B0054(void) {
     return 0;
 }
 
-INCLUDE_ASM("../asm/us/magic_beast/nonmatchings/text", func_801B0078);
+BsPolyEnt *func_801B0078(BsPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3) {
+    BsPolyEnt *e;
+    BsPolyFT3 *p;
+    s32 i;
+    s32 n;
+    s32 sh;
+
+    e = (BsPolyEnt *)(arg2 + 2);
+    i = 0;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    if ((u32)i < (u32)n) {
+        do {
+            *(MgB8 *)&arg0->v64 = *(MgB8 *)(arg1 + e->idx[0]);
+            *(MgB8 *)&arg0->v6C = *(MgB8 *)(arg1 + e->idx[1]);
+            *(MgB8 *)&arg0->v74 = *(MgB8 *)(arg1 + e->idx[2]);
+            gte_ldv3(&arg0->v64, &arg0->v6C, &arg0->v74);
+            gte_rtpt();
+            p->tag.len = 7;
+            do {
+                p->uvtp1 = e->uv1 | arg0->w10;
+                p->uvclut0 = e->w8;
+            } while (0);
+            gte_stflg(&arg0->flag);
+            if ((arg0->flag & 0x60000) == 0) {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                gte_stopz(&arg0->area);
+                if (arg0->area > 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_avsz3();
+                    gte_stotz(&arg0->otz);
+                    func_8003B69C(arg0->bE0, arg0->bE1, arg0->bE2);
+                    gte_ldrgb(&arg0->wDC);
+                    gte_mtc2(8, arg0->wCC);
+                    gte_dpcs();
+                    gte_strgb(&arg0->wD4);
+                    if (arg0->wD0 != 0) {
+                        func_8003B69C(0, 0, 0);
+                        gte_ldrgb(&arg0->wD4);
+                        gte_mtc2(8, arg0->wD0);
+                        gte_dpcs();
+                        gte_strgb(&p->r0);
+                    } else {
+                        *(s32 *)&p->r0 = arg0->wD4;
+                    }
+                    p->code = 0x26;
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+            i++;
+            e++;
+        } while (i < n);
+    }
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_beast/nonmatchings/text", func_801B0398);
 

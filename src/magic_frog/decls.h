@@ -82,5 +82,6 @@ typedef struct { s16 vi[4]; u32 c0; u32 c1; u32 c2; u32 c3; } FrgG4;
 typedef struct { u32 addr : 24; u32 len : 8; } FrgTag;
 typedef struct { u8 *data; u32 f4; u8 pad8[4]; u16 fC; } FrgModel;
 u8 *func_801B0A50(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3);
+u8 *func_801B0028(FrgModel *arg0, u32 *arg1, s32 arg2, u8 *arg3, s16 *arg4, MgMat *arg5, MgMat *arg6);
 
 #endif /* MAGIC_FROG_DECLS_H */

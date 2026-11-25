@@ -63,5 +63,10 @@ extern MgMat D_800FA63C;
 extern u8 D_801C15A8[];
 void func_800D54EC(s32, void *);
 extern u8 D_80151909[][0xB9C];
+typedef struct { u32 addr : 24; u32 len : 8; } BsTag;
+typedef struct { BsTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 uvclut0; s32 xy1; s32 uvtp1; s32 xy2; u16 uv2; u16 pad; } BsPolyFT3;
+typedef struct { u8 pad0[4]; BsTag *ot; s32 shift; BsPolyFT3 *prim; s32 w10; s32 area; u8 pad18[4]; s32 otz; s32 flag; u8 pad24[0x40]; MgSVec v64; MgSVec v6C; MgSVec v74; u8 pad7C[0x50]; s32 wCC; s32 wD0; s32 wD4; u8 padD8[4]; s32 wDC; u8 bE0; u8 bE1; u8 bE2; } BsPolyCtx;
+typedef struct { u16 idx[3]; u16 pad6; s32 w8; u16 uv1; u16 uv2; } BsPolyEnt;
+BsPolyEnt *func_801B0078(BsPolyCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_BEAST_DECLS_H */

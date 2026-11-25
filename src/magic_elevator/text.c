@@ -5,7 +5,71 @@ void func_801B0000(void) {
     func_801B0EF0();
 }
 
-INCLUDE_ASM("../asm/us/magic_elevator/nonmatchings/text", func_801B0020);
+void func_801B0020(ElvFx *arg0) {
+    ElSp *sp;
+    s32 *oz;
+    s32 *fl;
+    u8 *prim;
+    s32 q;
+    u32 w;
+    u32 x;
+    s32 col;
+    s32 k;
+
+    sp = (ElSp *)0x1F800000;
+    oz = &sp->otz;
+    func_8003C21C(&arg0->rot, &sp->m);
+    sp->m.t[0] = arg0->pos.vx;
+    fl = &sp->flag;
+    sp->m.t[1] = arg0->pos.vy;
+    sp->m.t[2] = arg0->pos.vz;
+    gte_SetRotMatrix(&D_800FA63C);
+    gte_ldmcol_m(&sp->m.m[0][0]);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(&sp->m.m[0][0]);
+    gte_ldmcol_m(&sp->m.m[0][1]);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(&sp->m.m[0][1]);
+    gte_ldmcol_m(&sp->m.m[0][2]);
+    gte_mvmva(1, 0, 3, 3, 0);
+    gte_stir3h_m(&sp->m.m[0][2]);
+    gte_SetTransMatrix_m(&D_800FA63C);
+    gte_ldv0w_m(&sp->m.t[0]);
+    gte_mvmva(1, 0, 0, 0, 0);
+    gte_stir3_m(&sp->m.t[0]);
+    gte_SetRotMatrix(&sp->m);
+    gte_SetTransMatrix_m(&sp->m);
+    prim = D_801D65BC;
+    gte_ldv3_m(&D_801B10F4[0], &D_801B10F4[1], &D_801B10F4[2]);
+    gte_rtpt();
+    gte_stflg_m(fl);
+    if ((*fl & 0x60000) == 0) {
+        do {
+            q = (arg0->unk0 << 7) / 15;
+            w = q << 16;
+            x = (q << 8) | 0x22000000;
+            col = q | (w | x);
+        } while (0);
+        gte_avsz3();
+        gte_stotz_m(oz);
+        gte_stsxy3_m(prim + 8, prim + 0xC, prim + 0x10);
+        *(s32 *)(prim + 4) = col;
+        *(s32 *)prim = 0x04000000;
+        k = ((*oz >> 2) << 2) + 0x70;
+        func_80046794(k + D_801517C0, prim);
+        D_801D65BC = prim + 0x14;
+    }
+    arg0->pos.vx += arg0->vel.vx;
+    arg0->pos.vy += arg0->vel.vy;
+    arg0->pos.vz += arg0->vel.vz;
+    arg0->vel.vx = (arg0->vel.vx * 3) >> 2;
+    arg0->vel.vy += 0xC8;
+    arg0->vel.vz = (arg0->vel.vz * 3) >> 2;
+    arg0->rot.vx += arg0->spin.vx;
+    arg0->rot.vy += arg0->spin.vy;
+    arg0->unk0--;
+    arg0->rot.vz += arg0->spin.vz;
+}
 
 void func_801B0418(void) {
     MgObj20 *p;

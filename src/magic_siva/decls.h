@@ -47,7 +47,7 @@ s32 func_801B2224(void);
 typedef struct { s16 pad0; s16 life; s16 x; s16 y; s16 z; s16 pad1; s16 vx; s16 vy; s16 vz; s16 pad2; void (*fn)(MgSVec *, void *, s32); } SvPtcl;
 extern SvPtcl D_801F13B4[];
 extern MgMat D_800FA63C;
-void func_801B1B5C(SvPtcl *);
+void func_801B1B5C(SvPtcl *arg0);
 void func_801B3B10(void);
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 padA; s16 unkC; s16 unkE; s16 unk10; s16 pad12; MgMat *unk14; s16 pad18; s16 unk1A; s16 pad1C; s16 pad1E; } SvTask;
 typedef struct { u8 pad0[8]; MgVec scale; MgMat m1; MgMat m2; } SvFx;
@@ -173,7 +173,7 @@ extern MgCam D_801F03C0;
 extern MgCam *D_801F03F0;
 s32 func_80039F5C(s32);
 extern s16 D_80162084;
-void func_8003A078(MgVec *, MgSVec *);
+s32 func_8003A078(MgVec *, MgSVec *);
 extern MgSVec D_80158D00;
 void func_8003ACE4(MgSVec *, MgVec *);
 void func_800D3994(s32, s32, MgSVec *);
@@ -186,5 +186,7 @@ typedef struct { SvTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 x
 typedef struct { MgSVec v0; MgSVec v1; MgSVec v2; u8 pad18[8]; s16 cx; s16 cy; s16 cz; } SvTri;
 extern SvTri *D_801F0208;
 typedef struct { SvTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; u16 uv1; u16 tpage; s32 xy2; u16 uv2; u16 pad1E; s32 xy3; u16 uv3; u16 pad26; } SvPolyFT4;
+typedef struct { s16 type; s16 pad2; s16 x; s16 y; s16 z; s16 pad8; s16 vx; s16 vy; s16 vz; s16 pad12; } SvForce;
+void func_8003BA10(MgVec *, MgVec *, MgVec *);
 
 #endif /* MAGIC_SIVA_DECLS_H */

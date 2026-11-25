@@ -22,7 +22,6 @@ typedef struct { s16 flag; u8 pad[0x22]; } ElvPart;
 extern ElvPart D_801B115C[];
 ElvPart *func_801B04E0(void);
 void func_801B0418(void);
-void func_801B0020(ElvPart *);
 s32 func_800BBEAC(void (*)());
 s32 func_800D7A88(s32, s32, void *, s32, s32, s32);
 extern u8 D_80154CA4[];
@@ -59,5 +58,10 @@ extern MgSVec D_801B1148;
 extern MgSVec D_801B1150;
 extern s32 D_801B113C;
 extern s32 D_801B1158;
+typedef struct { MgMat m; s32 otz; s32 flag; } ElSp;
+extern MgMat D_800FA63C;
+extern MgSVec D_801B10F4[3];
+void func_80046794(s32, void *);
+void func_801B0020(ElvFx *arg0);
 
 #endif /* MAGIC_ELEVATOR_DECLS_H */

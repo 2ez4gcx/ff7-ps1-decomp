@@ -822,7 +822,54 @@ s32 func_801B4614(s32 arg0) {
     return (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16);
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B46E0);
+void func_801B46E0(void) {
+    MgTask *p;
+    s32 a;
+    s32 b;
+    s32 c;
+    s32 x;
+    s32 q;
+    s32 k;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    D_801F0608 = (AxG3 *)D_80163C74;
+    func_8003B48C(&D_801F0610);
+    func_8003B51C(&D_801F0610);
+    gte_ldv3_m(&D_801EDFE0[p->unk0], &p->unk4, &p->unkC);
+    gte_rtpt();
+    gte_stsxy3_mm(&D_801F0608->xy0, &D_801F0608->xy1, &D_801F0608->xy2);
+    gte_stdp_m(&D_801EDFF0->dp);
+    gte_stflg_m(&D_801EDFF0->flag);
+    gte_avsz3();
+    gte_stotz_m(D_801EDFF0);
+    if ((D_801EDFF0->flag & 0x60000) == 0) {
+        a = p->unk2;
+        c = p->unk1C;
+        q = (a << 12) / 6;
+        x = c + (((0x1000 - c) * q) >> 12);
+        a++;
+        b = p->unk1E;
+        q = (a << 12) / 6;
+        b += ((0x1000 - b) * q) >> 12;
+        x = func_801B4614(x);
+        b = func_801B4614(b);
+        D_801F0608->rgbc = x | 0x32000000;
+        do {
+            D_801F0608->c1 = x;
+        } while (0);
+        D_801F0608->c2 = b;
+        D_801F0608->tag = 0x06000000;
+        k = ((D_801EDFF0->otz >> 2) << 2) + 0x70;
+        func_80046794(k + D_801517BC.ot, D_801F0608);
+        D_80163C74 = (s32)(D_801F0608 + 1);
+    }
+    if (D_80062D98 == 0) {
+        p->unk2 += 2;
+        if (p->unk2 >= 6) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B4970(void) {
     MgTask *p;

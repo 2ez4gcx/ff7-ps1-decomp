@@ -440,7 +440,105 @@ s32 func_801B1760(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
     return (s32)p;
 }
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B1B5C);
+void func_801B1B5C(SvPtcl *arg0) {
+    MgVec *a;
+    MgSVec *o;
+    MgVec *b;
+    SvForce *f1;
+    SvForce *f2;
+    SvForce *f3;
+    SvForce *f4;
+    SvForce *f5;
+    SvForce *f6;
+    SvForce *f7;
+    SvForce *f8;
+    s32 i;
+    s32 off;
+    s32 len;
+    s32 dot;
+    s32 q;
+    s32 base;
+    s32 k;
+
+    a = (MgVec *)0x1F800008;
+    b = (MgVec *)0x1F800018;
+    o = (MgSVec *)0x1F800000;
+    i = 0;
+    base = D_801F2674;
+    if (*(s16 *)base != -1) {
+        off = 0;
+        do {
+            if ((arg0->pad0 >> i) & 1) {
+                switch (*(s16 *)(off + base)) {
+                case 0:
+                    break;
+                case 1:
+                    f1 = (SvForce *)(D_801F2674 + off);
+                    a->vx = arg0->x - f1->x;
+                    a->vy = arg0->y - f1->y;
+                    a->vz = arg0->z - f1->z;
+                    if ((a->vx < 0 ? -a->vx : a->vx) > 0x7FFF || (a->vy < 0 ? -a->vy : a->vy) > 0x7FFF || (a->vz < 0 ? -a->vz : a->vz) > 0x7FFF) {
+                        do {
+                            k = 0;
+                            a->vx /= 2;
+                            a->vy /= 2;
+                            a->vz /= 2;
+                            k = 0x7FFF;
+                        } while ((a->vx < 0 ? -a->vx : a->vx) > k || (a->vy < 0 ? -a->vy : a->vy) > k || (a->vz < 0 ? -a->vz : a->vz) > k);
+                    }
+                    len = func_8003A078(a, o);
+                    if (len > 0) {
+                        f2 = (SvForce *)(D_801F2674 + off);
+                        dot = o->vx * f2->vx + o->vy * f2->vy + o->vz * f2->vz;
+                        if (dot > 0) {
+                            q = (dot >> 8) / func_80039F5C(len);
+                            f3 = (SvForce *)(D_801F2674 + off);
+                            arg0->vx += (f3->vx + o->vx) * q >> 10;
+                            arg0->vy += (f3->vy + o->vy) * q >> 10;
+                            arg0->vz += (f3->vz + o->vz) * q >> 10;
+                        }
+                    }
+                    break;
+                case 2:
+                    f4 = (SvForce *)(D_801F2674 + off);
+                    a->vx = f4->x - arg0->x;
+                    a->vy = f4->y - arg0->y;
+                    a->vz = f4->z - arg0->z;
+                    func_8003A078(a, o);
+                    f5 = (SvForce *)(D_801F2674 + off);
+                    arg0->vx += o->vx * f5->vx >> 12;
+                    arg0->vy += o->vy * f5->vy >> 12;
+                    arg0->vz += o->vz * f5->vz >> 12;
+                    break;
+                case 3:
+                    f6 = (SvForce *)(D_801F2674 + off);
+                    arg0->vx += f6->vx;
+                    arg0->vy += f6->vy;
+                    arg0->vz += f6->vz;
+                    break;
+                case 4:
+                    f7 = (SvForce *)(D_801F2674 + off);
+                    a->vx = f7->x - arg0->x;
+                    a->vy = f7->y - arg0->y;
+                    a->vz = f7->z - arg0->z;
+                    func_8003A08C(a, a);
+                    f8 = (SvForce *)(D_801F2674 + off);
+                    b->vx = f8->vx;
+                    b->vy = f8->vy;
+                    b->vz = f8->vz;
+                    func_8003BA10(a, b, a);
+                    arg0->vx += a->vx >> 4;
+                    arg0->vy += a->vy >> 4;
+                    arg0->vz += a->vz >> 4;
+                    break;
+                }
+            }
+            off += 0x14;
+            i++;
+            base = D_801F2674;
+        } while (*(s16 *)(off + base) != -1);
+    }
+}
 
 void func_801B2078(MgSVec *a) {
     u8 *q;

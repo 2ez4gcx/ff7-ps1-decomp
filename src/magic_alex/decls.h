@@ -187,5 +187,11 @@ typedef struct { MgSVec v[4]; s32 ext; s32 flag; } AlxQuad;
 M2C_UNK func_8003BC9C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern AlxQuad *D_801EDFF4;
 extern u8 *D_801F060C;
+typedef struct { u32 tag; s32 rgbc; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } AxG3;
+typedef struct { s32 otz; s32 dp; s32 flag; } AxGte;
+extern MgSVec D_801EDFE0[];
+extern AxGte *D_801EDFF0;
+extern AxG3 *D_801F0608;
+extern struct { s32 pad; s32 ot; } D_801517BC;
 
 #endif /* MAGIC_ALEX_DECLS_H */
