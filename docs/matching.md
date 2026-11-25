@@ -1100,6 +1100,31 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   k*128` order, the cast form `((MgSVec *)((u8 *)D->p + off))->vx` gave the offset first
   (magic_garyu func_801B0480). `*p & m` then `p = p - 8; .. m + (s32)p` gave an in-place
   `addiu v1,v1,-8` (battle func_800B9568).
+- sched1's `birthing_insn_p` boosts only a producer whose destination register has
+  `reg_n_sets == 1`, hard registers included (an `a3 = 0` constant is boosted, `a1` and
+  `a2` are not); a newly-ready predecessor carries the 7f000001 priority and is picked at
+  once; all other ties go to the later insn, so a chain stays contiguous. sched2's
+  priority is cumulative from the block start, and the first insn after a `do { } while
+  (0)` is a barrier every later register user depends on at cost 2: whether it is an `sll`
+  (cost 1) or an `lbu` decides whether a later `sll` sinks into a delay slot (battle
+  func_800A4BA4). Combine merges a single-use argument temp into the call's move.
+- reorg's `fill_simple_delay_slots` rejects every earlier candidate once a volatile memory
+  reference sits between the candidate and the branch (`resource_conflicts_p` tests the
+  volatile flag): that leaves a `nop` where an earlier `li` would fill the slot, and a
+  `volatile` global on the store between them decides it (magic_vahamut func_801B2DA8:
+  `D_801EF26A`, `D_801EF27A` as `volatile s16`, `w = u; D_801EF27A = w; D_801EF26A = w;`).
+  A volatile store can pin an order too (the 0x78 store volatile, the table load into a
+  local first: main func_80032614's tail).
+- A plain scalar global is a non-struct MEM, so the scheduler lets its load rise above
+  stores to array elements (`mem/s`); reading it through a one-field struct view at an
+  address a few bytes lower (`extern struct { s32 pad; s32 idx; } D_80062D00;` used as
+  `D_80062D00.idx` for D_80062D04) keeps the load after the stores and the direct `lui; lw
+  sym(reg)` address, where `(&D_x)[0]` gives the same order with a `la reg` address (main
+  func_80045A24); `volatile` on struct members does not change the order. In the spawn
+  template `D_80162978[D_8015169C].unk0 = -1; func_800D3994(g, D_8015190F[g][0], ..)` the
+  load written as `D_8015190F[g][0]` is independent of the store and the index chain
+  floats above it; the same load as `D_80151909[g][6]` (base symbol plus offset) keeps the
+  store group first (magic_beast, garyu, spark).
 
 ### Registers
 
@@ -1669,6 +1694,24 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   over 68 insns and `u = i << 6` 6 over 11, prio.py explains why the counter takes the
   first saved register: a separate counter for the last loops did not change the s1/s2
   order (formmenu func_801D0E94 before it matched).
+- `do { } while (0);` around ONE statement (wrapall.py finds it) changes the loop-depth
+  weight of references in register priority: it fixed an s3/s4 swap and a frame of 96
+  against 88 in magic_garyu func_801B0480 and every register difference of jet
+  func_800A1CD8. A fresh single-set local per step fixes an add that picks the wrong
+  register where a reused multi-set local makes local alloc tie the output to the other
+  operand (`w = D->w4; x = ((w >> 2) << 2) - 0x10; f(x + D_801517C0, q);`, magic_vahamut2
+  func_801B57F4); splitting a three-statement chain in two flips which variable gets s0
+  (magic_knights func_801B2048); an unrelated variable reused for a constant stored in a
+  conditional block and later for the `andi` result (`t = 0x800; ..; t = f() & 0x100;`) is
+  a global multi-set pseudo, so the `andi` is unboosted and lands as in the game while the
+  compare stays a local pseudo tied to its first operand (magic_debucho func_801B1D64).
+- The game's s0 can be one pseudo used for several unrelated values (a wrap-around
+  difference, a pointer, a constant, a node and an address in world func_800A71E8):
+  writing it that way gives the game's roles, and prio.py's numbers confirm which variable
+  should outrank which. A bare-name definition `s32 f(arg0, arg1)` is needed when a caller
+  passes no arguments (put refuses the prototyped form), and a function returning the sum
+  (`s32`) puts it in v0 where the same body as `void` puts it in a1 (battle
+  func_800D3520).
 
 ### Control flow
 
@@ -2035,6 +2078,13 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   sharing one variable keep a shared sb/jal tail merged, one variable each splits it
   (battle func_800E7170); a call written in full in each branch of an if gives the
   cross-jumped tail and stops early constants being hoisted (battle func_800E2098).
+- cse puts an operand with a known constant value second: `mult const_reg,x` needs a
+  constant register cse does not know, and a base-first `addu` needs a base that is not a
+  known constant at that point (magic_hades func_801B7A70, snobo func_800A0F1C: inferred
+  from the .cse dump, not proven). A `beqz` delay slot holds the last independent
+  instruction written above it (snobo func_800AAFE8: `q = arg0->z;` before the `if`);
+  writing the first iteration of a loop out by hand (`v += 6; n -= 3;` before `while (n >
+  0)`) stopped GCC merging two loop tails into a `j`.
 
 ### Loops
 
@@ -2407,6 +2457,22 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   where the global written inline gave lui/addu forms; one `o = k * 0xB9C` shared by the
   copies of a loop removed 16 words (magic_tifa func_801B5C74); a byte-stepped offset used
   for one array only stopped GCC hoisting that array's base (highway func_800AB738).
+- loop.c moves an add for free once the symbol it uses moves (`-dL`: "cond forces <sym>
+  savings 2 moved"), unless the add's result pseudo is set twice, and moves the symbol
+  alone only when its life is at least 2: the game's `lui s5` hoisted with the add left in
+  the loop came from `tbl = (u8 *)D_800E7B1C; b = e->b; p = tbl + o; p = *(u8 **)p;
+  (*(void (**)(s32, s32))(p + b * 4))(e->a, e->c);` (the load between the symbol's set and
+  its use gives it the longer life, the pointer assigned twice keeps the add: battle
+  func_800A72C8). loop.c eliminates a biv only when its pseudo has no use outside the loop
+  by insn uid, so sharing the loop variable with another use keeps the game's biv with its
+  `addiu a0,a0,48` and `sltu` (world func_800A71E8); a search loop written `while (p !=
+  NULL) { if (..) break; q = p; p = p->next; }` is recognised where `if` + `do-while` (a
+  multi-entry loop) is ignored. `*(volatile s32 *)&h->f = 0` stores keep `4/8/12(h)`
+  addressing where loop.c combines them into one `h+4` giv and eliminates the biv
+  (magic_hades func_801B3578); a pseudo set twice in a loop is not hoisted (`c = 2; ..; c
+  = 0x3D6;` keeps compare constants in the loop: battle func_800B46B4); a loop written
+  with `goto` keeps constants in the loop where a `for` with a call hoists them into
+  s4/s5, and `for (i = 6; i != -1; i--)` gives `li t,-1; bne` (snobo func_800AAE98).
 
 ### Stack frame
 
@@ -2893,6 +2959,44 @@ The PSY-Q libraries were split so: libcd and libgpu have the unfolded form (ASPS
 - Of the 348 functions splat marks handwritten that no batch had tried, 343 use GTE
   instructions (written with include/gte.h macros since 2026-11-25, except the PSY-Q library's
   own assembly); the other five are BIOS-call stubs and library assembly: they stay asm.
+- How a GTE macro is written (include/gte.h, about 75 macros now): one `asm volatile` per
+  sequence of the game, the instructions one per line (`\n\t`; maspsx cannot read `;`),
+  operands `%0`.. with "r" or "=r" constraints (GCC 2.6.3 rejects "+r": a macro that
+  changes its operand uses `"=r"(a) : "0"(a)`), scratch registers ($12 to $15, or what the
+  asm uses) as clobbers, "memory" for stores; branches and numeric labels (`1:`) inside a
+  macro work (maspsx already emits `.set noreorder`), `.set reorder` inside one makes gas
+  add nops. work.py drops `#define` lines of a work file, so new macros go into
+  include/gte.h. When the game computes pointers in C between its `move t4..t6`
+  instructions, each move is its own `asm volatile` (gte_ldv3_m, gte_stsxy3_m,
+  gte_stsz3_m), and three equal constants sharing one register need a single-operand macro
+  (gte_SetBackColorN).
+- What decides a GTE function's match is the C around the macros: scratchpad accesses
+  (`lui reg; sh x,6(reg)`) come from assigning the constant pointer `sc = (T
+  *)0x1F800000;` before the loop or label (in one straight block CSE folds `p + 6` to a
+  constant address and gives `lui at; sh ..(at)`; two macro uses of the same literal
+  address in a block share one register where the game reloads it, and an in/out operand
+  or a symbol at that address stops the sharing, each with another side effect); a loop
+  pointer written as struct-array indexing (`b[i].x`) gives `move v1,a0` and `addiu
+  v1,v1,12` in the delay slot where `q += 6` on an `s16 *` splits the givs; a running
+  offset written as `base + j * n` is a giv of the counter; no `if (cnt != 0)` guard
+  before a `for`; counters at function level, temps block-local per loop; `for (i = 0; i <
+  n; i++, dst += N, src += M)` gives the game's order of the increments; the loop's
+  pointer base is the last memory access in source order (`p->code` last gives `p+7`); raw
+  casts for a packet's stores (`*(s32 *)((u8 *)p + 0x38) = ..`) instead of struct fields
+  stop the scheduler hoisting the tag-word load (magic_wep4); a colour word as `u32 w =
+  col << 16; u32 x = (col << 8) | 0x24000000; *(u32 *)(p + 4) = w | x | col;` gives the
+  game's instruction order (magic_frog func_801B0A50 went from 435 to 243 differing
+  lines).
+- The loop guard decides the allocator's order of i, e and the mask: `if (i < n)` (blez)
+  or `if ((u32)i < (u32)n)` (beqz with an `lhu` count) leaves `i` one more reference than
+  `n != 0` or `n > 0` and gives the game's registers (magic_hades func_801B0480 and
+  func_801B1144, hatena, faiga2). A value that must be allocated like a global has to be
+  set in both arms of an `if` (matra and reazer `k`). A function with GTE code that is
+  really hand-written (trapping `add`/`sub`/`addi`, hand-filled delay slots, `rtpt` right
+  after `lwc2` without nops, an OT insertion expanded with `lui $at`, leaf routines on
+  v0/v1, t0 to t7 used as ALU scratch) stays asm: wrapping its body in fixed-register
+  macros matches but is only INCLUDE_ASM moved into a header (battle func_800D3418,
+  func_800D3474, func_800D34C8 were reverted).
 
 ## Working with agents
 
@@ -3006,3 +3110,15 @@ and a permuter hit has to be rewritten in the repository's style (tools/tidy_sty
 the whitespace and braces) and checked with work.py diff before put. A whole-project build
 (`tools/build.py`) after a batch that changed main/decls.h catches clashes with overlay
 declarations.
+
+Retrying old near misses with the newest facts paid off: of 22 functions that earlier
+batches had left 1 to 6 words off, near1 and near3 matched 9 (battle func_800A72C8,
+magic_vahamut, odin1, alex, gospel, beast, garyu, spark, hades) and focus10 4 of 7; the
+facts in this section from 2026-11-24 on are the ones that did it. GTE functions
+(include/gte.h) gave about 80 more functions in a day (gte2 to gte7): batches of 15 to 36
+small ones with siblings in other overlays work best, a family of large copies (frog 452
+and 650, vahamut2 688, eight overlays each) is worth the most but cost a full batch
+without a match; tools/permute.py cannot parse asm statements, so wrapall.py and forms are
+the tools there. Up to three agents ran at once from 2026-11-25; each one has its own work
+folder and `put` takes a lock; macros in include/gte.h are added with the Edit tool on its
+last line.
