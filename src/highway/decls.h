@@ -487,5 +487,6 @@ extern s32 D_800B574C;
 extern s32 D_800B5838[];
 extern s32 D_800BE300;
 extern s32 D_800C4A9C;
+void func_800B4114(s32 *arg0, s32 *arg1);
 
 #endif /* HIGHWAY_DECLS_H */

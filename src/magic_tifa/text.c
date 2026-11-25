@@ -215,7 +215,12 @@ void func_801B107C(MgSVec *v0, MgSVec *v1, s32 color) {
     D_801F3D50 = p;
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B1180);
+void func_801B1180(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    gte_ldv3(arg1, arg2, arg3);
+    gte_rtpt();
+    gte_stsxy3(&arg0[0x1D], &arg0[0x1E], &arg0[0x1F]);
+    gte_stszotz(&arg0[9]);
+}
 
 void func_801B11D8(MgRing *r, s32 v) {
     s32 head;

@@ -199,7 +199,7 @@ extern HdSt D_801F0FDC;
 extern MgMat D_801F0FE4;
 void func_801B40FC(void);
 typedef struct { u8 pad0[0x1C]; s32 w1C; s32 w20; u8 pad24[4]; MgSVec v28; MgSVec v30; MgSVec v38; u8 pad40[8]; MgSVec v48; MgSVec v50; u8 pad58[0x10]; s32 w68; s32 w6C; u8 pad70[0x18]; s32 w88; s32 w8C; u8 pad90[0x18]; s32 wA8; s32 wAC; s32 wB0; s32 wB4; u8 padB8[0x10]; MgSVec vC8; MgMat mD0; } HdSc4;
-void func_801B32FC(void *, void *, void *, void *);
+void func_801B32FC(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
 void func_801B3BD4(void);
 typedef struct { u8 pad0[0x1C]; s32 w1C; s32 w20; u8 pad24[4]; MgSVec v28; u8 pad30[8]; MgSVec v38; u8 pad40[8]; MgSVec v48; MgSVec v50; MgSVec v58; u8 pad60[8]; s32 w68; s32 w6C; s32 w70; u8 pad74[0x14]; s32 w88; s32 w8C; s32 w90; u8 pad94[0x14]; s32 wA8; s32 wAC; s32 wB0; s32 wB4; s32 wB8; s32 wBC; s32 wC0; s32 wC4; MgSVec vC8; MgMat mD0; } HdSc3;
 void func_801B6D74(void);

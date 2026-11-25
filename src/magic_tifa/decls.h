@@ -187,7 +187,7 @@ void func_801BADB8(void);
 extern s32 D_80163C74;
 extern s32 D_801F3C04[];
 void func_801B416C(void);
-void func_801B1180(void *, s32, s32, s32);
+void func_801B1180(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
 void func_801B1DB0(MgRing *, MgSVec *, MgSVec *, MgSVec *, s32);
 extern u8 D_80151A58[];
 extern u8 D_801F3D74[];

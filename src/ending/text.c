@@ -805,7 +805,18 @@ void func_800A2934(void *arg0, void *arg1) {
     M2C_FIELD(arg1, s16 *, 0x38) = 0;
 }
 
-INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2974);
+void func_800A2974(MgMat *arg0, s32 arg1, MgMat *arg2) {
+    u8 pad[16];
+
+    func_8003BF8C(arg2, arg0);
+    gte_SetRotMatrix(arg0);
+    gte_ldv0(arg1);
+    gte_mvmva(1, 0, 0, 3, 0);
+    gte_stlvnl(arg0->t);
+    arg0->t[0] = -arg0->t[0];
+    arg0->t[1] = -arg0->t[1];
+    arg0->t[2] = -arg0->t[2];
+}
 
 INCLUDE_ASM("../asm/us/ending/nonmatchings/text", func_800A2A2C);
 

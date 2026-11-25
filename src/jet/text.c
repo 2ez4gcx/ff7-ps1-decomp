@@ -1947,9 +1947,25 @@ void func_800A82F0(void *arg0) {
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A8310);
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A83F0);
+void func_800A83F0(s32 *arg0, s32 *arg1) {
+    gte_ldv3c(arg0);
+    gte_rtpt();
+    gte_stsxy3c(arg1);
+    gte_adv18_c(arg0, arg1);
+    gte_ldv3c(arg0);
+    gte_rtpt();
+    gte_stsxy3c(arg1);
+    gte_adv18_c(arg0, arg1);
+    gte_ldv3c(arg0);
+    gte_rtpt();
+    gte_stsxy2c(arg1);
+}
 
-INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A84A4);
+void func_800A84A4(s32 *arg0, s32 *arg1) {
+    gte_ldv3c(arg0);
+    gte_rtpt();
+    gte_stsxy3c(arg1);
+}
 
 INCLUDE_ASM("../asm/us/jet/nonmatchings/text", func_800A84DC);
 

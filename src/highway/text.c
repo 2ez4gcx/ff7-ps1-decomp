@@ -3463,6 +3463,10 @@ INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B3F74);
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B404C);
 
-INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B4114);
+void func_800B4114(s32 *arg0, s32 *arg1) {
+    gte_ldv3c(arg0);
+    gte_rtpt();
+    gte_stsxy3c(arg1);
+}
 
 INCLUDE_ASM("../asm/us/highway/nonmatchings/text", func_800B414C);

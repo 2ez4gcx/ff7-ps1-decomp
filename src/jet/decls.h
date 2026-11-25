@@ -312,5 +312,7 @@ typedef struct { u8 pad0[0xC]; s32 fC; u8 pad10[0x40]; s32 f50; u8 pad54[0x24]; 
 typedef struct { s32 f0; s32 f4; s32 f8; u8 padC[0xC]; u16 f18; u8 pad1A[0x1E]; s32 f38; u8 pad3C[0x98]; JetNode *node; } JetEnA;
 typedef struct { u8 pad0[0x409C]; JetTag ot; u8 pad40A0[0x437C - 0x40A0]; u8 *prim; } JetDrawCtx3;
 typedef struct { JetTag tag; u8 r0; u8 g0; u8 b0; u8 code; s16 x0; s16 y0; u8 u0; u8 v0; u16 clut; s16 x1; s16 y1; u8 u1; u8 v1; u16 tpage; s16 x2; s16 y2; u8 u2; u8 v2; u16 pad2; s16 x3; s16 y3; u8 u3; u8 v3; u16 pad3; } JetPolyFT4;
+void func_800A84A4(s32 *arg0, s32 *arg1);
+void func_800A83F0(s32 *arg0, s32 *arg1);
 
 #endif /* JET_DECLS_H */

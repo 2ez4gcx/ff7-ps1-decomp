@@ -531,7 +531,12 @@ void func_801B3218(MgSVec *v0, MgSVec *v1, s32 color) {
     D_80163C74 = p;
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B32FC);
+void func_801B32FC(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    gte_ldv3(arg1, arg2, arg3);
+    gte_rtpt();
+    gte_stsxy3(&arg0[0x1A], &arg0[0x1B], &arg0[0x1C]);
+    gte_stszotz(&arg0[7]);
+}
 
 INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text", func_801B3354);
 
