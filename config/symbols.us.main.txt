@@ -24,3 +24,5 @@ D_8001010E = 0x8001010E; // force_not_migration:True
 func_80042D98 = 0x80042D98; // type:func
 // A BIOS-call stub (A0 0x3F, printf) ends at 0x80042DD8, where a C function begins
 func_80042DD8 = 0x80042DD8; // type:func
+D_80010014 = 0x80010014; // force_not_migration:True
+D_80010020 = 0x80010020; // force_not_migration:True
