@@ -193,5 +193,9 @@ extern MgSVec D_801EDFE0[];
 extern AxGte *D_801EDFF0;
 extern AxG3 *D_801F0608;
 extern struct { s32 pad; s32 ot; } D_801517BC;
+void func_801B5C14(void);
+extern s16 D_80153BBE;
+extern s16 D_80153BCC;
+extern u16 D_80153D24;
 
 #endif /* MAGIC_ALEX_DECLS_H */

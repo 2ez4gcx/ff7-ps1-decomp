@@ -10,7 +10,7 @@ typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 void func_8003BA10(MgVec *, MgVec *, MgVec *);
 s32 func_8003A59C(s32);
 s32 func_8003CC1C(s32, s32);
-void func_8003A08C(MgVec *, MgVec *);
+s32 func_8003A08C(MgVec *, MgVec *);
 s32 func_801B0068(MgVec *a, MgVec *b, MgVec *c);
 typedef struct { s16 m[3][3]; s32 t[3]; } MgMat;
 s32 func_80039A74(s32);
@@ -239,5 +239,7 @@ HdQuadEnt *func_801B0708(HdClipCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
 typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyG4 *prim; u8 pad10[4]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[8]; MgSVec v28; MgSVec v30; MgSVec v38; MgSVec v40; u8 pad48[0x68]; s32 wB0; u8 padB4[0x84]; s32 w138; u8 b13C; u8 b13D; u8 b13E; } HdColCtx;
 typedef struct { u16 idx[4]; u8 k0; u8 pad9[3]; u8 k1; u8 padD[3]; u8 k2; u8 pad11[3]; u8 k3; u8 pad15[3]; } HdG4Ent;
 HdG4Ent *func_801B14A0(HdColCtx *arg0, u8 *arg1, s32 *arg2, s32 arg3);
+typedef struct { u8 pad0[4]; MgTag *ot; s32 shift; HdPolyFT3 *prim; u16 tpage; u8 pad12[2]; s32 area; u8 pad18[4]; s32 otz; u8 pad20[4]; s32 flag; MgSVec v28; MgSVec v30; MgSVec v38; u8 pad40[0xD0]; MgVec va; MgVec vb; u8 u0; u8 v0; u8 u1; u8 v1; u8 u2; u8 v2; } HdTriCtx;
+HdPolyEnt *func_801B0C24(HdTriCtx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
 
 #endif /* MAGIC_HADES_DECLS_H */

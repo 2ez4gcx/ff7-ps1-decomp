@@ -113,5 +113,11 @@ typedef struct { BzTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 c1; s32 x
 typedef struct { u8 pad0[4]; BzTag *ot; s32 shift; BzPolyG4 *prim; u8 pad10[8]; s32 area; u8 pad1C[4]; s32 otz; u8 pad24[0x98]; MgSVec vBC; MgSVec vC4; MgSVec vCC; MgSVec vD4; } BzG4Ctx;
 typedef struct { u16 idx[4]; s32 c0; s32 c1; s32 c2; s32 c3; } BzG4Ent;
 BzG4Ent *func_801B0C04(BzG4Ctx *arg0, u8 *arg1, u16 *arg2, s32 arg3);
+typedef struct { u8 pad0[4]; BzTag *ot; s32 shift; BzPolyFT3 *prim; u8 pad10[4]; s32 w14; s32 area; u8 pad1C[4]; s32 otz; s32 flag; u8 pad28[4]; BzRec *rec; u8 pad30[4]; MgMat m34; MgMat m54; u8 pad74[0x48]; MgSVec vBC; MgSVec vC4; MgSVec vCC; u8 padD4[8]; MgSVec vDC; } BzTCtxF;
+BzPolyEnt *func_801B1B68(BzTCtxF *arg0, u8 *arg1, u16 *arg2);
+typedef struct { u8 pad0[4]; BzTag *ot; s32 shift; BzPolyFT4 *prim; u8 pad10[4]; s32 w14; s32 area; u8 pad1C[4]; s32 otz; s32 flag; u8 pad28[4]; BzRec *rec; u8 pad30[4]; MgMat m34; MgMat m54; u8 pad74[0x48]; MgSVec vBC; MgSVec vC4; MgSVec vCC; MgSVec vD4; MgSVec vDC; } BzTCtxQ;
+BzQuadEnt *func_801B200C(BzTCtxQ *arg0, u8 *arg1, s32 *arg2);
+typedef struct { u8 pad0[4]; BzTag *ot; s32 shift; BzPolyG3 *prim; u8 pad10[8]; s32 area; u8 pad1C[4]; s32 otz; s32 flag; u8 pad28[4]; BzRec *rec; u8 pad30[4]; MgMat m34; MgMat m54; u8 pad74[0x48]; MgSVec vBC; MgSVec vC4; MgSVec vCC; u8 padD4[8]; MgSVec vDC; } BzTCtx;
+BzG3Ent *func_801B2548(BzTCtx *arg0, u8 *arg1, s32 *arg2);
 
 #endif /* MAGIC_BRIZAG2_DECLS_H */

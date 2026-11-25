@@ -53,7 +53,8 @@ segments:
     start: 0x0
     vram: 0x801b0000
     subsegments:
-      - [0x0, .rodata, text]
+      - [0x0, .rodata, text2]
       - [0x40, c, text]
+      - [0x14A0, c, text2]
       - [0xa9fc, data, data]
   - [0x47b8c]

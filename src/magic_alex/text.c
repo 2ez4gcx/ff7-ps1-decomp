@@ -1265,7 +1265,64 @@ void func_801B5A90(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B5C14);
+void func_801B5C14(void) {
+    MgTask *p;
+    u16 t;
+    s32 i;
+    s32 a;
+    s32 x;
+    u16 *r;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        t = p->unk2;
+        if ((u32)(t - 0x1E) < 0xA) {
+            x = (s16)t - 0x1E;
+            a = (x << 12) / 10;
+            if (t & 1) {
+                D_80153D24 = (u16)D_801EDB4C + (a * 0x3E8 >> 12);
+            } else {
+                D_80153D24 = (u16)D_801EDB4C - (a * 0x3E8 >> 12);
+            }
+        } else {
+            D_80153D24 = D_801EDB4C;
+        }
+        a = p->unk2;
+        if (a < 0x1E) {
+            i = 0;
+            a = ((a + 1) << 12) / 30;
+            a = 0x1000 - a;
+            do {
+                a = ((s32 (*)(s32))func_80039A74)(a / 4);
+                i++;
+            } while (i < 2);
+            a = 0x1000 - a;
+            D_80153BBE = (a << 11 >> 12) + 0x800;
+            D_80153BCC = 0x1000 - a;
+        }
+        x = p->unk2;
+        if (x < 0x28) {
+            i = 0;
+            a = ((x + 1) << 12) / 40;
+            a = 0x1000 - a;
+            do {
+                a = ((s32 (*)(s32))func_80039A74)(a / 4);
+                i++;
+            } while (i < 2);
+            a = 0x1000 - a;
+            D_80153D22 = (-(a * 0x5208) >> 12) + 0x4E20;
+        } else {
+            x -= 0x28;
+            if (x >= 5) {
+                p->unk0 = -1;
+                return;
+            }
+            r = &D_80153D22;
+            *r += 0xC8;
+        }
+        p->unk2++;
+    }
+}
 
 INCLUDE_ASM("../asm/us/magic_alex/nonmatchings/text", func_801B5E98);
 

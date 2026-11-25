@@ -413,11 +413,236 @@ BzIdx4b *func_801B17E8(BzCtx *ctx, u8 *verts, BzList4b *list) {
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B1AD0);
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B1B68);
+BzPolyEnt *func_801B1B68(BzTCtxF *arg0, u8 *arg1, u16 *arg2) {
+    BzPolyEnt *e;
+    BzPolyFT3 *p;
+    BzRec *r;
+    MgMat *m;
+    s32 i;
+    s32 n;
+    s32 sh;
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B200C);
+    e = (BzPolyEnt *)(arg2 + 2);
+    r = arg0->rec;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    for (i = 0; i < n; i++, e++, r++) {
+        if (r->unkE == 0) {
+            *(MgB8 *)&arg0->vDC = *(MgB8 *)r;
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            arg0->vBC.vx -= arg0->vDC.vx;
+            arg0->vBC.vy -= arg0->vDC.vy;
+            arg0->vBC.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            arg0->vC4.vx -= arg0->vDC.vx;
+            arg0->vC4.vy -= arg0->vDC.vy;
+            arg0->vC4.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            arg0->vCC.vx -= arg0->vDC.vx;
+            arg0->vCC.vy -= arg0->vDC.vy;
+            arg0->vCC.vz -= arg0->vDC.vz;
+            arg0->m54.t[0] = arg0->vDC.vx + r->unk18;
+            arg0->m54.t[1] = arg0->vDC.vy + r->unk1A;
+            arg0->m54.t[2] = arg0->vDC.vz + r->unk1C;
+            if (D_80062D98 == 0) {
+                r->unk8 += r->unk10;
+                r->unkC += r->unk14;
+                r->unk18 += r->unk20;
+                r->unk1A += r->unk22;
+                r->unk1C += r->unk24;
+                r->unk22 += r->unk26;
+                r->unk26 += (s16)r->unk26 >> 4;
+            }
+            m = &arg0->m54;
+            func_8003BF8C((MgSVec *)&r->unk8, m);
+            func_8003A63C(&arg0->m34, m, m);
+            gte_SetRotTrans_d4(m);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            p->tag.len = 7;
+            *(s32 *)&p->r0 = 0x26686868;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if (arg0->flag & 0x60000) {
+                r->unkE = 1;
+            } else {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                gte_stopz(&arg0->area);
+                if (arg0->area != 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_avsz3();
+                    gte_stotz(&arg0->otz);
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+        }
+    }
+    arg0->rec = r;
+    arg0->prim = p;
+    return e;
+}
 
-INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B2548);
+BzQuadEnt *func_801B200C(BzTCtxQ *arg0, u8 *arg1, s32 *arg2) {
+    s32 n;
+    s32 sh;
+    BzQuadEnt *e;
+    BzPolyFT4 *p;
+    BzRec *r;
+    MgMat *m;
+    s32 i;
+
+    e = (BzQuadEnt *)(arg2 + 1);
+    r = arg0->rec;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    for (i = 0; i < n; i++, e++, r++) {
+        if (r->unkE == 0) {
+            *(MgB8 *)&arg0->vDC = *(MgB8 *)r;
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            arg0->vBC.vx -= arg0->vDC.vx;
+            arg0->vBC.vy -= arg0->vDC.vy;
+            arg0->vBC.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            arg0->vC4.vx -= arg0->vDC.vx;
+            arg0->vC4.vy -= arg0->vDC.vy;
+            arg0->vC4.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            arg0->vCC.vx -= arg0->vDC.vx;
+            arg0->vCC.vy -= arg0->vDC.vy;
+            arg0->vCC.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vD4 = *(MgB8 *)(arg1 + e->idx[3]);
+            arg0->vD4.vx -= arg0->vDC.vx;
+            arg0->vD4.vy -= arg0->vDC.vy;
+            arg0->vD4.vz -= arg0->vDC.vz;
+            arg0->m54.t[0] = arg0->vDC.vx + r->unk18;
+            arg0->m54.t[1] = arg0->vDC.vy + r->unk1A;
+            arg0->m54.t[2] = arg0->vDC.vz + r->unk1C;
+            if (D_80062D98 == 0) {
+                r->unk8 += r->unk10;
+                r->unkC += r->unk14;
+                r->unk18 += r->unk20;
+                r->unk1A += r->unk22;
+                r->unk1C += r->unk24;
+                r->unk22 += r->unk26;
+                r->unk26 += (s16)r->unk26 >> 4;
+            }
+            m = &arg0->m54;
+            func_8003BF8C((MgSVec *)&r->unk8, m);
+            func_8003A63C(&arg0->m34, m, m);
+            gte_SetRotTrans_d4(m);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            p->tag.len = 9;
+            *(s32 *)&p->r0 = 0x2E686868;
+            p->uvtp1 = e->uv1 | arg0->w14;
+            p->uvclut0 = e->w8;
+            gte_stflg(&arg0->flag);
+            if (arg0->flag & 0x60000) {
+                r->unkE = 1;
+            } else {
+                gte_nclip();
+                p->uv2 = e->uv2;
+                p->uv3 = e->uv3;
+                gte_stopz(&arg0->area);
+                if (arg0->area != 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_ldv0c(&arg0->vD4);
+                    gte_rtps();
+                    gte_stsxy(&p->xy3);
+                    gte_avsz4();
+                    gte_stotz(&arg0->otz);
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+        }
+    }
+    arg0->rec = r;
+    arg0->prim = p;
+    return e;
+}
+
+BzG3Ent *func_801B2548(BzTCtx *arg0, u8 *arg1, s32 *arg2) {
+    BzG3Ent *e;
+    BzPolyG3 *p;
+    BzRec *r;
+    MgMat *m;
+    s32 i;
+    s32 n;
+    s32 sh;
+
+    e = (BzG3Ent *)(arg2 + 1);
+    i = 0;
+    r = arg0->rec;
+    p = arg0->prim;
+    sh = 14 - arg0->shift;
+    n = arg2[0];
+    for (; i < n; i++, e++, r++) {
+        if (r->unkE == 0) {
+            *(MgB8 *)&arg0->vDC = *(MgB8 *)r;
+            *(MgB8 *)&arg0->vBC = *(MgB8 *)(arg1 + e->idx[0]);
+            arg0->vBC.vx -= arg0->vDC.vx;
+            arg0->vBC.vy -= arg0->vDC.vy;
+            arg0->vBC.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vC4 = *(MgB8 *)(arg1 + e->idx[1]);
+            arg0->vC4.vx -= arg0->vDC.vx;
+            arg0->vC4.vy -= arg0->vDC.vy;
+            arg0->vC4.vz -= arg0->vDC.vz;
+            *(MgB8 *)&arg0->vCC = *(MgB8 *)(arg1 + e->idx[2]);
+            arg0->vCC.vx -= arg0->vDC.vx;
+            arg0->vCC.vy -= arg0->vDC.vy;
+            arg0->vCC.vz -= arg0->vDC.vz;
+            arg0->m54.t[0] = arg0->vDC.vx + r->unk18;
+            arg0->m54.t[1] = arg0->vDC.vy + r->unk1A;
+            arg0->m54.t[2] = arg0->vDC.vz + r->unk1C;
+            if (D_80062D98 == 0) {
+                r->unk8 += r->unk10;
+                r->unkC += r->unk14;
+                r->unk18 += r->unk20;
+                r->unk1A += r->unk22;
+                r->unk1C += r->unk24;
+                r->unk22 += r->unk26;
+                r->unk26 += (s16)r->unk26 >> 4;
+            }
+            m = &arg0->m54;
+            func_8003BF8C((MgSVec *)&r->unk8, m);
+            func_8003A63C(&arg0->m34, m, m);
+            gte_SetRotTrans_d4(m);
+            gte_ldv3(&arg0->vBC, &arg0->vC4, &arg0->vCC);
+            gte_rtpt();
+            *(s32 *)&p->r0 = e->c0;
+            p->c1 = e->c1;
+            p->c2 = e->c2;
+            p->tag.len = 6;
+            p->code = 0x32;
+            gte_stflg(&arg0->flag);
+            if (arg0->flag & 0x60000) {
+                r->unkE = 1;
+            } else {
+                gte_nclip();
+                gte_stopz(&arg0->area);
+                if (arg0->area != 0) {
+                    gte_stsxy3(&p->xy0, &p->xy1, &p->xy2);
+                    gte_avsz3();
+                    gte_stotz(&arg0->otz);
+                    p->tag.addr = (arg0->ot + (arg0->otz >> sh))->addr;
+                    (arg0->ot + (arg0->otz >> sh))->addr = (u32)p;
+                    p++;
+                }
+            }
+        }
+    }
+    arg0->rec = r;
+    arg0->prim = p;
+    return e;
+}
 
 INCLUDE_ASM("../asm/us/magic_brizag2/nonmatchings/text", func_801B29DC);
 
