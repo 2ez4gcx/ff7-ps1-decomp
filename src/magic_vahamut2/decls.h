@@ -193,7 +193,7 @@ extern s32 D_801F1784;
 void func_801B3804(void);
 M2C_UNK func_801B34C8(s16 *);
 void func_801B712C(void);
-extern s32 func_801B6EF4;
+void func_801B6EF4(void);
 void func_801B3600(void);
 void func_801B3028(void);
 typedef struct { MgSVec rot; MgMat m; } VhFx;
@@ -239,5 +239,10 @@ void func_801B4DD4(void);
 void func_801B5D80(void);
 MgTask *func_800D4FA8(s32);
 extern MgMat D_800FA63C;
+typedef struct { s32 v0; s32 v4; s32 v8; s32 padC; MgMat m; s16 w0; s16 w2; s32 w4; s32 w8; s32 wC; s32 s40; s32 s44; } Vh2Cam;
+typedef struct { s32 tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } Vh2Poly;
+s32 func_8003B66C(s32, s32, s32);
+s32 func_8003BBDC(s16 *, void *, void *, void *);
+extern Vh2Cam *D_801EF494;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */
