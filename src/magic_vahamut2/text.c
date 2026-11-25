@@ -1053,7 +1053,70 @@ MgPolyT *func_801B577C(void) {
     return prim;
 }
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B57F4);
+void func_801B57F4(void) {
+    MgTask *p;
+    Vh2Cam *s;
+    Vh2Poly *q;
+    s32 t;
+    s32 u;
+    s32 a;
+    s32 b;
+    s32 c;
+    s32 w;
+    s32 x;
+
+    p = &D_80162978[D_8015169C];
+    t = p->unk2;
+    if (t < 5) {
+        u = (t << 12) / 5;
+        D_801EF3FC->v0 = (p->unk18 * u) >> 12;
+    } else {
+        t -= 5;
+        if (t < 5) {
+            D_801EF3FC->v0 = p->unk18;
+            goto done;
+        }
+        t -= 5;
+        if (t < 5) {
+            u = (t << 12) / 5;
+            D_801EF3FC->v0 = (p->unk18 * (0x1000 - u)) >> 12;
+        } else {
+            p->unk0 = -1;
+            return;
+        }
+    }
+done:
+    func_8003B48C(&D_801F1AC0);
+    func_8003B51C(&D_801F1AC0);
+    D_801EF3FC->w4 = func_8003BBDC((s16 *)(&p->unk4), &D_801EF3FC->w0, &D_801EF3FC->w8, &D_801EF3FC->wC);
+    func_8003C21C(&p->unkC, (u16 *)(&D_801EF3FC->m));
+    func_8003B64C(&D_801EF3FC->s40, &D_801EF3FC->s44);
+    s = D_801EF3FC;
+    t = s->w0;
+    b = s->s40;
+    t -= b;
+    s->m.t[0] = t;
+    a = s->w2;
+    c = s->s44;
+    s->m.t[1] = a - c;
+    a -= c;
+    D_801EF3FC->m.t[2] = func_8003B66C(a, b, c);
+    s = D_801EF3FC;
+    s->v4 = (s->v8 = 0x1000);
+    ((void (*)(MgMat *, Vh2Cam *))func_8003B35C)(&s->m, s);
+    func_8003B48C(&D_801EF3FC->m);
+    func_8003B51C(&D_801EF3FC->m);
+    q = (Vh2Poly *)func_801B577C();
+    *(s32 *)((u8 *)q + 4) = 0x32808080;
+    *(s32 *)((u8 *)q + 0xC) = *(s32 *)((u8 *)q + 0x14) = 0x32808040;
+    w = D_801EF3FC->w4;
+    x = ((w >> 2) << 2) - 0x10;
+    func_80046794(x + D_801517C0, (s32)q);
+    if (D_80062D98 == 0) {
+        p->unk2++;
+        p->unk10 += p->unk1A;
+    }
+}
 
 void func_801B5A48(void) {
     MgTask *p;

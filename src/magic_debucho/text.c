@@ -526,4 +526,27 @@ void func_801B1A98(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_debucho/nonmatchings/text", func_801B1D64);
+void func_801B1D64(arg0, arg1) {
+    MgSVec v;
+    MgMat *m;
+    s16 elem;
+    s32 *p;
+    s32 t;
+
+    func_800D2980(D_801B1E80, 0, 0, 0);
+    D_801C42C0 = arg0;
+    func_800D54EC(arg0, &v);
+    elem = D_80151A50[arg1][0];
+    if (v.vz < elem) {
+        t = 0x800;
+        D_801C4050.vy = t;
+    }
+    p = (s32 *)&D_801C404C;
+    m = (MgMat *)((u8 *)p - 0x1C);
+    *p = v.vz;
+    func_8003BF8C(&D_801C4050, m);
+    func_800BBEAC((s32 *)func_801B1A98);
+    t = func_80042DA8() & 0x100;
+    ((void (*)(s32, s32, s32))func_801B11DC)((s32)(t ? D_801C4078 : D_801C40F4), (s32)m, arg1);
+    D_800F8380 |= 8;
+}

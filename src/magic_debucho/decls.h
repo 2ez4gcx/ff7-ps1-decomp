@@ -4,7 +4,7 @@
 
 #include "main/decls.h"
 M2C_UNK *func_801B0040(void);
-M2C_UNK func_801B1D64();
+void func_801B1D64();
 extern M2C_UNK D_801BAC54;
 typedef struct { s32 vx; s32 vy; s32 vz; s32 pad; } MgVec;
 typedef struct { s16 vx; s16 vy; s16 vz; s16 pad; } MgSVec;
@@ -86,5 +86,13 @@ void func_800D3994(s32, s32, MgSVec *);
 extern MgActorPos D_80151A4C[];
 extern MgSVec D_801031E8;
 extern MgTask D_80162978[];
+void func_800D2980(void *, s32, s32, s32);
+void func_800D54EC(s32, MgSVec *);
+void func_8003BF8C(void *, MgMat *);
+extern u8 D_801B1E80[];
+extern MgSVec D_801C4050;
+extern s16 D_80151A50[][0x5CE];
+extern u8 D_801C4078[];
+extern u8 D_801C40F4[];
 
 #endif /* MAGIC_DEBUCHO_DECLS_H */

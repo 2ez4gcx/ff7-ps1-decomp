@@ -13,7 +13,7 @@ extern s16 D_801635D8;
 extern s32 D_801635E4;
 extern s32 D_801635E8;
 extern s16 D_801635EC;
-extern M2C_UNK func_801B2048;
+void func_801B2048(void);
 void func_801BA29C(void);
 M2C_UNK func_800D5444(s16, M2C_UNK, M2C_UNK, M2C_UNK *);
 void func_801B6624(s32 arg0, void *arg1);
@@ -411,5 +411,14 @@ extern s16 D_801EE9D4;
 extern u8 D_801FA73C[];
 s32 func_80039F5C(s32);
 void func_800D3A6C(u8 *, KnRig2 *);
+typedef struct { s16 mode; s16 frames; s32 unk4; s32 unk8; s16 actor; s16 part; MgSVec pos; MgSVec unk18; MgSVec vel; s16 unk28; s16 unk2A; } MgCam;
+typedef struct { s16 unk0; s16 unk2; u8 pad4[8]; s16 *script; MgMat *mat; s16 actor; u8 pad16[0xA]; } MgCamTask;
+extern MgCam D_801ED184;
+extern MgCam *D_801ED1DC;
+extern MgCam D_801ED1B0;
+extern MgCam *D_801ED1E0;
+extern s16 D_80162084;
+extern MgSVec D_80158D00;
+extern MgSVec D_801031E8;
 
 #endif /* MAGIC_KNIGHTS_DECLS_H */

@@ -59,7 +59,65 @@ void func_801B00B0(void) {
 
 INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B02B0);
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B0480);
+void func_801B0480(s32 arg0, s32 arg1) {
+    s32 col;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 n;
+    s32 a;
+    s32 sc;
+    s32 t;
+    GrQuad *q;
+
+    col = (arg1 | (arg1 << 8) | (arg1 << 16)) | 0x2E000000;
+    k = 0;
+    n = 0;
+    j = arg0;
+    *(MgB8 *)D_801D6278 = *(MgB8 *)&D_801D9F94[0];
+    sc = D_801D9F94[0].unk10;
+l1:
+    D_801D6278->p[k][n].vx = D_801D6278->base.vx + (sc * func_80039A74(j) >> 12);
+    D_801D6278->p[k][n].vy = D_801D6278->base.vy;
+    D_801D6278->p[k][n].vz = D_801D6278->base.vz + (sc * func_80039B40(j) >> 12);
+    j += 0x100;
+    n++;
+    if (n < 16) {
+        goto l1;
+    }
+    for (i = 1; i < 16; i++) {
+        k ^= 1;
+        arg0 -= 0x40;
+        j = 0;
+        a = arg0;
+        *(MgB8 *)D_801D6278 = *(MgB8 *)&D_801D9F94[i];
+        sc = D_801D9F94[i].unk10;
+l2:
+        do {
+            D_801D6278->p[k][j].vx = D_801D6278->base.vx + (sc * func_80039A74(a) >> 12);
+        } while (0);
+        D_801D6278->p[k][j].vy = D_801D6278->base.vy;
+        D_801D6278->p[k][j].vz = D_801D6278->base.vz + (sc * func_80039B40(a) >> 12);
+        a += 0x100;
+        j++;
+        if (j < 16) {
+            goto l2;
+        }
+        j = 0;
+        do {
+            n = j + 1;
+            q = &D_801D9BD4[i].q[j][D_801D6274];
+            D_801D6278->otz = func_8003BD7C(&D_801D6278->p[k][j], &D_801D6278->p[k][n % 16], &D_801D6278->p[k ^ 1][j], &D_801D6278->p[k ^ 1][n % 16], &q->xy0, &q->xy1, &q->xy2, &q->xy3, &D_801D6278->ext, &D_801D6278->flag);
+            if (!(D_801D6278->flag & 0x60000)) {
+                q->rgbc = col;
+                t = ((D_801D6278->otz >> 2) << 2) + 0x70;
+                func_80046794(D_801517C0 + t, q);
+            }
+            j = n;
+        } while (j < 16);
+    }
+    D_801D6274 ^= 1;
+}
 
 void func_801B0808(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 i;

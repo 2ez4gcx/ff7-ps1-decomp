@@ -142,7 +142,7 @@ void func_801B7610(void);
 void func_801B5A48(void);
 typedef struct { u8 b[8]; } MgB8;
 extern s32 D_801F1788;
-extern s32 func_801B57F4;
+void func_801B57F4(void);
 void func_801B4570(void);
 extern M2C_UNK D_801EF240;
 extern MgMat D_801EF250;
@@ -244,5 +244,6 @@ typedef struct { s32 tag; s32 c0; s32 xy0; s32 c1; s32 xy1; s32 c2; s32 xy2; } V
 s32 func_8003B66C(s32, s32, s32);
 s32 func_8003BBDC(s16 *, void *, void *, void *);
 extern Vh2Cam *D_801EF494;
+extern Vh2Cam *D_801EF3FC;
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

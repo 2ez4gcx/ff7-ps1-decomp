@@ -80,7 +80,7 @@ extern struct { s32 t0; s32 t1; s32 t2; } D_801D62A8;
 extern MgSVec D_801D9DD0;
 extern s16 D_80163C78;
 void func_801B02B0(void);
-void func_801B0480(s32, s32);
+void func_801B0480(s32 arg0, s32 arg1);
 void func_801B0808(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 typedef struct { s16 x; s16 y; s16 z; u8 pad[0xE]; } GrVel;
 typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 pad6; s32 pad8; s32 padC; s32 unk10; } GrGrid;
@@ -92,5 +92,13 @@ extern s16 D_801D6284[];
 extern s16 D_801D6286;
 extern s16 D_801D6288;
 extern MgSVec *D_801D628C;
+typedef struct { MgSVec base; u8 pad8[8]; MgSVec p[2][16]; s32 otz; s32 ext; s32 flag; } GrScr;
+typedef struct { s32 tag; s32 rgbc; s32 xy0; u8 u0; u8 v0; s16 clut; s32 xy1; u8 u1; u8 v1; s16 tpage; s32 xy2; u8 u2; u8 v2; s16 pad1E; s32 xy3; u8 u3; u8 v3; s16 pad26; } GrQuad;
+typedef struct { GrQuad q[16][2]; } GrRow;
+extern GrScr *D_801D6278;
+extern s32 D_801D6274;
+extern GrRow D_801D9BD4[];
+s32 func_8003BD7C(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+void func_80046794(s32, void *);
 
 #endif /* MAGIC_GARYU_DECLS_H */
