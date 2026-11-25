@@ -61,7 +61,7 @@ void func_8003A63C(MgMat *, MgMat *, MgMat *);
 void func_8003B35C(MgMat *, MgVec *);
 void func_8003B69C(s32, s32, s32);
 void func_8003C21C(void *, MgMat *);
-s32 func_801B1364(SvWord *, s32, s32, s32);
+s32 func_801B1364(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_801B1760(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4);
 void func_801B3938(s32 *arg0, s32 first, MgMat *m1, MgMat *m2);
 void func_801B249C(void);
@@ -185,5 +185,6 @@ typedef struct { u32 addr : 24; u32 len : 8; } SvTag;
 typedef struct { SvTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; u16 uv1; u16 tpage; s32 xy2; u16 uv2; u16 pad; } SvPolyFT3;
 typedef struct { MgSVec v0; MgSVec v1; MgSVec v2; u8 pad18[8]; s16 cx; s16 cy; s16 cz; } SvTri;
 extern SvTri *D_801F0208;
+typedef struct { SvTag tag; u8 r0; u8 g0; u8 b0; u8 code; s32 xy0; s32 w0; s32 xy1; u16 uv1; u16 tpage; s32 xy2; u16 uv2; u16 pad1E; s32 xy3; u16 uv3; u16 pad26; } SvPolyFT4;
 
 #endif /* MAGIC_SIVA_DECLS_H */

@@ -409,4 +409,16 @@
 #define gte_ldrgb_m(p) asm volatile("move $12,%0\n\tlwc2 $6,0($12)" : : "r"(p) : "$12")
 #define gte_strgb_m(p) asm volatile("move $12,%0\n\tswc2 $22,0($12)" : : "r"(p) : "$12", "memory")
 
+/* gte_stflg_m with t6 and t7 ($14, $15) listed as clobbered too (a loop that leaves them unused) */
+#define gte_stflg_mk(p) \
+    asm volatile("move $12,%0\n\tcfc2 $13,$31\n\tnop\n\tsw $13,0($12)" : : "r"(p) : "$12", "$13", "$14", "$15", "memory")
+
+/* gte_stflg_mk in two statements (the pointer move, then the flag read and store): the loop optimizer and the register
+ * allocator count one more insn in the loop, which changes the allocation priorities */
+#define gte_stflg_ms(p) \
+    { \
+        asm volatile("move $12,%0" : : "r"(p) : "$12"); \
+        asm volatile("cfc2 $13,$31\n\tnop\n\tsw $13,0($12)" : : : "$13", "$14", "$15", "memory"); \
+    }
+
 #endif /* GTE_H */

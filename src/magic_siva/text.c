@@ -285,7 +285,95 @@ void func_801B1300(s32 arg0, s32 arg1, s16 arg2) {
     p->unk14 = arg2;
 }
 
-INCLUDE_ASM("../asm/us/magic_siva/nonmatchings/text", func_801B1364);
+s32 func_801B1364(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *hdr;
+    s16 *list;
+    MgSVec *a;
+    MgSVec *b;
+    MgSVec *c;
+    SvPolyFT3 *p;
+    SvPolyFT4 *q;
+    s32 i;
+    s32 n;
+    s32 flag;
+    s32 area;
+    s32 otz;
+    s32 z;
+
+    hdr = (u8 *)arg0->v + 4;
+    list = (s16 *)(hdr + *(s32 *)arg0->v);
+    n = list[0];
+    list += 2;
+    a = (MgSVec *)(hdr + list[0]);
+    b = (MgSVec *)(hdr + list[1]);
+    c = (MgSVec *)(hdr + list[2]);
+    p = (SvPolyFT3 *)arg3;
+    for (i = 0; i < n; list += 10, i++) {
+        gte_ldv3_mk(a, b, c);
+        gte_rtpt();
+        a = (MgSVec *)(hdr + list[10]);
+        b = (MgSVec *)(hdr + list[11]);
+        c = (MgSVec *)(hdr + list[12]);
+        gte_stflg_ms(&flag);
+        gte_nclip();
+        if ((flag & 0x60000) == 0) {
+            gte_stopz_m(&area);
+            if (area > 0) {
+                gte_avsz3();
+                *(s32 *)p = 0x07000000;
+                gte_stotz_m(&otz);
+                p->tag.addr = (*(SvTag **)(((otz >> (14 - arg2)) << 2) + arg1))->addr;
+                (*(SvTag **)(((otz >> (14 - arg2)) << 2) + arg1))->addr = (u32)p;
+                gte_stsxy3_m(&p->xy0, &p->xy1, &p->xy2);
+                p->tpage = *(u16 *)(list + 3);
+                *(s32 *)&p->r0 = *(s32 *)(list + 4);
+                p->w0 = *(s32 *)(list + 6);
+                p->uv1 = *(u16 *)(list + 8);
+                p->uv2 = *(u16 *)(list + 9);
+                p++;
+            }
+        }
+    }
+    n = list[0];
+    list += 2;
+    i = 0;
+    a = (MgSVec *)(hdr + list[0]);
+    b = (MgSVec *)(hdr + list[1]);
+    c = (MgSVec *)(hdr + list[2]);
+    q = (SvPolyFT4 *)p;
+    for (i = 0; i < n; i++, list += 12) {
+        gte_ldv3_mk(a, b, c);
+        gte_rtpt();
+        a = (MgSVec *)(hdr + list[12]);
+        b = (MgSVec *)(hdr + list[13]);
+        c = (MgSVec *)(hdr + list[14]);
+        gte_stflg_mk(&flag);
+        gte_nclip();
+        if ((flag & 0x60000) == 0) {
+            gte_stopz_m(&area);
+            if (area >= 0) {
+                gte_stsxy3_m(&q->xy0, &q->xy1, &q->xy2);
+                gte_ldv0(hdr + list[3]);
+                gte_rtps();
+                gte_stsxy_m(&q->xy3);
+                gte_avsz4();
+                gte_stotz_m(&otz);
+                z = otz;
+                *(s32 *)q = 0x09000000;
+                q->tag.addr = (*(SvTag **)(((z >> (14 - arg2)) << 2) + arg1))->addr;
+                (*(SvTag **)(((z >> (14 - arg2)) << 2) + arg1))->addr = (u32)q;
+                *(s32 *)&q->r0 = *(s32 *)(list + 4);
+                q->w0 = *(s32 *)(list + 6);
+                q->uv1 = *(u16 *)(list + 8);
+                q->uv2 = *(u16 *)(list + 9);
+                q->uv3 = *(u16 *)(list + 10);
+                q->tpage = *(u16 *)(list + 11);
+                q++;
+            }
+        }
+    }
+    return (s32)q;
+}
 
 s32 func_801B1760(SvWord *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
     u8 *hdr;
