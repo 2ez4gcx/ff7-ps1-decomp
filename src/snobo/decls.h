@@ -1349,5 +1349,8 @@ extern s16 D_800DB364[];
 s32 func_800A45AC(SbObjD *p);
 extern SbBlock16 D_800DB208;
 extern s32 D_800DB210;
+typedef struct { u32 flags; u8 pad4[8]; u8 unkC; u8 padD[5]; u16 unk12; s16 unk14; u8 pad16[0xE]; s32 unk24; u8 pad28[4]; s32 unk2C; u8 pad30[4]; s32 unk34; s32 unk38; s32 unk3C; s32 unk40; u8 unk44[0x28]; s16 unk6C; u8 pad6E[2]; s16 unk70; s16 unk72; } SbObjN;
+typedef struct { u8 pad0[0x20]; s32 x; s32 y; s32 z; } SbVecN;
+void func_800A88A8(SbObjN *p, SbVecN *q);
 
 #endif /* SNOBO_DECLS_H */

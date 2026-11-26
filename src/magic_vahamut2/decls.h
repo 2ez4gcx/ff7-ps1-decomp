@@ -210,10 +210,10 @@ extern s32 D_801EF184;
 extern s32 D_801EF188;
 extern s32 D_801EF18C;
 extern VhFx *D_801EF190;
-extern u8 D_801F4A8C[];
+extern MgMat D_801F4A8C[];
 MgPolyT *func_801B0E54(void *, s32, s32, MgPolyT *, void *);
 void func_801B2AAC(void);
-void func_801B2E54(void *);
+void func_801B2E54(MgMat *arg0);
 void func_801B6334(void);
 extern void *D_801EF45C;
 extern MgVec *D_801EF460;
@@ -251,5 +251,7 @@ typedef struct { s16 vi[3]; s16 pad6; u32 c0; u32 c1; u32 c2; } VhG3;
 typedef struct { s16 vi[4]; u32 c0; u32 c1; u32 c2; u32 c3; } VhG4;
 typedef struct { u32 addr : 24; u32 len : 8; } VhTag;
 typedef struct { u8 *data; u32 f4; u8 pad8[2]; s16 fA; u16 fC; } VhModel;
+extern MgMat *D_801EF15C;
+extern s16 D_801F1B14[];
 
 #endif /* MAGIC_VAHAMUT2_DECLS_H */

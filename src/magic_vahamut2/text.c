@@ -682,7 +682,46 @@ void func_801B2A1C(void) {
 
 INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B2AAC);
 
-INCLUDE_ASM("../asm/us/magic_vahamut2/nonmatchings/text", func_801B2E54);
+void func_801B2E54(MgMat *arg0) {
+    s32 i;
+    s16 *p;
+    s16 *h;
+    MgMat *m;
+
+    p = D_801F1B14;
+    m = D_801F4A8C;
+    i = 0;
+    do {
+        if (D_80062D98 == 0) {
+            if (p[0] > 0) {
+                p[0]--;
+            } else if (p[4] >= 0x61A8) {
+                p += 14;
+                h = (s16 *)m;
+                h[0] = h[1] = h[2] = h[3] = h[4] = h[5] = h[6] = h[7] = h[8] = 0;
+                m++;
+                continue;
+            } else {
+                p[2] += p[6];
+                p[3] += p[7];
+                p[4] += p[8];
+                p[6] = p[6] * 0x1F >> 5;
+                p[7] = p[7] * 0x1F >> 5;
+                p[8] = (p[8] * 0x1F >> 5) + 0x32;
+                p[10] += 0x12;
+                p[11] += 0x234;
+                p[12] += 0x456;
+            }
+        }
+        func_8003C21C(p + 10, (u16 *)D_801EF15C);
+        D_801EF15C->t[0] = p[2];
+        D_801EF15C->t[1] = p[3];
+        D_801EF15C->t[2] = p[4];
+        func_8003A63C(arg0, D_801EF15C, m);
+        p += 14;
+        m++;
+    } while (++i < 0x1B2);
+}
 
 void func_801B3028(void) {
     MgTask *p;

@@ -2380,7 +2380,71 @@ void func_800A884C(void *arg0) {
     }
 }
 
-INCLUDE_ASM("../asm/us/snobo/nonmatchings/text", func_800A88A8);
+void func_800A88A8(SbObjN *p, SbVecN *q) {
+    s32 d;
+    s32 a;
+    s32 b;
+    s32 v;
+    s32 w;
+    s32 u;
+    s32 t;
+    s32 r;
+    s32 sq;
+
+    if (!(p->flags & 1)) {
+        d = (s16)p->unk12;
+        if (d <= 0) {
+            a = p->unk34;
+            b = p->unk6C >> p->unk72;
+            if ((b ^ a) >= 0) {
+                v = a + (b - b * p->unk14 / 2048);
+            } else {
+                v = a + b;
+            }
+            w = p->unk70;
+            p->unk34 = v;
+            v = p->unk72;
+            do {
+                a = p->unk3C;
+            } while (0);
+            b = w >> v;
+            if ((b ^ a) < 0) {
+                w = a + b;
+            } else {
+                w = a + (b - b * p->unk14 / 2048);
+            }
+            p->unk3C = w;
+            if ((u8)(p->unkC - 3) >= 4 && (D_801028EC & 8)) {
+                p->unk40 = 0;
+                p->unk38 = p->unk14;
+            }
+        } else {
+            b = 0x10 - (d >> 2);
+            if (b < 6) {
+                b = 6;
+            }
+            t = p->unk34;
+            u = p->unk3C;
+            p->unk34 = t - (t >> b);
+            p->unk3C = u - (u >> b);
+        }
+        q->x = p->unk34;
+        q->y = 0;
+        q->z = p->unk3C;
+        func_8003A08C(&q->x, p->unk44);
+        p->unk24 += p->unk34;
+        p->unk2C += p->unk3C;
+    }
+    w = p->unk34;
+    w >>= 8;
+    r = p->unk3C >> 8;
+    sq = w * w + r * r;
+    if (sq != 0) {
+        p->unk14 = func_80039F5C(sq);
+    } else {
+        p->unk14 = 0;
+    }
+}
 
 void func_800A8A80(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) += M2C_FIELD(arg0, s32 *, 0x40);
