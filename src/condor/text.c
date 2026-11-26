@@ -3312,7 +3312,79 @@ void func_800B02E0(s32 arg0, s16 arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B0404);
+void func_800B0404(CondorEnt *arg0, CondorAct3 *e) {
+    u32 m;
+    u32 k5;
+    u32 k6;
+
+    switch (arg0->w06) {
+    case 4:
+    case 19:
+        e->b2B = 4;
+        e->b23 = 2;
+        e->b22 = 2;
+        *((s16 *)(((u8 *)e) + 0x4A)) -= 0x10;
+        *((s16 *)(((u8 *)e) + 0x52)) -= 0x10;
+        D_8009A000 = 0x2A;
+        D_8009A004 = 0x40;
+        D_8009A008 = 0;
+        m = (u16)e->x;
+        func_8002DA7C();
+        D_8009A000 = 0x2A;
+        D_8009A008 = 0xE4;
+        D_8009A004 = (m & 0x1FF) >> 2;
+        func_8002DA7C();
+        break;
+    case 5:
+        e->b2B = 0;
+        k5 = (u16)e->x;
+        k5 &= 0x1FF;
+        D_8009A000 = 0x29;
+        D_8009A004 = k5 >> 2;
+        D_8009A008 = 0xF3;
+        func_8002DA7C();
+        break;
+    case 6:
+        e->b2B = 0;
+        func_800B0604(e, 0);
+        func_800B0604(e, 1);
+        k6 = (u16)e->x;
+        k6 &= 0x1FF;
+        D_8009A000 = 0x29;
+        D_8009A004 = k6 >> 2;
+        D_8009A008 = 0xE6;
+        func_8002DA7C();
+        break;
+    case 7:
+        e->b2B = 2;
+        *((s16 *)(((u8 *)e) + 0x4A)) -= 0x28;
+        *((s16 *)(((u8 *)e) + 0x52)) -= 0x28;
+        D_8009A000 = 0x29;
+        D_8009A004 = (e->x & 0x1FF) >> 2;
+        D_8009A008 = 0xE7;
+        func_8002DA7C();
+        break;
+    case 8:
+        e->b2B = 3;
+        *((s16 *)(((u8 *)e) + 0x4A)) -= 0x28;
+        *((s16 *)(((u8 *)e) + 0x52)) -= 0x28;
+        D_8009A000 = 0x29;
+        D_8009A004 = (e->x & 0x1FF) >> 2;
+        D_8009A008 = 0xE7;
+        func_8002DA7C();
+        break;
+    case 24:
+        if (e->b2B == 0) {
+            *((s16 *)(((u8 *)e) + 0x48)) = e->x - 0x10;
+            *((s16 *)(((u8 *)e) + 0x50)) = e->w50 - 0x10;
+        } else {
+            *((s16 *)(((u8 *)e) + 0x48)) = e->x + 0x10;
+            *((s16 *)(((u8 *)e) + 0x50)) = e->w50 + 0x10;
+        }
+        e->b2B = 0;
+        break;
+    }
+}
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800B0604);
 

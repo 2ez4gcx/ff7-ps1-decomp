@@ -413,5 +413,7 @@ s32 func_800A5B64(void);
 extern u16 D_8012C458;
 extern u16 D_8012C45C;
 typedef struct { u8 pad0[4]; u8 r; u8 g; u8 b; u8 pad7[7]; u16 clut; } CondorCell;
+typedef struct { u8 pad00[0x22]; u8 b22; u8 b23; u8 pad24[7]; u8 b2B; u8 pad2C[0x1C]; s16 x; s16 y; s16 w4C; s16 w4E; s16 w50; s16 w52; u8 pad54[0x24]; } CondorAct3;
+void func_800B0404(CondorEnt *arg0, CondorAct3 *e);
 
 #endif /* CONDOR_DECLS_H */
