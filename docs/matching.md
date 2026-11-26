@@ -1166,6 +1166,20 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   is duplicated in the first path instead of shared (condor func_800B4060). `tools/work.py
   put` keeps the old near-miss body under `#else` of `#ifndef NON_MATCHING` when it
   replaces one.
+- The lower-base-symbol alias works for loads too: `D_800F5BE0[arg0].b[0]` for
+  `D_800F5BE1[arg0][0]` keeps a `lbu` after a store to `D_800F3A04[arg0].a` without a
+  do-while barrier (battle func_800A4BA4); it only works for register-indexed addresses
+  (for a constant-address scalar the const form just gets an `la` that cse shares between
+  the store and the load). sched1 never boosts an insn whose destination is a SUBREG (`s8
+  t = arg1 + 0x20` sets `(subreg:SI (reg:QI t))`), so it floats to the top of its block. A
+  multi-set pointer loses to a single-set copy: in condor func_800A5B64 the multi-set `p =
+  D_80129F34` load floated above `move a0,zero`; a fresh single-set `u8 *b2 = (u8
+  *)D_80129F34; p = (CondorCell *)(b2 + 0x5330)` is boosted, so the load lands right
+  before the call.
+- wrapall on a draft that has no wraps at all found `do { return *p; } while (0);` for
+  battle func_800DDCE8 (wrapping the final return changes sched2) and `do { off += 0x34;
+  if (++i < n) goto loop; } while (0);` for the loop registers of battle func_800B5AAC
+  (i=a0, off=a1): run it on a plain draft before hand-placing wraps.
 
 ### Registers
 
@@ -1812,6 +1826,27 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   body names the globals directly (`*(MgB8 *)((u8 *)D_80151A4C + o)`) and not when
   base/q/r are variables; `bl = bp - 12;` as its own statement in a loop body gives the
   `move t2,a3` copy of the pre-loop `addiu a3,s4,-12`.
+- Nested `do { } while (0)` around ONLY one pseudo's own mentions adds one weighted
+  reference per level to that pseudo without touching its giv: ten levels around
+  `gte_mv12(&verts[i])` took the vertex-base copy of magic_elevator func_801B05E4 from 8
+  to 18 references and its register now goes before the packet giv's (a wrapper around
+  more than that pseudo's mentions also deepens the loop nest for the others, which is why
+  wrapping a whole statement could not do it); it works in local-alloc too (the `.lreg`
+  dump shows `used N times across M insns`; `t0 = D_800F38A0 << 3;` wrapped ordered the
+  registers of battle func_800E368C arm 0; `do { k = 0; } while (0);` and `do { sc = (u8
+  *)0x1F800000; } while (0);` ordered magic_nanntoka func_801B1D48's saved registers). A
+  same-block multi-set local (`k = (u16)e->x; k &= 0x1FF;`) is unboosted (its load goes to
+  the top) and is allocated by local-alloc before the constants, so it gets v0 where a
+  shared global temp got v1 (condor func_800B0404: separate `k5`, `k6` for cases 5 and 6).
+- `if (a > 0) { h = X; } else { h = X; }` makes an s16 `h` a multi-set pseudo, so combine
+  cannot fold its sign copies and the `sll 16; sra 16` truncation stays (snobo
+  func_800A4D38 and its twin snobo2 func_800A5F00, where about 100 other forms had been
+  folded); then `b = h << 16; a = ...; t = b >> 16;` with `b` an existing multi-set local
+  splits the two shifts around the chain because sched1 does not boost the first shift. A
+  loop pointer and a later temp made one variable give the temp the register the pointer
+  gets in the loop, where four temps are live and first-fit lands on a2 (magic_tifa
+  func_801B2F08); a table base in a user variable set before the tag puts its `la` ahead
+  of the tag `lui` (magic_garyu func_801B02B0).
 
 ### Control flow
 
@@ -2615,6 +2650,14 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   an address (main func_80021F58: 779 to 764 instructions). A pointer set after a call
   (`qv = (MgSVec *)&D_801F5334;`) used for two reads gives `lhu v1,0(s0)` as in the game;
   `r = &D[i]; c = &D[i].col;` gives separate value-giv registers with a `move s0,t0` init.
+- Accessing decls.h's struct array (`D_801E0EA8[found].y = ...`) instead of a separate
+  `off = found * 0x14` makes the multiply one pseudo that lives across calls, directly in
+  s0 (cse copied the variable into s0 after the first call otherwise); a `u8` array
+  written as `*(u8 *)(D_801E0EB8 + found * 0x14)` makes loop.c hoist the symbol address
+  into s7 and s8 and adds 8 bytes of frame, while a work-file struct array does not
+  (magic_nanntoka func_801B1D48). `s32 p` with a `slt` against `arg0 + 0x2850`, void *
+  parameters and three `p += 8;` that raise p's priority above s gave magic_hades
+  func_801B8404 the game's s0/s1.
 
 ### Stack frame
 
@@ -3103,6 +3146,20 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   come from reload slots, not user locals (`u8 pad[]` sits below the slot). Greedy and
   iterated wrapall rounds (work/big21/wrapk.py, wrapn.py, work/big22/perm.py) took
   magic_tifa func_801B5C74 from 163 to 74 and then 38 differing words but not to zero.
+- A work file's `extern` replaces decls.h's type for every function of the file when it is
+  put: `extern BtlC440 D_8009D898[]` and `extern s32 D_80062F24` each broke other
+  functions, `put` then reports that functions of the file no longer match or that the
+  file does not compile (tools/work.py put prints no detail: run work/gte15/wf.py TARGET
+  WORK NAME and read work/gte15/wf_stderr.txt for the lines that are not warnings). Keep
+  decls.h's type and cast at the use (`*(T6 *)D_8009D898[arg0].b`, `(s32 *)&D_80062F24`,
+  `((SbBlock16 *)&D_800DDE98)->v[0]`). `put` also cannot change the prototype of a main
+  function that overlays call through casts (eqipmenu, namemenu, savemenu, shopmenu use
+  main's decls.h): place such a function by hand, replacing its INCLUDE_ASM in the source
+  file and changing the prototype in decls.h, then run the full build (main func_8002708C,
+  whose third parameter is s32 and whose caller still matches). A twin that tools/twins.py
+  reports at 1.00 may still differ in constants and in the base symbol of a table (snobo2
+  func_800A5F00 against snobo func_800A4D38: `li a0,0x20` for 0x40 and the array at
+  D_800B85CC for D_800C0000).
 
 ## Hand-written assembly
 
