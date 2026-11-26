@@ -801,7 +801,7 @@ extern s32 D_80048DD4[];
 void func_8001A3B8(s32 arg0, s32 arg1, s32 arg2);
 void func_8001BD50(u8 arg0, u8 arg1, u8 arg2);
 void func_80027354(s16 x, s16 y, u8 *str, u8 color);
-void func_8002708C(s16, s16, u8, u8);
+void func_8002708C(s16, s16, s32, u8);
 void func_800111E4(s32 arg0);
 void func_8001117C(u16 arg0);
 void func_800146A4(s32 arg0);

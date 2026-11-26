@@ -163,7 +163,70 @@ void func_80026F44(s16 arg0, s16 arg1, u8 *arg2, s32 arg3) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/text5", func_8002708C);
+void func_8002708C(s16 x, s16 y, s32 c, u8 clut) {
+    s32 t;
+    s32 u;
+    s32 v;
+    u32 cc;
+    void *p;
+
+    cc = c & 0xFF;
+    if (cc < 0x29U) {
+        *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 3) = 3;
+        *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 7) = 0x74;
+        func_80046870((*(void * volatile *)&D_80062F24), 1);
+        *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 8) = x;
+        *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xA) = y - 8;
+        *(u8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xC) = 0x88;
+        *(u8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xD) = 0x98;
+        *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xE) = func_80046634(0x100, clut + 0x1E0);
+        p = (*(void * volatile *)&D_80062F24);
+        (*(void * volatile *)&D_80062F24) = (u8 *)p + 0x10;
+        func_80046794(D_80062FC4, (s32)p);
+        t = cc + 0x40;
+        goto block_5;
+    }
+    do {
+    if ((u8)(c + 0x4C) >= 0x1AU) {
+        if ((u8)(c - 0x29) < 0xAU) {
+            *(s8 *)((u8 *)D_80062F24 + 3) = 3;
+            *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 7) = 0x74;
+            func_80046870((*(void * volatile *)&D_80062F24), 1);
+            *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 8) = x;
+            *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xA) = y - 8;
+            *(u8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xC) = 0x90;
+            *(u8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xD) = 0x98;
+            *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xE) = func_80046634(0x100, clut + 0x1E0);
+            p = (*(void * volatile *)&D_80062F24);
+            (*(void * volatile *)&D_80062F24) = (u8 *)p + 0x10;
+            func_80046794(D_80062FC4, (s32)p);
+            t = cc + 0x17;
+block_5:
+            u = ((t & 0xF) * 8) | 0x80;
+            t = t >> 4;
+            t = t * 8;
+            v = t + 0x80;
+        } else {
+            goto block_7;
+        }
+    } else {
+block_7:
+        u = ((c & 0xF) * 8) | 0x80;
+        v = ((cc >> 4) * 8) | 0x80;
+    }
+    } while (0);
+    *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 3) = 3;
+    *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 7) = 0x74;
+    func_80046870((*(void * volatile *)&D_80062F24), 1);
+    *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 8) = x;
+    *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xA) = y;
+    *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xC) = u;
+    *(s8 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xD) = v;
+    *(s16 *)((u8 *)(*(void * volatile *)&D_80062F24) + 0xE) = func_80046634(0x100, clut + 0x1E0);
+    p = (*(void * volatile *)&D_80062F24);
+    *(void * volatile *)&D_80062F24 = (u8 *)p + 0x10;
+    func_80046794(D_80062FC4, (s32)p);
+}
 
 void func_80027354(s16 x, s16 y, u8 *str, u8 color) {
     s16 i;
