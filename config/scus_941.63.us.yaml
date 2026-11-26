@@ -61,6 +61,7 @@ segments:
       - [0x900, .rodata, text2]
       - [0x958, .rodata, text3]
       - [0xA9C, .rodata, text4]
+      - [0xB14, .rodata, text4b]
       - [0xB60, .rodata, text5]
       - [0xB94, .rodata, akao]
       - [0xCB4, .rodata, lib]
@@ -79,6 +80,7 @@ segments:
       - [0x7790, c, text3]
       - [0xB6E4, c, text3b]
       - [0xC5B0, c, text4]
+      - [0x104DC, c, text4b]
       - [0x17200, c, text5]
       # The AKAO sound driver and the PSY-Q libraries were built without $gp (-G0).
       - [0x1A250, c, akao]

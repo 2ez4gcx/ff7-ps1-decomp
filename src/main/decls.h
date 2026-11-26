@@ -1856,5 +1856,9 @@ extern s16 D_80099F14;
 extern s16 D_80099F16;
 extern s16 D_80099F20;
 extern s16 D_80099F22;
+extern s32 (*D_800493A8[])();
+extern u8 D_80049248[][0xC];
+extern s32 D_80062DF0;
+extern u16 D_80062F4C;
 
 #endif /* MAIN_DECLS_H */

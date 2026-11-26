@@ -60,6 +60,8 @@ FILE_OPTIONS = {
     'main/text3.c': {'aspsx': '2.21', 'cflags': ['-O2', '-G8', '-ffixed-25']},
     'main/text3b.c': {'aspsx': '2.21', 'cflags': ['-O2', '-G8']},
     'main/text4.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
+    # text4b.c begins one of the game's files (its jump tables are 8-byte aligned from 0x80010314).
+    'main/text4b.c': {'aspsx': '2.21', 'gcc': '2.7.2', 'unit_start': True},
     'main/text5.c': {'aspsx': '2.21', 'gcc': '2.7.2'},
     'main/akao.c': {'cflags': ['-O2', '-G0'], 'gp_size': 0, 'aspsx': '2.21'},
     # Sony's libraries were assembled by two ASPSX versions: the unfolded
