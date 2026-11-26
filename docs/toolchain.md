@@ -165,6 +165,19 @@ the entry points of different overlays loaded at the same address stay apart onl
 `ovl1_801B0040`, `ovl2_801B0040` ... (battle func_800C679C). A line in
 `config/symbols.us.<target>.txt` does not reach the linker for such names.
 
+Finding where a game's file begins from its jump tables: list the tables of the file's
+rodata with their offsets from the rodata start (`grep dlabel jtbl_` in the asm folder).
+A table not 8-aligned from the current start marks a new file there, and each table must
+be 8-aligned from the start of its own file (a 4-byte pad before one that is not). When a
+function in C stops fitting because its table needs such a pad that the 4-byte alignment
+of a shared file does not give (main func_800230C4: the game pads 4 bytes after the
+0x14-byte table of func_80022B5C), split the file before the first function of the game's
+file that holds the table, at any function boundary after the previous file's last table:
+`tools/split_file.py main text4 text4b 8001FCDC 80010314` (rodata at the first table of that
+file), give the new file `unit_start` in tools/psyq.py and run `tools/build.py main --split`.
+When several processes may be putting, run the split under the work lock
+(`auto_decomp.Turn()`).
+
 ## Writing a function
 
 - `tools/match.py FILE.c` compiles a file the way `build.py` does and compares **every
