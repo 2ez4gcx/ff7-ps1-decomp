@@ -115,5 +115,7 @@ extern GyB8 D_801D6354[];
 extern u8 D_801D63A4[];
 extern GyEnt D_801D9DD8[];
 void func_801B2D34();
+typedef struct { s32 tag; s32 col; s32 xy0; u8 u0; u8 v0; u16 clut; s32 xy1; u8 u1; u8 v1; u16 tpage; s32 xy2; u8 u2; u8 v2; u16 pad2; s32 xy3; u8 u3; u8 v3; u16 pad3; } GyFt4;
+extern GyFt4 D_801DA0D4[15][16][2];
 
 #endif /* MAGIC_GARYU_DECLS_H */

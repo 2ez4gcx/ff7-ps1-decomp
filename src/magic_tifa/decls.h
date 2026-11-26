@@ -212,5 +212,7 @@ typedef struct { u8 pad0[0x24]; s32 otz; u8 pad28[0xC]; s16 vx; s16 vy; s16 vz; 
 typedef struct { u8 pad0[0x24]; s32 otz; u8 pad28[0x90]; s32 xyB8; s32 xyBC; u8 padC0[8]; s32 xyC8; s32 xyCC; } TfRingCtx;
 void func_801BB734(void);
 s32 func_80039F5C(s32);
+void func_801B2F08(void);
+typedef struct { s16 unk0; s16 unk2; s16 unk4; s16 unk6; s16 unk8; s16 unkA; s16 unkC; s16 unkE; s16 unk10; s16 unk12; s16 unk14; s16 unk16; } TfPart;
 
 #endif /* MAGIC_TIFA_DECLS_H */

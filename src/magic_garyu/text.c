@@ -57,7 +57,85 @@ void func_801B00B0(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_garyu/nonmatchings/text", func_801B02B0);
+void func_801B02B0(void) {
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 m;
+    s32 clut;
+    s32 neg;
+    s32 tp;
+    s32 q;
+    s32 e;
+    s32 tag;
+    GyFt4 *p;
+    u8 *pj;
+    u8 *tb;
+    s8 ua;
+    s8 ub;
+    s8 va;
+    s8 vb;
+
+    tp = 0;
+    clut = 0x3FF0;
+    i = 0;
+    neg = -2;
+    tb = (u8 *)D_801DA0D4;
+    tag = 0x09000000;
+    for (; i < 15; i++) {
+        q = (i << 12) / 16;
+        vb = neg - (q * 0xFE >> 12);
+        q = ((i + 1) << 12) / 16;
+        va = neg - (q * 0xFE >> 12);
+        for (j = 0; j < 16; j++) {
+            e = 0;
+            m = j % 8;
+            if (m < 4) {
+                ua = m * 16;
+                ub = ua | 0xF;
+            } else {
+                e = 8;
+                m = e - m;
+                ua = m * 16 - 1;
+                ub = m * 16 - 0x10;
+            }
+            pj = tb + j * 0x50;
+            do {
+                k = 0;
+            } while (0);
+            p = (GyFt4 *)(i * 0x500 + (s32)pj);
+loopk:
+            p->col = 0x2E808080;
+            tp = 0xAC;
+            do {
+                p->tag = tag;
+            } while (0);
+            p->u2 = ua;
+            p->u0 = ua;
+            p->u3 = ub;
+            p->u1 = ub;
+            p->v1 = va;
+            p->v0 = va;
+            p->v3 = vb;
+            p->v2 = vb;
+            p->clut = clut;
+            p->tpage = tp;
+            p++;
+            do {
+                k++;
+            } while (0);
+            if (k < 2) {
+                goto loopk;
+            }
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        D_801D9F94[i].unk0 = 0;
+        D_801D9F94[i].unk4 = 0;
+        D_801D9F94[i].unk2 = i * 10 / 15;
+        D_801D9F94[i].unk10 = 0x258;
+    }
+}
 
 void func_801B0480(s32 arg0, s32 arg1) {
     s32 col;

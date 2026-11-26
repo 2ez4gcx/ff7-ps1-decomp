@@ -877,7 +877,85 @@ void func_801B2CEC(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_tifa/nonmatchings/text", func_801B2F08);
+void func_801B2F08(void) {
+    MgTask *p;
+    TfPart *r;
+    TfPart *u;
+    u8 *s;
+    s32 i;
+    s32 o;
+    s32 j;
+    s32 n;
+    s32 k;
+    s16 w;
+    u8 pad[8];
+    MgMat *m;
+    s32 a;
+
+    s = (u8 *)0x1F800000;
+    *(s32 *)0x1F8000C4 = 0x523020;
+    *(s32 *)0x1F8000C8 = 0x100402;
+    p = &D_80162978[D_8015169C];
+    for (i = 0, o = 0; i < 100; i++, o += 0x18) {
+        r = (TfPart *)(o + (s32)D_801F3D48);
+        if (r->unk0 != 0) {
+            w = r->unk16;
+            m = func_800D4368(&r->unk4, w, -(w >> 3));
+            a = ((TfPart *)(o + (s32)D_801F3D48))->unk14 + *(s32 *)(s + 0xC4);
+            if (m->t[2] > 0) {
+                func_801B18C4(s, 8, a, *(s32 *)(s + 0xC8));
+            }
+            if (D_80062D98 == 0) {
+                u = (TfPart *)(o + (s32)D_801F3D48);
+                u->unk4 += u->unkC;
+                u->unk6 += u->unkE;
+                u->unk8 += u->unk10;
+                u->unk16 -= (u16)u->unk2 * 2;
+                if (u->unk2 >= p->unk1A) {
+                    u->unk0 = 0;
+                }
+                ((TfPart *)(o + (s32)D_801F3D48))->unk2++;
+            }
+        }
+    }
+    if (D_80062D98 == 0) {
+        if (p->unk2 >= p->unk18) {
+            p->unk0 = -1;
+        }
+        if (p->unk2 < p->unk10) {
+            n = 0;
+            k = p->unkC << 4;
+            if (p->unk12 > 0) {
+                do {
+                    j = 0;
+                    while (j < 100 && ((TfPart *)D_801F3D48)[j].unk0 != 0) {
+                        j++;
+                    }
+                    if (j >= 100) {
+                        break;
+                    }
+                    o = j * 0x18;
+                    ((TfPart *)(o + (s32)D_801F3D48))->unk0 = 1;
+                    ((TfPart *)(o + (s32)D_801F3D48))->unk2 = 0;
+                    *(MgB8 *)&((TfPart *)(o + (s32)D_801F3D48))->unk4 = *(MgB8 *)&p->unk4;
+                    *(s32 *)(s + 0x11C) = func_80042DA8() % 0x1000 - 0x800;
+                    *(s32 *)(s + 0x120) = func_80042DA8() % 0x1000 - 0x800;
+                    *(s32 *)(s + 0x124) = func_80042DA8() % 0x1000 - 0x800;
+                    func_8003A08C((MgVec *)(s + 0x11C), (MgVec *)(s + 0x11C));
+                    u = (TfPart *)((s16)p->unkE + func_80042DA8() % ((s16)p->unkE >> 1));
+                    ((TfPart *)(o + (s32)D_801F3D48))->unkC = (s32)u * *(s32 *)(s + 0x11C) >> 12;
+                    ((TfPart *)(o + (s32)D_801F3D48))->unkE = (s32)u * *(s32 *)(s + 0x120) >> 12;
+                    ((TfPart *)(o + (s32)D_801F3D48))->unk10 = (s32)u * *(s32 *)(s + 0x124) >> 12;
+                    ((TfPart *)(o + (s32)D_801F3D48))->unk14 = func_80042DA8() % 48;
+                    u = (TfPart *)(func_80042DA8() % 2048 + 0xA00);
+                    ((TfPart *)(o + (s32)D_801F3D48))->unk16 = k * (s32)u >> 12;
+                    n++;
+                } while (n < p->unk12);
+            }
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B3354(void) {
     MgSVec pos;
