@@ -25,15 +25,15 @@ executable is split into source files by how its parts were compiled. Progress, 
 
 | Part | Executables | Functions in C | Code in C |
 |---|---|---|---|
-| Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 851 of 1072 (79%) | 65% |
-| Field (`src/field/`) | 1 | 391 of 435 (90%) | 58% |
-| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 740 of 839 (88%) | 56% |
-| World map (`src/world/`) | 1 | 433 of 459 (94%) | 63% |
+| Main executable (`src/main/`: game code, AKAO sound driver, PSY-Q libraries) | 1 | 855 of 1072 (80%) | 67% |
+| Field (`src/field/`) | 1 | 392 of 435 (90%) | 58% |
+| Battle (`src/battle/`, `brom/`, `batini/`, `batres/`) | 4 | 744 of 839 (89%) | 57% |
+| World map (`src/world/`) | 1 | 434 of 459 (95%) | 65% |
 | Menus (`src/*menu/`) | 13 | 226 of 243 (93%) | 49% |
-| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1117 of 1317 (85%) | 53% |
+| Minigames (`src/chocobo/`, `condor/`, `highway/`, `jet/`, `snobo/`, `snobo2/`, `submar/`) | 7 | 1123 of 1317 (85%) | 54% |
 | Ending, disc change (`src/ending/`, `dschange/`) | 2 | 58 of 64 (91%) | 60% |
-| Spell effects (`src/magic_*/`) | 290 | 3754 of 3997 (94%) | 83% |
-| **All** | **319** | **7570 of 8426 (90%)** | **71%** |
+| Spell effects (`src/magic_*/`) | 290 | 3774 of 3997 (94%) | 85% |
+| **All** | **319** | **7606 of 8426 (90%)** | **72%** |
 
 The main executable's files: `text.c` … `text5.c` are the game's code
 (0x800110B8–0x80029A4F), `akao.c` the AKAO sound driver, CD and movie code
