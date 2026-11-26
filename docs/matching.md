@@ -1141,6 +1141,31 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   is also a scheduling barrier, and it can change control flow when it wraps an `if/else`
   as a whole (the branch layout flipped): search by allocation first
   (work/spells87/prio.py), then by score, because the two can disagree.
+- sched1's memory dependences (GCC 2.7.2's sched.c): `(plus reg symbol_ref)` addresses of
+  two different arrays are independent, so a load rises above a store; a field at a
+  nonzero offset from its base symbol is `(const (plus sym off))`, for which
+  `find_symbolic_term` returns 0 (CONST is rtx class 'o'), so `memrefs_conflict_p` assumes
+  a conflict and the program order stays. Writing the store through a LOWER base symbol
+  with the field at +0xC (`D_800F5E5C[i].a = 0` for `D_800F5E68[i].a`, a work-file typedef
+  with the s16 at +0xC) kept it before a later load (battle func_800AEC10); a one-field
+  struct view of a scalar global (`((LamW *)&D_801517C0)->v`) read after a struct-pointer
+  store keeps the load after the store (magic_lamu func_801B24A8: the whole loop shape
+  followed). A pointer register is known to sched1 only with a single set and a REG_EQUAL
+  note; a two-set pointer is unknown, so conflicts are assumed. A load and a store of
+  different symbols are independent (a wrap on the statement between them, or the same
+  symbol for both, gives the game's order); a stack store before loads through a register
+  pointer gets a high `ref_count` and cannot sink below them: write the stores of the
+  loaded values first and the stack stores last (magic_tifa func_801B5C74). `D_x[D_n++] =
+  i;` as `D_x[D_n] = i; D_n++;` gives the game's store order.
+- Reversing the arms of an `if` (`if ((b ^ a) < 0) { w = a + b; } else { complex }`) made
+  reorg fill the `bltz` slot from the target where the other arm order was refused (snobo
+  func_800A88A8); a quotient kept in its own variable (`q = (i << 12) / 16`) lets reorg
+  fill the `bgez` slot from the join (magic_garyu func_801B02B0); `ch = ch + 1;` (a second
+  set) with `mask = 0;` as the first statement put `lui/addiu s1` before `li v0,0x101`
+  (main akao_menu_sfx_start); `move a0,s0; j L; sh v0,N(a0)` appears when the final call
+  is duplicated in the first path instead of shared (condor func_800B4060). `tools/work.py
+  put` keeps the old near-miss body under `#else` of `#ifndef NON_MATCHING` when it
+  replaces one.
 
 ### Registers
 
@@ -1755,6 +1780,38 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   and when a hand-written function that stays asm ends a source file, split the file there
   (tools/split_file.py magic_hades text text2 801B14A0, moving the `.rodata` subsegment by
   hand when the jump tables belong to the later functions).
+- Reload: a constant or memory expression passed to an asm "r" operand is folded into the
+  `asm_operands` by cse and combine, so reload needs one register per such operand for
+  that insn, keeps them as spill registers and inherits later `lui/ori` constants between
+  uses; a cast to `s32` or `u32` (`gte_SetBackColor_k((s32)arg1[0], (s32)arg1[1],
+  (s32)arg1[2])`) makes each operand a pseudo again, so every constant is reloaded as in
+  the game (field func_800B1E40). In `-dg`, "Need N regs of class GR_REGS (for insn X)"
+  followed by "Spilling reg Y" shows reload's spill registers; pseudos in a spill register
+  end up on the stack (a hoisted `14 - arg2` becomes `lw s7,48(sp)`). A mfc2 result used
+  after a `jal` lands in a callee-saved register.
+- Using the parameter directly (`arg2`, `((VhModel *)arg0)->` at each use) instead of a
+  typed local copy keeps the param-entry `move` order a0, a1, a2 (a local copy makes the
+  scheduler place that move last) and lets the parameter pseudo take a saved register
+  (magic_vahamut2 func_801B0184, eight overlays); a copy of a stack-passed parameter (`e8
+  = arg8;`) spills to its own slot instead of its incoming one, and declaring that local
+  before the others orders the slots. A variable shared by two blocks, one of which
+  crosses calls, is one global pseudo (48 refs in magic_tifa func_801B2F08, 7 saved
+  registers in vahamut2): give each block its own pointer variable, or rebuild the pointer
+  at each use as the game does after calls. Pseudo priority is linear in loop depth, so no
+  number of `do { } while (0)` wrappers lifts a pseudo above one with twice the weighted
+  references (magic_elevator func_801B05E4); splitting `list += 2` into `list++; list++;`
+  raises the weighted count without changing the code.
+- A multiply written as `s0 = i << 4; s0 += i; s0 <<= 2;` puts every step in one register
+  and `s0 += (s32)&D_x; *(u8 *)s0 = 0; s0--` reuses it as the loop pointer (battle
+  func_800AEC10). In the cse1 dump a constant address used before and after a `do { }
+  while (0)` becomes two pseudos (the wrapper ends cse's basic-block extent in the first
+  pass) and cse2 turns the second set into a `move`: that is the `move a0,s2` where the
+  game reads `lhu v0,0(s2)` directly; `-dL` reports these wrappers as phony loops. cse2
+  also turns constants hoisted by loop.c into `move`s from registers that already hold
+  them (the four `move t5..t2` of magic_tifa func_801B5C74): they appear when the loop
+  body names the globals directly (`*(MgB8 *)((u8 *)D_80151A4C + o)`) and not when
+  base/q/r are variables; `bl = bp - 12;` as its own statement in a loop body gives the
+  `move t2,a3` copy of the pre-loop `addiu a3,s4,-12`.
 
 ### Control flow
 
@@ -2538,6 +2595,26 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   sh 0(v1)`) is `r = &D_x; *r += k;`: redeclaring it as an array in the work file makes
   `put` refuse (an earlier function stops matching) and `(&D_x)[0]` gives direct `lui at`
   accesses.
+- `combine_movables` merges identical constant loads into one hoisted pseudo (savings 2,
+  life 2) that stays hoisted in every loop tested (up to about 140 real insns; "not
+  desirable" only at about 159, so padding the loop is no lever). A pseudo with two sets
+  (a dead pre-loop `k2 = 0x2C000000;` plus the inner set; a dead `hd = 0;` with `hd =
+  (s32)(hdr << 16) >> 24;` inside the loop; `h = 0;` at the loop top plus `h = arg1 >> 1`
+  in the `if`) is not a loop.c movable: flow deletes the dead set, the constant is
+  block-local at local-alloc and takes the game's register, and a shift stays in the loop
+  as in the game (magic_vahamut2 func_801B0184, magic_nanntoka func_801B192C).
+- loop.c processes the bivs in reverse order of their increment insns: the giv inits come
+  out in that order and each biv's giv increments come out just before its own increment,
+  so `m++; e++;` instead of `e++; m++;` moved a giv's init and gave the game's allocation
+  (magic_brizag func_801B116C: 56 differing lines down to 6). Frame spill slots are handed
+  out in pseudo order and dead pseudos still get one (the slt/sext temps combine removed;
+  a `for (i = 0; i < n;)` loop creates its compare pseudo before the body's pseudos): `for
+  (i = 0; i < n;)` in place of a do-while and an `s32` local for the sign-extended loads
+  fixed the frame size and slot offsets. Inner `for (;;)` loops written as `L: ... goto
+  L;` stay inside the loop for loop.c, where `for (;;)` lets it hoist an index chain and
+  an address (main func_80021F58: 779 to 764 instructions). A pointer set after a call
+  (`qv = (MgSVec *)&D_801F5334;`) used for two reads gives `lhu v1,0(s0)` as in the game;
+  `r = &D[i]; c = &D[i].col;` gives separate value-giv registers with a `move s0,t0` init.
 
 ### Stack frame
 
@@ -3005,6 +3082,27 @@ same target at once. Each works on its own functions; only `put` writes `src/`.
   `p->u0 = p->u2 = c; p->u1 = p->u3 = c2;` gave the game's store order and made `c' = c +
   shifted` land in the shifted value's register (magic_odin1 func_801B0E60,
   func_801B11C8).
+- A frame that is 4 mod 8 (chocobo func_800AE534 and its copies in field, highway and
+  world: `addiu sp,sp,-60`, 24 bytes of locals and arguments plus 9 saved words) cannot be
+  produced: cc1 2.6.3 and 2.7.2 round the frame to a multiple of 8 whatever the locals,
+  arguments or variadics (56 or 64 in every test) and no C function of the repository has
+  such a frame (all 319 elfs scanned): such a function is not matchable with the current
+  toolchain. When a function is followed by data words in .text that splat folded into its
+  asm (main func_80034CAC and the save area D_80034CF0..), give the first data word a
+  symbol (`func_80034CF0 = 0x80034CF0; // type:func`), `INCLUDE_ASM` it right after the
+  function and rebuild with `--split`.
+- Volatile array elements (`D_8009D25C[3]`, `D_8009D3EA[0]`) give the `la reg; lw/sb
+  0(reg)` form even for a single use where plain arrays fold back to the `lui` form; a `u8
+  b = s6[0]` local at the inner-loop site gives `lbu s0; andi s0,s0,0xff`, and `b = s6[0];
+  c = b;` keeps `c` set twice so loop.c does not hoist the address constant (main
+  func_80011C1C). Wrapping the whole final `if (s0 != NULL) do { } while` loop in `do { }
+  while (0)` raised the node pseudo's refs from 121 to 141 against 120 for the record and
+  flipped the s0/s1 order (about 80 lines of diff, world func_800A71E8); repeating the
+  bound expression inline in both the loop and the post-test makes thread_jumps send the
+  top test straight to the else branch. Extra frame bytes above an argument spill slot
+  come from reload slots, not user locals (`u8 pad[]` sits below the slot). Greedy and
+  iterated wrapall rounds (work/big21/wrapk.py, wrapn.py, work/big22/perm.py) took
+  magic_tifa func_801B5C74 from 163 to 74 and then 38 differing words but not to zero.
 
 ## Hand-written assembly
 
