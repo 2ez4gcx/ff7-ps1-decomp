@@ -573,7 +573,60 @@ void func_801B2A60(MgTask *p) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_odin1/nonmatchings/text", func_801B2BE0);
+void func_801B2BE0(void) {
+    MgTask *p;
+    OdRing *a;
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 s;
+
+    p = &D_80162978[D_8015169C];
+    if (D_80062D98 == 0) {
+        if (p->unk2 == 0) {
+            for (j = 0x1C0C; j >= 0; j -= 0x14) {
+                *(s16 *)((u8 *)D_801F7EE4 + j) = -1;
+            }
+        }
+        t = p->unk2;
+        s = 0x80;
+        if (t >= 0x6E) {
+            t -= 0x6E;
+            if (t < 0xF) {
+                s = ((t << 12) / 15 * 0xE80 >> 12) + 0x80;
+            } else {
+                t -= 0xF;
+                if (t >= 0x78) {
+                    p->unk0 = -1;
+                    return;
+                }
+                s = 0xF00;
+            }
+        }
+        s += s * p->unk2 & 0xFF;
+        if (s >= 0x100) {
+            do {
+                a = &D_801F7EE4[D_801F2840];
+                a->unk0 = 0;
+                a->unk2 = 0;
+                D_801F2840 = (D_801F2840 + 1) % 360;
+                s -= 0x100;
+                a->x = func_80042DA8() % 9000 - 0x1194;
+                a->y = func_80042DA8() % 500 - 0x1388;
+                a->z = func_80042DA8() % 5000;
+                a->vy = 0x1F4;
+                a->vz = -0x32;
+                a->vx = 0;
+            } while (s >= 0x100);
+        }
+        p->unk2++;
+    }
+    for (i = 0; i < 360; i++) {
+        if (D_801F7EE4[i].unk0 != -1) {
+            func_801B2A60((MgTask *)&D_801F7EE4[i]);
+        }
+    }
+}
 
 void func_801B2EC0(void) {
     MgTask *p;

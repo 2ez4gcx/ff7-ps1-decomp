@@ -215,5 +215,8 @@ OdPoly *func_801B0E60(MgSVec *arg0, s32 arg1, OdArg *arg2, OdTag *arg3, s32 arg4
 OdPoly *func_801B11C8(MgSVec *arg0, MgSVec *arg1, s32 arg2, OdArg *arg3, OdTag *arg4, s32 arg5, OdPoly *arg6);
 typedef struct { u16 sx0; u16 sy0; u16 sx1; u16 sy1; s32 otz; s32 dp; s32 flag; s32 w14; } OdG2;
 extern OdG2 *D_801F2550;
+typedef struct { s16 unk0; s16 unk2; s16 x; s16 y; s16 z; s16 padA; s16 vx; s16 vy; s16 vz; s16 pad12; } OdRing;
+extern OdRing D_801F7EE4[];
+extern s32 D_801F2840;
 
 #endif /* MAGIC_ODIN1_DECLS_H */
