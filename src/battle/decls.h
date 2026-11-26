@@ -1167,7 +1167,7 @@ extern MgMat D_800F818C;
 extern BtlB9CPos D_80153CF8;
 void func_800DDE90(u8 *arg0);
 M2C_UNK func_800D93E4(u8 *);
-M2C_UNK func_800DDCE8();
+s32 func_800DDCE8();
 extern u16 D_80062D78;
 extern u8 D_800F514D;
 extern u8 D_801518FA;
@@ -1731,5 +1731,9 @@ extern u8 D_800F5BD7;
 extern u8 D_800F5BDF;
 typedef struct { u8 pad0[0xC]; s16 a; u8 pad2[0x26]; } BtlAeS;
 extern BtlAeS D_800F5E5C[];
+extern s32 D_800F3148;
+extern Spr D_800F57D8;
+extern s8 D_800F57EF;
+extern s8 D_800F57F0;
 
 #endif /* BATTLE_DECLS_H */

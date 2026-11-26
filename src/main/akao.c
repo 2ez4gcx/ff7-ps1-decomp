@@ -4435,7 +4435,14 @@ void func_80034BB0(s32 *arg0, u8 *arg1) {
     }
 }
 
-INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034CAC);
+s32 func_80034CAC(s32 arg0) {
+    D_8009A000 = 0x30;
+    D_8009A004 = arg0;
+    D_8009A008 = arg0;
+    func_8002DA7C();
+    return func_8003CEDC(0x3C);
+}
+INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034CF0);
 
 INCLUDE_ASM("../asm/us/main/nonmatchings/akao", func_80034D18);
 

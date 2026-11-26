@@ -26,3 +26,5 @@ func_80042D98 = 0x80042D98; // type:func
 func_80042DD8 = 0x80042DD8; // type:func
 D_80010014 = 0x80010014; // force_not_migration:True
 D_80010020 = 0x80010020; // force_not_migration:True
+// The ten words after func_80034CAC are data in .text (the save area D_80034CF0 to jtbl_80034D14); a symbol of their own ends the function there
+func_80034CF0 = 0x80034CF0; // type:func

@@ -52,7 +52,7 @@ s32 func_80039A74(s32);
 s32 func_80039B40(s32);
 s32 func_800D56A8(void *);
 void func_800D55F4(s32, s32, s32);
-void func_801B05E4(MgSVec *);
+void func_801B05E4(MgSVec *arg0);
 extern MgSVec D_801B1140;
 extern MgSVec D_801B1148;
 extern MgSVec D_801B1150;
@@ -63,5 +63,10 @@ extern MgMat D_800FA63C;
 extern MgSVec D_801B10F4[3];
 void func_80046794(s32, void *);
 void func_801B0020(ElvFx *arg0);
+extern u8 D_801B1118[];
+void func_800D44E8(MgSVec *, MgMat *);
+void func_8003A63C(MgMat *, MgMat *, MgMat *);
+void func_8003B48C(MgMat *);
+void func_8003B51C(MgMat *);
 
 #endif /* MAGIC_ELEVATOR_DECLS_H */

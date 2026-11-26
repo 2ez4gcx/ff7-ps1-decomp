@@ -116,7 +116,87 @@ void func_801B0528(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_elevator/nonmatchings/text", func_801B05E4);
+void func_801B05E4(MgSVec *arg0) {
+    MgSVec v;
+    MgMat m;
+    MgSVec verts[8];
+    s32 dp;
+    s32 flag;
+    s32 otz;
+    s32 i;
+    s32 r;
+    s32 k;
+    s32 n;
+    u8 *q;
+
+    v.vx = arg0->vx - (u16)D_801B10EC;
+    v.vy = 0;
+    v.vz = arg0->vz - (u16)D_801B10F0;
+    func_800D44E8(&v, &m);
+    m.t[0] = arg0->vx;
+    m.t[1] = arg0->vy;
+    m.t[2] = arg0->vz;
+    func_8003A63C(&D_800FA63C, &m, &m);
+    func_8003B48C(&m);
+    func_8003B51C(&m);
+    i = 0;
+loop:
+    do {
+        r = func_80042DA8() % 500 + 1000;
+        verts[i].vx = (func_80039A74(i << 9) * r) >> 12;
+        verts[i].vy = (func_80039B40(i << 9) * r) >> 11;
+        verts[i].vz = 0;
+        i++;
+        if (i < 8) {
+            goto loop;
+        }
+        q = D_801D65BC;
+        for (i = 0; i < 8;) {
+            *(s32 *)q = 0x06000000;
+            do {
+                do {
+                    do {
+                        do {
+                            do {
+                                do {
+                                    do {
+                                        do {
+                                            do {
+                                                do {
+                                                    gte_mv12(&verts[i]);
+                                                } while (0);
+                                            } while (0);
+                                        } while (0);
+                                    } while (0);
+                                } while (0);
+                            } while (0);
+                        } while (0);
+                    } while (0);
+                } while (0);
+            } while (0);
+            n = i + 1;
+            gte_mv13(&verts[n & 7]);
+            gte_mv14(D_801B1118);
+            asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t"
+                         "lwc2 $5,4($14)");
+            gte_rtpt();
+            gte_stsxy3_m(q + 8, q + 0x10, q + 0x18);
+            gte_stdp_m(&dp);
+            gte_stflg_m(&flag);
+            gte_avsz3();
+            gte_stotz_m(&otz);
+            *(s32 *)(q + 4) = 0x32000000;
+            *(s32 *)(q + 0xC) = 0x30000000;
+            *(s32 *)(q + 0x14) = 0x30808080;
+
+            k = ((otz >> 2) << 2) + 0x70;
+            func_80046794(k + D_801517C0, q);
+            q += 0x1C;
+            i = n;
+        }
+    } while (0);
+    D_801D65BC = q;
+}
 
 void func_801B0854(MgSVec *pos, MgSVec *v) {
     MgSVec pad;

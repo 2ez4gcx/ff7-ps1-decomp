@@ -585,7 +585,7 @@ s32 func_80044D64(s32 arg0, s32 arg1, s32 arg2);
 void func_8002B9AC(void *arg0);
 void func_80032C8C(void *arg0, void *arg1, s32 arg2);
 void func_800346F8(void);
-M2C_UNK func_80034CAC(M2C_UNK);
+s32 func_80034CAC(s32 arg0);
 void func_80014980(void *arg0);
 s32 func_80044000(void *arg0, void *arg1);
 void func_80026448(void *arg0, s8 arg1, s8 arg2, s8 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11, s32 arg12, u16 arg13);
