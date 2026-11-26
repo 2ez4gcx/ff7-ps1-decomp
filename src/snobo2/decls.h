@@ -960,8 +960,8 @@ typedef struct { u8 flag; s8 unk1; s16 unk2; s32 unk4; u8 pad8[0x24]; s32 unk2C;
 extern Sb2TmplA D_800E0178;
 void func_800B37E8(s16 arg0, Sb2PosDb *arg1);
 void func_800A0448(void);
-M2C_UNK func_8003B6BC(M2C_UNK, M2C_UNK);
-M2C_UNK func_8003B6DC(M2C_UNK);
+void func_8003B6BC(s32, s32);
+void func_8003B6DC(s32);
 M2C_UNK func_80043D3C(M2C_UNK);
 M2C_UNK func_80043DD8(M2C_UNK);
 M2C_UNK func_80043F6C(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
@@ -1105,5 +1105,13 @@ typedef struct { s32 f; } SbWord;
 extern u8 D_800D1DB6;
 extern s16 D_800DDFF4[];
 void func_8003C21C(void *, void *);
+typedef struct { s32 x; s32 y; s32 z; } SbVec3;
+typedef struct { u8 pad0[0xE]; s16 f; u8 pad10[0x364]; } SbRec374;
+extern SbRec374 D_800B85CC[];
+typedef struct { s16 sx; s16 sy; u8 pad4[0xC]; s16 v[3]; } SbCamV;
+extern u8 D_800B84F0[];
+s32 func_8003BF8C();
+extern SbVec3 D_80106A10;
+void func_800A5F00(SbCamV *arg0);
 
 #endif /* SNOBO2_DECLS_H */

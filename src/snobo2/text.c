@@ -1648,7 +1648,94 @@ void func_800A5AF8(s32 arg0, s32 arg1, void *arg2, void *arg3) {
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5C54);
 
-INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A5F00);
+void func_800A5F00(SbCamV *arg0) {
+    s16 *cam;
+    s32 a;
+    s32 b;
+    s32 t;
+    s16 h;
+    s32 x;
+
+    if (D_801069CC >= 0) {
+        cam = (s16 *)&D_80103D04;
+        switch (D_800B84F0[(u8)D_800DDE70]) {
+        case 1:
+            if ((s16)D_800DDE78 > 0x80) {
+                a = func_8003CC1C(-((SbBlock16 *)&D_800DDE98)->v[0], -D_800DDEA0) & 0xFFF;
+                goto common;
+            }
+        case 2:
+            a = D_801053B4;
+common:
+            b = D_801053B4;
+            t = (a - b) & 0xFFF;
+            if ((u32)(t - 0x401) < 0x7FF) {
+                a = (a + 0x800) & 0xFFF;
+            }
+            t = (a - b) & 0xFFF;
+            if ((u32)(t - 0x201) < 0x5FF) {
+                a = b + 0x200;
+            } else if ((u32)(t - 0x801) < 0x5FF) {
+                a = b - 0x200;
+            }
+            if (a > 0) {
+                h = ((u16)D_800DDE78 << 16) >> 20;
+            } else {
+                h = ((u16)D_800DDE78 << 16) >> 20;
+            }
+            b = h << 16;
+            a = (0x800 - a) & 0xFFF;
+            t = b >> 16;
+            if (t < 4) {
+                t = 4;
+            }
+            cam[1] = func_800AA140(a, cam[1], t);
+        }
+        if (((u8 **)D_80106AF8)[3][D_801069CC] & 8) {
+            a = 0x20;
+        } else if (D_800DDE76 > 8) {
+            a = 0x80;
+        } else {
+            a = D_800B85CC[((u8 **)D_80106AF8)[2][D_801069CC]].f * 3;
+        }
+        x = cam[0];
+        a += 0x40;
+        a -= x;
+        if (a != 0) {
+            if (a > 0) {
+                x += 4;
+            } else {
+                x -= 4;
+            }
+            cam[0] = x;
+        }
+        cam[2] = 0;
+        func_8003BF8C(&D_80103D04, &D_801069FC);
+        func_8003B2CC(&D_801069FC, (u8 *)&D_80103D04 + 8, &arg0->v);
+        D_80106A10.x = -arg0->v[0];
+        D_80106A10.y = 0x80 - arg0->v[1];
+        D_80106A10.z = 0x140 - arg0->v[2];
+        arg0->v[0] = (D_800DDE88.v[0] >> 12) - (u16)D_80106A60;
+        arg0->v[1] = (D_800DDE8C >> 12) - (u16)D_80106A64;
+        arg0->v[2] = (D_800DDE90 >> 12) - (u16)D_80106A68;
+        func_8003B6BC(0, 0);
+        func_8003B6DC(0xA0);
+        func_8003B48C(&D_801069FC);
+        func_8003B51C(&D_801069FC);
+        gte_ldv0(&arg0->v);
+        gte_rtps();
+        gte_stsxy_m(arg0);
+        a = arg0->sy;
+        if (a < 0) {
+            a = -a;
+        } else if (a > 0x40) {
+            a = (0x40 - a) * 2;
+        } else {
+            a = 0;
+        }
+        D_80106A10.y += a;
+    }
+}
 
 INCLUDE_ASM("../asm/us/snobo2/nonmatchings/text", func_800A627C);
 
