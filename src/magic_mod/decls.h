@@ -61,6 +61,12 @@ extern u8 D_800F5B71;
 extern u8 D_800F5B72;
 extern MgSVec D_801BA330[];
 extern M2C_UNK func_801B01A4;
-extern M2C_UNK func_801B0994;
+void func_801B0994(void);
+typedef struct { s32 *p; } MdPtr;
+extern u8 D_801BA320;
+extern u8 D_801BA321;
+extern u8 D_801BA322;
+extern u16 D_801BA324;
+extern s32 *D_801BA328[];
 
 #endif /* MAGIC_MOD_DECLS_H */

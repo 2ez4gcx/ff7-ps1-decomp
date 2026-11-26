@@ -1947,7 +1947,124 @@ void func_801B8314(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_hades/nonmatchings/text2", func_801B8404);
+void func_801B8404(void *arg0, void *arg1) {
+    HdScr *s;
+    s32 p;
+    s32 j;
+    s32 tx;
+    s32 ty;
+    s32 tz;
+    s32 dx;
+    s32 dy;
+    s32 dz;
+    s32 cur;
+    s16 v;
+    u16 x;
+    s32 k;
+
+    s = arg1;
+    p = (s32)arg0;
+again:
+    {
+        if (*(s16 *)(p + 0x0) != 0) {
+            tx = *(s16 *)(p + 0x4);
+            ty = *(s16 *)(p + 0x6);
+            tz = *(s16 *)(p + 0x8);
+            s->near = s->far = 0x7FFFFFFF;
+            j = 0;
+            s->j1 = s->j2 = 0;
+            do {
+                cur = s->near;
+                dx = tx - s->tbl[j].x;
+                dx = dx < 0 ? -dx : dx;
+                dy = ty - s->tbl[j].y;
+                dy = dy < 0 ? -dy : dy;
+                dz = tz - s->tbl[j].z;
+                dz = dz < 0 ? -dz : dz;
+                dx = dx + dy + dz;
+                if (dx < cur) {
+                    if (cur < s->far) {
+                        s->far = cur;
+                        s->j2 = s->j1;
+                    }
+                    s->near = dx;
+                    s->j1 = j;
+                }
+                j++;
+            } while (j < 0x14);
+            j = *(s16 *)(p + 0x14);
+            s->w88 = *(s16 *)(p + 0x0) & 0xF;
+            s->w84 = *(s32 *)(p + 0xC) | 0x2E000000;
+            do {
+                dz = 0;
+            } while (0);
+            if (D_80062D98 != 0) {
+                dy = 0;
+                dx = 0;
+            } else {
+                do {
+                    dx = s->tbl[s->j1].vx / j + (s16)(s->tbl[s->j2].vx >> 1) / j;
+                    dy = s->tbl[s->j1].vy / j + (s16)(s->tbl[s->j2].vy >> 1) / j;
+                    dz = s->tbl[s->j1].vz / j + (s16)(s->tbl[s->j2].vz >> 1) / j;
+                    j = (u16)*(s16 *)(p + 0x0) + 1;
+                    *(s16 *)(p + 0x0) = j;
+                    if ((s16)j >= *(s16 *)(p + 0x2)) {
+                        cur = j & 0xF;
+                        k = 0xF;
+                        if (cur == k) {
+                            *(s16 *)(p + 0x0) = 0;
+                        } else {
+                            *(s16 *)(p + 0x2) = *(s16 *)(p + 0x2) + k - cur;
+                        }
+                    }
+                    if (*(s16 *)(p + 0x14) >= 6) {
+                        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x14) - 1;
+                    }
+                } while (0);
+                *(s16 *)(p + 0x16) = (u16)*(s16 *)(p + 0x16) + (*(s16 *)(p + 0x16) >> 5);
+                if (*(s16 *)(p + 0x12) != 0) {
+                    *(s16 *)(p + 0xC) = (u16)*(s16 *)(p + 0xC) - (u16)*(s16 *)(p + 0x10);
+                    *(s16 *)(p + 0xE) = (u16)*(s16 *)(p + 0xE) + (u16)*(s16 *)(p + 0x10);
+                    if (*(s16 *)(p + 0xC) < 0) {
+                        *(s16 *)(p + 0xC) = 0;
+                        *(s16 *)(p + 0x12) = *(s16 *)(p + 0x12) ^ 1;
+                    }
+                } else {
+                    *(s16 *)(p + 0xC) = (u16)*(s16 *)(p + 0xC) + (u16)*(s16 *)(p + 0x10);
+                    v = (u16)*(s16 *)(p + 0xE) - (u16)*(s16 *)(p + 0x10);
+                    *(s16 *)(p + 0xE) = v;
+                    if (v < 0) {
+                        *(s16 *)(p + 0xE) = 0;
+                        *(s16 *)(p + 0x12) = *(s16 *)(p + 0x12) ^ 1;
+                    }
+                }
+            }
+            x = *(s16 *)(p + 0x16);
+            s->m40.m[2][2] = x;
+            s->m40.m[1][1] = x;
+            s->m40.m[0][0] = x;
+            *(s16 *)(p + 0x4) = tx + dx;
+            s->m40.t[0] = *(s16 *)(p + 0x4);
+            *(s16 *)(p + 0x6) = ty + dy;
+            s->m40.t[1] = *(s16 *)(p + 0x6);
+            *(s16 *)(p + 0x8) = tz + dz;
+            s->m40.t[2] = *(s16 *)(p + 0x8);
+            func_8003AB84(&s->m20, &s->m40.t[0], &s->m60.t[0], dy);
+            s->m60.t[0] = s->m60.t[0] + s->m20.t[0];
+            s->m60.t[1] = s->m60.t[1] + s->m20.t[1];
+            s->m60.t[2] = s->m60.t[2] + s->m20.t[2];
+            func_8003B48C(&s->m40);
+            func_8003B51C(&s->m60);
+            D_80163C74 = func_800D4D90(&s->pad80, D_801517C0 + 0x70, 0xC, D_80163C74);
+        }
+        p += 8;
+        p += 8;
+        p += 8;
+    }
+    if (p < (s32)arg0 + 0x2850) {
+        goto again;
+    }
+}
 
 void func_801B8888(void) {
     MgTask *p;

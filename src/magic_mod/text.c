@@ -77,7 +77,38 @@ void func_801B081C(void) {
     }
 }
 
-INCLUDE_ASM("../asm/us/magic_mod/nonmatchings/text", func_801B0994);
+void func_801B0994(void) {
+    MgSVec v;
+    MgTask *p;
+    u16 *frame;
+    MdPtr *q;
+    u8 *t;
+
+    p = (MgTask *)&D_80162978[D_8015169C];
+    v.vx = p->unk4 + (func_80039A74(p->unk14) * p->unk18 * 8 >> 12);
+    v.vz = p->unk8 + (func_80039B40(p->unk14) * p->unk18 * 8 >> 12);
+    v.vy = 0;
+    func_800D4368(&v, 0x3000, 0);
+    frame = &D_801BA324;
+    M2C_SFIELD(frame, u16 *, 0) = p->unk1A % 4;
+    q = (MdPtr *)((u8 *)frame - 8);
+    q->p = D_801BA328[p->unk16];
+    t = D_801D23B0;
+    D_801BA320 = D_801BA321 = D_801BA322 = p->unk18;
+    D_801D23B0 = func_800D4D90(q, D_801517C0 + 0x70, 0xC, t);
+    if (D_80062D98 == 0) {
+        p->unk1A += 1;
+        if (p->unk2 < 0x10) {
+            p->unk18 += 8;
+        }
+        if (p->unk2 >= 0x2D) {
+            p->unk18 -= 8;
+        }
+        if (++p->unk2 == 0x3C) {
+            p->unk0 = -1;
+        }
+    }
+}
 
 void func_801B0B4C(void) {
     MgTask *p;

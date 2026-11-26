@@ -893,7 +893,39 @@ s32 func_800A5AA8(void) {
     return func_80014BA8(0x10) + 0x38;
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5AC8);
+INCLUDE_RODATA("../asm/us/battle/nonmatchings/text1c", D_800A028C);
+
+u8 func_800A5AC8(s32 arg0, s32 arg1, s32 arg2, BtlRes *r) {
+    s32 t;
+    s32 k;
+    s32 j;
+    u8 ret;
+
+    ret = 3;
+    j = D_800A028C[arg1];
+    *(volatile s32 *)&r->b = -1;
+    *(volatile s32 *)&r->a = j;
+    k = r->a;
+    if (k != 1) {
+        r->b = arg2;
+        if (arg2 >= 0xFD) {
+            r->b = D_8009FE8C[arg2](arg0);
+        }
+        if (r->a == 2) {
+            t = r->b;
+            ret = D_800708D0[t * 0x1C];
+            if (t >= 0x38) {
+                r->a = 3;
+                r->b = r->b - 0x38;
+            }
+        } else {
+            r->a = r->b;
+            r->b = -1;
+            ret = D_800707C5[r->a][0];
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A5BC8);
 

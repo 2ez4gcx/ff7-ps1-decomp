@@ -1736,5 +1736,10 @@ extern Spr D_800F57D8;
 extern s8 D_800F57EF;
 extern s8 D_800F57F0;
 void func_800A4BA4(s32 arg0);
+typedef struct { s32 a; s32 b; } BtlRes;
+extern const u8 D_800A028C[];
+extern u8 D_800707C5[][8];
+extern s32 (*D_8009FE8C[])(s32);
+u8 func_800A5AC8(s32 arg0, s32 arg1, s32 arg2, BtlRes *r);
 
 #endif /* BATTLE_DECLS_H */
