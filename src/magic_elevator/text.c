@@ -177,8 +177,7 @@ loop:
             n = i + 1;
             gte_mv13(&verts[n & 7]);
             gte_mv14(D_801B1118);
-            asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t"
-                         "lwc2 $5,4($14)");
+            gte_ldv3_t();
             gte_rtpt();
             gte_stsxy3_m(q + 8, q + 0x10, q + 0x18);
             gte_stdp_m(&dp);

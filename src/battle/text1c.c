@@ -419,7 +419,23 @@ u8 func_800A4B3C(s32 arg0, s32 arg1) {
 void func_800A4B9C(void) {
 }
 
-INCLUDE_ASM("../asm/us/battle/nonmatchings/text1c", func_800A4BA4);
+void func_800A4BA4(s32 arg0) {
+    T6 *p;
+    T6 *base;
+    s32 m;
+
+    base = D_800F39F0;
+    p = &base[arg0];
+    *p = *(T6 *)D_8009D898[arg0].b;
+    D_800F3A04[arg0] = *p;
+    D_800F3A04[arg0].a = 1;
+    m = 0;
+    if (!(D_800F5BE0[arg0].b[0] & 2)) {
+        m = 7;
+    }
+    D_800F3A04[arg0].b[0] = m;
+    D_800F3A04[arg0].b[1] = D_800F5EFC[arg0].a;
+}
 
 u8 func_800A4CA8(s32 arg0) {
     return D_800F39F0[arg0].a;

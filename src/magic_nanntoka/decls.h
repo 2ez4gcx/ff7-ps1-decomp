@@ -17,7 +17,7 @@ void func_801B2114(void);
 s32 func_800BBEAC(void (*)());
 void func_801B0240();
 void func_801B14B8(void);
-void func_801B1D48();
+void func_801B1D48(void);
 M2C_UNK func_800D2980(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 s32 func_800D55F4(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
 extern u8 D_801B0018[];
@@ -64,5 +64,9 @@ extern NnPart D_801E0EA8[300];
 extern u16 D_800D3544;
 extern u16 D_800D3546;
 void func_801B192C(NnCtx2 *arg0, s32 arg1);
+typedef struct { u8 r; u8 g; u8 b; u8 pad[17]; } NnCol;
+extern NnCol D_801E0EB8[300];
+s32 func_80042DA8(void);
+void func_8003A08C(MgVec *, MgVec *);
 
 #endif /* MAGIC_NANNTOKA_DECLS_H */

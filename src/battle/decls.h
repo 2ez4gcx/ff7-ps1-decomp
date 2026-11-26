@@ -1735,5 +1735,6 @@ extern s32 D_800F3148;
 extern Spr D_800F57D8;
 extern s8 D_800F57EF;
 extern s8 D_800F57F0;
+void func_800A4BA4(s32 arg0);
 
 #endif /* BATTLE_DECLS_H */

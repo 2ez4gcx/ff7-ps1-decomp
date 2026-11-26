@@ -802,7 +802,103 @@ void func_800A5210(s16 arg0, s32 arg1) {
 
 INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A5258);
 
-INCLUDE_ASM("../asm/us/condor/nonmatchings/text", func_800A5B64);
+s32 func_800A5B64(void) {
+    CondorRect *rc;
+    CondorCell *p;
+    u8 *b2;
+    u8 *b3;
+    s32 clut;
+    s32 y;
+    s32 x;
+    u8 c;
+
+    D_8012C42C = 1;
+    if (D_8012C39C & 0x100) {
+        D_8009A000 = 0x2B;
+        D_8009A004 = 0x40;
+        D_8009A008 = 1;
+        func_8002DA7C();
+        func_80043DD8(0);
+        func_8003CEDC(0);
+        func_80043D3C(0);
+        rc = &D_8012AF3C;
+        rc->x = 0x140;
+        D_8012AF40 = 0xA0;
+        D_8012AF3E = 0;
+        D_8012AF42 = 0xDC;
+        D_8012C434 = D_8012C458;
+        D_8012C438 = D_8012C45C;
+        func_80044000(rc, (void *)0x80150220);
+        func_80043DD8(0);
+        *(u16 *)rc = 0;
+        D_8012AF3E = 0x1F0;
+        D_8012AF40 = 0x100;
+        D_8012AF42 = 1;
+        func_80044000(rc, (void *)0x80150014);
+        func_80043DD8(0);
+        p = (CondorCell *)D_80129F34;
+        D_8012C3EC = 0;
+        clut = func_80046634(0, 0x1F0);
+        p = (CondorCell *)((u8 *)p + 0x5330);
+        y = 0;
+        c = 0x80;
+        do {
+            x = 0;
+            do {
+                p->clut = clut;
+                p->b = c;
+                p->g = c;
+                p->r = c;
+                p++;
+                x++;
+            } while (x < 0x15);
+            y++;
+        } while (y < 0xE);
+        func_800B7874();
+        func_800B9668();
+        b2 = (u8 *)D_80129F34;
+        clut = func_80046634(0, 0x1F0);
+        p = (CondorCell *)(b2 + 0x5330);
+        y = 0;
+        c = 0x80;
+        do {
+            x = 0;
+            do {
+                p->clut = clut;
+                p->b = c;
+                p->g = c;
+                p->r = c;
+                p++;
+                x++;
+            } while (x < 0x15);
+            y++;
+        } while (y < 0xE);
+        func_800B7874();
+        func_800B9668();
+        b3 = (u8 *)D_80129F34;
+        clut = func_80046634(0, 0x1F0);
+        p = (CondorCell *)(b3 + 0x5330);
+        y = 0;
+        c = 0x80;
+        do {
+            x = 0;
+            do {
+                p->clut = clut;
+                p->b = c;
+                p->g = c;
+                p->r = c;
+                p++;
+                x++;
+            } while (x < 0x15);
+            y++;
+        } while (y < 0xE);
+        func_800B7874();
+        func_800B9668();
+        func_8003CEDC(0);
+        func_80043D3C(1);
+        D_8012C42C = 0;
+    }
+}
 
 s32 func_800A5E04(void) {
 

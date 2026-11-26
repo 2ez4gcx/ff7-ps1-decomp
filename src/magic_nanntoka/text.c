@@ -505,7 +505,90 @@ void func_801B192C(NnCtx2 *arg0, s32 arg1) {
     D_801DBEF0 = (NnPoly *)p;
 }
 
-INCLUDE_ASM("../asm/us/magic_nanntoka/nonmatchings/text", func_801B1D48);
+void func_801B1D48(void) {
+    u8 pad[8];
+    s32 k;
+    MgTask *p;
+    s32 cnt;
+    s32 i;
+    s32 found;
+    s32 t;
+    s32 u;
+    s32 d;
+    s32 a;
+    s32 r;
+    s32 v;
+    s32 sz;
+    u8 *sc;
+
+    p = &D_80162978[D_8015169C];
+    func_801B192C(0x1F800000, p->unk2);
+    do {
+        sc = (u8 *)0x1F800000;
+    } while (0);
+    if (D_80062D98 == 0) {
+        if ((u16)(p->unk2 - 0x1E) < 0xBA) {
+            v = (s16)p->unk2;
+            if (v < 0x64) {
+                cnt = 7;
+                sz = v;
+            } else if (v < 0x8C) {
+                cnt = 0xA;
+                sz = v << 2;
+            } else if (v < 0xA0) {
+                cnt = 0xE;
+                sz = v << 3;
+            } else {
+                cnt = 0x12;
+                sz = v * 0x11;
+            }
+            do {
+                k = 0;
+            } while (0);
+            if (cnt != 0) {
+                d = 5460;
+                do {
+                    i = 0;
+                    found = -1;
+                    for (; i < 0x12C; i++) {
+                        if (D_801E0EA8[i].st == 0) {
+                            found = i;
+                            break;
+                        }
+                    }
+                    if (found < 0) {
+                        break;
+                    }
+                    D_801E0EA8[found].y = -0x44C;
+                    D_801E0EA8[found].z = 0x4E20;
+                    D_801E0EA8[found].x = 0;
+                    D_801E0EA8[found].st = 1;
+                    *(s32 *)(sc + 0x240) = func_80042DA8() % d - 0xAAA;
+                    *(s32 *)(sc + 0x244) = func_80042DA8() % d - 0xAAA;
+                    r = func_80042DA8();
+                    *(s32 *)(sc + 0x248) = r / 0x1000 * 0x1000 - r;
+                    func_8003A08C((MgVec *)(sc + 0x240), (MgVec *)(sc + 0x240));
+                    k++;
+                    u = func_80042DA8();
+                    a = p->unk2 + (p->unk2 >> 1);
+                    t = u % 170 + 0x64;
+                    a += t;
+                    D_801E0EA8[found].vx = a * *(s32 *)(sc + 0x240) >> 12;
+                    D_801E0EA8[found].vy = a * *(s32 *)(sc + 0x244) >> 12;
+                    D_801E0EA8[found].vz = a * *(s32 *)(sc + 0x248) >> 12;
+                    D_801E0EA8[found].sc = sz;
+                    D_801E0EB8[found].r= (*(s32 *)(sc + 0x240) & 0x3F) + 0x48;
+                    D_801E0EB8[found].g= (*(s32 *)(sc + 0x244) & 0x3F) + 0x4A;
+                    D_801E0EB8[found].b= (*(s32 *)(sc + 0x248) & 0x3F) + 0x44;
+                } while (k < cnt);
+            }
+        }
+        if (p->unk2 >= 0xE1) {
+            p->unk0 = -1;
+        }
+        p->unk2++;
+    }
+}
 
 void func_801B20EC(void) {
     s32 i;

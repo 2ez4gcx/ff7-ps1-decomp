@@ -451,4 +451,9 @@
  * after it */
 #define gte_rtpsm() gte_cmdm(0x0180001)
 
+/* the six lwc2 loads of three vectors through t4 to t6 ($12 to $14), which the C has set with gte_mv12 to gte_mv14 */
+#define gte_ldv3_t() \
+    asm volatile("lwc2 $0,0($12)\n\tlwc2 $1,4($12)\n\tlwc2 $2,0($13)\n\tlwc2 $3,4($13)\n\tlwc2 $4,0($14)\n\t" \
+                 "lwc2 $5,4($14)")
+
 #endif /* GTE_H */
